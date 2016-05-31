@@ -1,0 +1,16 @@
+		Date salvageDate;
+		Date initiatedDate;;
+		Date survey;
+		Date costco;
+		Date proposal;
+		Date asBuilts;
+		Date punchList;
+		Date alarmHvac;
+		Date verisae;
+		Date closeoutBook;
+		Date closeoutNotes;
+		Date start;
+		Date scheduled;
+		Date actual;
+		Date airGas;
+		Date permits;

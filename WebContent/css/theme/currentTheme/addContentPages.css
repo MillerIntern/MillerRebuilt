@@ -1,0 +1,53 @@
+#tab3
+{
+
+	padding:15px;
+	border-radius:3px;
+	box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
+	width:70%;
+	margin-left:15%;
+	margin-top:4%;
+		
+		
+}
+
+#required12
+{
+		padding:15px;
+	border-radius:3px;
+	box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
+	width:90%;
+	margin-left:22%;	
+}
+
+#tab11
+{
+	width:100%	
+}
+#tab12
+{
+	width:100%	
+}
+
+#required1
+{
+  margin-left:10%;
+  width:100%;
+}
+
+
+
+
+#dialog-window {
+  height: 560px; 
+  
+}
+
+#scrollable-content {
+  height: 100%;
+  overflow: auto;
+  width:120%;
+  
+ 
+}
+

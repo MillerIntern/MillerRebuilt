@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/query.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/query.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/menu.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/globalMenu.css" type="text/css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Report generator</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <p class="title">Reports</p>
+    </div>
+
+    <br>
+    <ul>
+        <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+        <li class="dropdown">
+            <a class="dropbtn">Projects</a>
+            <div class="dropdown-content">
+                <a onClick="document.location.href='projectData.html'">Add</a>
+                <a onClick="document.location.href='editSelect.html'">Edit</a>
+            </div>
+        </li>
+        <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+        <li><a class="active" onClick="document.location.href='query.html'">Reports</a></li>
+        <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+    </ul>
+
+    
+
+    <div id=content>
+        
+        <input type='text' class="reportTitle" id='reportTitle' placeholder='Title(Optional)'></input>
+
+        <!--<br>  -->
+        <div class=paramTableWrapper>
+            
+            <!--</br>  -->
+
+            <div class=reportGenTable>
+                <Select class="reportTypePicker">
+                    <option>Select A Report</option>
+                </Select>
+                <br>
+                <button value="Active" onclick="reportCreator(this)">Active</button>
+                <button value="Proposals" onclick="reportCreator(this)">Proposals</button>
+                <button value="Budgetary" onclick="reportCreator(this)">Budgetary</button>
+                <button value="Inactive" onclick="reportCreator(this)">Inactive</button>
+                <button value="Closed" onclick="reportCreator(this)">Closed</button>
+                <!--  <input type="button" value="Proposals" onclick="reportCreator(this)"></input>
+                <input type="button" value="Inactive" onclick="reportCreator(this)"></input>
+                <input type="button" value="Closed" onclick="reportCreator(this)"></input>-->
+
+
+
+                <div class="but">
+                    <div class="leftButtons">
+                    </div>
+                    <div id="addParam">
+                        <input class="leftButton" type="button" value="Add Parameter" onclick="addParamCell()"></input>
+                    </div>
+                    <div id="addDateParam">
+                        <input class="leftButton" type="button" value="Add Date Parameter" onclick="addDateParamCell()"></input>
+                    </div>
+                    <div id="submit">
+                        <input class="leftButton" type="button" value="Search" onclick="createModalFieldSelector()"></input>
+                    </div>
+
+                </div>
+
+                <div class=paramTable> </div>
+
+
+
+
+
+                <!-- <div class=headers>
+					<div class=tableHead>Type</div>
+					<div class=tableHead>Active</div>
+					<div class=tableHead>Proposal</div>
+				</div>
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>WEEKLY</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('WEEKLY_A')"></input></div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('WEEKLY_P')"></input></div>
+				</div>
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>STEVE MEYER</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('STEVE_MEYER_A')"></input></div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('STEVE_MEYER_P')"></input></div>
+				</div>
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>SOUTH EAST</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('SE_A')"></input></div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('SE_P')"></input></div>
+				</div>
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>NORTH EAST</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('NE_A')"></input></div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('NE_P')"></input></div>
+				</div>	
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>J_DEMPSEY</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('J_DEMPSEY_A')"></input></div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('J_DEMPSEY_P')"></input></div>
+				</div>
+				<div class=reportTypeRow>
+					<div class=reportTypeCell>INVOICE</div>
+					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('INVOICED')"></input></div>
+				</div> -->
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

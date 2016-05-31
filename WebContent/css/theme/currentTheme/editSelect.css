@@ -1,0 +1,80 @@
+@CHARSET "ISO-8859-1";
+
+#queryForm fieldset
+{
+    /* To see the outline of the form */
+    padding: 1em;
+    border-radius: 1em;
+    background: white;
+    margin-top: 5%;
+}
+
+#queryForm
+{
+    width:70%;
+    margin-left:15%	
+}
+
+#queryForm fieldset select, input, textarea
+{
+	margin-top: 2px;
+}
+
+#queryForm fieldset textarea
+{
+	width: 250px;
+	bottom: -51px;
+	
+}
+
+.drop
+{
+	width: 250px;	
+}
+
+label
+{
+	display: inline-block;
+	width: 120px;
+	text-align: left;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+    line-height: 1.5em;
+}
+
+legend
+{
+	color: white;
+    font-family: 'Raleway',sans-serif;
+    font-style: italic;
+    font-size: 20px; font-weight: 400; 
+    background: #494949;
+    border: solid 2px #3A3A3A;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+select, input
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px;
+}
+
+button
+{   
+    margin-top: 2%;
+    margin-left: 30%;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18px;
+    padding: 4px 8px;
+}
+
+#queryForm fieldset label, select, input
+{
+	vertical-align: middle;
+}
+
+.dateDrop
+{
+	width: 100px;
+}

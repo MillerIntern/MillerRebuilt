@@ -1,0 +1,22 @@
+## Database Configuration
+*.cfg.*
+
+## OS X Annoying files
+.DS_Store
+
+## Eclipse Stuffs
+.classpath
+.project
+.metadata
+**/bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.externalToolBuilders/
+*.launch
+.settings/

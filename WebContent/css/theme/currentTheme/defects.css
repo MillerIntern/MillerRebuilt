@@ -1,0 +1,74 @@
+
+.HorizontalBar
+{
+	bottom: -20px;
+	position: relative;
+	border-style: solid ;
+	border-width: medium;
+	text-align: center;
+	padding:30px ;
+	background-color: white;
+}
+
+.mainPage
+{
+	
+	
+	
+	
+}
+
+#info
+{
+position:relative;
+background-color: white;	
+border-style:solid;
+border-width: medium;
+
+
+}
+
+#detail
+{
+position:relative;
+background-color: white;	
+border-style:solid;
+border-width: medium;	
+	
+	
+}
+
+
+#contentBox
+{
+position:relative;
+	
+border-style:solid;
+border-width: medium;
+/*padding:30px;
+width: 40%;
+bottom:-30px;
+right: -28%;
+*/
+	
+	
+	
+}
+
+#textt
+{
+
+	}
+
+
+#title
+{
+	font-size: 150%;
+
+	
+	
+	
+}
+label:not(:last-child) {
+    margin-bottom: 16px;
+}

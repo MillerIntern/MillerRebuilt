@@ -1,0 +1,28 @@
+
+.HorizontalBar 
+{
+	
+	position: relative;
+	border-style: solid ;
+	border-width: 5px;
+	text-align: center;
+	height: 35px;
+	background-color: white;
+	width:95%;
+	color:black;
+	
+		
+}
+
+
+#title
+{
+	font-size: 20%;
+}
+
+
+
+.HorizontalBar a
+{
+margin-left:30%;
+}

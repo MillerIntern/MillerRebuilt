@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+
+.contentHeader
+{
+	text-align:center;
+	color: white;
+	-webkit-appearance: none;
+}
+
+.notification
+{
+	width: 100%;
+	-webkit-appearance: none;
+}
+
+#menuTable
+{
+	-webkit-appearance: none;
+	position: relative;
+	margin-left: 30%;
+	margin-top: 0;
+	width: 40%;
+	height: 50%;
+	border: 10px solid black;
+	box-shadow: 10px 10px 5px #888888;
+	border-radius: 10px;
+}
+

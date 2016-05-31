@@ -1,0 +1,97 @@
+@CHARSET "ISO-8859-1";
+
+/*----- Tabs -----*/
+.tabs {
+    width:100%;
+	margin-top:1%;
+
+}
+ 
+    /*----- Tab Links -----*/
+    /* Clearfix */
+.tab-links:after
+{
+	display:block;
+	clear:both;
+	content:'';
+	float:left;
+
+}
+
+ 
+.tab-links  
+{ 
+	transition:all linear 0.15s;
+	display:inline-block;
+	float:left; 
+	width:16%;
+    max-width: 120px;
+	border-style:solid;		
+	border-width: medium;
+    background: #444444;
+}
+ 
+ .tab-links input
+{
+	margin-top:10%;
+	font-size:.78em;
+           
+}
+.tab-links a
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 20px; font-weight: 350; 
+    padding: 14px 16px;
+    font-size: 18px;
+    border: 0;
+    max-width: 120px;
+    min-width: 100px;
+    border-bottom: solid 2px black;
+
+}
+
+ 
+    /*----- Content of Tabs -----*/
+	/* content box*/
+    .tab-content {
+		position: relative;
+        
+		margin-left:2%;
+		
+		border-width: medium;
+		float:left; 
+		width:72%;
+		height:80%;
+		
+		
+                
+    }
+ 
+.tab 
+{
+    display:none;
+    background: 0;
+}
+ 
+
+.tab.active 
+{
+    display:block;
+}
+        
+        
+#dialog-window {
+  height: 700px; 
+  
+}
+
+#scrollable-content
+{
+  height: 100%;
+  overflow: auto;
+  width:100%; 
+}
+
+  
+
+      

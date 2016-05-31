@@ -1,0 +1,178 @@
+
+.paramTableWrapper {
+	 min-height: 225px;
+	 
+	position: relative;
+	margin: auto;
+	background: gray;
+	border: 2px solid black;
+	border-radius: 10px;
+	display: inline-block;
+	width: 70%;
+	margin-top:3%;
+	margin-left:13%
+
+}
+
+
+.paramTable{
+	padding: 2px;
+	position: relative;
+	width: 40%;
+}
+
+
+.paramCell {
+	padding: 5px;
+    margin-bottom: 1%;
+	width: 100%;
+	min-width: 150px;
+	right:0px;
+	background: white;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.paramDateCell {
+	padding: 5px;
+	margin: 0px auto;
+	width: 100%;
+	min-width: 150px;
+	right:0px;
+	background: white;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.reportGenTable{
+    margin-top: .5%;
+    margin-left: .5%;
+	padding: 5px;
+	width: 80%;
+	top: 0px;
+	right: 0px;
+	background: gray;
+	color: white;
+	position: relative;
+	min-width: 300px;
+	
+}
+
+.tableHead{
+	width: 30%;
+	background: black;
+	color: white;
+	border-left: 1px solid white;
+	display:inline-block;
+}
+
+.headers{
+	width: 100%;
+	background: black;
+	border: 1px solid white;
+	color: white;
+	display:inline-block;
+}
+
+.reportTypeRow{
+	background: black;
+	border: 1px solid white;
+	color: white;
+	width: 100%;
+	display:inline-block;
+}
+
+.reportTypeCell{
+	width: 30%;
+	display:inline-block;
+}
+
+.reportButton{
+	width: 100%;
+	height: 100%;
+}
+
+.drop {
+	width: 85%;
+}
+
+.remove{
+	color: black;
+	padding: 5px;
+	position: relative;
+	top: 0px;
+	right: 0px;
+	font-size: 100%;
+	display: inline;
+}
+
+.remove:hover{
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+.leftButtons {
+	padding: 2px;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	display: inline;
+}
+
+.typeButt
+{
+    padding: 4px 4px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; font-weight: 800; 
+}
+
+.reportTitle
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; font-weight: 800; 
+    margin-top: 2%;
+    margin-left: 28%;
+    padding: 4px 8px;
+    width: 40%;
+}
+
+input.leftButton
+{
+	width: 40%;
+        padding: 4px 16px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; font-weight: 400;
+    margin-bottom: 1%;
+}
+
+select
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; font-weight: 800; 
+    margin-bottom: 1%;
+}
+
+button
+{
+    padding: 4px 16px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; font-weight: 400; 
+}
+
+
+.but
+{
+	padding: 5px;
+	position: relative;
+	margin: 0px auto;
+	width: 100%;
+	bottom: -10px;
+    padding-bottom: 1%;
+}
+}
+
+
+
+
+

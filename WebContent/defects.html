@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/global.js"></script>
+		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+		<link href="css/theme/currentTheme/projectData.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/EquipmentTab.js"></script>
+		<script type="text/javascript" src="js/EquipmentPage.js"></script>
+		<link href="css/theme/currentTheme/defects.css" type="text/css" rel="stylesheet" />
+		
+		<title>Miller Construction Site</title>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body onload="getProjectEnums();">
+		<div id="header">
+			<div id="backButton"><input type="button" value="Go Back" onclick="document.location.href='homepage.html'"></input></div>
+			<!-- <div id="notificationBox" onclick="document.location.href = 'triggers.html'"><div id="notificationBoxGreen"></div><div id="notificationBoxYellow"></div><div id="notificationBoxRed"></div></div>
+			--></div>
+			
+			
+			
+			
+			<div class="tabs">
+				
+				<ul class="tab-links">
+					<li class="active"><a href="#tab1">Required Information</a></li>					
+				</ul>
+				
+				
+				<div class="tab-content">
+					
+					<div id="projectForm" >		
+					
+									<div id="tab1" class="tab active">
+									<fieldset id='Equipment'>
+									
+									
+									<label for="searchEqp">Search Field:</label>
+									<input id="searchEqp" type="text" )></input>
+									
+									
+									<div class = equipmenttt>
+									<a id = "simulate2" href = "#tab2" rel = "tab2" > Create New Equipment </a>
+									</div>
+									<div class = equipmentt>
+									<a id = "simulate" href = "#tab2" rel = "tab2"> Edit Existing Equipment </a>
+									</div>
+									
+									
+									<table id="myTable" >
+										<tr>
+											<th><b>selection ID</b></th>
+											<th><b>Number</b></th>  
+											<th><b>Project</b></th> 
+											<th><b>PO#</b></th> 
+											<th><b>Equipment Name</b></th> 
+											<th><b>Vendor</b></th> 
+											<th><b>Component</b></th> 
+											<th><b>Estimated Delivery Date</b></th> 
+										</tr>			
+										
+									
+									</table>
+
+									</fieldset>
+								</div>
+						
+			<!-- 			
+						<div id="tab2" class="tab">
+							<fieldset id='Equipment'>
+								<div id="contentBox">
+									
+									<div class = backToEquipment>
+									<a href = "#tab1" rel = "tab1"> Back To Equipment </a>
+									</div>
+									
+									<div id= "info">
+										<p> Defect #5555 <p>
+											<label for="equipName">Equipment Name:</label>
+											<input id="equipName" type="text" ></input></br>
+											<p> Status: OPEN </p>
+										</div>
+										
+										
+										<br></br>
+										<div id= "detail">
+											<br></br>
+											
+											
+											
+											<label for="vendor">Vendor:</label>
+											<select id="vendor"><option value="default">--Please select an option--</option></select></br></br>
+											
+											<label for="projecteq">Project:</label>
+											<select id="projecteq"><option value="default">--Please select an option--</option></select></br></br>
+											
+											<label for="po">PO#:</label>
+											<input id="po" type="text" ></input></br></br>
+											
+											<label for="enteredBy">Entered By:</label>
+											<select id="enteredBy"><option value="default">--Please select an option--</option></select></br></br>
+											
+											<label for="estimatedDeliveryDate">Estimated Delivery Date:</label>
+											<input id="estimatedDeliveryDate" type="text"></input></br></br>
+											
+											<label for="component">Component:</label>
+											<select id="component"><option value="default">--Please select an option--</option></select></br></br>
+											
+											<label for="severity">Severity:</label>
+											<input id="severity" type="text"></input></br></br>
+											
+											<label for="vendorDate">Vendor Date:</label>
+											<input id="vendorDate" type="text"></input></br></br>
+											
+											
+											
+											<p>Notes:</p>
+											<textarea name="noteseq" id="noteseq" rows="6" cols="80" style="right:-120px; position:relative; width: 60%;" >Notes </textarea>
+											
+											<br></br>
+											
+											
+										
+										</div>
+									<div class = applyChanges>
+									<a id = "applyChanges" href = "#tab6" rel = "tab6"> Submit and Apply Changes </a>
+									</div>
+									
+									</div>
+									</fieldset>
+								</div>
+								
+
+						-->				
+									</div>
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									<div id="saveConfirm" title="Project has been saved" style="display:none">
+										<p>
+											The project has been successfully saved. What would you like to do?
+										</p>
+									</div>
+									<input type="button" value="Click here to save the Project" onclick="addProject()" />
+									
+									
+								</div>
+							</div>
+							
+							
+							
+						</div>
+						
+						
+						<div id="footer"></div>
+					</body>
+				</html>
+						

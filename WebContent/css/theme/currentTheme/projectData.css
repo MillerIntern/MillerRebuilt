@@ -1,0 +1,104 @@
+@CHARSET "ISO-8859-1";
+
+#projectForm fieldset
+{
+    max-width: 100%;
+    /* To see the outline of the form */
+    padding: 1em;
+    border: 1px solid black;
+    border-radius: 1em;
+    background: white;
+}
+
+#projectForm fieldset select, textarea
+{
+    margin-bottom: 0%;
+	width: 250px;
+}
+
+.pair
+{
+    white-space: wrap;
+    overflow: hidden
+    line-height: .5em;
+}
+
+label
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+	display: inline-block;
+	width: 180px;
+	text-align: left;
+    margin-top: 3%;
+    margin-right: 4%
+}
+
+legend
+{
+	color: white;
+    font-family: 'Raleway',sans-serif;
+    font-style: italic;
+    font-size: 20px; font-weight: 400; 
+    background: #494949;
+    border: solid 2px #3A3A3A;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+select, input, textarea
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px;
+}
+
+
+#projectForm fieldset label, select, input
+{
+	vertical-align: middle;
+}
+
+input:focus, textarea:focus{
+    /* To give a little highlight on active elements */
+    border-color: #000;
+}
+
+.add
+{
+	vertical-align: left;
+}
+
+#contractItemDialog *
+{
+	margin-bottom: 10px;
+}
+
+.equipmenttt
+{
+	position: relative;
+	float:left;
+	margin-left:10%;
+	border-style:solid;
+	padding:7px;
+	border-width: 2px;
+}
+
+.equipmentt
+{
+	position: relative;
+	float:left;
+	margin-left:12%;
+	border-style:solid;
+	padding:7px;
+	border-width: 2px;
+	
+	
+}
+
+button
+{
+    margin-top: 20%;
+    font-size: 18px;
+    padding: 14px 12px;
+}
+

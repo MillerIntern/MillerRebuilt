@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery.dropDownPlain.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/trigger.js"></script>
+	<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+	<link href="css/theme/currentTheme/triggers.css" type="text/css" rel="stylesheet" />
+	<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+	
+		<link href="css/theme/currentTheme/menu.css" type="text/css" rel="stylesheet" />
+	<link href="css/theme/currentTheme/globalMenu.css" type="text/css" rel="stylesheet" />
+	<title>Trigger Page</title>
+	<meta charset="UTF-8" />
+</head>
+	
+<body onload="getTriggers()">
+    <div class="header">
+        <p class="title">Triggers</p>
+    </div>
+
+    <br>
+    <ul>
+        <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+        <li class="dropdown">
+            <a class="dropbtn">Projects</a>
+            <div class="dropdown-content">
+                <a onClick="document.location.href='projectData.html'">Add</a>
+                <a onClick="document.location.href='editSelect.html'">Edit</a>
+            </div>
+        </li>
+        <li><a class="active" onClick="document.location.href='triggers.html'">Triggers</a></li>
+        <li><a onClick="document.location.href='query.html'">Reports</a></li>
+        <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+    </ul>
+	
+	
+	
+		<div class="dataDisplay" id="dataBox"></div>
+	    <div id="projectConfirmation" title="Confirm Project" style="display:hidden;"></div>
+	    <div class="contentHeader"><h2>Construction Project Notifications:</h2></div>
+
+	<table id="menuTable">
+		<tr id="menuTab">
+		<td id="infoSel" onclick="clickPane(this.id)">
+		<div class="category" id="info">
+			<h2 class="categoryContent" onclick="clickPane(this.id)">Info</h2>
+		</div>
+		</td>
+		</tr>
+		<tr id="menuTab">
+		<td id="warningSel" onclick="clickPane(this.id)">
+		<div class="category" id="warning">
+			<h2  class="categoryContent" >Warning</h2>
+		</div>
+		</td>
+		</tr>
+		<tr id="menuTab">
+		<td id="severeSel" onclick="clickPane(this.id)">
+		<div class="category" id="severe">
+			<h2 class="categoryContent">Severe</h2>
+		</div>
+		</td>
+		</tr>
+	</table>
+	
+
+
+
+</body>
+</html>

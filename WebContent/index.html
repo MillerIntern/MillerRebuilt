@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<div>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js" ></script>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+<link href="css/theme/currentTheme/index.css" type="text/css" rel="stylesheet" />
+<title>Login</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<div class="title">
+  <p>Login</p>
+</div>
+    
+<div id="login">
+  <p id="notification"> </p>
+  <p>
+    <label for="username">Username:</label>
+    <br>
+    <input type="text" id="username"/>
+  </p>
+  <p>
+    <label for="password">Password:</label>
+    <br>
+    <input type="password" id="password"/>
+  </p>
+  <div id="buttonWrapper">
+    <input id="loginButton" type="button" onclick="login()" value="Log in"/>
+  </div>
+</div>
+</body>
+</html>
+</div>
