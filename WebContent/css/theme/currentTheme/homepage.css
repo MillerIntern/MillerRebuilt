@@ -2,12 +2,16 @@
 
 .buttonHolder
 {
-    margin-left: 28%;
+    margin: auto;
+    width: 60%;
+    padding: 10px;
 }
 
 .buttonHolder2
 {
-    margin-left:39%;
+    margin: auto;
+    width: 35%;
+    padding: 10px;
 }
 
 .bottomButton

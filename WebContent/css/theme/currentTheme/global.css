@@ -103,8 +103,8 @@ body{
 .header
 {
     margin-top: 4%;
+    margin-left: -10%;
     text-align: center;
-
 }
 
 
@@ -193,7 +193,7 @@ li.dropdown
 
 }
 
-.dropdown-content a 
+.dropdown-content .dropdown-content-sideways a 
 {
     color: white;
     font-size: 18px;
@@ -201,11 +201,29 @@ li.dropdown
     text-decoration: none;
     display: block;
     text-align: left;
+    
 }
 
 .dropdown:hover .dropdown-content 
 {
-    display: block;
+    display: block;    
+}
+
+.dropdown-content-sideways
+{
+    display:none;
+    position: absolute;
+    background-color: #6A6A6A;
+    min-width: 120px;
+    text-decoration: none;
+    z-index: 1;
+
+}
+
+.dropdown:hover .dropdown-content-sideways
+{
+    display:block;
+    margin-left: 7%;
 }
 
 .active

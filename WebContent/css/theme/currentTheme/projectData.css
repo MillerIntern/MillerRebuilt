@@ -3,6 +3,7 @@
 #projectForm fieldset
 {
     max-width: 100%;
+    margin-bottom: 2%;
     /* To see the outline of the form */
     padding: 1em;
     border: 1px solid black;
@@ -97,8 +98,16 @@ input:focus, textarea:focus{
 
 button
 {
-    margin-top: 20%;
     font-size: 18px;
-    padding: 14px 12px;
+    padding: 12px 12px;
+    background: #999999;
 }
+
+button:hover
+{
+    padding: 12px 12px;
+    background: #DDDDDD;
+}
+
+
 

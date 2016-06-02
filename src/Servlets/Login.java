@@ -38,11 +38,6 @@ public class Login extends HttpServlet
 		String password = req.getParameter("password");
 		String serverResponse = "";
 
-		for(int i = 0; i < 100; i++)
-		{
-			System.out.println("Changes are immediate!");
-		}
-		
 		if (LoginService.Login(username, password))
 		{
 			HttpSession session = req.getSession(true);

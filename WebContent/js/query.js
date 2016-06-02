@@ -40,6 +40,7 @@ const PROJECT_TYPE_RM=3;
 const PROJECT_TYPE_OH=2;
 const PROJECT_TYPE_H=8;
 const PROJECT_TYPE_RX = 9;
+const PROJECT_TYPE_RS = 10;
 
 //PROJECT_STATUSES
 const PROJECT_STATUS_PREPARING_PROPOSAL = 1;
@@ -821,7 +822,6 @@ function checkAll()
 
 function reportCreator(elem)
 {
-
 	switch(elem.value){
 		case 'Active':
 			generateReport($('.reportTypePicker :selected').val()+'_A');
@@ -1074,9 +1074,7 @@ function generateReport(reportType)
 			break;
 	
 		case ACTIVE_WEEKLY:
-            console.log("Just doing actives");
-			stage.push(2);
-            console.log(stage + " is the stage!!!!")
+			stage.push(ACTIVE_STAGE);
 			title = "Weekly Active Projects";
 			break;
 
@@ -1145,6 +1143,7 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_CW);
+			pType.push(PROJECT_TYPE_RS);
 			break;
 	
 		case ACTIVE_SE:
@@ -1165,6 +1164,7 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_CW);
+
 			break;
 	
 		case PROPOSAL_NE:
@@ -1172,6 +1172,8 @@ function generateReport(reportType)
 			title = "NE Refrigeration Proposals";
 			region.push("NE");
 			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RS);
+
 			break;
 	
 		case ACTIVE_NE:

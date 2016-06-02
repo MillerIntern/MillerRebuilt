@@ -1,12 +1,10 @@
 package services;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,15 +73,27 @@ public class ProjectService extends ProjectObjectService
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 	
 		//Read Max ID from file
-		File file = new File("projectIdCount.txt");
+		File file = new File("C:\\TestEnvironment\\projectIdCount.txt");
 		Integer maxId = 0;
-		for (String line : Files.readAllLines(Paths.get(file.getAbsolutePath()), StandardCharsets.ISO_8859_1)) {
-			System.out.println("path:" +Paths.get(file.getAbsolutePath()));
-		   maxId = Integer.valueOf(line) + 1;
-		   
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader(file));
+		 
+			String line = null;
+			while ((line = br.readLine()) != null) {
+		
+				maxId = Integer.parseInt(line)+1;
+			}
+			br.close();
 		}
+		catch(Exception e)
+		{
+			System.out.println("Hah, I havent broken yet!");
+		}
+
+		
 			Long maxID = (long) maxId;	
-			System.out.println("Current ID" + maxID);
+			System.out.println("Current ID: " + maxID);
 		//Get REQUIRED project data
 		Warehouse warehouse = (Warehouse) ProjectObjectService.get(warehouseID, "Warehouse");
 		Person manager = (Person) ProjectObjectService.get(new Long(managerID), "Person");

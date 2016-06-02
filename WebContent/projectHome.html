@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/projectData.js"></script>
+    <script type="text/javascript" src="js/projectHome.js"></script>
+
+    <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/projectHome.css" type="text/css" rel="stylesheet" />
+
+    <!--<link href = "css/theme/currentTheme/tabContent1.css" type = "text/css" rel="stylesheet" />-->
+
+    <title>Miller Construction Site</title>
+    <meta charset="UTF-8">
+</head>
+
+<body onload="getProjectEnums();">
+    <div class="header">
+        <p class="title">Project Home</p>
+        <p class="subtitle">Create, Edit, and Manage</p>
+    </div>
+
+    <ul>
+        <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+        <li><a onClick="document.location.href='#'">New Project</a></li>
+        <li><a onClick="document.location.href='#'">Find Project</a></li>
+        <li><a onClick="addProject()">Save Project</a></li>
+        <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+    </ul>
+    
+    <br>
+    
+    <div class="container">
+
+        <ul class="tabs">
+            <li class="tab-link current" data-tab="tab-1">General Info</li>
+            <li class="tab-link" data-tab="tab-2">Additional Info</li>
+            <li class="tab-link" data-tab="tab-3">Permits</li>
+            <li class="tab-link" data-tab="tab-4">Inspections</li>
+            <li class="tab-link" data-tab="tab-5">Equipment</li>
+            <li class="tab-link" data-tab="tab-6">Closeout</li>
+
+
+        </ul>
+
+        <div id="tab-1" class="tab-content current">
+            <div class="pair">
+                <label for="mcsNumber">MCS Project#:</label>
+                <input id="mcsNumber" type="text">
+            </div>
+
+            <div class="pair">
+                <label for="warehouse">Warehouse:</label>
+                <select id="warehouse">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="class">Project Classification:</label>
+                <select id="class">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="project">Project:</label>
+                <select id="project">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+
+            <div class="pair">
+                <label for="manager">Project Manager:</label>
+                <select id="manager">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="supervisor">Supervisor:</label>
+                <select id="supervisor">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="stage">Project Stage:</label>
+                <select id="stage">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="status">Project Status:</label>
+                <select id="status">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="pType">Project Type:</label>
+                <select id="pType">
+                    <option value="default">--Please select an option--</option>
+                </select>
+            </div>
+
+            <div class="pair">
+                <label for="scope">Project Scope:</label>
+                <textarea type="textarea" id="scope"></textarea>
+                </br>
+            </div>
+        </div>
+    </div>
+    <div id="tab-2" class="tab-content">
+        Additional Info
+    </div>
+    <div id="tab-3" class="tab-content">
+        Permit Info
+    </div>
+    <div id="tab-4" class="tab-content">
+        Inspections
+    </div>
+    <div id="tab-5" class="tab-content">
+        Equipment Stuffs
+    </div>
+    <div id="tab-6" class="tab-content">
+
+        Closeout info
+
+    </div>
+
+    </div>
+    <!-- container -->
+
+
+<div id="footer">
+</div>
+</body>
+</html>

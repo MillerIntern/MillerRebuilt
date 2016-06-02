@@ -77,8 +77,7 @@ $(document).ready(function()
 	$("#equipmentSubCL").datepicker();
 	$("#traneCL").datepicker();
 
-	PAGETYPE = getParameterByName("type");
-	
+	PAGETYPE = getParameterByName("type");	
 });
 
 //WILL HANDLE WHEN CHANGE ORDERS/CONTRACT ITEMS ARE FULLY IMPLEMENTED

@@ -11,7 +11,7 @@
     /* Clearfix */
 .tab-links:after
 {
-	display:block;
+	display:inline-block;
 	clear:both;
 	content:'';
 	float:left;
@@ -21,33 +21,25 @@
  
 .tab-links  
 { 
-	transition:all linear 0.15s;
-	display:inline-block;
-	float:left; 
-	width:16%;
-    max-width: 120px;
-	border-style:solid;		
-	border-width: medium;
+    display:inline-block;
+    float:left;
+    width: 10%;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
     background: #444444;
+    margin-bottom: 1%;
+
 }
- 
- .tab-links input
-{
-	margin-top:10%;
-	font-size:.78em;
-           
-}
+
 .tab-links a
 {
     font-family: 'Raleway',sans-serif;
-    font-size: 20px; font-weight: 350; 
-    padding: 14px 16px;
+    font-size: 24px; 
+    padding: 14px 12px;
     font-size: 18px;
     border: 0;
+    min-width: 120px;
     max-width: 120px;
-    min-width: 100px;
-    border-bottom: solid 2px black;
-
 }
 
  
@@ -76,7 +68,7 @@
 
 .tab.active 
 {
-    display:block;
+    display:inline;
 }
         
         
