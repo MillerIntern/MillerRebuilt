@@ -1,38 +1,28 @@
 @CHARSET "ISO-8859-1";
 
-.buttonHolder
+.center 
 {
     margin: auto;
-    width: 60%;
-    padding: 10px;
-}
-
-.buttonHolder2
-{
-    margin: auto;
-    width: 35%;
-    padding: 10px;
-}
-
-.bottomButton
-{
-    position: relative;
+    height: 100px;
+	margin: 10px;
+    text-align:center;
+    position:relative;
 }
 
 .button
 {
-  border-radius: 4px;
-  background-color: #800000;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 220px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 20px;
-  white-space: nowrap;
+    border-radius: 16px;
+    background-color: #800000;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 220px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 20px;
+    white-space: nowrap;
     -webkit-box-shadow: 10px 10px 0px -6 rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 0px -6px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 0px -3px rgba(0,0,0,0.75);
@@ -40,31 +30,29 @@
 
 .button span 
 {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
 .button span:after
 {
-  content: '»';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-
-
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
 }
 
-.button:hover span {
-  padding-right: 25px;
-    
+.button:hover span 
+{
+    padding-right: 25px;    
 }
 
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-    
+.button:hover span:after 
+{
+    opacity: 1;
+    right: 0;   
 }

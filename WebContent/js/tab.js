@@ -1,36 +1,36 @@
 
-
 // All normal Tabs
 jQuery(document).ready(function() {
     jQuery('.tabs .tab-links a').on('click', function(e)  {
         var currentAttrValue = jQuery(this).attr('href');
- 
+        
         // Show/Hide Tabs
         jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
  
         // Change/remove current tab to active
         jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
         
-        jQuery(this).parent('li').siblings().children('div.dropdown-content').children('a').removeClass('active');
+        jQuery(this).parent('li').siblings().children('div.dropdown-content-sideways').children('a').removeClass('active');
         
         e.preventDefault();
     });
 });
 
-// Dropdown tabs
+//All normal Tabs
 jQuery(document).ready(function() {
-    jQuery('.tabs .tab-links .dropdown-content a').on('click', function(e)  {
-
+    jQuery('.tabs .tab-links .dropdown-content-sideways a').on('click', function(e)  {
         var currentAttrValue = jQuery(this).attr('href');
- 
+        
         // Show/Hide Tabs
         jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
  
         // Change/remove current tab to active
-        jQuery(this).addClass('active').parent('div').parent('li').siblings().removeClass('active');
+        jQuery(this).addClass('active').siblings().removeClass('active');
         
-        jQuery(this).siblings().removeClass('active');
- 
+       jQuery(this).parent('div').parent('li').siblings().removeClass('active');
+       jQuery(this).parent('div').parent('li').siblings().children('div.dropdown-content-sideways').children('a').removeClass('active');
+       
+       
         e.preventDefault();
     });
 });

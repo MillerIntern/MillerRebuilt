@@ -12,24 +12,12 @@
 #queryForm
 {
     width:70%;
-    margin-left:15%	
+    margin-left:10%	
 }
 
 #queryForm fieldset select, input, textarea
 {
 	margin-top: 2px;
-}
-
-#queryForm fieldset textarea
-{
-	width: 250px;
-	bottom: -51px;
-	
-}
-
-.drop
-{
-	width: 250px;	
 }
 
 label
@@ -39,7 +27,7 @@ label
 	text-align: left;
     font-family: 'Raleway',sans-serif;
     font-size: 18px; 
-    line-height: 1.5em;
+    line-height: 2em;
 }
 
 legend
@@ -63,18 +51,8 @@ select, input
 button
 {   
     margin-top: 2%;
-    margin-left: 30%;
+    margin-left: 1%;
     font-family: 'Raleway',sans-serif;
     font-size: 18px;
     padding: 4px 8px;
-}
-
-#queryForm fieldset label, select, input
-{
-	vertical-align: middle;
-}
-
-.dateDrop
-{
-	width: 100px;
 }
