@@ -90,6 +90,11 @@
     padding: 0px 0px;
 }
 
+.dropdown-content-sideways a:last-child
+{
+	border-bottom: none;
+}
+
 .dropdown:hover .dropdown-content-sideways
 {
     display: block;  

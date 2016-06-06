@@ -13,8 +13,9 @@
 		<script type="text/javascript" src="js/tab.js"></script>
         
         
-        <!-- Probably delete this line -->
+        <!-- Don't delete this line (it reads functions from this file) -->
 		<script type="text/javascript" src="js/equipment.js"></script>
+		<!--  Eventually delete it because it feels very band-aided on -->
 		
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
@@ -49,7 +50,7 @@
         <a class="dropbtn">More Information</a>
         <div class="dropdown-content-sideways">
         <a href="#tab2">Scheduling</a>
-        <a style="border-bottom:none" href="#tab2b">Financial</a>
+        <a href="#tab2b">Financial</a>
         </div>
     </li>
     <li><a href="#tab4">Permits</a></li>
@@ -59,7 +60,7 @@
         <a href="#tab3">General Inspections</a>
         <a href="#tab3b">Rough-In Inspections</a>
         <a href="#tab3c">Final Inspections</a>
-        <a style="border-bottom:none" href="#tab3d">Safety Inspections</a>
+        <a href="#tab3d">Safety Inspections</a>
     </div>
     </li>
     <li><a href="#tab6">Equipment</a></li>
@@ -71,7 +72,7 @@
             <a href="#tab7b">Final Liens</a>
             <a href="#tab7c">Warranty Letters</a>
             <a href="#tab7d">Closeout Documents</a>
-            <a style="border-bottom:none" href="#tab7e">MCS Review</a>
+            <a href="#tab7e">MCS Review</a>
         </div>
     </li>
 
@@ -356,8 +357,8 @@
     </fieldset>
 </div>
 			
-<!--######### Actual garbage ############# 
-<div id="tab5" class="tab">
+<!--######### Actual basically garbage ############# -->
+<!-- <div id="tab5" class="tab">
 <div id="dialog-window">
     <fieldset id='Equipment'>
         <div id="contentBox">
@@ -456,7 +457,7 @@
 <div id="tab6" class="tab">
 <div id="dialog-window">
     <fieldset id='Equipment'>
-        <Legend>Coming Back Soon!</Legend>
+        <Legend>Coming Back Eventually!</Legend>
     </fieldset>
 </div>
 </div>    
@@ -470,7 +471,8 @@
 
             <div class="pair">
             <label for="buildingPermitCL">Building Permit:</label>
-            <input id="buildingPermitCL" type="text"></input></div>
+            <input id="buildingPermitCL" type="text"></input>
+            </div>
 
             <div class="pair">
             <label for="inspectionSOCL">Inspection Sign offs:</label>
@@ -549,10 +551,15 @@
 <div id="dialog-window">
     <fieldset id='CloseOutList'>
         <Legend>Closeout Project Items:</Legend>
-        
-            <div class="pair">
+        	
+        	<div class="pair">
             <label for="copSubmitted">COP's Submitted to MG2:</label>
-            <input type="text" id="copSubmitted" /></div>
+			<select class="closeout-input" id="copSubmittedStatus">
+            	<option value="default">--Status--</option>
+           	</select>
+           	<input class="closeout-input" type = "text" id ="copSubmitted"/>
+            <input class="closeout-input" type="text" id="copSubmittedNotes" />
+            </div>
         
             <div class="pair">
             <label for="copApproved">COP's Approved by MG2:</label>

@@ -351,9 +351,8 @@ public class ProjectService extends ProjectObjectService
 		
 //---------------------------------------------Receiving ARRAYS ------------------------------------------------------------
 		
-		//If their was any added equipments
+		//If there were any added equipments
 		String[] equipToAdd = getGSONArray(req, "newEquip");
-
 
 		if(equipToAdd.length!=0)
 		{

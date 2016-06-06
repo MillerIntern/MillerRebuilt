@@ -51,7 +51,7 @@ public class Project extends HttpServlet
 		else if (action.equals("getEditQueryObjects"))
 		{
 			System.out.println("qenum");
-			response = ps.getEditEnumsAsJSON();
+			response = ProjectService.getEditEnumsAsJSON();
 		}
 		else if (action.equals("getProjectToEdit"))
 		{
