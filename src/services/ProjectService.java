@@ -1157,8 +1157,7 @@ public class ProjectService extends ProjectObjectService
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
-		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
-	
+		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));	
 		
 		//Turn the hashmap into a JSON array and return it
 		return g.toJson(map);

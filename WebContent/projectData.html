@@ -7,9 +7,10 @@
 		<script type="text/javascript" src="js/global.js"></script>
 		<script type="text/javascript" src="js/projectData.js"></script>
 		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
-		<link href="css/theme/currentTheme/projectData.css" type="text/css" rel="stylesheet" />
         
 		<link href = "css/theme/currentTheme/tabContent.css" type = "text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/projectData.css" type="text/css" rel="stylesheet" />
+
 		<script type="text/javascript" src="js/tab.js"></script>
         
         
@@ -59,7 +60,6 @@
     <div class="dropdown-content-sideways">
         <a href="#tab3">General Inspections</a>
         <a href="#tab3b">Rough-In Inspections</a>
-        <a href="#tab3c">Final Inspections</a>
         <a href="#tab3d">Safety Inspections</a>
     </div>
     </li>
@@ -70,6 +70,7 @@
             <a href="#tab7">Current Listing</a>
             <a href="#tab7a">Project Items</a>
             <a href="#tab7b">Final Liens</a>
+            <a href="#tab3c">Final Inspections</a>
             <a href="#tab7c">Warranty Letters</a>
             <a href="#tab7d">Closeout Documents</a>
             <a href="#tab7e">MCS Review</a>
@@ -249,6 +250,15 @@
         <label for="mechlightsmoke">Mechanical, Light and Smoke Inspection Date:</label>
         <input type="text" id="mechlightsmokeDate"></div>
 
+        <div class="pair">
+            <label for="tmpCertificateDate">Temp Certificate of Occupancy:</label>
+            <select class="closeout-input" id="tmpCertificateStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="tmpCertificateDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="tmpCertificateNotes"> </textarea><br>
+        
     </fieldset>
 </div>
 </div>
@@ -265,44 +275,20 @@
         <input type="text" id="roughmechDate"></div>
 
         <div class="pair">
-        <label for="roughelec">Rough-In Electric Inspection Date:</label>
+        <label for="roughelecDate">Rough-In Electric Inspection Date:</label>
         <input type="text" id="roughelecDate"></div>
 
         <div class="pair">
-        <label for="roughplumb">Rough-In Plumbing Inspection Date:</label>
+        <label for="roughplumbDate">Rough-In Plumbing Inspection Date:</label>
         <input type="text" id="roughplumbDate"></div>
 
     </fieldset>
 </div>
 </div>
     
-<!-- ##### TAB 3c ##### --> 		
-<div id="tab3c" class="tab">
-<div id="dialog-window">
-    <fieldset id='Inspection'>
-        <legend>Final Inspection Information:</legend>
-        
-        <div class="pair">
-        <label for="buildfinal">Building Final Inspection Date:</label>
-        <input type="text" id="buildfinalDate"></div>
-        
-        <div class="pair">
-        <label for="mechfinal">Mechanical Final Inspection Date:</label>
-        <input type="text" id="mechfinalDate"></div>
 
-        <div class="pair">
-        <label for="elecfinal">Electrical Final Inspecion Date:</label>
-        <input type="text" id="elecfinalDate"></div>
-
-        <div class="pair">
-        <label for="plumbfinal">Plumbing Final Inspection Date:</label>
-        <input type="text" id="plumbfinalDate"></div>
-
-    </fieldset>
-</div>
-</div>
     
-<!-- ##### TAB 3 ##### --> 		
+<!-- ##### TAB 3d ##### --> 		
 <div id="tab3d" class="tab">
 <div id="dialog-window">
     <fieldset id='Inspection'>
@@ -552,54 +538,68 @@
     <fieldset id='CloseOutList'>
         <Legend>Closeout Project Items:</Legend>
         	
-        	<div class="pair">
-            <label for="copSubmitted">COP's Submitted to MG2:</label>
-			<select class="closeout-input" id="copSubmittedStatus">
-            	<option value="default">--Status--</option>
-           	</select>
-           	<input class="closeout-input" type = "text" id ="copSubmitted"/>
-            <input class="closeout-input" type="text" id="copSubmittedNotes" />
+            <div class="pair">
+                <label for="copSubmittedDate">COP's Submitted:</label>
+                <select class="closeout-input" id="copSubmittedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="copSubmittedDate"/>
             </div>
+            <textarea class="closeout-textarea" type="text" id="copSubmittedNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="copApproved">COP's Approved by MG2:</label>
-            <input type="text" id="copApproved" /></div>
+                <label for="copApprovedDate">COP's Approved:</label>
+                <select class="closeout-input" id="copApprovedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="copApprovedDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="copApprovedNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="copCompleted">COP's Completed:</label>
-            <input type="text" id="copCompleted" /></div>
+                <label for="copCompletedDate">COP's Completed:</label>
+                <select class="closeout-input" id="copCompletedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+            <input type="text" id="copCompletedDate" /></div>
+            <textarea class="closeout-textarea" type="text" id="copCompletedNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="changeOrderSubmitted">Change Orders Submitted to MG2:</label>
-            <input type="text" id="changeOrderSubmitted" /></div>
+                <label for="changeOrderSubmittedDate">Change Orders Submitted to MG2:</label>
+                <select class="closeout-input" id="changeOrderSubmittedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="changeOrderSubmittedDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="changeOrderSubmittedNotes"> </textarea><br><br><br>
         
+            
             <div class="pair">
-            <label for="changeOrderApproved">Change Orders Approved by MG2:</label>
-            <input type="text" id="changeOrderApproved" /></div>
+                <label for="changeOrderApprovedDate">Change Orders Approved by MG2:</label>
+                <select class="closeout-input" id="changeOrderApprovedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="changeOrderApprovedDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="changeOrderApprovedNotes"> </textarea><br><br><br>
                                
             <div class="pair">
-            <label for="revisionsSubmittedRefrig">Revisions Submitted (Refrigeration):</label>
-            <input type="text" id="revisionsSubmittedRefrig" /></div>
+                <label for="revisionsSubmittedDate">Revisions Submitted:</label>
+                <select class="closeout-input" id="revisionsSubmittedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="revisionsSubmittedDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="revisionsSubmittedNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="revisionsApprovedRefrig">Revisions Approved (Refrigeration):</label>
-            <input type="text" id="revisionsApprovedRefrig" /></div>
-        
-            <div class="pair">
-            <label for="revisionsSubmittedWar">Revisions Submitted (Warehouse):</label>
-            <input type="text" id="revisionsSubmittedWar" /></div>
-        
-            <div class="pair">
-            <label for="revisionsApprovedWar">Revisions Approved (Warehouse):</label>
-            <input type="text" id="revisionsApprovedWar" /></div>
-        
-            <div class="pair">
-            <label for="revisionsSubmittedFac">Revisions Submitted (Facilities):</label>
-            <input type="text" id="revisionsSubmittedFac" /></div>
-        
-            <div class="pair">
-            <label for="revisionsApprovedFac">Revisions Approved (Facilities):</label>
-            <input type="text" id="revisionsApprovedFac" /></div>
+                <label for="revisionsApprovedDate">Revisions Approved:</label>
+                <select class="closeout-input" id="revisionsApprovedStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="revisionsApprovedDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="revisionsApprovedNotes"> </textarea><br>
     </fieldset>
 </div>
 </div> 
@@ -611,39 +611,151 @@
         <Legend>Closeout Final Liens:</Legend>
         
             <div class="pair">
-            <label for="mcs">MCS:</label>
-            <input type="text" id="mcs" /></div>
+                <label for="MCSDate">MCS:</label>
+                <select class="closeout-input" id="MCSStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="MCSDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="MCSNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="gc">GC:</label>
-            <input type="text" id="gc" /></div>
+                <label for="GCSDate">GC:</label>
+                <select class="closeout-input" id="GCStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="GCSDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="GCSNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="mechanical">Mechanical:</label>
-            <input type="text" id="mechanical" /></div>
+                <label for="mechanicalDate">Mechanical:</label>
+                <select class="closeout-input" id="mechanicalStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="mechanicalDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="mechanicalNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="electrical">Electrical:</label>
-            <input type="text" id="electrical" /></div>
+                <label for="electricalDate">Eletrical:</label>
+                <select class="closeout-input" id="electricalStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="electricalDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="electricalNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="plumbing">Plumbing:</label>
-            <input type="text" id="plumbing" /></div>
+                <label for="plumbingDate">Plumbing:</label>
+                <select class="closeout-input" id="plumbingStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="plumbingDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="plumbingNotes"> </textarea><br><br><br>
                                
             <div class="pair">
-            <label for="sprinkleFire">Sprinkler/Fire:</label>
-            <input type="text" id="sprinkleFire" /></div>
+                <label for="sprinkleDate">Sprinkler:</label>
+                <select class="closeout-input" id="sprinkleStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="sprinkleDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="sprinkleNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="roofing">Roofing:</label>
-            <input type="text" id="roofing" /></div>
+                <label for="roofingDate">Roofing:</label>
+                <select class="closeout-input" id="roofingStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="roofingDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="roofingNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="HTI">HTI:</label>
-            <input type="text" id="HTI" /></div>
-    </fieldset>
+                <label for="HTIDate">HTI:</label>
+                <select class="closeout-input" id="HTIStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="HTIDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="HTINotes"> </textarea><br><br><br>
+        
+            <div class="pair">
+                <label for="otherFinalLiensDate">Other:</label>
+                <select class="closeout-input" id="otherFinalLiensStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="otherFinalLiensDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="otherFinalLiensNotes"> </textarea><br>
 </div>
 </div> 
+    
+<!-- ##### TAB 3c ##### Could be renamed...--> 		
+<div id="tab3c" class="tab">
+<div id="dialog-window">
+    <fieldset id='Inspection'>
+        <legend>Final Inspection Information:</legend>
+        
+        <div class="pair">
+            <label for="mechfinalDate">Mechanical Final Inspection Date:</label>
+            <select class="closeout-input" id="mechfinalStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="mechfinalDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="mechfinalNotes"> </textarea><br><br><br>
+        
+        <div class="pair">
+            <label for="mechfinalDate">Electrical Final Inspection Date:</label>
+            <select class="closeout-input" id="elecfinalStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="elecfinalDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="elecfinalNotes"> </textarea><br><br><br>
+        
+        <div class="pair">
+            <label for="plumbfinalDate">Plumbing Final Inspection Date:</label>
+            <select class="closeout-input" id="plumbfinalStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="plumbfinalDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="plumbfinalNotes"> </textarea><br><br><br>
+        
+        <div class="pair">
+            <label for="sprinklefinalDate">Sprinkler Final Inspection Date:</label>
+            <select class="closeout-input" id="sprinklefinalStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="sprinklefinalDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="sprinklefinalNotes"> </textarea><br><br><br>
+    
+        <div class="pair">
+            <label for="certificateDate">Certificate of Occupancy:</label>
+            <select class="closeout-input" id="certificateStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="certificateDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="certificateNotes"> </textarea><br><br><br>
+        
+        <div class="pair">
+            <label for="buildfinalDate">Building Final Inspection Date:</label>
+            <select class="closeout-input" id="buildfinalStatus">
+                <option value="default">--Status--</option>
+            </select>
+            <input type="text" id="buildfinalDate" />
+        </div>
+        <textarea class="closeout-textarea" type="text" id="buildfinalNotes"> </textarea><br>
+
+    </fieldset>
+</div>
+</div>
 
 <!-- ##### TAB 7C ##### --> 
 <div id="tab7c" class="tab">
@@ -652,36 +764,94 @@
         <Legend>Closeout Warranty Letters:</Legend>
         
             <div class="pair">
-            <label for="mcsWarranty">MCS:</label>
-            <input type="text" id="mcsWarranty" /></div>
+                <label for="MCSWarrantyDate">MCS:</label>
+                <select class="closeout-input" id="MCSWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="MCSWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="MCSWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="gcWarranty">GC:</label>
-            <input type="text" id="gcWarranty" /></div>
+                <label for="GCWarrantySDate">GC:</label>
+                <select class="closeout-input" id="GCWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="GCWarrantySDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="GCWarrantySNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="mechanicalWarranty">Mechanical:</label>
-            <input type="text" id="mechanicalWarranty" /></div>
+                <label for="mechanicalWarrantyWarrantyDate">Mechanical:</label>
+                <select class="closeout-input" id="mechanicalWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="mechanicalWarrantyWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="mechanicalWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="electricalWarranty">Electrical:</label>
-            <input type="text" id="electricalWarranty" /></div>
+                <label for="electricalWarrantyDate">Eletrical:</label>
+                <select class="closeout-input" id="electricalWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="electricalWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="electricalWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="plumbingWarranty">Plumbing:</label>
-            <input type="text" id="plumbingWarranty" /></div>
+                <label for="plumbingWarrantyDate">Plumbing:</label>
+                <select class="closeout-input" id="plumbingWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="plumbingWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="plumbingWarrantyNotes"> </textarea><br><br><br>
                                
             <div class="pair">
-            <label for="sprinklerWarranty">Sprinkler:</label>
-            <input type="text" id="sprinklerWarranty" /></div>
+                <label for="sprinkleWarrantyDate">Sprinkler:</label>
+                <select class="closeout-input" id="sprinkleWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="sprinkleWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="sprinkleWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="roofingWarranty">Roofing:</label>
-            <input type="text" id="roofingWarranty" /></div>
+                <label for="roofingWarrantyDate">Roofing:</label>
+                <select class="closeout-input" id="roofingWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="roofingWarrantyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="roofingWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="HTIWarranty">HTI:</label>
-            <input type="text" id="HTIWarranty" /></div>
+                <label for="HTIWarrantySDate">HTI:</label>
+                <select class="closeout-input" id="HTIWarrantyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="HTIWarrantySDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="HTIWarrantyNotes"> </textarea><br><br><br>
+        
+            <div class="pair">
+                <label for="otherInspectionsDateA">Other:</label>
+                <select class="closeout-input" id="otherInspectionsStatusA">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="otherInspectionsDateA" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="otherInspectionsNotesA"> </textarea><br><br><br>
+        
+            <div class="pair">
+                <label for="otherInspectionsDateB">Other:</label>
+                <select class="closeout-input" id="otherInspectionsStatusB">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="otherInspectionsDateB" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="otherInspectionsNotesB"> </textarea><br>
     </fieldset>
 </div>
 </div> 
@@ -693,36 +863,85 @@
         <Legend>Closeout Documents (PO/AIA):</Legend>
         
             <div class="pair">
-            <label for="equipmentSubmittal">Equipment Submittal:</label>
-            <input type="text" id="equipmentSubmittal" /></div>
+                <label for="equipmentSubmittalDate">Equipment Submittal:</label>
+                <select class="closeout-input" id="equipmentSubmittalStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="equipmentSubmittalDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="equipmentSubmittalNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="operationManuals">Operations and Maintenance Manuals:</label>
-            <input type="text" id="operationManuals" /></div>
+                <label for="manualDate">Operations and Maintenance Manuals:</label>
+                <select class="closeout-input" id="manualStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="manualDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="manualNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="punchListDev">Punch List:</label>
-            <input type="text" id="punchListDev" /></div>
+                <label for="MCSpunchListDate">MCS Punch List:</label>
+                <select class="closeout-input" id="MCSpunchListStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="MCSpunchListDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="MCSpunchListNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="asBuiltDrawings">As Built Drawings:</label>
-            <input type="text" id="asBuiltDrawings" /></div>
+                <label for="MG2punchListDate">MG2 Punch List:</label>
+                <select class="closeout-input" id="MG2punchListStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="MG2punchListDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="MG2punchListNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="closeOutPhotos">Close Out Photos:</label>
-            <input type="text" id="closeOutPhotos" /></div>
-                               
-            <div class="pair">
-            <label for="HVACstartupForm">HVAC Startup Form:</label>
-            <input type="text" id="HVACstartupForm" /></div>
+                <label for="asBuiltDrawingsDate">As-Built Drawings:</label>
+                <select class="closeout-input" id="asBuiltDrawingsStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="asBuiltDrawingsDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="asBuiltDrawingsNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="alarmForm">Alarm Form:</label>
-            <input type="text" id="alarmForm" /></div>
+                <label for="closeOutPhotosDate">Close Out Photos:</label>
+                <select class="closeout-input" id="closeOutPhotosStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="closeOutPhotosDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="closeOutPhotosNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="verisaeReport">Verisae Report:</label>
-            <input type="text" id="verisaeReport" /></div>
+                <label for="HVACstartupFormDate">HVAC Startup Form:</label>
+                <select class="closeout-input" id="HVACstartupFormStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="HVACstartupFormDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="HVACstartupFormNotes"> </textarea><br><br><br>
+        
+            <div class="pair">
+                <label for="alarmFormDate">Alarm Form:</label>
+                <select class="closeout-input" id="alarmFormStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="alarmFormDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="alarmFormNotes"> </textarea><br><br><br>
+        
+            <div class="pair">
+                <label for="verisaeReportDate">Verisae Report:</label>
+                <select class="closeout-input" id="verisaeReportStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="verisaeReportDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="verisaeReportNotes"> </textarea><br>
     </fieldset>
 </div>
 </div> 
@@ -732,18 +951,41 @@
 <div id="dialog-window">
     <fieldset id='CloseOutList'>
         <Legend>Closeout MCS Review:</Legend>
+            <div class="pair">
+                <label for="bartOrSandyDate">Bart/Sandy:</label>
+                <select class="closeout-input" id="bartOrSandyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="bartOrSandyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="bartOrSandyNotes"> </textarea><br><br><br>
+    
+            <div class="pair">
+                <label for="alexDate">Alex:</label>
+                <select class="closeout-input" id="alexStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="alexDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="alexNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="bartOrSandy">Bart/Sandy:</label>
-            <input type="text" id="bartOrSandy" /></div>
+                <label for="andyDate">Andy:</label>
+                <select class="closeout-input" id="andyStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="andyDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="andyNotes"> </textarea><br><br><br>
         
             <div class="pair">
-            <label for="projectManager">Project Manager:</label>
-            <input type="text" id="projectManager" /></div>
-        
-            <div class="pair">
-            <label for="andyMiller">Andy Miller:</label>
-            <input type="text" id="andyMiller" /></div>
+                <label for="projectManagerDate">Andy:</label>
+                <select class="closeout-input" id="projectManagerStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="projectManagerDate" />
+            </div>
+            <textarea class="closeout-textarea" type="text" id="projectManagerNotes"> </textarea><br><br><br>
         
     </fieldset>
 </div>

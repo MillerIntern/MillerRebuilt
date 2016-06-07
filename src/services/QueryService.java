@@ -70,8 +70,9 @@ public class QueryService
 		{
 			String paramName = iter.next();
 			Disjunction or = Restrictions.disjunction();
-			System.out.println(paramName);
 			System.out.println();
+
+			System.out.println(paramName);
 			String v = pars.get(paramName)[0];
 			System.out.println(v);
 			if (!v.isEmpty() && v != null && !v.equals("none") && !paramName.equals("domain") && !paramName.equals("action") && !paramName.equals("title") && !paramName.equals("projectInitiatedDateRelation")
@@ -132,7 +133,7 @@ public class QueryService
 						if (paramName.contains(".id"))
 						{
 							or.add(Restrictions.eq(paramName, Long.parseLong(dataList.get(i))));
-							System.out.println(dataList.get(i) + "Added to or");
+							System.out.println(dataList.get(i) + " Added to or");
 						}
 						else if (paramName.contains(".region"))
 						{
@@ -176,6 +177,7 @@ public class QueryService
 						}
 						else if (paramName.contains(".region"))
 							criteria.createCriteria("warehouse").add(Restrictions.eqOrIsNull("region",Region.valueOf(dataList.get(i))));
+
 					}
 				}
 				}

@@ -50,9 +50,7 @@ public class Report extends HttpServlet
 	{
 		resp.setContentType("text/html");
 		out = resp.getWriter();
-		
-		System.out.println("I am doing things and stuffs");
-		
+				
 		//Get the list of projects
 		Map<String, String[]> map = req.getParameterMap();
 		List<projectObjects.Project> projects = null;
@@ -349,7 +347,8 @@ public class Report extends HttpServlet
 		else if (value.equals("supervisor") )
 			return getFirstFromSet(p.getSupervisors()).getName();
 		else if (value.equals("manager"))
-			return getFirstFromSet(p.getProjectManagers()).getName();
+			return p.getProjectManagers().getName();
+			//return getFirstFromSet(p.getProjectManagers()).getName();
 		else if (value.equals("region") && p.getWarehouse() != null && p.getWarehouse().getRegion() != null)
 			return p.getWarehouse().getRegion().getRegionName();
 		else if (value.equals("class") && p.getProjectClass() != null)

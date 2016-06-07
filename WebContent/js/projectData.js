@@ -77,6 +77,8 @@ $(document).ready(function()
 	$("#equipmentSubCL").datepicker();
 	$("#traneCL").datepicker();
 
+    $("#copSubmittedDate").datepicker();
+    
 	PAGETYPE = getParameterByName("type");	
 });
 
@@ -685,7 +687,7 @@ function fillForm(data)
     $("#warehouse").val(json.warehouse.id);
 	$("#class").val(json.projectClass.id);
 	$("#project").val(json.projectItem.id);
-	$("#manager").val(json.projectManagers[0].id);
+	$("#manager").val(json.projectManagers.id);
 	$("#supervisor").val(json.supervisors[0].id);
 	$("#status").val(json.status.id);
 	$("#scope").val(json.scope);

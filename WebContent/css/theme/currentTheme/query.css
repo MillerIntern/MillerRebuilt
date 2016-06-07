@@ -124,13 +124,13 @@
 {
     padding: 4px 4px;
     font-family: 'Raleway',sans-serif;
-    font-size: 16px; font-weight: 800; 
+    font-size: 16px; font-weight: 400; 
 }
 
 .reportTitle
 {
     font-family: 'Raleway',sans-serif;
-    font-size: 16px; font-weight: 800; 
+    font-size: 16px; font-weight: 400; 
     margin-top: 2%;
     margin-left: 28%;
     padding: 4px 8px;
@@ -149,7 +149,7 @@ input.leftButton
 select
 {
     font-family: 'Raleway',sans-serif;
-    font-size: 16px; font-weight: 800; 
+    font-size: 16px; font-weight: 400; 
     margin-bottom: 1%;
 }
 

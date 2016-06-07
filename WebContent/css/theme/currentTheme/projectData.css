@@ -65,6 +65,8 @@ select, input, textarea
 }
 
 
+
+
 #projectForm fieldset label, select, input
 {
 	vertical-align: middle;
@@ -128,3 +130,7 @@ button:hover
 	margin-right: 2%;
 }
 
+.closeout-textarea
+{
+    margin-left: 300px;
+}

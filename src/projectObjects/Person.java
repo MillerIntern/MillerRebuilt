@@ -40,4 +40,9 @@ public class Person extends ProjectObject
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String toString()
+	{
+		return "Person Object";
+	}
 }

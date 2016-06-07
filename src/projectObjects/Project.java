@@ -34,7 +34,7 @@ public class Project extends ProjectObject
 	
 	private ProjectItem projectItem;
 
-	private Set<Person> projectManagers;
+	private Person projectManagers;
 	
 	private Set<Person> supervisors;
 
@@ -97,7 +97,7 @@ public class Project extends ProjectObject
 	//private RequestForInfo rfi;
 
 	public Project(Warehouse warehouse, String scope,
-			Set<Person> projectManagers, Set<Person> supervisors,
+			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
 			CloseoutCheckList closeoutCheckList,
@@ -146,7 +146,7 @@ public class Project extends ProjectObject
 		this.warehouse = null;
 		this.scope = null;
 		this.supervisors = new HashSet<Person>();
-		this.projectManagers = new HashSet<Person>();
+		this.projectManagers = null;
 		this.status = null;
 		this.projectInitiatedDate = null;
 		this.siteSurvey = null;
@@ -249,16 +249,16 @@ public class Project extends ProjectObject
 		this.scope = scope;
 	}
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name = "project_managers",
 	      joinColumns = {@JoinColumn(name = "project_id")},
 	      inverseJoinColumns = @JoinColumn(name = "id"))
-	public Set<Person> getProjectManagers() {
+	public Person getProjectManagers() {
 		return projectManagers;
 	}
 
-	public void setProjectManagers(Set<Person> projectManagers) {
+	public void setProjectManagers(Person projectManagers) {
 		this.projectManagers = projectManagers;
 	}
 
@@ -380,13 +380,13 @@ public class Project extends ProjectObject
 	//TODO: A project should have multiple managers, but the GUI does not support this right now.
 	public void addProjectManager(Person p)
 	{
-		if (projectManagers.size() == 0)
+		/*if (projectManagers.size() == 0)
 			projectManagers.add(p);
 		else
 		{
 			projectManagers.clear();
 			projectManagers.add(p);
-		}
+		}*/this.projectManagers = p;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)

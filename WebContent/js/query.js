@@ -1,4 +1,4 @@
-var ITEM_TYPES = ["warehouse", "stage", "item", "class", "type", "region", "status"];
+var ITEM_TYPES = ["warehouse", "stage", "item", "class", "type", "region", "status", "person"];
 var DATE_TYPES = ["initiated", "costcoDueDate", "proposalSubmitted", "scheduledStartDate", "scheduledTurnover", "actualTurnover", "onGoing"];
 var DATE_RELATIONS = ["<", "=", ">"];
 var BOOL_RELATIONS = ["and", "or"];
@@ -17,7 +17,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 		  "proposalSubmitted" : "Proposal Submitted", "type" : "Type", "asBuilts" : "As-Builts", "punchList":"Punch List",
 		  "alarmHvacForm":"Alarm/HVAC Form", "salvageValue" : "Salvage Value", "airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report",
 		  "shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
-		  "cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application"};
+		  "cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", "person": "Project Manager"};
 
 var REPORT_VALS = {"Weekly":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", "Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX"};
@@ -215,6 +215,7 @@ var classOptions;
 var typeOptions;
 var regionOptions;
 var statusOptions;
+var managerOptions;
 
 //Keeps track of what values go with which parameter
 var paramNum = 0;
@@ -238,7 +239,8 @@ function setVals(thisParam)
 {
 	var modParam = $(thisParam).parent().find("select.drop.value");
 	valOptions = $(thisParam).val();
-	if(valOptions == 'warehouse')
+
+    if(valOptions == 'warehouse')
 	{
 		modParam.empty();
 		modParam.append(warehouseOptions.cloneNode(true));
@@ -273,6 +275,12 @@ function setVals(thisParam)
 		modParam.empty();
 		modParam.append(statusOptions.cloneNode(true));
 	}
+    if(valOptions == 'person')
+    {
+		modParam.empty();
+		modParam.append(managerOptions.cloneNode(true));      
+    }
+    
 }
 	
 //Retrives the project enums, called on document ready
@@ -309,7 +317,7 @@ function generateDropdown(str, className)
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
 	var sent=true;
-	
+	    
 	for (var i = 0; i < json.length; i++)
 	{
 		sent=true;
@@ -374,6 +382,10 @@ function generateDropdown(str, className)
 		{
 			statusOptions = d;
 		}
+        if(className == 'person')
+        {
+            managerOptions = d;
+        }
 	
 }
 
@@ -881,8 +893,10 @@ function generateReport(reportType)
 	var onGoingRelation = new Array();
 	var pType = new Array();
 	var stage = new Array();
+    var manager = new Array();
 	var title = undefined;
 	
+    console.log(paramNum);
 	 for(var i = 0; i < paramNum;i++)
 	    {
 	    	var paramType = $('#param'+i).val();
@@ -1027,6 +1041,13 @@ function generateReport(reportType)
 	    				var valType = $('#val'+i).val();
 	    				stage.push(valType);
 					break;
+                    
+                    case 'person':
+                        console.log("here and trying my best....");
+	    				var valType = $('#val'+i).val();
+                        console.log(valType);
+                        manager.push(valType);
+                        
 			}
 	    		
 	    		/*if(paramType == 'region')
@@ -1529,6 +1550,7 @@ function generateReport(reportType)
     			'actualTurnoverRelation':JSON.stringify(actTurnoverDateRelation),
     			'onGoing':JSON.stringify(onGoing),
     			'onGoingRelation':JSON.stringify(onGoingRelation),
+                'projectManagers.id':JSON.stringify(manager),
     			'title':title,
         };
         
