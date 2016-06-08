@@ -77,7 +77,61 @@ $(document).ready(function()
 	$("#equipmentSubCL").datepicker();
 	$("#traneCL").datepicker();
 
+	// New Closeout
+    
+        // Closeout Project Items:
     $("#copSubmittedDate").datepicker();
+    $("#copApprovedDate").datepicker();
+    $("#copCompletedDate").datepicker();
+    $("#changeOrderSubmittedDate").datepicker();
+    $("#changeOrderApprovedDate").datepicker();
+    $("#revisionsSubmittedDate").datepicker();
+    $("#revisionsApprovedDate").datepicker();
+    
+        // Final Liens
+    $("#MCSDate").datepicker();   
+    $("#GCDate").datepicker();
+    $("#mechanicalDate").datepicker();
+    $("#electricalDate").datepicker();
+    $("#plumbingDate").datepicker();
+    $("#sprinkleDate").datepicker();
+    $("#roofingDate").datepicker();
+    $("#HTIDate").datepicker();
+    $("#otherFinalLiensDate").datepicker();
+    
+    	// Final Inspections //Move other fields here from above
+    $("#sprinklefinalDate").datepicker();
+    $("#certificateDate").datepicker();
+    
+        // Warranty Letters
+    $("#MCSWarrantyDate").datepicker();
+    $("#GCWarrantyDate").datepicker();
+    $("#mechanicalWarrantyDate").datepicker();
+    $("#electricalWarrantyDate").datepicker();
+    $("#plumbingWarrantyDate").datepicker();
+    $("#sprinkleWarrantyDate").datepicker();
+    $("#roofingWarrantyDate").datepicker();
+    $("#HTIWarrantyDate").datepicker();
+    $("#otherWarrantyDateA").datepicker();
+    $("#otherWarrantyDateB").datepicker();
+    
+        // Closeout documents
+    $("#equipmentSubmittalDate").datepicker();
+    $("#manualDate").datepicker();
+    $("#MCSpunchListDate").datepicker();
+    $("#MG2punchListDate").datepicker();
+    $("#asBuiltDrawingsDate").datepicker();
+    $("#closeOutPhotosDate").datepicker();
+    $("#HVACstartupFormDate").datepicker();
+    $("#alarmFormDate").datepicker();
+    $("#verisaeReportDate").datepicker();
+    
+        // MCS Review
+    $("#bartOrSandyDate").datepicker();
+    $("#alexDate").datepicker();
+    $("#andyDate").datepicker();
+    $("#projectManagerDate").datepicker();
+    
     
 	PAGETYPE = getParameterByName("type");	
 });
@@ -343,7 +397,7 @@ function addProject()
 	var startDate = $("#startDate").val();;
 	var scheduledTurnover = $("#scheduledTurnover").val();;
 	var actualTurnover = $("#actualTurnover").val();;
-
+    
 
 	var stage = $("#stage").val();
 	var mcsNumber = $("#mcsNumber").val();
@@ -401,6 +455,180 @@ function addProject()
 	var MCSWarranty = $("#MCSWarranty").val();
 	var equipmentSubCL = $("#equipmentSubCL").val();
 	var traneCL = $("#traneCL").val();
+    
+    
+    // NEW CONTENT
+    var copSubmittedStatus = $("#copSubmittedStatus");
+    var copSubmittedDate = $("#copSubmittedDate");
+    var copSubmittedNotes = $("#copSubmittedNotes");
+
+    var copApprovedStatus = $("#copApprovedStatus");
+    var copApprovedDate = $("#copApprovedDate");
+    var copApprovedNotes = $("#copApprovedNotes");
+    
+    var copCompletedStatus = $("#copCompletedStatus");
+    var copCompletedDate = $("#copCompletedDate");
+    var copCompletedNotes = $("#copCompletedNotes");
+
+    var changeOrderSubmittedStatus = $("#changeOrderSubmittedStatus");
+    var changeOrderSubmittedDate = $("#changeOrderSubmittedDate");
+    var changeOrderSubmittedNotes = $("#changeOrderSubmittedNotes");
+    
+    var changeOrderApprovedStatus = $("#changeOrderApprovedStatus");
+    var changeOrderApprovedDate = $("#changeOrderApprovedDate");
+    var changeOrderApprovedNotes = $("#changeOrderApprovedNotes");
+    
+    var revisionsSubmittedStatus = $("#revisionsSubmittedStatus");
+    var revisionsSubmittedDate = $("#revisionsSubmittedDate");
+    var revisionsSubmittedNotes = $("#revisionsSubmittedNotes");
+    
+    var revisionsApprovedStatus = $("#revisionsApprovedStatus");
+    var revisionsApprovedDate = $("#revisionsApprovedDate");
+    var revisionsApprovedNotes = $("#revisionsApprovedNotes");
+    
+        // Final Liens
+    var MCSStatus = $("#MCSStatus"); 
+    var MCSDate = $("#MCSDate"); 
+    var MCSNotes = $("#MCSNotes"); 
+    
+    var GCStatus = $("#GCStatus");
+    var GCDate = $("#GCDate");
+    var GCNotes = $("#GCNotes");
+    
+    var mechanicalStatus = $("#mechanicalStatus");
+    var mechanicalDate = $("#mechanicalDate");
+    var mechanicalNotes = $("#mechanicalNotes");
+    
+    var electricalStatus = $("#electricalStatus");
+    var electricalDate = $("#electricalDate");
+    var electricalNotes = $("#electricalNotes");
+    
+    var plumbingStatus = $("#plumbingStatus");
+    var plumbingDate = $("#plumbingDate");
+    var plumbingNotes = $("#plumbingNotes");
+    
+    var sprinkleStatus = $("#sprinkleStatus");
+    var sprinkleDate = $("#sprinkleDate");
+    var sprinkleNotes = $("#sprinkleNotes");
+    
+    var roofingStatus = $("#roofingStatus");
+    var roofingDate = $("#roofingDate");
+    var roofingNotes = $("#roofingNotes");
+    
+    var HTIStatus = $("#HTIStatus");
+    var HTIDate = $("#HTIDate");
+    var HTINotes = $("#HTINotes");
+    
+    var otherFinalLeinsStatus = $("#otherFinalLiensStatus");
+    var otherFinalLeinsDate = $("#otherFinalLiensDate");
+    var otherFinalLeinsNotes = $("#otherFinalLiensNotes");
+    
+    	// Final Inspections //Move other fields here from above
+    // TODO: Get the fields in for the other final inspections!
+    var sprinkleFinalStatus = $("#sprinklefinalStatus");
+    var sprinkleFinalDate = $("#sprinklefinalDate");
+    var sprinkleFinalNotes = $("#sprinklefinalNotes");
+    
+    var certificateStatus = $("#certificateStatus");
+    var certificateDate = $("#certificateDate");
+    var certificateNotes = $("#certificateNotes");
+    
+        // Warranty Letters
+    var MCSWarrantyStatus = $("#MCSWarrantyStatus");
+    var MCSWarrantyDate = $("#MCSWarrantyDate");
+    var MCSWarrantyNotes = $("#MCSWarrantyNotes");
+    
+    var GCWarrantyStatus = $("#GCWarrantyStatus");
+    var GCWarrantyDate = $("#GCWarrantyDate");
+    var GCWarrantyNotes = $("#GCWarrantyNotes");
+    
+    var mechanicalWarrantyStatus = $("#mechanicalWarrantyStatus");
+    var mechanicalWarrantyDate = $("#mechanicalWarrantyDate");
+    var mechanicalWarrantyNotes = $("#mechanicalWarrantyNotes");
+    
+    var eletricalWarrantyStatus = $("#electricalWarrantyStatus");
+    var eletricalWarrantyDate = $("#electricalWarrantyDate");
+    var eletricalWarrantyNotes = $("#electricalWarrantyNotes");
+    
+    var plumbingWarrantyStatus = $("#plumbingWarrantyStatus");
+    var plumbingWarrantyDate = $("#plumbingWarrantyDate");
+    var plumbingWarrantyNotes = $("#plumbingWarrantyNotes");
+    
+    var sprinkleWarrantyStatus = $("#sprinkleWarrantyStatus");
+    var sprinkleWarrantyDate = $("#sprinkleWarrantyDate");
+    var sprinkleWarrantyNotes = $("#sprinkleWarrantyNotes");
+    
+    var roofingWarrantyStatus = $("#roofingWarrantyStatus");
+    var roofingWarrantyDate = $("#roofingWarrantyDate");
+    var roofingWarrantyNotes = $("#roofingWarrantyNotes");
+    
+    var HTIWarrantyStatus = $("#HTIWarrantyStatus");
+    var HTIWarrantyDate = $("#HTIWarrantyDate");
+    var HTIWarrantyNotes = $("#HTIWarrantyNotes");
+    
+    var otherWarrantyStatusA = $("#otherWarrantyStatusA");
+    var otherWarrantyDateA = $("#otherWarrantyDateA");
+    var otherWarrantyNotesA = $("#otherWarrantyNotesA");
+    
+    var otherWarrantyStatusB = $("#otherWarrantyStatusB");
+    var otherWarrantyDateB = $("#otherWarrantyDateB");
+    var otherWarrantyNotesB = $("#otherWarrantyNotesB");
+    
+        // Closeout documents
+    var equipmentSubmittalStatus = $("#equipmentSubmittalStatus");
+    var equipmentSubmittalDate = $("#equipmentSubmittalDate");
+    var equipmentSubmittalNotes = $("#equipmentSubmittalNotes");
+    
+    var manualStatus = $("#manualStatus");
+    var manualDate = $("#manualDate");
+    var manualNotes = $("#manualNotes");
+    
+    var MCSpunchListStatus = $("#MCSpunchListStatus");
+    var MCSpunchListDate = $("#MCSpunchListDate");
+    var MCSpunchListNotes = $("#MCSpunchListNotes");
+    
+    var MG2punchListStatus = $("#MG2punchListStatus");
+    var MG2punchListDate = $("#MG2punchListDate");
+    var MG2punchListNotes = $("#MG2punchListNotes");
+    
+    var asBuiltDrawingsStatus = $("#asBuiltDrawingsStatus");
+    var asBuiltDrawingsDate = $("#asBuiltDrawingsDate");
+    var asBuiltDrawingsNotes = $("#asBuiltDrawingsNotes");
+    
+    var closeOutPhotosStatus = $("#closeOutPhotosStatus");
+    var closeOutPhotosDate = $("#closeOutPhotosDate");
+    var closeOutPhotosNotes = $("#closeOutPhotosNotes");
+    
+    var HVAVstartupFormStatus = $("#HVACstartupFormStatus");
+    var HVAVstartupFormDate = $("#HVACstartupFormDate");
+    var HVAVstartupFormNotes = $("#HVACstartupFormNotes");
+    
+    var alarmFormStatus = $("#alarmFormStatus");
+    var alarmFormDate = $("#alarmFormDate");
+    var alarmFormNotes = $("#alarmFormNotes");
+    
+    var verisaeReportStatus = $("#verisaeReportStatus");
+    var verisaeReportDate = $("#verisaeReportDate");
+    var verisaeReportNotes = $("#verisaeReportNotes");
+    
+        // MCS Review
+    var bartOrSandyStatus = $("#bartOrSandyStatus");
+    var bartOrSandyDate = $("#bartOrSandyDate");
+    var bartOrSandyNotes = $("#bartOrSandyNotes");
+    
+    var alexStatus = $("#alexStatus");
+    var alexDate = $("#alexDate");
+    var alexNotes = $("#alexNotes");
+    
+    var andyStatus = $("#andyStatus");
+    var andyDate = $("#andyDate");
+    var andyNotes = $("#andyNotes");
+    
+    var projectManagerStatus = $("#projectManagerStatus");
+    var projectManagerDate = $("#projectManagerDate");
+    var projectManagerNotes = $("#projectManagerNotes");
+    
+    ////////////// END NEW CONTENT
 
 	var k = 0;
 	for(var i= 0;i<vendor_eqArray.length;i++)
