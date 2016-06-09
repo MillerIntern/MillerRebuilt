@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
+import projectObjects.CloseoutEnhanced;
 import projectObjects.Equipment;
 import projectObjects.EquipmentStatus;
 import projectObjects.EquipmentVendor;
@@ -69,6 +70,7 @@ public class ProjectService extends ProjectObjectService
 			Map<String, String>params, Long inspectionTN, HttpServletRequest req) throws ClassNotFoundException, ParseException, NumberFormatException, IOException
 	{
 		System.out.println("in add");
+		System.out.println(params);
 		//Initialize Services
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 	
@@ -177,7 +179,7 @@ public class ProjectService extends ProjectObjectService
 		Date ffireMarshal = null; 
 		Date fhealth = null; 
 		Date fbuildFinal = null; 
-		Long finspectionID = null; 
+		//Long finspectionID = null; 
 		
 		//Permits
 		Date fbuilding_p =null;
@@ -195,15 +197,182 @@ public class ProjectService extends ProjectObjectService
 		Date MCSWarrantyf =null;
 		Date equipmentSubClf =null;
 		Date traneCLf=null;
-		Date frontPagef=null;
-		Date subContractorCLf = null;
+		//Date frontPagef=null;
+		//Date subContractorCLf = null;
 		Date buldingPermitCLf = null;
 		Date inspectionSOCLf = null;
 		Date certCompletionCLf = null;
 		
 		
-		Date festimatedDeliveryDate = null;
-		Date fvendorDate = null;
+		// Closeout Enhanced
+	////// Closeout Enhanced
+		
+		CloseoutEnhanced closeout = new CloseoutEnhanced();
+
+		Date copSubmittedDate = null;
+		if(!params.get("copSubmittedDate").isEmpty())
+			copSubmittedDate = formatter.parse(params.get("copSubmittedDate"));
+		closeout.setCopSubmittedDate(copSubmittedDate);
+		closeout.setCopSubmittedNotes(params.get("copSubmittedNotes"));
+		closeout.setCopSubmittedStatus(params.get("copSubmittedStatus"));
+		
+		/*'copApprovedStatus': copApprovedStatus, 
+		'copApprovedDate': copApprovedDate, 
+		'copApprovedNotes': copApprovedNotes,
+		
+		'copCompletedStatus': copCompletedStatus,
+		'copCompletedDate': copCompletedDate,
+		'copCompletedNotes': copCompletedNotes,
+		
+		'changeOrderSubmittedStatus': changeOrderSubmittedStatus,
+		'changeOrderSubmittedDate': changeOrderSubmittedDate,
+		'changeOrderSubmittedNotes': changeOrderSubmittedNotes,
+		
+		'changeOrderApprovedStatus': changeOrderApprovedStatus,
+		'changeOrderApprovedDate': changeOrderApprovedDate,
+		'changeOrderApprovedNotes': changeOrderApprovedNotes,
+		
+		'revisionsSubmittedStatus': revisionsSubmittedStatus,
+		'revisionsSubmittedDate': revisionsSubmittedDate,
+		'revisionsSubmittedNotes': revisionsSubmittedNotes,
+		
+		'revisionsApprovedStatus': revisionsApprovedStatus,
+		'revisionsApprovedDate': revisionsApprovedDate,
+		'revisionsApprovedNotes': revisionsApprovedNotes,
+		
+		'MCSStatus': MCSStatus,
+		'MCSDate': MCSDate,
+		'MCSNotes': MCSNotes,
+		
+		'GCStatus': GCStatus,
+		'GCDate': GCDate,
+		'GCNotes': GCNotes,
+		
+		'mechanicalStatus': mechanicalStatus,
+		'mechanicalDate': mechanicalDate,
+		'mechanicalNotes': mechanicalNotes,
+		
+		'electricalStatus': electricalStatus,
+		'electricalDate': electricalDate,
+		'electricalNotes': electricalNotes,
+		
+		'plumbingStatus': plumbingStatus,
+		'plumbingDate': plumbingDate,
+		'plumbingNotes': plumbingNotes,
+		
+		'sprinkleStatus': sprinkleStatus,
+		'sprinkleDate': sprinkleDate,
+		'sprinkleNotes': sprinkleNotes,
+		
+		'roofingStatus': roofingStatus,
+		'roofingDate': roofingDate,
+		'roofingNotes': roofingNotes,
+		
+		'HTIStatus': HTIStatus,
+		'HTIDate': HTIDate,
+		'HTINotes': HTINotes,
+		
+		'otherFinalLeinsStatus': otherFinalLeinsStatus,
+		'otherFinalLeinsDate': otherFinalLeinsDate,
+		'otherFinalLeinsNotes': otherFinalLeinsNotes,
+		
+		// TODO: NONE OF THE INSPECTIONS ARE IN HERE
+		
+		'MCSWarrantyStatus': MCSWarrantyStatus,
+		'MCSWarrantyDate': MCSWarrantyDate,
+		'MCSWarrantyNotes': MCSWarrantyNotes,
+		
+		'GCWarrantyStatus': GCWarrantyStatus,
+		'GCWarrantyDate': GCWarrantyDate,
+		'GCWarrantyNotes': GCWarrantyNotes,
+		
+		'mechanicalWarrantyStatus': mechanicalWarrantyStatus,
+		'mechanicalWarrantyDate': mechanicalWarrantyDate,
+		'mechanicalWarrantyNotes': mechanicalWarrantyNotes,
+		
+		'electricalWarrantyStatus': electricalWarrantyStatus,
+		'electricalWarrantyDate': electricalWarrantyDate,
+		'electricalWarrantyNotes': electricalWarrantyNotes,
+		
+		'plumbingWarrantyStatus': plumbingWarrantyStatus,
+		'plumbingWarrantyDate': plumbingWarrantyDate,
+		'plumbingWarrantyNotes': plumbingWarrantyNotes,
+		
+		'sprinkleWarrantyStatus': sprinkleWarrantyStatus,
+		'sprinkleWarrantyDate': sprinkleWarrantyDate,
+		'sprinkleWarrantyNotes': sprinkleWarrantyNotes,
+		
+		'roofingWarrantyStatus': roofingWarrantyStatus,
+		'roofingWarrantyDate': roofingWarrantyDate,
+		'roofingWarrantyNotes': roofingWarrantyNotes,
+		
+		'HTIWarrantyStatus': HTIWarrantyStatus,
+		'HTIWarrantyDate': HTIWarrantyDate,
+		'HTIWarrantyNotes': HTIWarrantyNotes,
+		
+		'otherWarrantyStatusA': otherWarrantyStatusA,
+		'otherWarrantyDateA': otherWarrantyDateA,
+		'otherWarrantyNotesA': otherWarrantyNotesA,
+		
+		'otherWarrantyStatusB': otherWarrantyStatusB,
+		'otherWarrantyDateB': otherWarrantyDateB,
+		'otherWarrantyNotesB': otherWarrantyNotesB,
+		
+		'equipmentSubmittalStatus': equipmentSubmittalStatus,
+		'equipmentSubmittalDate': equipmentSubmittalDate,
+		'equipmentSubmittalNotes': equipmentSubmittalNotes,
+		
+		'manualStatus': manualStatus,
+		'manualDate': manualDate,
+		'manualNotes': manualNotes,
+		
+		'MCSpunchListStatus': MCSpunchListStatus,
+		'MCSpunchListDate': MCSpunchListDate,
+		'MCSpunchListNotes': MCSpunchListNotes,
+		
+		'MG2punchListStatus': MG2punchListStatus,
+		'MG2punchListDate': MG2punchListDate,
+		'MG2punchListNotes': MG2punchListNotes,
+		
+		'asBuiltDrawingsStatus': asBuiltDrawingsStatus,
+		'asBuiltDrawingsDate': asBuiltDrawingsDate,
+		'asBuiltDrawingsNotes': asBuiltDrawingsNotes,
+		
+		'closeOutPhotosStatus': closeOutPhotosStatus,
+		'closeOutPhotosDate': closeOutPhotosDate,
+		'closeOutPhotosNotes': closeOutPhotosNotes,
+		
+		'HVACstartupFormStatus': HVACstartupFormStatus,
+		'HVACstartupFormDate': HVACstartupFormDate,
+		'HVACstartupFormNotes': HVACstartupFormNotes,
+		
+		'alarmFormStatus': alarmFormStatus,
+		'alarmFormDate': alarmFormDate,
+		'alarmFormNotes': alarmFormNotes,
+		
+		'verisaeReportStatus': verisaeReportStatus,
+		'verisaeReportDate': verisaeReportDate,
+		'verisaeReportNotes': verisaeReportNotes,
+		
+		'bartOrSandyStatus': bartOrSandyStatus,
+		'bartOrSandyDate': bartOrSandyDate,
+		'bartOrSandyNotes': bartOrSandyNotes,
+		
+		'alexStatus': alexStatus,
+		'alexDate': alexDate,
+		'alexNotes': alexNotes,
+		
+		'andyStatus': andyStatus,
+		'andyDate': andyDate,
+		'andyNotes': andyNotes,
+		
+		'projectManagerStatus': projectManagerStatus,
+		'projectManagerDate': projectManagerDate,
+		'projectManagerNotes': projectManagerNotes,*/
+		
+		
+		//Date festimatedDeliveryDate = null;
+		//Date fvendorDate = null;
 		
 		//String noteseq = params.get("notes_eq");
 		//String equipmentName = params.get("equipName");
@@ -391,7 +560,7 @@ public class ProjectService extends ProjectObjectService
 
 		
 		for(int i=0; i<equipToAdd.length;i++)
-			{
+		{
 			equip = new Equipment();
 			
 			// Convert Arrays to either int, long or Date
@@ -510,6 +679,12 @@ public class ProjectService extends ProjectObjectService
 		permits.setPlumbingPermitDate(flowVoltage_p);
 	
 
+
+		
+		
+		
+////// After all of that... closeout enhanced is done
+		
 		//Set required fields
 		Project p = new Project();
 		//p.setEqpd(equip.getEqpd());
@@ -532,6 +707,7 @@ public class ProjectService extends ProjectObjectService
 		p.setCloseoutDetails(cd);
 		p.setPermits(permits);
 		//p.setEquipment(equip);
+		p.setCloseout(closeout);
 
 		p.setProjectInitiatedDate(finitiatedDate);
 		p.setSiteSurvey(fsurvey);
@@ -575,7 +751,9 @@ public class ProjectService extends ProjectObjectService
 	 * @throws ClassNotFoundException
 	 * @throws ParseException
 	 */
-	public static void editProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN, HttpServletRequest req) throws ClassNotFoundException, ParseException
+	public static void editProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, 
+			Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN, 
+			HttpServletRequest req) throws ClassNotFoundException, ParseException
 	{
 		//Initialize Services
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -1184,6 +1362,7 @@ public class ProjectService extends ProjectObjectService
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
 		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
+		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
 		
 		return g.toJson(map);
 	}

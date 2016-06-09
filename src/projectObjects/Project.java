@@ -78,7 +78,7 @@ public class Project extends ProjectObject
 	
 	private Date permitApp;
 	
-	private Equipment equipmentData;
+	//private Equipment equipmentData;
 
 	private String DrawingsDue;
 
@@ -86,7 +86,9 @@ public class Project extends ProjectObject
 	
 	private Permits permits;
 	
-	private Equipment equipment;
+	//private Equipment equipment;
+	
+	private CloseoutEnhanced closeout;
 	
 	private long eqpd;
 	/*
@@ -100,7 +102,7 @@ public class Project extends ProjectObject
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
-			CloseoutCheckList closeoutCheckList,
+			CloseoutEnhanced closeout, CloseoutCheckList closeoutCheckList,
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
@@ -118,6 +120,7 @@ public class Project extends ProjectObject
 		this.costcoDueDate = costcoDueDate;
 		this.proposalSubmitted = proposalSubmitted;
 		this.closeoutDetails = closeoutDetails;
+		this.closeout = closeout;
 		this.closeoutCheckList = closeoutCheckList;
 		this.changeOrders = changeOrders;
 		this.shouldInvoice = shouldInvoice;
@@ -132,7 +135,7 @@ public class Project extends ProjectObject
 		this.cost = cst;
 		this.customerNumber = custNum;
 		this.permitApp = permitApp;
-		this.equipmentData = equipList;
+		//this.equipmentData = equipList;
 		this.DrawingsDue=DrawingsDue;
 		this.inspections= inspections;
 		//this.equipmentList = equips;
@@ -153,8 +156,10 @@ public class Project extends ProjectObject
 		this.costcoDueDate = null;
 		this.proposalSubmitted = null;
 		this.closeoutDetails = new CloseoutDetails();
+		this.closeout = new CloseoutEnhanced();
 		this.closeoutCheckList = new CloseoutCheckList();
 		this.changeOrders = new HashSet<ChangeOrder>();
+		
 		this.shouldInvoice = 0;
 		this.invoiced = 0;
 		this.projectNotes = null;
@@ -167,7 +172,7 @@ public class Project extends ProjectObject
 		this.cost = null;
 		this.customerNumber = null;
 		this.permitApp = null;
-		this.equipmentData = null;
+		//this.equipmentData = null;
 		this.DrawingsDue=null;
 		this.inspections=null;
 		//this.equipmentList = new HashSet<EquipmentType>();
@@ -522,6 +527,17 @@ public class Project extends ProjectObject
 	public long getEqpd()
 	{
 		return this.eqpd;
+	}
+
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public CloseoutEnhanced getCloseout() {
+		return closeout;
+	}
+
+	public void setCloseout(CloseoutEnhanced closeout) {
+		this.closeout = closeout;
 	}
 	
 	

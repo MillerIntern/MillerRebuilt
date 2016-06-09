@@ -62,6 +62,7 @@ public class ProjectObjectService
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		Class c;
+		
 		try 
 		{
 			c = Class.forName("projectObjects."+domain);
