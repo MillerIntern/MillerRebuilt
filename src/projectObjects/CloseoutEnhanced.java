@@ -14,34 +14,10 @@ import javax.persistence.Entity;
 @Entity
 public class CloseoutEnhanced extends ProjectObject
 {
-	private Date copSubmittedDate;
-	private String copSubmittedNotes;
-	private String copSubmittedStatus;
+	private int numOfChangeOrders;
+	private int numOfChangeOrdersCompleted;
 	
-	private String copApprovedStatus;
-	private Date copApprovedDate;
-	private String copApprovedNotes;
-	
-	private String copCompletedStatus;
-	private Date copCompletedDate;
-	private String copCompletedNotes;
-	
-	private String changeOrderSubmittedStatus;
-	private Date changeOrderSubmittedDate;
-	private String changeOrderSubmittedNotes;
-	
-	private String changeOrderApprovedStatus;
-	private Date changeOrderApprovedDate;
-	private String changeOrderApprovedNotes;
-	
-	private String revisionsSubmittedStatus;
-	private Date revisionsSubmittedDate;
-	private String revisionsSubmittedNotes;
-	
-	private String revisionsApprovedStatus;
-	private Date revisionsApprovedDate;
-	private String revisionsApprovedNotes;
-	
+	// Final Liens 
 	private String MCSStatus;
 	private Date MCSDate;
 	private String MCSNotes;
@@ -78,8 +54,36 @@ public class CloseoutEnhanced extends ProjectObject
 	private Date otherFinalLeinsDate;
 	private String otherFinalLeinsNotes;
 	
-	// TODO: NONE OF THE INSPECTIONS ARE IN HERE
+	// Inspections
+	private String mechFinalStatus;
+	private Date mechFinalDate;
+	private String mechFinalNotes;
 	
+	private String elecFinalStatus;
+	private Date elecFinalDate;
+	private String elecFinalNotes;
+	
+	private String plumbingFinalStatus;
+	private String plumbingFinalNotes;
+	private Date plumbingFinalDate;
+	
+	private String sprinkleFinalStatus;
+	private String sprinkleFinalNotes;
+	private Date sprinkleFinalDate;
+	
+	private String buildingFinalStatus;
+	private String buildingFinalNotes;
+	private Date buildingFinalDate;
+	
+	private String tmpCertificateStatus; 
+	private String tmpCertificateNotes;
+	private Date tmpCertificateDate;
+	
+	private String certificateStatus;
+	private String certificateNotes;
+	private Date certificateDate;
+	
+	//Warranties
 	private String MCSWarrantyStatus;
 	private Date MCSWarrantyDate;
 	private String MCSWarrantyNotes;
@@ -128,6 +132,10 @@ public class CloseoutEnhanced extends ProjectObject
 	private Date manualDate;
 	private String manualNotes;
 	
+	private String punchListStatus;
+	private String punchListNotes;
+	private Date punchListDate;
+	
 	private String asBuiltDrawingsStatus;
 	private Date asBuiltDrawingsDate;
 	private String asBuiltDrawingsNotes;
@@ -147,30 +155,13 @@ public class CloseoutEnhanced extends ProjectObject
 	private String verisaeReportStatus;
 	private Date verisaeReportDate;
 	private String verisaeReportNotes;
-	
-	private String bartOrSandyStatus;
-	private Date bartOrSandyDate;
-	private String bartOrSandyNotes;
 
-	private String andyStatus;
-	private Date andyDate;
-	private String andyNotes;
-	
-	private String projectManagerStatus;
-	private Date projectManagerDate;
-	private String projectManagerNotes;
-
-	public CloseoutEnhanced(Date copSubmittedDate, String copSubmittedNotes, String copSubmittedStatus,
-	String copApprovedStatus, Date copApprovedDate, String copApprovedNotes, String copCompletedStatus, Date copCompletedDate,
-	String copCompletedNotes, String changeOrderSubmittedStatus, Date changeOrderSubmittedDate, String changeOrderSubmittedNotes,
-	String changeOrderApprovedStatus, Date changeOrderApprovedDate, String changeOrderApprovedNotes, String revisionsSubmittedStatus,
-	Date revisionsSubmittedDate, String revisionsSubmittedNotes, String revisionsApprovedStatus, Date revisionsApprovedDate, 
-	String revisionsApprovedNotes, String MCSStatus, Date MCSDate, String MCSNotes, String GCStatus, Date GCDate, String GCNotes,
+	public CloseoutEnhanced(String MCSStatus, Date MCSDate, String MCSNotes, String GCStatus, Date GCDate, String GCNotes,
 	String mechanicalStatus, Date mechanicalDate, String mechanicalNotes, String electricalStatus, Date electricalDate,
 	String electricalNotes, String plumbingNotes, Date plumbingDate, String plumbingStatus, String sprinkleStatus, Date sprinkleDate, 
 	String sprinkleNotes, String roofingStatus, Date roofingDate, String roofingNotes, String HTIStatus, Date HTIDate, String HTINotes, 
 	String otherFinalLeinsStatus, Date otherFinalLeinsDate, String otherFinalLeinsNotes, String MCSWarrantyStatus, Date MCSWarrantyDate, 
-	String MCSWarrantyNotes, String mechanicalWarrantyStatus, Date mechanicalWarrantyDate, String mechanicalWarrantyNotes, 
+	String MCSWarrantyNotes,  Date mechanicalWarrantyDate, String mechanicalWarrantyNotes, 
 	String electricalWarrantyStatus, Date electricalWarrantyDate, String electircalWarrantyNotes, String plumbingWarrantyStatus, 
 	Date plumbingWarrantyDate, String plumbingWarrantyNotes, String sprinkleWarrantyStatus, Date sprinkleWarrantyDate, 
 	String sprinkleWarrantynotes, String roofingWarrantyStatus, Date roofingWarrantyDate, String roofingWarrantyNotes, 
@@ -180,32 +171,15 @@ public class CloseoutEnhanced extends ProjectObject
 	String asBuiltDrawingsStatus, Date asBuiltDrawingsDate, String asBuiltDrawingsNotes, 
 	String closeOutPhotosStatus, Date closeOutPhotosDate, String closeOutPhotosNotes, String HVACstartupFormStatus, Date HVACstartupFormDate, 
 	String HVACstartupFormNOtes, String alarmFormStatus, Date alarmFormDate, String alarmFormNotes, String verisaeReportStatus, 
-	Date verisaeReportDate, String verisaeReportNotes, String bartOrSandyStatus, Date bartOrSandyDate, String bartOrSandyNotes,
-	String andyStatus, Date andyDate, String andyNotes, String projectManagerStatus, Date projectManagerDate, String projectManagerNotes,
+	Date verisaeReportDate, String verisaeReportNotes, int numOfChangeOrders, int numOfChangeOrdersCompleted,
 	String GCWarrantyNotes, Date GCWarrantyDate, String GCWarrantyStatus, String electricalWarrantyNotes, String sprinkleWarrantyNotes, 
-	String HVACstartupFormNotes)
+	String HVACstartupFormNotes, String mechanicalWarrantyStatus, String mechFinalStatus, String mechFinalNotes, Date mechFinalDate,
+	String elecFinalNotes, String elecFinalStatus, Date elecFinalDate, String plumbingFinalStatus, String plumbingFinalNotes, 
+	Date plumbingFinalDate, String sprinkleFinalStatus, String sprinkleFinalNotes, Date sprinkleFinalDate, String buildingFinalStatus, 
+	String buildingFinalNotes, Date buildingFinalDate, String tmpCertificateStatus, String tmpCertificateNotes, Date tmpCertificateDate,
+	String certificateStatus, String certificateNotes, Date certificateDate, String punchListStatus, String punchListNotes,
+	Date punchListDate)
 	{
-		this.copSubmittedDate = copSubmittedDate; 						///
-		this.copSubmittedNotes = copSubmittedNotes;
-		this.copSubmittedStatus = copSubmittedStatus;
-		this.copApprovedDate = copApprovedDate;							///
-		this.copApprovedNotes = copApprovedNotes;
-		this.copApprovedStatus = copApprovedStatus;
-		this.copCompletedDate = copCompletedDate; 						///
-		this.copCompletedNotes = copCompletedNotes;
-		this.copCompletedStatus = copCompletedStatus;
-		this.changeOrderSubmittedDate = changeOrderSubmittedDate;		///
-		this.changeOrderSubmittedNotes = changeOrderSubmittedNotes;
-		this.changeOrderSubmittedStatus = changeOrderSubmittedStatus;
-		this.changeOrderApprovedDate = changeOrderApprovedDate;			///
-		this.changeOrderApprovedNotes = changeOrderApprovedNotes;
-		this.changeOrderApprovedStatus = changeOrderApprovedStatus;
-		this.revisionsSubmittedDate = revisionsSubmittedDate; 			///
-		this.revisionsSubmittedNotes = revisionsSubmittedNotes;
-		this.revisionsSubmittedStatus = revisionsSubmittedStatus;
-		this.revisionsApprovedDate = revisionsApprovedDate;				///
-		this.revisionsApprovedNotes = revisionsApprovedNotes;
-		this.revisionsApprovedStatus = revisionsApprovedStatus;
 		this.MCSDate = MCSDate;											///
 		this.MCSNotes = MCSNotes;
 		this.MCSStatus = MCSStatus;
@@ -233,7 +207,6 @@ public class CloseoutEnhanced extends ProjectObject
 		this.otherFinalLeinsDate = otherFinalLeinsDate;
 		this.otherFinalLeinsNotes = otherFinalLeinsNotes;
 		this.otherFinalLeinsStatus = otherFinalLeinsStatus;
-		//TODO: INSPECTIONS STILL
 		this.MCSWarrantyDate = MCSWarrantyDate;
 		this.MCSWarrantyNotes = MCSWarrantyNotes;
 		this.MCSWarrantyStatus = MCSWarrantyStatus;
@@ -270,7 +243,6 @@ public class CloseoutEnhanced extends ProjectObject
 		this.manualDate = manualDate;
 		this.manualNotes = manualNotes;
 		this.manualStatus = manualStatus;
-		//TODO: Punch List
 		this.asBuiltDrawingsDate = asBuiltDrawingsDate;
 		this.asBuiltDrawingsNotes = asBuiltDrawingsNotes;
 		this.asBuiltDrawingsStatus = asBuiltDrawingsStatus;
@@ -284,36 +256,135 @@ public class CloseoutEnhanced extends ProjectObject
 		this.verisaeReportDate = verisaeReportDate;
 		this.verisaeReportNotes = verisaeReportNotes; 
 		this.verisaeReportStatus = verisaeReportStatus;
-		this.bartOrSandyDate = bartOrSandyDate;
-		this.bartOrSandyNotes = bartOrSandyNotes;
-		this.bartOrSandyStatus = bartOrSandyStatus;
+		this.numOfChangeOrders = numOfChangeOrders;
+		this.numOfChangeOrdersCompleted = numOfChangeOrdersCompleted;
+		
+		this.mechFinalDate = mechFinalDate;
+		this.mechFinalNotes = mechFinalNotes;
+		this.mechFinalStatus = mechFinalStatus;
+		this.elecFinalDate = elecFinalDate;
+		this.elecFinalStatus = elecFinalStatus;
+		this.elecFinalNotes = elecFinalNotes;
+		this.plumbingFinalDate = plumbingFinalDate;
+		this.plumbingFinalNotes = plumbingFinalNotes;
+		this.plumbingFinalStatus = plumbingFinalStatus;
+		this.buildingFinalDate = buildingFinalDate;
+		this.buildingFinalNotes = buildingFinalNotes;
+		this.buildingFinalStatus = buildingFinalStatus;
+		this.tmpCertificateDate = tmpCertificateDate;
+		this.tmpCertificateNotes = tmpCertificateNotes;
+		this.tmpCertificateStatus = tmpCertificateStatus;
+		this.certificateDate = certificateDate;
+		this.certificateNotes = certificateNotes;
+		this.certificateStatus = certificateStatus;
+		this.punchListDate = punchListDate;
+		this.punchListStatus = punchListStatus;
+		this.punchListNotes = punchListNotes;
 	}
 	
 	public CloseoutEnhanced()
 	{
-		this.copSubmittedDate = null;
-		this.copSubmittedNotes = null;
-		this.copSubmittedStatus = null;
-	}
-	
-	
-	
-	public void setCopSubmittedDate(Date copSubmittedDate) 
-	{
-		this.copSubmittedDate = copSubmittedDate;
+		this.MCSDate = null;											///
+		this.MCSNotes = null;
+		this.MCSStatus = null;
+		this.GCDate = null;											///
+		this.GCNotes = null;
+		this.GCStatus = null;
+		this.mechanicalDate = null;
+		this.mechanicalNotes = null;
+		this.mechanicalStatus = null;
+		this.electricalDate = null;
+		this.electricalNotes = null;
+		this.electricalStatus = null;
+		this.plumbingDate = null;
+		this.plumbingNotes = null;
+		this.plumbingStatus = null;
+		this.sprinkleDate = null;
+		this.sprinkleNotes = null;
+		this.sprinkleStatus = null;
+		this.roofingDate = null;
+		this.roofingNotes = null;
+		this.roofingStatus = null;
+		this.HTIDate = null;
+		this.HTINotes = null;
+		this.HTIStatus = null;
+		this.otherFinalLeinsDate = null;
+		this.otherFinalLeinsNotes = null;
+		this.otherFinalLeinsStatus = null;
+		this.MCSWarrantyDate = null;
+		this.MCSWarrantyNotes = null;
+		this.MCSWarrantyStatus = null;
+		this.GCWarrantyDate = null;
+		this.GCWarrantyNotes = null;
+		this.GCWarrantyStatus = null;
+		this.mechanicalWarrantyDate = null;
+		this.mechanicalWarrantyNotes = null;
+		this.mechanicalWarrantyStatus = null;
+		this.electricalWarrantyDate = null; 
+		this.electricalWarrantyNotes = null;
+		this.electricalWarrantyStatus = null;
+		this.plumbingWarrantyDate = null;
+		this.plumbingWarrantyNotes = null;
+		this.plumbingWarrantyStatus = null;
+		this.sprinkleWarrantyDate = null;
+		this.sprinkleWarrantyNotes = null;
+		this.sprinkleWarrantyStatus = null;
+		this.roofingWarrantyDate = null;
+		this.roofingWarrantyNotes = null;
+		this.roofingWarrantyStatus = null;
+		this.HTIWarrantyDate = null;
+		this.HTIWarrantyNotes = null;
+		this.HTIWarrantyStatus = null;
+		this.otherWarrantyDateA = null;
+		this.otherWarrantyNotesA = null;
+		this.otherWarrantyStatusA = null;
+		this.otherWarrantyDateB = null;
+		this.otherWarrantyNotesB = null;
+		this.otherWarrantyStatusB = null;
+		this.equipmentSubmittalDate = null;
+		this.equipmentSubmittalNotes = null;
+		this.equipmentSubmittalStatus = null;
+		this.manualDate = null;
+		this.manualNotes = null;
+		this.manualStatus = null;
+		this.asBuiltDrawingsDate = null;
+		this.asBuiltDrawingsNotes = null;
+		this.asBuiltDrawingsStatus = null;
+		this.closeOutPhotosDate = null;
+		this.HVACstartupFormDate = null;
+		this.HVACstartupFormNotes = null;
+		this.HVACstartupFormStatus = null;
+		this.alarmFormDate = null;
+		this.alarmFormNotes = null;
+		this.alarmFormStatus = null;
+		this.verisaeReportDate = null;
+		this.verisaeReportNotes = null; 
+		this.verisaeReportStatus = null;
+		this.numOfChangeOrders = 0;
+		this.numOfChangeOrdersCompleted = 0;
+		this.mechFinalDate = null;
+		this.mechFinalNotes = null;
+		this.mechFinalStatus = null;
+		this.elecFinalDate = null;
+		this.elecFinalStatus = null;
+		this.elecFinalNotes = null;
+		this.plumbingFinalDate = null;
+		this.plumbingFinalNotes = null;
+		this.plumbingFinalStatus = null;
+		this.buildingFinalDate = null;
+		this.buildingFinalNotes = null;
+		this.buildingFinalStatus = null;
+		this.tmpCertificateDate = null;
+		this.tmpCertificateNotes = null;
+		this.tmpCertificateStatus = null;
+		this.certificateDate = null;
+		this.certificateNotes = null;
+		this.certificateStatus = null;
+		this.punchListDate = null;
+		this.punchListStatus = null;
+		this.punchListNotes = null;
 	}
 
-	public void setCopSubmittedNotes(String copSubmittedNotes) 
-	{
-		this.copSubmittedNotes = copSubmittedNotes;
-	}
-
-	public void setCopSubmittedStatus(String copSubmittedStatus) 
-	{
-		this.copSubmittedStatus = convert(copSubmittedStatus);
-	}
-
-	
 	private static String convert(String copSubmittedStatus)
 	{
 		if(copSubmittedStatus.equals("1"))
@@ -325,172 +396,13 @@ public class CloseoutEnhanced extends ProjectObject
 		return "Null";
 	}
 	
-	
-	public Date getCopSubmittedDate()
-	{
-		return copSubmittedDate;
-	}
-	
-	public String getCopSubmittedNotes()
-	{
-		return copSubmittedNotes;
-	}
-	
-	public String getCopSubmittedStatus()
-	{
-		return copSubmittedStatus;
-	}
-
-	public String getCopApprovedStatus() {
-		return copApprovedStatus;
-	}
-
-	public void setCopApprovedStatus(String copApprovedStatus) {
-		this.copApprovedStatus = copApprovedStatus;
-	}
-
-	public Date getCopApprovedDate() {
-		return copApprovedDate;
-	}
-
-	public void setCopApprovedDate(Date copApprovedDate) {
-		this.copApprovedDate = copApprovedDate;
-	}
-
-	public String getCopApprovedNotes() {
-		return copApprovedNotes;
-	}
-
-	public void setCopApprovedNotes(String copApprovedNotes) {
-		this.copApprovedNotes = copApprovedNotes;
-	}
-
-	public String getCopCompletedStatus() {
-		return copCompletedStatus;
-	}
-
-	public void setCopCompletedStatus(String copCompletedStatus) {
-		this.copCompletedStatus = copCompletedStatus;
-	}
-
-	public Date getCopCompletedDate() {
-		return copCompletedDate;
-	}
-
-	public void setCopCompletedDate(Date copCompletedDate) {
-		this.copCompletedDate = copCompletedDate;
-	}
-
-	public String getCopCompletedNotes() {
-		return copCompletedNotes;
-	}
-
-	public void setCopCompletedNotes(String copCompletedNotes) {
-		this.copCompletedNotes = copCompletedNotes;
-	}
-
-	public String getChangeOrderSubmittedStatus() {
-		return changeOrderSubmittedStatus;
-	}
-
-	public void setChangeOrderSubmittedStatus(String changeOrderSubmittedStatus) {
-		this.changeOrderSubmittedStatus = changeOrderSubmittedStatus;
-	}
-
-	public Date getChangeOrderSubmittedDate() {
-		return changeOrderSubmittedDate;
-	}
-
-	public void setChangeOrderSubmittedDate(Date changeOrderSubmittedDate) {
-		this.changeOrderSubmittedDate = changeOrderSubmittedDate;
-	}
-
-	public String getChangeOrderSubmittedNotes() {
-		return changeOrderSubmittedNotes;
-	}
-
-	public void setChangeOrderSubmittedNotes(String changeOrderSubmittedNotes) {
-		this.changeOrderSubmittedNotes = changeOrderSubmittedNotes;
-	}
-
-	public String getChangeOrderApprovedStatus() {
-		return changeOrderApprovedStatus;
-	}
-
-	public void setChangeOrderApprovedStatus(String changeOrderApprovedStatus) {
-		this.changeOrderApprovedStatus = changeOrderApprovedStatus;
-	}
-
-	public Date getChangeOrderApprovedDate() {
-		return changeOrderApprovedDate;
-	}
-
-	public void setChangeOrderApprovedDate(Date changeOrderApprovedDate) {
-		this.changeOrderApprovedDate = changeOrderApprovedDate;
-	}
-
-	public String getChangeOrderApprovedNotes() {
-		return changeOrderApprovedNotes;
-	}
-
-	public void setChangeOrderApprovedNotes(String changeOrderApprovedNotes) {
-		this.changeOrderApprovedNotes = changeOrderApprovedNotes;
-	}
-
-	public String getRevisionsSubmittedStatus() {
-		return revisionsSubmittedStatus;
-	}
-
-	public void setRevisionsSubmittedStatus(String revisionsSubmittedStatus) {
-		this.revisionsSubmittedStatus = revisionsSubmittedStatus;
-	}
-
-	public Date getRevisionsSubmittedDate() {
-		return revisionsSubmittedDate;
-	}
-
-	public void setRevisionsSubmittedDate(Date revisionsSubmittedDate) {
-		this.revisionsSubmittedDate = revisionsSubmittedDate;
-	}
-
-	public String getRevisionsSubmittedNotes() {
-		return revisionsSubmittedNotes;
-	}
-
-	public void setRevisionsSubmittedNotes(String revisionsSubmittedNotes) {
-		this.revisionsSubmittedNotes = revisionsSubmittedNotes;
-	}
-
-	public String getRevisionsApprovedStatus() {
-		return revisionsApprovedStatus;
-	}
-
-	public void setRevisionsApprovedStatus(String revisionsApprovedStatus) {
-		this.revisionsApprovedStatus = revisionsApprovedStatus;
-	}
-
-	public Date getRevisionsApprovedDate() {
-		return revisionsApprovedDate;
-	}
-
-	public void setRevisionsApprovedDate(Date revisionsApprovedDate) {
-		this.revisionsApprovedDate = revisionsApprovedDate;
-	}
-
-	public String getRevisionsApprovedNotes() {
-		return revisionsApprovedNotes;
-	}
-
-	public void setRevisionsApprovedNotes(String revisionsApprovedNotes) {
-		this.revisionsApprovedNotes = revisionsApprovedNotes;
-	}
-
-	public String getMCSStatus() {
-		return MCSStatus;
-	}
-
 	public void setMCSStatus(String mCSStatus) {
 		MCSStatus = mCSStatus;
+	}
+	
+	public String getMCSStatus()
+	{
+		return MCSStatus;
 	}
 
 	public Date getMCSDate() {
@@ -1109,75 +1021,211 @@ public class CloseoutEnhanced extends ProjectObject
 		this.verisaeReportNotes = verisaeReportNotes;
 	}
 
-	public String getBartOrSandyStatus() {
-		return bartOrSandyStatus;
+	public int getNumOfChangeOrders() {
+		return numOfChangeOrders;
 	}
 
-	public void setBartOrSandyStatus(String bartOrSandyStatus) {
-		this.bartOrSandyStatus = bartOrSandyStatus;
+	public void setNumOfChangeOrders(int numOfChangeOrders) {
+		this.numOfChangeOrders = numOfChangeOrders;
 	}
 
-	public Date getBartOrSandyDate() {
-		return bartOrSandyDate;
+	public int getNumOfChangeOrdersCompleted() {
+		return numOfChangeOrdersCompleted;
 	}
 
-	public void setBartOrSandyDate(Date bartOrSandyDate) {
-		this.bartOrSandyDate = bartOrSandyDate;
+	public void setNumOfChangeOrdersCompleted(int numOfChangeOrdersCompleted) {
+		this.numOfChangeOrdersCompleted = numOfChangeOrdersCompleted;
 	}
 
-	public String getBartOrSandyNotes() {
-		return bartOrSandyNotes;
+	public String getMechFinalStatus() {
+		return mechFinalStatus;
 	}
 
-	public void setBartOrSandyNotes(String bartOrSandyNotes) {
-		this.bartOrSandyNotes = bartOrSandyNotes;
+	public void setMechFinalStatus(String mechFinalStatus) {
+		this.mechFinalStatus = mechFinalStatus;
 	}
 
-	public String getAndyStatus() {
-		return andyStatus;
+	public Date getMechFinalDate() {
+		return mechFinalDate;
 	}
 
-	public void setAndyStatus(String andyStatus) {
-		this.andyStatus = andyStatus;
+	public void setMechFinalDate(Date mechFinalDate) {
+		this.mechFinalDate = mechFinalDate;
 	}
 
-	public Date getAndyDate() {
-		return andyDate;
+	public String getMechFinalNotes() {
+		return mechFinalNotes;
 	}
 
-	public void setAndyDate(Date andyDate) {
-		this.andyDate = andyDate;
+	public void setMechFinalNotes(String mechFinalNotes) {
+		this.mechFinalNotes = mechFinalNotes;
 	}
 
-	public String getAndyNotes() {
-		return andyNotes;
+	public String getElecFinalStatus() {
+		return elecFinalStatus;
 	}
 
-	public void setAndyNotes(String andyNotes) {
-		this.andyNotes = andyNotes;
+	public void setElecFinalStatus(String elecFinalStatus) {
+		this.elecFinalStatus = elecFinalStatus;
 	}
 
-	public String getProjectManagerStatus() {
-		return projectManagerStatus;
+	public Date getElecFinalDate() {
+		return elecFinalDate;
 	}
 
-	public void setProjectManagerStatus(String projectManagerStatus) {
-		this.projectManagerStatus = projectManagerStatus;
+	public void setElecFinalDate(Date elecFinalDate) {
+		this.elecFinalDate = elecFinalDate;
 	}
 
-	public Date getProjectManagerDate() {
-		return projectManagerDate;
+	public String getElecFinalNotes() {
+		return elecFinalNotes;
 	}
 
-	public void setProjectManagerDate(Date projectManagerDate) {
-		this.projectManagerDate = projectManagerDate;
+	public void setElecFinalNotes(String elecFinalNotes) {
+		this.elecFinalNotes = elecFinalNotes;
 	}
 
-	public String getProjectManagerNotes() {
-		return projectManagerNotes;
+	public String getPlumbingFinalStatus() {
+		return plumbingFinalStatus;
 	}
 
-	public void setProjectManagerNotes(String projectManagerNotes) {
-		this.projectManagerNotes = projectManagerNotes;
+	public void setPlumbingFinalStatus(String plumbingFinalStatus) {
+		this.plumbingFinalStatus = plumbingFinalStatus;
+	}
+
+	public String getPlumbingFinalNotes() {
+		return plumbingFinalNotes;
+	}
+
+	public void setPlumbingFinalNotes(String plumbingFinalNotes) {
+		this.plumbingFinalNotes = plumbingFinalNotes;
+	}
+
+	public Date getPlumbingFinalDate() {
+		return plumbingFinalDate;
+	}
+
+	public void setPlumbingFinalDate(Date plumbingFinalDate) {
+		this.plumbingFinalDate = plumbingFinalDate;
+	}
+
+	public String getSprinkleFinalStatus() {
+		return sprinkleFinalStatus;
+	}
+
+	public void setSprinkleFinalStatus(String sprinkleFinalStatus) {
+		this.sprinkleFinalStatus = sprinkleFinalStatus;
+	}
+
+	public String getSprinkleFinalNotes() {
+		return sprinkleFinalNotes;
+	}
+
+	public void setSprinkleFinalNotes(String sprinkleFinalNotes) {
+		this.sprinkleFinalNotes = sprinkleFinalNotes;
+	}
+
+	public Date getSprinkleFinalDate() {
+		return sprinkleFinalDate;
+	}
+
+	public void setSprinkleFinalDate(Date sprinkleFinalDate) {
+		this.sprinkleFinalDate = sprinkleFinalDate;
+	}
+
+	public String getBuildingFinalStatus() {
+		return buildingFinalStatus;
+	}
+
+	public void setBuildingFinalStatus(String buildingFinalStatus) {
+		this.buildingFinalStatus = buildingFinalStatus;
+	}
+
+	public String getBuildingFinalNotes() {
+		return buildingFinalNotes;
+	}
+
+	public void setBuildingFinalNotes(String buildingFinalNotes) {
+		this.buildingFinalNotes = buildingFinalNotes;
+	}
+
+	public Date getBuildingFinalDate() {
+		return buildingFinalDate;
+	}
+
+	public void setBuildingFinalDate(Date buildingFinalDate) {
+		this.buildingFinalDate = buildingFinalDate;
+	}
+
+	public String getTmpCertificateStatus() {
+		return tmpCertificateStatus;
+	}
+
+	public void setTmpCertificateStatus(String tmpCertificateStatus) {
+		this.tmpCertificateStatus = tmpCertificateStatus;
+	}
+
+	public String getTmpCertificateNotes() {
+		return tmpCertificateNotes;
+	}
+
+	public void setTmpCertificateNotes(String tmpCertificateNotes) {
+		this.tmpCertificateNotes = tmpCertificateNotes;
+	}
+
+	public Date getTmpCertificateDate() {
+		return tmpCertificateDate;
+	}
+
+	public void setTmpCertificateDate(Date tmpCertificateDate) {
+		this.tmpCertificateDate = tmpCertificateDate;
+	}
+
+	public String getCertificateStatus() {
+		return certificateStatus;
+	}
+
+	public void setCertificateStatus(String certificateStatus) {
+		this.certificateStatus = certificateStatus;
+	}
+
+	public String getCertificateNotes() {
+		return certificateNotes;
+	}
+
+	public void setCertificateNotes(String certificateNotes) {
+		this.certificateNotes = certificateNotes;
+	}
+
+	public Date getCertificateDate() {
+		return certificateDate;
+	}
+
+	public void setCertificateDate(Date certificateDate) {
+		this.certificateDate = certificateDate;
+	}
+
+	public String getPunchListStatus() {
+		return punchListStatus;
+	}
+
+	public void setPunchListStatus(String punchListStatus) {
+		this.punchListStatus = punchListStatus;
+	}
+
+	public String getPunchListNotes() {
+		return punchListNotes;
+	}
+
+	public void setPunchListNotes(String punchListNotes) {
+		this.punchListNotes = punchListNotes;
+	}
+
+	public Date getPunchListDate() {
+		return punchListDate;
+	}
+
+	public void setPunchListDate(Date punchListDate) {
+		this.punchListDate = punchListDate;
 	}
 }

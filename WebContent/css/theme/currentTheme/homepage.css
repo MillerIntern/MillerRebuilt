@@ -28,6 +28,12 @@
     box-shadow: 10px 10px 0px -3px rgba(0,0,0,0.75);
 }
 
+button:focus 
+{
+	outline:0;
+	background-color: #770000;
+}
+
 .button span 
 {
     cursor: pointer;

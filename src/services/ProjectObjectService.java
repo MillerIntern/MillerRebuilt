@@ -272,44 +272,7 @@ public class ProjectObjectService
 	 * @param id the id of the object to be edited
 	 * @param newObject the object that is to replace the object in the database.
 	 * @throws ClassNotFoundException
-	 */
-/*
-	
-	public static void editObjects(long[] iDs,String[] domains,ProjectObject objects[]) throws ClassNotFoundException
-	{
-		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
-		for(int i=0; i<iDs.length;i++)
-		{
-		//Get session and start transaction
-		System.out.println(i);
-		
-				
-				if(iDs[i]!=0 )
-				{
-				Class c = Class.forName("projectObjects."+domains[i]);
-				
-				//Copy fields of new object into old object, but keep the i
-				ProjectObject oldObject = (ProjectObject) session.get(c, iDs[i]);
-				ProjectObject newObject = objects[i];
-				
-				//Copy fields of new object into old object, but keep the id
-				newObject.setId(iDs[i]);
-				//if(i==iDs.length)
-			//	{
-					copyFieldByField(newObject, oldObject);
-					session.update(oldObject);
-					
-				//}
-				}
-			
-		//Save the change
-		
-		}
-		tx.commit();
-	}
-	*/
-	
+	 */	
 	public static void editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
