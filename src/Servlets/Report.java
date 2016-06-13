@@ -57,6 +57,7 @@ public class Report extends HttpServlet
 		try 
 		{
 			projects = QueryService.queryProjects(map);
+			System.out.println(projects.size());
 		} 
 		catch (ParseException e) 
 		{
@@ -302,6 +303,76 @@ public class Report extends HttpServlet
 				sb.append("<th>");
 				sb.append("Permit Application");
 			}
+			else if(value.equals("mechanicalFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Mechanical Final Inspection");
+			}
+			else if(value.equals("electricalFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Electrical Final Inspection");
+			}
+			else if(value.equals("plumbingFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Plumbing Final Inspection");
+			}
+			else if(value.equals("sprinkleFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Sprinkler Final Inspection");
+			}
+			else if(value.equals("buildingFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Building Final Inspection");
+			}
+			else if(value.equals("tmpCertificate"))
+			{
+				sb.append("<th>");
+				sb.append("Temp Certificate of Occupancy");
+			}
+			else if(value.equals("certififcateFinal"))
+			{
+				sb.append("<th>");
+				sb.append("Final Certificate of Occupancy");
+			}
+			else if(value.equals("equipmentSubmittal"))
+			{
+				sb.append("<th>");
+				sb.append("Equipment Submittal");
+			}
+			else if(value.equals("manuals"))
+			{
+				sb.append("<th>");
+				sb.append("Operation & Maintenance Manuals");
+			}
+			else if(value.equals("punchList"))
+			{
+				sb.append("<th>");
+				sb.append("Punch List");
+			}
+			else if(value.equals("asBuiltDrawings"))
+			{
+				sb.append("<th>");
+				sb.append("As-Built Drawings");
+			}
+			else if(value.equals("closeoutPhotos"))
+			{
+				sb.append("<th>");
+				sb.append("Closeout Photos");
+			}
+			else if(value.equals("hvacStartup"))
+			{
+				sb.append("<th>");
+				sb.append("HVAC Startup");
+			}
+			
+
+			
+			
+			
 			sb.append("</th>");
 		}
 		sb.append("</tr>");
@@ -418,12 +489,42 @@ public class Report extends HttpServlet
 			return String.valueOf(p.getZachUpdates());
 		else if (value.equals("permitApp") && p.getPermitApplication() != null)
 			return dForm.format(p.getPermitApplication()).toString();
+		else if(value.equals("mechanicalFinal") && p.getCloseoutDetails().getMechFinalStatus() != null)
+		{
+			if(p.getCloseoutDetails().getMechFinalNotes() != null)
+			{
+				if(p.getCloseoutDetails().getMechFinalDate() != null)
+					return convert(p.getCloseoutDetails().getMechFinalStatus()) + "<br> " + 
+								dForm.format(p.getCloseoutDetails().getMechFinalDate()) + "<br>" + 
+								p.getCloseoutDetails().getMechFinalNotes();
+			}
+			else
+				return convert(p.getCloseoutDetails().getMechFinalStatus()) + "<br> " 
+					+ p.getCloseoutDetails().getMechFinalNotes();
+		
+			System.out.println("Should be returning complete...");
+			return convert(p.getCloseoutDetails().getMechFinalStatus());
+		}
+		
 		
 			else
 			return "---";
 	}
 
 
+	private static String convert(String i)
+	{
+		if(i.equals("1"))
+			return "Complete";
+		else if(i.equals("2"))
+			return "Incomplete";
+		else if(i.equals("3"))
+			return "N/A";
+
+		
+		return "---";
+	}
+	
 	public Person getFirstFromSet(Set<Person> set)
 	{
 		Iterator<Person> i = set.iterator();

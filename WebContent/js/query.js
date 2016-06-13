@@ -4,7 +4,7 @@ var DATE_RELATIONS = ["<", "=", ">"];
 var BOOL_RELATIONS = ["and", "or"];
 var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
 
-const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration","J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX"];
+const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration","J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -15,12 +15,13 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 		  "status": "Project Status", "scheduledStartDate": "Scheduled Start Date", "scheduledTurnover" : "Scheduled Turn Over",
 		  "actualTurnover" : "Actual Turn Over", "initiated": "Project Initiated Date", "siteSurvey" : "Site Survey", "costcoDueDate" : "Costco Due Date",
 		  "proposalSubmitted" : "Proposal Submitted", "type" : "Type", "asBuilts" : "As-Builts", "punchList":"Punch List",
-		  "alarmHvacForm":"Alarm/HVAC Form", "salvageValue" : "Salvage Value", "airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report",
+		  "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", "airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report",
 		  "shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
 		  "cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", "person": "Project Manager"};
 
 var REPORT_VALS = {"Weekly":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
-					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", "Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX"};
+					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
+					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT"};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -146,6 +147,12 @@ const CLOSED_RX ="RX_C";
 const BUDGETARY_RX ="RX_B";
 
 const ACTIVE_COMPLETE_REPORT ="COMPLETED_A";
+
+const ACTIVE_CLOSEOUT = "CLOSEOUT_A";
+const BUDGETARY_CLOSEOUT = "CLOSEOUT_B";
+const CLOSED_CLOSEOUT = "CLOSEOUT_C";
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Fields to show the fields required for weekly reports
@@ -206,6 +213,12 @@ const ACTIVE_HVAC_KEYS = new Array("warehouse", "item","scope","region","status"
 
 //Fields to show with Active/Complete report
 const ACTIVE_COMPLETE_KEYS = new Array("mcsNum","warehouse", "item", "scope","region", "scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed","shouldInvoice","invoiced","projectNotes");
+
+// Fields to show for the closeout report
+const CLOSEOUT_KEYS = new Array("warehouse", "item", "status", "mechanicalFinal", "electricalFinal", "plumbingFinal", 
+								"sprinkleFinal", "buildingFinal", "tmpCertificate", "certififcateFinal", "equipmentSubmittal", 
+								"manuals", "punchList", "asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", 
+								"verisaeShutdownReport","shouldInvoice", "invoiced");
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
 var warehouseOptions;
@@ -748,42 +761,6 @@ function submitQuery()
     				var valType = $('#val'+i).val();
     				stage.push(valType);
 				break;
-    		
-    		/*if(paramType == 'region')
-    			{
-    				var valType = $('#val'+i).val();
-    				region.push(valType);
-    			}
-    		else if(paramType == 'warehouse')
-				{
-    				var valType = $('#val'+i).val();
-    				warehouseIDs.push(valType);
-				}
-    		else if(paramType == 'class')
-    			{
-    				var valType = $('#val'+i).val();
-					pClass.push(valType);
-    			}
-    		else if(paramType == 'item')
-    			{
-    				var valType = $('#val'+i).val();
-    				item.push(valType);
-    			}
-    		else if(paramType == 'type')
-    			{
-    				var valType = $('#val'+i).val();
-    				pType.push(valType);
-    			}
-    		else if(paramType == 'status')
-				{
-					var valType = $('#val'+i).val();
-					status.push(valType);
-				}
-    		else if(paramType == 'stage')
-				{
-    				var valType = $('#val'+i).val();
-    				stage.push(valType);
-				}*/
 		}
     	}
     }
@@ -869,7 +846,7 @@ function reportCreator(elem)
 
 function generateReport(reportType)
 {
-	
+	console.log(reportType);
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
 	var warehouseIDs = new Array();
@@ -953,55 +930,7 @@ function generateReport(reportType)
 					break;
 
 			}
-	    		/*if(paramType == 'initiated')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				initiatedRelation.push(valType);			
-	    				var date = $('#dateBox'+i).val();
-	    				initiated.push(date);
-	    			}
-	    		if(paramType == 'costcoDueDate')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				costcoRelation.push(valType);
-	    				var date = $('#dateBox'+i).val();
-						costco.push(date);
-	    			}
-	    		if(paramType == 'proposalSubmitted')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				submittedRelation.push(valType);
-	    				var date = $('#dateBox'+i).val();
-	    				submitted.push(date);
-	    			}
-	    		if(paramType == 'scheduledStartDate')
-    			{
-    				var valType = $('#val'+i).val();
-    				schStartDateRelation.push(valType);			
-    				var date = $('#dateBox'+i).val();
-    				schStartDate.push(date);
-    			}
-    		if(paramType == 'scheduledTurnover')
-    			{
-    				var valType = $('#val'+i).val();
-    				schTurnoverDateRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-    				schTurnoverDate.push(date);
-    			}
-    		if(paramType == 'actualTurnover')
-    			{
-    				var valType = $('#val'+i).val();
-    				actTurnoverDateRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-    				actTurnoverDate.push(date);
-    			}   
-    		if(paramType == 'onGoing')
-			{
-				var valType = $('#val'+i).val();
-				onGoingRelation.push(valType);
-				var date = $('#dateBox'+i).val();
-				onGoing.push(date);
-			}*/   
+	    
 	    	}
 	    	else
 	    	{
@@ -1049,42 +978,7 @@ function generateReport(reportType)
                         manager.push(valType);
                         
 			}
-	    		
-	    		/*if(paramType == 'region')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				region.push(valType);
-	    			}
-	    		else if(paramType == 'warehouse')
-					{
-	    				var valType = $('#val'+i).val();
-	    				warehouseIDs.push(valType);
-					}
-	    		else if(paramType == 'class')
-	    			{
-	    				var valType = $('#val'+i).val();
-						pClass.push(valType);
-	    			}
-	    		else if(paramType == 'item')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				item.push(valType);
-	    			}
-	    		else if(paramType == 'type')
-	    			{
-	    				var valType = $('#val'+i).val();
-	    				pType.push(valType);
-	    			}
-	    		else if(paramType == 'status')
-					{
-						var valType = $('#val'+i).val();
-						status.push(valType);
-					}
-	    		else if(paramType == 'stage')
-					{
-	    				var valType = $('#val'+i).val();
-	    				stage.push(valType);
-					}*/
+
 	    	}
 	    }
 
@@ -1343,7 +1237,22 @@ function generateReport(reportType)
 			 item.push(PROJECT_ITEM_PHARMACY_LAMINATE_FLOOR);
 			 item.push(PROJECT_ITEM_PHARMACY_FLOOR);
 			
-			break;			
+			break;
+				
+		case ACTIVE_CLOSEOUT:
+			stage.push(ACTIVE_STAGE);
+			title = "Closeout for Active Projects";
+			break;
+
+		case BUDGETARY_CLOSEOUT:
+			stage.push(BUDGETARY_STAGE);
+			title="Closeout for Budgetary Projects";
+			break;
+		case CLOSED_CLOSEOUT:
+			stage.push(CLOSED_STAGE);
+			title="Closeout for Closed Projects";
+			break;	
+		
 	
 		default:
 			alert("Invalid report type");
@@ -1351,177 +1260,7 @@ function generateReport(reportType)
 			break;
 	}
 	
-	/*if(reportType == PROPOSAL_WEEKLY)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "Weekly Proposals";
-	}
-	
-	else if(reportType == ACTIVE_WEEKLY)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "Weekly Active Projects";
-	}
 
-	else if(reportType==BUDGETARY_WEEKLY)
-	{
-		stage.push(BUDGETARY_STAGE);
-		title="Weekly Budgetary Projects";
-	}
-
-	else if(reportType==INACTIVE_WEEKLY)
-	{
-		stage.push(INACTIVE_STAGE);
-		title="Weekly Inactive Projects";
-	}
-
-	else if(reportType==CLOSED_WEEKLY)
-	{
-		stage.push(CLOSED_STAGE);
-		title="Weekly Closed Projects";
-	}
-	
-	else if(reportType == PROPOSAL_STEVE_MEYER)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "NE, SE, and PR Proposals";
-		pType.push(PROJECT_TYPE_C);
-		pType.push(PROJECT_TYPE_R);
-		region.push("SE");
-		region.push("PR");
-		region.push("NE");
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL_TEMP);
-		status.push(PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED);
-		status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
-		status.push(PROJECT_STATUS_AWAITING_DIRECTION);
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-		status.push(PROJECT_STATUS_SITE_SURVEY);
-		status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-		status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
-		status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
-		status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
-		status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
-		status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
-		status.push(PROJECT_STATUS_BUDGETARY_SUBMITTED);
-	}
-	
-	else if(reportType == ACTIVE_STEVE_MEYER)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "NE, SE, and PR Active Projects";
-		region.push("SE");
-		region.push("PR");
-		region.push("NE");
-		status.push(PROJECT_STATUS_SCHEDULING);
-		status.push(PROJECT_STATUS_SCHEDULED);
-		status.push(PROJECT_STATUS_AWAITING_CONTRACT);
-		status.push(PROJECT_STATUS_AWAITING_PO);
-		status.push(PROJECT_STATUS_AWAITING_PERMIT);
-		pType.push(PROJECT_TYPE_C);
-		pType.push(PROJECT_TYPE_CW);
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == PROPOSAL_SE)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "SE Refrigeration Proposals";
-		region.push("PR");
-		region.push("SE");
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == ACTIVE_SE)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "Active SE Refrigeration Projects";
-		region.push("PR");
-		region.push("SE");
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == PROPOSAL_NE)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "NE Refrigeration Proposals";
-		region.push("NE");
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == ACTIVE_NE)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "Active NE Refrigeration Projects";
-		region.push("NE");
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == PROPOSAL_J_DEMPSEY)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "SE and PR Proposals";
-		pType.push(PROJECT_TYPE_C);
-		pType.push(PROJECT_TYPE_R);
-		region.push("SE");
-		region.push("PR");
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL_TEMP);
-		status.push(PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED);
-		status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
-		status.push(PROJECT_STATUS_AWAITING_DIRECTION);
-		status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-		status.push(PROJECT_STATUS_SITE_SURVEY);
-		status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-		status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
-		status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
-		status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
-		status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
-		status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
-		status.push(PROJECT_STATUS_BUDGETARY_SUBMITTED);
-	}
-	
-	else if(reportType == ACTIVE_J_DEMPSEY)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "SE and PR Active Projects";
-		region.push("SE");
-		region.push("PR");
-		status.push(PROJECT_STATUS_SCHEDULING);
-		status.push(PROJECT_STATUS_SCHEDULED);
-		status.push(PROJECT_STATUS_AWAITING_CONTRACT);
-		status.push(PROJECT_STATUS_AWAITING_PO);
-		status.push(PROJECT_STATUS_AWAITING_PERMIT);
-		pType.push(PROJECT_TYPE_C);
-		pType.push(PROJECT_TYPE_CW);
-		pType.push(PROJECT_TYPE_R);
-	}
-	
-	else if(reportType == PROPOSAL_INVOICE_REPORT)
-	{
-		stage.push(PROPOSAL_STAGE);
-		title = "Invoice Report";
-	}
-	else if(reportType == ACTIVE_INVOICE_REPORT)
-	{
-		stage.push(ACTIVE_STAGE);
-		title = "Invoice Report";
-	}
-	
-	else if(reportType == ACTIVE_COMPLETE_REPORT)
-	{
-		stage.push(ACTIVE_STAGE);
-		status.push(PROJECT_STATUS_COMPLETE);
-		title = "Completed Actives Report";
-		
-	}
-	
-	else
-	{
-		alert("Invalid report type");
-		return false;
-	}*/
-	
 	if($('#reportTitle').val() != null && $('#reportTitle').val() != '')
 	{
 		title = $('#reportTitle').val();
@@ -1671,54 +1410,14 @@ function getAllSpecifiedFields(reportType)
 		case BUDGETARY_RX:
 			genType=BUDGETARY_WEEKLY_KEYS;
 			break;
-	}
+			
+		case ACTIVE_CLOSEOUT:
+		case BUDGETARY_CLOSEOUT:
+		case CLOSED_CLOSEOUT:
+			genType=CLOSEOUT_KEYS;
+			break;
 	
-	/*if(reportType == PROPOSAL_WEEKLY)
-	{
-		genType = PROPOSAL_WEEKLY_KEYS;
 	}
-	else if(reportType == ACTIVE_WEEKLY)
-	{
-		genType = ACTIVE_WEEKLY_KEYS;
-	}
-	else if(reportType==BUDGETARY_WEEKLY)
-	{
-		genType=BUDGETARY_WEEKLY_KEYS;	
-	}
-	else if(reportType == PROPOSAL_J_DEMPSEY)
-	{
-		genType = PROPOSAL_J_DEMPSEY_KEYS;
-	}
-	else if(reportType == ACTIVE_SE || reportType == ACTIVE_NE)
-	{
-		genType = ACTIVE_SE_AND_NE_KEYS;
-	}
-	else if(reportType == PROPOSAL_SE || reportType == PROPOSAL_NE)
-	{
-		genType = PROPOSAL_SE_AND_NE_KEYS;
-	}
-	else if(reportType == ACTIVE_STEVE_MEYER || reportType == ACTIVE_J_DEMPSEY)
-	{
-		genType = ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS;
-	}
-	
-	else if(reportType == PROPOSAL_STEVE_MEYER)
-	{
-		genType = PROPOSAL_STEVE_MEYER_KEYS;
-	}
-	else if(reportType == PROPOSAL_INVOICE_REPORT)
-	{
-		genType = INVOICE_KEYS;
-	}
-	else if(reportType == ACTIVE_INVOICE_REPORT)
-	{
-		genType = INVOICE_KEYS;
-	}
-	else if(reportType == ACTIVE_COMPLETE_REPORT)
-	{
-		genType = ACTIVE_COMPLETE_KEYS;
-	}*/
-	
 	return genType;
 };
 

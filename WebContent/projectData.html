@@ -445,10 +445,10 @@
     <fieldset id='CloseOutList'>
         <legend>Close Out List Information:</legend>
 
-            <div class="pair">
+            <!-- Moved to building final inspeciton <div class="pair">
             <label for="buildingPermitCL">Building Permit:</label>
             <input id="buildingPermitCL" type="text"></input>
-            </div>
+            </div>-->
 
             <div class="pair">
             <label for="inspectionSOCL">Inspection Sign offs:</label>
@@ -462,41 +462,42 @@
             <label for="mPunchListCL">MulvannyG2 PunchList:</label>
             <input id="mPunchListCL" type="text"></input></div>
 
-            <div class="pair">
+            <!-- Moved to Closeout Photos<div class="pair">
             <label for="closeoutPhotosCL">Closeout Photos:</label>
-            <input id="closeoutPhotosCL" type="text"></input></div>
+            <input id="closeoutPhotosCL" type="text"></input></div>-->
 
             <div class="pair">
             <label for="subConWarrantiesCL">Subcontractor's Warranties:</label>
             <input id="subConWarrantiesCL" type="text"></input></div>
 
-            <div class="pair">
+            <!-- Moved to MCS Warranty <div class="pair">
             <label for="MCSWarranty">MCS Warranty:</label>
-            <input id="MCSWarranty" type="text"></input></div>
+            <input id="MCSWarranty" type="text"></input></div>--> 
 
-            <div class="pair">
+            <!-- Moved to EquipmentSubmittal<div class="pair">
             <label for="equipmentSubCL">Equipment Submittals:</label>
-            <input id="equipmentSubCL" type="text"></input></div>
+            <input id="equipmentSubCL" type="text"></input></div> -->
 
             <div class="pair">
             <label for="traneCL">Trane Submittal:</label>
             <input id="traneCL" type="text"></input></div>
 
-            <div class="pair">
+            <!-- Moved to As-Built Drawings <div class="pair">
             <label for="asBuilts">As-Builts Date:</label>
-            <input type="text" id="asBuilts" /></div>
+            <input type="text" id="asBuilts" /></div> -->
 
-            <div class="pair">
+            <!-- Moved to Punch List <div class="pair">
             <label for="punchList">Punch List Date:</label>
-            <input type="text" id="punchList" /></div>
+            <input type="text" id="punchList" /></div> -->
 
-            <div class="pair">
+
+            <!-- moved to alarm form <div class="pair">
             <label for="alarmHvac">Alarm / HVAC Form Date:</label>
-            <input type="text" id="alarmHvac" /></div>	
+            <input type="text" id="alarmHvac" /></div>	--> 
 
-            <div class="pair">
+            <!-- Moved to Verisae Report<div class="pair">
             <label for="verisae">Verisae Report Date:</label>
-            <input type="text" id="verisae" /></div>	
+            <input type="text" id="verisae" /></div> -->	
 
             <div class="pair">
             <label for="closeoutNotes">Closeout Notes Date:</label>
@@ -551,7 +552,7 @@
                 <select class="closeout-input" id="MCSStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="MCSDate" />
+                <input type="text" id="MCSDate"/>
             </div>
             <textarea class="closeout-textarea" type="text" id="MCSNotes"> </textarea><br><br><br>
         
@@ -691,11 +692,11 @@
         <textarea class="closeout-textarea" type="text" id="certificateNotes"> </textarea><br><br><br>
         
         <div class="pair">
-            <label for="buildFinalDate">Building Final Inspection Date:</label>
+            <label for="buildingPermitCL">Building Final Inspection Date:</label>
             <select class="closeout-input" id="buildFinalStatus">
                 <option value="default">--Status--</option>
             </select>
-            <input type="text" id="buildFinalDate" />
+            <input id="buildingPermitCL" type="text"></input>
         </div>
         <textarea class="closeout-textarea" type="text" id="buildFinalNotes"> </textarea><br>
 
@@ -710,11 +711,11 @@
         <Legend>Closeout Warranty Letters:</Legend>
         
             <div class="pair">
-                <label for="MCSWarrantyDate">MCS Warranty:</label>
+                <label for="MCSWarranty">MCS Warranty:</label>
                 <select class="closeout-input" id="MCSWarrantyStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="MCSWarrantyDate" />
+            <input id="MCSWarranty" type="text"></input>
             </div>
             <textarea class="closeout-textarea" type="text" id="MCSWarrantyNotes"> </textarea><br><br><br>
         
@@ -812,11 +813,11 @@
         	Project Classification: AIA/PO</label><br><br>
 
             <div class="pair">
-                <label for="equipmentSubmittalDate">Equipment Submittal:</label>
+                <label for="equipmentSubCL">Equipment Submittal:</label>
                 <select class="closeout-input" id="equipmentSubmittalStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="equipmentSubmittalDate" />
+            <input id="equipmentSubCL" type="text"></input>
             </div>
             <textarea class="closeout-textarea" type="text" id="equipmentSubmittalNotes"> </textarea><br><br><br>
         
@@ -830,29 +831,29 @@
             <textarea class="closeout-textarea" type="text" id="manualNotes"> </textarea><br><br><br>
         
             <div class="pair">
-                <label for="punchListDate">Punch List:</label>
+                <label for="punchList">Punch List:</label>
                 <select class="closeout-input" id="punchListStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="punchListDate" />
+            <input type="text" id="punchList" />
             </div>
             <textarea class="closeout-textarea" type="text" id="punchListNotes"> </textarea><br><br><br>
         
             <div class="pair">
-                <label for="asBuiltDrawingsDate">As-Built Drawings:</label>
+                <label for="asBuilts">As-Built Drawings:</label>
                 <select class="closeout-input" id="asBuiltDrawingsStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="asBuiltDrawingsDate" />
+                <input type="text" id="asBuilts" />
             </div>
             <textarea class="closeout-textarea" type="text" id="asBuiltDrawingsNotes"> </textarea><br><br><br>
         
             <div class="pair">
-                <label for="closeOutPhotosDate">Close Out Photos:</label>
+                <label for="closeoutPhotosCL">Close Out Photos:</label>
                 <select class="closeout-input" id="closeOutPhotosStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="closeOutPhotosDate" />
+            <input id="closeoutPhotosCL" type="text"></input>
             </div>
             <textarea class="closeout-textarea" type="text" id="closeOutPhotosNotes"> </textarea><br><br><br>
         
@@ -866,20 +867,20 @@
             <textarea class="closeout-textarea" type="text" id="HVACstartupFormNotes"> </textarea><br><br><br>
         
             <div class="pair">
-                <label for="alarmFormDate">Alarm Form:</label>
+                <label for="alarmHvac">Alarm Form:</label>
                 <select class="closeout-input" id="alarmFormStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="alarmFormDate" />
+                <input type="text" id="alarmHvac" />
             </div>
             <textarea class="closeout-textarea" type="text" id="alarmFormNotes"> </textarea><br><br><br>
         
             <div class="pair">
-                <label for="verisaeReportDate">Verisae Report:</label>
+                <label for="verisae">Verisae Report:</label>
                 <select class="closeout-input" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
                 </select>
-                <input type="text" id="verisaeReportDate" />
+                <input type="text" id="verisae" />	
             </div>
             <textarea class="closeout-textarea" type="text" id="verisaeReportNotes"> </textarea><br>
     </fieldset>

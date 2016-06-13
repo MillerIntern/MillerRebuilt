@@ -41,7 +41,7 @@ public class Project extends HttpServlet
 		Map<String, String> parameters = RequestHandler.getParameters((req.getParameterMap()));
 		
 		//Get the domain and desired action
-		String domain = parameters.get("domain");
+		//String domain = parameters.get("domain");
 		String action = parameters.get("action");
 		ProjectService ps = new ProjectService();
 		
@@ -77,7 +77,7 @@ public class Project extends HttpServlet
 			String classID = (parameters.get("classID"));
 			String itemID = (parameters.get("itemID"));
 			String projectID = (parameters.get("projectID"));
-			String inspections=(parameters.get("inspections"));
+			//String inspections=(parameters.get("inspections"));
 			response = QueryService.getProjectToEdit(warehouse, stage, classID, itemID, projectID);
 		}
 		else if (action.equals("add"))

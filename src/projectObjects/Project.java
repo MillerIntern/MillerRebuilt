@@ -88,7 +88,7 @@ public class Project extends ProjectObject
 	
 	//private Equipment equipment;
 	
-	private CloseoutEnhanced closeout;
+	//private CloseoutEnhanced closeout;
 	
 	private long eqpd;
 	/*
@@ -102,7 +102,7 @@ public class Project extends ProjectObject
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
-			CloseoutEnhanced closeout, CloseoutCheckList closeoutCheckList,
+			CloseoutCheckList closeoutCheckList,
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
@@ -120,7 +120,7 @@ public class Project extends ProjectObject
 		this.costcoDueDate = costcoDueDate;
 		this.proposalSubmitted = proposalSubmitted;
 		this.closeoutDetails = closeoutDetails;
-		this.closeout = closeout;
+		//this.closeout = closeout;
 		this.closeoutCheckList = closeoutCheckList;
 		this.changeOrders = changeOrders;
 		this.shouldInvoice = shouldInvoice;
@@ -156,7 +156,6 @@ public class Project extends ProjectObject
 		this.costcoDueDate = null;
 		this.proposalSubmitted = null;
 		this.closeoutDetails = new CloseoutDetails();
-		this.closeout = new CloseoutEnhanced();
 		this.closeoutCheckList = new CloseoutCheckList();
 		this.changeOrders = new HashSet<ChangeOrder>();
 		
@@ -529,7 +528,7 @@ public class Project extends ProjectObject
 		return this.eqpd;
 	}
 
-	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	/*@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
 	public CloseoutEnhanced getCloseout() {
@@ -538,7 +537,7 @@ public class Project extends ProjectObject
 
 	public void setCloseout(CloseoutEnhanced closeout) {
 		this.closeout = closeout;
-	}
+	}*/
 	
 	
 	
