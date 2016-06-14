@@ -1,23 +1,27 @@
-var ITEM_TYPES = ["warehouse", "stage", "item", "class", "type", "region", "status", "person"];
+var ITEM_TYPES = ["warehouse", "stage", "item", "class", "type", "region", "status", "person", "closeout"];
 var DATE_TYPES = ["initiated", "costcoDueDate", "proposalSubmitted", "scheduledStartDate", "scheduledTurnover", "actualTurnover", "onGoing"];
 var DATE_RELATIONS = ["<", "=", ">"];
 var BOOL_RELATIONS = ["and", "or"];
 var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
+var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
-const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration","J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout"];
+const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration",
+                      "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
 const BOOL_COMPARATORS = {"and":"AND", "or":"OR"};
 
-const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "warehouse": "Warehouse", "item": "Project Item", "scope": "Project Scope",
-		  "class": "Project Classification", "manager": "Project Manager", "supervisor": "Project Supervisor", "region": "Region",
-		  "status": "Project Status", "scheduledStartDate": "Scheduled Start Date", "scheduledTurnover" : "Scheduled Turn Over",
-		  "actualTurnover" : "Actual Turn Over", "initiated": "Project Initiated Date", "siteSurvey" : "Site Survey", "costcoDueDate" : "Costco Due Date",
-		  "proposalSubmitted" : "Proposal Submitted", "type" : "Type", "asBuilts" : "As-Builts", "punchList":"Punch List",
-		  "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", "airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report",
-		  "shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
-		  "cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", "person": "Project Manager"};
+const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "warehouse": "Warehouse", "item": "Project Item", 
+			"scope": "Project Scope", "class": "Project Classification", "manager": "Project Manager", "supervisor": "Project Supervisor",
+			"region": "Region", "status": "Project Status", "scheduledStartDate": "Scheduled Start Date", 
+			"scheduledTurnover" : "Scheduled Turn Over", "actualTurnover" : "Actual Turn Over", "initiated": "Project Initiated Date", 
+			"siteSurvey" : "Site Survey", "costcoDueDate" : "Costco Due Date", "proposalSubmitted" : "Proposal Submitted", "type" : "Type", 
+			"asBuilts" : "As-Builts", "punchList":"Punch List", "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", 
+			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
+			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
+			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
+			"person": "Project Manager", "closeout": "Closeout"};
 
 var REPORT_VALS = {"Weekly":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
@@ -156,20 +160,27 @@ const CLOSED_CLOSEOUT = "CLOSEOUT_C";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Fields to show the fields required for weekly reports
-const PROPOSAL_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","class","manager", "supervisor", "region", "status","initiated","siteSurvey","costcoDueDate","proposalSubmitted",
-								"type","projectNotes");
-const ACTIVE_WEEKLY_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", "region", "status","scheduledStartDate","scheduledTurnover","actualTurnover",
-							  "type","asBuilts","punchList","alarmHvacForm","salvageValue","airGas","permitsClosed","verisaeShutdownReport", "invoiced", "shouldInvoice", "projectNotes");
+const PROPOSAL_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","class","manager", "supervisor", 
+					"region", "status","initiated","siteSurvey","costcoDueDate","proposalSubmitted","type","projectNotes");
+
+const ACTIVE_WEEKLY_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", "region", 
+									"status","scheduledStartDate","scheduledTurnover","actualTurnover",
+									"type",
+									/*TODO: Get rid of this"asBuilts","punchList","alarmHvacForm","salvageValue","airGas",
+									"permitsClosed","verisaeShutdownReport",*/ "invoiced", "shouldInvoice", "projectNotes");
 
 
 const INACTIVE_WEEKLY_KEYS = new Array("stage", "item","scope","status");
 
 
-const BUDGETARY_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","manager", "supervisor", "region", "status","initiated","siteSurvey","costcoDueDate","proposalSubmitted","type", "projectNotes");
+const BUDGETARY_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","manager", "supervisor", 
+		"region", "status","initiated","siteSurvey","costcoDueDate","proposalSubmitted","type", "projectNotes");
 
 
-const CLOSED_WEEKLY_KEYS = new Array("mcsNum", "stage", "warehouse", "item","scope","manager", "supervisor", "region", "status","initiated","type","costcoDueDate","proposalSubmitted",
-"scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed","shouldInvoice","invoiced","projectNotes");
+const CLOSED_WEEKLY_KEYS = new Array("mcsNum", "stage", "warehouse", "item","scope","manager", "supervisor",
+									"region", "status","initiated","type","costcoDueDate","proposalSubmitted",
+									"scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm",
+									"permitsClosed","shouldInvoice","invoiced","projectNotes");
 
 //Fields to show with Steve Meyer and J Dempsey reports
 const PROPOSAL_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", "status", "initiated","proposalSubmitted");
@@ -214,11 +225,35 @@ const ACTIVE_HVAC_KEYS = new Array("warehouse", "item","scope","region","status"
 //Fields to show with Active/Complete report
 const ACTIVE_COMPLETE_KEYS = new Array("mcsNum","warehouse", "item", "scope","region", "scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed","shouldInvoice","invoiced","projectNotes");
 
-// Fields to show for the closeout report
-const CLOSEOUT_KEYS = new Array("warehouse", "item", "status", "mechanicalFinal", "electricalFinal", "plumbingFinal", 
+// Fields to show for the closeout report, don't ever actually make this report. It doesn't look good.
+const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFinal", "electricalFinal", "plumbingFinal", 
 								"sprinkleFinal", "buildingFinal", "tmpCertificate", "certififcateFinal", "equipmentSubmittal", 
 								"manuals", "punchList", "asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", 
-								"verisaeShutdownReport","shouldInvoice", "invoiced");
+								"verisaeShutdownReport","mcsWarranty", "gcWarranty", "mechanicalWarranty", "electricalWarranty",
+								"plumbingWarranty", "sprinklerWarranty", "roofingWarranty", "htiWarranty", "otherWarrantyA", 
+								"otherWarrantyB", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
+								"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "numOfChanges", "numOfChangesCompleted");
+
+const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList",
+										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
+										"inspectionsRequired", "inspectionsCompleted", "warrantiesRequired", "warrantiesCompleted", 
+										"liensRequired", "liensCompleted", "numOfChanges", "numOfChangesCompleted", "mg2Completion");
+
+const CLOSEOUT_KEYS_INSPECTIONS = new Array("warehouse", "item", "status", "inspectionsRequired", "inspectionsCompleted", "mechanicalFinal",
+											"electricalFinal", "plumbingFinal", "sprinkleFinal", "buildingFinal", "tmpCertificate", 
+											"certififcateFinal");
+
+// TODO: We don't use the document keys, delete if you see this (the general CLOSEOUT_KEYS_SIMPLE already has all of the stuffs)
+const CLOSEOUT_KEYS_DOCUMENTS = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList", 
+										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
+										"mg2Completion", "numOfChanges", "numOfChangesCompleted");
+
+const CLOSEOUT_KEYS_WARRANTIES = new Array("warehouse", "item", "status", "warrantiesRequired", "warrantiesCompleted","mcsWarranty", 
+										"gcWarranty", "mechanicalWarranty", "electricalWarranty", "plumbingWarranty", "sprinklerWarranty", 
+										"roofingWarranty", "htiWarranty", "otherWarrantyA", "otherWarrantyB" );
+
+const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "liensCompleted", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
+										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens");
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
 var warehouseOptions;
@@ -229,6 +264,7 @@ var typeOptions;
 var regionOptions;
 var statusOptions;
 var managerOptions;
+var closeoutOptions;
 
 //Keeps track of what values go with which parameter
 var paramNum = 0;
@@ -293,6 +329,11 @@ function setVals(thisParam)
 		modParam.empty();
 		modParam.append(managerOptions.cloneNode(true));      
     }
+    if(valOptions == 'closeout')
+    {
+    	modParam.empty();
+    	modParam.append(closeoutOptions.cloneNode(true));
+    }
     
 }
 	
@@ -318,15 +359,21 @@ function getProjectEnums()
 //passes data from ajax call from projectEnums to generate values for drop downs
 function fillDropdown(data)
 {
+
 	for (var i = 0; i < ITEM_TYPES.length; i++)
 	{
 		generateDropdown(data[ITEM_TYPES[i]], ITEM_TYPES[i]);
 	}
+	generateCloseoutDropdown();
+
 }
 
 //stores the drop down values retrieved from server locally for later use so they may be retrieved swiftly
 function generateDropdown(str, className)
 {
+	if(className == "closeout")
+		return;
+	
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
 	var sent=true;
@@ -401,6 +448,21 @@ function generateDropdown(str, className)
         }
 	
 }
+
+function generateCloseoutDropdown()
+{
+
+	var d = document.createDocumentFragment();
+	for(var i = 0; i < CLOSEOUT_PARAMS.length; i++)
+	{
+		var option = document.createElement("option");
+		option.innerHTML=CLOSEOUT_PARAMS[i];
+		option.setAttribute("value", CLOSEOUT_PARAMS[i]);
+		d.appendChild(option);
+	}
+	closeoutOptions = d;
+}
+
 
 //add a parameter cell to the paramTable
 function addParamCell()
@@ -846,7 +908,6 @@ function reportCreator(elem)
 
 function generateReport(reportType)
 {
-	console.log(reportType);
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
 	var warehouseIDs = new Array();
@@ -891,7 +952,7 @@ function generateReport(reportType)
 	    				var valType = $('#val'+i).val();
 	    				costcoRelation.push(valType);
 	    				var date = $('#dateBox'+i).val();
-					costco.push(date);
+	    				costco.push(date);
 	    				break;
 
 	    			case 'proposalSubmitted':
@@ -972,11 +1033,67 @@ function generateReport(reportType)
 					break;
                     
                     case 'person':
-                        console.log("here and trying my best....");
 	    				var valType = $('#val'+i).val();
-                        console.log(valType);
                         manager.push(valType);
+	    				console.log(valType);
+
                         
+                    case 'closeout':
+	    				var valType = $('#val'+i).val();
+	    				if(valType == "Inspection")
+	    				{
+	    					selectedFields = JSON.stringify(CLOSEOUT_KEYS_INSPECTIONS);
+	    					switch(reportType)
+	    					{
+	    						case ACTIVE_CLOSEOUT:
+		    	    				title = "Inspection Closeouts for Active Projects";
+		    						break;
+	    						
+	    						case BUDGETARY_CLOSEOUT:
+			    	    			title = "Inspection Closeouts for Budgetary Projects";
+		    						break;
+	    							
+	    						case CLOSED_CLOSEOUT:
+				    	    		title = "Inspection Closeouts for Closed Projects";
+		    						break;
+	    					}
+	    				}
+	    				if(valType == "Warranties")
+	    				{
+	    					selectedFields = JSON.stringify(CLOSEOUT_KEYS_WARRANTIES);
+	    					switch(reportType)
+	    					{
+	    						case ACTIVE_CLOSEOUT:
+		    	    				title = "Warranty Closeouts for Active Projects";
+		    	    				break;
+	    						
+	    						case BUDGETARY_CLOSEOUT:
+	    							title = "Warranty Closeout for Budgetary Projects";
+	    						break;
+	    							
+	    						case CLOSED_CLOSEOUT:
+			    	    		title = "Warranty Closeout For Closed Projects";
+	    						break;
+	    					}	    				
+	    				}
+	    				if(valType == "Liens")
+	    				{
+	    					selectedFields = JSON.stringify(CLOSEOUT_KEYS_LIENS);
+	    					switch(reportType)
+	    					{
+	    						case ACTIVE_CLOSEOUT:
+	    	    				title = "Liens Closeout Form for Active Projects";
+	    						break;
+	    						
+	    						case BUDGETARY_CLOSEOUT:
+		    	    			title = "Liens Closeout Form for Budgetary Projects";
+	    						break;
+	    							
+	    						case CLOSED_CLOSEOUT:
+			    	    		title = "Liens Closeout Form for Closed Projects";
+	    						break;
+	    					}
+	    				}
 			}
 
 	    	}
@@ -1049,7 +1166,8 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_PO);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
-	
+			break;
+			
 		case PROPOSAL_SE:
 			stage.push(PROPOSAL_STAGE);
 			title = "SE Refrigeration Proposals";
@@ -1232,25 +1350,28 @@ function generateReport(reportType)
 			title = "Inactive RX Projects";
 			//pType.push(PROJECT_TYPE_RX);
 			item.push(PROJECT_ITEM_PHARMACY);
-			 item.push(PROJECT_ITEM_PHARMACY_SALES_COUNTER);
-			 item.push(PROJECT_ITEM_PHARMACY_TRIPPLE_WINDOW);
-			 item.push(PROJECT_ITEM_PHARMACY_LAMINATE_FLOOR);
-			 item.push(PROJECT_ITEM_PHARMACY_FLOOR);
+			item.push(PROJECT_ITEM_PHARMACY_SALES_COUNTER);
+			item.push(PROJECT_ITEM_PHARMACY_TRIPPLE_WINDOW);
+			item.push(PROJECT_ITEM_PHARMACY_LAMINATE_FLOOR);
+			item.push(PROJECT_ITEM_PHARMACY_FLOOR);
 			
 			break;
 				
 		case ACTIVE_CLOSEOUT:
 			stage.push(ACTIVE_STAGE);
-			title = "Closeout for Active Projects";
+			if(title == undefined)
+				title = "Closeout Summary for Active Projects";
 			break;
 
 		case BUDGETARY_CLOSEOUT:
 			stage.push(BUDGETARY_STAGE);
-			title="Closeout for Budgetary Projects";
+			if(title == undefined)
+				title="Closeout Summary for Budgetary Projects";
 			break;
 		case CLOSED_CLOSEOUT:
 			stage.push(CLOSED_STAGE);
-			title="Closeout for Closed Projects";
+			if(title == undefined)
+				title="Closeout Summary for Closed Projects";
 			break;	
 		
 	
@@ -1414,7 +1535,7 @@ function getAllSpecifiedFields(reportType)
 		case ACTIVE_CLOSEOUT:
 		case BUDGETARY_CLOSEOUT:
 		case CLOSED_CLOSEOUT:
-			genType=CLOSEOUT_KEYS;
+			genType=CLOSEOUT_KEYS_SIMPLE;
 			break;
 	
 	}

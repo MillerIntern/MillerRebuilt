@@ -67,7 +67,7 @@
     <li class="dropdown">
         <a class="dropbtn">Closeout</a>
         <div class="dropdown-content-sideways">
-            <a href="#tab7a">Change Order Items</a>
+            <a href="#tab7a">General Closeout Items</a>
             <a href="#tab3c">Final Inspections</a>
             <a href="#tab7d">Closeout Documents</a>
             <a href="#tab7c">Warranty Letters</a>
@@ -527,7 +527,7 @@
 <div id="tab7a" class="tab">
 <div id="dialog-window">
     <fieldset id='CloseOutList'>
-        <Legend>Change Order Items:</Legend>
+        <Legend>General Closeout Items:</Legend>
         	
             <div class="pair">
             <label for="numOfChangeOrders">Number of Change Orders:</label>
@@ -536,6 +536,14 @@
             <div class="pair">
             <label for="numOfChangeOrdersCompleted">Number of Change Orders Completed:</label>
             <input type="text" id="numOfChangeOrdersCompleted" /></div>
+            
+            <div class="pair">
+                <label for="mg2CompletionDate">MG2 Completion:</label>
+                <select class="closeout-input" id="mg2CompletionStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                <input type="text" id="mg2CompletionDate"/>
+            </div>
         
     </fieldset>
 </div>
@@ -656,7 +664,7 @@
         <textarea class="closeout-textarea" type="text" id="mechFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
-            <label for="elecFinalStatus">Electrical Final Inspection Date:</label>
+            <label for="elecFinalStatus">Electrical Final Inspection:</label>
             <select class="closeout-input" id="elecFinalStatus">
                 <option value="default">--Status--</option>
             </select>
@@ -665,7 +673,7 @@
         <textarea class="closeout-textarea" type="text" id="elecFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
-            <label for="plumbingFinalDate">Plumbing Final Inspection Date:</label>
+            <label for="plumbingFinalDate">Plumbing Final Inspection:</label>
             <select class="closeout-input" id="plumbingFinalStatus">
                 <option value="default">--Status--</option>
             </select>
@@ -674,7 +682,7 @@
         <textarea class="closeout-textarea" type="text" id="plumbingFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
-            <label for="sprinkleFinalDate">Sprinkler Final Inspection Date:</label>
+            <label for="sprinkleFinalDate">Sprinkler Final Inspection:</label>
             <select class="closeout-input" id="sprinkleFinalStatus">
                 <option value="default">--Status--</option>
             </select>
@@ -692,7 +700,7 @@
         <textarea class="closeout-textarea" type="text" id="certificateNotes"> </textarea><br><br><br>
         
         <div class="pair">
-            <label for="buildingPermitCL">Building Final Inspection Date:</label>
+            <label for="buildingPermitCL">Building Final Inspection:</label>
             <select class="closeout-input" id="buildFinalStatus">
                 <option value="default">--Status--</option>
             </select>

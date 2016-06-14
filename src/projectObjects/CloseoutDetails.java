@@ -222,6 +222,8 @@ public class CloseoutDetails extends ProjectObject
 	private String verisaeReportStatus;
 	private String verisaeReportNotes;
 	
+	private Date mg2CompletionDate;
+	private String mg2CompletionStatus;
 	
 
 	public CloseoutDetails(Date asBuilts, SalvageValue salvageValue,
@@ -231,7 +233,27 @@ public class CloseoutDetails extends ProjectObject
 			Date mPunchListCL, Date closeoutPhotosCL, Date subConWarrantiesCL,
 			Date mCSWarranty, Date equipmentSubCL, Date traneCL, Date MCSDate, String MCSNotes, String MCSStatus,
 			Date GCDate, String GCNotes, String GCStatus, Date mechanicalDate, String mechanicalNotes, 
-			String mechanicalStatus, Date electricalDate, String electricalNotes, String electricalStatus, Date plumbingDate, String plumbingNotes, String plumbingStatus, Date sprinkleDate, String sprinkleNotes, String sprinkleStatus, Date roofingDate, String roofingNotes, String roofingStatus, String HTINotes, Date HTIDate, String HTIStatus, Date otherFinalLeinsDate, String otherFinalLeinsNotes, String MCSWarrantyNotes, String MCSWarrantyStatus, String otherFinalLeinsStatus, String GCWarrantyNotes, Date GCWarrantyDate, String GCWarrantyStatus, Date mechanicalWarrantyDate, String mechanicalWarrantyNotes, String mechanicalWarrantyStatus, Date electricalWarrantyDate, String electricalWarrantyNotes, String electricalWarrantyStatus, Date plumbingWarrantyDate, String plumbingWarrantyNotes, String plumbingWarrantyStatus, Date sprinkleWarrantyDate, String sprinkleWarrantyNotes, String sprinkleWarrantyStatus, Date roofingWarrantyDate, String roofingWarrantyNotes, String roofingWarrantyStatus, Date HTIWarrantyDate, String HTIWarrantyNotes, String HTIWarrantyStatus, Date otherWarrantyDateA, String otherWarrantyNotesA, String otherWarrantyStatusA, Date otherWarrantyDateB, String otherWarrantyNotesB, String otherWarrantyStatusB, String equipmentSubmittalNotes, String equipmentSubmittalStatus, Date manualDate, String manualNotes, String manualStatus, String asBuiltDrawingsNotes, String asBuiltDrawingsStatus, Date HVACstartupFormDate, String HVACstartupFormNotes, String HVACstartupFormStatus, String alarmFormNotes, String alarmFormStatus, String verisaeReportNotes, String verisaeReportStatus, int numOfChangeOrders, int numOfChangeOrdersCompleted, Date mechFinalDate, String mechFinalNotes, String mechFinalStatus, Date elecFinalDate, String elecFinalStatus, Date plumbingFinalDate, String elecFinalNotes, String plumbingFinalNotes, String plumbingFinalStatus, String buildingFinalNotes, String buildingFinalStatus, Date tmpCertificateDate, String tmpCertificateNotes, String tmpCertificateStatus, Date certificateDate, String certificateNotes, String certificateStatus, String punchListStatus, String punchListNotes) 
+			String mechanicalStatus, Date electricalDate, String electricalNotes, String electricalStatus, Date plumbingDate, 
+			String plumbingNotes, String plumbingStatus, Date sprinkleDate, String sprinkleNotes, String sprinkleStatus, 
+			Date roofingDate, String roofingNotes, String roofingStatus, String HTINotes, Date HTIDate, String HTIStatus, 
+			Date otherFinalLeinsDate, String otherFinalLeinsNotes, String MCSWarrantyNotes, String MCSWarrantyStatus, 
+			String otherFinalLeinsStatus, String GCWarrantyNotes, Date GCWarrantyDate, String GCWarrantyStatus, 
+			Date mechanicalWarrantyDate, String mechanicalWarrantyNotes, String mechanicalWarrantyStatus, 
+			Date electricalWarrantyDate, String electricalWarrantyNotes, String electricalWarrantyStatus, 
+			Date plumbingWarrantyDate, String plumbingWarrantyNotes, String plumbingWarrantyStatus, Date 
+			sprinkleWarrantyDate, String sprinkleWarrantyNotes, String sprinkleWarrantyStatus, Date roofingWarrantyDate, 
+			String roofingWarrantyNotes, String roofingWarrantyStatus, Date HTIWarrantyDate, String HTIWarrantyNotes, 
+			String HTIWarrantyStatus, Date otherWarrantyDateA, String otherWarrantyNotesA, String otherWarrantyStatusA, 
+			Date otherWarrantyDateB, String otherWarrantyNotesB, String otherWarrantyStatusB, String equipmentSubmittalNotes, 
+			String equipmentSubmittalStatus, Date manualDate, String manualNotes, String manualStatus, 
+			String asBuiltDrawingsNotes, String asBuiltDrawingsStatus, Date HVACstartupFormDate, 
+			String HVACstartupFormNotes, String HVACstartupFormStatus, String alarmFormNotes, String alarmFormStatus,
+			String verisaeReportNotes, String verisaeReportStatus, int numOfChangeOrders, int numOfChangeOrdersCompleted, 
+			Date mechFinalDate, String mechFinalNotes, String mechFinalStatus, Date elecFinalDate, String elecFinalStatus, 
+			Date plumbingFinalDate, String elecFinalNotes, String plumbingFinalNotes, String plumbingFinalStatus,
+			String buildingFinalNotes, String buildingFinalStatus, Date tmpCertificateDate, String tmpCertificateNotes, 
+			String tmpCertificateStatus, Date certificateDate, String certificateNotes, String certificateStatus, 
+			String punchListStatus, String punchListNotes, Date mg2CompletionDate, String mg2CompletionStatus) 
 	{
 		this.asBuilts = asBuilts;
 		this.salvageValue = salvageValue;
@@ -345,6 +367,9 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateStatus = certificateStatus;
 		this.punchListStatus = punchListStatus;
 		this.punchListNotes = punchListNotes;
+		
+		this.mg2CompletionDate = mg2CompletionDate;
+		this.mg2CompletionStatus = mg2CompletionStatus;
 	}
 	
 	public CloseoutDetails() 
@@ -460,6 +485,8 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateStatus = null;
 		this.punchListStatus = null;
 		this.punchListNotes = null;
+		this.mg2CompletionDate = null;
+		this.mg2CompletionStatus = null;
 	}
 	
 	/**
@@ -1457,6 +1484,22 @@ public class CloseoutDetails extends ProjectObject
 
 	public void setVerisaeReportNotes(String verisaeReportNotes) {
 		this.verisaeReportNotes = verisaeReportNotes;
+	}
+
+	public Date getMg2CompletionDate() {
+		return mg2CompletionDate;
+	}
+
+	public void setMg2CompletionDate(Date mg2CompletionDate) {
+		this.mg2CompletionDate = mg2CompletionDate;
+	}
+
+	public String getMg2CompletionStatus() {
+		return mg2CompletionStatus;
+	}
+
+	public void setMg2CompletionStatus(String mg2CompletionStatus) {
+		this.mg2CompletionStatus = mg2CompletionStatus;
 	}
 	
 	

@@ -220,6 +220,13 @@ public class ProjectService extends ProjectObjectService
 		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
 		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
 				
+		Date mg2CompletionDate = null;
+		if(!params.get("mg2CompletionDate").isEmpty())
+			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
+		cd.setMg2CompletionDate(mg2CompletionDate);
+		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
+		System.out.println(params.get("mg2CompletionDate") + " " + params.get("mg2CompletionStatus"));
+		
 		Date MCSDate = null;
 		if(!params.get("MCSDate").isEmpty())
 			MCSDate = formatter.parse(params.get("MCSDate"));
@@ -978,8 +985,7 @@ public class ProjectService extends ProjectObjectService
 		if (!params.get("permitApp").isEmpty())
 			permitApp = formatter.parse(params.get("permitApp"));
 		
-		
-	////// Closeout Enhanced
+		// Closeout!
 		
 		CloseoutDetails cd = new CloseoutDetails();
 		
@@ -998,6 +1004,13 @@ public class ProjectService extends ProjectObjectService
 		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
 		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
 				
+		Date mg2CompletionDate = null;
+		if(!params.get("mg2CompletionDate").isEmpty())
+			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
+		
+		cd.setMg2CompletionDate(mg2CompletionDate);
+		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
+		
 		Date MCSDate = null;
 		if(!params.get("MCSDate").isEmpty())
 			MCSDate = formatter.parse(params.get("MCSDate"));

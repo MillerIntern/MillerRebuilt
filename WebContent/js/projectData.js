@@ -66,7 +66,8 @@ $(document).ready(function()
 	$("#vendorDate").datepicker();
 	
 	//closeout
-
+	$("#mg2CompletionDate").datepicker();
+	
 	$("#subcontractorCL").datepicker();
 	$("#buildingPermitCL").datepicker();
 	$("#inspectionSOCL").datepicker();
@@ -464,6 +465,9 @@ function addProject()
     
     // NEW Closeout CONTENT
 	
+	var mg2CompletionStatus = $("#mg2CompletionStatus").val();
+	var mg2CompletionDate = $("#mg2CompletionDate").val();
+	
 	var numOfChangeOrders = $("#numOfChangeOrders").val();
 	var numOfChangeOrdersCompleted = $("#numOfChangeOrdersCompleted").val();
     
@@ -648,6 +652,8 @@ function addProject()
 				traneCL,
 				
 				// new closeout info
+				mg2CompletionDate,
+				
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, 
 				sprinkleDate, roofingDate, HTIDate, otherFinalLeinsDate,
 				
@@ -796,7 +802,9 @@ function addProject()
 				'traneCL': traneCL,
 				
 				// new closeout info
-
+				'mg2CompletionStatus': mg2CompletionStatus,
+				'mg2CompletionDate': mg2CompletionDate,
+				
 				'numOfChangeOrders': numOfChangeOrders,
 				'numOfChangeOrdersCompleted': numOfChangeOrdersCompleted,
 				
@@ -1138,7 +1146,7 @@ function fillForm(data)
 			$("#salvageDate").val(json.closeoutDetails.salvageValue.date);
 			$("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
 		}
-
+		
 		$("#airGas").val(json.closeoutDetails.airGas);
 		$("#permits").val(json.closeoutDetails.permitsClosed);
 		$("#asBuilts").val(json.closeoutDetails.asBuilts);
@@ -1289,6 +1297,9 @@ function fillForm(data)
 		$("#otherFinalLiensStatus").val(json.closeoutDetails.otherFinalLeinsStatus);
 		$("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
 		$("#otherFinalLiensNotes").val(json.closeoutDetails.otherFinalLeinsNotes);
+		
+		$("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
+		$("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 	}
 	//fillInChangeOrders(json);
 }
@@ -1384,9 +1395,27 @@ function hasStage(stageList, stage)
 	return false;
 }
 
+/**
+ * Statuses from the new closeout come in as values from 1-3 or "default"
+ * This function converts the 1-3 value to its dropdown correlation
+ * @param status
+ */
+function convertStatusInt(status)
+{
+	if(status == "1")
+		return "Complete";
+	else if(status == "2") 
+		return "Incomplete";
+	else if(status == "3")
+		return "N/A";
+	
+	return status;
+}
+
 // closeout dropdowns - at the bottom cause it's huge
 var closeoutstatus_dropdowns = [
-                               
+                "mg2CompletionStatus",                
+                
 				"copSubmittedStatus", "copApprovedStatus", "copCompletedStatus", "changeOrderSubmittedStatus",
 				"changeOrderApprovedStatus","revisionsSubmittedStatus", "revisionsApprovedStatus",
 				
