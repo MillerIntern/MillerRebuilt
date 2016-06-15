@@ -231,214 +231,209 @@ public class ProjectService extends ProjectObjectService
 		if(!params.get("MCSDate").isEmpty())
 			MCSDate = formatter.parse(params.get("MCSDate"));
 		cd.setMCSDate(MCSDate);
-		cd.setMCSNotes(params.get("MCSNotes"));
 		cd.setMCSStatus(params.get("MCSStatus"));
 		
 		Date GCDate = null;
 		if(!params.get("GCDate").isEmpty())
 			GCDate = formatter.parse(params.get("GCDate"));
 		cd.setGCDate(GCDate);
-		cd.setGCNotes(params.get("GCNotes"));
+
 		cd.setGCStatus(params.get("GCStatus"));
 		
 		Date mechanicalDate = null;
 		if(!params.get("mechanicalDate").isEmpty())
 			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
 		cd.setMechanicalDate(mechanicalDate);
-		cd.setMechanicalNotes(params.get("mechanicalNotes"));
+
 		cd.setMechanicalStatus(params.get("mechanicalStatus"));
 		
 		Date electricalDate = null;
 		if(!params.get("electricalDate").isEmpty())
 			electricalDate = formatter.parse(params.get("electricalDate"));
 		cd.setElectricalDate(electricalDate);
-		cd.setElectricalNotes(params.get("electricalNotes"));
+
 		cd.setElectricalStatus(params.get("electricalStatus"));
 		
 		Date plumbingDate = null;
 		if(!params.get("plumbingDate").isEmpty())
 			plumbingDate = formatter.parse(params.get("plumbingDate"));
 		cd.setPlumbingDate(plumbingDate);
-		cd.setPlumbingNotes(params.get("plumbingNotes"));
+
 		cd.setPlumbingStatus(params.get("plumbingStatus"));
 		
 		Date sprinkleDate = null;
 		if(!params.get("sprinkleDate").isEmpty())
 			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
 		cd.setSprinkleDate(sprinkleDate);
-		cd.setSprinkleNotes(params.get("sprinkleNotes"));
+
 		cd.setSprinkleStatus(params.get("sprinkleStatus"));
 		
 		Date roofingDate = null;
 		if(!params.get("roofingDate").isEmpty())
 			roofingDate = formatter.parse(params.get("roofingDate"));
 		cd.setRoofingDate(roofingDate);
-		cd.setRoofingNotes(params.get("roofingNotes"));
+
 		cd.setRoofingStatus(params.get("roofingStatus"));
 		
 		Date HTIDate = null;
 		if(!params.get("HTIDate").isEmpty())
 			HTIDate = formatter.parse(params.get("HTIDate"));
 		cd.setHTIDate(HTIDate);
-		cd.setHTINotes(params.get("HTINotes"));
+
 		cd.setHTIStatus(params.get("HTIStatus"));
 		
 		Date otherFinalLeinsDate = null;
 		if(!params.get("otherFinalLeinsDate").isEmpty())
 			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
 		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
-		cd.setOtherFinalLeinsNotes(params.get("otherFinalLeinsNotes"));
+
 		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
 		
-		cd.setMCSWarrantyNotes(params.get("MCSWarrantyNotes"));
+
 		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
 		
 		Date GCWarrantyDate = null;
 		if(!params.get("GCWarrantyDate").isEmpty())
 			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
 		cd.setGCWarrantyDate(GCWarrantyDate);
-		cd.setGCWarrantyNotes(params.get("GCWarrantyNotes"));
+
 		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
 		
 		Date mechanicalWarrantyDate = null;
 		if(!params.get("mechanicalWarrantyDate").isEmpty())
 			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
 		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
-		cd.setMechanicalWarrantyNotes(params.get("mechanicalWarrantyNotes"));
+
 		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
 		
 		Date electricalWarrantyDate = null;
 		if(!params.get("electricalWarrantyDate").isEmpty())
 			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
 		cd.setElectricalWarrantyDate(electricalWarrantyDate);
-		cd.setElectricalWarrantyNotes(params.get("electricalWarrantyNotes"));
+
 		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
 		
 		Date plumbingWarrantyDate = null;
 		if(!params.get("plumbingWarrantyDate").isEmpty())
 			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
 		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
-		cd.setPlumbingWarrantyNotes(params.get("plumbingWarrantyNotes"));
+
 		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
 		
 		Date sprinkleWarrantyDate = null;
 		if(!params.get("sprinkleWarrantyDate").isEmpty())
 			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
 		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
-		cd.setSprinkleWarrantyNotes(params.get("sprinkleWarrantyNotes"));
+
 		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
 		
 		Date roofingWarrantyDate = null;
 		if(!params.get("roofingWarrantyDate").isEmpty())
 			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
 		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-		cd.setRoofingWarrantyNotes(params.get("roofingWarrantyNotes"));
+
 		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
 		
 		Date HTIWarrantyDate = null;
 		if(!params.get("HTIWarrantyDate").isEmpty())
 			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
 		cd.setHTIWarrantyDate(HTIWarrantyDate);
-		cd.setHTIWarrantyNotes(params.get("HTIWarrantyNotes"));
+
 		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
 		
 		Date otherWarrantyDateA = null;
 		if(!params.get("otherWarrantyDateA").isEmpty())
 			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
 		cd.setOtherWarrantyDateA(otherWarrantyDateA);
-		cd.setOtherWarrantyNotesA(params.get("otherWarrantyNotesA"));
+
 		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
 		
 		Date otherWarrantyDateB = null;
 		if(!params.get("otherWarrantyDateB").isEmpty())
 			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
 		cd.setOtherWarrantyDateB(otherWarrantyDateB);
-		cd.setOtherWarrantyNotesB(params.get("otherWarrantyNotesB"));
+
 		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
 		
 		Date mechFinalDate = null;
 		if(!params.get("mechFinalDate").isEmpty())
 			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
 		cd.setMechFinalDate(mechFinalDate);
-		cd.setMechFinalNotes(params.get("mechFinalNotes"));
+
 		cd.setMechFinalStatus(params.get("mechFinalStatus"));
 		
 		Date elecFinalDate = null;
 		if(!params.get("elecFinalDate").isEmpty())
 			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
 		cd.setElecFinalDate(elecFinalDate);
-		cd.setElecFinalNotes(params.get("elecFinalNotes"));
+
 		cd.setElecFinalStatus(params.get("elecFinalStatus"));
 		
 		Date plumbingFinalDate = null;
 		if(!params.get("plumbingFinalDate").isEmpty())
 			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
 		cd.setPlumbingFinalDate(plumbingFinalDate);
-		cd.setPlumbingFinalNotes(params.get("plumbingFinalNotes"));
+
 		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
 		
 		Date sprinkleFinalDate = null;
 		if(!params.get("sprinkleFinalDate").isEmpty())
 			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
 		cd.setSprinkleFinalDate(sprinkleFinalDate);
-		cd.setSprinkleFinalNotes(params.get("sprinkleFinalNotes"));
+
 		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
 		
-		cd.setBuildingFinalNotes(params.get("buildingFinalNotes"));
+
 		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
 		
 		Date tmpCertificateDate = null;
 		if(!params.get("tmpCertificateDate").isEmpty())
 			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
 		cd.setTmpCertificateDate(tmpCertificateDate);
-		cd.setTmpCertificateNotes(params.get("tmpCertificateNotes"));
+
 		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
 		
 		Date certificateDate = null;
 		if(!params.get("certificateDate").isEmpty())
 			certificateDate = formatter.parse(params.get("certificateDate"));
 		cd.setCertificateDate(certificateDate);
-		cd.setCertificateNotes(params.get("certificateNotes"));
+
 		cd.setCertificateStatus(params.get("certificateStatus"));
 
-		cd.setEquipmentSubmittalNotes(params.get("equipmentSubmittalNotes"));
+
 		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
 		
 		Date manualDate = null;
 		if(!params.get("manualDate").isEmpty())
 			manualDate = formatter.parse(params.get("manualDate"));
 		cd.setManualDate(manualDate);
-		cd.setManualNotes(params.get("manualNotes"));
+
 		cd.setManualStatus(params.get("manualStatus"));
 
-		cd.setPunchListNotes(params.get("punchListNotes"));
+
 		cd.setPunchListStatus(params.get("punchListStatus"));
 
-		cd.setAsBuiltDrawingsNotes(params.get("asBuiltDrawingsNotes"));
+
 		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
 		
-		cd.setCloseOutPhotosNotes(params.get("closeOutPhotosNotes"));
+
 		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
 		
 		Date HVACstartupFormDate = null;
 		if(!params.get("HVACstartupFormDate").isEmpty())
 			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
 		cd.setHVACstartupFormDate(HVACstartupFormDate);
-		cd.setHVACstartupFormNotes(params.get("HVACstartupFormNotes"));
+
 		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
-		
-		cd.setAlarmFormNotes(params.get("alarmFormNotes"));
+
 		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
 
-		cd.setVerisaeReportNotes(params.get("verisaeReportNotes"));
 		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
 		
-		;
-
-		//String noteseq = params.get("notes_eq");
-		//String equipmentName = params.get("equipName");
-
-		
+		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
+		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
+		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
+		cd.setWarrantyNotes(params.get("warrantyNotes"));		
 		
 		//Additional Fields
 		String zachNotes = params.get("zachUpdates");
@@ -1015,208 +1010,209 @@ public class ProjectService extends ProjectObjectService
 		if(!params.get("MCSDate").isEmpty())
 			MCSDate = formatter.parse(params.get("MCSDate"));
 		cd.setMCSDate(MCSDate);
-		cd.setMCSNotes(params.get("MCSNotes"));
+
 		cd.setMCSStatus(params.get("MCSStatus"));
 		
 		Date GCDate = null;
 		if(!params.get("GCDate").isEmpty())
 			GCDate = formatter.parse(params.get("GCDate"));
 		cd.setGCDate(GCDate);
-		cd.setGCNotes(params.get("GCNotes"));
+
 		cd.setGCStatus(params.get("GCStatus"));
 		
 		Date mechanicalDate = null;
 		if(!params.get("mechanicalDate").isEmpty())
 			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
 		cd.setMechanicalDate(mechanicalDate);
-		cd.setMechanicalNotes(params.get("mechanicalNotes"));
+
 		cd.setMechanicalStatus(params.get("mechanicalStatus"));
 		
 		Date electricalDate = null;
 		if(!params.get("electricalDate").isEmpty())
 			electricalDate = formatter.parse(params.get("electricalDate"));
 		cd.setElectricalDate(electricalDate);
-		cd.setElectricalNotes(params.get("electricalNotes"));
+
 		cd.setElectricalStatus(params.get("electricalStatus"));
 		
 		Date plumbingDate = null;
 		if(!params.get("plumbingDate").isEmpty())
 			plumbingDate = formatter.parse(params.get("plumbingDate"));
 		cd.setPlumbingDate(plumbingDate);
-		cd.setPlumbingNotes(params.get("plumbingNotes"));
+
 		cd.setPlumbingStatus(params.get("plumbingStatus"));
 		
 		Date sprinkleDate = null;
 		if(!params.get("sprinkleDate").isEmpty())
 			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
 		cd.setSprinkleDate(sprinkleDate);
-		cd.setSprinkleNotes(params.get("sprinkleNotes"));
+
 		cd.setSprinkleStatus(params.get("sprinkleStatus"));
 		
 		Date roofingDate = null;
 		if(!params.get("roofingDate").isEmpty())
 			roofingDate = formatter.parse(params.get("roofingDate"));
 		cd.setRoofingDate(roofingDate);
-		cd.setRoofingNotes(params.get("roofingNotes"));
+
 		cd.setRoofingStatus(params.get("roofingStatus"));
 		
 		Date HTIDate = null;
 		if(!params.get("HTIDate").isEmpty())
 			HTIDate = formatter.parse(params.get("HTIDate"));
 		cd.setHTIDate(HTIDate);
-		cd.setHTINotes(params.get("HTINotes"));
+
 		cd.setHTIStatus(params.get("HTIStatus"));
 		
 		Date otherFinalLeinsDate = null;
 		if(!params.get("otherFinalLeinsDate").isEmpty())
 			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
 		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
-		cd.setOtherFinalLeinsNotes(params.get("otherFinalLeinsNotes"));
+
 		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
 		
-		cd.setMCSWarrantyNotes(params.get("MCSWarrantyNotes"));
+
 		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
 		
 		Date GCWarrantyDate = null;
 		if(!params.get("GCWarrantyDate").isEmpty())
 			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
 		cd.setGCWarrantyDate(GCWarrantyDate);
-		cd.setGCWarrantyNotes(params.get("GCWarrantyNotes"));
+
 		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
 		
 		Date mechanicalWarrantyDate = null;
 		if(!params.get("mechanicalWarrantyDate").isEmpty())
 			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
 		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
-		cd.setMechanicalWarrantyNotes(params.get("mechanicalWarrantyNotes"));
+
 		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
 		
 		Date electricalWarrantyDate = null;
 		if(!params.get("electricalWarrantyDate").isEmpty())
 			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
 		cd.setElectricalWarrantyDate(electricalWarrantyDate);
-		cd.setElectricalWarrantyNotes(params.get("electricalWarrantyNotes"));
+
 		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
 		
 		Date plumbingWarrantyDate = null;
 		if(!params.get("plumbingWarrantyDate").isEmpty())
 			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
 		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
-		cd.setPlumbingWarrantyNotes(params.get("plumbingWarrantyNotes"));
+
 		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
 		
 		Date sprinkleWarrantyDate = null;
 		if(!params.get("sprinkleWarrantyDate").isEmpty())
 			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
 		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
-		cd.setSprinkleWarrantyNotes(params.get("sprinkleWarrantyNotes"));
+
 		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
 		
 		Date roofingWarrantyDate = null;
 		if(!params.get("roofingWarrantyDate").isEmpty())
 			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
 		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-		cd.setRoofingWarrantyNotes(params.get("roofingWarrantyNotes"));
+
 		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
 		
 		Date HTIWarrantyDate = null;
 		if(!params.get("HTIWarrantyDate").isEmpty())
 			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
 		cd.setHTIWarrantyDate(HTIWarrantyDate);
-		cd.setHTIWarrantyNotes(params.get("HTIWarrantyNotes"));
+
 		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
 		
 		Date otherWarrantyDateA = null;
 		if(!params.get("otherWarrantyDateA").isEmpty())
 			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
 		cd.setOtherWarrantyDateA(otherWarrantyDateA);
-		cd.setOtherWarrantyNotesA(params.get("otherWarrantyNotesA"));
 		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
 		
 		Date otherWarrantyDateB = null;
 		if(!params.get("otherWarrantyDateB").isEmpty())
 			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
 		cd.setOtherWarrantyDateB(otherWarrantyDateB);
-		cd.setOtherWarrantyNotesB(params.get("otherWarrantyNotesB"));
 		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
 		
 		Date mechFinalDate = null;
 		if(!params.get("mechFinalDate").isEmpty())
 			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
 		cd.setMechFinalDate(mechFinalDate);
-		cd.setMechFinalNotes(params.get("mechFinalNotes"));
+
 		cd.setMechFinalStatus(params.get("mechFinalStatus"));
 		
 		Date elecFinalDate = null;
 		if(!params.get("elecFinalDate").isEmpty())
 			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
 		cd.setElecFinalDate(elecFinalDate);
-		cd.setElecFinalNotes(params.get("elecFinalNotes"));
+
 		cd.setElecFinalStatus(params.get("elecFinalStatus"));
 		
 		Date plumbingFinalDate = null;
 		if(!params.get("plumbingFinalDate").isEmpty())
 			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
 		cd.setPlumbingFinalDate(plumbingFinalDate);
-		cd.setPlumbingFinalNotes(params.get("plumbingFinalNotes"));
+
 		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
 		
 		Date sprinkleFinalDate = null;
 		if(!params.get("sprinkleFinalDate").isEmpty())
 			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
 		cd.setSprinkleFinalDate(sprinkleFinalDate);
-		cd.setSprinkleFinalNotes(params.get("sprinkleFinalNotes"));
+
 		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
 		
-		cd.setBuildingFinalNotes(params.get("buildingFinalNotes"));
+
 		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
 		
 		Date tmpCertificateDate = null;
 		if(!params.get("tmpCertificateDate").isEmpty())
 			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
 		cd.setTmpCertificateDate(tmpCertificateDate);
-		cd.setTmpCertificateNotes(params.get("tmpCertificateNotes"));
+
 		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
 		
 		Date certificateDate = null;
 		if(!params.get("certificateDate").isEmpty())
 			certificateDate = formatter.parse(params.get("certificateDate"));
 		cd.setCertificateDate(certificateDate);
-		cd.setCertificateNotes(params.get("certificateNotes"));
+
 		cd.setCertificateStatus(params.get("certificateStatus"));
 		
-		cd.setEquipmentSubmittalNotes(params.get("equipmentSubmittalNotes"));
+
 		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
 		
 		Date manualDate = null;
 		if(!params.get("manualDate").isEmpty())
 			manualDate = formatter.parse(params.get("manualDate"));
 		cd.setManualDate(manualDate);
-		cd.setManualNotes(params.get("manualNotes"));
+
 		cd.setManualStatus(params.get("manualStatus"));
 
-		cd.setPunchListNotes(params.get("punchListNotes"));
+
 		cd.setPunchListStatus(params.get("punchListStatus"));
 
-		cd.setAsBuiltDrawingsNotes(params.get("asBuiltDrawingsNotes"));
+
 		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
 		
-		cd.setCloseOutPhotosNotes(params.get("closeOutPhotosNotes"));
+
 		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
 		
 		Date HVACstartupFormDate = null;
 		if(!params.get("HVACstartupFormDate").isEmpty())
 			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
 		cd.setHVACstartupFormDate(HVACstartupFormDate);
-		cd.setHVACstartupFormNotes(params.get("HVACstartupFormNotes"));
+
 		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
 		
 
-		cd.setAlarmFormNotes(params.get("alarmFormNotes"));
 		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
 
-		cd.setVerisaeReportNotes(params.get("verisaeReportNotes"));
 		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
+		
+		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
+		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
+		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
+		cd.setWarrantyNotes(params.get("warrantyNotes"));
 		
 		
 // ************************Optional Inspections************************ \\

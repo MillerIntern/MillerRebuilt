@@ -26,7 +26,6 @@ import services.HtmlGenerator;
 import services.QueryService;
 
 /**
- *	This class  
  *
  */
 @WebServlet(description = "Servlet that handles generating reports", urlPatterns = { "/Report" })

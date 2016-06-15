@@ -28,7 +28,7 @@ public class Inspections extends ProjectObject{
 
 	public Inspections(long ticketNumber, Date framing, Date ceiling, Date roughin_mechanical, Date roughin_plumbing, 
 		Date mechanicallightsmoke, Date mechanical_final, Date electrical_final, Date plumbing_final, 
-		Date fire_marshal, Date health, Date building_final){
+		Date fire_marshal, Date health, Date building_final, Date roughin_electric){
 		
 		this.ticketNumber = ticketNumber;
 		this.framing=framing;

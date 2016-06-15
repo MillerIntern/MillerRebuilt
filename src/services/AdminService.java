@@ -286,7 +286,7 @@ public class AdminService
 	{
 		Gson g = new Gson();
 		
-		HashMap<String, List> map = new HashMap<String, List>();
+		HashMap<String, List<Object>> map = new HashMap<String, List<Object>>();
 		List<Object> user = ProjectObjectService.getAll("User");
 		List<Object> perm = ProjectObjectService.getAll("Permission");
 		List<Object> status = ProjectObjectService.getAll("Status");

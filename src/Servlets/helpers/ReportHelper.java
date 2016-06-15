@@ -394,7 +394,26 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("MG2 Completion (G704)");
 		}
-		
+		else if(value.equals("closeoutDocumentNotes"))
+		{
+			sb.append("<th>");
+			sb.append("Closeout Document Notes");
+		}
+		else if(value.equals("warrantyNotes"))
+		{
+			sb.append("<th>");
+			sb.append("Warranty Notes");
+		}
+		else if(value.equals("finalInspectionNotes"))
+		{
+			sb.append("<th>");
+			sb.append("Final Inspection Notes");
+		}
+		else if(value.equals("finalLiensNotes"))
+		{
+			sb.append("<th>");
+			sb.append("Final Liens Notes");
+		}
 	}
 	
 	public static String getReportVal(String value, Project p)
@@ -499,8 +518,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getMechFinalStatus()));
 			if(p.getCloseoutDetails().getMechFinalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMechFinalDate()));
-			if(p.getCloseoutDetails().getMechFinalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getMechFinalNotes());
+			/***if(p.getCloseoutDetails().getMechFinalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getMechFinalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -512,8 +531,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getElecFinalStatus()));
 			if(p.getCloseoutDetails().getElecFinalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getElecFinalDate()));
-			if(p.getCloseoutDetails().getElecFinalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getElecFinalNotes());
+			/***if(p.getCloseoutDetails().getElecFinalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getElecFinalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -525,8 +544,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getPlumbingFinalStatus()));
 			if(p.getCloseoutDetails().getPlumbingFinalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPlumbingFinalDate()));
-			if(p.getCloseoutDetails().getPlumbingFinalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingFinalNotes());
+			/***if(p.getCloseoutDetails().getPlumbingFinalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingFinalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -538,8 +557,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getSprinkleFinalStatus()));
 			if(p.getCloseoutDetails().getSprinkleFinalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSprinkleFinalDate()));
-			if(p.getCloseoutDetails().getSprinkleFinalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleFinalNotes());
+			/***if(p.getCloseoutDetails().getSprinkleFinalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleFinalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -551,8 +570,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getBuildingFinalStatus()));
 			if(p.getCloseoutDetails().getBuildingPermitCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getBuildingPermitCL()));
-			if(p.getCloseoutDetails().getBuildingFinalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getBuildingFinalNotes());
+			/***if(p.getCloseoutDetails().getBuildingFinalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getBuildingFinalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -564,8 +583,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getTmpCertificateStatus()));
 			if(p.getCloseoutDetails().getTmpCertificateDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getTmpCertificateDate()));
-			if(p.getCloseoutDetails().getTmpCertificateNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getTmpCertificateNotes());
+			/***if(p.getCloseoutDetails().getTmpCertificateNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getTmpCertificateNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -577,8 +596,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getCertificateStatus()));
 			if(p.getCloseoutDetails().getCertificateDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCertificateDate()));
-			if(p.getCloseoutDetails().getCertificateNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getCertificateNotes());
+			/***if(p.getCloseoutDetails().getCertificateNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getCertificateNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -590,8 +609,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getEquipmentSubmittalStatus()));
 			if(p.getCloseoutDetails().getEquipmentSubCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getEquipmentSubCL()));
-			if(p.getCloseoutDetails().getEquipmentSubmittalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getEquipmentSubmittalNotes());
+			/***if(p.getCloseoutDetails().getEquipmentSubmittalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getEquipmentSubmittalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -603,8 +622,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getManualStatus()));
 			if(p.getCloseoutDetails().getManualDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getManualDate()));
-			if(p.getCloseoutDetails().getManualNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getManualNotes());
+			/***if(p.getCloseoutDetails().getManualNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getManualNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -616,8 +635,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getPunchListStatus()));
 			if(p.getCloseoutDetails().getPunchList() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPunchList()));
-			if(p.getCloseoutDetails().getPunchListNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getPunchListNotes());
+			/***if(p.getCloseoutDetails().getPunchListNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getPunchListNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -629,8 +648,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getAsBuiltDrawingsStatus()));
 			if(p.getCloseoutDetails().getAsBuilts() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getAsBuilts()));
-			if(p.getCloseoutDetails().getAsBuiltDrawingsNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getAsBuiltDrawingsNotes());
+			/***if(p.getCloseoutDetails().getAsBuiltDrawingsNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getAsBuiltDrawingsNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -642,8 +661,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getCloseOutPhotosStatus()));
 			if(p.getCloseoutDetails().getCloseoutPhotosCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCloseoutPhotosCL()));
-			if(p.getCloseoutDetails().getCloseOutPhotosNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getCloseOutPhotosNotes());
+			/***if(p.getCloseoutDetails().getCloseOutPhotosNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getCloseOutPhotosNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -655,8 +674,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getCloseOutPhotosStatus()));
 			if(p.getCloseoutDetails().getCloseoutPhotosCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCloseoutPhotosCL()));
-			if(p.getCloseoutDetails().getCloseOutPhotosNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getCloseOutPhotosNotes());
+			/***if(p.getCloseoutDetails().getCloseOutPhotosNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getCloseOutPhotosNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -668,8 +687,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getHVACstartupFormStatus()));
 			if(p.getCloseoutDetails().getHVACstartupFormDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getHVACstartupFormDate()));
-			if(p.getCloseoutDetails().getHVACstartupFormNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getHVACstartupFormNotes());
+			/***if(p.getCloseoutDetails().getHVACstartupFormNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getHVACstartupFormNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -681,8 +700,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getAlarmFormStatus()));
 			if(p.getCloseoutDetails().getAlarmHvacForm() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getAlarmHvacForm()));
-			if(p.getCloseoutDetails().getAlarmFormNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getAlarmFormNotes());
+			/***if(p.getCloseoutDetails().getAlarmFormNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getAlarmFormNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -694,8 +713,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getVerisaeReportStatus()));
 			if(p.getCloseoutDetails().getVerisaeShutdownReport() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getVerisaeShutdownReport()));
-			if(p.getCloseoutDetails().getVerisaeReportNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getVerisaeReportNotes());
+			/***if(p.getCloseoutDetails().getVerisaeReportNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getVerisaeReportNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -707,8 +726,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getMCSWarrantyStatus()));
 			if(p.getCloseoutDetails().getMCSWarranty() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMCSWarranty()));
-			if(p.getCloseoutDetails().getMCSWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getMCSWarrantyNotes());
+			/***if(p.getCloseoutDetails().getMCSWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getMCSWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -720,8 +739,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getGCWarrantyStatus()));
 			if(p.getCloseoutDetails().getGCWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getGCWarrantyDate()));
-			if(p.getCloseoutDetails().getGCWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getGCWarrantyNotes());
+			/***if(p.getCloseoutDetails().getGCWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getGCWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -733,8 +752,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getMechanicalWarrantyStatus()));
 			if(p.getCloseoutDetails().getMechanicalWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMechanicalWarrantyDate()));
-			if(p.getCloseoutDetails().getMechanicalWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getMechanicalWarrantyNotes());
+			/***if(p.getCloseoutDetails().getMechanicalWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getMechanicalWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -746,8 +765,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getElectricalWarrantyStatus()));
 			if(p.getCloseoutDetails().getElectricalWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getElectricalWarrantyDate()));
-			if(p.getCloseoutDetails().getElectricalWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getElectricalWarrantyNotes());
+			/***if(p.getCloseoutDetails().getElectricalWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getElectricalWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -759,8 +778,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getPlumbingWarrantyStatus()));
 			if(p.getCloseoutDetails().getPlumbingWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPlumbingWarrantyDate()));
-			if(p.getCloseoutDetails().getPlumbingWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingWarrantyNotes());
+			/***if(p.getCloseoutDetails().getPlumbingWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -772,8 +791,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getSprinkleWarrantyStatus()));
 			if(p.getCloseoutDetails().getSprinkleWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSprinkleWarrantyDate()));
-			if(p.getCloseoutDetails().getSprinkleWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleWarrantyNotes());
+			/***if(p.getCloseoutDetails().getSprinkleWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -785,8 +804,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getRoofingWarrantyStatus()));
 			if(p.getCloseoutDetails().getRoofingWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getRoofingWarrantyDate()));
-			if(p.getCloseoutDetails().getRoofingWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getRoofingWarrantyNotes());
+			/***if(p.getCloseoutDetails().getRoofingWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getRoofingWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -798,8 +817,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getHTIWarrantyStatus()));
 			if(p.getCloseoutDetails().getHTIWarrantyDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getHTIWarrantyDate()));
-			if(p.getCloseoutDetails().getHTIWarrantyNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getHTIWarrantyNotes());
+			/***if(p.getCloseoutDetails().getHTIWarrantyNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getHTIWarrantyNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -811,8 +830,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getOtherWarrantyStatusA()));
 			if(p.getCloseoutDetails().getOtherWarrantyDateA() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getOtherWarrantyDateA()));
-			if(p.getCloseoutDetails().getOtherWarrantyNotesA() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getOtherWarrantyNotesA());
+			/***if(p.getCloseoutDetails().getOtherWarrantyNotesA() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getOtherWarrantyNotesA());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -824,8 +843,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getOtherWarrantyStatusB()));
 			if(p.getCloseoutDetails().getOtherWarrantyDateB() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getOtherWarrantyDateB()));
-			if(p.getCloseoutDetails().getOtherWarrantyNotesB() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getOtherWarrantyNotesB());
+			/***if(p.getCloseoutDetails().getOtherWarrantyNotesB() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getOtherWarrantyNotesB());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -837,8 +856,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getMCSStatus()));
 			if(p.getCloseoutDetails().getMCSDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMCSDate()));
-			if(p.getCloseoutDetails().getMCSNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getMCSNotes());
+			/***if(p.getCloseoutDetails().getMCSNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getMCSNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -850,8 +869,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getGCStatus()));
 			if(p.getCloseoutDetails().getGCDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getGCDate()));
-			if(p.getCloseoutDetails().getGCNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getGCNotes());
+			/***if(p.getCloseoutDetails().getGCNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getGCNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -863,8 +882,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getMechanicalStatus()));
 			if(p.getCloseoutDetails().getMechanicalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMechanicalDate()));
-			if(p.getCloseoutDetails().getMechanicalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getMechanicalNotes());
+			/***if(p.getCloseoutDetails().getMechanicalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getMechanicalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -876,8 +895,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getElectricalStatus()));
 			if(p.getCloseoutDetails().getElectricalDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getElectricalDate()));
-			if(p.getCloseoutDetails().getElectricalNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getElectricalNotes());
+			/***if(p.getCloseoutDetails().getElectricalNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getElectricalNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -889,8 +908,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getPlumbingStatus()));
 			if(p.getCloseoutDetails().getPlumbingDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPlumbingDate()));
-			if(p.getCloseoutDetails().getPlumbingNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingNotes());
+			/***if(p.getCloseoutDetails().getPlumbingNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getPlumbingNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -902,8 +921,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getSprinkleStatus()));
 			if(p.getCloseoutDetails().getSprinkleDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSprinkleDate()));
-			if(p.getCloseoutDetails().getSprinkleNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleNotes());
+			/***if(p.getCloseoutDetails().getSprinkleNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getSprinkleNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -915,8 +934,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getRoofingStatus()));
 			if(p.getCloseoutDetails().getRoofingDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getRoofingDate()));
-			if(p.getCloseoutDetails().getRoofingNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getRoofingNotes());
+			/***if(p.getCloseoutDetails().getRoofingNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getRoofingNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -928,8 +947,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getHTIStatus()));
 			if(p.getCloseoutDetails().getHTIDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getHTIDate()));
-			if(p.getCloseoutDetails().getHTINotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getHTINotes());
+			/***if(p.getCloseoutDetails().getHTINotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getHTINotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -941,8 +960,8 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getOtherFinalLeinsStatus()));
 			if(p.getCloseoutDetails().getOtherFinalLeinsDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getOtherFinalLeinsDate()));
-			if(p.getCloseoutDetails().getOtherFinalLeinsNotes() != null)
-				sb.append("<br>"+  p.getCloseoutDetails().getOtherFinalLeinsNotes());
+			/***if(p.getCloseoutDetails().getOtherFinalLeinsNotes() != null)
+				sb.append("<br>"+  p.getCloseoutDetails().getOtherFinalLeinsNotes());***/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -1149,10 +1168,14 @@ public class ReportHelper
 			return String.valueOf(p.getCloseoutDetails().getNumOfChangeOrders());
 		else if(value.equals("numOfChangesCompleted"))
 			return String.valueOf(p.getCloseoutDetails().getNumOfChangeOrdersCompleted());
-		
-		
-		
-		
+		else if(value.equals("finalLiensNotes") && p.getCloseoutDetails().getFinalLiensNotes() != null)
+			return p.getCloseoutDetails().getFinalLiensNotes();
+		else if(value.equals("finalInspectionNotes") && p.getCloseoutDetails().getFinalInspectionNotes() != null)
+			return p.getCloseoutDetails().getFinalInspectionNotes();
+		else if(value.equals("warrantyNotes") && p.getCloseoutDetails().getWarrantyNotes() != null)
+			return p.getCloseoutDetails().getWarrantyNotes();
+		else if(value.equals("closeoutDocumentNotes") && p.getCloseoutDetails().getCloseoutDocumentsNotes() != null)
+			return p.getCloseoutDetails().getCloseoutDocumentsNotes();
 		
 		else
 			return "---";	// If nothing else just fill the field with nothing

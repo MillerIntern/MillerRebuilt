@@ -1,18 +1,16 @@
 package services;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import projectObjects.ChangeOrder;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import projectObjects.ChangeOrder;
 
 /**
  * This class provides methods in order to parse Change orders from strings (which come from HTTP requests).
@@ -33,7 +31,7 @@ public class ChangeOrderService extends ProjectObjectService
 	public static HashSet<ChangeOrder> getChangeOrdersFromString(String json) throws ParseException, NumberFormatException, ClassNotFoundException
 	{	
 		//Initialize variables
-		DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
+		//DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
 		HashSet<ChangeOrder> cos = new HashSet<ChangeOrder>();
 		
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
@@ -45,7 +43,7 @@ public class ChangeOrderService extends ProjectObjectService
 	
 	public static HashSet<ChangeOrder> editChangeOrders(HashSet<ChangeOrder> newOrders, HashSet<ChangeOrder>oldOrders)
 	{
-		Iterator<ChangeOrder> newChangeOrders = newOrders.iterator();
+		//Iterator<ChangeOrder> newChangeOrders = newOrders.iterator();
 		Iterator<ChangeOrder> oldChangeOrders = oldOrders.iterator();
 		
 		while (oldChangeOrders.hasNext())

@@ -132,7 +132,8 @@
 
         <div class="pair">
         <label for="scope">Project Scope:</label>
-        <textarea type="textarea" id="scope" ></textarea></br>
+        <textarea id="scope" ></textarea>
+        <br>
         </div>
     </fieldset>
 </div>
@@ -206,12 +207,12 @@
 
             <div class="pair">
             <label for="notes">Project / Financial Notes:</label>
-            <textarea type="textarea" id="notes" ></textarea>
+            <textarea id="notes" ></textarea>
             </div>
 
             <div class="pair">
             <label for="zUpdates">Refrigeration Notes:</label>
-            <textarea type="textarea" id="zUpdates" ></textarea>
+            <textarea id="zUpdates" ></textarea>
             </div>	
 
             <div class="pair">
@@ -333,7 +334,7 @@
     </fieldset>
 </div>
 			
-<!--######### Actual basically garbage ############# -->
+<!--######### Actual garbage ############# -->
 <!-- <div id="tab5" class="tab">
 <div id="dialog-window">
     <fieldset id='Equipment'>
@@ -433,7 +434,7 @@
 <div id="tab6" class="tab">
 <div id="dialog-window">
     <fieldset id='Equipment'>
-        <Legend>Coming Back Eventually!</Legend>
+        <Legend>Coming Back... Probably!</Legend>
     </fieldset>
 </div>
 </div>    
@@ -444,11 +445,6 @@
 <div id="dialog-window">
     <fieldset id='CloseOutList'>
         <legend>Close Out List Information:</legend>
-
-            <!-- Moved to building final inspeciton <div class="pair">
-            <label for="buildingPermitCL">Building Permit:</label>
-            <input id="buildingPermitCL" type="text"></input>
-            </div>-->
 
             <div class="pair">
             <label for="inspectionSOCL">Inspection Sign offs:</label>
@@ -462,42 +458,13 @@
             <label for="mPunchListCL">MulvannyG2 PunchList:</label>
             <input id="mPunchListCL" type="text"></input></div>
 
-            <!-- Moved to Closeout Photos<div class="pair">
-            <label for="closeoutPhotosCL">Closeout Photos:</label>
-            <input id="closeoutPhotosCL" type="text"></input></div>-->
-
             <div class="pair">
             <label for="subConWarrantiesCL">Subcontractor's Warranties:</label>
             <input id="subConWarrantiesCL" type="text"></input></div>
 
-            <!-- Moved to MCS Warranty <div class="pair">
-            <label for="MCSWarranty">MCS Warranty:</label>
-            <input id="MCSWarranty" type="text"></input></div>--> 
-
-            <!-- Moved to EquipmentSubmittal<div class="pair">
-            <label for="equipmentSubCL">Equipment Submittals:</label>
-            <input id="equipmentSubCL" type="text"></input></div> -->
-
             <div class="pair">
             <label for="traneCL">Trane Submittal:</label>
             <input id="traneCL" type="text"></input></div>
-
-            <!-- Moved to As-Built Drawings <div class="pair">
-            <label for="asBuilts">As-Builts Date:</label>
-            <input type="text" id="asBuilts" /></div> -->
-
-            <!-- Moved to Punch List <div class="pair">
-            <label for="punchList">Punch List Date:</label>
-            <input type="text" id="punchList" /></div> -->
-
-
-            <!-- moved to alarm form <div class="pair">
-            <label for="alarmHvac">Alarm / HVAC Form Date:</label>
-            <input type="text" id="alarmHvac" /></div>	--> 
-
-            <!-- Moved to Verisae Report<div class="pair">
-            <label for="verisae">Verisae Report Date:</label>
-            <input type="text" id="verisae" /></div> -->	
 
             <div class="pair">
             <label for="closeoutNotes">Closeout Notes Date:</label>
@@ -562,7 +529,6 @@
                 </select>
                 <input type="text" id="MCSDate"/>
             </div>
-            <textarea class="closeout-textarea" type="text" id="MCSNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="GCDate">GC Liens:</label>
@@ -571,7 +537,6 @@
                 </select>
                 <input type="text" id="GCDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="GCNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="mechanicalDate">Mechanical Liens:</label>
@@ -580,7 +545,6 @@
                 </select>
                 <input type="text" id="mechanicalDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="mechanicalNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="electricalDate">Eletrical Liens:</label>
@@ -589,7 +553,6 @@
                 </select>
                 <input type="text" id="electricalDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="electricalNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="plumbingDate">Plumbing Liens:</label>
@@ -598,7 +561,6 @@
                 </select>
                 <input type="text" id="plumbingDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="plumbingNotes"> </textarea><br><br><br>
                                
             <div class="pair">
                 <label for="sprinkleDate">Sprinkler Liens:</label>
@@ -607,7 +569,6 @@
                 </select>
                 <input type="text" id="sprinkleDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="sprinkleNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="roofingDate">Roofing Liens:</label>
@@ -616,7 +577,6 @@
                 </select>
                 <input type="text" id="roofingDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="roofingNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="HTIDate">HTI Liens:</label>
@@ -625,7 +585,6 @@
                 </select>
                 <input type="text" id="HTIDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="HTINotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="otherFinalLiensDate">Other Liens:</label>
@@ -634,7 +593,11 @@
                 </select>
                 <input type="text" id="otherFinalLiensDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="otherFinalLiensNotes"> </textarea><br>
+            
+            <br>
+            <label for="finalLiensNotes">Final Liens Notes:</label>
+            <textarea id="finalLiensNotes"> </textarea>
+            <br>
       </fieldset>
 </div>
 </div> 
@@ -652,7 +615,6 @@
             </select>
             <input type="text" id="tmpCertificateDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="tmpCertificateNotes"> </textarea><br><br><br>
         
         <div class="pair">
             <label for="mechFinalDate">Mechanical Final Inspection:</label>
@@ -661,7 +623,6 @@
             </select>
             <input type="text" id="mechFinalDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="mechFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
             <label for="elecFinalStatus">Electrical Final Inspection:</label>
@@ -670,7 +631,6 @@
             </select>
             <input type="text" id="elecFinalDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="elecFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
             <label for="plumbingFinalDate">Plumbing Final Inspection:</label>
@@ -679,7 +639,6 @@
             </select>
             <input type="text" id="plumbingFinalDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="plumbingFinalNotes"> </textarea><br><br><br>
         
         <div class="pair">
             <label for="sprinkleFinalDate">Sprinkler Final Inspection:</label>
@@ -688,7 +647,6 @@
             </select>
             <input type="text" id="sprinkleFinalDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="sprinkleFinalNotes"> </textarea><br><br><br>
     
         <div class="pair">
             <label for="certificateDate">Certificate of Occupancy:</label>
@@ -697,7 +655,6 @@
             </select>
             <input type="text" id="certificateDate" />
         </div>
-        <textarea class="closeout-textarea" type="text" id="certificateNotes"> </textarea><br><br><br>
         
         <div class="pair">
             <label for="buildingPermitCL">Building Final Inspection:</label>
@@ -706,8 +663,11 @@
             </select>
             <input id="buildingPermitCL" type="text"></input>
         </div>
-        <textarea class="closeout-textarea" type="text" id="buildFinalNotes"> </textarea><br>
-
+        
+        <br>
+        <label for="finalInspectionNotes">Final Inspection Notes:</label>
+        <textarea id="finalInspectionNotes"> </textarea>
+		<br>
     </fieldset>
 </div>
 </div>
@@ -725,7 +685,6 @@
                 </select>
             <input id="MCSWarranty" type="text"></input>
             </div>
-            <textarea class="closeout-textarea" type="text" id="MCSWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="GCWarrantyDate">GC Warranty:</label>
@@ -734,7 +693,6 @@
                 </select>
                 <input type="text" id="GCWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="GCWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="mechanicalWarrantyDate">Mechanical Warranty:</label>
@@ -743,7 +701,6 @@
                 </select>
                 <input type="text" id="mechanicalWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="mechanicalWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="electricalWarrantyDate">Eletrical Warranty:</label>
@@ -752,7 +709,6 @@
                 </select>
                 <input type="text" id="electricalWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="electricalWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="plumbingWarrantyDate">Plumbing Warranty:</label>
@@ -761,7 +717,6 @@
                 </select>
                 <input type="text" id="plumbingWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="plumbingWarrantyNotes"> </textarea><br><br><br>
                                
             <div class="pair">
                 <label for="sprinkleWarrantyDate">Sprinkler Warranty:</label>
@@ -770,7 +725,6 @@
                 </select>
                 <input type="text" id="sprinkleWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="sprinkleWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="roofingWarrantyDate">Roofing Warranty:</label>
@@ -779,7 +733,6 @@
                 </select>
                 <input type="text" id="roofingWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="roofingWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="HTIWarrantyDate">HTI Warranty:</label>
@@ -788,7 +741,6 @@
                 </select>
                 <input type="text" id="HTIWarrantyDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="HTIWarrantyNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="otherWarrantyDateA">Other Warranty (A):</label>
@@ -797,7 +749,6 @@
                 </select>
                 <input type="text" id="otherWarrantyDateA" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="otherWarrantyNotesA"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="otherWarrantyDateB">Other Warranty (B):</label>
@@ -806,7 +757,11 @@
                 </select>
                 <input type="text" id="otherWarrantyDateB" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="otherWarrantyNotesB"> </textarea><br>
+            
+            <br>
+            <label for="warrantyNotes">Warranty Notes:</label>
+            <textarea id="warrantyNotes"> </textarea>
+            <br>
     </fieldset>
 </div>
 </div> 
@@ -827,7 +782,6 @@
                 </select>
             <input id="equipmentSubCL" type="text"></input>
             </div>
-            <textarea class="closeout-textarea" type="text" id="equipmentSubmittalNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="manualDate">Operations and Maintenance Manuals:</label>
@@ -836,7 +790,6 @@
                 </select>
                 <input type="text" id="manualDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="manualNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="punchList">Punch List:</label>
@@ -845,7 +798,6 @@
                 </select>
             <input type="text" id="punchList" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="punchListNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="asBuilts">As-Built Drawings:</label>
@@ -854,7 +806,6 @@
                 </select>
                 <input type="text" id="asBuilts" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="asBuiltDrawingsNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="closeoutPhotosCL">Close Out Photos:</label>
@@ -863,7 +814,6 @@
                 </select>
             <input id="closeoutPhotosCL" type="text"></input>
             </div>
-            <textarea class="closeout-textarea" type="text" id="closeOutPhotosNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="HVACstartupFormDate">HVAC Startup Form:</label>
@@ -872,7 +822,6 @@
                 </select>
                 <input type="text" id="HVACstartupFormDate" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="HVACstartupFormNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="alarmHvac">Alarm Form:</label>
@@ -881,7 +830,6 @@
                 </select>
                 <input type="text" id="alarmHvac" />
             </div>
-            <textarea class="closeout-textarea" type="text" id="alarmFormNotes"> </textarea><br><br><br>
         
             <div class="pair">
                 <label for="verisae">Verisae Report:</label>
@@ -890,7 +838,11 @@
                 </select>
                 <input type="text" id="verisae" />	
             </div>
-            <textarea class="closeout-textarea" type="text" id="verisaeReportNotes"> </textarea><br>
+            
+            <br>
+            <label for="closeoutDocumentsNotes">Closeout Documents Notes:</label>      
+            <textarea id="closeoutDocumentsNotes"> </textarea>
+            <br>
     </fieldset>
 </div>
 </div> 

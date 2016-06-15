@@ -122,7 +122,7 @@ $(document).ready(function()
     $("#andyDate").datepicker();
     $("#projectManagerDate").datepicker();
     
-    $("#closedocsProjectClass").text("Need to add function later to var projectClass = $(#class).val();");
+    //$("#closedocsProjectClass").text("Need to add function later to var projectClass = $(#class).val();");
     
 	PAGETYPE = getParameterByName("type");	
 });
@@ -418,13 +418,8 @@ function addProject()
 	var roughElec=$("#roughelecDate").val();
 	var roughPlumb=$("#roughplumbDate").val();
 	var mechLightSmoke=$("#mechlightsmokeDate").val();
-	// Taking this fields out might be bad later on, we'll see. If you didn't put this comment in you can prolly delete em
-	//var mechFinal=$("#mechfinalDate").val();
-	//var elecFinal=$("#elecfinalDate").val();
-	//var plumbFinal=$("#plumbfinalDate").val();
 	var fireMarshal=$("#firemarshalDate").val();
 	var health=$("#healthDate").val();
-	//var buildFinal=$("#buildfinalDate").val();
 	var inspectionID=$("#inspections").val();
 	
 	//Permit variables
@@ -449,10 +444,7 @@ function addProject()
 	var salvageAmount = $("#salvageAmount").val();
 	var airGas = $("#airGas").val();;
 	
-	//var frontPage = $("#frontPage").val();
-
 	var buildingPermitCL = $("#buildingPermitCL").val();
-	console.log(buildingPermitCL);
 	var inspectionSOCL = $("#inspectionSOCL").val();
 	var certCompletionCL = $("#certCompletionCL").val();
 	var mPunchListCL = $("#mPunchListCL").val();
@@ -471,149 +463,125 @@ function addProject()
 	var numOfChangeOrders = $("#numOfChangeOrders").val();
 	var numOfChangeOrdersCompleted = $("#numOfChangeOrdersCompleted").val();
     
-        // Final Liens
+        // LIENS
     var MCSStatus = $("#MCSStatus").val(); 
     var MCSDate = $("#MCSDate").val(); 
-    var MCSNotes = $("#MCSNotes").val(); 
     
     var GCStatus = $("#GCStatus").val();
     var GCDate = $("#GCDate").val();
-    var GCNotes = $("#GCNotes").val();
     
     var mechanicalStatus = $("#mechanicalStatus").val();
     var mechanicalDate = $("#mechanicalDate").val();
-    var mechanicalNotes = $("#mechanicalNotes").val();
     
     var electricalStatus = $("#electricalStatus").val();
     var electricalDate = $("#electricalDate").val();
-    var electricalNotes = $("#electricalNotes").val();
     
     var plumbingStatus = $("#plumbingStatus").val();
     var plumbingDate = $("#plumbingDate").val();
-    var plumbingNotes = $("#plumbingNotes").val();
     
     var sprinkleStatus = $("#sprinkleStatus").val();
     var sprinkleDate = $("#sprinkleDate").val();
-    var sprinkleNotes = $("#sprinkleNotes").val();
     
     var roofingStatus = $("#roofingStatus").val();
     var roofingDate = $("#roofingDate").val();
-    var roofingNotes = $("#roofingNotes").val();
     
     var HTIStatus = $("#HTIStatus").val();
     var HTIDate = $("#HTIDate").val();
-    var HTINotes = $("#HTINotes").val();
     
     var otherFinalLeinsStatus = $("#otherFinalLiensStatus").val();
     var otherFinalLeinsDate = $("#otherFinalLiensDate").val();
-    var otherFinalLeinsNotes = $("#otherFinalLiensNotes").val();
+    
+    var finalLiensNotes = $("#finalLiensNotes").val();
+    console.log(finalLiensNotes);
         
-    // INSPECTIONS
+    	// INSPECTIONS
     
     var tmpCertificateStatus = $("#tmpCertificateStatus").val();
     var tmpCertificateDate = $("#tmpCertificateDate").val();
-    var tmpCertificateNotes = $("#tmpCertificateNotes").val();
     
-    var mechFinalNotes = $("#mechFinalNotes").val();
-    var mechFinalDate = $("#mechFinalDate").val();
     var mechFinalStatus = $("#mechFinalStatus").val();
+    var mechFinalDate = $("#mechFinalDate").val();
     
     var elecFinalDate = $("#elecFinalDate").val();
     var elecFinalStatus = $("#elecFinalStatus").val();
-    var elecFinalNotes = $("#elecFinalNotes").val();
     
     var plumbingFinalDate = $("#plumbingFinalDate").val();
     var plumbingFinalStatus = $("#plumbingFinalStatus").val();
-    var plumbingFinalNotes = $("#plumbingFinalNotes").val();
     
     var sprinkleFinalStatus = $("#sprinkleFinalStatus").val();
     var sprinkleFinalDate = $("#sprinkleFinalDate").val();
-    var sprinkleFinalNotes = $("#sprinkleFinalNotes").val();
     
     var certificateStatus = $("#certificateStatus").val();
     var certificateDate = $("#certificateDate").val();
-    var certificateNotes = $("#certificateNotes").val();
     
     // buildingPermitCL = buildingFinalDate;
     var buildingFinalStatus = $("#buildFinalStatus").val();
-    var buildingFinalNotes = $("#buildFinalNotes").val();
     
-        // Warranty Letters
+    var finalInspectionNotes = $("#finalInspectionNotes").val();
+       
+    	// WARRANTIES
+    
     var MCSWarrantyStatus = $("#MCSWarrantyStatus").val();
     // MCSWarranty = MCSWarrantyDate
-    var MCSWarrantyNotes = $("#MCSWarrantyNotes").val();
     
     var GCWarrantyStatus = $("#GCWarrantyStatus").val();
     var GCWarrantyDate = $("#GCWarrantyDate").val();
-    var GCWarrantyNotes = $("#GCWarrantyNotes").val();
     
     var mechanicalWarrantyStatus = $("#mechanicalWarrantyStatus").val();
     var mechanicalWarrantyDate = $("#mechanicalWarrantyDate").val();
-    var mechanicalWarrantyNotes = $("#mechanicalWarrantyNotes").val();
     
     var electricalWarrantyStatus = $("#electricalWarrantyStatus").val();
     var electricalWarrantyDate = $("#electricalWarrantyDate").val();
-    var electricalWarrantyNotes = $("#electricalWarrantyNotes").val();
     
     var plumbingWarrantyStatus = $("#plumbingWarrantyStatus").val();
     var plumbingWarrantyDate = $("#plumbingWarrantyDate").val();
-    var plumbingWarrantyNotes = $("#plumbingWarrantyNotes").val();
     
     var sprinkleWarrantyStatus = $("#sprinkleWarrantyStatus").val();
     var sprinkleWarrantyDate = $("#sprinkleWarrantyDate").val();
-    var sprinkleWarrantyNotes = $("#sprinkleWarrantyNotes").val();
     
     var roofingWarrantyStatus = $("#roofingWarrantyStatus").val();
     var roofingWarrantyDate = $("#roofingWarrantyDate").val();
-    var roofingWarrantyNotes = $("#roofingWarrantyNotes").val();
     
     var HTIWarrantyStatus = $("#HTIWarrantyStatus").val();
     var HTIWarrantyDate = $("#HTIWarrantyDate").val();
-    var HTIWarrantyNotes = $("#HTIWarrantyNotes").val();
     
     var otherWarrantyStatusA = $("#otherWarrantyStatusA").val();
     var otherWarrantyDateA = $("#otherWarrantyDateA").val();
-    var otherWarrantyNotesA = $("#otherWarrantyNotesA").val();
     
     var otherWarrantyStatusB = $("#otherWarrantyStatusB").val();
     var otherWarrantyDateB = $("#otherWarrantyDateB").val();
-    var otherWarrantyNotesB = $("#otherWarrantyNotesB").val();
     
-        // Closeout documents
+    var warrantyNotes = $("#warrantyNotes").val();
+    
+        // CLOSEOUT DOCUMENTS
     var equipmentSubmittalStatus = $("#equipmentSubmittalStatus").val();
     // equipmentSubCL = equipmentSubmittalDate
-    var equipmentSubmittalNotes = $("#equipmentSubmittalNotes").val();
     
     var manualStatus = $("#manualStatus").val();
     var manualDate = $("#manualDate").val();
-    var manualNotes = $("#manualNotes").val();
     
     var punchListStatus = $("#punchListStatus").val();
     //punchList = punchListDate
-    var punchListNotes = $("#punchListNotes").val();
     
     var asBuiltDrawingsStatus = $("#asBuiltDrawingsStatus").val();
     // asBuilts = asBuiltDrawingsDate
-    var asBuiltDrawingsNotes = $("#asBuiltDrawingsNotes").val();
     
     var closeOutPhotosStatus = $("#closeOutPhotosStatus").val();
     //closeoutPhotosCL = closeOutPhotosDate
-    var closeOutPhotosNotes = $("#closeOutPhotosNotes").val();
     
     var HVACstartupFormStatus = $("#HVACstartupFormStatus").val();
     var HVACstartupFormDate = $("#HVACstartupFormDate").val();
-    var HVACstartupFormNotes = $("#HVACstartupFormNotes").val();
     
     var alarmFormStatus = $("#alarmFormStatus").val();
     // alarmHVAC = alarmFormDate
-    var alarmFormNotes = $("#alarmFormNotes").val();
     
     var verisaeReportStatus = $("#verisaeReportStatus").val();
     // verisae = verisaeReportDate
-    var verisaeReportNotes = $("#verisaeReportNotes").val();
-    
+
+    var closeoutDocumentsNotes = $("#closeoutDocumentsNotes").val();
     ////////////// END NEW CONTENT
 
+    // Probably going to get rid of this
 	var k = 0;
 	for(var i= 0;i<vendor_eqArray.length;i++)
 		{
@@ -670,20 +638,7 @@ function addProject()
 	var noteFields = [notes, scope, zachNotes,
 	                  
 		                // Close out info
-
-						
-						MCSNotes, GCNotes, mechanicalNotes, electricalNotes, plumbingNotes, 
-						sprinkleNotes, roofingNotes, HTINotes, otherFinalLeinsNotes,
-						
-						sprinkleFinalNotes, certificateNotes, mechFinalNotes, elecFinalNotes, plumbingFinalNotes, 
-						buildFinalNotes, tmpCertificateNotes,
-						
-						MCSWarrantyNotes, GCWarrantyNotes, mechanicalWarrantyNotes, electricalWarrantyNotes, sprinkleWarrantyNotes, 
-						roofingWarrantyNotes, HTIWarrantyNotes, otherWarrantyNotesA, otherWarrantyNotesB,
-						
-						equipmentSubmittalNotes, manualNotes, punchListNotes, asBuiltDrawingsNotes, 
-		                closeOutPhotosNotes, HVACstartupFormNotes, alarmFormNotes, verisaeReportNotes,
-		                 
+	                  	closeoutDocumentsNotes, finalInspectionNotes, finalLiensNotes, warrantyNotes, 
 	                  ];
 
 	
@@ -758,12 +713,8 @@ function addProject()
 				'roughElec' : roughElec, 
 				'roughPlumb' : roughPlumb, 
 				'mechLightSmoke' : mechLightSmoke,
-				//'mechFinal' : mechFinal, 
-				//'elecFinal' : elecFinal,
-				//'plumbFinal' : plumbFinal,
 				'fireMarshal' : fireMarshal, 
 				'health' : health, 
-				//'buildFinal' : buildFinal,
 				
 				//Permit Data
 				'permitsID':PERMITS_ID,
@@ -810,131 +761,105 @@ function addProject()
 				
 				'MCSStatus': MCSStatus,
 				'MCSDate': MCSDate,
-				'MCSNotes': MCSNotes,
 				
 				'GCStatus': GCStatus,
 				'GCDate': GCDate,
-				'GCNotes': GCNotes,
 				
 				'mechanicalStatus': mechanicalStatus,
 				'mechanicalDate': mechanicalDate,
-				'mechanicalNotes': mechanicalNotes,
 				
 				'electricalStatus': electricalStatus,
 				'electricalDate': electricalDate,
-				'electricalNotes': electricalNotes,
 				
 				'plumbingStatus': plumbingStatus,
 				'plumbingDate': plumbingDate,
-				'plumbingNotes': plumbingNotes,
 				
 				'sprinkleStatus': sprinkleStatus,
 				'sprinkleDate': sprinkleDate,
-				'sprinkleNotes': sprinkleNotes,
 				
 				'roofingStatus': roofingStatus,
 				'roofingDate': roofingDate,
-				'roofingNotes': roofingNotes,
 				
 				'HTIStatus': HTIStatus,
 				'HTIDate': HTIDate,
-				'HTINotes': HTINotes,
+				
+				'finalLiensNotes': finalLiensNotes,
 				
 				'otherFinalLeinsStatus': otherFinalLeinsStatus,
 				'otherFinalLeinsDate': otherFinalLeinsDate,
-				'otherFinalLeinsNotes': otherFinalLeinsNotes,
 				
 				'mechFinalStatus': mechFinalStatus,
 				'mechFinalDate': mechFinalDate,
-				'mechFinalNotes': mechFinalNotes,
 				
 				'elecFinalStatus': elecFinalStatus,
 				'elecFinalDate': elecFinalDate,
-				'elecFinalNotes': elecFinalNotes,
 				
 				'plumbingFinalStatus': plumbingFinalStatus,
 				'plumbingFinalDate': plumbingFinalDate,
-				'plumbingFinalNotes': plumbingFinalNotes,
 				
 				'sprinkleFinalStatus': sprinkleFinalStatus,
 				'sprinkleFinalDate': sprinkleFinalDate,
-				'sprinkleFinalNotes': sprinkleFinalNotes,
 				
-				'buildingFinalStatus': buildingFinalStatus,
-				'buildingFinalNotes': buildingFinalNotes,
+				'buildingFinalStatus': buildingFinalStatus,	
 				
 				'tmpCertificateStatus': tmpCertificateStatus,
 				'tmpCertificateDate': tmpCertificateDate,
-				'tmpCertificateNotes': tmpCertificateNotes,
 				
 				'certificateStatus': certificateStatus,
 				'certificateDate': certificateDate,
-				'certificateNotes': certificateNotes,
 				
+				'finalInspectionNotes': finalInspectionNotes,
+			
 				'MCSWarrantyStatus': MCSWarrantyStatus,
-				'MCSWarrantyNotes': MCSWarrantyNotes,
 				
 				'GCWarrantyStatus': GCWarrantyStatus,
 				'GCWarrantyDate': GCWarrantyDate,
-				'GCWarrantyNotes': GCWarrantyNotes,
 				
 				'mechanicalWarrantyStatus': mechanicalWarrantyStatus,
 				'mechanicalWarrantyDate': mechanicalWarrantyDate,
-				'mechanicalWarrantyNotes': mechanicalWarrantyNotes,
 				
 				'electricalWarrantyStatus': electricalWarrantyStatus,
 				'electricalWarrantyDate': electricalWarrantyDate,
-				'electricalWarrantyNotes': electricalWarrantyNotes,
 				
 				'plumbingWarrantyStatus': plumbingWarrantyStatus,
 				'plumbingWarrantyDate': plumbingWarrantyDate,
-				'plumbingWarrantyNotes': plumbingWarrantyNotes,
 				
 				'sprinkleWarrantyStatus': sprinkleWarrantyStatus,
 				'sprinkleWarrantyDate': sprinkleWarrantyDate,
-				'sprinkleWarrantyNotes': sprinkleWarrantyNotes,
 				
 				'roofingWarrantyStatus': roofingWarrantyStatus,
 				'roofingWarrantyDate': roofingWarrantyDate,
-				'roofingWarrantyNotes': roofingWarrantyNotes,
 				
 				'HTIWarrantyStatus': HTIWarrantyStatus,
 				'HTIWarrantyDate': HTIWarrantyDate,
-				'HTIWarrantyNotes': HTIWarrantyNotes,
 				
 				'otherWarrantyStatusA': otherWarrantyStatusA,
 				'otherWarrantyDateA': otherWarrantyDateA,
-				'otherWarrantyNotesA': otherWarrantyNotesA,
 				
 				'otherWarrantyStatusB': otherWarrantyStatusB,
 				'otherWarrantyDateB': otherWarrantyDateB,
-				'otherWarrantyNotesB': otherWarrantyNotesB,
+				
+				'warrantyNotes': warrantyNotes,
 								
 				'equipmentSubmittalStatus': equipmentSubmittalStatus,
-				'equipmentSubmittalNotes': equipmentSubmittalNotes,
 				
 				'manualStatus': manualStatus,
 				'manualDate': manualDate,
-				'manualNotes': manualNotes,
 				
 				'punchListStatus': punchListStatus,
-				'punchListNotes': punchListNotes,
 				
 				'asBuiltDrawingsStatus': asBuiltDrawingsStatus,
-				'asBuiltDrawingsNotes': asBuiltDrawingsNotes,
 				
 				'closeOutPhotosStatus': closeOutPhotosStatus,
-				'closeOutPhotosNotes': closeOutPhotosNotes,
 				
 				'HVACstartupFormStatus': HVACstartupFormStatus,
 				'HVACstartupFormDate': HVACstartupFormDate,
-				'HVACstartupFormNotes': HVACstartupFormNotes,
 				
 				'alarmFormStatus': alarmFormStatus,
-				'alarmFormNotes': alarmFormNotes,
 				
 				'verisaeReportStatus': verisaeReportStatus,
-				'verisaeReportNotes': verisaeReportNotes,
+				
+				'closeoutDocumentsNotes': closeoutDocumentsNotes,
 			},
 			success:function(data){
 				
@@ -1065,6 +990,7 @@ function fillInProjectData()
 //Output: none (fills out data on the page)
 function fillForm(data)
 {
+	console.log(data);
 	var json = (data);
     $("#warehouse").val(json.warehouse.id);
 	$("#class").val(json.projectClass.id);
@@ -1172,11 +1098,9 @@ function fillForm(data)
 		
 		$("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
 		$("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
-		$("#tmpCertificateNotes").val(json.closeoutDetails.tmpCertificateNotes);
 		
 		$("#mechFinalStatus").val(json.closeoutDetails.mechFinalStatus);
 		$("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
-		$("#mechFinalNotes").val(json.closeoutDetails.mechFinalNotes);
 		
 		$("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
 		$("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
@@ -1184,122 +1108,96 @@ function fillForm(data)
 		
 		$("#plumbingFinalStatus").val(json.closeoutDetails.plumbingFinalStatus);
 		$("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
-		$("#plumbingFinalNotes").val(json.closeoutDetails.plumbingFinalNotes);
 		
 		$("#sprinkleFinalStatus").val(json.closeoutDetails.sprinkleFinalStatus);
 		$("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
-		$("#sprinkleFinalNotes").val(json.closeoutDetails.sprinkleFinalNotes);
 		
 		$("#certificateStatus").val(json.closeoutDetails.certificateStatus);
 		$("#certificateDate").val(json.closeoutDetails.certificateDate);
-		$("#certificateNotes").val(json.closeoutDetails.certificateNotes);
 		
 		$("#buildFinalStatus").val(json.closeoutDetails.buildingFinalStatus);
-		$("#buildFinalNotes").val(json.closeoutDetails.buildingFinalNotes);
 		
 		$("#equipmentSubmittalStatus").val(json.closeoutDetails.equipmentSubmittalStatus);
-		$("#equipmentSubmittalNotes").val(json.closeoutDetails.equipmentSubmittalNotes);
 		
 		$("#manualStatus").val(json.closeoutDetails.manualStatus);
 		$("#manualDate").val(json.closeoutDetails.manualDate);
-		$("#manualNotes").val(json.closeoutDetails.manualNotes);
 		
 		$("#punchListStatus").val(json.closeoutDetails.punchListStatus);
-		$("#punchListNotes").val(json.closeoutDetails.punchListNotes);
 		
 		$("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
-		$("#asBuiltDrawingsNotes").val(json.closeoutDetails.asBuiltDrawingsNotes);
 		
 		$("#closeOutPhotosStatus").val(json.closeoutDetails.closeOutPhotosStatus);
-		$("#closeOutPhotosNotes").val(json.closeoutDetails.closeOutPhotosNotes);
 		
 		$("#HVACstartupFormStatus").val(json.closeoutDetails.HVACstartupFormStatus);
 		$("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
-		$("#HVACstartupFormNotes").val(json.closeoutDetails.HVACstartupFormNotes);
 		
 		$("#alarmFormStatus").val(json.closeoutDetails.alarmFormStatus);
-		$("#alarmFormNotes").val(json.closeoutDetails.alarmFormNotes);
 		
 		$("#verisaeReportStatus").val(json.closeoutDetails.verisaeReportStatus);
-		$("#verisaeReportNotes").val(json.closeoutDetails.verisaeReportNotes);
 		
 		$("#MCSWarrantyStatus").val(json.closeoutDetails.MCSWarrantyStatus);
-		$("#MCSWarrantyNotes").val(json.closeoutDetails.MCSWarrantyNotes);
 		
 		$("#GCWarrantyStatus").val(json.closeoutDetails.GCWarrantyStatus);
 		$("#GCWarrantyDate").val(json.closeoutDetails.GCWarrantyDate);
-		$("#GCWarrantyNotes").val(json.closeoutDetails.GCWarrantyNotes);
 		
 		$("#mechanicalWarrantyStatus").val(json.closeoutDetails.mechanicalWarrantyStatus);
 		$("#mechanicalWarrantyDate").val(json.closeoutDetails.mechanicalWarrantyDate);
-		$("#mechanicalWarrantyNotes").val(json.closeoutDetails.mechanicalWarrantyNotes);
 		
 		$("#electricalWarrantyStatus").val(json.closeoutDetails.electricalWarrantyStatus);
 		$("#electricalWarrantyDate").val(json.closeoutDetails.electricalWarrantyDate);
-		$("#electricalWarrantyNotes").val(json.closeoutDetails.electricalWarrantyNotes);
 		
 		$("#plumbingWarrantyStatus").val(json.closeoutDetails.plumbingWarrantyStatus);
 		$("#plumbingWarrantyDate").val(json.closeoutDetails.plumbingWarrantyDate);
-		$("#plumbingWarrantyNotes").val(json.closeoutDetails.plumbingWarrantyNotes);
 		
 		$("#sprinkleWarrantyStatus").val(json.closeoutDetails.sprinkleWarrantyStatus);
 		$("#sprinkleWarrantyDate").val(json.closeoutDetails.sprinkleWarrantyDate);
-		$("#sprinkleWarrantyNotes").val(json.closeoutDetails.sprinkleWarrantyNotes);
 		
 		$("#roofingWarrantyStatus").val(json.closeoutDetails.roofingWarrantyStatus);
 		$("#roofingWarrantyDate").val(json.closeoutDetails.roofingWarrantyDate);
-		$("#roofingWarrantyNotes").val(json.closeoutDetails.roofingWarrantyNotes);
 		
 		$("#HTIWarrantyStatus").val(json.closeoutDetails.HTIWarrantyStatus);
 		$("#HTIWarrantyDate").val(json.closeoutDetails.HTIWarrantyDate);
-		$("#HTIWarrantyNotes").val(json.closeoutDetails.HTIWarrantyNotes);
 		
 		$("#otherWarrantyStatusA").val(json.closeoutDetails.otherWarrantyStatusA);
 		$("#otherWarrantyDateA").val(json.closeoutDetails.otherWarrantyDateA);
-		$("#otherWarrantyNotesA").val(json.closeoutDetails.otherWarrantyNotesA);
 		
 		$("#otherWarrantyStatusB").val(json.closeoutDetails.otherWarrantyStatusB);
 		$("#otherWarrantyDateB").val(json.closeoutDetails.otherWarrantyDateB);
-		$("#otherWarrantyNotesB").val(json.closeoutDetails.otherWarrantyNotesB);
 		
 		$("#MCSStatus").val(json.closeoutDetails.MCSStatus);
 		$("#MCSDate").val(json.closeoutDetails.MCSDate);
-		$("#MCSNotes").val(json.closeoutDetails.MCSNotes);
 		
 		$("#GCStatus").val(json.closeoutDetails.GCStatus);
 		$("#GCDate").val(json.closeoutDetails.GCDate);
-		$("#GCNotes").val(json.closeoutDetails.GCNotes);
 		
 		$("#mechanicalStatus").val(json.closeoutDetails.mechanicalStatus);
 		$("#mechanicalDate").val(json.closeoutDetails.mechanicalDate);
-		$("#mechanicalNotes").val(json.closeoutDetails.mechanicalNotes);
 		
 		$("#electricalStatus").val(json.closeoutDetails.electricalStatus);
 		$("#electricalDate").val(json.closeoutDetails.electricalDate);
-		$("#electricalNotes").val(json.closeoutDetails.electricalNotes);
 		
 		$("#plumbingStatus").val(json.closeoutDetails.plumbingStatus);
 		$("#plumbingDate").val(json.closeoutDetails.plumbingDate);
-		$("#plumbingNotes").val(json.closeoutDetails.plumbingNotes);
 		
 		$("#sprinkleStatus").val(json.closeoutDetails.sprinkleStatus);
 		$("#sprinkleDate").val(json.closeoutDetails.sprinkleDate);
-		$("#sprinkleNotes").val(json.closeoutDetails.sprinkleNotes);
 		
 		$("#roofingStatus").val(json.closeoutDetails.roofingStatus);
 		$("#roofingDate").val(json.closeoutDetails.roofingDate);
-		$("#roofingNotes").val(json.closeoutDetails.roofingNotes);
 		
 		$("#HTIStatus").val(json.closeoutDetails.HTIStatus);
 		$("#HTIDate").val(json.closeoutDetails.HTIDate);
-		$("#HTINotes").val(json.closeoutDetails.HTINotes);
 		
 		$("#otherFinalLiensStatus").val(json.closeoutDetails.otherFinalLeinsStatus);
 		$("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
-		$("#otherFinalLiensNotes").val(json.closeoutDetails.otherFinalLeinsNotes);
 		
 		$("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
+		
+		$("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+		$("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
+		$("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
+		$("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
 	}
 	//fillInChangeOrders(json);
 }

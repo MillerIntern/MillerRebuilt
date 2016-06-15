@@ -236,12 +236,13 @@ const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFi
 
 const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList",
 										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
+										"closeoutDocumentNotes", 
 										"inspectionsRequired", "inspectionsCompleted", "warrantiesRequired", "warrantiesCompleted", 
 										"liensRequired", "liensCompleted", "numOfChanges", "numOfChangesCompleted", "mg2Completion");
 
 const CLOSEOUT_KEYS_INSPECTIONS = new Array("warehouse", "item", "status", "inspectionsRequired", "inspectionsCompleted", "mechanicalFinal",
 											"electricalFinal", "plumbingFinal", "sprinkleFinal", "buildingFinal", "tmpCertificate", 
-											"certififcateFinal");
+											"certififcateFinal", "finalInspectionNotes");
 
 // TODO: We don't use the document keys, delete if you see this (the general CLOSEOUT_KEYS_SIMPLE already has all of the stuffs)
 const CLOSEOUT_KEYS_DOCUMENTS = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList", 
@@ -250,10 +251,10 @@ const CLOSEOUT_KEYS_DOCUMENTS = new Array("warehouse", "item", "status", "equipm
 
 const CLOSEOUT_KEYS_WARRANTIES = new Array("warehouse", "item", "status", "warrantiesRequired", "warrantiesCompleted","mcsWarranty", 
 										"gcWarranty", "mechanicalWarranty", "electricalWarranty", "plumbingWarranty", "sprinklerWarranty", 
-										"roofingWarranty", "htiWarranty", "otherWarrantyA", "otherWarrantyB" );
+										"roofingWarranty", "htiWarranty", "otherWarrantyA", "otherWarrantyB", "warrantyNotes");
 
 const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "liensCompleted", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
-										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens");
+										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "finalLiensNotes");
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
 var warehouseOptions;
