@@ -588,7 +588,7 @@ public class ProjectService extends ProjectObjectService
 		String[][] equipComponent = getGSON2DArray(req, "component_eq");
 		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
 		
-		String[] equipIDS = getGSONArray(req, "equipIDS");
+		//String[] equipIDS = getGSONArray(req, "equipIDS");
 		String[] equipPO = getGSONArray(req, "po_eq");
 		String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
 		String[] equipName  = getGSONArray(req, "equipName"); 
@@ -600,7 +600,7 @@ public class ProjectService extends ProjectObjectService
 		
 		long longEquipPO[] = new long[equipToAdd.length];
 		Date[] dateEquipEDD = new Date[equipToAdd.length];
-		Date[] dateEquipVD = new Date[equipToAdd.length];
+		//Date[] dateEquipVD = new Date[equipToAdd.length];
 		int[] array = new int[equipToAdd.length];
 		
 		
@@ -872,7 +872,7 @@ public class ProjectService extends ProjectObjectService
 		
 		//Parse change orders from strong
 		String changeOrderJsonString = params.get("coItems");
-		ChangeOrderService orderService = new ChangeOrderService();
+		//ChangeOrderService orderService = new ChangeOrderService();
 		HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 		
 		Date fsalvageDate = null;
@@ -1649,6 +1649,20 @@ public class ProjectService extends ProjectObjectService
 		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
 		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
+		
+		return g.toJson(map);
+	}
+	
+	/**
+	 * This method gets all of the projects
+	 * @return A string representing a JSON array containing this information
+	 */
+	public static String getAllProjectsAsJson()
+	{
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("projects", ProjectObjectService.getAllAsJsonString("Project"));
 		
 		return g.toJson(map);
 	}

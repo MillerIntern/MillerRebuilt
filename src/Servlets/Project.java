@@ -132,7 +132,7 @@ public class Project extends HttpServlet
 			try 
 			{
 				    System.out.println("inspections in edit: " + inspections);
-				    ps.editProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
+				    ProjectService.editProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
 			  
 			} catch (ClassNotFoundException | ParseException e) 
 			{
@@ -160,7 +160,7 @@ public class Project extends HttpServlet
 		}
 		else if (action.equals("getAllEquipmentObjects"))
 		{
-			response = ps.getAllEnumsEquipAsJson();
+			response = ProjectService.getAllEnumsEquipAsJson();
 		}
 		/*
 		else if(action.equals("retrieveEquipment"))
@@ -204,7 +204,15 @@ public class Project extends HttpServlet
 			CloseoutListService.setCheckList(Long.parseLong(parameters.get("id")),new String[]{parameters.get("asBuilts"),parameters.get("punchList"),parameters.get("permits"),parameters.get("closeOutPhoto"),parameters.get("revisions"),parameters.get("mechanicalInspection"),parameters.get("electricInspection"),parameters.get("plumbingInspection"),parameters.get("fireSprinklerInspection"),parameters.get("ansulInspection"),parameters.get("buildingInspection"),parameters.get("alarmForm"),
 												parameters.get("hvacShutDown"),parameters.get("airGas"),parameters.get("hvacForm"),parameters.get("salvageValue"),parameters.get("mulvannyPunchList"),parameters.get("substantialCompletion"),parameters.get("subcontractorWarranty"),parameters.get("mcsWarranty"),parameters.get("lienRelease"),parameters.get("confirmCOs"),parameters.get("g704"),parameters.get("g706"),parameters.get("g706a")});
 		}
-		System.out.println(response);
+		// Very aggressive
+		else if(action.equals("getAllProjects"))
+		{
+			System.out.println("getting the projects!");
+			response = ProjectService.getAllProjectsAsJson();
+		}
+		
+		if(!action.equals("getAllProjects"))
+			System.out.println(response);
 		out.println(response);
 		
 		
