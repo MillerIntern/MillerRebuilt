@@ -1,0 +1,92 @@
+ul.tabs
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    background-color: gray;
+}
+ul.tabs li
+{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'Raleway',sans-serif;
+    font-size: 20px; 
+    font-weight: 350;
+    transition: all 0.6s ease 0s;
+}
+
+ul.tabs li:last-child
+{
+    border-left: none;
+    border-right: 1.5px solid #555555;
+}
+
+ul.tabs li:hover
+{
+    background-color: #805050;
+}
+
+ul.tabs li.current
+{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content
+{
+    display: none;
+    background: #ededed;
+    padding: 15px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 20px; 
+}
+
+.tab-content.current
+{
+    display: inherit;
+}
+
+table
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table, th, td
+{
+	border: 1px solid gray;	
+}
+
+td
+{
+	margin-left: 1%;
+	padding: 0px 4px;
+}
+
+tr
+{
+	height: 50px;	
+}
+
+tr:nth-child(even) 
+{
+	background-color: #dCdCdC;
+}
+
+tr:hover
+{
+	background-color: #c4c4c4;
+}
+
+button
+{
+	margin-top: 10px;
+	padding: 10px 10px;
+	font-family: 'Raleway',sans-serif;
+    font-size: 20px; 
+}
+
+

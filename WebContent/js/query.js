@@ -6,7 +6,7 @@ var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
 var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
 const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration",
-                      "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout"];
+                      "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout", "Meeting", "Projects Not in Meeting"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -25,7 +25,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 
 var REPORT_VALS = {"Weekly":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
-					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT"};
+					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Projects Not in Meeting" : "OTHER"};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -38,36 +38,32 @@ const CLOSED_STAGE=4;
 
 //PROJECT_TYPES
 const PROJECT_TYPE_C = 1;
-const PROJECT_TYPE_CW = 5;
 const PROJECT_TYPE_R = 6;
-const PROJECT_TYPE_CR=7;
-const PROJECT_TYPE_RM=3;
+const PROJECT_TYPE_CR=3;
 const PROJECT_TYPE_OH=2;
 const PROJECT_TYPE_H=8;
 const PROJECT_TYPE_RX = 9;
 const PROJECT_TYPE_RS = 10;
+const PROJECT_TYPE_RR = 11;
+const PROJECT_TYPE_BE=4;
 
 //PROJECT_STATUSES
 const PROJECT_STATUS_PREPARING_PROPOSAL = 1;
 const PROJECT_STATUS_ON_HOLD = 2;
 const PROJECT_STATUS_PROPOSAL_SUBMITTED = 3;
 const PROJECT_STATUS_AWAITING_DIRECTION = 4;
-const PROJECT_STATUS_BUDGETARY_SUBMITTED = 5;
 const PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED = 6;
 const PROJECT_STATUS_PROPOSAL_RESUBMITTED = 7;
 const PROJECT_STATUS_REVISING_PROPOSAL = 8;
 const PROJECT_STATUS_PREPARING_PROPOSAL_TEMP = 9;
-const PROJECT_STATUS_BUDGET_SUBMITTED = 10;
 const PROJECT_STATUS_AWAITING_DRAWINGS = 11;
 const PROJECT_STATUS_SITE_SURVEY = 12;
-const PROJECT_STATUS_REVISED_BUDGET_SUBMITTED = 13;
 const PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS = 14;
 const PROJECT_STATUS_CONFIRMING_SCOPE_SITE_SURVEY = 15;
 const PROJECT_STATUS_AWAITING_REFRIGERATION_DRAWINGS = 17;
 const PROJECT_STATUS_REVISING_PRICE = 18;
 const PROJECT_STATUS_SCHEDULE_SITE_SURVEY = 19;
 const PROJECT_STATUS_PERFORMING_SITE_SURVEY = 20;
-const PROJECT_STATUS_BUDGETARY_RESUBMITTED = 21;
 const PROJECT_STATUS_UPDATED_PROPOSAL = 22;
 const PROJECT_STATUS_UPDATING_PROPOSAL = 23;
 const PROJECT_STATUS_AWAITING_UPDATED_SCOPE = 24;
@@ -95,6 +91,13 @@ const ACTIVE_WEEKLY = "WEEKLY_A";
 const INACTIVE_WEEKLY = "WEEKLY_I";
 const CLOSED_WEEKLY = "WEEKLY_C";
 const BUDGETARY_WEEKLY = "WEEKLY_B";
+
+const ACTIVE_MEETING = "MEETING_A";
+const OTHER_ACTIVE = "OTHER_A";
+const PROPOSAL_MEETING = "MEETING_P";
+const PROPOSAL_OTHER = "OTHER_P";
+const BUDGETARY_MEETING = "MEETING_B";
+const BUDGETARY_OTHER = "OTHER_B";
 
 const PROPOSAL_STEVE_MEYER = "STEVE_MEYER_P";
 const ACTIVE_STEVE_MEYER = "STEVE_MEYER_A";
@@ -374,6 +377,8 @@ function generateDropdown(str, className)
 {
 	if(className == "closeout")
 		return;
+	if(className == "meeting")
+		return;
 	
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
@@ -452,7 +457,6 @@ function generateDropdown(str, className)
 
 function generateCloseoutDropdown()
 {
-
 	var d = document.createDocumentFragment();
 	for(var i = 0; i < CLOSEOUT_PARAMS.length; i++)
 	{
@@ -463,7 +467,6 @@ function generateCloseoutDropdown()
 	}
 	closeoutOptions = d;
 }
-
 
 //add a parameter cell to the paramTable
 function addParamCell()
@@ -734,56 +737,6 @@ function submitQuery()
 				var date = $('#dateBox'+i).val();
 				onGoing.push(date);
 				break;
-
-    		/*if(paramType == 'initiated')
-    			{
-    				var valType = $('#val'+i).val();
-    				initiatedRelation.push(valType);			
-    				var date = $('#dateBox'+i).val();
-    				initiated.push(date);
-    			}
-    		if(paramType == 'costcoDueDate')
-    			{
-    				var valType = $('#val'+i).val();
-    				costcoRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-					costco.push(date);
-    			}
-    		if(paramType == 'proposalSubmitted')
-    			{
-    				var valType = $('#val'+i).val();
-    				submittedRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-    				submitted.push(date);
-    			}
-    		if(paramType == 'scheduledStartDate')
-    			{
-    				var valType = $('#val'+i).val();
-    				schStartDateRelation.push(valType);			
-    				var date = $('#dateBox'+i).val();
-    				schStartDate.push(date);
-    			}
-    		if(paramType == 'scheduledTurnover')
-    			{
-    				var valType = $('#val'+i).val();
-    				schTurnoverDateRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-    				schTurnoverDate.push(date);
-    			}
-    		if(paramType == 'actualTurnover')
-    			{
-    				var valType = $('#val'+i).val();
-    				actTurnoverDateRelation.push(valType);
-    				var date = $('#dateBox'+i).val();
-    				actTurnoverDate.push(date);
-    			}
-    		if(paramType == 'onGoing')
-			{
-				var valType = $('#val'+i).val();
-				onGoingRelation.push(valType);
-				var date = $('#dateBox'+i).val();
-				onGoing.push(date);
-			}*/
 		}   
     	}
     	else
@@ -909,6 +862,7 @@ function reportCreator(elem)
 
 function generateReport(reportType)
 {
+	console.log(reportType);
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
 	var warehouseIDs = new Array();
@@ -1105,17 +1059,74 @@ function generateReport(reportType)
 			stage.push(PROPOSAL_STAGE);
 			title = "Weekly Proposals";
 			break;
+			
+		case PROPOSAL_MEETING:
+			stage.push(PROPOSAL_STAGE);
+			title = "Weekly Proposals";
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
+			break;
 	
+		case PROPOSAL_OTHER:
+			stage.push(PROPOSAL_STAGE);
+			title = "Weekly Proposals";
+			pType.push(PROJECT_TYPE_CR);
+			pType.push(PROJECT_TYPE_RR);
+			pType.push(PROJECT_TYPE_OH);
+			pType.push(PROJECT_TYPE_BE);
+			pType.push(PROJECT_TYPE_RS);
+			break;
+		
 		case ACTIVE_WEEKLY:
 			stage.push(ACTIVE_STAGE);
 			title = "Weekly Active Projects";
 			break;
+			
+		case ACTIVE_MEETING:
+			title = "Active Projects";
+			stage.push(ACTIVE_STAGE);
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
+			status.push(PROJECT_STATUS_SCHEDULING);
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			break;
 
+		case OTHER_ACTIVE:
+			title = "Active Projects";
+			stage.push(ACTIVE_STAGE);
+			pType.push(PROJECT_TYPE_CR);
+			pType.push(PROJECT_TYPE_RR);
+			pType.push(PROJECT_TYPE_OH);
+			//pType.push(PROJECT_TYPE_BE);
+			break;
+		
 		case BUDGETARY_WEEKLY:
 			stage.push(BUDGETARY_STAGE);
 			title="Weekly Budgetary Projects";
 			break;
 
+		case BUDGETARY_MEETING:
+			stage.push(BUDGETARY_STAGE);
+			title="Budgetary Projects";
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			break;
+			
+		case BUDGETARY_OTHER:
+			stage.push(BUDGETARY_STAGE);
+			title="Budgetary Projects";
+			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
+			break;
+		
 		case INACTIVE_WEEKLY:
 			stage.push(INACTIVE_STAGE);
 			title="Weekly Inactive Projects";
@@ -1362,17 +1373,23 @@ function generateReport(reportType)
 			stage.push(ACTIVE_STAGE);
 			if(title == undefined)
 				title = "Closeout Summary for Active Projects";
+			
+			status.push(PROJECT_STATUS_COMPLETE);
 			break;
 
 		case BUDGETARY_CLOSEOUT:
 			stage.push(BUDGETARY_STAGE);
 			if(title == undefined)
 				title="Closeout Summary for Budgetary Projects";
+			
+			status.push(PROJECT_STATUS_COMPLETE);
 			break;
 		case CLOSED_CLOSEOUT:
 			stage.push(CLOSED_STAGE);
 			if(title == undefined)
 				title="Closeout Summary for Closed Projects";
+			
+			status.push(PROJECT_STATUS_COMPLETE);
 			break;	
 		
 	
@@ -1456,12 +1473,18 @@ function getAllSpecifiedFields(reportType)
 
 	switch(reportType)
 	{
+		case PROPOSAL_OTHER:
+		case PROPOSAL_MEETING:
 		case PROPOSAL_WEEKLY:
 			genType=PROPOSAL_WEEKLY_KEYS;
 			break;
+		case OTHER_ACTIVE:
+		case ACTIVE_MEETING: 
 		case ACTIVE_WEEKLY:
 			genType=ACTIVE_WEEKLY_KEYS;
 			break;
+		case BUDGETARY_MEETING:
+		case BUDGETARY_OTHER:
 		case BUDGETARY_WEEKLY:
 			genType=BUDGETARY_WEEKLY_KEYS;
 			break;

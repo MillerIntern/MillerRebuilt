@@ -110,7 +110,6 @@ ul
     padding: 0;
     overflow: hidden;
     background-color: #333;
-  
 }
 
 .side-borders
@@ -161,7 +160,6 @@ li.dropdown
     min-width: 150px;
     text-decoration: none;
     z-index: 1;
-
 }
 
 .dropdown-content .dropdown-content-sideways a 
@@ -171,12 +169,11 @@ li.dropdown
     text-decoration: none;
     display: block;
     text-align: left;
-    
 }
 
 .dropdown:hover .dropdown-content 
 {
-    display: block;    
+    display: block;  
 }
 
 
@@ -218,4 +215,3 @@ li.dropdown
 	background: red;
 	color: black;
 }*/
-

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/projectManager.js"></script>
+    <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
+    <title>Project Manager</title>
+    <meta charset="UTF-8">
+</head>
+
+<body onload="getProject()">
+<div class="header">
+    <p class="title">Project Manager</p>
+</div><br>
+
+<ul>
+    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+    <li class="dropdown">
+        <a class="dropbtn active">Projects</a>
+        <div class="dropdown-content">
+            <a onClick="document.location.href='projectData.html'">Add</a>
+            <a onClick="document.location.href='findProject.html'">Find</a>
+        </div>
+    </li>
+    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+    <li><a onClick="document.location.href='query.html'">Reports</a></li>
+    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+</ul><br>
+    
+<div class="container">
+
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="projectInformation">Project Information </li>
+		<li class="tab-link" data-tab="changeOrders">Change Orders</li>
+        <li class="tab-link" data-tab="equipment">Equipment</li>
+		<li class="tab-link" data-tab="closeout">Closeout</li>
+		<li id="triggerTab" class="tab-link" data-tab="triggers">Triggers</li>
+	</ul>
+
+	<div id="projectInformation" class="tab-content current">
+		<p class="deleteThis">Basic Information</p>
+		<table>
+		  <tr>
+		    <td>MCS Number:</td>
+		    <td id="mcsNumber">-1 </td>
+		  </tr>
+		  <tr>
+		    <td>Warehouse:</td>
+		    <td id="warehouse">City, State</td>
+		  </tr>
+		  <tr>
+		    <td>Item:</td>
+		    <td id="item">Undefined</td>
+		  </tr>
+		 <tr>
+		    <td>Status:</td>
+		    <td id="status">Undefined</td>
+		  </tr>
+		  <tr>
+		    <td>Type:</td>
+		    <td id="type">Undefined</td>
+		  </tr>
+		  <tr>
+		    <td>Stage:</td>
+		    <td id="stage">Undefined</td>
+		  </tr>
+		  <tr>
+		    <td>Manager:</td>
+		    <td id="manager">Undefined</td>
+		  </tr>
+		  <tr>
+		    <td>Supervisor:</td>
+		    <td id="supervisor">Undefined</td>
+		  </tr>
+		</table>
+	</div>
+	<div id="changeOrders" class="tab-content">
+        <p class="deleteThis">Change Orders</p>
+	</div>
+	<div id="equipment" class="tab-content">
+        <p class="deleteThis">Equipment</p>
+	</div>
+	<div id="closeout" class="tab-content">
+		<p class="deleteThis">Closeout</p>
+		<table>
+			<tr>
+				<td>Closeout Documents</td>
+			</tr>
+			 <tr>
+			   <td>MG2 Completion (G704 Form):</td>
+			   <td id="mg2Completion">Undefined</td>
+			 </tr>
+			<tr>
+			   <td>Punch List:</td>
+			   <td id="punchList">Undefined</td>
+			 </tr>
+			 <tr>
+			   <td>Verisae Report:</td>
+			   <td id="verisae">Undefined</td>
+			 </tr>
+		  
+		</table><br>
+		<table>
+			<tr>
+		    	<td></td>
+		    	<td>Required</td>
+		    	<td>Completed</td>
+		  	</tr>
+		  <tr>
+		    <td>Final Inspections:</td>
+		    <td id="finalInspectionsRequired">-1 </td>
+		    <td id="finalInspectionsCompleted">-1</td>
+		  </tr>
+		  <tr>
+		    <td>Final Warranties:</td>
+		    <td id="finalWarrantiesRequired">-1</td>
+		    <td id="finalWarrantiesCompleted">-1</td>
+		  </tr>
+		  <tr>
+		    <td>Final Liens:</td>
+		    <td id="finalLiensRequired">-1</td>
+		    <td id="finalLiensCompleted">-1</td>
+		  </tr>
+		</table>
+	</div>
+    <div id="triggers" class="tab-content">
+        <p class="deleteThis">Triggers</p>
+
+    </div>
+
+</div><!-- container -->
+
+    
+</body>
+</html>

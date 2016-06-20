@@ -1,0 +1,47 @@
+table
+{
+	border-collapse: collapse;
+	width: 80%;
+}
+
+table, th, td
+{
+	border: none;
+}
+
+td
+{
+	margin-left: 1%;
+	padding: 0px 4px;
+}
+
+tr
+{
+	height: 50px;	
+}
+
+tr:nth-child(even) 
+{
+	background-color: #dCdCdC;
+}
+
+tr:hover
+{
+	background-color: #c4c4c4;
+}
+
+li:last-child
+{
+    float: right;
+}
+
+li:last-child:hover
+{
+    color: white;
+}
+
+select, input, textarea
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px;
+}

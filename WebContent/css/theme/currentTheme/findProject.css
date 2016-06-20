@@ -77,12 +77,17 @@ select:first-child
 {
     width: 100%;
     text-align: left;
-    line-height: 1.5em;
+    line-height: 2em;
     border: none;
-    border-bottom: solid 1px dimgray;
-    font-family: 'Raleway',sans-serif;
+    border-bottom: solid 1px #222222;
+    font-family: 'proxima-nova',sans-serif;
     font-size: 24px; 
     transition: all 0.4s ease 0s;
+}
+
+b
+{
+	color: black;
 }
 
 .project:last-child

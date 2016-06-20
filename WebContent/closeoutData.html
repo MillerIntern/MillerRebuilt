@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/global.js"></script>
+        <script type="text/javascript" src="js/closeoutData.js"></script>
+
+		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/closeoutData.css" type="text/css" rel="stylesheet" />
+        
+		<script type="text/javascript" src="js/tab.js"></script>
+        
+		<title>Miller Construction Site</title>
+		<meta charset="UTF-8">
+	</head>
+	
+<body onload="getDropdownItems();">
+    <div class="header">
+        <p class="title">Closeout Items</p>
+    </div>
+<br>
+		
+<ul class="side-borders">
+    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+    <li class="dropdown">
+    <a class="active" class="dropbtn">Projects</a>
+    <div class="dropdown-content">
+        <a onClick="document.location.href='projectData.html'">Add</a>
+        <a onClick="document.location.href='findProject.html'">Find</a>
+    </div></li>
+    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+    <li><a onClick="document.location.href='query.html'">Reports</a></li>
+    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+</ul><br>
+
+    <div class="container">
+
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="closeoutDocuments">Closeout Documents </li>
+		<li class="tab-link" data-tab="finalInspections">Final Inspections</li>
+        <li class="tab-link" data-tab="warrantyLetters">Warranty Letters</li>
+		<li class="tab-link" data-tab="finalLiens">Final Liens</li>
+		<li class="tab-link" data-tab="otherItems">Other Items</li>
+        <li onClick="saveProject()" data-tab="saveButton">Save Project</li>
+	</ul>
+
+    <!-- Closeout Documents Tab--> 
+	<div id="closeoutDocuments" class="tab-content current">
+        <table>
+            <tr>
+                <td>Equipment Submittal:</td>
+                <td>  
+                    <select class="closeout-input" id="equipmentSubmittalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="equipmentSubCL" type="text"></input>  
+                </td>
+            </tr>
+            <tr>
+                <td>Operations and Maintenance Manuals:</td>
+                <td>  
+                    <select class="closeout-input" id="manualStatus">
+                    <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="manualDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Punch List:</td>
+                <td>  
+                    <select class="closeout-input" id="punchListStatus">
+                    <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="punchList" />
+                </td>   
+            </tr>
+            <tr>
+                <td>As-Built Drawings:</td>
+                <td>  
+                    <select class="closeout-input" id="asBuiltDrawingsStatus">
+                    <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                <input type="text" id="asBuilts" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Close Out Photos:</td>
+                <td>  
+                    <select class="closeout-input" id="closeOutPhotosStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="closeoutPhotosCL" type="text"></input>
+                </td>   
+            </tr>
+            <tr>
+                <td>HVAC Startup Form:</td>
+                <td>  
+                    <select class="closeout-input" id="HVACstartupFormStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="HVACstartupFormDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Alarm Form:</td>
+                <td>  
+                <select class="closeout-input" id="alarmFormStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                </td>
+                <td>
+                <input type="text" id="alarmHvac" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Verisae Report:</td>
+                <td>  
+                    <select class="closeout-input" id="verisaeReportStatus">
+                    <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                <input type="text" id="verisae" />	
+                </td>   
+            </tr>
+            <tr>
+                <td>Closeout Documents Notes:</td>
+                <td>  
+                <textarea id="closeoutDocumentsNotes"> </textarea>
+                </td> 
+                <td></td>
+            </tr>
+        </table>
+	</div>
+    <!-- End Closeout Documents Tab--> 
+
+    <!-- Final Inspections Tab -->
+	<div id="finalInspections" class="tab-content">
+        <table>
+            <tr>
+                <td>Temp Certificate of Occupancy:</td>
+                <td>  
+                    <select class="closeout-input" id="tmpCertificateStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+            <input type="text" id="tmpCertificateDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Mechanical Final Inspection:</td>
+                <td>  
+                    <select class="closeout-input" id="mechFinalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="mechFinalDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Electrical Final Inspection:</td>
+                <td>  
+                    <select class="closeout-input" id="elecFinalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+            <input type="text" id="elecFinalDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Plumbing Final Inspection:</td>
+                <td>  
+                    <select class="closeout-input" id="plumbingFinalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="plumbingFinalDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Sprinkler Final Inspection:</td>
+                <td>  
+                    <select class="closeout-input" id="sprinkleFinalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="sprinkleFinalDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Certificate of Occupancy:</td>
+                <td>  
+                    <select class="closeout-input" id="certificateStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="certificateDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Building Final Inspection:</td>
+                <td>  
+                    <select class="closeout-input" id="buildFinalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="buildingPermitCL" type="text"></input>
+                </td>   
+            </tr> 
+            <tr>
+                <td>Final Inspection Notes:</td>
+                <td>  
+                    <textarea id="finalInspectionNotes"> </textarea>
+                </td>
+                <td></td>
+            </tr> 
+        
+        </table>
+    </div>
+    <!-- End Final Inspections Tab --> 
+    
+    <!-- Warranty Letters Tab -->
+	<div id="warrantyLetters" class="tab-content">
+        <table>
+            <tr>
+                <td>MCS Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="MCSWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="MCSWarranty" type="text"></input>
+                </td>   
+            </tr> 
+            <tr>
+                <td>GC Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="GCWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="GCWarrantyDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Mechanical Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="mechanicalWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="mechanicalWarrantyDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Eletrical Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="electricalWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="electricalWarrantyDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Plumbing Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="plumbingWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="plumbingWarrantyDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Sprinkler Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="sprinkleWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="sprinkleWarrantyDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Roofing Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="roofingWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="roofingWarrantyDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>HTI Warranty:</td>
+                <td>  
+                    <select class="closeout-input" id="HTIWarrantyStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="HTIWarrantyDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Other Warranty (A):</td>
+                <td>  
+                    <select class="closeout-input" id="otherWarrantyStatusA">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="otherWarrantyDateA" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Other Warranty (B):</td>
+                <td>  
+                    <select class="closeout-input" id="otherWarrantyStatusB">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="otherWarrantyDateB" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Warranty Notes:</td>
+                <td>  
+                    <textarea id="warrantyNotes"> </textarea>
+                </td>
+                <td></td>
+            </tr> 
+        </table>
+    </div>
+    <!-- End Warranty Letters Tab -->
+
+    <!-- Final Liens Tab -->
+	<div id="finalLiens" class="tab-content">
+		<table>
+            <tr>
+                <td>MCS Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="MCSStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="MCSDate"/>
+                </td>   
+            </tr> 
+            <tr>
+                <td>GC Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="GCStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="GCDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Mechanical Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="mechanicalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="mechanicalDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Eletrical Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="electricalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="electricalDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Plumbing Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="plumbingStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="plumbingDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Sprinkler Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="sprinkleStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="sprinkleDate" />
+                </td>   
+            </tr> 
+            <tr>
+                <td>Roofing Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="roofingStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="roofingDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>HTI Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="HTIStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="HTIDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Other Liens:</td>
+                <td>  
+                    <select class="closeout-input" id="otherFinalLiensStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="otherFinalLiensDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Final Liens Notes:</td>
+                <td>  
+                    <textarea id="finalLiensNotes"> </textarea>
+                </td>   
+                <td></td>
+            </tr>
+		</table>
+	</div>
+    <!-- End Final Liens Tab -->
+
+    <!-- Other Items Tab -->
+    <div id="otherItems" class="tab-content">
+        <table>
+            <tr>
+                <td>Number of Change Orders:</td>
+                <td>  
+                 <input type="text" id="numOfChangeOrders" />   
+                </td>  
+                <td></td>
+            </tr>
+            <tr>
+                <td>Number of Change Orders Completed:</td>
+                <td>  
+            <input type="text" id="numOfChangeOrdersCompleted" />
+                </td> 
+                <td></td>
+            </tr>
+            <tr>
+                <td>MG2 Completion:</td>
+                <td>  
+                    <select class="closeout-input" id="mg2CompletionStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td> 
+                <td>
+                    <input type="text" id="mg2CompletionDate"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- end other Items Tab -->
+
+</div><!-- container -->
+
+<div id="footer">
+</div>
+</body>
+</html>
+						

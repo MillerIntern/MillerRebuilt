@@ -116,12 +116,6 @@ $(document).ready(function()
     $("#manualDate").datepicker();
     $("#HVACstartupFormDate").datepicker();
     
-        // MCS Review
-    $("#bartOrSandyDate").datepicker();
-    $("#alexDate").datepicker();
-    $("#andyDate").datepicker();
-    $("#projectManagerDate").datepicker();
-    
     //$("#closedocsProjectClass").text("Need to add function later to var projectClass = $(#class).val();");
     
 	PAGETYPE = getParameterByName("type");	
@@ -304,12 +298,12 @@ function fillDropdowns(data)
 	
 	
 	//retrieves and manipulates all of the equipment data
-	generateEquipment(data["equipment"]);
+	/*generateEquipment(data["equipment"]);
 	
 	//creates seperate arrays for main data
 	generateArray(data["warehouse"],itemTypes[0] );
 	generateArray(data["item"],"item" );
-	generateArray(data["equipmentvendor"], "equipmentVendor");
+	generateArray(data["equipmentvendor"], "equipmentVendor");*/
 	
 }
 
@@ -492,7 +486,6 @@ function addProject()
     var otherFinalLeinsDate = $("#otherFinalLiensDate").val();
     
     var finalLiensNotes = $("#finalLiensNotes").val();
-    console.log(finalLiensNotes);
         
     	// INSPECTIONS
     
@@ -900,13 +893,13 @@ function createConfirmWindow()
 		buttons: {
 			"Continue Working": function() {
 				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				$(this).dialog("close");
+				window.location.href="projectManager.html?type=navigateTo&id=";//TODO: How to get project id!
 			},
 			"Go to Home Page": function() {
 				window.location.href="homepage.html";
 			},
-			"Edit another project": function() {
-				window.location.href="editSelect.html";
+			"Find another project": function() {
+				window.location.href="findProject.html";
 			}
 		}
 	});	
@@ -1329,6 +1322,6 @@ var closeoutstatus_dropdowns = [
 				"equipmentSubmittalStatus", "manualStatus","punchListStatus", "asBuiltDrawingsStatus", 
                 "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",
                  
-                "bartOrSandyStatus", "alexStatus", "andyStatus", "projectManagerStatus",                                                     
+                                                     
                                 ];
 

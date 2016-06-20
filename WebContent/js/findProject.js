@@ -25,12 +25,12 @@ function getProjectEnums()
 		data: 
 		{
 			'domain': 'project',
-			'action': 'getAllObjects',
+			'action': 'getAllProjects',
 		},
 		success: function(data)
 		{
-			getProjects();
-			fillDropdowns(data);
+			projects = data;
+			getDropdownFields();
 
 		},
 		error: function(xhr)
@@ -40,7 +40,7 @@ function getProjectEnums()
 	});
 }
 
-function getProjects()
+function getDropdownFields()
 {
 	// Get projects to filter
 	$.ajax({
@@ -49,12 +49,12 @@ function getProjects()
 		data:
 		{
 			'domain': 'project',
-			'action': 'getAllProjects',
+			'action': 'getAllObjects',
 		},
 		success: function(data)
 		{
-			projects = data;
-			console.log(projects);
+			fillDropdowns(data);
+			console.log("ready");
 		},
 		error: function(xhr)
 		{
@@ -142,17 +142,17 @@ function sortByName(object, className)
 
 $(document).on('change', 'select.parameterValue', function()
 {
-	console.log("firing values");
 	filterProjects();
 });
 
-$(document).on('change', 'select.parameterID',function(){
+$(document).on('change', 'select.parameterID',function()
+{
 	setVals($(this));
+	filterProjects();
 });
 
 function setVals(param)
 {
-	console.log("firing");
 	var modParam = $(param).siblings("select");
 	valOptions = $(param).val();
 	
@@ -253,38 +253,132 @@ function populateParameters()
 
 function filterProjects()
 {
+	console.log("filtering");
 	var json = JSON.parse(projects["projects"]);
 
-	console.log(json.length);
+	var remaining = json.length;
 	for(var i = 0; i < paramNum; i++)
 	{
 		var id = $("#paramID"+(i + 1)).val();
 		var val = $("#paramVal"+(i + 1)).val();
-		console.log(id + " " + val);
-
 		for(var j = 0; j < json.length; j++)
 		{
 			if(id == 'Warehouse')
 			{
-				if(json[i].warehouse.warehouseID != val)
-					console.log("entry to delete");
+
+				if(json[j] != null && json[j].warehouse.city.id != val)
+				{
+					json[j] = null;
+					remaining = remaining - 1;
+				}
 			}
+			else if(id == 'Classification')
+			{
+				if(json[j] != null && json[j].projectClass.id != val)
+				{
+					json[j] = null;
+					remaining = remaining - 1;
+				}
+			}
+			else if(id == 'Item')
+			{
+				if(json[j] != null && json[j].projectItem.id != val) 
+				{
+					json[j] = null;
+					remaining = remaining - 1;
+				}
+			}
+			else if(id == 'Manager')
+			{
+				if(json[j] != null && json[j].projectManagers.id != val)
+				{
+					json[j] = null;
+					remaining = remaining -1;
+				}
+			}
+			else if(id == 'Supervisor')
+			{
+				if(json[j] != null && json[j].supervisors[0].id != val)
+				{
+					json[j] = null;
+					remaining = remaining -1;
+				}
+			}
+			else if(id == 'Type')
+			{
+				if(json[j] != null && json[j].projectType.id != val)
+				{
+					json[j] = null;
+					remaining = remaining -1;
+				}
+			}
+			else if(id == 'Status')
+			{
+				if(json[j] != null && json[j].status.id != val)
+				{
+					json[j] = null;
+					remaining = remaining -1;
+				}
+			}
+			else if(id == 'Stage')
+			{
+				if(json[j] != null && json[j].stage.id != val)
+				{
+					json[j] = null;
+					remaining = remaining -1;
+				}
+			}
+			
+			
 		}
 	}
-}
-
-function addProjects()
-{
-	if(filteredProjects.length > 60)
+	console.log("Entries remaining: " +  remaining);
+	
+	$("#projectHolder").children().remove();
+	if(remaining == 0)
 	{
+		var projectListing = document.createElement("li");
+		projectListing.className = "project";
+		projectListing.innerHTML = ("No results :(")
 		
-		return;
+		$("#projectHolder").append(projectListing);
+	}
+	else if(remaining > 50)
+	{
+		var projectListing = document.createElement("li");
+		projectListing.className = "project";
+		projectListing.innerHTML = ("Too many results. Please refine your search.")
+		
+		$("#projectHolder").append(projectListing);
+	}
+	else 
+	{
+		for(var i = 0; i < json.length; i++)
+		{
+			if(json[i] != null)
+			{
+				var projectListing = document.createElement("li");
+				projectListing.className = "project";
+				projectListing.id = (json[i].id);
+				projectListing.innerHTML = (json[i].warehouse.city.name 
+						+ ", " + json[i].warehouse.state + " --- " +  json[i].projectItem.name); //+ " --- " + json[i].status.name);
+				projectListing.onclick = function() {manageThisProject(this)};
+				
+				$("#projectHolder").append(projectListing);
+			}
+		}
 	}
 }
 
 function removeParam(param)
 {
 	console.log(param);
+}
+
+function manageThisProject(listing)
+{
+	console.log(listing);
+	window.location.href = ('projectManager.html?type=navigateTo&id='+listing.id);
 }
 
 
