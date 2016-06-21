@@ -11,9 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.google.gson.Gson;
 
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
@@ -32,8 +35,6 @@ import projectObjects.ProjectType;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Warehouse;
-
-import com.google.gson.Gson;
 
 
 /**
@@ -775,6 +776,10 @@ public class ProjectService extends ProjectObjectService
 		p.setCustomerNumber(customerNumber);
 		p.setPermitApplication(permitApp);
 		
+		System.out.println(p.getCloseoutDetails().getId() + " closeout id");
+		System.out.println(p.getPermits().getId() + "  status id");
+		System.out.println(p.getInspections().getId() + "  inspection id");
+		
 		//Add the project to the database.
 		ProjectObjectService.addObject("Project", p);
 	
@@ -871,9 +876,9 @@ public class ProjectService extends ProjectObjectService
 		String customerNumber = params.get("customerNumber");
 		
 		//Parse change orders from strong
-		String changeOrderJsonString = params.get("coItems");
+		//String changeOrderJsonString = params.get("coItems");
 		//ChangeOrderService orderService = new ChangeOrderService();
-		HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
+		//HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 		
 		Date fsalvageDate = null;
 		Date finitiatedDate = null;
@@ -930,7 +935,7 @@ public class ProjectService extends ProjectObjectService
 
 		
 		//assign values to dates, if they are not null
-		if (!(params.get("salvageDate")).isEmpty())
+		if ((params.get("salvageDate") != null) && !(params.get("salvageDate")).isEmpty())
 			fsalvageDate = formatter.parse(params.get("salvageDate"));
 		
 		if (!(params.get("initiated")).isEmpty())
@@ -947,7 +952,7 @@ public class ProjectService extends ProjectObjectService
 		
 //********************CLOSEOUTDETAILS OPTIONAL**************************\\
 		
-		if (!params.get("closeoutNotes").isEmpty())
+		if (params.get("closeoutNotes") != null && !params.get("closeoutNotes").isEmpty())
 			fcloseoutNotes = formatter.parse(params.get("closeoutNotes"));
 		
 		if (!(params.get("asBuilts")).isEmpty())
@@ -971,10 +976,10 @@ public class ProjectService extends ProjectObjectService
 		if (!params.get("actualTurnover").isEmpty())
 			factual = formatter.parse(params.get("actualTurnover"));
 
-		if (!params.get("airGas").isEmpty())
+		if (params.get("airGas") != null && !params.get("airGas").isEmpty())
 			fairGas = formatter.parse(params.get("airGas"));
 		
-		if (!params.get("permits").isEmpty())
+		if (params.get("permits") != null && !params.get("permits").isEmpty())
 			fpermits = formatter.parse(params.get("permits"));
 		
 		if (!params.get("permitApp").isEmpty())
@@ -1281,21 +1286,21 @@ public class ProjectService extends ProjectObjectService
 		//CloseoutLIST
 		if(!params.get("buildingPermitCL").isEmpty()) 
 			buldingPermitCLf = formatter.parse(params.get("buildingPermitCL"));
-		if(!params.get("inspectionSOCL").isEmpty()) 
+		if(params.get("inspectionSOCL") != null && !params.get("inspectionSOCL").isEmpty()) 
 			inspectionSOCLf = formatter.parse(params.get("inspectionSOCL"));
-		if(!params.get("certCompletionCL").isEmpty()) 
+		if(params.get("certiCompletionCL") != null && !params.get("certCompletionCL").isEmpty()) 
 			certCompletionCLf = formatter.parse(params.get("certCompletionCL"));
-		if(!params.get("mPunchListCL").isEmpty()) 
+		if(params.get("mPunchListCL") != null && !params.get("mPunchListCL").isEmpty()) 
 			mPunchListCLf = formatter.parse(params.get("mPunchListCL"));
 		if(!params.get("closeoutPhotosCL").isEmpty()) 
 			closeoutPhotosCLf = formatter.parse(params.get("closeoutPhotosCL"));
-		if(!params.get("subConWarrantiesCL").isEmpty()) 
+		if(params.get("subConWarrantiesCL") != null && !params.get("subConWarrantiesCL").isEmpty()) 
 			subConWarrantiesCLf = formatter.parse(params.get("subConWarrantiesCL"));
 		if(!params.get("MCSWarranty").isEmpty()) 
 			MCSWarrantyf = formatter.parse(params.get("MCSWarranty"));
 		if(!params.get("equipmentSubCL").isEmpty()) 
 			equipmentSubClf  = formatter.parse(params.get("equipmentSubCL"));
-		if(!params.get("traneCL").isEmpty()) 
+		if(params.get("traneCL")  != null && !params.get("traneCL").isEmpty()) 
 			traneCLf = formatter.parse(params.get("traneCL"));
 		
 
@@ -1307,8 +1312,8 @@ public class ProjectService extends ProjectObjectService
 		Long id = Long.parseLong(params.get("projectID"));
 		String[] equipToAdd = getGSONArray(req, "newEquip");
 		
-		
-		if(equipToAdd.length!=0)
+
+		if(equipToAdd != null&& equipToAdd.length!=0)
 		{
 		System.out.println("in equipment");
 		// ---------------------------Receiving ARRAYS -----------------------------------------------
@@ -1403,10 +1408,12 @@ public class ProjectService extends ProjectObjectService
 		}
 		
 		Double salvageAmount = null;
-		try
-		{
-			salvageAmount = Double.parseDouble(params.get("salvageAmount"));
-		}catch(NumberFormatException nfe){}
+		if(params.get("salvageAmount") != null)
+			try
+			{
+				
+				salvageAmount = Double.parseDouble(params.get("salvageAmount"));
+			}catch(NumberFormatException nfe){}
         
         //Edit salvage values and closeout details
 		SalvageValue sv = null;
@@ -1508,7 +1515,7 @@ public class ProjectService extends ProjectObjectService
 		p.setShouldInvoice(shouldInvoice);
 		p.setInvoiced(actualInvoice);
 		p.setProjectNotes(notes);
-		p.setChangeOrders(changeOrders);
+		//p.setChangeOrders(changeOrders);
 		p.setProjectType(pType);
 		p.setZachUpdates(zachNotes);
 		p.setCost(cost);
@@ -1517,7 +1524,6 @@ public class ProjectService extends ProjectObjectService
 		p.setCloseoutDetails(cd);
 		p.setInspections(inspections);
 		p.setPermits(permits);
-		//p.setCloseout(closeout);
 
 				
 
@@ -1710,6 +1716,417 @@ public class ProjectService extends ProjectObjectService
 		array = gson.fromJson(req.getParameter(var), dummy.getClass());
 		
 		return array;	
+	}
+
+	public static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Closeout:");
+		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		String closeoutIDString = params.get("closeoutID");
+		Long closeoutID = (long)-1;
+
+
+		
+		//Parse mcsNumber, change to -1 if it's not a number
+		try
+		{
+			closeoutID = Long.parseLong(closeoutIDString);		
+		}catch(Exception e){}
+		
+		
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Create new project to replace the old one
+		Project p = new Project();
+		p.setMcsNumber(currentProject.getMcsNumber());
+		p.setProjectClass(currentProject.getProjectClass());
+		p.addProjectManager(currentProject.getProjectManagers());
+		Iterator<Person> supervisor = currentProject.getSupervisors().iterator();
+		p.addSupervisor(supervisor.next());
+		p.setStatus(currentProject.getStatus());
+		p.setWarehouse(currentProject.getWarehouse());
+		p.setScope(currentProject.getScope());
+		p.setProjectItem(currentProject.getProjectItem());
+		p.setStage(currentProject.getStage());
+		p.setProjectInitiatedDate(currentProject.getProjectInitiatedDate());
+		p.setSiteSurvey(currentProject.getSiteSurvey());
+		p.setCostcoDueDate(currentProject.getCostcoDueDate());
+		p.setProposalSubmitted(currentProject.getProposalSubmitted());
+		p.setScheduledStartDate(currentProject.getScheduledStartDate());
+		p.setScheduledTurnover(currentProject.getScheduledTurnover());
+		p.setActualTurnover(currentProject.getActualTurnover());
+		p.setShouldInvoice(currentProject.getShouldInvoice());
+		p.setInvoiced(currentProject.getInvoiced());
+		p.setProjectNotes(currentProject.getProjectNotes());
+		//p.setChangeOrders(changeOrders);
+		p.setProjectType(currentProject.getProjectType());
+		p.setZachUpdates(currentProject.getZachUpdates());
+		p.setCost(currentProject.getCost());
+		p.setCustomerNumber(currentProject.getCustomerNumber());
+		p.setPermitApplication(currentProject.getPermitApplication());
+		p.setInspections(currentProject.getInspections());
+		p.setPermits(currentProject.getPermits());	
+		
+		
+		CloseoutDetails cd = new CloseoutDetails();
+		
+		int numOfChangeOrders;
+		try
+		{
+			 numOfChangeOrders = Integer.parseInt(params.get("numOfChangeOrders"));
+		}catch(NumberFormatException ex) { numOfChangeOrders = 0; }
+		
+		cd.setNumOfChangeOrders(numOfChangeOrders);
+
+		int numOfChangeOrdersCompleted;
+		try
+		{
+			 numOfChangeOrdersCompleted = Integer.parseInt(params.get("numOfChangeOrdersCompleted"));
+		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
+		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
+				
+		Date mg2CompletionDate = null;
+		if(!params.get("mg2CompletionDate").isEmpty())
+			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
+		
+		cd.setMg2CompletionDate(mg2CompletionDate);
+		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
+		
+		Date MCSDate = null;
+		if(!params.get("MCSDate").isEmpty())
+			MCSDate = formatter.parse(params.get("MCSDate"));
+		cd.setMCSDate(MCSDate);
+		cd.setMCSStatus(params.get("MCSStatus"));
+		
+		Date GCDate = null;
+		if(!params.get("GCDate").isEmpty())
+			GCDate = formatter.parse(params.get("GCDate"));
+		cd.setGCDate(GCDate);
+		cd.setGCStatus(params.get("GCStatus"));
+		
+		Date mechanicalDate = null;
+		if(!params.get("mechanicalDate").isEmpty())
+			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
+		cd.setMechanicalDate(mechanicalDate);
+		cd.setMechanicalStatus(params.get("mechanicalStatus"));
+		
+		Date electricalDate = null;
+		if(!params.get("electricalDate").isEmpty())
+			electricalDate = formatter.parse(params.get("electricalDate"));
+		cd.setElectricalDate(electricalDate);
+		cd.setElectricalStatus(params.get("electricalStatus"));
+		
+		Date plumbingDate = null;
+		if(!params.get("plumbingDate").isEmpty())
+			plumbingDate = formatter.parse(params.get("plumbingDate"));
+		cd.setPlumbingDate(plumbingDate);
+		cd.setPlumbingStatus(params.get("plumbingStatus"));
+		
+		Date sprinkleDate = null;
+		if(!params.get("sprinkleDate").isEmpty())
+			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
+		cd.setSprinkleDate(sprinkleDate);
+		cd.setSprinkleStatus(params.get("sprinkleStatus"));
+		
+		Date roofingDate = null;
+		if(!params.get("roofingDate").isEmpty())
+			roofingDate = formatter.parse(params.get("roofingDate"));
+		cd.setRoofingDate(roofingDate);
+		cd.setRoofingStatus(params.get("roofingStatus"));
+		
+		Date HTIDate = null;
+		if(!params.get("HTIDate").isEmpty())
+			HTIDate = formatter.parse(params.get("HTIDate"));
+		cd.setHTIDate(HTIDate);
+		cd.setHTIStatus(params.get("HTIStatus"));
+		
+		Date otherFinalLeinsDate = null;
+		if(!params.get("otherFinalLeinsDate").isEmpty())
+			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
+		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
+		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
+		
+		Date mcsWarranty = null;
+		if(!params.get("MCSWarranty").isEmpty())
+			mcsWarranty = formatter.parse(params.get("MCSWarranty"));
+		cd.setMCSWarranty(mcsWarranty);
+		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
+		
+		Date GCWarrantyDate = null;
+		if(!params.get("GCWarrantyDate").isEmpty())
+			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
+		cd.setGCWarrantyDate(GCWarrantyDate);
+		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
+		
+		Date mechanicalWarrantyDate = null;
+		if(!params.get("mechanicalWarrantyDate").isEmpty())
+			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
+		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
+		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
+		
+		Date electricalWarrantyDate = null;
+		if(!params.get("electricalWarrantyDate").isEmpty())
+			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
+		cd.setElectricalWarrantyDate(electricalWarrantyDate);
+		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
+		
+		Date plumbingWarrantyDate = null;
+		if(!params.get("plumbingWarrantyDate").isEmpty())
+			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
+		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
+		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
+		
+		Date sprinkleWarrantyDate = null;
+		if(!params.get("sprinkleWarrantyDate").isEmpty())
+			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
+		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
+		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
+		
+		Date roofingWarrantyDate = null;
+		if(!params.get("roofingWarrantyDate").isEmpty())
+			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
+		cd.setRoofingWarrantyDate(roofingWarrantyDate);
+		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
+		
+		Date HTIWarrantyDate = null;
+		if(!params.get("HTIWarrantyDate").isEmpty())
+			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
+		cd.setHTIWarrantyDate(HTIWarrantyDate);
+		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
+		
+		Date otherWarrantyDateA = null;
+		if(!params.get("otherWarrantyDateA").isEmpty())
+			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
+		cd.setOtherWarrantyDateA(otherWarrantyDateA);
+		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
+		
+		Date otherWarrantyDateB = null;
+		if(!params.get("otherWarrantyDateB").isEmpty())
+			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
+		cd.setOtherWarrantyDateB(otherWarrantyDateB);
+		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
+		
+		Date mechFinalDate = null;
+		if(!params.get("mechFinalDate").isEmpty())
+			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
+		cd.setMechFinalDate(mechFinalDate);
+		cd.setMechFinalStatus(params.get("mechFinalStatus"));
+		
+		Date elecFinalDate = null;
+		if(!params.get("elecFinalDate").isEmpty())
+			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
+		cd.setElecFinalDate(elecFinalDate);
+		cd.setElecFinalStatus(params.get("elecFinalStatus"));
+		
+		Date plumbingFinalDate = null;
+		if(!params.get("plumbingFinalDate").isEmpty())
+			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
+		cd.setPlumbingFinalDate(plumbingFinalDate);
+		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
+		
+		Date sprinkleFinalDate = null;
+		if(!params.get("sprinkleFinalDate").isEmpty())
+			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
+		cd.setSprinkleFinalDate(sprinkleFinalDate);
+		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
+		
+		Date buildingFinal = null;
+		if(!params.get("buildingPermitCL").isEmpty())
+			buildingFinal = formatter.parse(params.get("buildingPermitCL"));
+		cd.setBuildingPermitCL(buildingFinal);
+		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
+		
+		Date tmpCertificateDate = null;
+		if(!params.get("tmpCertificateDate").isEmpty())
+			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
+		cd.setTmpCertificateDate(tmpCertificateDate);
+		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
+		
+		Date certificateDate = null;
+		if(!params.get("certificateDate").isEmpty())
+			certificateDate = formatter.parse(params.get("certificateDate"));
+		cd.setCertificateDate(certificateDate);
+		cd.setCertificateStatus(params.get("certificateStatus"));
+		
+		Date equipmentSubmittal = null;
+		if(!params.get("equipmentSubCL").isEmpty())
+			equipmentSubmittal = formatter.parse(params.get("equipmentSubCL"));
+		cd.setEquipmentSubCL(equipmentSubmittal);
+		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
+		
+		Date manualDate = null;
+		if(!params.get("manualDate").isEmpty())
+			manualDate = formatter.parse(params.get("manualDate"));
+		cd.setManualDate(manualDate);
+		cd.setManualStatus(params.get("manualStatus"));
+
+		Date punchList = null;
+		if(!params.get("punchList").isEmpty())
+			punchList = formatter.parse(params.get("punchList"));
+		cd.setPunchList(punchList);
+		cd.setPunchListStatus(params.get("punchListStatus"));
+
+		Date asBuilts = null;
+		if(!params.get("asBuilts").isEmpty())
+			asBuilts = formatter.parse(params.get("asBuilts"));
+		cd.setAsBuilts(asBuilts);
+		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
+		
+		Date closeOutPhotos = null;
+		if(!params.get("closeoutPhotosCL").isEmpty())
+			closeOutPhotos = formatter.parse(params.get("closeoutPhotosCL"));
+		cd.setCloseoutPhotosCL(closeOutPhotos);
+		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
+		
+		Date HVACstartupFormDate = null;
+		if(!params.get("HVACstartupFormDate").isEmpty())
+			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
+		cd.setHVACstartupFormDate(HVACstartupFormDate);
+		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
+		
+		Date alarmForm = null;
+		if(!params.get("alarmHvac").isEmpty())
+			alarmForm = formatter.parse(params.get("alarmHvac"));
+		cd.setAlarmHvacForm(alarmForm);
+		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
+
+		Date verisaeDate = null;
+		if(!params.get("verisae").isEmpty())
+			verisaeDate = formatter.parse(params.get("verisae"));
+		cd.setVerisaeShutdownReport(verisaeDate);
+		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
+		
+		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
+		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
+		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
+		cd.setWarrantyNotes(params.get("warrantyNotes"));
+		
+		
+		p.setCloseoutDetails(cd);
+		
+		int i = 0;
+		int k = 0;
+		System.out.println();
+
+		if(closeoutID!=0)
+		{	
+			i=0;
+			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
+			k=1;
+		}
+		ProjectObjectService.editObject("Project",projectID,p,k);
+	}
+
+	public static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Closeout:");
+		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		String permitsIDString = params.get("permitsID");
+		Long permitsID = (long)-1;
+
+		try
+		{
+			permitsID = Long.parseLong(permitsIDString);		
+		}catch(Exception e){}
+		
+		
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Create new project to replace the old one
+		Project p = new Project();
+		p.setMcsNumber(currentProject.getMcsNumber());
+		p.setProjectClass(currentProject.getProjectClass());
+		p.addProjectManager(currentProject.getProjectManagers());
+		Iterator<Person> supervisor = currentProject.getSupervisors().iterator();
+		p.addSupervisor(supervisor.next());
+		p.setStatus(currentProject.getStatus());
+		p.setWarehouse(currentProject.getWarehouse());
+		p.setScope(currentProject.getScope());
+		p.setProjectItem(currentProject.getProjectItem());
+		p.setStage(currentProject.getStage());
+		p.setProjectInitiatedDate(currentProject.getProjectInitiatedDate());
+		p.setSiteSurvey(currentProject.getSiteSurvey());
+		p.setCostcoDueDate(currentProject.getCostcoDueDate());
+		p.setProposalSubmitted(currentProject.getProposalSubmitted());
+		p.setScheduledStartDate(currentProject.getScheduledStartDate());
+		p.setScheduledTurnover(currentProject.getScheduledTurnover());
+		p.setActualTurnover(currentProject.getActualTurnover());
+		p.setShouldInvoice(currentProject.getShouldInvoice());
+		p.setInvoiced(currentProject.getInvoiced());
+		p.setProjectNotes(currentProject.getProjectNotes());
+		//p.setChangeOrders(changeOrders);
+		p.setProjectType(currentProject.getProjectType());
+		p.setZachUpdates(currentProject.getZachUpdates());
+		p.setCost(currentProject.getCost());
+		p.setCustomerNumber(currentProject.getCustomerNumber());
+		p.setPermitApplication(currentProject.getPermitApplication());
+		p.setInspections(currentProject.getInspections());
+		p.setCloseoutDetails(currentProject.getCloseoutDetails());	
+				
+		Permits permits = new Permits();
+		
+		Date buildingPermit = null;
+		if(!params.get("building_p").isEmpty())
+			buildingPermit = formatter.parse(params.get("building_p"));
+		permits.setBuildingPermitDate(buildingPermit);	
+		
+		Date mechanicalPermit = null;
+		if(!params.get("mechanical_p").isEmpty())
+			mechanicalPermit = formatter.parse(params.get("mechanical_p"));
+		permits.setMechanicalPermitDate(mechanicalPermit);
+		
+		Date electricalPermit = null;
+		if(!params.get("electrical_p").isEmpty())
+			electricalPermit = formatter.parse(params.get("electrical_p"));
+		permits.setElectricalPermitDate(electricalPermit);
+		
+		Date plumbingPermit = null;
+		if(!params.get("plumbing_p").isEmpty())
+			plumbingPermit = formatter.parse(params.get("plumbing_p"));
+		permits.setPlumbingPermitDate(plumbingPermit);
+		
+		Date fireSprinklePermit = null;
+		if(!params.get("fireSprinkler_p").isEmpty())
+			fireSprinklePermit = formatter.parse(params.get("fireSprinkler_p"));
+		permits.setFireSprinklerDate(fireSprinklePermit);
+		
+		Date fireAlarmPermit = null;
+		if(!params.get("fireAlarm_p").isEmpty())
+			fireAlarmPermit = formatter.parse(params.get("fireAlarm_p"));
+		permits.setFireAlarmPermitDate(fireAlarmPermit);
+		
+		Date lowVoltagePermit = null;
+		if(!params.get("lowVoltage_p").isEmpty())
+			lowVoltagePermit = formatter.parse(params.get("lowVoltage_p"));
+		permits.setLowVoltagePermitDate(lowVoltagePermit);
+		
+		p.setPermits(permits);
+		
+		int i = 0;
+		int k = 0;
+		System.out.println();
+
+		if(permitsID!=0)
+		{
+			System.out.println("hey");
+			i=0;
+			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
+			k = 1;
+		}
+		
+		ProjectObjectService.editObject("Project",projectID,p,k);
 	}
 	
 	

@@ -15,6 +15,7 @@ import services.TriggerService;
  * Servlet implementation class Trigger
  */
 @WebServlet(description = "This servlet handles requests for Project Triggers", urlPatterns = { "/Trigger" })
+//@WebServlet("Trigger")
 public class Trigger extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;

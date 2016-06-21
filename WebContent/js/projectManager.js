@@ -1,6 +1,7 @@
 var PAGETYPE = 'navigateTo';
 var EDIT_PAGE = 'projectData.html?type=edit&id=';
 var CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
+var PERMIT_PAGE = 'permitData.html?type=permit&id=';
 	
 var ID;
 
@@ -63,6 +64,8 @@ function fillTabs(data)
 	
 	// Build Equipment tab
 	
+	// Build Permit Tab
+	buildPermit(json);
 	
 	// Build Closeout tab
 	buildCloseout(json);
@@ -83,6 +86,13 @@ function navigateToCloseoutPage(param)
 	console.log(param);
 	console.log("Ah, so you want the closeout page!");
 	window.location.href = (CLOSEOUT_PAGE+ID);
+}
+
+function navigateToPermitPage(param)
+{
+	console.log(param);
+	console.log("Ah, so you want the permit a page!");
+	window.location.href = (PERMIT_PAGE+ID);
 }
 
 function statusConverter(param)
@@ -120,6 +130,28 @@ function buildProjectInformation(json)
 	
 }
 
+/**
+ * 
+ * @param json
+ */
+function buildPermit(json)
+{
+	if(json.permits != null)
+	{
+		$("#buildingPermit").html(json.permits.building);
+		$("#mechanicalPermit").html(json.permits.mechanical);
+		$("#electricalPermit").html(json.permits.electrical);
+		$("#plumbingPermit").html(json.permits.plumbing);
+		$("#fireSprinklePermit").html(json.permits.fire_sprinkler);
+		$("#fireAlarmPermit").html(json.permits.fire_alarm);
+		$("#lowVoltagePermit").html(json.permits.low_voltage);
+	}
+	
+	var projectEditButton = document.createElement("button");
+	projectEditButton.onclick = function() {navigateToPermitPage(this)};
+	projectEditButton.innerHTML = "Edit Permit Information";
+	$("#permits").append(projectEditButton);	
+}
 /**
  * builds the closeout information witht the json information
  * @param json

@@ -106,7 +106,8 @@ public class Project extends ProjectObject
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
-			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, Inspections inspections)
+			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
+			Inspections inspections, Permits permits)
 	{
 		// Set<EquipmentType> equips, Set<EquipVendor> vendorList
 		
@@ -138,6 +139,7 @@ public class Project extends ProjectObject
 		//this.equipmentData = equipList;
 		this.DrawingsDue=DrawingsDue;
 		this.inspections= inspections;
+		this.permits = permits;
 		//this.equipmentList = equips;
 		//this.equipmentVendors = vendorList;
 		//this.rfi = requestInfo;
@@ -157,6 +159,8 @@ public class Project extends ProjectObject
 		this.proposalSubmitted = null;
 		this.closeoutDetails = new CloseoutDetails();
 		this.closeoutCheckList = new CloseoutCheckList();
+		this.permits = new Permits();
+		this.inspections = new Inspections();
 		this.changeOrders = new HashSet<ChangeOrder>();
 		
 		this.shouldInvoice = 0;
@@ -173,7 +177,6 @@ public class Project extends ProjectObject
 		this.permitApp = null;
 		//this.equipmentData = null;
 		this.DrawingsDue=null;
-		this.inspections=null;
 		//this.equipmentList = new HashSet<EquipmentType>();
 		//this.equipmentVendors = new HashSet<EquipVendor>();
 		//this.rfi = null;
@@ -586,4 +589,8 @@ public class Project extends ProjectObject
 		this.rfi = info;
 	}
 	*/
+	public String toString()
+	{
+		return "Project ID: "  + id.toString();
+	}
 }

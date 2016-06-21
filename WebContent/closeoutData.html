@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
 		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/global.js"></script>
-        <script type="text/javascript" src="js/closeoutData.js"></script>
+        <script type="text/javascript" src="js/projectData/closeoutData.js"></script>
 
 		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
         <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
@@ -44,7 +44,7 @@
         <li class="tab-link" data-tab="warrantyLetters">Warranty Letters</li>
 		<li class="tab-link" data-tab="finalLiens">Final Liens</li>
 		<li class="tab-link" data-tab="otherItems">Other Items</li>
-        <li onClick="saveProject()" data-tab="saveButton">Save Project</li>
+        <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
 	</ul>
 
     <!-- Closeout Documents Tab--> 
@@ -511,6 +511,13 @@
     <!-- end other Items Tab -->
 
 </div><!-- container -->
+
+
+<div id="saveConfirm" title="Project has been saved" style="display:none">
+    <p>
+        Closeout information has been successfully saved. What would you like to do?
+    </p>
+</div>
 
 <div id="footer">
 </div>

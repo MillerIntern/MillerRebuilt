@@ -37,10 +37,19 @@
     <legend>Project Search Parameters:</legend>
     <button onClick="addParameter()" class="addParamButton">Add Parameter</button><br><br>
     <div class="paramHolder">
-        <select class="parameterID" id=paramID1>
+        <select class="parameterID" id="paramID1">
             <option value="default">-- Please select an option --</option>
         </select>
-        <select class="parameterValue" id=paramVal1>
+        <select class="parameterValue" id="paramVal1">
+            <option value="default">---</option>
+        </select>
+        <p onClick="removeParam(this)">X</p><br>
+   </div>
+   <div class="paramHolder">
+        <select class="parameterID" id="paramID2">
+            <option value="default">-- Please select an option --</option>
+        </select>
+        <select class="parameterValue" id="paramVal2">
             <option value="default">---</option>
         </select>
         <p onClick="removeParam(this)">X</p><br>
@@ -49,7 +58,7 @@
 
 
 <ul id="projectHolder" class="projects">
-    <li class="project">City, State --- Project Item</li>
+    <li class="project">Loading</li>
 </ul> 
     
 </body>

@@ -5,7 +5,7 @@ var parameterFields = ["Warehouse", "Classification", "Item",
 var projects;
 var filteredProjects;
 
-var paramNum = 1;
+var paramNum = 2;
 
 var warehouseOptions;
 var classOptions;
@@ -55,6 +55,14 @@ function getDropdownFields()
 		{
 			fillDropdowns(data);
 			console.log("ready");
+			$("#paramID1").val('Warehouse');
+			$("#paramVal1").empty();
+			$("#paramVal1").append(warehouseOptions.cloneNode(true));
+			
+			$("#paramID2").val('Stage');
+			$("#paramVal2").empty();
+			$("#paramVal2").append(stageOptions.cloneNode(true));
+			filterProjects();
 		},
 		error: function(xhr)
 		{
@@ -85,7 +93,6 @@ function fillDropdowns(data)
 	generateDropdowns(data["type"], parameterFields[5]);
 	generateDropdowns(data["status"], parameterFields[6]);
 	generateDropdowns(data["stage"], parameterFields[7]);
-
 }
 
 function generateDropdowns(str, className)
@@ -373,6 +380,9 @@ function filterProjects()
 function removeParam(param)
 {
 	console.log(param);
+	param.parentNode.remove();
+	paramNum--;
+	filterProjects();
 }
 
 function manageThisProject(listing)

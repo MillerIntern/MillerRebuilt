@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/global.js"></script>
+        <script type="text/javascript" src="js/projectData/permitData.js"></script>
+
+		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/closeoutData.css" type="text/css" rel="stylesheet" />
+        
+		<script type="text/javascript" src="js/tab.js"></script>
+        
+		<title>Miller Construction Site</title>
+		<meta charset="UTF-8">
+	</head>
+	
+<body onload="getProjectEnums();">
+    <div class="header">
+        <p class="title">Permit Information</p>
+    </div>
+<br>
+		
+<ul class="side-borders">
+    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+    <li class="dropdown">
+    <a class="active" class="dropbtn">Projects</a>
+    <div class="dropdown-content">
+        <a onClick="document.location.href='projectData.html'">Add</a>
+        <a onClick="document.location.href='findProject.html'">Find</a>
+    </div></li>
+    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+    <li><a onClick="document.location.href='query.html'">Reports</a></li>
+    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+</ul><br>
+
+    <div class="container">
+
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="allPermits">Permits</li>
+        <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
+	</ul>
+
+    <!-- Closeout Documents Tab--> 
+	<div id="allPermits" class="tab-content current">
+        <table>
+            <tr>
+                <td>Building Permit:</td>
+                <td>
+                    <input id="buildingPermit" type="text"></input>  
+                </td>
+            </tr>
+            <tr>
+                <td>Mechanical Permit:</td>
+                <td>
+                    <input type="text" id="mechanicalPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Electrical Permit:</td>
+                <td>
+                    <input type="text" id="electricalPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Plumbing Permit:</td>
+                <td>
+                	<input type="text" id="plumbingPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Fire Sprinkler Permit:</td>
+                <td>
+                    <input id="fireSprinklePermit" type="text"></input>
+                </td>   
+            </tr>
+            <tr>
+                <td>Fire Alarm Permit:</td>
+                <td>
+                    <input type="text" id="fireAlarmPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Low Voltage Permit:</td>
+ 
+                <td>
+                	<input type="text" id="lowVoltagePermit" />
+                </td>   
+            </tr>
+        </table>
+	</div>
+    <!-- End Closeout Documents Tab--> 
+</div>
+
+<div id="saveConfirm" title="Project has been saved" style="display:none">
+    <p>
+        Permit information has been successfully saved. What would you like to do?
+    </p>
+</div>
+
+<div id="footer">
+</div>
+</body>
+</html>
+						

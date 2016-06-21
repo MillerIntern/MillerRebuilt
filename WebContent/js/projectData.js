@@ -8,7 +8,6 @@ var PROJECT_DATA = null;
 var stages=["Active", "Proposal", "Budgetary", "Closed", "Inactive"];
 var INSPECTION_ID = 0;
 var CLOSEOUT_ID = 0;
-var CLOSEOUT_ENHANCED_ID = 0;
 var SALVAGE_ID = 0;
 var PERMITS_ID = 0;
 var EQUIP_ID = 0;

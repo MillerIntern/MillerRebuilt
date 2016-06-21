@@ -437,8 +437,8 @@ function saveProject()
     {
     	console.log("we got valid data now");
     	
-		var action = "edit";
-
+		var action = "editCloseout";
+		var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -447,84 +447,14 @@ function saveProject()
 			{
 				'domain': 'project',
 				'action': action,
-				'mcsNumber': PROJECT_DATA.McsNumber,
-				'warehouse': PROJECT_DATA.warehouse.id,
-				'class':PROJECT_DATA.projectClass.id,
-				'projectItem': PROJECT_DATA.projectItem.id,
-				'manager':PROJECT_DATA.projectManagers.id,
-				'supervisor':PROJECT_DATA.supervisors[0].id,
-				'status': PROJECT_DATA.status.id,
-				'stage':PROJECT_DATA.stage.id,
-				'pType':PROJECT_DATA.projectType.id,
-				'scope': PROJECT_DATA.scope,
-				'initiated': PROJECT_DATA.projectInitiatedDate,
-				'survey':PROJECT_DATA.siteSurvey,
-				'costco':PROJECT_DATA.costcoDueDate,
-				'proposal':PROJECT_DATA.proposalSubmitted,
+				'projectID':PROJECT_DATA.id,
+				'closeoutID':CLOSEOUT_ID,
+
 				'asBuilts':asBuilts,
 				'punchList':punchList,
 				'alarmHvac':alarmHvac,
 				'verisae':verisae,
-				'shouldInvoice':PROJECT_DATA.shouldInvoice,
-				'actualInvoice':PROJECT_DATA.invoiced,
-				'startDate':PROJECT_DATA.scheduledStartDate,
-				'scheduledTurnover':PROJECT_DATA.scheduledTurnover,
-				'actualTurnover':PROJECT_DATA.actualTurnover,
-				//'airGas':airGas, Going to phase out the old closeout fields finally in this form.
-				//'permits':permits,
-				//'notes':notes,
-				//'salvageDate':salvageDate,
-				//'salvageAmount':salvageAmount,
-				//'coItems': JSON.stringify(changeOrders),
-				'projectID':PROJECT_DATA.id,
-				'inspectionID' : PROJECT_DATA.inspections.id,
-				'zachUpdates': PROJECT_DATA.zachUpdates,
-				'cost':PROJECT_DATA.cost,
-				'customerNumber':PROJECT_DATA.customerNumber,
-				'permitApp': PROJECT_DATA.permitApp,
-				//'closeoutBook' : closeoutBook,
-				//'closeoutNotes' : closeoutNotes,
-				'closeoutID' : PROJECT_DATA.closeoutDetails.id,
-				//'salvageID' : SALVAGE_ID,
-				'equipID' : PROJECT_DATA.eqpd,
 				
-				//inspections Data
-				'inspections': PROJECT_DATA.inspections.ticketNumber,
-				'framing' : PROJECT_DATA.inspections.framing, 
-				'ceiling' : PROJECT_DATA.inspections.ceiling, 
-				'roughMech' : PROJECT_DATA.inspections.roughin_mechanical, 
-				'roughElec' : PROJECT_DATA.inspections.roughin_electric, 
-				'roughPlumb' : PROJECT_DATA.inspections.roughin_plumbing, 
-				'mechLightSmoke' : PROJECT_DATA.inspections.mechanicalLightSmoke,
-				'fireMarshal' : PROJECT_DATA.inspections.fire_marshal, 
-				'health' : PROJECT_DATA.inspections.health, 
-				
-				//Permit Data
-				'permitsID':PROJECT_DATA.permits.id,
-				'building_p':PROJECT_DATA.permits.building, 
-				'mechanical_p' :PROJECT_DATA.permits.mechanical, 
-				'electrical_p':PROJECT_DATA.permits.electrical, 
-				'plumbing_p':PROJECT_DATA.permits.plumbing,
-				'fireSprinkler_p':PROJECT_DATA.permits.fire_sprinkler,
-				'fireAlarm_p':PROJECT_DATA.permits.fire_alarm, 
-				'lowVoltage_p':PROJECT_DATA.permits.low_voltage,
-				
-				//Equipment Data//TODO?
-				/*'vendor_eq': JSON.stringify(vendor_eqArray),
-				'project_eq' : JSON.stringify(project_eqArray),
-				'po_eq' : JSON.stringify(po_eqArray),
-				'estimatedDeliveryDate_eq' : JSON.stringify(estimatedDeliveryDate_eqArray),
-				'component_eq' : JSON.stringify(component_eqArray),
-				'vendorDate_eq' : JSON.stringify(vendorDate_eqArray),
-				'notes_eq' : JSON.stringify(notes_eqArray),
-				'equipName' : JSON.stringify(equipNameArray),
-				'equipIDS' : JSON.stringify(equip_ids),
-				'newEquip' : JSON.stringify(new_equip),
-				'status_eq' : JSON.stringify(status_arr),*/
-				
-				//Rest of closeout information
-
-				//'frontPage' : frontPage,
 				'buildingPermitCL':buildingPermitCL,
 				'closeoutPhotosCL': closeoutPhotosCL,
 				'MCSWarranty': MCSWarranty,
@@ -684,6 +614,34 @@ function isValidInput(dates)
 		}
 	}
 	return true;
+}
+
+function createConfirmWindow()
+{
+	$("#saveConfirm").dialog({
+		resizable: false,
+		height: 350,
+		width: 450,
+		modal: true,
+		buttons: {
+			"Stay on this page": function()
+			{
+				$("#saveConfirm").dialog('close');
+			},
+			"Return to project manager": function() {
+				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
+				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
+			},
+			"Go to Home Page": function() {
+				window.location.href="homepage.html";
+			},
+			"Find another project": function() {
+				window.location.href="findProject.html";
+			},
+
+			
+		}
+	});	
 }
 
 var CLOSEOUTSTATUS_DROPDOWNS = [
