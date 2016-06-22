@@ -495,7 +495,7 @@ public class Project extends ProjectObject
 	}
 	
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
 	public Permits getPermits(){

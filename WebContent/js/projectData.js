@@ -693,7 +693,6 @@ function addProject()
 				'closeoutBook' : closeoutBook,
 				'closeoutNotes' : closeoutNotes,
 				'closeoutID' : CLOSEOUT_ID,
-				'closeoutEnhancedID': CLOSEOUT_ENHANCED_ID,
 				'salvageID' : SALVAGE_ID,
 				'equipID' : EQUIP_ID,
 				

@@ -1268,10 +1268,5 @@ public class CloseoutDetails extends ProjectObject
 
 	public void setWarrantyNotes(String warrantyNotes) {
 		this.warrantyNotes = warrantyNotes;
-	}
-	
-	
-	
-	
-	
+	}	
 }

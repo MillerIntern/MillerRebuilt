@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import objects.HibernateUtil;
-
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Query;
@@ -14,10 +12,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
-import projectObjects.ProjectObject;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import objects.HibernateUtil;
+import projectObjects.Inspections;
+import projectObjects.Permits;
+import projectObjects.ProjectObject;
 
 
 /**
@@ -194,6 +195,9 @@ public class ProjectObjectService
 		
 		//When convering dates to JSON format, don't use units smaller than days
 		o = session.get(c, id);
+		if(o instanceof projectObjects.Project)
+			checkNullRows((projectObjects.Project)o);
+
 		tx.commit();
 
 	try
@@ -213,6 +217,23 @@ public class ProjectObjectService
 		return gson.toJson(o);
 	}
 	
+	/**
+	 * this method is vital for any new fields that are added to the database
+	 * This method will find any objects within a project that are null (weren't initialized when created)
+	 * and then initialize them which gives them a ID which is needed to access any linked object's fields. 
+	 * @param o the Project which needs to be checked
+	 */
+	private static void checkNullRows(projectObjects.Project o) {
+		if(o.getPermits() == null)
+		{
+			o.setPermits(new Permits());
+		}	
+		if(o.getInspections() == null)
+		{
+			o.setInspections(new Inspections());
+		}
+	}
+
 	/**
 	 * This method deletes an object from the database.
 	 * @param id the id of the object to be deleted
@@ -287,6 +308,7 @@ public class ProjectObjectService
 		
 		//Copy fields of new object into old object, but keep the id
 		newObject.setId(id);
+		System.out.println(newObject + " " + oldObject2);
 		copyFieldByField(newObject, oldObject2, i2);
 		
 		//session.update(oldObject2);
@@ -366,6 +388,7 @@ public class ProjectObjectService
 		{
 			//if src is of the Inspection object slip
 			Object value = f.get(src);
+			System.out.println(f);
 			f.set(dest, value);
 			
 				

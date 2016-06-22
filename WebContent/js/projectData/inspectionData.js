@@ -1,9 +1,7 @@
-var PAGETYPE = 'permit';
+var PAGETYPE = 'inspection';
 
 var PROJECT_DATA;
-var PROJECT_ID;
 
-// This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
 	$('ul.tabs li').click(function()
@@ -20,22 +18,20 @@ $(document).ready(function(){
 		$("#"+tab_id).addClass('current');
 	});
 	
- 	$("#buildingPermit").datepicker();   
- 	$("#mechanicalPermit").datepicker(); 
- 	$("#electricalPermit").datepicker();   
- 	$("#plumbingPermit").datepicker();   
- 	$("#fireSprinklePermit").datepicker();   
- 	$("#fireAlarmPermit").datepicker();   
- 	$("#lowVoltagePermit").datepicker();   
-
-
-
+ 	$("#fireMarshalInspection").datepicker();   
+ 	$("#healthInspection").datepicker(); 
+ 	$("#roughinElectricalInspection").datepicker();   
+ 	$("#roughinMechanicalInspection").datepicker();   
+ 	$("#roughinPlumbingInspection").datepicker();   
+ 	$("#mechanicalLightSmokeInspection").datepicker();   
+ 	$("#ceilingInspection").datepicker();   
+ 	$("#framingInspection").datepicker();   
 });
 
 function getProjectEnums()
 {
 	console.log(getParameterByName("id"));
-	if (PAGETYPE == 'permit')
+	if (PAGETYPE == 'inspection')
 	{
 		PROJECT_ID = getParameterByName("id");
 		
@@ -63,38 +59,35 @@ function getProjectEnums()
 	}
 }
 
-function fillTabs(data)
+function fillTabs(json)
 {
-	var json = data;
 	console.log(json);
-	if (json.permits != null)
-	{	
-		$("#buildingPermit").val(json.permits.building);
-		$("#mechanicalPermit").val(json.permits.mechanical);
-		$("#electricalPermit").val(json.permits.electrical);
-		$("#plumbingPermit").val(json.permits.plumbing);
-		$("#fireSprinklePermit").val(json.permits.fire_sprinkler);
-		$("#fireAlarmPermit").val(json.permits.fire_alarm);
-		$("#lowVoltagePermit").val(json.permits.low_voltage);
-	}
+	$("#fireMarshalInspection").val(json.inspections.fire_marshal);
+	$("#healthInspection").val(json.inspections.health);
+	$("#roughinMechanical").val(json.inspections.roughin_mechanical);
+	$("#roughinElectrical").val(json.inspections.roughin_electric);
+	$("#roughinPlumbing").val(json.inspections.roughin_plumbing);
+	$("#framingInspection").val(json.inspections.framing);
+	$("#ceilingInspection").val(json.inspections.ceiling);
+	$("#mechanicalLightSmokeInspection").val(json.inspections.mechanicalLightSmoke);
 }
-
 
 function saveProject()
 {
-    console.log("Saving Permit Information");
+    console.log("Saving Inspections Information");
 	
-    var buildingPermit = $("#buildingPermit").val();
-    var mechanicalPermit = $("#mechanicalPermit").val();
-    var electricalPermit = $("#electricalPermit").val();
-    var plumbingPermit = $("#plumbingPermit").val();
-    var fireSprinklePermit = $("#fireSprinklePermit").val();
-    var fireAlarmPermit = $("#fireAlarmPermit").val();
-    var lowVoltagePermit = $("#lowVoltagePermit").val();
+    var fireMarshalInspection = $("#fireMarshalInspection").val();
+    var healthInspection = $("#healthInspection").val();
+    var roughinMechanical = $("#roughinMechanical").val();
+    var roughinElectrical = $("#roughinElectrical").val();
+    var roughinPlumbing = $("#roughinPlumbing").val();
+    var framingInspection = $("#framingInspection").val();
+    var mechanicalLightSmokeInspection = $("#mechanicalLightSmokeInspection").val();
+    var ceilingInspection = $("#ceilingInspection").val();
     
     var dates =[
-				buildingPermit, mechanicalPermit, electricalPermit, plumbingPermit, 
-				fireSprinklePermit, fireAlarmPermit, lowVoltagePermit,
+				fireMarshalInspection, healthInspection, roughinMechanical, roughinElectrical, 
+				roughinPlumbing, framingInspection, mechanicalLightSmokeInspection,ceilingInspection
                 ];
     
     
@@ -102,12 +95,11 @@ function saveProject()
     {
     	console.log("we got valid data now");
     	
-		var action = "editPermits";
-		var PERMIT_ID = 0;
-		if(PROJECT_DATA.permits != null)
-			PERMIT_ID = PROJECT_DATA.permits.id;
-		else
-			PERMIT_ID = 0;
+		var action = "editInspections";
+		var INSPECTION_ID = 0;
+		if(PROJECT_DATA.inspections != null)
+			INSPECTION_ID = PROJECT_DATA.inspections.id;
+
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -119,14 +111,15 @@ function saveProject()
 				'projectID':PROJECT_DATA.id,
 				
 				//Permit Data
-				'permitsID':PERMIT_ID,
-				'building_p':buildingPermit, 
-				'mechanical_p' :mechanicalPermit,
-				'electrical_p':electricalPermit,
-				'plumbing_p':plumbingPermit,
-				'fireSprinkler_p':fireSprinklePermit,
-				'fireAlarm_p':fireAlarmPermit, 
-				'lowVoltage_p':lowVoltagePermit,
+				'inspectionID':INSPECTION_ID,
+				'framing':framingInspection, 
+				'ceiling' :ceilingInspection,
+				'mechanicalLightSmoke':mechanicalLightSmokeInspection,
+				'roughin_mechanical':roughinMechanical,
+				'roughin_electric':roughinElectrical,
+				'roughin_plumbing':roughinPlumbing, 
+				'health':healthInspection,
+				'fire_marshal': fireMarshalInspection,
 			},
 			success:function(data){
 				

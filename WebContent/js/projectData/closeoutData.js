@@ -63,6 +63,8 @@ $(document).ready(function(){
 		$("#closeoutPhotosCL").datepicker();
 		$("#alarmHvac").datepicker();
 		$("#verisae").datepicker();
+		
+		$("#salvageDate").datepicker();
 });
 
 
@@ -244,6 +246,12 @@ function fillTabs(data)
 		$("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
 		$("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
 		$("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
+		
+		if(json.closeoutDetails.salvageValue != null)
+		{
+			$("#salvageDate").val(json.closeoutDetails.salvageValue.date);
+			$("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
+		}
 	}
 	
 }
@@ -409,6 +417,9 @@ function saveProject()
     // verisae = verisaeReportDate
 
     var closeoutDocumentsNotes = $("#closeoutDocumentsNotes").val();
+    
+    var salvageDate = $("#salvageDate").val();
+    var salvageAmount = $("#salvageAmount").val();
     ////////////// END NEW CONTENT
     
     var dates =[
@@ -429,7 +440,7 @@ function saveProject()
 				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, 
 				roofingWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
 				
-				manualDate, HVACstartupFormDate, 
+				manualDate, HVACstartupFormDate, salvageDate
                 ];
     
     
@@ -439,6 +450,9 @@ function saveProject()
     	
 		var action = "editCloseout";
 		var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
+		var SALVAGE_ID = 0;
+		if(PROJECT_DATA.closeoutDetails.salvageValue != null)
+			SALVAGE_ID = PROJECT_DATA.closeoutDetails.salvageValue.id;
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -449,6 +463,7 @@ function saveProject()
 				'action': action,
 				'projectID':PROJECT_DATA.id,
 				'closeoutID':CLOSEOUT_ID,
+				'salvageID': SALVAGE_ID,
 
 				'asBuilts':asBuilts,
 				'punchList':punchList,
@@ -568,6 +583,9 @@ function saveProject()
 				'verisaeReportStatus': verisaeReportStatus,
 				
 				'closeoutDocumentsNotes': closeoutDocumentsNotes,
+				
+				'salvageDate': salvageDate,
+				'salvageAmount': salvageAmount,
 			},
 			success:function(data){
 				

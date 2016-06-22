@@ -163,7 +163,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
-
+		else if(action.equals("editInspections"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.editInspections(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 		
 		else if (action.equals("get"))
 		{

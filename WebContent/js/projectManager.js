@@ -1,7 +1,9 @@
-var PAGETYPE = 'navigateTo';
-var EDIT_PAGE = 'projectData.html?type=edit&id=';
-var CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
-var PERMIT_PAGE = 'permitData.html?type=permit&id=';
+const PAGETYPE = 'navigateTo';
+const EDIT_PAGE = 'projectData.html?type=edit&id=';
+const CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
+const PERMIT_PAGE = 'permitData.html?type=permit&id=';
+const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
+
 	
 var ID;
 
@@ -67,6 +69,9 @@ function fillTabs(data)
 	// Build Permit Tab
 	buildPermit(json);
 	
+	// Build inspection tab
+	buildInspection(json);
+	
 	// Build Closeout tab
 	buildCloseout(json);
 	
@@ -91,8 +96,15 @@ function navigateToCloseoutPage(param)
 function navigateToPermitPage(param)
 {
 	console.log(param);
-	console.log("Ah, so you want the permit a page!");
+	console.log("Ah, so you want the permit page!");
 	window.location.href = (PERMIT_PAGE+ID);
+}
+
+function navigateToInspectionPage(param)
+{
+	console.log(param);
+	console.log("Ah, so you want the inspection page!");
+	window.location.href = (INSPECTION_PAGE+ID);
 }
 
 function statusConverter(param)
@@ -130,27 +142,42 @@ function buildProjectInformation(json)
 	
 }
 
+
+function buildInspection(json)
+{
+	$("#framingInspection").html(json.inspections.framing);
+	$("#celingInspection").html(json.inspections.ceiling);
+	$("#mechLightSmokeInspection").html(json.inspections.mechanicalLightSmoke);
+	$("#roughMechanicalInspection").html(json.inspections.roughin_mechanical);
+	$("#roughElectricalInspection").html(json.inspections.roughin_electric);
+	$("#roughPlumbingInspection").html(json.inspections.roughin_plumbing);
+	$("#fireMarshalInspection").html(json.inspections.fire_marshal);
+	$("#healthInspection").html(json.inspections.health);
+	
+	var projectEditButton = document.createElement("button");
+	projectEditButton.onclick = function() {navigateToInspectionPage(this)};
+	projectEditButton.innerHTML = "Edit Inspection Information";
+	$("#inspections").append(projectEditButton);	
+}
+
 /**
  * 
  * @param json
  */
 function buildPermit(json)
 {
-	if(json.permits != null)
-	{
-		$("#buildingPermit").html(json.permits.building);
-		$("#mechanicalPermit").html(json.permits.mechanical);
-		$("#electricalPermit").html(json.permits.electrical);
-		$("#plumbingPermit").html(json.permits.plumbing);
-		$("#fireSprinklePermit").html(json.permits.fire_sprinkler);
-		$("#fireAlarmPermit").html(json.permits.fire_alarm);
-		$("#lowVoltagePermit").html(json.permits.low_voltage);
-	}
+	$("#buildingPermit").html(json.permits.building);
+	$("#mechanicalPermit").html(json.permits.mechanical);
+	$("#electricalPermit").html(json.permits.electrical);
+	$("#plumbingPermit").html(json.permits.plumbing);
+	$("#fireSprinklePermit").html(json.permits.fire_sprinkler);
+	$("#fireAlarmPermit").html(json.permits.fire_alarm);
+	$("#lowVoltagePermit").html(json.permits.low_voltage);
 	
 	var projectEditButton = document.createElement("button");
 	projectEditButton.onclick = function() {navigateToPermitPage(this)};
 	projectEditButton.innerHTML = "Edit Permit Information";
-	$("#permits").append(projectEditButton);	
+	$("#permits").append(projectEditButton);
 }
 /**
  * builds the closeout information witht the json information
@@ -556,7 +583,6 @@ function generateTriggers(json)
 	if(json.McsNumber == "-1")
 	{
 		triggerElement.innerHTML = "- Change MCS Number from -1";
-		triggerElement.style.color = "#ff9900";
 		$("#triggers").append(triggerElement);	
 		triggerCount++;
 	}

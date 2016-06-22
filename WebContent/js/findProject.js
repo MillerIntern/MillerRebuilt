@@ -18,6 +18,9 @@ var stageOptions;
 
 function getProjectEnums()
 {
+	document.body.style.cursor='wait';
+	$(".project").html("Loading.");
+
 	// Get stuff for parameters
 	$.ajax({
 		type: 'POST',
@@ -29,6 +32,7 @@ function getProjectEnums()
 		},
 		success: function(data)
 		{
+			$(".project").html("Loading..");
 			projects = data;
 			getDropdownFields();
 
@@ -53,6 +57,7 @@ function getDropdownFields()
 		},
 		success: function(data)
 		{
+
 			fillDropdowns(data);
 			console.log("ready");
 			$("#paramID1").val('Warehouse');
@@ -62,7 +67,9 @@ function getDropdownFields()
 			$("#paramID2").val('Stage');
 			$("#paramVal2").empty();
 			$("#paramVal2").append(stageOptions.cloneNode(true));
+			$(".project").html("Loading...");
 			filterProjects();
+			document.body.style.cursor='default';
 		},
 		error: function(xhr)
 		{

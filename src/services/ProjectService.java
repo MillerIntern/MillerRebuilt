@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +34,10 @@ import projectObjects.ProjectType;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Warehouse;
+import services.helpers.CloseoutDetailsFiller;
+import services.helpers.InspectionsFiller;
+import services.helpers.PermitsFiller;
+import services.helpers.SalvageValueFiller;
 
 
 /**
@@ -107,17 +110,6 @@ public class ProjectService extends ProjectObjectService
 		ProjectType pType = (ProjectType) ProjectObjectService.get(typeID, "ProjectType");
 		String mcsNumString = params.get("mcsNumber");
 		
-
-		
-		
-		//Equipment Data
-		/*Warehouse warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(params.get("project_eq")), "Warehouse");	
-		ProjectItem item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(params.get("component_eq")), "ProjectItem");
-		EquipmentVendor vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(params.get("vendor_eq")), "EquipmentVendor");
-		String fpoString = params.get("po_eq");
-		System.out.print(fpoString);
-			*/	
-		
 		Inspections inspections = null;
 		if(inspectionTN!=-1)
 			inspections= (Inspections) ProjectObjectService.get(inspectionTN, "Inspections");
@@ -133,9 +125,7 @@ public class ProjectService extends ProjectObjectService
 			
 			
 		}catch(Exception e){}
-		
-		
-		
+
 		//Get invoice values and notes
 		int shouldInvoice = Integer.parseInt(params.get("shouldInvoice"));
 		int actualInvoice = Integer.parseInt(params.get("actualInvoice"));
@@ -146,24 +136,14 @@ public class ProjectService extends ProjectObjectService
 		HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 				
 		//assign values to dates, if they are not null
-		
-		//
-		Date fsalvageDate = null;
 		Date finitiatedDate = null;
 		Date fsurvey = null;
 		Date fcostco = null;
 		Date fproposal = null;
-		Date fasBuilts = null;
-		Date fpunchList = null;
-		Date falarmHvac = null;
-		Date fverisae = null;
-		Date fcloseoutBook = null;
-		Date fcloseoutNotes = null;
 		Date fstart = null;
 		Date fscheduled = null;
 		Date factual = null;
-		Date fairGas = null;
-		Date fpermits = null;
+
 		Date permitApp = null;
 		
 		//INspections
@@ -181,269 +161,16 @@ public class ProjectService extends ProjectObjectService
 		Date fbuildFinal = null; 
 		//Long finspectionID = null; 
 		
-		//Permits
-		Date fbuilding_p =null;
-		Date fmechanical_p = null;
-		Date felectrical_p = null;
-		Date plumbing_p = null;
-		Date ffireSprinler_p = null;
-		Date ffireAlarm_p = null;
-		Date flowVoltage_p = null;
-		
-		//closeout
-		Date mPunchListCLf =null;
-		Date closeoutPhotosCLf=null;
-		Date subConWarrantiesCLf =null;
-		Date MCSWarrantyf =null;
-		Date equipmentSubClf =null;
-		Date traneCLf=null;
-		//Date frontPagef=null;
-		//Date subContractorCLf = null;
-		Date buldingPermitCLf = null;
-		Date inspectionSOCLf = null;
-		Date certCompletionCLf = null;
-		
-		
 		//Create CloseoutDetails Object.
 		CloseoutDetails cd = new CloseoutDetails();
-		int numOfChangeOrders;
-		try
-		{
-			 numOfChangeOrders = Integer.parseInt(params.get("numOfChangeOrders"));
-		}catch(NumberFormatException ex) { numOfChangeOrders = 0; }
-		
-		cd.setNumOfChangeOrders(numOfChangeOrders);
-
-		int numOfChangeOrdersCompleted;
-		try
-		{
-			 numOfChangeOrdersCompleted = Integer.parseInt(params.get("numOfChangeOrdersCompleted"));
-		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
-		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
-				
-		Date mg2CompletionDate = null;
-		if(!params.get("mg2CompletionDate").isEmpty())
-			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
-		cd.setMg2CompletionDate(mg2CompletionDate);
-		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
-		System.out.println(params.get("mg2CompletionDate") + " " + params.get("mg2CompletionStatus"));
-		
-		Date MCSDate = null;
-		if(!params.get("MCSDate").isEmpty())
-			MCSDate = formatter.parse(params.get("MCSDate"));
-		cd.setMCSDate(MCSDate);
-		cd.setMCSStatus(params.get("MCSStatus"));
-		
-		Date GCDate = null;
-		if(!params.get("GCDate").isEmpty())
-			GCDate = formatter.parse(params.get("GCDate"));
-		cd.setGCDate(GCDate);
-
-		cd.setGCStatus(params.get("GCStatus"));
-		
-		Date mechanicalDate = null;
-		if(!params.get("mechanicalDate").isEmpty())
-			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
-		cd.setMechanicalDate(mechanicalDate);
-
-		cd.setMechanicalStatus(params.get("mechanicalStatus"));
-		
-		Date electricalDate = null;
-		if(!params.get("electricalDate").isEmpty())
-			electricalDate = formatter.parse(params.get("electricalDate"));
-		cd.setElectricalDate(electricalDate);
-
-		cd.setElectricalStatus(params.get("electricalStatus"));
-		
-		Date plumbingDate = null;
-		if(!params.get("plumbingDate").isEmpty())
-			plumbingDate = formatter.parse(params.get("plumbingDate"));
-		cd.setPlumbingDate(plumbingDate);
-
-		cd.setPlumbingStatus(params.get("plumbingStatus"));
-		
-		Date sprinkleDate = null;
-		if(!params.get("sprinkleDate").isEmpty())
-			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
-		cd.setSprinkleDate(sprinkleDate);
-
-		cd.setSprinkleStatus(params.get("sprinkleStatus"));
-		
-		Date roofingDate = null;
-		if(!params.get("roofingDate").isEmpty())
-			roofingDate = formatter.parse(params.get("roofingDate"));
-		cd.setRoofingDate(roofingDate);
-
-		cd.setRoofingStatus(params.get("roofingStatus"));
-		
-		Date HTIDate = null;
-		if(!params.get("HTIDate").isEmpty())
-			HTIDate = formatter.parse(params.get("HTIDate"));
-		cd.setHTIDate(HTIDate);
-
-		cd.setHTIStatus(params.get("HTIStatus"));
-		
-		Date otherFinalLeinsDate = null;
-		if(!params.get("otherFinalLeinsDate").isEmpty())
-			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
-		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
-
-		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
-		
-
-		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
-		
-		Date GCWarrantyDate = null;
-		if(!params.get("GCWarrantyDate").isEmpty())
-			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
-		cd.setGCWarrantyDate(GCWarrantyDate);
-
-		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
-		
-		Date mechanicalWarrantyDate = null;
-		if(!params.get("mechanicalWarrantyDate").isEmpty())
-			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
-		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
-
-		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
-		
-		Date electricalWarrantyDate = null;
-		if(!params.get("electricalWarrantyDate").isEmpty())
-			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
-		cd.setElectricalWarrantyDate(electricalWarrantyDate);
-
-		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
-		
-		Date plumbingWarrantyDate = null;
-		if(!params.get("plumbingWarrantyDate").isEmpty())
-			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
-		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
-
-		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
-		
-		Date sprinkleWarrantyDate = null;
-		if(!params.get("sprinkleWarrantyDate").isEmpty())
-			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
-		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
-
-		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
-		
-		Date roofingWarrantyDate = null;
-		if(!params.get("roofingWarrantyDate").isEmpty())
-			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
-		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-
-		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
-		
-		Date HTIWarrantyDate = null;
-		if(!params.get("HTIWarrantyDate").isEmpty())
-			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
-		cd.setHTIWarrantyDate(HTIWarrantyDate);
-
-		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
-		
-		Date otherWarrantyDateA = null;
-		if(!params.get("otherWarrantyDateA").isEmpty())
-			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
-		cd.setOtherWarrantyDateA(otherWarrantyDateA);
-
-		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
-		
-		Date otherWarrantyDateB = null;
-		if(!params.get("otherWarrantyDateB").isEmpty())
-			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
-		cd.setOtherWarrantyDateB(otherWarrantyDateB);
-
-		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
-		
-		Date mechFinalDate = null;
-		if(!params.get("mechFinalDate").isEmpty())
-			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
-		cd.setMechFinalDate(mechFinalDate);
-
-		cd.setMechFinalStatus(params.get("mechFinalStatus"));
-		
-		Date elecFinalDate = null;
-		if(!params.get("elecFinalDate").isEmpty())
-			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
-		cd.setElecFinalDate(elecFinalDate);
-
-		cd.setElecFinalStatus(params.get("elecFinalStatus"));
-		
-		Date plumbingFinalDate = null;
-		if(!params.get("plumbingFinalDate").isEmpty())
-			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
-		cd.setPlumbingFinalDate(plumbingFinalDate);
-
-		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
-		
-		Date sprinkleFinalDate = null;
-		if(!params.get("sprinkleFinalDate").isEmpty())
-			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
-		cd.setSprinkleFinalDate(sprinkleFinalDate);
-
-		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
-		
-
-		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
-		
-		Date tmpCertificateDate = null;
-		if(!params.get("tmpCertificateDate").isEmpty())
-			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
-		cd.setTmpCertificateDate(tmpCertificateDate);
-
-		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
-		
-		Date certificateDate = null;
-		if(!params.get("certificateDate").isEmpty())
-			certificateDate = formatter.parse(params.get("certificateDate"));
-		cd.setCertificateDate(certificateDate);
-
-		cd.setCertificateStatus(params.get("certificateStatus"));
-
-
-		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
-		
-		Date manualDate = null;
-		if(!params.get("manualDate").isEmpty())
-			manualDate = formatter.parse(params.get("manualDate"));
-		cd.setManualDate(manualDate);
-
-		cd.setManualStatus(params.get("manualStatus"));
-
-
-		cd.setPunchListStatus(params.get("punchListStatus"));
-
-
-		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
-		
-
-		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
-		
-		Date HVACstartupFormDate = null;
-		if(!params.get("HVACstartupFormDate").isEmpty())
-			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
-		cd.setHVACstartupFormDate(HVACstartupFormDate);
-
-		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
-
-		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
-
-		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
-		
-		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
-		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
-		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
-		cd.setWarrantyNotes(params.get("warrantyNotes"));		
+		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
+		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
+		cd.setSalvageValue(sv);
 		
 		//Additional Fields
 		String zachNotes = params.get("zachUpdates");
 		String cost = params.get("cost");
 		String customerNumber = params.get("customerNumber");
-	
-		
-		if (!(params.get("salvageDate")).isEmpty())
-			fsalvageDate = formatter.parse(params.get("salvageDate"));
 		
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
@@ -457,40 +184,7 @@ public class ProjectService extends ProjectObjectService
 		if (!(params.get("proposal")).isEmpty())
 			fproposal = formatter.parse(params.get("proposal"));
 		
-//***********************Close OUT DETAILS******************************\\
-		
-		if (!(params.get("asBuilts")).isEmpty())
-			fasBuilts = formatter.parse(params.get("asBuilts"));
-		
-		if (!(params.get("punchList")).isEmpty())
-			fpunchList = formatter.parse(params.get("punchList"));
-		
-		if (!(params.get("alarmHvac")).isEmpty())
-			falarmHvac = formatter.parse(params.get("alarmHvac"));
-		
-		if (!params.get("verisae").isEmpty())
-			fverisae = formatter.parse(params.get("verisae"));
-		
-		if (!params.get("closeoutNotes").isEmpty())
-			fcloseoutNotes = formatter.parse(params.get("closeoutNotes"));
-		
-		if (!params.get("startDate").isEmpty())
-			fstart = formatter.parse(params.get("startDate"));
-		
-		if (!params.get("scheduledTurnover").isEmpty())
-			fscheduled = formatter.parse(params.get("scheduledTurnover"));
-		
-		if (!params.get("actualTurnover").isEmpty())
-			factual = formatter.parse(params.get("actualTurnover"));
 
-		if (!params.get("airGas").isEmpty())
-			fairGas = formatter.parse(params.get("airGas"));
-		
-		if (!params.get("permits").isEmpty())
-			fpermits = formatter.parse(params.get("permits"));
-		
-		if(!params.get("permitApp").isEmpty()) 
-			permitApp = formatter.parse(params.get("permitApp"));
 		
 	// ***************Optional Inspections************************ \\
 		if(!params.get("framing").isEmpty()) 
@@ -513,68 +207,12 @@ public class ProjectService extends ProjectObjectService
 		{
 			fmechLightSmoke = formatter.parse(params.get("mechLightSmoke"));
 		}
-		/*if(!params.get("mechFinal").isEmpty()) 
-			fmechFinal = formatter.parse(params.get("mechFinal"));
-		
-		if(!params.get("elecFinal").isEmpty()) 
-			felecFinal = formatter.parse(params.get("elecFinal"));
-		
-		if(!params.get("plumbFinal").isEmpty()) 
-			fplumbFinal = formatter.parse(params.get("plumbFinal"));
-		*/
 		
 		if(!params.get("fireMarshal").isEmpty()) 
 			ffireMarshal = formatter.parse(params.get("fireMarshal"));
 		
 		if(!params.get("health").isEmpty()) 
 			fhealth = formatter.parse(params.get("health"));
-		
-		/*if(!params.get("buildFinal").isEmpty()) 
-			fbuildFinal = formatter.parse(params.get("buildFinal"));*/
-		
-		// ***************Optional Permits************************ \\
-		if(!params.get("building_p").isEmpty()) 
-			fbuilding_p = formatter.parse(params.get("building_p"));
-		
-		if(!params.get("mechanical_p").isEmpty()) 
-			fmechanical_p = formatter.parse(params.get("mechanical_p"));
-		
-		if(!params.get("electrical_p").isEmpty()) 
-			felectrical_p = formatter.parse(params.get("electrical_p"));
-		
-		if(!params.get("plumbing_p").isEmpty()) 
-			plumbing_p = formatter.parse(params.get("plumbing_p"));
-		
-		if(!params.get("fireSprinkler_p").isEmpty()) 
-			ffireSprinler_p = formatter.parse(params.get("fireSprinkler_p"));
-		
-		if(!params.get("fireAlarm_p").isEmpty()) 
-			ffireAlarm_p = formatter.parse(params.get("fireAlarm_p"));
-		
-		if(!params.get("lowVoltage_p").isEmpty()) 
-		{
-			flowVoltage_p = formatter.parse(params.get("lowVoltage_p"));
-		}
-		
-//-------------------------CloseoutLIST----------------------------------------------------------------------------------------
-		if(!params.get("buildingPermitCL").isEmpty()) 
-			buldingPermitCLf = formatter.parse(params.get("buildingPermitCL"));
-		if(!params.get("inspectionSOCL").isEmpty()) 
-			inspectionSOCLf = formatter.parse(params.get("inspectionSOCL"));
-		if(!params.get("certCompletionCL").isEmpty()) 
-			certCompletionCLf = formatter.parse(params.get("certCompletionCL"));
-		if(!params.get("mPunchListCL").isEmpty()) 
-			mPunchListCLf = formatter.parse(params.get("mPunchListCL"));
-		if(!params.get("closeoutPhotosCL").isEmpty()) 
-			closeoutPhotosCLf = formatter.parse(params.get("closeoutPhotosCL"));
-		if(!params.get("subConWarrantiesCL").isEmpty()) 
-			subConWarrantiesCLf = formatter.parse(params.get("subConWarrantiesCL"));
-		if(!params.get("MCSWarranty").isEmpty()) 
-			MCSWarrantyf = formatter.parse(params.get("MCSWarranty"));
-		if(!params.get("equipmentSubCL").isEmpty()) 
-			equipmentSubClf  = formatter.parse(params.get("equipmentSubCL"));
-		if(!params.get("traneCL").isEmpty()) 
-			traneCLf = formatter.parse(params.get("traneCL"));
 		
 //---------------------------------------------Receiving ARRAYS ------------------------------------------------------------
 		
@@ -661,44 +299,7 @@ public class ProjectService extends ProjectObjectService
 			}
 		}
 
-				
-		//Create SalvageValue object
-		SalvageValue sv = null;
-		try
-		{
-			double salvageAmount = Double.parseDouble(params.get("salvageAmount"));
-			if (salvageAmount != 0 && !params.get("salvageDate").isEmpty())
-			{
-				sv = new SalvageValue(fsalvageDate, salvageAmount);
-			}
-		}
-		catch(NumberFormatException nfe){}
-		
-		
 
-		
-//-------------------------Closeout fields---------------------------------------------
-		cd.setPunchList(fpunchList);
-		cd.setAsBuilts(fasBuilts);
-		cd.setAirGas(fairGas);
-		cd.setAlarmHvacForm(falarmHvac);
-		cd.setCloseoutBook(fcloseoutBook);
-		cd.setCloseoutNotes(fcloseoutNotes);
-		cd.setPermitsClosed(fpermits);
-		cd.setPunchList(fpunchList);
-		cd.setVerisaeShutdownReport(fverisae);
-		cd.setSalvageValue(sv);
-		
-		cd.setMPunchListCL(mPunchListCLf) ;
-		cd.setCloseoutPhotosCL(closeoutPhotosCLf);
-		cd.setSubConWarrantiesCL(subConWarrantiesCLf);
-		cd.setMCSWarranty(MCSWarrantyf);
-		cd.setEquipmentSubCL(equipmentSubClf);
-		cd.setTraneCL(traneCLf);
-
-		cd.setBuildingPermitCL(buldingPermitCLf);
-		cd.setInspectionSOCL(inspectionSOCLf);
-		cd.setCertCompletionCL(certCompletionCLf);
 	
 		
 //-------------------------Inspections -------------------------------------------------------------------	
@@ -727,18 +328,10 @@ public class ProjectService extends ProjectObjectService
 		
 		//Permit Fields
 		Permits	permits = new Permits();
-		permits.setBuildingPermitDate(fbuilding_p);
-		permits.setElectricalPermitDate(fmechanical_p);
-		permits.setFireAlarmPermitDate(felectrical_p);
-		permits.setFireSprinklerDate(plumbing_p);
-		permits.setLowVoltagePermitDate(ffireSprinler_p);
-		permits.setMechanicalPermitDate(ffireAlarm_p);
-		permits.setPlumbingPermitDate(flowVoltage_p);
-	
+		PermitsFiller.fillPermits(permits, params);
 		
 		//Set required fields
 		Project p = new Project();
-		//p.setEqpd(equip.getEqpd());
 		p.setMcsNumber(mcsNum);
 		p.setProjectClass(projectClass);
 		p.addProjectManager(manager);
@@ -757,8 +350,6 @@ public class ProjectService extends ProjectObjectService
 		p.setInspections(inspections);
 		p.setCloseoutDetails(cd);
 		p.setPermits(permits);
-		//p.setEquipment(equip);
-		//p.setCloseout(closeout);
 
 		p.setProjectInitiatedDate(finitiatedDate);
 		p.setSiteSurvey(fsurvey);
@@ -827,10 +418,6 @@ public class ProjectService extends ProjectObjectService
 		
 		String mcsNumString = params.get("mcsNumber");
 		
-		
-
-		
-		
 		//ID's 
 		String iIDString = params.get("inspectionID");
 		String closeoutIDString = params.get("closeoutID");
@@ -857,7 +444,7 @@ public class ProjectService extends ProjectObjectService
 		
 		//SMALL FIX BUT NOT CORRECT
 		
-		Inspections inspections = null;
+		Inspections inspections = new Inspections();
 		
 		//inspections=(Inspections) ProjectObjectService.get(new Long(iID), "Inspections");
 		
@@ -880,22 +467,14 @@ public class ProjectService extends ProjectObjectService
 		//ChangeOrderService orderService = new ChangeOrderService();
 		//HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 		
-		Date fsalvageDate = null;
 		Date finitiatedDate = null;
 		Date fsurvey = null;
 		Date fcostco = null;
 		Date fproposal = null;
-		Date fasBuilts = null;
-		Date fpunchList = null;
-		Date falarmHvac = null;
-		Date fverisae = null;
-		Date fcloseoutBook = null;
-		Date fcloseoutNotes = null;
 		Date fstart = null;
 		Date fscheduled = null;
 		Date factual = null;
-		Date fairGas = null;
-		Date fpermits = null;
+
 		Date permitApp = null;
 		
 		Date fframing = null ; 
@@ -911,32 +490,11 @@ public class ProjectService extends ProjectObjectService
 		Date fhealth = null; 
 		Date fbuildFinal = null; 
 		
-		//Permits
-		Date fbuilding_p =null;
-		Date fmechanical_p = null;
-		Date felectrical_p = null;
-		Date plumbing_p = null;
-		Date ffireSprinler_p = null;
-		Date ffireAlarm_p = null;
-		Date flowVoltage_p = null;
-		
 		//closeout
-		Date mPunchListCLf =null;
-		Date closeoutPhotosCLf=null;
-		Date subConWarrantiesCLf =null;
-		Date MCSWarrantyf =null;
-		Date equipmentSubClf =null;
-		Date traneCLf=null;
-		//Date frontPagef=null;
-		//Date subContractorCLf = null;
-		Date buldingPermitCLf = null;
-		Date inspectionSOCLf = null;
-		Date certCompletionCLf = null;
 
 		
 		//assign values to dates, if they are not null
-		if ((params.get("salvageDate") != null) && !(params.get("salvageDate")).isEmpty())
-			fsalvageDate = formatter.parse(params.get("salvageDate"));
+
 		
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
@@ -952,21 +510,6 @@ public class ProjectService extends ProjectObjectService
 		
 //********************CLOSEOUTDETAILS OPTIONAL**************************\\
 		
-		if (params.get("closeoutNotes") != null && !params.get("closeoutNotes").isEmpty())
-			fcloseoutNotes = formatter.parse(params.get("closeoutNotes"));
-		
-		if (!(params.get("asBuilts")).isEmpty())
-			fasBuilts = formatter.parse(params.get("asBuilts"));
-		
-		if (!(params.get("punchList")).isEmpty())
-			fpunchList = formatter.parse(params.get("punchList"));
-		
-		if (!(params.get("alarmHvac")).isEmpty())
-			falarmHvac = formatter.parse(params.get("alarmHvac"));
-		
-		if (!params.get("verisae").isEmpty())
-			fverisae = formatter.parse(params.get("verisae"));
-		
 		if (!params.get("startDate").isEmpty())
 			fstart = formatter.parse(params.get("startDate"));
 		
@@ -975,12 +518,6 @@ public class ProjectService extends ProjectObjectService
 		
 		if (!params.get("actualTurnover").isEmpty())
 			factual = formatter.parse(params.get("actualTurnover"));
-
-		if (params.get("airGas") != null && !params.get("airGas").isEmpty())
-			fairGas = formatter.parse(params.get("airGas"));
-		
-		if (params.get("permits") != null && !params.get("permits").isEmpty())
-			fpermits = formatter.parse(params.get("permits"));
 		
 		if (!params.get("permitApp").isEmpty())
 			permitApp = formatter.parse(params.get("permitApp"));
@@ -988,237 +525,11 @@ public class ProjectService extends ProjectObjectService
 		// Closeout!
 		
 		CloseoutDetails cd = new CloseoutDetails();
-		
-		int numOfChangeOrders;
-		try
-		{
-			 numOfChangeOrders = Integer.parseInt(params.get("numOfChangeOrders"));
-		}catch(NumberFormatException ex) { numOfChangeOrders = 0; }
-		
-		cd.setNumOfChangeOrders(numOfChangeOrders);
-
-		int numOfChangeOrdersCompleted;
-		try
-		{
-			 numOfChangeOrdersCompleted = Integer.parseInt(params.get("numOfChangeOrdersCompleted"));
-		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
-		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
-				
-		Date mg2CompletionDate = null;
-		if(!params.get("mg2CompletionDate").isEmpty())
-			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
-		
-		cd.setMg2CompletionDate(mg2CompletionDate);
-		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
-		
-		Date MCSDate = null;
-		if(!params.get("MCSDate").isEmpty())
-			MCSDate = formatter.parse(params.get("MCSDate"));
-		cd.setMCSDate(MCSDate);
-
-		cd.setMCSStatus(params.get("MCSStatus"));
-		
-		Date GCDate = null;
-		if(!params.get("GCDate").isEmpty())
-			GCDate = formatter.parse(params.get("GCDate"));
-		cd.setGCDate(GCDate);
-
-		cd.setGCStatus(params.get("GCStatus"));
-		
-		Date mechanicalDate = null;
-		if(!params.get("mechanicalDate").isEmpty())
-			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
-		cd.setMechanicalDate(mechanicalDate);
-
-		cd.setMechanicalStatus(params.get("mechanicalStatus"));
-		
-		Date electricalDate = null;
-		if(!params.get("electricalDate").isEmpty())
-			electricalDate = formatter.parse(params.get("electricalDate"));
-		cd.setElectricalDate(electricalDate);
-
-		cd.setElectricalStatus(params.get("electricalStatus"));
-		
-		Date plumbingDate = null;
-		if(!params.get("plumbingDate").isEmpty())
-			plumbingDate = formatter.parse(params.get("plumbingDate"));
-		cd.setPlumbingDate(plumbingDate);
-
-		cd.setPlumbingStatus(params.get("plumbingStatus"));
-		
-		Date sprinkleDate = null;
-		if(!params.get("sprinkleDate").isEmpty())
-			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
-		cd.setSprinkleDate(sprinkleDate);
-
-		cd.setSprinkleStatus(params.get("sprinkleStatus"));
-		
-		Date roofingDate = null;
-		if(!params.get("roofingDate").isEmpty())
-			roofingDate = formatter.parse(params.get("roofingDate"));
-		cd.setRoofingDate(roofingDate);
-
-		cd.setRoofingStatus(params.get("roofingStatus"));
-		
-		Date HTIDate = null;
-		if(!params.get("HTIDate").isEmpty())
-			HTIDate = formatter.parse(params.get("HTIDate"));
-		cd.setHTIDate(HTIDate);
-
-		cd.setHTIStatus(params.get("HTIStatus"));
-		
-		Date otherFinalLeinsDate = null;
-		if(!params.get("otherFinalLeinsDate").isEmpty())
-			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
-		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
-
-		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
-		
-
-		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
-		
-		Date GCWarrantyDate = null;
-		if(!params.get("GCWarrantyDate").isEmpty())
-			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
-		cd.setGCWarrantyDate(GCWarrantyDate);
-
-		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
-		
-		Date mechanicalWarrantyDate = null;
-		if(!params.get("mechanicalWarrantyDate").isEmpty())
-			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
-		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
-
-		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
-		
-		Date electricalWarrantyDate = null;
-		if(!params.get("electricalWarrantyDate").isEmpty())
-			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
-		cd.setElectricalWarrantyDate(electricalWarrantyDate);
-
-		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
-		
-		Date plumbingWarrantyDate = null;
-		if(!params.get("plumbingWarrantyDate").isEmpty())
-			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
-		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
-
-		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
-		
-		Date sprinkleWarrantyDate = null;
-		if(!params.get("sprinkleWarrantyDate").isEmpty())
-			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
-		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
-
-		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
-		
-		Date roofingWarrantyDate = null;
-		if(!params.get("roofingWarrantyDate").isEmpty())
-			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
-		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-
-		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
-		
-		Date HTIWarrantyDate = null;
-		if(!params.get("HTIWarrantyDate").isEmpty())
-			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
-		cd.setHTIWarrantyDate(HTIWarrantyDate);
-
-		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
-		
-		Date otherWarrantyDateA = null;
-		if(!params.get("otherWarrantyDateA").isEmpty())
-			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
-		cd.setOtherWarrantyDateA(otherWarrantyDateA);
-		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
-		
-		Date otherWarrantyDateB = null;
-		if(!params.get("otherWarrantyDateB").isEmpty())
-			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
-		cd.setOtherWarrantyDateB(otherWarrantyDateB);
-		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
-		
-		Date mechFinalDate = null;
-		if(!params.get("mechFinalDate").isEmpty())
-			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
-		cd.setMechFinalDate(mechFinalDate);
-
-		cd.setMechFinalStatus(params.get("mechFinalStatus"));
-		
-		Date elecFinalDate = null;
-		if(!params.get("elecFinalDate").isEmpty())
-			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
-		cd.setElecFinalDate(elecFinalDate);
-
-		cd.setElecFinalStatus(params.get("elecFinalStatus"));
-		
-		Date plumbingFinalDate = null;
-		if(!params.get("plumbingFinalDate").isEmpty())
-			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
-		cd.setPlumbingFinalDate(plumbingFinalDate);
-
-		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
-		
-		Date sprinkleFinalDate = null;
-		if(!params.get("sprinkleFinalDate").isEmpty())
-			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
-		cd.setSprinkleFinalDate(sprinkleFinalDate);
-
-		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
-		
-
-		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
-		
-		Date tmpCertificateDate = null;
-		if(!params.get("tmpCertificateDate").isEmpty())
-			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
-		cd.setTmpCertificateDate(tmpCertificateDate);
-
-		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
-		
-		Date certificateDate = null;
-		if(!params.get("certificateDate").isEmpty())
-			certificateDate = formatter.parse(params.get("certificateDate"));
-		cd.setCertificateDate(certificateDate);
-
-		cd.setCertificateStatus(params.get("certificateStatus"));
-		
-
-		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
-		
-		Date manualDate = null;
-		if(!params.get("manualDate").isEmpty())
-			manualDate = formatter.parse(params.get("manualDate"));
-		cd.setManualDate(manualDate);
-
-		cd.setManualStatus(params.get("manualStatus"));
-
-
-		cd.setPunchListStatus(params.get("punchListStatus"));
-
-
-		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
-		
-
-		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
-		
-		Date HVACstartupFormDate = null;
-		if(!params.get("HVACstartupFormDate").isEmpty())
-			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
-		cd.setHVACstartupFormDate(HVACstartupFormDate);
-
-		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
-		
-
-		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
-
-		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
-		
-		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
-		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
-		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
-		cd.setWarrantyNotes(params.get("warrantyNotes"));
-		
+		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
+		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
+		cd.setSalvageValue(sv);
+		//ID's
+		System.out.println("Salvage ID: " + salvageID);
 		
 // ************************Optional Inspections************************ \\
 		if(!params.get("framing").isEmpty()) 
@@ -1240,74 +551,12 @@ public class ProjectService extends ProjectObjectService
 		{
 			fmechLightSmoke = formatter.parse(params.get("mechLightSmoke"));
 		}
-		
-		/*if(!params.get("mechFinal").isEmpty()) 
-			fmechFinal = formatter.parse(params.get("mechFinal"));
-				
-		if(!params.get("elecFinal").isEmpty()) 
-			felecFinal = formatter.parse(params.get("elecFinal"));
-				
-		if(!params.get("plumbFinal").isEmpty()) 
-			fplumbFinal = formatter.parse(params.get("plumbFinal"));*/
 				
 		if(!params.get("fireMarshal").isEmpty()) 
 			ffireMarshal = formatter.parse(params.get("fireMarshal"));
 				
 		if(!params.get("health").isEmpty()) 
 			fhealth = formatter.parse(params.get("health"));
-						
-		//if(!params.get("buildFinal").isEmpty()) 
-			//fbuildFinal = formatter.parse(params.get("buildFinal"));
-		
-		
-		// ***************Optional Permits************************ \\
-		if(!params.get("building_p").isEmpty()) 
-			fbuilding_p = formatter.parse(params.get("building_p"));
-		
-		if(!params.get("mechanical_p").isEmpty()) 
-			fmechanical_p = formatter.parse(params.get("mechanical_p"));
-		
-		if(!params.get("electrical_p").isEmpty()) 
-			felectrical_p = formatter.parse(params.get("electrical_p"));
-		
-		if(!params.get("plumbing_p").isEmpty()) 
-			plumbing_p = formatter.parse(params.get("plumbing_p"));
-		
-		if(!params.get("fireSprinkler_p").isEmpty()) 
-			ffireSprinler_p = formatter.parse(params.get("fireSprinkler_p"));
-		
-		if(!params.get("fireAlarm_p").isEmpty()) 
-			ffireAlarm_p = formatter.parse(params.get("fireAlarm_p"));
-		
-		if(!params.get("lowVoltage_p").isEmpty()) 
-			flowVoltage_p = formatter.parse(params.get("lowVoltage_p"));
-		
-		
-		//CloseoutLIST
-		if(!params.get("buildingPermitCL").isEmpty()) 
-			buldingPermitCLf = formatter.parse(params.get("buildingPermitCL"));
-		if(params.get("inspectionSOCL") != null && !params.get("inspectionSOCL").isEmpty()) 
-			inspectionSOCLf = formatter.parse(params.get("inspectionSOCL"));
-		if(params.get("certiCompletionCL") != null && !params.get("certCompletionCL").isEmpty()) 
-			certCompletionCLf = formatter.parse(params.get("certCompletionCL"));
-		if(params.get("mPunchListCL") != null && !params.get("mPunchListCL").isEmpty()) 
-			mPunchListCLf = formatter.parse(params.get("mPunchListCL"));
-		if(!params.get("closeoutPhotosCL").isEmpty()) 
-			closeoutPhotosCLf = formatter.parse(params.get("closeoutPhotosCL"));
-		if(params.get("subConWarrantiesCL") != null && !params.get("subConWarrantiesCL").isEmpty()) 
-			subConWarrantiesCLf = formatter.parse(params.get("subConWarrantiesCL"));
-		if(!params.get("MCSWarranty").isEmpty()) 
-			MCSWarrantyf = formatter.parse(params.get("MCSWarranty"));
-		if(!params.get("equipmentSubCL").isEmpty()) 
-			equipmentSubClf  = formatter.parse(params.get("equipmentSubCL"));
-		if(params.get("traneCL")  != null && !params.get("traneCL").isEmpty()) 
-			traneCLf = formatter.parse(params.get("traneCL"));
-		
-
-
-
-		
-		
 		
 		Long id = Long.parseLong(params.get("projectID"));
 		String[] equipToAdd = getGSONArray(req, "newEquip");
@@ -1407,43 +656,18 @@ public class ProjectService extends ProjectObjectService
 				}
 		}
 		
-		Double salvageAmount = null;
-		if(params.get("salvageAmount") != null)
-			try
-			{
-				
-				salvageAmount = Double.parseDouble(params.get("salvageAmount"));
-			}catch(NumberFormatException nfe){}
-        
-        //Edit salvage values and closeout details
-		SalvageValue sv = null;
-		
-		//CloseoutDetails cd = (CloseoutDetails) ProjectObjectService.get(closeoutID, "CloseoutDetails");
+
 
 		
-		if (salvageAmount != null && !params.get("salvageDate").isEmpty())
-		{
-			//If the salvageValue doesn't exist, make one
-			if (cd.getSalvageValue() == null)
-			{
-				sv = new SalvageValue(fsalvageDate, salvageAmount);
-			}
-		}
-		//ID's
-		System.out.println("Salvage ID: " + salvageID);
-
-		
-		//Create CloseoutDetails Object.
 				
 		//Closeout fields
-		cd.setPunchList(fpunchList);
+		/*cd.setPunchList(fpunchList);
 		cd.setAsBuilts(fasBuilts);
 		cd.setAirGas(fairGas);
 		cd.setAlarmHvacForm(falarmHvac);
 		cd.setCloseoutBook(fcloseoutBook);
 		cd.setCloseoutNotes(fcloseoutNotes);
 		cd.setPermitsClosed(fpermits);
-		cd.setPunchList(fpunchList);
 		cd.setVerisaeShutdownReport(fverisae);
 		cd.setSalvageValue(sv);
 		
@@ -1456,15 +680,11 @@ public class ProjectService extends ProjectObjectService
 
 		cd.setBuildingPermitCL(buldingPermitCLf);
 		cd.setInspectionSOCL(inspectionSOCLf);
-		cd.setCertCompletionCL(certCompletionCLf);
+		cd.setCertCompletionCL(certCompletionCLf);*/
 				
 		
 		//create inspections Object.
-		if(inspections==null)
-		{
-			 inspections = new Inspections();
-			 System.out.println("Inpsections was empty in edit");
-		}		
+
 				//set inspection fields
 		System.out.println(inspectionTN);
 		inspections.setTicketNumber(inspectionTN);
@@ -1483,13 +703,7 @@ public class ProjectService extends ProjectObjectService
 		
 		
 		Permits	permits = new Permits();
-		permits.setBuildingPermitDate(fbuilding_p);
-		permits.setElectricalPermitDate(felectrical_p);
-		permits.setFireAlarmPermitDate(ffireAlarm_p);
-		permits.setFireSprinklerDate(ffireSprinler_p);
-		permits.setLowVoltagePermitDate(flowVoltage_p);
-		permits.setMechanicalPermitDate(fmechanical_p);
-		permits.setPlumbingPermitDate(plumbing_p);
+		PermitsFiller.fillPermits(permits, params);
 		
 
 
@@ -1569,20 +783,16 @@ public class ProjectService extends ProjectObjectService
 		}
 		if(permitsID!=0)
 		{
+			System.out.println("We get here");
 			i=0;
 			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
 			k = 1;
 		}
-		
-		
+			
 		 System.out.println("k = " + k);
 			ProjectObjectService.editObject("Project",id,p,k);
 			//ProjectObjectService.editObjects(iDs,domains, objects);
-
-
-		System.out.println("END");
-
-		
+		System.out.println("END");		
 	}
 	
 	/**
@@ -1721,17 +931,16 @@ public class ProjectService extends ProjectObjectService
 	public static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Closeout:");
-		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 		String closeoutIDString = params.get("closeoutID");
+		String salvageIDString = params.get("salvageID");
 		Long closeoutID = (long)-1;
+		Long salvageID = (long)-1;
 
-
-		
-		//Parse mcsNumber, change to -1 if it's not a number
 		try
 		{
-			closeoutID = Long.parseLong(closeoutIDString);		
+			closeoutID = Long.parseLong(closeoutIDString);	
+			salvageID = Long.parseLong(salvageIDString);
 		}catch(Exception e){}
 		
 		
@@ -1739,294 +948,50 @@ public class ProjectService extends ProjectObjectService
 		try {
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Create new project to replace the old one
-		Project p = new Project();
-		p.setMcsNumber(currentProject.getMcsNumber());
-		p.setProjectClass(currentProject.getProjectClass());
-		p.addProjectManager(currentProject.getProjectManagers());
-		Iterator<Person> supervisor = currentProject.getSupervisors().iterator();
-		p.addSupervisor(supervisor.next());
-		p.setStatus(currentProject.getStatus());
-		p.setWarehouse(currentProject.getWarehouse());
-		p.setScope(currentProject.getScope());
-		p.setProjectItem(currentProject.getProjectItem());
-		p.setStage(currentProject.getStage());
-		p.setProjectInitiatedDate(currentProject.getProjectInitiatedDate());
-		p.setSiteSurvey(currentProject.getSiteSurvey());
-		p.setCostcoDueDate(currentProject.getCostcoDueDate());
-		p.setProposalSubmitted(currentProject.getProposalSubmitted());
-		p.setScheduledStartDate(currentProject.getScheduledStartDate());
-		p.setScheduledTurnover(currentProject.getScheduledTurnover());
-		p.setActualTurnover(currentProject.getActualTurnover());
-		p.setShouldInvoice(currentProject.getShouldInvoice());
-		p.setInvoiced(currentProject.getInvoiced());
-		p.setProjectNotes(currentProject.getProjectNotes());
-		//p.setChangeOrders(changeOrders);
-		p.setProjectType(currentProject.getProjectType());
-		p.setZachUpdates(currentProject.getZachUpdates());
-		p.setCost(currentProject.getCost());
-		p.setCustomerNumber(currentProject.getCustomerNumber());
-		p.setPermitApplication(currentProject.getPermitApplication());
-		p.setInspections(currentProject.getInspections());
-		p.setPermits(currentProject.getPermits());	
-		
-		
+
 		CloseoutDetails cd = new CloseoutDetails();
-		
-		int numOfChangeOrders;
-		try
-		{
-			 numOfChangeOrders = Integer.parseInt(params.get("numOfChangeOrders"));
-		}catch(NumberFormatException ex) { numOfChangeOrders = 0; }
-		
-		cd.setNumOfChangeOrders(numOfChangeOrders);
-
-		int numOfChangeOrdersCompleted;
-		try
-		{
-			 numOfChangeOrdersCompleted = Integer.parseInt(params.get("numOfChangeOrdersCompleted"));
-		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
-		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
-				
-		Date mg2CompletionDate = null;
-		if(!params.get("mg2CompletionDate").isEmpty())
-			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
-		
-		cd.setMg2CompletionDate(mg2CompletionDate);
-		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
-		
-		Date MCSDate = null;
-		if(!params.get("MCSDate").isEmpty())
-			MCSDate = formatter.parse(params.get("MCSDate"));
-		cd.setMCSDate(MCSDate);
-		cd.setMCSStatus(params.get("MCSStatus"));
-		
-		Date GCDate = null;
-		if(!params.get("GCDate").isEmpty())
-			GCDate = formatter.parse(params.get("GCDate"));
-		cd.setGCDate(GCDate);
-		cd.setGCStatus(params.get("GCStatus"));
-		
-		Date mechanicalDate = null;
-		if(!params.get("mechanicalDate").isEmpty())
-			mechanicalDate = formatter.parse(params.get("mechanicalDate"));
-		cd.setMechanicalDate(mechanicalDate);
-		cd.setMechanicalStatus(params.get("mechanicalStatus"));
-		
-		Date electricalDate = null;
-		if(!params.get("electricalDate").isEmpty())
-			electricalDate = formatter.parse(params.get("electricalDate"));
-		cd.setElectricalDate(electricalDate);
-		cd.setElectricalStatus(params.get("electricalStatus"));
-		
-		Date plumbingDate = null;
-		if(!params.get("plumbingDate").isEmpty())
-			plumbingDate = formatter.parse(params.get("plumbingDate"));
-		cd.setPlumbingDate(plumbingDate);
-		cd.setPlumbingStatus(params.get("plumbingStatus"));
-		
-		Date sprinkleDate = null;
-		if(!params.get("sprinkleDate").isEmpty())
-			sprinkleDate = formatter.parse(params.get("sprinkleDate"));
-		cd.setSprinkleDate(sprinkleDate);
-		cd.setSprinkleStatus(params.get("sprinkleStatus"));
-		
-		Date roofingDate = null;
-		if(!params.get("roofingDate").isEmpty())
-			roofingDate = formatter.parse(params.get("roofingDate"));
-		cd.setRoofingDate(roofingDate);
-		cd.setRoofingStatus(params.get("roofingStatus"));
-		
-		Date HTIDate = null;
-		if(!params.get("HTIDate").isEmpty())
-			HTIDate = formatter.parse(params.get("HTIDate"));
-		cd.setHTIDate(HTIDate);
-		cd.setHTIStatus(params.get("HTIStatus"));
-		
-		Date otherFinalLeinsDate = null;
-		if(!params.get("otherFinalLeinsDate").isEmpty())
-			otherFinalLeinsDate = formatter.parse(params.get("otherFinalLeinsDate"));
-		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
-		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
-		
-		Date mcsWarranty = null;
-		if(!params.get("MCSWarranty").isEmpty())
-			mcsWarranty = formatter.parse(params.get("MCSWarranty"));
-		cd.setMCSWarranty(mcsWarranty);
-		cd.setMCSWarrantyStatus(params.get("MCSWarrantyStatus"));
-		
-		Date GCWarrantyDate = null;
-		if(!params.get("GCWarrantyDate").isEmpty())
-			GCWarrantyDate = formatter.parse(params.get("GCWarrantyDate"));
-		cd.setGCWarrantyDate(GCWarrantyDate);
-		cd.setGCWarrantyStatus(params.get("GCWarrantyStatus"));
-		
-		Date mechanicalWarrantyDate = null;
-		if(!params.get("mechanicalWarrantyDate").isEmpty())
-			mechanicalWarrantyDate = formatter.parse(params.get("mechanicalWarrantyDate"));
-		cd.setMechanicalWarrantyDate(mechanicalWarrantyDate);
-		cd.setMechanicalWarrantyStatus(params.get("mechanicalWarrantyStatus"));
-		
-		Date electricalWarrantyDate = null;
-		if(!params.get("electricalWarrantyDate").isEmpty())
-			electricalWarrantyDate = formatter.parse(params.get("electricalWarrantyDate"));
-		cd.setElectricalWarrantyDate(electricalWarrantyDate);
-		cd.setElectricalWarrantyStatus(params.get("electricalWarrantyStatus"));
-		
-		Date plumbingWarrantyDate = null;
-		if(!params.get("plumbingWarrantyDate").isEmpty())
-			plumbingWarrantyDate = formatter.parse(params.get("plumbingWarrantyDate"));
-		cd.setPlumbingWarrantyDate(plumbingWarrantyDate);
-		cd.setPlumbingWarrantyStatus(params.get("plumbingWarrantyStatus"));
-		
-		Date sprinkleWarrantyDate = null;
-		if(!params.get("sprinkleWarrantyDate").isEmpty())
-			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
-		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
-		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
-		
-		Date roofingWarrantyDate = null;
-		if(!params.get("roofingWarrantyDate").isEmpty())
-			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
-		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
-		
-		Date HTIWarrantyDate = null;
-		if(!params.get("HTIWarrantyDate").isEmpty())
-			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
-		cd.setHTIWarrantyDate(HTIWarrantyDate);
-		cd.setHTIWarrantyStatus(params.get("HTIWarrantyStatus"));
-		
-		Date otherWarrantyDateA = null;
-		if(!params.get("otherWarrantyDateA").isEmpty())
-			otherWarrantyDateA = formatter.parse(params.get("otherWarrantyDateA"));
-		cd.setOtherWarrantyDateA(otherWarrantyDateA);
-		cd.setOtherWarrantyStatusA(params.get("otherWarrantyStatusA"));
-		
-		Date otherWarrantyDateB = null;
-		if(!params.get("otherWarrantyDateB").isEmpty())
-			otherWarrantyDateB = formatter.parse(params.get("otherWarrantyDateB"));
-		cd.setOtherWarrantyDateB(otherWarrantyDateB);
-		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
-		
-		Date mechFinalDate = null;
-		if(!params.get("mechFinalDate").isEmpty())
-			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
-		cd.setMechFinalDate(mechFinalDate);
-		cd.setMechFinalStatus(params.get("mechFinalStatus"));
-		
-		Date elecFinalDate = null;
-		if(!params.get("elecFinalDate").isEmpty())
-			elecFinalDate = formatter.parse(params.get("elecFinalDate"));
-		cd.setElecFinalDate(elecFinalDate);
-		cd.setElecFinalStatus(params.get("elecFinalStatus"));
-		
-		Date plumbingFinalDate = null;
-		if(!params.get("plumbingFinalDate").isEmpty())
-			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
-		cd.setPlumbingFinalDate(plumbingFinalDate);
-		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
-		
-		Date sprinkleFinalDate = null;
-		if(!params.get("sprinkleFinalDate").isEmpty())
-			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));
-		cd.setSprinkleFinalDate(sprinkleFinalDate);
-		cd.setSprinkleFinalStatus(params.get("sprinkleFinalStatus"));
-		
-		Date buildingFinal = null;
-		if(!params.get("buildingPermitCL").isEmpty())
-			buildingFinal = formatter.parse(params.get("buildingPermitCL"));
-		cd.setBuildingPermitCL(buildingFinal);
-		cd.setBuildingFinalStatus(params.get("buildingFinalStatus"));
-		
-		Date tmpCertificateDate = null;
-		if(!params.get("tmpCertificateDate").isEmpty())
-			tmpCertificateDate = formatter.parse(params.get("tmpCertificateDate"));
-		cd.setTmpCertificateDate(tmpCertificateDate);
-		cd.setTmpCertificateStatus(params.get("tmpCertificateStatus"));
-		
-		Date certificateDate = null;
-		if(!params.get("certificateDate").isEmpty())
-			certificateDate = formatter.parse(params.get("certificateDate"));
-		cd.setCertificateDate(certificateDate);
-		cd.setCertificateStatus(params.get("certificateStatus"));
-		
-		Date equipmentSubmittal = null;
-		if(!params.get("equipmentSubCL").isEmpty())
-			equipmentSubmittal = formatter.parse(params.get("equipmentSubCL"));
-		cd.setEquipmentSubCL(equipmentSubmittal);
-		cd.setEquipmentSubmittalStatus(params.get("equipmentSubmittalStatus"));
-		
-		Date manualDate = null;
-		if(!params.get("manualDate").isEmpty())
-			manualDate = formatter.parse(params.get("manualDate"));
-		cd.setManualDate(manualDate);
-		cd.setManualStatus(params.get("manualStatus"));
-
-		Date punchList = null;
-		if(!params.get("punchList").isEmpty())
-			punchList = formatter.parse(params.get("punchList"));
-		cd.setPunchList(punchList);
-		cd.setPunchListStatus(params.get("punchListStatus"));
-
-		Date asBuilts = null;
-		if(!params.get("asBuilts").isEmpty())
-			asBuilts = formatter.parse(params.get("asBuilts"));
-		cd.setAsBuilts(asBuilts);
-		cd.setAsBuiltDrawingsStatus(params.get("asBuiltDrawingsStatus"));
-		
-		Date closeOutPhotos = null;
-		if(!params.get("closeoutPhotosCL").isEmpty())
-			closeOutPhotos = formatter.parse(params.get("closeoutPhotosCL"));
-		cd.setCloseoutPhotosCL(closeOutPhotos);
-		cd.setCloseOutPhotosStatus(params.get("closeOutPhotosStatus"));
-		
-		Date HVACstartupFormDate = null;
-		if(!params.get("HVACstartupFormDate").isEmpty())
-			HVACstartupFormDate = formatter.parse(params.get("HVACstartupFormDate"));
-		cd.setHVACstartupFormDate(HVACstartupFormDate);
-		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
-		
-		Date alarmForm = null;
-		if(!params.get("alarmHvac").isEmpty())
-			alarmForm = formatter.parse(params.get("alarmHvac"));
-		cd.setAlarmHvacForm(alarmForm);
-		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
-
-		Date verisaeDate = null;
-		if(!params.get("verisae").isEmpty())
-			verisaeDate = formatter.parse(params.get("verisae"));
-		cd.setVerisaeShutdownReport(verisaeDate);
-		cd.setVerisaeReportStatus(params.get("verisaeReportStatus"));
-		
-		cd.setFinalInspectionNotes(params.get("finalInspectionNotes"));
-		cd.setFinalLiensNotes(params.get("finalLiensNotes"));
-		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
-		cd.setWarrantyNotes(params.get("warrantyNotes"));
-		
-		
-		p.setCloseoutDetails(cd);
+		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
+		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
+		cd.setSalvageValue(sv);
+		currentProject.setCloseoutDetails(cd);
 		
 		int i = 0;
 		int k = 0;
-		System.out.println();
+		System.out.println(cd.getId());
 
-		if(closeoutID!=0)
+		System.out.println(closeoutID);
+		if(closeoutID!=0 && salvageID ==0)
 		{	
 			i=0;
 			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
+			System.out.println(cd.getId()+ " is the id");
+
 			k=1;
 		}
-		ProjectObjectService.editObject("Project",projectID,p,k);
+		if(closeoutID!=0 && salvageID !=0)
+		{	
+			i=2;
+			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
+			System.out.println(cd.getId() + " is the id");
+
+			k=1;
+		}
+		
+		if(salvageID!=0)
+		{
+			i=0;
+			System.out.println("SV number: " + salvageID);
+			ProjectObjectService.editObject("SalvageValue", salvageID, sv, i);
+			k = 1;
+		}
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 	}
 
 	public static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Closeout:");
-		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		System.out.println("In Edit Permits:");
 
 		String permitsIDString = params.get("permitsID");
 		Long permitsID = (long)-1;
@@ -2041,94 +1006,62 @@ public class ProjectService extends ProjectObjectService
 		try {
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Create new project to replace the old one
-		Project p = new Project();
-		p.setMcsNumber(currentProject.getMcsNumber());
-		p.setProjectClass(currentProject.getProjectClass());
-		p.addProjectManager(currentProject.getProjectManagers());
-		Iterator<Person> supervisor = currentProject.getSupervisors().iterator();
-		p.addSupervisor(supervisor.next());
-		p.setStatus(currentProject.getStatus());
-		p.setWarehouse(currentProject.getWarehouse());
-		p.setScope(currentProject.getScope());
-		p.setProjectItem(currentProject.getProjectItem());
-		p.setStage(currentProject.getStage());
-		p.setProjectInitiatedDate(currentProject.getProjectInitiatedDate());
-		p.setSiteSurvey(currentProject.getSiteSurvey());
-		p.setCostcoDueDate(currentProject.getCostcoDueDate());
-		p.setProposalSubmitted(currentProject.getProposalSubmitted());
-		p.setScheduledStartDate(currentProject.getScheduledStartDate());
-		p.setScheduledTurnover(currentProject.getScheduledTurnover());
-		p.setActualTurnover(currentProject.getActualTurnover());
-		p.setShouldInvoice(currentProject.getShouldInvoice());
-		p.setInvoiced(currentProject.getInvoiced());
-		p.setProjectNotes(currentProject.getProjectNotes());
-		//p.setChangeOrders(changeOrders);
-		p.setProjectType(currentProject.getProjectType());
-		p.setZachUpdates(currentProject.getZachUpdates());
-		p.setCost(currentProject.getCost());
-		p.setCustomerNumber(currentProject.getCustomerNumber());
-		p.setPermitApplication(currentProject.getPermitApplication());
-		p.setInspections(currentProject.getInspections());
-		p.setCloseoutDetails(currentProject.getCloseoutDetails());	
+
 				
 		Permits permits = new Permits();
+		PermitsFiller.fillPermits(permits, params);
 		
-		Date buildingPermit = null;
-		if(!params.get("building_p").isEmpty())
-			buildingPermit = formatter.parse(params.get("building_p"));
-		permits.setBuildingPermitDate(buildingPermit);	
-		
-		Date mechanicalPermit = null;
-		if(!params.get("mechanical_p").isEmpty())
-			mechanicalPermit = formatter.parse(params.get("mechanical_p"));
-		permits.setMechanicalPermitDate(mechanicalPermit);
-		
-		Date electricalPermit = null;
-		if(!params.get("electrical_p").isEmpty())
-			electricalPermit = formatter.parse(params.get("electrical_p"));
-		permits.setElectricalPermitDate(electricalPermit);
-		
-		Date plumbingPermit = null;
-		if(!params.get("plumbing_p").isEmpty())
-			plumbingPermit = formatter.parse(params.get("plumbing_p"));
-		permits.setPlumbingPermitDate(plumbingPermit);
-		
-		Date fireSprinklePermit = null;
-		if(!params.get("fireSprinkler_p").isEmpty())
-			fireSprinklePermit = formatter.parse(params.get("fireSprinkler_p"));
-		permits.setFireSprinklerDate(fireSprinklePermit);
-		
-		Date fireAlarmPermit = null;
-		if(!params.get("fireAlarm_p").isEmpty())
-			fireAlarmPermit = formatter.parse(params.get("fireAlarm_p"));
-		permits.setFireAlarmPermitDate(fireAlarmPermit);
-		
-		Date lowVoltagePermit = null;
-		if(!params.get("lowVoltage_p").isEmpty())
-			lowVoltagePermit = formatter.parse(params.get("lowVoltage_p"));
-		permits.setLowVoltagePermitDate(lowVoltagePermit);
-		
-		p.setPermits(permits);
+		currentProject.setPermits(permits);
 		
 		int i = 0;
 		int k = 0;
-		System.out.println();
 
 		if(permitsID!=0)
 		{
-			System.out.println("hey");
 			i=0;
 			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
 			k = 1;
 		}
-		
-		ProjectObjectService.editObject("Project",projectID,p,k);
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 	}
-	
-	
-	
+
+	public static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Inspections:");
+
+		String inspectionIDString = params.get("inspectionID");
+		Long inspectionID = (long)-1;
+
+		try
+		{
+			inspectionID = Long.parseLong(inspectionIDString);		
+		}catch(Exception e){}
+		System.out.println(inspectionID);
+		
+		
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Inspections inspection = new Inspections();
+		InspectionsFiller.fillInspections(inspection, params);
+		
+		currentProject.setInspections(inspection);
+		
+		int i = 0;
+		int k = 0;
+
+		if(inspectionID!=0)
+		{
+			i=0;
+			ProjectObjectService.editObject("Inspections",inspectionID,inspection, i);	
+			k = 1;
+		}
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+	}	
 }
