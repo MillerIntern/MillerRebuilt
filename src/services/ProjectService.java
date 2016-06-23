@@ -37,6 +37,7 @@ import projectObjects.Warehouse;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
+import services.helpers.ProjectInformationFiller;
 import services.helpers.SalvageValueFiller;
 
 
@@ -47,9 +48,6 @@ import services.helpers.SalvageValueFiller;
  */
 public class ProjectService extends ProjectObjectService
 {
-	
-	//private static Long iID;
-	
 	/**
 	 * This method adds a project to the database. The fields REQUIRED for a project are specific arguments.
 	 * The OPTIONAL fields for a projects are parsed from the HTTP Request parameter mapping
@@ -95,8 +93,7 @@ public class ProjectService extends ProjectObjectService
 		{
 			System.out.println("Hah, I havent broken yet!");
 		}
-
-		
+	
 			Long maxID = (long) maxId;	
 			System.out.println("Current ID: " + maxID);
 		//Get REQUIRED project data
@@ -110,10 +107,6 @@ public class ProjectService extends ProjectObjectService
 		ProjectType pType = (ProjectType) ProjectObjectService.get(typeID, "ProjectType");
 		String mcsNumString = params.get("mcsNumber");
 		
-		Inspections inspections = null;
-		if(inspectionTN!=-1)
-			inspections= (Inspections) ProjectObjectService.get(inspectionTN, "Inspections");
-	
 		int mcsNum = -1;
 		//int fpo = -1;
 		//Parse mcsNumber, change to -1 if it's not a number
@@ -146,21 +139,6 @@ public class ProjectService extends ProjectObjectService
 
 		Date permitApp = null;
 		
-		//INspections
-		Date fframing = null ; 
-		Date fceiling = null; 
-		Date froughMech = null; 
-		Date froughElec= null;  
-		Date froughPlumb = null; 
-		Date fmechLightSmoke = null; 
-		Date fmechFinal = null; 
-		Date  felecFinal = null; 
-		Date fplumbFinal = null; 
-		Date ffireMarshal = null; 
-		Date fhealth = null; 
-		Date fbuildFinal = null; 
-		//Long finspectionID = null; 
-		
 		//Create CloseoutDetails Object.
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
@@ -183,36 +161,6 @@ public class ProjectService extends ProjectObjectService
 		
 		if (!(params.get("proposal")).isEmpty())
 			fproposal = formatter.parse(params.get("proposal"));
-		
-
-		
-	// ***************Optional Inspections************************ \\
-		if(!params.get("framing").isEmpty()) 
-			fframing = formatter.parse(params.get("framing"));
-		
-		if(!params.get("ceiling").isEmpty()) 
-			fceiling = formatter.parse(params.get("ceiling"));
-		
-		if(!params.get("roughMech").isEmpty()) 
-			froughMech = formatter.parse(params.get("roughMech"));
-		
-		if(!params.get("roughElec").isEmpty()) 
-			froughElec = formatter.parse(params.get("roughElec"));
-			System.out.println(froughElec);
-		
-		if(!params.get("roughPlumb").isEmpty()) 
-			froughPlumb = formatter.parse(params.get("roughPlumb"));
-		
-		if(!params.get("mechLightSmoke").isEmpty()) 
-		{
-			fmechLightSmoke = formatter.parse(params.get("mechLightSmoke"));
-		}
-		
-		if(!params.get("fireMarshal").isEmpty()) 
-			ffireMarshal = formatter.parse(params.get("fireMarshal"));
-		
-		if(!params.get("health").isEmpty()) 
-			fhealth = formatter.parse(params.get("health"));
 		
 //---------------------------------------------Receiving ARRAYS ------------------------------------------------------------
 		
@@ -303,29 +251,14 @@ public class ProjectService extends ProjectObjectService
 	
 		
 //-------------------------Inspections -------------------------------------------------------------------	
-		if(inspections==null)
-		{
-			inspections = new Inspections();
-		}
+		Inspections inspections = new Inspections();
+		if(inspectionTN!=-1)
+			inspections= (Inspections) ProjectObjectService.get(inspectionTN, "Inspections");
 		
 		//set inspection fields
 		System.out.println("inspection ticket number " + inspectionTN);
-		inspections.setTicketNumber(inspectionTN);
-		inspections.setFraming(fframing);
-		inspections.setCeiling(fceiling);
-		inspections.setRoughin_Mechanical(froughMech);
-		inspections.setRoughin_Electric(froughElec);
-		inspections.setRoughin_Plumbing(froughPlumb);
-		inspections.setMechanicalLightSmoke(fmechLightSmoke);
-		inspections.setMechanical_Final(fmechFinal);
-		inspections.setElectrical_Final(felecFinal);
-		inspections.setPlumbing_Final(fplumbFinal);
-		inspections.setFire_Marshal(ffireMarshal);
-		inspections.setHealth(fhealth);
-		inspections.setBuilding_Final(fbuildFinal);
-		
-		
-		
+		InspectionsFiller.fillInspections(inspections, params);
+
 		//Permit Fields
 		Permits	permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
@@ -401,7 +334,6 @@ public class ProjectService extends ProjectObjectService
 			Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN, 
 			HttpServletRequest req) throws ClassNotFoundException, ParseException
 	{
-		
 		System.out.println(params);
 		//Initialize Services
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -442,17 +374,9 @@ public class ProjectService extends ProjectObjectService
 			
 		}catch(Exception e){}
 		
-		//SMALL FIX BUT NOT CORRECT
-		
-		Inspections inspections = new Inspections();
-		
-		//inspections=(Inspections) ProjectObjectService.get(new Long(iID), "Inspections");
-		
 		System.out.println("inspection ID : " + iID);
 		System.out.println("closeoutID : " + closeoutID);
 
-		
-		
 		int shouldInvoice = Integer.parseInt(params.get("shouldInvoice"));
 		int actualInvoice = Integer.parseInt(params.get("actualInvoice"));
 		String notes = params.get("notes");
@@ -461,11 +385,6 @@ public class ProjectService extends ProjectObjectService
 		String zachNotes = params.get("zachUpdates");
 		String cost = params.get("cost");
 		String customerNumber = params.get("customerNumber");
-		
-		//Parse change orders from strong
-		//String changeOrderJsonString = params.get("coItems");
-		//ChangeOrderService orderService = new ChangeOrderService();
-		//HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 		
 		Date finitiatedDate = null;
 		Date fsurvey = null;
@@ -476,25 +395,6 @@ public class ProjectService extends ProjectObjectService
 		Date factual = null;
 
 		Date permitApp = null;
-		
-		Date fframing = null ; 
-		Date fceiling = null; 
-		Date froughMech = null; 
-		Date froughElec= null;  
-		Date froughPlumb = null; 
-		Date fmechLightSmoke = null; 
-		Date fmechFinal = null; 
-		Date  felecFinal = null; 
-		Date fplumbFinal = null; 
-		Date ffireMarshal = null; 
-		Date fhealth = null; 
-		Date fbuildFinal = null; 
-		
-		//closeout
-
-		
-		//assign values to dates, if they are not null
-
 		
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
@@ -532,31 +432,6 @@ public class ProjectService extends ProjectObjectService
 		System.out.println("Salvage ID: " + salvageID);
 		
 // ************************Optional Inspections************************ \\
-		if(!params.get("framing").isEmpty()) 
-			fframing = formatter.parse(params.get("framing"));
-				
-		if(!params.get("ceiling").isEmpty()) 
-			fceiling = formatter.parse(params.get("ceiling"));
-				
-		if(!params.get("roughMech").isEmpty()) 
-			froughMech = formatter.parse(params.get("roughMech"));
-				
-		if(!params.get("roughElec").isEmpty()) 
-			froughElec = formatter.parse(params.get("roughElec"));
-			
-		if(!params.get("roughPlumb").isEmpty()) 
-			froughPlumb = formatter.parse(params.get("roughPlumb"));
-		
-		if(!params.get("mechLightSmoke").isEmpty()) 
-		{
-			fmechLightSmoke = formatter.parse(params.get("mechLightSmoke"));
-		}
-				
-		if(!params.get("fireMarshal").isEmpty()) 
-			ffireMarshal = formatter.parse(params.get("fireMarshal"));
-				
-		if(!params.get("health").isEmpty()) 
-			fhealth = formatter.parse(params.get("health"));
 		
 		Long id = Long.parseLong(params.get("projectID"));
 		String[] equipToAdd = getGSONArray(req, "newEquip");
@@ -649,64 +524,19 @@ public class ProjectService extends ProjectObjectService
 				{
 					System.out.println("here");
 					ProjectObjectService.addObject("Equipment", equip);
-				}
-				
-				
-				
-				}
+				}	
+			}
 		}
-		
-
-
-		
-				
-		//Closeout fields
-		/*cd.setPunchList(fpunchList);
-		cd.setAsBuilts(fasBuilts);
-		cd.setAirGas(fairGas);
-		cd.setAlarmHvacForm(falarmHvac);
-		cd.setCloseoutBook(fcloseoutBook);
-		cd.setCloseoutNotes(fcloseoutNotes);
-		cd.setPermitsClosed(fpermits);
-		cd.setVerisaeShutdownReport(fverisae);
-		cd.setSalvageValue(sv);
-		
-		cd.setMPunchListCL(mPunchListCLf) ;
-		cd.setCloseoutPhotosCL(closeoutPhotosCLf);
-		cd.setSubConWarrantiesCL(subConWarrantiesCLf);
-		cd.setMCSWarranty(MCSWarrantyf);
-		cd.setEquipmentSubCL(equipmentSubClf);
-		cd.setTraneCL(traneCLf);
-
-		cd.setBuildingPermitCL(buldingPermitCLf);
-		cd.setInspectionSOCL(inspectionSOCLf);
-		cd.setCertCompletionCL(certCompletionCLf);*/
-				
-		
-		//create inspections Object.
-
 				//set inspection fields
 		System.out.println(inspectionTN);
-		inspections.setTicketNumber(inspectionTN);
-		inspections.setFraming(fframing);
-		inspections.setCeiling(fceiling);
-		inspections.setRoughin_Mechanical(froughMech);
-		inspections.setRoughin_Electric(froughElec);
-		inspections.setRoughin_Plumbing(froughPlumb);
-		inspections.setMechanicalLightSmoke(fmechLightSmoke);
-		inspections.setMechanical_Final(fmechFinal);
-		inspections.setElectrical_Final(felecFinal);
-		inspections.setPlumbing_Final(fplumbFinal);
-		inspections.setFire_Marshal(ffireMarshal);
-		inspections.setHealth(fhealth);
-		inspections.setBuilding_Final(fbuildFinal);
-		
+		//Inspections inspections = new Inspections();
+
+		Inspections inspection = new Inspections();
+		inspection.setTicketNumber(inspectionTN);
+		InspectionsFiller.fillInspections(inspection, params);
 		
 		Permits	permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
-		
-
-
 		
 		//Create new project to replace the old one
 		Project p = new Project();
@@ -736,7 +566,7 @@ public class ProjectService extends ProjectObjectService
 		p.setCustomerNumber(customerNumber);
 		p.setPermitApplication(permitApp);
 		p.setCloseoutDetails(cd);
-		p.setInspections(inspections);
+		p.setInspections(inspection);
 		p.setPermits(permits);
 
 				
@@ -758,7 +588,7 @@ public class ProjectService extends ProjectObjectService
 		if(iID!=0)
 		{
 			 i = 0;
-			ProjectObjectService.editObject("Inspections",iID,inspections, i);	
+			ProjectObjectService.editObject("Inspections",iID,inspection, i);	
 			k = 1;
 		}
 		if(closeoutID!=0 && salvageID ==0)
@@ -1063,5 +893,21 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+	}
+
+	public static void editProjectInformation(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		ProjectInformationFiller.fillCloseoutDetails(currentProject, params);
+		
+		int k = 1;
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+
 	}	
 }

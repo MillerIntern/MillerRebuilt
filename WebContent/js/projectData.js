@@ -367,11 +367,6 @@ function generateDropdowns(str, className)
 		$("#"+className).append(d);
 }
 
-
-
-
-
-
 //This function adds a project to the database
 //Input: none
 //Output: none
@@ -700,11 +695,11 @@ function addProject()
 				'inspections': inspectionID,
 				'framing' : framing, 
 				'ceiling' : ceiling, 
-				'roughMech' : roughMech, 
-				'roughElec' : roughElec, 
-				'roughPlumb' : roughPlumb, 
-				'mechLightSmoke' : mechLightSmoke,
-				'fireMarshal' : fireMarshal, 
+				'roughin_mechanical' : roughMech, 
+				'roughin_electric' : roughElec, 
+				'roughin_plumbing' : roughPlumb, 
+				'mechanicalLightSmoke' : mechLightSmoke,
+				'fire_marshal' : fireMarshal, 
 				'health' : health, 
 				
 				//Permit Data

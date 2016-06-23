@@ -3,6 +3,7 @@ const EDIT_PAGE = 'projectData.html?type=edit&id=';
 const CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
 const PERMIT_PAGE = 'permitData.html?type=permit&id=';
 const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
+const BASIC_PAGE = 'projectData.html?type=edit&id=';
 
 	
 var ID;
@@ -83,7 +84,7 @@ function navigateToEditPage(param)
 {
 	console.log(param);
 	console.log("Ah, so you want to edit a page!");
-	window.location.href = (EDIT_PAGE+ID);
+	window.location.href = (BASIC_PAGE+ID);
 }
 
 function navigateToCloseoutPage(param)
