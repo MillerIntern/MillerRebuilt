@@ -1063,6 +1063,10 @@ function generateReport(reportType)
 		case PROPOSAL_MEETING:
 			stage.push(PROPOSAL_STAGE);
 			title = "Proposals";
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_RX);
@@ -1071,7 +1075,7 @@ function generateReport(reportType)
 	
 		case PROPOSAL_OTHER:
 			stage.push(PROPOSAL_STAGE);
-			title = "Proposals";
+			title = "Refrigeration and Construction Service Proposals";
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_RR);
 			pType.push(PROJECT_TYPE_OH);
@@ -1085,7 +1089,7 @@ function generateReport(reportType)
 			break;
 			
 		case ACTIVE_MEETING:
-			title = "Projects";
+			title = "Active Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_R);
@@ -1099,7 +1103,7 @@ function generateReport(reportType)
 			break;
 
 		case OTHER_ACTIVE:
-			title = "Projects";
+			title = "Refrigeration and Construction Service Active Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_RR);
@@ -1165,7 +1169,6 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
 			status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
 			status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
-			status.push(PROJECT_STATUS_BUDGETARY_SUBMITTED);
 			break;
 	
 		case ACTIVE_STEVE_MEYER:
@@ -1192,7 +1195,6 @@ function generateReport(reportType)
 			region.push("SE");
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_CR);
-			pType.push(PROJECT_TYPE_CW);
 			pType.push(PROJECT_TYPE_RS);
 			break;
 	
@@ -1213,7 +1215,6 @@ function generateReport(reportType)
 			status.push(16);
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_CR);
-			pType.push(PROJECT_TYPE_CW);
 
 			break;
 	
@@ -1263,7 +1264,6 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
 			status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
 			status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
-			status.push(PROJECT_STATUS_BUDGETARY_SUBMITTED);
 			break;
 	
 		case ACTIVE_J_DEMPSEY:
@@ -1277,7 +1277,6 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_AWAITING_PO);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			pType.push(PROJECT_TYPE_C);
-			pType.push(PROJECT_TYPE_CW);
 			pType.push(PROJECT_TYPE_R);
 			break;
 	
@@ -1301,7 +1300,6 @@ function generateReport(reportType)
 			stage.push(ACTIVE_STAGE);
 			title = "Active Construction Projects";
 			pType.push(PROJECT_TYPE_H);
-			pType.push(PROJECT_TYPE_CW);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_RX);
 			break;
@@ -1310,7 +1308,6 @@ function generateReport(reportType)
 			stage.push(PROPOSAL_STAGE);
 			title = "Proposal Construction Projects";
 			pType.push(PROJECT_TYPE_H);
-			pType.push(PROJECT_TYPE_CW);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_RX);
 			break;

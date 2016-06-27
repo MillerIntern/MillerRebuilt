@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/newQuery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/newQuery.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/menu.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/globalMenu.css" type="text/css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Report generator</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <p class="title">Reports</p>
+    </div>
+
+    <br>
+    <ul>
+        <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+        <li class="dropdown">
+            <a class="dropbtn">Projects</a>
+            <div class="dropdown-content">
+                <a onClick="document.location.href='projectData.html'">Add</a>
+                <a onClick="document.location.href='findProject.html'">Find</a>
+            </div>
+        </li>
+        <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+        <li><a class="active" onClick="document.location.href='query.html'">Reports</a></li>
+        <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+    </ul>
+    
+
+<fieldset id="paramField">
+    <legend>Quick Report:</legend><br><br>
+    <table id="quickReport">
+    <tr><td onClick="showSubreports(this)" class="topLevel" id="activeProjects">Active Projects</td>
+        <td onClick="showSubreports(this)" class="topLevel" id="proposalProjects">Project Proposals</td>
+        <td onClick="showSubreports(this)" class="topLevel" id="budgetaryProjects">Budgetary Projects</td>
+        <td onClick="showSubreports(this)" class="topLevel" id="other">Other Projects</td></tr>
+    </table>    
+</fieldset>
+    
+    
+<fieldset id="paramField">
+    <legend>Project Report Parameters:</legend>
+    <button onClick="addParameter()" class="addParamButton">Add Parameter</button><br><br>
+    <div class="paramHolder">
+        <select class="parameterID" id="paramID1">
+            <option value="default">-- Please select an option --</option>
+        </select>
+        <select class="parameterValue" id="paramVal1">
+            <option value="default">---</option>
+        </select>
+        <p onClick="removeParam(this)">X</p><br>
+   </div>
+   <div class="paramHolder">
+        <select class="parameterID" id="paramID2">
+            <option value="default">-- Please select an option --</option>
+        </select>
+        <select class="parameterValue" id="paramVal2">
+            <option value="default">---</option>
+        </select>
+        <p onClick="removeParam(this)">X</p><br>
+   </div>
+</fieldset>
+    
+<button class="addParamButton" style="margin-left: 1.5%;">Generate</button>
+
+</body>
+
+</html>

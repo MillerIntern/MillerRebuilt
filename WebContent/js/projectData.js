@@ -886,7 +886,7 @@ function createConfirmWindow()
 		buttons: {
 			"Continue Working": function() {
 				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				window.location.href="projectManager.html?type=navigateTo&id=";//TODO: How to get project id!
+				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;//TODO: How to get project id!
 			},
 			"Go to Home Page": function() {
 				window.location.href="homepage.html";

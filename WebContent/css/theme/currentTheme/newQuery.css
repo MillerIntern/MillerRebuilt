@@ -1,0 +1,111 @@
+fieldset
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    background: white;
+    width: 80%;
+}
+
+legend
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 24px; 
+    background: #800000;
+    color: #EEEEEE;
+    font-weight: 200;
+    margin-bottom: -4%;
+    border-radius: 10px;
+    padding: 4px 12px;
+    border: solid 1px dimgray;
+}
+
+.addParamButton
+{
+    display: inline;
+	padding: .65em .25em;
+    background-color: gray;
+    color: #111111;
+    line-height: .5em;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+    text-align: right;
+    margin-left: 75%;
+    transition: all 0.4s ease 0s;
+    border-radius: 8px;
+}
+
+.addParamButton:hover
+{
+    background: #676767;
+}
+
+p
+{
+	font-family: "Verdana", "sans-serif";
+	display:inLine;
+}
+
+select
+{
+    background: lightgray;
+    width: 250px;
+    text-align: center;
+    font-family: 'Raleway',sans-serif;
+    font-size: 15px; 
+    border: 0;
+    line-height: 2em;
+    margin-right: 8px;
+}
+
+select:first-child
+{
+	margin-top: 10px;
+}
+
+table
+{
+    margin-top: 10px;
+	border-collapse: collapse;
+	width: 100%;
+          font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+    
+}
+
+table, th, td
+{
+	border: 1px solid gray;	
+
+}
+
+td
+{
+	margin-left: 1%;
+	padding: 0px 4px;
+}
+
+tr
+{
+	height: 50px;	
+}
+
+td:hover
+{
+	background-color: #c4c4c4;
+}
+
+button
+{
+    display: inline;
+    margin: 1%;
+    padding: 10px 10px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+}
+
+button:hover
+{
+    background-color: #d4d4d4;
+}
+
