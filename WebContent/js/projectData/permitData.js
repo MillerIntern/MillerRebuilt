@@ -66,6 +66,10 @@ function getProjectEnums()
 function fillTabs(data)
 {
 	var json = data;
+	
+	$(".projectIdentifier").html(json.warehouse.city.name 
+			+ ", " + json.warehouse.state + " --- " +  json.projectItem.name);
+	
 	console.log(json);
 	if (json.permits != null)
 	{	

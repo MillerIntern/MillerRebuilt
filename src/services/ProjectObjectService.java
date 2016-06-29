@@ -232,6 +232,10 @@ public class ProjectObjectService
 		{
 			o.setInspections(new Inspections());
 		}
+		if(o.getChangeOrders() == null)
+		{
+			
+		}
 	}
 
 	/**

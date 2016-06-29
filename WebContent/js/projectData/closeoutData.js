@@ -123,6 +123,9 @@ function getDropdownItems()
 function fillTabs(data)
 {
 	var json = data;
+	$(".projectIdentifier").html(json.warehouse.city.name 
+			+ ", " + json.warehouse.state + " --- " +  json.projectItem.name);
+
 	console.log(json);
 	if (json.closeoutDetails != null)
 	{	
@@ -260,8 +263,6 @@ function fillDropdowns(data)
 {
 	var json = JSON.parse(data["closeoutstatus"]);
 	var d = document.createDocumentFragment();
-	var sent=true;
-
 
 	for (var i = 0; i < json.length; i++)
 	{	

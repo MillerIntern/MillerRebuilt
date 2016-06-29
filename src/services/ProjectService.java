@@ -695,6 +695,8 @@ public class ProjectService extends ProjectObjectService
 		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
 		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
+		map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
+		map.put("changeorderstatus", ProjectObjectService.getAllAsJsonString("ChangeOrderStatus"));
 		
 		return g.toJson(map);
 	}

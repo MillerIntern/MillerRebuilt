@@ -4,6 +4,7 @@ const CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
 const PERMIT_PAGE = 'permitData.html?type=permit&id=';
 const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
 const BASIC_PAGE = 'projectData.html?type=edit&id=';
+const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id='
 
 	
 var ID;
@@ -63,7 +64,7 @@ function fillTabs(data)
 	buildProjectInformation(json);
 	
 	// Build Change order tab
-	
+	buildChangeOrders(json);
 	
 	// Build Equipment tab
 	
@@ -108,6 +109,13 @@ function navigateToInspectionPage(param)
 	window.location.href = (INSPECTION_PAGE+ID);
 }
 
+function navigateToChangeOrderPage(param)
+{
+	console.log(param);
+	console.log("Ah, so you want the change order page!");
+	window.location.href = CHANGE_ORDER_PAGE+ID;
+}
+
 function statusConverter(param)
 {
 	if(param == 1)
@@ -139,10 +147,27 @@ function buildProjectInformation(json)
 	var projectEditButton = document.createElement("button");
 	projectEditButton.onclick = function() {navigateToEditPage(this)};
 	projectEditButton.innerHTML = "Edit Project Information";
-	$("#projectInformation").append(projectEditButton);	
-	
+	$("#projectInformation").append(projectEditButton);		
 }
 
+function buildChangeOrders(json)
+{
+	for(var i = 0; i < json.changeOrders.length; i++)
+	{
+		var changeOrder = json.changeOrders[i];
+		console.log(changeOrder);
+	}
+	var changeOrderAddButton = document.createElement("button");
+	changeOrderAddButton.onclick = function() {navigateToChangeOrderPage(this)};
+	changeOrderAddButton.innerHTML = "Add Change Order";
+	changeOrderAddButton.style.marginRight = "10px";
+	$("#changeOrders").append(changeOrderAddButton);
+	
+	var printChangeOrdersButton = document.createElement("button");
+	printChangeOrdersButton.onclick = function() {printChangeOrder(this)};
+	printChangeOrdersButton.innerHTML = "Print Change Order";
+	$("#changeOrders").append(printChangeOrdersButton);
+}
 
 function buildInspection(json)
 {
@@ -610,4 +635,9 @@ function generateTriggers(json)
 
 		$("#triggers").append(triggerElement);	
 	}
+}
+
+function printChangeOrder(param)
+{
+	console.log("Display a window with all change orders");
 }
