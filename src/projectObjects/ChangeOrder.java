@@ -3,11 +3,6 @@ package projectObjects;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * This class models the various change orders of a project: these are revisions or extra
@@ -22,38 +17,27 @@ public class ChangeOrder extends ProjectObject
 	/**
 	 * The status of the change order
 	 */
-	private ChangeOrderStatus status;
+	private String status;
+	private String type;
 	
-	/**
-	 * The submission date of the change order
-	 */
-	private Date submissionDate;
+	private String mcsCO;
+	private String subCO;
 	
-	/**
-	 * The completion date of the change order
-	 */
-	private Date completedDate;
+	private String subNames;
 	
-	/**
-	 * The due date of the change order
-	 */
-	private Date dueDate;
-	
-	/**
-	 * The due date of the change order
-	 */
+	private Date proposalDate;
+	private Date submittedDate;
 	private Date approvedDate;
 	
-	/**
-	 * Person who requested the CO
-	 */
-	private String requested;
+	private String submittedTo;
+	
+	private String briefDescription;
+	private String notes;
+	
+	private double cost;
+	private double sell;
 	
 	
-	/**
-	 * The monetary value of the change order
-	 */
-	private double amount;
 	
 	/**
 	 * This method constructs a new change order. Change orders need types, statuses, dates, and 
@@ -64,37 +48,45 @@ public class ChangeOrder extends ProjectObject
 	 * @param date the date that the change order was initiated on
 	 * @param amount the amount of money that the change order is associated with
 	 */
-	public ChangeOrder(ChangeOrderStatus status, Date subdate, Date compDate, Date dueDate, Date apprvDate, String req, double amount)
+	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
+					   String briefDescription, String notes, double cost, double sell, String type,
+					   String submittedTo, String subCO)
 	{
 		this.status = status;
-		this.submissionDate = subdate;
-		this.amount = amount;
-		this.completedDate = compDate;
-		this.dueDate = dueDate;
 		this.approvedDate = apprvDate;
-		this.requested = req;
+		this.mcsCO = mcsCO;
+		this.subNames = subNames;
+		this.proposalDate = proposalDate;
+		this.submittedDate = submittedDate;
+		this.briefDescription = briefDescription;
+		this.notes = notes;
+		this.cost = cost;
+		this.submittedTo = submittedTo;
+		this.subCO = subCO;
+		this.sell = sell;
+		this.setType(type);
 	}
 	
 	public ChangeOrder()
 	{
 		this.status = null;
-		this.submissionDate = null;
-		this.amount = 0;
-		this.completedDate = null;
-		this.dueDate = null;
 		this.approvedDate = null;
-		this.requested = null;
+		this.setType(null);
+		this.mcsCO = null;
+		this.subNames = null;
+		this.proposalDate = null;
+		this.submittedDate = null;
+		this.briefDescription = null;
+		this.notes = null;
+		this.cost = 0;
+		this.sell = 0;
+		this.subCO = null;
+		this.submittedTo = null;
 	}
 
 
 
-	/**
-	 * This method gets the status of the change order
-	 * @return
-	 */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	public ChangeOrderStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
@@ -102,56 +94,16 @@ public class ChangeOrder extends ProjectObject
 	 * This methdo sets the status of a change order
 	 * @param status the status of the change order
 	 */
-	public void setStatus(ChangeOrderStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	/**
-	 * This method gets the submission date of a change order
-	 * @return the submission date of the change order
-	 */
-	public Date getSubmissionDate() {
-		return submissionDate;
+	public String getType() {
+		return type;
 	}
 
-	/**
-	 * This method sets the submission date of the change order
-	 * @param submissionDate
-	 */
-	public void setSubmissionDate(Date submissionDate) {
-		this.submissionDate = submissionDate;
-	}
-	
-	/**
-	 * This method gets the due date of a change order
-	 * @return the due date of the change order
-	 */
-	public Date getDueDate() {
-		return dueDate;
-	}
-	
-	/**
-	 * This method sets the due date of the change order
-	 * @param dueDate
-	 */
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-	
-	/**
-	 * This method gets the completed date of a change order
-	 * @return the completed date of the change order
-	 */
-	public Date getCompletedDate() {
-		return completedDate;
-	}
-	
-	/**
-	 * This method sets the completed date of the change order
-	 * @param completedDate
-	 */
-	public void setCompletedDate(Date completedDate) {
-		this.completedDate = completedDate;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	/**
@@ -170,38 +122,83 @@ public class ChangeOrder extends ProjectObject
 		this.approvedDate = approvedDate;
 	}
 
-	
-
-	/**
-	 * This method returns the monetary value of the change order
-	 * @return the value of the change order
-	 */
-	public double getAmount() {
-		return amount;
+	public String getMcsCO() {
+		return mcsCO;
 	}
 
-	/**
-	 * This method sets the monetary value of the change order
-	 * @param amount
-	 */
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setMcsCO(String mcsCO) {
+		this.mcsCO = mcsCO;
 	}
-	
-	/**
-	 * This method returns the requester of the CO
-	 * @return the requester
-	 */
-	public String getRequested(){
-		return requested;
+
+	public String getSubNames() {
+		return subNames;
 	}
-	
-	/**
-	 * This sets the requester of the CO
-	 * @param requested
-	 */
-	public void setRequested(String requested){
-		this.requested = requested;
+
+	public void setSubNames(String subNames) {
+		this.subNames = subNames;
 	}
-	
+
+	public Date getProposalDate() {
+		return proposalDate;
+	}
+
+	public void setProposalDate(Date proposalDate) {
+		this.proposalDate = proposalDate;
+	}
+
+	public Date getSubmittedDate() {
+		return submittedDate;
+	}
+
+	public void setSubmittedDate(Date submittedDate) {
+		this.submittedDate = submittedDate;
+	}
+
+	public String getBriefDescription() {
+		return briefDescription;
+	}
+
+	public void setBriefDescription(String briefDescription) {
+		this.briefDescription = briefDescription;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public double getSell() {
+		return sell;
+	}
+
+	public void setSell(double sell) {
+		this.sell = sell;
+	}
+
+	public String getSubCO() {
+		return subCO;
+	}
+
+	public void setSubCO(String subCO) {
+		this.subCO = subCO;
+	}
+
+	public String getSubmittedTo() {
+		return submittedTo;
+	}
+
+	public void setSubmittedTo(String submittedTo) {
+		this.submittedTo = submittedTo;
+	}	
 }

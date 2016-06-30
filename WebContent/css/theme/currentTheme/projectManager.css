@@ -41,7 +41,7 @@ ul.tabs li.current
     background: #ededed;
     padding: 15px;
     font-family: 'Raleway',sans-serif;
-    font-size: 20px; 
+    font-size: 16px; 
 }
 
 .tab-content.current
@@ -59,7 +59,6 @@ table
 table, th, td
 {
 	border: 1px solid gray;	
-    
 }
 
 td
@@ -67,6 +66,11 @@ td
 	margin-left: 1%;
 	padding: 0px 4px;
     
+}
+
+tr:first-child
+{
+	font-size: 20px;
 }
 
 tr

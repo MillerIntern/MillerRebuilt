@@ -175,6 +175,9 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		/**
+		 * this one doesnt work. It actually wipes all required information from a project
+		 */
 		else if(action.equals("editProjectInfo"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
@@ -187,11 +190,25 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		/**
+		 * This obviously doesnt work. 
+		 */
 		else if(action.equals("addNewProject"))
 		{
 			
 		}
-		
+		else if(action.equals("addChangeOrder"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.addChangeOrder(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else if (action.equals("get"))
 		{
 			System.out.println("GET");

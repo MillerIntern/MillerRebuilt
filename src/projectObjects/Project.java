@@ -52,7 +52,7 @@ public class Project extends ProjectObject
 	
 	private CloseoutCheckList closeoutCheckList;
 	
-	private Set<ChangeOrder> changeOrders;
+	//private Set<ChangeOrder> changeOrders;
 	
 	private int shouldInvoice;
 	
@@ -85,6 +85,8 @@ public class Project extends ProjectObject
 	private Inspections inspections;
 	
 	private Permits permits;
+	
+	private Set<ChangeOrder> changeOrders;
 	
 	//private Equipment equipment;
 	
@@ -123,7 +125,7 @@ public class Project extends ProjectObject
 		this.closeoutDetails = closeoutDetails;
 		//this.closeout = closeout;
 		this.closeoutCheckList = closeoutCheckList;
-		this.changeOrders = changeOrders;
+		this.setChangeOrders(changeOrders);
 		this.shouldInvoice = shouldInvoice;
 		this.invoiced = invoiced;
 		this.projectNotes = projectNotes;
@@ -530,18 +532,6 @@ public class Project extends ProjectObject
 	{
 		return this.eqpd;
 	}
-
-	/*@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn
-	public CloseoutEnhanced getCloseout() {
-		return closeout;
-	}
-
-	public void setCloseout(CloseoutEnhanced closeout) {
-		this.closeout = closeout;
-	}*/
-	
 	
 	
 	

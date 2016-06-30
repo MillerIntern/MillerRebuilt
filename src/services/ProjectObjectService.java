@@ -3,7 +3,9 @@ package services;
 import java.io.File;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueObjectException;
@@ -16,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import objects.HibernateUtil;
+import projectObjects.ChangeOrder;
 import projectObjects.Inspections;
 import projectObjects.Permits;
 import projectObjects.ProjectObject;
@@ -234,7 +237,7 @@ public class ProjectObjectService
 		}
 		if(o.getChangeOrders() == null)
 		{
-			
+			o.setChangeOrders(new HashSet<ChangeOrder>());
 		}
 	}
 
@@ -255,9 +258,13 @@ public class ProjectObjectService
 		//Attempt to delete the object
 		try
 		{
-		    Object o = session.get(c, id); 
-		    session.delete(o); 
+			ProjectObject oldObject2 = (ProjectObject) session.get(c, id);
+
+		   // Object o = session.get(c, id); 
+		    session.delete(oldObject2); 
+		    System.out.println("hi");
 		    tx.commit();
+		    System.out.println("hello");
 		    success = 1;
 		}
 		catch (Exception e) 
@@ -321,7 +328,20 @@ public class ProjectObjectService
 		tx.commit();
 
 		//Save the change
+	}
 	
+	public static void addToSet(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
+	{
+		
+		System.out.println("add to set");
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.save(o);
+		//long txID = Long.parseLong((String)session.save(o));
+       // System.out.println("ID OF TRANSACTION: " + txID);
+        tx.commit();
+        //return (long) txID;
 	}
 	
 	/**

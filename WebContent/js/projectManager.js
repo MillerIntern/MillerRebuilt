@@ -4,10 +4,13 @@ const CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
 const PERMIT_PAGE = 'permitData.html?type=permit&id=';
 const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
 const BASIC_PAGE = 'projectData.html?type=edit&id=';
-const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id='
+const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id=';
+const CHANGE_ORDER_EDIT = 'changeOrderData.html?type=edit&id=';
 
 	
 var ID;
+var changeOrderCount;
+var changeOrderToEdit = null;
 
 $(document).ready(function(){
 	
@@ -55,6 +58,7 @@ function getProject()
 
 function fillTabs(data)
 {
+	changeOrderCount = 0;
 	console.log(data);
 	var json = data;
 
@@ -152,10 +156,62 @@ function buildProjectInformation(json)
 
 function buildChangeOrders(json)
 {
+	var row = document.createElement('tr');
+	
+	var type = document.createElement('td');
+	type.appendChild(document.createTextNode("Type"));
+	
+	var name = document.createElement('td');
+	name.appendChild(document.createTextNode("Brief Description"));
+	
+	var stat = document.createElement('td');
+	stat.appendChild(document.createTextNode("Status"));
+	
+	var submitted = document.createElement('td');
+	submitted.appendChild(document.createTextNode("Submitted Date"));
+	
+	var approved = document.createElement('td');
+	approved.appendChild(document.createTextNode("Approved Date"));
+	
+	row.appendChild(type);
+	row.appendChild(name);
+	row.appendChild(stat);
+	row.appendChild(submitted);
+	row.appendChild(approved);
+	$("#changeOrderTable").append(row);
+	
 	for(var i = 0; i < json.changeOrders.length; i++)
 	{
 		var changeOrder = json.changeOrders[i];
-		console.log(changeOrder);
+		var tableRow = document.createElement('tr');
+		tableRow.setAttribute("value", changeOrder.id);
+		changeOrderCount++;
+		tableRow.onclick = function() {toggleChangeOrder(this)};
+
+		var changeType = document.createElement('td');
+		changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
+		
+		var briefDescription = document.createElement('td');
+		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
+		
+		var status = document.createElement('td');
+		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
+		
+		var submittedDate = document.createElement('td');
+		submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
+		
+		var approvedDate = document.createElement('td');
+		if(changeOrder.approvedDate == 'Undefined')
+			approvedDate.appendChild(document.createTextNode("---"))
+		else
+			approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
+		
+		tableRow.appendChild(changeType);
+		tableRow.appendChild(briefDescription);
+		tableRow.appendChild(status);
+		tableRow.appendChild(submittedDate);
+		tableRow.appendChild(approvedDate);
+		$("#changeOrderTable").append(tableRow);
 	}
 	var changeOrderAddButton = document.createElement("button");
 	changeOrderAddButton.onclick = function() {navigateToChangeOrderPage(this)};
@@ -163,10 +219,12 @@ function buildChangeOrders(json)
 	changeOrderAddButton.style.marginRight = "10px";
 	$("#changeOrders").append(changeOrderAddButton);
 	
-	var printChangeOrdersButton = document.createElement("button");
-	printChangeOrdersButton.onclick = function() {printChangeOrder(this)};
-	printChangeOrdersButton.innerHTML = "Print Change Order";
-	$("#changeOrders").append(printChangeOrdersButton);
+	var editChangeOrderButton = document.createElement("button");
+	editChangeOrderButton.onclick = function() {editChangeOrder()};
+	editChangeOrderButton.innerHTML = "Edit Change Order";
+	editChangeOrderButton.setAttribute("id", "editButton")
+	editChangeOrderButton.disabled = true;
+	$("#changeOrders").append(editChangeOrderButton);
 }
 
 function buildInspection(json)
@@ -637,7 +695,52 @@ function generateTriggers(json)
 	}
 }
 
-function printChangeOrder(param)
+function editChangeOrder()
 {
-	console.log("Display a window with all change orders");
+	console.log(changeOrderToEdit);
+	console.log("Ah, so you want the change order page!");
+	window.location.href = CHANGE_ORDER_EDIT+ID+"&changeOrderID="+$(changeOrderToEdit).attr("value");;
+}
+
+function parseChangeOrderType(param)
+{
+	switch(param)
+	{
+		case "1":
+			return "COP";
+		case "2":
+			return "REF";
+		case "3":
+			return "WHS";
+		case "4": 
+			return "FAC";
+		case "5":
+			return "VEN";
+		case "6":
+		default:
+			return "UDF";
+	}
+}
+
+function parseChangeOrderStatus(param)
+{
+	switch(param)
+	{
+		case "1":
+			return "Submitted";
+		case "2":
+			return "MCS Reviewing";
+		default:
+			return "Undefined";
+	}
+}
+
+function toggleChangeOrder(param)
+{
+	if(changeOrderToEdit != null)
+		$(changeOrderToEdit).css("background-color", "#dCdCdC");
+	$(param).css("background-color", "#CCB4B4");
+	console.log($(param).attr("value"));
+	changeOrderToEdit = param;
+	$("#editButton").prop("disabled", false);
 }

@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +36,7 @@ import projectObjects.ProjectType;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Warehouse;
+import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
@@ -294,7 +297,7 @@ public class ProjectService extends ProjectObjectService
 		p.setShouldInvoice(shouldInvoice);
 		p.setInvoiced(actualInvoice);
 		p.setProjectNotes(notes);
-		p.setChangeOrders(changeOrders);
+		//p.setChangeOrders(changeOrders);
 		p.setZachUpdates(zachNotes);
 		p.setCost(cost);
 		p.setCustomerNumber(customerNumber);
@@ -568,20 +571,10 @@ public class ProjectService extends ProjectObjectService
 		p.setCloseoutDetails(cd);
 		p.setInspections(inspection);
 		p.setPermits(permits);
-
-				
-
-		//Replace the old project with the new project.
 		
-		System.out.println("Project ID : " + id);
-		
-		
+		System.out.println("Project ID : " + id);	
 		System.out.println("SV number: " + salvageID);
-		System.out.println("PERMITS number: " + permitsID); 
-	//	long[] iDs = {iID,/*closeoutID,*/id} ;
-	//	String[] domains = {"Inspections",/*"CloseoutDetails",*/"Project" };
-	//  ProjectObject[] objects ={inspections, /*cd,*/ p};
-				
+		System.out.println("PERMITS number: " + permitsID); 		
 		
 	int i = 0;
 	int k = 0;
@@ -642,7 +635,6 @@ public class ProjectService extends ProjectObjectService
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
-		
 		
 		return g.toJson(map);
 	}
@@ -783,6 +775,8 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 
+		
+		
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
 		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
@@ -911,5 +905,39 @@ public class ProjectService extends ProjectObjectService
 		int k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 
+	}
+
+	/**
+	 * @param projectID
+	 * @param parameters
+	 */
+	public static void addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Add Change Order:");
+		
+		Project currentProject = null;
+		try 
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
+				
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		
+		ChangeOrder co = new ChangeOrder();
+		ChangeOrderFiller.fillChangeOrder(co, params);
+		changeOrders.add(co);
+		currentProject.setChangeOrders(changeOrders);
+		int k;
+		
+		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
+		k = 1;
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 	}	
 }
