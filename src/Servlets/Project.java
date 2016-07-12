@@ -20,6 +20,7 @@ import services.QueryService;
 /**
  * Always code as if the guy who ends up maintaining your code 
  * will be a violent psychopath who knows where you live.
+ * 
  */
 @WebServlet("/Project")
 public class Project extends HttpServlet 
@@ -230,49 +231,13 @@ public class Project extends HttpServlet
 		{
 			response = ProjectService.getAllEnumsEquipAsJson();
 		}
-		/*
-		else if(action.equals("retrieveEquipment"))
-		{	
-			response = EquipmentService.retrieveProjectEquipmentSet(parameters.get("id"));
-		}*/
-	/*	
-		else if(action.equals("addEquipment"))
-		{
-			EquipmentService.addEquipment(parameters.get("equipName"));
-		}
-		
-		else if(action.equals("addVendor"))
-		{
-			EquipmentService.addVendor(parameters.get("vendorName"));
-		}
-		*/
-		/*else if(action.equals("getDropdownNames"))
-		{
-			if(parameters.get("getType").equals("equips"))
-			{
-				response = EquipmentService.getAllEquipssAsJson();	
-			}
-			else if(parameters.get("getType").equals("vendors"))
-			{
-				
-				response = EquipmentService.getAllVendorsAsJson();
-			}*/
-			
-		
-		/*
-		else if(action.equals("setEquipment"))
-		{
-			System.out.println("in equipment");
-			EquipmentService.setEquipment(parameters.get("equipment"),parameters.get("projectID"));
-		}
-		*/
 		else if(action.equals("setCloseoutList"))
 		{
 			System.out.println("in SetCLOSEOUT LIST");
 			CloseoutListService.setCheckList(Long.parseLong(parameters.get("id")),new String[]{parameters.get("asBuilts"),parameters.get("punchList"),parameters.get("permits"),parameters.get("closeOutPhoto"),parameters.get("revisions"),parameters.get("mechanicalInspection"),parameters.get("electricInspection"),parameters.get("plumbingInspection"),parameters.get("fireSprinklerInspection"),parameters.get("ansulInspection"),parameters.get("buildingInspection"),parameters.get("alarmForm"),
 												parameters.get("hvacShutDown"),parameters.get("airGas"),parameters.get("hvacForm"),parameters.get("salvageValue"),parameters.get("mulvannyPunchList"),parameters.get("substantialCompletion"),parameters.get("subcontractorWarranty"),parameters.get("mcsWarranty"),parameters.get("lienRelease"),parameters.get("confirmCOs"),parameters.get("g704"),parameters.get("g706"),parameters.get("g706a")});
 		}
-		// Very aggressive
+		// Very aggressive request
 		else if(action.equals("getAllProjects"))
 		{
 			System.out.println("getting the projects!");

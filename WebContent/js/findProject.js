@@ -92,6 +92,7 @@ function fillDropdowns(data)
 	}
 	$(".parameterID").append(d);
 	
+	console.log(data);
 	generateDropdowns(data["warehouse"], parameterFields[0]);
 	generateDropdowns(data["class"], parameterFields[1]);
 	generateDropdowns(data["item"], parameterFields[2]);
@@ -107,10 +108,6 @@ function generateDropdowns(str, className)
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
 	
-	if(className == "Warehouse")
-	{
-		json = sortByName(json, className);
-	}
 	for(var i = 0; i < json.length; i++)
 	{
 		var option = document.createElement("option");
@@ -280,7 +277,7 @@ function filterProjects()
 			if(id == 'Warehouse')
 			{
 
-				if(json[j] != null && json[j].warehouse.city.id != val)
+				if(json[j] != null && json[j].warehouse.id != val)
 				{
 					json[j] = null;
 					remaining = remaining - 1;
