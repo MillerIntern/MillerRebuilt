@@ -142,7 +142,7 @@ function saveProject()
 	var submittedDate = $("#submittedDate").val();
 	var approvedDate = $("#approvedDate").val();
 	
-	var cusomterCO = $("#customerCO").val();
+	var customerCO = $("#customerCO").val();
 	var mcsCO = $("#mcsCO").val();
 	var subCO = $("#subCO").val();
 	var subNames = $("#subNames").val();
@@ -156,12 +156,13 @@ function saveProject()
 	var sell = $("#sell").val();
 	
 	var dates = [proposalDate, submittedDate, approvedDate];
+	var required = [customerCO, briefDescription, cost, sell, status, submittedTo, submittedDate];
 	
 	var action = "addChangeOrder";
 	if(PAGETYPE == 'edit')
 		action = "editChangeOrder";
 	
-	if(isValidInput(dates))
+	if(isValidInput(required, dates)) ;
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -172,10 +173,11 @@ function saveProject()
 				'action': action,
 				
 				'projectID': PROJECT_ID,
+				'changeOrderID': CHANGE_ORDER_ID,
 				'proposalDate': proposalDate,
 				'submittedDate': submittedDate,
 				'approvedDate': approvedDate,
-				'customerCO': cusomterCO,
+				'customerCO': customerCO,
 				'mcsCO': mcsCO,
 				'subCO': subCO,
 				'subNames': subNames,
@@ -198,8 +200,18 @@ function saveProject()
 		});
 }
 
-function isValidInput(dates)
+function isValidInput(required, dates)
 {	
+	for(var i = 0; i < required.length; i++)
+	{
+		if(required[i] == "default" || required[i] == "")
+		{
+			alert("Default Fields Must be Filled In!");
+			return false;
+		}
+	}
+	
+	
 	//Check if all of the dates are in the correct format
 	for (var i = 0; i < dates.length; i++)
 	{

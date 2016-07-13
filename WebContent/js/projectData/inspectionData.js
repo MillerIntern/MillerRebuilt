@@ -20,9 +20,9 @@ $(document).ready(function(){
 	
  	$("#fireMarshalInspection").datepicker();   
  	$("#healthInspection").datepicker(); 
- 	$("#roughinElectricalInspection").datepicker();   
- 	$("#roughinMechanicalInspection").datepicker();   
- 	$("#roughinPlumbingInspection").datepicker();   
+ 	$("#roughinElectrical").datepicker();   
+ 	$("#roughinMechanical").datepicker();   
+ 	$("#roughinPlumbing").datepicker();   
  	$("#mechanicalLightSmokeInspection").datepicker();   
  	$("#ceilingInspection").datepicker();   
  	$("#framingInspection").datepicker();   

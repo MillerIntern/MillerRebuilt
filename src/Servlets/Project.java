@@ -210,6 +210,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("editChangeOrder"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.editChangeOrder(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else if (action.equals("get"))
 		{
 			System.out.println("GET");

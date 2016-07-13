@@ -321,15 +321,29 @@ public class ProjectObjectService
 		newObject.setId(id);
 		System.out.println(newObject + " " + oldObject2);
 		copyFieldByField(newObject, oldObject2, i2);
-		
-		//session.update(oldObject2);
-		
+				
 		session.saveOrUpdate(oldObject2);
 		tx.commit();
 
 		//Save the change
 	}
 	
+	/**
+	 * TODO: This is a really hacky way to fix a problem with the whole changeorder process
+	 * @param session
+	 */
+	public static void deleteNullChangeOrders() 
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+		Query q = session.createSQLQuery("delete from changeorder where changeOrders_id is NULL");
+		q.executeUpdate();
+		
+		tx.commit();
+		
+	}
+
 	public static void addToSet(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		

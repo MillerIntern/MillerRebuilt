@@ -611,6 +611,23 @@ public class ProjectService extends ProjectObjectService
 			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
 			k = 1;
 		}
+		
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(id,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		p.setChangeOrders(changeOrders);
+		
 			
 		 System.out.println("k = " + k);
 			ProjectObjectService.editObject("Project",id,p,k);
@@ -774,7 +791,15 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		
+		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		currentProject.setChangeOrders(changeOrders);
 		
 		
 		CloseoutDetails cd = new CloseoutDetails();
@@ -813,6 +838,8 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullChangeOrders();
+
 	}
 
 	public static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
@@ -835,6 +862,14 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 
+		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		currentProject.setChangeOrders(changeOrders);
 				
 		Permits permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
@@ -851,6 +886,8 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullChangeOrders();
+
 	}
 
 	public static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
@@ -874,6 +911,15 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 		
+		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		currentProject.setChangeOrders(changeOrders);
+		
 		Inspections inspection = new Inspections();
 		InspectionsFiller.fillInspections(inspection, params);
 		
@@ -889,6 +935,8 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullChangeOrders();
+
 	}
 
 	public static void editProjectInformation(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
@@ -903,6 +951,7 @@ public class ProjectService extends ProjectObjectService
 		ProjectInformationFiller.fillCloseoutDetails(currentProject, params);
 		
 		int k = 1;
+		
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 
 	}
@@ -922,8 +971,7 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
-				
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		while(iter.hasNext())
 		{
@@ -939,5 +987,45 @@ public class ProjectService extends ProjectObjectService
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+	}
+
+	/**
+	 * @param projectID
+	 * @param parameters
+	 */
+	public static void editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Change Order:");
+		Long changeOrderID = Long.parseLong(params.get("changeOrderID"));
+		
+		Project currentProject = null;
+		try 
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();	
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		ChangeOrder oldOrder = new ChangeOrder();
+		ChangeOrder newOrder = new ChangeOrder();
+		while(iter.hasNext())
+		{
+			ChangeOrder item = iter.next();
+			if(item.getId() == changeOrderID)
+			{
+				oldOrder = item;
+				ChangeOrderFiller.fillChangeOrder(newOrder, params);
+				
+			}
+			item.setId(null);
+		}
+
+		currentProject.setChangeOrders(changeOrders);
+		int k;
+		
+		k = 1;
+		ProjectObjectService.editObject("ChangeOrder",changeOrderID,newOrder,k);
+		ProjectObjectService.deleteNullChangeOrders();
 	}	
 }

@@ -237,11 +237,12 @@ const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFi
 								"otherWarrantyB", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
 								"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "numOfChanges", "numOfChangesCompleted");
 
-const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList",
+const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "equipmentSubmittal", "manuals", "punchList",
 										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
-										"closeoutDocumentNotes", 
+							
 										"inspectionsRequired", "inspectionsCompleted", "warrantiesRequired", "warrantiesCompleted", 
-										"liensRequired", "liensCompleted", "numOfChanges", "numOfChangesCompleted", "mg2Completion");
+										"liensRequired", "liensCompleted", "numOfChanges", "numOfChangesCompleted", "mg2Completion", 
+										"closeoutDocumentNotes");
 
 const CLOSEOUT_KEYS_INSPECTIONS = new Array("warehouse", "item", "status", "inspectionsRequired", "inspectionsCompleted", "mechanicalFinal",
 											"electricalFinal", "plumbingFinal", "sprinkleFinal", "buildingFinal", "tmpCertificate", 
