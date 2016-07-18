@@ -848,9 +848,9 @@ function addProject()
 				'closeoutDocumentsNotes': closeoutDocumentsNotes,
 			},
 			success:function(data){
-				
-				createConfirmWindow();
 				console.log(data);
+				PROJECT_ID = data.id;
+				createConfirmWindow();
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
 			 * Code works perfectly with error statement 
@@ -859,6 +859,7 @@ function addProject()
 			 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			error: function()
 			{
+
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
 			       createConfirmWindow();

@@ -282,17 +282,18 @@ public class ProjectObjectService
 	 * @param o the object to be added
 	 * @return the id of the transaction
 	 */
-	public static String addObject(String domain, Object o)
+	public static long addObject(String domain, Object o)
 	{
 		System.out.println("add Project");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		session.save(o);
-		//long txID = Long.parseLong((String)session.save(o));
-       // System.out.println("ID OF TRANSACTION: " + txID);
+		//session.save(o);
+		
+		Long txID = (Long)session.save(o);
+        System.out.println("ID OF TRANSACTION: " + txID);
         tx.commit();
         //return (long) txID;
-	    return "ok" ;
+	    return txID ;
 	}
 	
 	

@@ -70,7 +70,7 @@ public class ProjectService extends ProjectObjectService
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public  String addProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope, 
+	public  long addProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope, 
 			Map<String, String>params, Long inspectionTN, HttpServletRequest req) throws ClassNotFoundException, ParseException, NumberFormatException, IOException
 	{
 		System.out.println("in add");
@@ -308,13 +308,13 @@ public class ProjectService extends ProjectObjectService
 		System.out.println(p.getInspections().getId() + "  inspection id");
 		
 		//Add the project to the database.
-		ProjectObjectService.addObject("Project", p);
+		long projectID = ProjectObjectService.addObject("Project", p);
 	
 		
 		PrintWriter writer = new PrintWriter(file.getAbsoluteFile(),"UTF-8" );
 		writer.println(maxID);
 		writer.close();
-        return "OK";  
+        return projectID;  
 	}
 	
 	/**
@@ -1008,24 +1008,27 @@ public class ProjectService extends ProjectObjectService
 		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();	
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		ChangeOrder oldOrder = new ChangeOrder();
-		ChangeOrder newOrder = new ChangeOrder();
+		
 		while(iter.hasNext())
 		{
 			ChangeOrder item = iter.next();
-			if(item.getId() == changeOrderID)
+
+			System.out.println(item.getId() + " is the ID compared to " + changeOrderID);
+			if(item.getId().longValue() == changeOrderID.longValue())
 			{
+				System.out.println("Found the correct change order!");
 				oldOrder = item;
-				ChangeOrderFiller.fillChangeOrder(newOrder, params);
+				ChangeOrderFiller.fillChangeOrder(oldOrder, params);
+
 				
 			}
 			item.setId(null);
 		}
-
 		currentProject.setChangeOrders(changeOrders);
 		int k;
 		
 		k = 1;
-		ProjectObjectService.editObject("ChangeOrder",changeOrderID,newOrder,k);
+		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullChangeOrders();
 	}	
 }

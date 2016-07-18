@@ -101,7 +101,8 @@ public class Project extends HttpServlet
 						
 			try 
 			{ 	
-				ps.addProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
+				Long projID = ps.addProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
+				response = ProjectService.getAsJSON(projID, "Project");
 					
 			} catch (ClassNotFoundException | ParseException e) 
 			{
