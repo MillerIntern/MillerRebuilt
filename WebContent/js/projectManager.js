@@ -6,6 +6,7 @@ const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
 const BASIC_PAGE = 'projectData.html?type=edit&id=';
 const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id=';
 const CHANGE_ORDER_EDIT = 'changeOrderData.html?type=edit&id=';
+const CHANGE_ORDER_PRINT = 'changeOrderPrint.html?type=project&id=';
 
 	
 var ID;
@@ -31,7 +32,7 @@ function getProject()
 	console.log(getParameterByName("id"));
 	if (PAGETYPE == 'navigateTo')
 	{
-		PROJECT_ID = getParameterByName("id");
+		var PROJECT_ID = getParameterByName("id");
 		ID = PROJECT_ID;
 
 		$.ajax({
@@ -118,6 +119,11 @@ function navigateToChangeOrderPage(param)
 	console.log(param);
 	console.log("Ah, so you want the change order page!");
 	window.location.href = CHANGE_ORDER_PAGE+ID;
+}
+
+function printChangeOrders()
+{
+	window.location.href = CHANGE_ORDER_PRINT+ID;
 }
 
 function statusConverter(param)
@@ -222,9 +228,16 @@ function buildChangeOrders(json)
 	var editChangeOrderButton = document.createElement("button");
 	editChangeOrderButton.onclick = function() {editChangeOrder()};
 	editChangeOrderButton.innerHTML = "Edit Change Order";
-	editChangeOrderButton.setAttribute("id", "editButton")
+	editChangeOrderButton.setAttribute("id", "editButton");
+	editChangeOrderButton.style.marginRight = "10px";
 	editChangeOrderButton.disabled = true;
 	$("#changeOrders").append(editChangeOrderButton);
+	
+	var printChangeOrderButton = document.createElement("button");
+	printChangeOrderButton.onclick = function() {printChangeOrders()};
+	printChangeOrderButton.innerHTML = "Print Change Orders";
+	printChangeOrderButton.setAttribute("id", "printButton")
+	$("#changeOrders").append(printChangeOrderButton);
 }
 
 function buildInspection(json)
@@ -744,3 +757,161 @@ function toggleChangeOrder(param)
 	changeOrderToEdit = param;
 	$("#editButton").prop("disabled", false);
 }
+
+function showChangeOrderTable()
+{
+	console.log(getParameterByName("id"));
+	var PROJECT_ID = getParameterByName("id");
+
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		data: 
+		{
+			'domain': 'project',
+			'action': 'get',
+			'id': PROJECT_ID,
+			
+		},
+		success: function(data)
+		{
+			console.log(data);
+			fillTable(data);
+		}
+	});
+}
+
+function fillTable(json)
+{
+	$("p").css("line-height", "5px");
+
+	$("#location").text("Project Location: "  + json.warehouse.city.name + ", " + json.warehouse.state);
+	$("#scope").text("Project Scope: " + json.projectItem.name);
+	$("#manager").text("Project Manager: " + json.projectManagers.name);
+
+	var header = document.createElement("tr");
+	var cust = document.createElement("th");
+	cust.appendChild(document.createTextNode("Customer CO#"));
+	var mcsCO = document.createElement("th");
+	mcsCO.appendChild(document.createTextNode("MCS CO#"));
+	var subCO = document.createElement("th");
+	subCO.appendChild(document.createTextNode("Sub Names(s)"));
+	var proposalDate = document.createElement("th");
+	proposalDate.appendChild(document.createTextNode("Proposal Date"));
+	var briefDescription = document.createElement("th");
+	briefDescription.appendChild(document.createTextNode("Brief Description"));
+	var cost = document.createElement("th");
+	cost.appendChild(document.createTextNode("Cost ($)"));
+	var sell = document.createElement("th");
+	sell.appendChild(document.createTextNode("Sell ($)"));
+	var status = document.createElement("th");
+	status.appendChild(document.createTextNode("Status"));
+	var submittedTo = document.createElement("th");
+	submittedTo.appendChild(document.createTextNode("Submitted To"));
+	var submittedDate = document.createElement("th");
+	submittedDate.appendChild(document.createTextNode("Submitted Date"));
+	var approvedDate = document.createElement("th");
+	approvedDate.appendChild(document.createTextNode("Approved Date"));
+	var notes = document.createElement("th");
+	notes.appendChild(document.createTextNode("Notes"));
+	
+	header.appendChild(cust);
+	header.appendChild(mcsCO);
+	header.appendChild(subCO);
+	header.appendChild(proposalDate);
+	header.appendChild(briefDescription);
+	header.appendChild(cost);
+	header.appendChild(sell);
+	header.appendChild(status);
+	header.appendChild(submittedTo);
+	header.appendChild(submittedDate);
+	header.appendChild(approvedDate);
+	header.appendChild(notes);
+	
+	$("#changeOrderTable").append(header);
+	
+	for(var i = 0; i < json.changeOrders.length; i++)
+	{
+		var row = document.createElement("tr");
+		var customer = document.createElement("td");
+		customer.appendChild(document.createTextNode(convertCustomer(json.changeOrders[i].type)));
+		var mcs = document.createElement("td");
+		if(json.changeOrders[i].mcsCO == "" || json.changeOrders[i].mcsCO == "undefined")
+			mcs.appendChild(document.createTextNode("---"));
+		else
+			mcs.appendChild(document.createTextNode(json.changeOrders[i].mcsCO));			
+		var sub = document.createElement("td");
+		if(json.changeOrders[i].subCO == "" || json.changeOrders[i].subCO == "undefined")
+			sub.appendChild(document.createTextNode("---"));
+		else
+			sub.appendChild(document.createTextNode(json.changeOrders[i].subCO));
+		var proposal = document.createElement("td");
+		if(json.changeOrders[i].proposalDate == "" || json.changeOrders[i].proposalDate == "undefined")
+			proposal.appendChild(document.createTextNode("---"));
+		else
+			proposal.appendChild(document.createTextNode(json.changeOrders[i].proposalDate));
+		var description = document.createElement("td");
+		description.appendChild(document.createTextNode(json.changeOrders[i].briefDescription));
+		var cos = document.createElement("td");
+		cos.appendChild(document.createTextNode(json.changeOrders[i].cost));
+		var sel = document.createElement("td");
+		sel.appendChild(document.createTextNode(json.changeOrders[i].sell));
+		var stat = document.createElement("td");
+		stat.appendChild(document.createTextNode(convertStatus(json.changeOrders[i].status)));
+		var submittedT = document.createElement("td");
+		submittedT.appendChild(document.createTextNode(json.changeOrders[i].submittedTo));
+		var submittedD = document.createElement("td");
+		submittedD.appendChild(document.createTextNode(json.changeOrders[i].submittedDate));
+		var approved = document.createElement("td");
+		approved.appendChild(document.createTextNode(json.changeOrders[i].approvedDate));
+		var note = document.createElement("td");
+		if(json.changeOrders[i].notes == " " || json.changeOrders[i].notes == "undefined")
+			note.appendChild(document.createTextNode("---"));
+		else
+			note.appendChild(document.createTextNode(json.changeOrders[i].notes));
+		
+		row.appendChild(customer);
+		row.appendChild(mcs);
+		row.appendChild(sub);
+		row.appendChild(proposal);
+		row.appendChild(description);
+		row.appendChild(cos);
+		row.appendChild(sel);
+		row.appendChild(stat);
+		row.appendChild(submittedT);
+		row.appendChild(submittedD);
+		row.appendChild(approved);
+		row.appendChild(note);
+		
+		$("#changeOrderTable").append(row);
+	}
+}
+
+function convertCustomer(param)
+{
+	console.log(param);
+	if(param == '1')
+		return "COP";
+	else if(param == '2')
+		return "REF";
+	else if(param == '3')
+		return "WHS";
+	else if(param == '4')
+		return "FAC";
+	else if(param == '5')
+		return "VEN";
+	else if(param == '6')
+		return "UDF";
+	else return "UDF";
+}
+
+function convertStatus(param)
+{
+	if(param == '1')
+		return "Submitted";
+	else if(param == '2')
+		return "MCS Reviewing";
+	else
+		return "Undefined Status!";
+}
+

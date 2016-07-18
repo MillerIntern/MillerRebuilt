@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueObjectException;
@@ -65,7 +64,7 @@ public class ProjectObjectService
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		Class c;
+		Class<?> c;
 		
 		try 
 		{
@@ -120,7 +119,7 @@ public class ProjectObjectService
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		Class c;
+		Class<?> c;
 		try 
 		{
 			c = Class.forName("projectObjects."+domain);
@@ -171,7 +170,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get the Class from parsing the "domain" string.
-		Class c = Class.forName("projectObjects."+domain);
+		Class<?> c = Class.forName("projectObjects."+domain);
 		
 		//Get object from database that matches the id
 		Object o = session.get(c, id);
@@ -194,7 +193,7 @@ public class ProjectObjectService
 
 		Object o;	
 		Gson gson= new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
-		Class c = Class.forName("projectObjects."+domain);
+		Class<?> c = Class.forName("projectObjects."+domain);
 		
 		//When convering dates to JSON format, don't use units smaller than days
 		o = session.get(c, id);
@@ -253,7 +252,7 @@ public class ProjectObjectService
 		int success = IS_OWNED_BY_OTHER_OBJECT;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		Class c = Class.forName("projectObjects."+domain);
+		Class<?> c = Class.forName("projectObjects."+domain);
 		
 		//Attempt to delete the object
 		try
@@ -314,7 +313,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get object from database
-		Class c = Class.forName("projectObjects."+domain);
+		Class<?> c = Class.forName("projectObjects."+domain);
 		
 		ProjectObject oldObject2 = (ProjectObject) session.get(c, id);
 		

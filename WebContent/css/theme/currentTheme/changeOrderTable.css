@@ -1,0 +1,21 @@
+#changeOrderTable
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#changeOrderTable td
+{
+	text-align: left;
+	padding: 8px;
+}
+
+#changeOrderTable tr:nth-child(even)
+{
+	background-color: #f2f2f2;
+	
+}
+
+#changeOrderTable table, td, th {
+    border: 1px solid black;
+}
