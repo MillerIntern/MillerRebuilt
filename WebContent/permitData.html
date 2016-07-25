@@ -13,13 +13,6 @@
         
 		<script type="text/javascript" src="js/tab.js"></script>
         
-        <style>
-        .tableTitle
-        {
-        font-size: 20px;
-        }
-        </style>
-        
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
 	</head>
@@ -50,121 +43,273 @@
     <div class="container">
 
 	<ul class="tabs">
-		<li class="tab-link current" data-tab="allPermits">Permits</li>
+		<li class="tab-link current" data-tab="permits">Building Permits</li>
 		<li class='tab-link' data-tab='technicalPermits'>Technical Permits</li>
 		<li class='tab-link' data-tab='safetyPermits'>Safety Permits</li>
+		<li class='tab-link' data-tab='otherPermits'>Other Permits and Notes</li>
         <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
 	</ul>
 
-    <!-- Closeout Documents Tab--> 
-	<div id="allPermits" class="tab-content current">
-        <table>
-        <tr style="height: 0px;"></tr>
-            <tr>
-                <td>Building Permit:</td>
-                <td>
-                    <input id="buildingPermit" type="text"></input>  
-                </td>
-            </tr>
-            <tr>
-                <td>Mechanical Permit:</td>
-                <td>
-                    <input type="text" id="mechanicalPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Electrical Permit:</td>
-                <td>
-                    <input type="text" id="electricalPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Plumbing Permit:</td>
-                <td>
-                	<input type="text" id="plumbingPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Fire Sprinkler Permit:</td>
-                <td>
-                    <input id="fireSprinklePermit" type="text"></input>
-                </td>   
-            </tr>
-            <tr>
-                <td>Fire Alarm Permit:</td>
-                <td>
-                    <input type="text" id="fireAlarmPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Low Voltage Permit:</td>
- 
-                <td>
-                	<input type="text" id="lowVoltagePermit" />
-                </td>   
-            </tr>
-        </table>
+
+	<div id="permits" class="tab-content current">
+		<table class="manager">
+		<tr>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+		</tr>
+		<tr>
+			<td>Building:</td>
+			<td>
+				<select id="buildingPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="buildingPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="buildingInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="buildingInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="buildingNotes"> </textarea>
+			</td>
+		</tr>
+		
+				<tr>
+			<td>Roofing:</td>
+			<td>
+				<select id="roofingPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="roofingPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="roofingInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="roofingInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="roofingNotes"> </textarea>
+			</td>
+		</tr>
+		
+		</table>
 	</div>
 	
 	<div id="technicalPermits" class="tab-content">
-	        <div class="tableTitle">Mechanical Permit:</div>
-	        <table>
-        	<tr style="height: 0px;"></tr>
-            <tr>
-            	<td>
-            	Submitted:
-            	</td>
-            	<td>
-            	<input type="text" id="mechanicalPermitSubmitted" style="margin-left:10px"/>
-            	</td>
-            </tr>
-            <tr>
-            	<td>Approved:
-            	</td>
-            	<td>
-            	<input type="text" id="mechanicalPermit" style="margin-left:10px"/>
-            	</td>
-            </tr>
-            <tr>
-            	<td>Issued:
-            	</td>
-            	<td>
-            	<input type="text" id="mechanicalPermitIssued" style="margin-left:10px"/>
-            	</td>
-            </tr>
-            <tr>
-            	<td>Obtained:
-            	</td>
-            	<td>
-            	<input type="text" id="mechanicalPermitObtained" style="margin-left:10px"/>
-            	</td>
-            </tr>
-            </table>
-            
-            <div class="tableTitle">Electrical Permit</div>
-            <table>
-            <tr style="height: 0px;"></tr>
-            
-            <tr>
-                <td>Electrical Permit:</td>
-                <td>
-                    <input type="text" id="electricalPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Plumbing Permit:</td>
-                <td>
-                	<input type="text" id="plumbingPermit" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Low Voltage Permit:</td>
- 
-                <td>
-                	<input type="text" id="lowVoltagePermit" />
-                </td>   
-            </tr>
+	        <table class="manager">
+        <tr>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+		</tr>
+		<tr>
+			<td>Mechanical:</td>
+			<td>
+				<select id="mechanicalPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="mechanicalPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="mechanicalInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="mechanicalInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="mechanicalNotes"> </textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Electrical:</td>
+			<td>
+				<select id="electricalPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="electricalPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="electricalInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="electricalInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="electricalNotes"> </textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Plumbing:</td>
+			<td>
+				<select id="plumbingPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="plumbingPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="plumbingInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="plumbingInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="plumbingNotes"> </textarea>
+			</td>
+		</tr>
+		
         </table>
+	</div>
+	
+	<div id="safetyPermits" class="tab-content">
+			        <table class="manager">
+        <tr>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+		</tr>
+		<tr>
+			<td>Sprinkler:</td>
+			<td>
+				<select id="sprinklerPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="sprinklerPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="sprinklerInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="sprinklerInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="sprinklerNotes"> </textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Fire Alarm:</td>
+			<td>
+				<select id="fireAlarmPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="fireAlarmPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="fireAlarmInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="fireAlarmInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="fireAlarmNotes"> </textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Low-Voltage:</td>
+			<td>
+				<select id="voltagePermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="voltagePermitLastUpdated" />
+			</td>
+			<td>
+				<select id="voltageInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="voltageInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="voltageNotes"> </textarea>
+			</td>
+		</tr>
+		
+        </table>
+	</div>
+	
+	<div class="tab-content" id="otherPermits">
+	       <table class="manager">
+        <tr>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+		</tr>
+		<tr>
+			<td>Other Permit (A):</td>
+			<td>
+				<select id="otherAPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="otherAPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="otherAInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="otherAInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="otherANotes"> </textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Other Permit (B):</td>
+			<td>
+				<select id="otherBPermitStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+            	<input type="text" id="otherBPermitLastUpdated" />
+			</td>
+			<td>
+				<select id="otherBInspectionStatus">
+					<option value="default">--Status--</option>
+				</select>
+			</td>
+			<td>
+           		<input type="text" id="otherBInspectionLastUpdated" />
+			</td>
+			<td>
+                <textarea id="otherBNotes"> </textarea>
+			</td>
+		</tr>
+		</table>
 	</div>
     <!-- End Closeout Documents Tab--> 
 </div>

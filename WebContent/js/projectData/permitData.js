@@ -20,16 +20,26 @@ $(document).ready(function(){
 		$("#"+tab_id).addClass('current');
 	});
 	
- 	$("#buildingPermit").datepicker();   
- 	$("#mechanicalPermit").datepicker(); 
- 	$("#electricalPermit").datepicker();   
- 	$("#plumbingPermit").datepicker();   
- 	$("#fireSprinklePermit").datepicker();   
- 	$("#fireAlarmPermit").datepicker();   
- 	$("#lowVoltagePermit").datepicker();   
-
-
-
+	$("#buildingPermitLastUpdated").datepicker();
+	$("#buildingInspectionLastUpdated").datepicker();
+	$("#roofingPermitLastUpdated").datepicker();
+	$("#roofingInspectionLastUpdated").datepicker();
+	$("#mechanicalPermitLastUpdated").datepicker();
+	$("#mechanicalInspectionLastUpdated").datepicker();
+	$("#electricalPermitLastUpdated").datepicker();
+	$("#electricalInspectionLastUpdated").datepicker();
+	$("#plumbingPermitLastUpdated").datepicker();
+	$("#plumbingInspectionLastUpdated").datepicker();
+	$("#sprinklerPermitLastUpdated").datepicker();
+	$("#sprinklerInspectionLastUpdated").datepicker();
+	$("#fireAlarmInspectionLastUpdated").datepicker();
+	$("#fireAlarmPermitLastUpdated").datepicker();
+	$("#voltagePermitLastUpdated").datepicker();
+	$("#voltageInspectionLastUpdated").datepicker();
+	$("#otherAPermitLastUpdated").datepicker();
+	$("#otherBPermitLastUpdated").datepicker();
+	$("#otherAInspectionLastUpdated").datepicker();
+	$("#otherBInspectionLastUpdated").datepicker();
 });
 
 function getProjectEnums()
@@ -73,13 +83,13 @@ function fillTabs(data)
 	console.log(json);
 	if (json.permits != null)
 	{	
-		$("#buildingPermit").val(json.permits.building);
-		$("#mechanicalPermit").val(json.permits.mechanical);
-		$("#electricalPermit").val(json.permits.electrical);
-		$("#plumbingPermit").val(json.permits.plumbing);
-		$("#fireSprinklePermit").val(json.permits.fire_sprinkler);
-		$("#fireAlarmPermit").val(json.permits.fire_alarm);
-		$("#lowVoltagePermit").val(json.permits.low_voltage);
+		$("#buildingPermitLastUpdated").val(json.permits.building);
+		$("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
+		$("#electricalPermitLastUpdated").val(json.permits.electrical);
+		$("#plumbingPermitLastUpdated").val(json.permits.plumbing);
+		$("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
+		$("#fireAlarmPermitLastUpdated").val(json.permits.fire_alarm);
+		$("#voltagePermitLastUpdated").val(json.permits.low_voltage);
 	}
 }
 
@@ -88,17 +98,77 @@ function saveProject()
 {
     console.log("Saving Permit Information");
 	
-    var buildingPermit = $("#buildingPermit").val();
-    var mechanicalPermit = $("#mechanicalPermit").val();
-    var electricalPermit = $("#electricalPermit").val();
-    var plumbingPermit = $("#plumbingPermit").val();
-    var fireSprinklePermit = $("#fireSprinklePermit").val();
-    var fireAlarmPermit = $("#fireAlarmPermit").val();
-    var lowVoltagePermit = $("#lowVoltagePermit").val();
+    var buildingPermitStatus = $("#buildingPermitStatus");
+    var buildingPermitLastUpdated = $("#buildingPermitLastUpdated");
+    var buildingInspectionStatus = $("#buildingInspectionStatus");
+    var buildingInspectionLastUpdated = $("#buildingInspectionLastUpdated");
+    var buildingNotes = $("#buildingNotes");
+    
+    var roofingPermitStatus = $("#roofingPermitStatus");
+    var roofingPermitLastUpdated = $("#roofingPermitLastUpdated");
+    var roofingInspectionStatus = $("#roofingInspectionStatus");
+    var roofingInspectionLastUpdated = $("#roofingInspectionLastUpdated");
+    var roofingNotes = $("#roofingNotes");
+    
+    var mechanicalPermitStatus = $("#mechanicalPermitStatus");
+    var mechanicalPermitLastUpdated = $("#mechanicalPermitLastUpdated");
+    var mechanicalInspectionStatus = $("#mechanicalInspectionStatus");
+    var mechanicalInspectionLastUpdated = $("#mechanicalInspectionLastUpdated");
+    var mechanicalNotes = $("#mechanicalNotes");
+    
+    var electricalPermitStatus = $("#electricalPermitStatus");
+    var electricalPermitLastUpdated = $("#electricalPermitLastUpdated");
+    var electricalInspectionStatus = $("#electricalInspectionStatus");
+    var electricalInspectionLastUpdated = $("#electricalInspectionLastUpdated");
+    var electricalNotes = $("#electricalNotes");
+    
+    var plumbingPermitStatus = $("#plumbingPermitStatus");
+    var plumbingPermitLastUpdated = $("#plumbingPermitLastUpdated");
+    var plumbingInspectionStatus = $("#plumbingInspectionStatus");
+    var plumbingInspectionLastUpdated = $("#plumbingInspectionLastUpdated");
+    var plumbingNotes = $("#plumbingNotes");    
+    
+    var sprinklerPermitStatus = $("#sprinklerPermitStatus");
+    var sprinklerPermitLastUpdated = $("#sprinklerPermitLastUpdated");
+    var sprinklerInspectionStatus = $("#sprinklerInspectionStatus");
+    var sprinklerInspectionLastUpdated = $("#sprinklerInspectionLastUpdated");
+    var sprinklerNotes = $("#sprinklerNotes");    
+    
+    var fireAlarmPermitStatus = $("#fireAlarmPermitStatus");
+    var fireAlarmPermitLastUpdated = $("#fireAlarmPermitLastUpdated");
+    var fireAlarmInspectionStatus = $("#fireAlarmInspectionStatus");
+    var fireAlarmInspectionLastUpdated = $("#fireAlarmInspectionLastUpdated");
+    var fireAlarmNotes = $("#fireAlarmNotes");  
+    
+    var voltagePermitStatus = $("#voltagePermitStatus");
+    var voltagePermitLastUpdated = $("#voltagePermitLastUpdated");
+    var voltageInspectionStatus = $("#voltageInspectionStatus");
+    var voltageInspectionLastUpdated = $("#voltageInspectionLastUpdated");
+    var voltageNotes = $("#voltageNotes");  
+    
+    var otherAPermitStatus = $("#otherAPermitStatus");
+    var otherAPermitLastUpdated = $("#otherAPermitLastUpdated");
+    var otherAInspectionStatus = $("#otherAInspectionStatus");
+    var otherAInspectionLastUpdated = $("#otherAInspectionLastUpdated");
+    var otherANotes = $("#otherANotes");    
+    
+    var otherBPermitStatus = $("#otherBPermitStatus");
+    var otherBPermitLastUpdated = $("#otherBPermitLastUpdated");
+    var otherBInspectionStatus = $("#otherBInspectionStatus");
+    var otherBInspectionLastUpdated = $("#otherBInspectionLastUpdated");
+    var otherBNotes = $("#otherBNotes");    
     
     var dates =[
-				buildingPermit, mechanicalPermit, electricalPermit, plumbingPermit, 
-				fireSprinklePermit, fireAlarmPermit, lowVoltagePermit,
+				buildingPermitLastUpdated, buildingInspectionLastUpdated,
+				roofingPermitLastUpdated, roofingInspectionLastUpdated,
+				mechanicalPermitLastUpdated, mechanicalInspectionLastUpdated, 
+				electricalPermitLastUpdated, electricalInspectionLastUpdated,
+				plumbingPermitLastUpdated, plumbingInspectionLastUpdated,
+				sprinklerPermitLastUpdated, sprinklerInspectionLastUpdated,
+				fireAlarmPermitLastUpdated, fireAlarmInspectionLastUpdated,
+				voltagePermitLastUpdated, voltageInspectionLastUpdated,
+				otherAPermitLastUpdated, otherAInspectionLastUpdated,
+				otherBPermitLastUpdated, otherBInspectionLastUpdated,
                 ];
     
     
@@ -112,6 +182,7 @@ function saveProject()
 			PERMIT_ID = PROJECT_DATA.permits.id;
 		else
 			PERMIT_ID = 0;
+		if(false)
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -124,13 +195,66 @@ function saveProject()
 				
 				//Permit Data
 				'permitsID':PERMIT_ID,
-				'building_p':buildingPermit, 
-				'mechanical_p' :mechanicalPermit,
-				'electrical_p':electricalPermit,
-				'plumbing_p':plumbingPermit,
-				'fireSprinkler_p':fireSprinklePermit,
-				'fireAlarm_p':fireAlarmPermit, 
-				'lowVoltage_p':lowVoltagePermit,
+				
+				'building_p':buildingPermitLastUpdated, 
+				'buildingPermitStatus': buildingPermitStatus,
+				'buildingInspectionStatus': buildingInspectionStatus,
+				'buildingInspectionLastUpdated': buildingInspectionLastUpdated,
+				'buildingNotes': buildingNotes,
+				
+				'mechanical_p' :mechanicalPermitLastUpdated,
+				'mechanicalPermitStatus': mechanicalPermitStatus,
+				'mechanicalInspectionStatus': mechanicalInspectionStatus,
+				'mechanicalInspectionLastUpdated': mechanicalInspectionLastUpdated,
+				'mechanicalNotes': mechanicalNotes,
+				
+				'electrical_p':electricalPermitLastUpdated,
+				'electricalPermitStatus': electricalPermitStatus,
+				'electricalInspectionStatus': electricalInspectionStatus,
+				'electricalInspectionLastUpdated': electricalInspectionLastUpdated,
+				'electricalNotes': electricalNotes,
+				
+				'plumbing_p':plumbingPermitLastUpdated,
+				'plumbingPermitStatus': plumbingPermitStatus,
+				'plumbingInspectionStatus': plumbingInspectionStatus,
+				'plubmingInspectionLastUpdated': plumbingInspectionLastUpdated,
+				'plumbingNotes': plumbingNotes,
+				
+				'fireSprinkler_p':sprinklerPermitLastUpdated,
+				'sprinklerPermitStatus': sprinklerPermitStatus,
+				'sprinklerInspectionStatus': sprinklerInspectionStatus,
+				'sprinklerInspectionLastUpdated': sprinklerInspectionLastUpdated,
+				'sprinklerNotes': sprinklerNotes,
+				
+				'fireAlarm_p':fireAlarmPermitLastUpdated, 
+				'fireAlarmPermitStatus': fireAlarmPermitStatus,
+				'fireAlarmInspectionStatus': fireAlarmInspectionStatus,
+				'fireAlarmInspectionLastUpdated': fireAlarmInspectionLastUpdated,
+				'fireAlarmNotes': fireAlarmNotes,
+				
+				'lowVoltage_p':voltagePermitLastUpdated,
+				'voltagePermitStatus': voltagePermitStatus,
+				'voltageInspectionStatus': voltageInspectionStatus,
+				'voltageInspectionLastUpdated': voltageInspectionLastUpdated,
+				'voltageNotes': voltageNotes,
+				
+				'roofingPermit': roofingPermitLastUpdated,
+				'roofingPermitStatus': roofingPermitStatus,
+				'roofingInspectionStatus': roofingInspectionStatus,
+				'roofingInspectionLastUpdated': roofingInspectionLastUpdated,
+				'roofingNotes': roofingNotes,
+				
+				'otherPermitA': otherAPermitLastUpdated,
+				'otherAPermitStatus': otherAPermitStatus,
+				'otherAInspectionStatus': otherAInspectionStatus,
+				'otherAInspectionLastUpdated': otherAInspectionLastUpdated,
+				'otherANotes': otherANotes,
+				
+				'otherBPermit': otherBPermitLastUpdated,
+				'otherBPermitStatus': otherBPermitStatus,
+				'otherBInspectionStatus': otherBInspectionStatus,
+				'otherBInspectionLastUpdated': otherBInspectionLastUpdated,
+				'otherBNotes': otherBNotes,
 			},
 			success:function(data){
 				
@@ -153,6 +277,8 @@ function saveProject()
 							
 			}
 		});
+	else
+		console.log("hey");
 
     }
     
