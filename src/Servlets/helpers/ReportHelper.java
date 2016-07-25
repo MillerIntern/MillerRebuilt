@@ -21,6 +21,13 @@ import projectObjects.Project;
  */
 public class ReportHelper 
 {
+	/**
+	 * Creates table headers based on the values passed in from the report
+	 * For an example, report.js might send values [mcsNum, warehouse, stage]. This method will then be called
+	 * three times each time appending a new header with the resulting table having headers -- MCS Number | Warehouse | Stage
+	 * @param sb - the string builder that contains the html page to be written out to
+	 * @param value - the value of the current header
+	 */
 	public static void appendReportProjectHeader(StringBuilder sb, String value)
 	{
 		if(value.equals("mcsNum"))
@@ -416,15 +423,17 @@ public class ReportHelper
 		}
 	}
 	
+	/**
+	 * Gets the report value given a project and a key. 
+	 * This method checks every possible value for projects against the passed in value-key 
+	 * and retrieves and formats that value for display on the table
+	 * @param value - the key of the value to be found
+	 * @param p - the project containing the values
+	 * @return - a string containing the value
+	 */
 	public static String getReportVal(String value, Project p)
 	{
 		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
-		/*
-		if(value.equals("proposalSubmitted") && p.getProposalSubmitted() != null )
-		{
-			System.out.println("hi");
-			System.out.println(p.getProposalSubmitted().equals("Proposal Submitted"));
-		}*/
 		
 		if(value.equals("mcsNum"))
 		{
@@ -1147,6 +1156,13 @@ public class ReportHelper
 	}
 	
 	
+	/**
+	 * Gets the first person from a set. Though this should eventually 
+	 * be removed because only a single manager and supervisor will be assigned
+	 * to each project.
+	 * @param set - set of people
+	 * @return - the first one in the set
+	 */
 	private static Person getFirstFromSet(Set<Person> set)
 	{
 		Iterator<Person> i = set.iterator();
@@ -1156,6 +1172,12 @@ public class ReportHelper
 			return new Person("---");
 	}
 	
+	/**
+	 * converts closeoutstatus values. The statuses are stored in the database as 
+	 * strings from the initial form and are 1,2,3 or nothing. 
+	 * @param i - the databse held string for a given closeoutstatus
+	 * @return ["1": "Complete", "2": "Incomplete", "3": "N/A"] else ""
+	 */
 	private static String convert(String i)
 	{
 		if(i.equals("1"))

@@ -31,10 +31,13 @@ body{
 	color: white;
 	font-size: 120%;
     border-radius: 10px;
+        -webkit-transition: ease-in-out all .4s;
+    
 }
 
 #menuTab:hover
 {
+	-webkit-transition: ease-in-out all .4s;
 	background: grey;
 	cursor: pointer;
 }
@@ -110,6 +113,7 @@ ul
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    
 }
 
 .side-borders
@@ -125,7 +129,7 @@ li
     font-family: 'Raleway',sans-serif;
     font-size: 22px; font-weight: 300; 
     text-align: center;
-    border-right: 1.5px solid #555555;
+    border-right: 1.5px solid #555555;    
 }
 
 li:last-child
@@ -140,11 +144,13 @@ li a, .dropbtn
     color: white;
     text-decoration: none;
     padding: 14px 20px;
+    -webkit-transition: ease-in-out all .3s;
+   
 }
 
 li a:hover:not(.active), .dropdown:hover .dropbtn
 {
-    background-color: #1F1F1F;
+    background-color: #1F1F1F;   
 }
 
 li.dropdown
@@ -160,6 +166,7 @@ li.dropdown
     min-width: 150px;
     text-decoration: none;
     z-index: 1;
+    
 }
 
 .dropdown-content .dropdown-content-sideways a 
@@ -169,11 +176,12 @@ li.dropdown
     text-decoration: none;
     display: block;
     text-align: left;
+    
 }
 
 .dropdown:hover .dropdown-content 
 {
-    display: block;  
+    display: block;      
 }
 
 
@@ -181,37 +189,3 @@ li.dropdown
 {
     background-color: #800000;
 }
-
-
-
-
-/*#notificationBox
-{
-	position: absolute;
-	top: 0px;
-	right: 5px;
-	background: white;
-	padding: 3px;
-	border-radius: 10px;
-}
-
-#notificationBoxGreen
-{
-	width: 33%;
-	background: green;
-	color: black;
-}
-
-#notificationBoxYellow
-{
-	width: 33%;
-	background: yellow;
-	color: black;
-}	
-
-#notificationBoxRed
-{
-	width: 33%;
-	background: red;
-	color: black;
-}*/

@@ -13,6 +13,13 @@
         
 		<script type="text/javascript" src="js/tab.js"></script>
         
+        <style>
+        .tableTitle
+        {
+        font-size: 20px;
+        }
+        </style>
+        
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
 	</head>
@@ -44,6 +51,8 @@
 
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="allPermits">Permits</li>
+		<li class='tab-link' data-tab='technicalPermits'>Technical Permits</li>
+		<li class='tab-link' data-tab='safetyPermits'>Safety Permits</li>
         <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
 	</ul>
 
@@ -85,6 +94,67 @@
                 <td>Fire Alarm Permit:</td>
                 <td>
                     <input type="text" id="fireAlarmPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Low Voltage Permit:</td>
+ 
+                <td>
+                	<input type="text" id="lowVoltagePermit" />
+                </td>   
+            </tr>
+        </table>
+	</div>
+	
+	<div id="technicalPermits" class="tab-content">
+	        <div class="tableTitle">Mechanical Permit:</div>
+	        <table>
+        	<tr style="height: 0px;"></tr>
+            <tr>
+            	<td>
+            	Submitted:
+            	</td>
+            	<td>
+            	<input type="text" id="mechanicalPermitSubmitted" style="margin-left:10px"/>
+            	</td>
+            </tr>
+            <tr>
+            	<td>Approved:
+            	</td>
+            	<td>
+            	<input type="text" id="mechanicalPermit" style="margin-left:10px"/>
+            	</td>
+            </tr>
+            <tr>
+            	<td>Issued:
+            	</td>
+            	<td>
+            	<input type="text" id="mechanicalPermitIssued" style="margin-left:10px"/>
+            	</td>
+            </tr>
+            <tr>
+            	<td>Obtained:
+            	</td>
+            	<td>
+            	<input type="text" id="mechanicalPermitObtained" style="margin-left:10px"/>
+            	</td>
+            </tr>
+            </table>
+            
+            <div class="tableTitle">Electrical Permit</div>
+            <table>
+            <tr style="height: 0px;"></tr>
+            
+            <tr>
+                <td>Electrical Permit:</td>
+                <td>
+                    <input type="text" id="electricalPermit" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Plumbing Permit:</td>
+                <td>
+                	<input type="text" id="plumbingPermit" />
                 </td>   
             </tr>
             <tr>

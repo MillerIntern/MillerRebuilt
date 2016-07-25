@@ -33,6 +33,35 @@ public class Project extends HttpServlet
         super();
     }
 
+    /**
+     * This is where most of the java work is called from. The whatever.js
+     * page will send a request to this URL given a set of parameters with 
+     * an action. This method will result in data being written back out to 
+     * the caller. 
+     * 
+     * Possible calls
+     * 	{	
+     * 		[
+     * 		action: "getAllObjects",
+     * 		response: JSON object of information from databse
+     * 		],
+     * 		[
+     * 		action: "getEditQueryObjects",
+     * 		response: JSON object of some information from database
+     * 		TODO: get rid of getEditQueryObjects? I think it's used somewhere but getAllObjects could be called instead
+     * 		],
+     * 		[
+     * 		action: "add",
+     *		params: JSON information of project,
+     * 		response: ID of new project,
+     * 		],
+     * 		[
+     * 		action : 'edit', 
+     * 		params: 
+     * 		]
+     * 		
+     * }
+     */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		resp.setContentType("application/json");
@@ -51,7 +80,6 @@ public class Project extends HttpServlet
 			response = ProjectService.getAllEnumsAsJson();
 			
 		}
-
 		else if (action.equals("getEditQueryObjects"))
 		{
 			System.out.println("qenum");
@@ -191,13 +219,6 @@ public class Project extends HttpServlet
 			{
 				e.printStackTrace();
 			}
-		}
-		/**
-		 * This obviously doesnt work. 
-		 */
-		else if(action.equals("addNewProject"))
-		{
-			
 		}
 		else if(action.equals("addChangeOrder"))
 		{
