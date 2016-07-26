@@ -2,7 +2,7 @@ const PAGETYPE = 'navigateTo';
 const EDIT_PAGE = 'projectData.html?type=edit&id=';
 const CLOSEOUT_PAGE = 'closeoutData.html?type=closeout&id=';
 const PERMIT_PAGE = 'permitData.html?type=permit&id=';
-const INSPECTION_PAGE = 'inspectionData.html?type=inspection&id=';
+const INSPECTION_PAGE = 'permitData.html?type=permit&id=';
 const BASIC_PAGE = 'projectData.html?type=edit&id=';
 const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id=';
 const CHANGE_ORDER_EDIT = 'changeOrderData.html?type=edit&id=';
@@ -242,14 +242,31 @@ function buildChangeOrders(json)
 
 function buildInspection(json)
 {
-	$("#framingInspection").html(json.inspections.framing);
+	$("#buildingInspection").html(json.permits.buildingInspectionLastUpdated);
+	$("#buildingInspectionStatus").html(convertPermit(json.permits.buildingInspectionStatus));
+	$("#roofingInspection").html(json.permits.roofingInspectionLastUpdated);
+	$("#roofingInspectionStatus").html(convertPermit(json.permits.roofingInspectionStatus));
+	$("#mechanicalInspection").html(json.permits.mechanicalInspectionLastUpdated);
+	$("#mechanicalInspectionStatus").html(convertPermit(json.permits.mechanicalInspectionStatus));
+	$("#electricalInspection").html(json.permits.electricalInspectionLastUpdated);
+	$("#electricalInspectionStatus").html(convertPermit(json.permits.electricalInspectionStatus));
+	$("#plumbingInspection").html(json.permits.plumbingInspectionLastUpdated);
+	$("#plumbingInspectionStatus").html(convertPermit(json.permits.plumbingInspectionStatus));
+	$("#fireSprinkleInspection").html(json.permits.sprinklerInspectionLastUpdated);
+	$("#sprinklerInspectionStatus").html(convertPermit(json.permits.sprinklerInspectionStatus));
+	$("#fireAlarmInspection").html(json.permits.fireAlarmInspectionLastUpdated);
+	$("#fireAlarmInspectionStatus").html(convertPermit(json.permits.fireAlarmInspectionStatus));
+	$("#lowVoltageInspection").html(json.permits.voltageInspectionLastUpdated);
+	$("#voltageInspectionStatus").html(convertPermit(json.permits.voltageInspectionStatus));
+	
+	/*$("#framingInspection").html(json.inspections.framing);
 	$("#celingInspection").html(json.inspections.ceiling);
 	$("#mechLightSmokeInspection").html(json.inspections.mechanicalLightSmoke);
 	$("#roughMechanicalInspection").html(json.inspections.roughin_mechanical);
 	$("#roughElectricalInspection").html(json.inspections.roughin_electric);
 	$("#roughPlumbingInspection").html(json.inspections.roughin_plumbing);
 	$("#fireMarshalInspection").html(json.inspections.fire_marshal);
-	$("#healthInspection").html(json.inspections.health);
+	$("#healthInspection").html(json.inspections.health);*/
 	
 	var projectEditButton = document.createElement("button");
 	projectEditButton.onclick = function() {navigateToInspectionPage(this)};
@@ -264,18 +281,28 @@ function buildInspection(json)
 function buildPermit(json)
 {
 	$("#buildingPermit").html(json.permits.building);
+	$("#buildingPermitStatus").html(convertPermit(json.permits.buildingPermitStatus));
+	$("#roofingPermit").html(json.permits.roofing);
+	$("#roofingPermitStatus").html(convertPermit(json.permits.roofingPermitStatus));
 	$("#mechanicalPermit").html(json.permits.mechanical);
+	$("#mechanicalPermitStatus").html(convertPermit(json.permits.mechanicalPermitStatus));
 	$("#electricalPermit").html(json.permits.electrical);
+	$("#electricalPermitStatus").html(convertPermit(json.permits.electricalPermitStatus));
 	$("#plumbingPermit").html(json.permits.plumbing);
+	$("#plumbingPermitStatus").html(convertPermit(json.permits.plumbingPermitStatus));
 	$("#fireSprinklePermit").html(json.permits.fire_sprinkler);
+	$("#sprinklerPermitStatus").html(convertPermit(json.permits.sprinklerPermitStatus));
 	$("#fireAlarmPermit").html(json.permits.fire_alarm);
+	$("#fireAlarmPermitStatus").html(convertPermit(json.permits.fireAlarmPermitStatus));
 	$("#lowVoltagePermit").html(json.permits.low_voltage);
+	$("#voltagePermitStatus").html(convertPermit(json.permits.voltagePermitStatus));
 	
 	var projectEditButton = document.createElement("button");
 	projectEditButton.onclick = function() {navigateToPermitPage(this)};
 	projectEditButton.innerHTML = "Edit Permit Information";
 	$("#permits").append(projectEditButton);
 }
+
 /**
  * builds the closeout information witht the json information
  * @param json
@@ -914,4 +941,19 @@ function convertStatus(param)
 	else
 		return "Undefined Status!";
 }
+
+function convertPermit(param)
+{
+	if(param == '1')
+		return "Preparing";
+	else if(param == '2')
+		return "Submitted";
+	else if(param == '3')
+		return "Issued";
+	else if(param == '4')
+		return "Closed";
+	else
+		return "Undefined!";
+}
+
 

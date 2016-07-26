@@ -706,6 +706,7 @@ public class ProjectService extends ProjectObjectService
 		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
 		map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
 		map.put("changeorderstatus", ProjectObjectService.getAllAsJsonString("ChangeOrderStatus"));
+		map.put("permitstage", ProjectObjectService.getAllAsJsonString("PermitStage"));
 		
 		return g.toJson(map);
 	}
@@ -939,6 +940,7 @@ public class ProjectService extends ProjectObjectService
 
 	}
 
+	/*We could just delete this
 	public static void editProjectInformation(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		Project currentProject = null;
@@ -954,7 +956,7 @@ public class ProjectService extends ProjectObjectService
 		
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 
-	}
+	}*/
 
 	/**
 	 * @param projectID

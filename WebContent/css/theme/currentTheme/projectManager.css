@@ -54,13 +54,12 @@ ul.tabs li.current
 table
 {
 	border-collapse: collapse;
-	width: 100%;
- 
+	width: 100%; 
 }
 
 table, th, td
 {
-	border: 1px solid gray;	
+	border: 1px solid gray;
 }
 
 td
@@ -77,7 +76,7 @@ tr:first-child
 
 tr
 {
-	height: 50px;	
+	height: 50px;
 }
 
 tr:nth-child(even) 

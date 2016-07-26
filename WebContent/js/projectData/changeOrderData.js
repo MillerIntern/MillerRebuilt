@@ -110,6 +110,7 @@ function convert(param)
 
 function fillDropdowns(json)
 {
+	console.log(json);
 	var changeorderStatus = JSON.parse(json["changeorderstatus"]);
 	var d = document.createDocumentFragment();
 	
@@ -162,7 +163,7 @@ function saveProject()
 	if(PAGETYPE == 'edit')
 		action = "editChangeOrder";
 	
-	if(isValidInput(required, dates)) ;
+	if(isValidInput(required, dates))
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 

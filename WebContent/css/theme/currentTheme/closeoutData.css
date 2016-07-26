@@ -20,7 +20,7 @@ tr
 	height: 50px;	
 }
 
-tr:nth-child(even) 
+tr:nth-child(even)
 {
 	background-color: #dCdCdC;
 }

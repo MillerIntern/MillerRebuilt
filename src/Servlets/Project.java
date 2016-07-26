@@ -39,16 +39,11 @@ public class Project extends HttpServlet
      * an action. This method will result in data being written back out to 
      * the caller. 
      * 
-     * Possible calls
+     * important calls
      * 	{	
      * 		[
      * 		action: "getAllObjects",
      * 		response: JSON object of information from databse
-     * 		],
-     * 		[
-     * 		action: "getEditQueryObjects",
-     * 		response: JSON object of some information from database
-     * 		TODO: get rid of getEditQueryObjects? I think it's used somewhere but getAllObjects could be called instead
      * 		],
      * 		[
      * 		action: "add",
@@ -56,8 +51,13 @@ public class Project extends HttpServlet
      * 		response: ID of new project,
      * 		],
      * 		[
-     * 		action : 'edit', 
-     * 		params: 
+     * 		action : 'edit<*>', 
+     * 		params: JSON infomration of project,
+     * 		],
+     * 		[
+     * 		action : GET 
+     * 		params: id of project to get
+     * 		response: JSON'd project information
      * 		]
      * 		
      * }
@@ -210,15 +210,15 @@ public class Project extends HttpServlet
 		 */
 		else if(action.equals("editProjectInfo"))
 		{
-			Long projectID = Long.parseLong(parameters.get("projectID"));
+			/*Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
 			{
-				ProjectService.editProjectInformation(projectID, parameters);
+				//ProjectService.editProjectInformation(projectID, parameters);
 			}
 			catch(ClassNotFoundException | ParseException e)
 			{
 				e.printStackTrace();
-			}
+			}*/
 		}
 		else if(action.equals("addChangeOrder"))
 		{
