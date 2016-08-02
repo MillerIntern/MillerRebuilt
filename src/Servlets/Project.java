@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import objects.RequestHandler;
-import services.LoginService;
+import services.CloseoutListService;
 import services.ProjectObjectService;
 import services.ProjectService;
 import services.QueryService;
@@ -64,8 +64,6 @@ public class Project extends HttpServlet
      */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
-
 		resp.setContentType("application/json");
 		out = resp.getWriter();
 		String response = "";
@@ -266,6 +264,12 @@ public class Project extends HttpServlet
 		else if (action.equals("getAllEquipmentObjects"))
 		{
 			response = ProjectService.getAllEnumsEquipAsJson();
+		}
+		else if(action.equals("setCloseoutList"))
+		{
+			System.out.println("in SetCLOSEOUT LIST");
+			CloseoutListService.setCheckList(Long.parseLong(parameters.get("id")),new String[]{parameters.get("asBuilts"),parameters.get("punchList"),parameters.get("permits"),parameters.get("closeOutPhoto"),parameters.get("revisions"),parameters.get("mechanicalInspection"),parameters.get("electricInspection"),parameters.get("plumbingInspection"),parameters.get("fireSprinklerInspection"),parameters.get("ansulInspection"),parameters.get("buildingInspection"),parameters.get("alarmForm"),
+												parameters.get("hvacShutDown"),parameters.get("airGas"),parameters.get("hvacForm"),parameters.get("salvageValue"),parameters.get("mulvannyPunchList"),parameters.get("substantialCompletion"),parameters.get("subcontractorWarranty"),parameters.get("mcsWarranty"),parameters.get("lienRelease"),parameters.get("confirmCOs"),parameters.get("g704"),parameters.get("g706"),parameters.get("g706a")});
 		}
 		// Very aggressive request
 		else if(action.equals("getAllProjects"))

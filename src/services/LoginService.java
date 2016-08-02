@@ -2,8 +2,6 @@ package services;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import objects.HashGen;
 import objects.HibernateUtil;
 
@@ -37,14 +35,5 @@ public class LoginService
 			loggedIn = false;
 		
 		return loggedIn;
-	}
-	
-	public static boolean verify(HttpServletRequest request)
-	{
-		if(request.getSession().getAttribute("verified") == null) return false;
-		if(!request.getSession().getAttribute("verified").equals("true")) return false;
-		if(request.getSession().getAttribute("user") == null) return false;
-		System.out.println(request.getSession().getAttribute("user") + " session: " + request.getSession().getAttribute("verified"));
-		return true;
 	}
 }

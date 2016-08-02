@@ -953,7 +953,7 @@ function convertPermit(param)
 	else if(param == '4')
 		return "Closed";
 	else
-		return "---";
+		return "Undefined!";
 }
 
 
