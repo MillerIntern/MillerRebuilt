@@ -11,6 +11,7 @@ import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.TransactionException;
 import org.hibernate.criterion.Order;
 
 import com.google.gson.Gson;
@@ -45,7 +46,8 @@ public class ProjectObjectService
 		
 		//Get all objects of type "domain"
         Query q = session.createQuery("from "+domain);
-        List<Object> list = q.list();
+        @SuppressWarnings("unchecked")
+		List<Object> list = q.list();
         tx.commit();
         
         return list;
@@ -63,7 +65,17 @@ public class ProjectObjectService
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+			
+			tx.commit();
+			return "ERROR";
+		}
 		Class<?> c;
 		
 		try 
@@ -101,7 +113,12 @@ public class ProjectObjectService
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
 			}
-	
+			/*else if(domain.equals("Post"))
+			{
+				criteria.createAlias("post", "c");
+				criteria.addOrder(Order.asc("c.postDate"));
+			}*/
+			
 	        List<?> list = criteria.list();
 	        tx.commit();
 

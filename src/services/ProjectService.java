@@ -8,17 +8,22 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.google.gson.Gson;
 
+import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
 import projectObjects.Equipment;
@@ -27,6 +32,7 @@ import projectObjects.EquipmentVendor;
 import projectObjects.Inspections;
 import projectObjects.Permits;
 import projectObjects.Person;
+import projectObjects.Post;
 import projectObjects.Project;
 import projectObjects.ProjectClass;
 import projectObjects.ProjectItem;
@@ -40,7 +46,6 @@ import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
-import services.helpers.ProjectInformationFiller;
 import services.helpers.SalvageValueFiller;
 
 
@@ -128,8 +133,8 @@ public class ProjectService extends ProjectObjectService
 		String notes = params.get("notes");
 
 		//Create and persist change orders if they exist
-		String changeOrderJsonString = params.get("coItems");
-		HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
+		//String changeOrderJsonString = params.get("coItems");
+		//HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
 				
 		//assign values to dates, if they are not null
 		Date finitiatedDate = null;
@@ -725,6 +730,22 @@ public class ProjectService extends ProjectObjectService
 		return g.toJson(map);
 	}
 	
+	public static String getAllPostsAsJson()
+	{
+		//HashMap<String, String> map = new HashMap<String, String>();
+		Session session = HibernateUtil.getSession();
+		Gson gson = new Gson();
+		String posts = "FROM projectObjects.Post";
+		Query query = session.createQuery(posts);
+		
+		@SuppressWarnings("unchecked")
+		List<Post> results = query.list();
+		
+		Collections.sort(results);
+		
+		return gson.toJson(results);
+	}
+	
 	public static String getAllEnumsEquipAsJson()
 	{
 		Gson g = new Gson();
@@ -1032,5 +1053,19 @@ public class ProjectService extends ProjectObjectService
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullChangeOrders();
+	}
+
+	/**
+	 * @param parameters 
+	 * @return
+	 */
+	public static String postNewPost(Map<String, String> parameters, String author) throws ClassNotFoundException, ParseException
+	{
+		Date date = new Date();
+		Post post = new Post(date, parameters.get("title"), parameters.get("text"), author);
+		
+		ProjectObjectService.addObject("Post", post);
+		
+		return "success";
 	}	
 }

@@ -8,6 +8,8 @@ html{
 body{
 	background: #4F79DD;
     background: radial-gradient(#4f79FF 0%, #4F69BB 100%) fixed;
+        font-family: 'Raleway',sans-serif; 
+    
 }
 
 #menuTable
@@ -88,11 +90,18 @@ body{
     font-size: 62px; 
     margin: 0 0 20px; 
     line-height: 0.2em;
-    text-shadow: 10px 6px 10px rgba(30, 30, 30, .50);
+   // text-shadow: 10px 6px 10px rgba(30, 30, 30, .50);
+   	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;  
+	cursor: default;
 }
 
 ul {list-style-type: none; padding: 0; margin: 0;}
-#navBar
+ul
 {
     list-style-type: none;
     margin: 0;
@@ -109,7 +118,7 @@ ul {list-style-type: none; padding: 0; margin: 0;}
     border-right: solid 3px #1d1d1d;  
 }
 
-#navBar li
+li
 {
     /*display: inline;*/
     float: left;
@@ -119,13 +128,13 @@ ul {list-style-type: none; padding: 0; margin: 0;}
     border-right: 1.5px solid #555555;    
 }
 
-#navBar li:last-child
+li:last-child
 {
     border-left: 1.5px solid #555555;
     border-right: none;
 }
 
-#navBar li a, #navBar .dropbtn
+li a, .dropbtn
 {
     display: block;
     color: white;
@@ -135,12 +144,12 @@ ul {list-style-type: none; padding: 0; margin: 0;}
    
 }
 
-#navBar li a:hover:not(.active), #navBar .dropdown:hover .dropbtn
+li a:hover:not(.active), .dropdown:hover .dropbtn
 {
     background-color: #1F1F1F;   
 }
 
-#navBar li.dropdown
+li.dropdown
 {
     display: block;
 }

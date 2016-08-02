@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import objects.RequestHandler;
-import services.CloseoutListService;
+import services.LoginService;
 import services.ProjectObjectService;
 import services.ProjectService;
 import services.QueryService;
@@ -64,6 +64,7 @@ public class Project extends HttpServlet
      */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
+		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		resp.setContentType("application/json");
 		out = resp.getWriter();
 		String response = "";
@@ -205,21 +206,6 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
-		/**
-		 * this one doesnt work. It actually wipes all required information from a project
-		 */
-		else if(action.equals("editProjectInfo"))
-		{
-			/*Long projectID = Long.parseLong(parameters.get("projectID"));
-			try
-			{
-				//ProjectService.editProjectInformation(projectID, parameters);
-			}
-			catch(ClassNotFoundException | ParseException e)
-			{
-				e.printStackTrace();
-			}*/
-		}
 		else if(action.equals("addChangeOrder"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
@@ -265,17 +251,35 @@ public class Project extends HttpServlet
 		{
 			response = ProjectService.getAllEnumsEquipAsJson();
 		}
-		else if(action.equals("setCloseoutList"))
-		{
-			System.out.println("in SetCLOSEOUT LIST");
-			CloseoutListService.setCheckList(Long.parseLong(parameters.get("id")),new String[]{parameters.get("asBuilts"),parameters.get("punchList"),parameters.get("permits"),parameters.get("closeOutPhoto"),parameters.get("revisions"),parameters.get("mechanicalInspection"),parameters.get("electricInspection"),parameters.get("plumbingInspection"),parameters.get("fireSprinklerInspection"),parameters.get("ansulInspection"),parameters.get("buildingInspection"),parameters.get("alarmForm"),
-												parameters.get("hvacShutDown"),parameters.get("airGas"),parameters.get("hvacForm"),parameters.get("salvageValue"),parameters.get("mulvannyPunchList"),parameters.get("substantialCompletion"),parameters.get("subcontractorWarranty"),parameters.get("mcsWarranty"),parameters.get("lienRelease"),parameters.get("confirmCOs"),parameters.get("g704"),parameters.get("g706"),parameters.get("g706a")});
-		}
 		// Very aggressive request
 		else if(action.equals("getAllProjects"))
 		{
 			System.out.println("getting the projects!");
 			response = ProjectService.getAllProjectsAsJson();
+		}
+		else if(action.equals("postPost"))
+		{
+			try {
+				response = ProjectService.postNewPost(parameters, (String)req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("getPosts"))
+		{
+			try
+			{
+				System.out.println("getting posts");
+				response = ProjectService.getAllPostsAsJson();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		
 		if(!action.equals("getAllProjects"))

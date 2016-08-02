@@ -99,3 +99,9 @@ function goHome()
 {
 	document.location.href = 'homepage.html';
 }
+
+function returnToLogin()
+{
+	if(confirm("Login Session has expired. Would you like to relogin?"))
+		window.location.href = "index.html";
+}

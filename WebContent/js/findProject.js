@@ -57,6 +57,7 @@ function getDropdownFields()
 		},
 		success: function(data)
 		{
+			if(typeof data == 'string' && data.slice(0,-1) == 'VERIFICATION_FAILURE') {returnToLogin(); return;} 
 
 			fillDropdowns(data);
 			console.log("ready");

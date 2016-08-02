@@ -4,32 +4,49 @@
 <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
 <link href="css/theme/currentTheme/homepage.css" type="text/css" rel="stylesheet" />
 <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="js/jquery.js" ></script>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/homepage.js"></script>
+
 <meta charset="UTF-8">
 <title>Miller Home</title>
 </head>
     
-<body>
-<div class="center">
-    <div class="header">
-        <p class="title">Miller Home</p>
-        <p class="subtitle">Hello!</p>
-    </div>
-
-    <br>
-        <button onClick="document.location.href='triggers.html'" 
-            class="button"><span>Triggers </span></button>
-        <button onClick="document.location.href='query.html'" 
-            class="button"><span>Reports </span></button> 
-        <br>
-        <button onClick="document.location.href='projectData.html'" 
-            class="button"><span>Add Project </span></button> 
-        <button onClick="document.location.href='editSelect.html'" 
-            class="button"><span>Edit Projects </span></button> 
-        <br>
-        <button onClick="document.location.href='findProject.html'" 
-        	class="button"><span>Find Projects</span></button>
-        <button onClick="document.location.href='logout.html'" 
-            class="button"><span>Logout</span></button>  
+<body onload="loadPosts()">
+<div class="header">
+    <p class="title">Miller Home</p>
 </div>
+
+<ul style="margin-top: 24px;" class="side-borders">
+    <li><a class='active' onClick="document.location.href='homepage.html'">Home</a></li>
+    <li class="dropdown">
+    <a class="dropbtn">Projects</a>
+    <div class="dropdown-content">
+        <a onClick="document.location.href='projectData.html'">Add</a>
+        <a onClick="document.location.href='findProject.html'">Find</a>
+    </div></li>
+    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+    <li><a onClick="document.location.href='query.html'">Reports</a></li>
+    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+</ul>
+<div id="container">
+<div id="postsField">
+	<button id="createPost" onclick="createPost()">+</button>
+	<ul id="posts">
+		<li id="newPost">
+            <input placeholder="New Post Title" type="text" id="newPostTitle" /><br><br>
+            <textarea id="newPostText"></textarea><br><br>
+            <button class="postButtons" onClick="submit()">Submit</button><button class="postButtons" onClick="discard()">Discard</button>
+		</li>
+	</ul>
+</div>
+<div id="globalTriggers">
+	<ul id="alerts">
+		<li></li>
+	</ul>
+</div>
+</div>
+
 </body>
 </html>
