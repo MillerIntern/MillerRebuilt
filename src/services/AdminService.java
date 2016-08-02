@@ -16,7 +16,7 @@ import com.google.gson.Gson;
  * @author Alex Campbell
  *
  */
-public class AdminService 
+public class AdminService
 {
 	/**
 	 * This class adds a permission to the database
