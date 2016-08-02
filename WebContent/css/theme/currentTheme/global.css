@@ -31,7 +31,7 @@ body{
 	color: white;
 	font-size: 120%;
     border-radius: 10px;
-        -webkit-transition: ease-in-out all .4s;
+	-webkit-transition: ease-in-out all .4s;
     
 }
 
@@ -74,45 +74,32 @@ body{
 /* Title and subtitle should usually be inside a div with this specified class */ 
 .header
 {
-    margin-top: 4%;
-    text-align: center;
+    margin-top: 3%;
 }
 
 /* Formatting for title text and subtitle text */
 .title
 {
-	text-align:center;
-	font-size: 250%;
+	text-align:left;
 	font-weight: bold;
     white-space: nowrap;
     color: #fEfEfE; 
     font-family: 'Raleway',sans-serif; 
     font-size: 62px; 
-    font-weight: 800; 
-    line-height: 72px; 
-    margin: 0 0 24px; 
-    text-align: center; 
-    line-height: 0.3em;
-    text-shadow: 10px 6px 10px rgba(30, 30, 30, .75);
+    margin: 0 0 20px; 
+    line-height: 0.2em;
+    text-shadow: 10px 6px 10px rgba(30, 30, 30, .50);
 }
 
-.subtitle
-{
-    color: #ffffff; 
-    font-family: 'Raleway',sans-serif;
-    font-size: 24px; font-weight: 800; 
-    line-height: 36px; 
-    text-align: center;
-    text-shadow: 10px 6px 12px rgba(30, 30, 30, .5);
-}
-
-ul
+ul {list-style-type: none; padding: 0; margin: 0;}
+#navBar
 {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    width: 100%;
     
 }
 
@@ -122,7 +109,7 @@ ul
     border-right: solid 3px #1d1d1d;  
 }
 
-li
+#navBar li
 {
     /*display: inline;*/
     float: left;
@@ -132,28 +119,28 @@ li
     border-right: 1.5px solid #555555;    
 }
 
-li:last-child
+#navBar li:last-child
 {
     border-left: 1.5px solid #555555;
     border-right: none;
 }
 
-li a, .dropbtn
+#navBar li a, #navBar .dropbtn
 {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 14px 20px;
+    padding: 8px 24px;
     -webkit-transition: ease-in-out all .3s;
    
 }
 
-li a:hover:not(.active), .dropdown:hover .dropbtn
+#navBar li a:hover:not(.active), #navBar .dropdown:hover .dropbtn
 {
     background-color: #1F1F1F;   
 }
 
-li.dropdown
+#navBar li.dropdown
 {
     display: block;
 }
@@ -163,7 +150,7 @@ li.dropdown
     display:none;
     position: absolute;
     background-color: #4F4F4F;
-    min-width: 150px;
+    min-width: 126px;
     text-decoration: none;
     z-index: 1;
     

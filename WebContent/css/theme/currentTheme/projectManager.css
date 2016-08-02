@@ -1,3 +1,8 @@
+.container
+{
+	width: 100%;
+}
+
 ul.tabs
 {
     margin: 0px;
@@ -7,7 +12,7 @@ ul.tabs
 }
 ul.tabs li
 {
-    background: none;
+    background-color: gray;
     color: #222;
     display: inline-block;
     padding: 10px 15px;
@@ -15,7 +20,7 @@ ul.tabs li
     font-family: 'Raleway',sans-serif;
     font-size: 20px; 
     font-weight: 350;
-    transition: all 0.6s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 ul.tabs li:last-child
