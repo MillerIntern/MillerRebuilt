@@ -14,6 +14,8 @@ public class PermitsFiller
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
+		
+		System.out.println(params);
 		Date buildingPermit = null;
 		if(!params.get("building_p").isEmpty())
 			buildingPermit = formatter.parse(params.get("building_p"));

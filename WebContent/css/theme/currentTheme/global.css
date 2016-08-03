@@ -8,7 +8,7 @@ html{
 body{
 	background: #4F79DD;
     background: radial-gradient(#4f79FF 0%, #4F69BB 100%) fixed;
-        font-family: 'Raleway',sans-serif; 
+    font-family: 'Raleway',sans-serif; 
     
 }
 
@@ -110,6 +110,7 @@ ul
     background-color: #333;
     width: 100%;
     
+    
 }
 
 .side-borders
@@ -141,6 +142,13 @@ li a, .dropbtn
     text-decoration: none;
     padding: 8px 24px;
     -webkit-transition: ease-in-out all .3s;
+    -webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;  
+	cursor: default;
    
 }
 

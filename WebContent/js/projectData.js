@@ -389,19 +389,142 @@ function addProject()
     // verisae = verisaeReportDate
 
     var closeoutDocumentsNotes = $("#closeoutDocumentsNotes").val();
+   
+    /* Fill in dumb data if */
+    if(PROJECT_DATA == null)
+    {
+    	PROJECT_DATA = 
+    	{
+			"permits" :
+			{
+				'building': null, 
+				'buildingPermitStatus': 0,
+				'buildingInspectionStatus': 0,
+				'buildingInspectionLastUpdated': null,
+				'buildingNotes': "",
+				
+				'mechanical' : null,
+				'mechanicalPermitStatus': 0,
+				'mechanicalInspectionStatus': 0,
+				'mechanicalInspectionLastUpdated': null,
+				'mechanicalNotes': "",
+				
+				'electrical': null,
+				'electricalPermitStatus': 0,
+				'electricalInspectionStatus': 0,
+				'electricalInspectionLastUpdated': null,
+				'electricalNotes': "",
+				
+				'plumbing': null,
+				'plumbingPermitStatus': 0,
+				'plumbingInspectionStatus': 0,
+				'plumbingInspectionLastUpdated': null,
+				'plumbingNotes': "",
+				
+				'fire_sprinkler': null,
+				'sprinklerPermitStatus': 0,
+				'sprinklerInspectionStatus': 0,
+				'sprinklerInspectionLastUpdated': null,
+				'sprinklerNotes': "",
+				
+				'fire_alarm': null, 
+				'fireAlarmPermitStatus': 0,
+				'fireAlarmInspectionStatus': 0,
+				'fireAlarmInspectionLastUpdated': null,
+				'fireAlarmNotes': "",
+				
+				'low_voltage': null,
+				'voltagePermitStatus': 0,
+				'voltageInspectionStatus': 0,
+				'voltageInspectionLastUpdated': null,
+				'voltageNotes': "",
+				
+				'roofing': null,
+				'roofingPermitStatus': 0,
+				'roofingInspectionStatus': 0,
+				'roofingInspectionLastUpdated': null,
+				'roofingNotes': "",
+				
+				'otherAPermit': null,
+				'otherAPermitStatus': 0,
+				'otherAInspectionStatus': 0,
+				'otherAInspectionLastUpdated': null,
+				'otherANotes': "",
+				
+				'otherBPermit': null,
+				'otherBPermitStatus': 0,
+				'otherBInspectionStatus': 0,
+				'otherBInspectionLastUpdated': null,
+				'otherBNotes': "",
+			},
+    	}
+    }
+    else
+    {
+    	if(PROJECT_DATA.permits.building == undefined)
+    		PROJECT_DATA.permits.building = null;
+    	if(PROJECT_DATA.permits.buildingInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.buildingInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.mechanical == undefined)
+    		PROJECT_DATA.permits.mechanical = null;
+    	if(PROJECT_DATA.permits.mechanicalInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.mechanicalInspectionLastUpdated = null;
+
+    	if(PROJECT_DATA.permits.electrical == undefined)
+    		PROJECT_DATA.permits.electrical = null;
+    	if(PROJECT_DATA.permits.electricalInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.electricalInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.plumbing == undefined)
+    		PROJECT_DATA.permits.plumbing = null;
+    	if(PROJECT_DATA.permits.plumbingInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.plumbingInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.fire_sprinkler == undefined)
+    		PROJECT_DATA.permits.fire_sprinkler = null;
+    	if(PROJECT_DATA.permits.sprinklerInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.sprinklerInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.fire_alarm == undefined)
+    		PROJECT_DATA.permits.fire_alarm = null;
+    	if(PROJECT_DATA.permits.fireAlarmInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.fireAlarmInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.low_voltage == undefined)
+    		PROJECT_DATA.permits.low_voltage = null;
+    	if(PROJECT_DATA.permits.voltageInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.voltageInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.roofing == undefined)
+    		PROJECT_DATA.permits.roofing = null;
+    	if(PROJECT_DATA.permits.roofingInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.roofingInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.otherAPermit == undefined)
+    		PROJECT_DATA.permits.otherAPermit = null;
+    	if(PROJECT_DATA.permits.otherAInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.otherAInspectionLastUpdated = null;
+    	
+    	if(PROJECT_DATA.permits.otherBPermit == undefined)
+    		PROJECT_DATA.permits.otherBPermit = null;
+    	if(PROJECT_DATA.permits.otherBInspectionLastUpdated == undefined)
+    		PROJECT_DATA.permits.otherBInspectionLastUpdated = null;
+    }
+    console.log(PROJECT_DATA);
     ////////////// END NEW CONTENT
 
     // Probably going to get rid of this
 	var k = 0;
 	for(var i= 0;i<vendor_eqArray.length;i++)
+	{
+		if(eqpid_array[i]== PROJECT_ID)
 		{
-			if(eqpid_array[i]== PROJECT_ID)
-				{
-				new_equip[k] = i; 
-				k++;
-				console.log(k);
-				}
+		new_equip[k] = i; 
+		k++;
+		console.log(k);
 		}
+	}
 	
 	
 	
@@ -526,14 +649,66 @@ function addProject()
 				'health' : health, 
 				
 				//Permit Data
-				'permitsID':PERMITS_ID,
-				'building_p':building_p, 
-				'mechanical_p' :mechanical_p, 
-				'electrical_p':electrical_p, 
-				'plumbing_p':plumbing_p,
-				'fireSprinkler_p':fireSprinkler_p,
-				'fireAlarm_p':fireAlarm_p, 
-				'lowVoltage_p':lowVoltage_p,
+				'permitsID': PROJECT_DATA.permits.id,
+				'building_p':PROJECT_DATA.permits.building, 
+				'buildingPermitStatus': PROJECT_DATA.permits.buildingPermitStatus,
+				'buildingInspectionStatus': PROJECT_DATA.permits.buildingInspectionStatus,
+				'buildingInspectionLastUpdated': PROJECT_DATA.permits.buildingInspectionLastUpdated,
+				'buildingNotes': PROJECT_DATA.permits.buildingNotes,
+				
+				'mechanical_p' :PROJECT_DATA.permits.mechanical,
+				'mechanicalPermitStatus': PROJECT_DATA.permits.mechanicalPermitStatus,
+				'mechanicalInspectionStatus': PROJECT_DATA.permits.mechanicalInspectionStatus,
+				'mechanicalInspectionLastUpdated': PROJECT_DATA.permits.mechanicalInspectionLastUpdated,
+				'mechanicalNotes': PROJECT_DATA.permits.mechanicalNotes,
+				
+				'electrical_p':PROJECT_DATA.permits.electrical,
+				'electricalPermitStatus': PROJECT_DATA.permits.electricalPermitStatus,
+				'electricalInspectionStatus': PROJECT_DATA.permits.electricalInspectionStatus,
+				'electricalInspectionLastUpdated': PROJECT_DATA.permits.electricalInspectionLastUpdated,
+				'electricalNotes': PROJECT_DATA.permits.electricalNotes,
+				
+				'plumbing_p':PROJECT_DATA.permits.plumbing,
+				'plumbingPermitStatus': PROJECT_DATA.permits.plumbingPermitStatus,
+				'plumbingInspectionStatus': PROJECT_DATA.permits.plumbingInspectionStatus,
+				'plumbingInspectionLastUpdated': PROJECT_DATA.permits.plumbingInspectionLastUpdated,
+				'plumbingNotes': PROJECT_DATA.permits.plumbingNotes,
+				
+				'fireSprinkler_p': PROJECT_DATA.permits.fire_sprinkler,
+				'sprinklerPermitStatus': PROJECT_DATA.permits.sprinklerPermitStatus,
+				'sprinklerInspectionStatus': PROJECT_DATA.permits.sprinklerInspectionStatus,
+				'sprinklerInspectionLastUpdated': PROJECT_DATA.permits.sprinklerInspectionLastUpdated,
+				'sprinklerNotes': PROJECT_DATA.permits.sprinklerNotes,
+				
+				'fireAlarm_p': PROJECT_DATA.permits.fire_alarm, 
+				'fireAlarmPermitStatus': PROJECT_DATA.permits.fireAlarmPermitStatus,
+				'fireAlarmInspectionStatus': PROJECT_DATA.permits.fireAlarmInspectionStatus,
+				'fireAlarmInspectionLastUpdated': PROJECT_DATA.permits.fireAlarmInspectionLastUpdated,
+				'fireAlarmNotes': PROJECT_DATA.permits.fireAlarmNotes,
+				
+				'lowVoltage_p': PROJECT_DATA.permits.low_voltage,
+				'voltagePermitStatus': PROJECT_DATA.permits.voltagePermitStatus,
+				'voltageInspectionStatus': PROJECT_DATA.permits.voltageInspectionStatus,
+				'voltageInspectionLastUpdated': PROJECT_DATA.permits.voltageInspectionLastUpdated,
+				'voltageNotes': PROJECT_DATA.permits.voltageNotes,
+				
+				'roofingPermit': PROJECT_DATA.permits.roofing,
+				'roofingPermitStatus': PROJECT_DATA.permits.roofingPermitStatus,
+				'roofingInspectionStatus': PROJECT_DATA.permits.roofingInspectionStatus,
+				'roofingInspectionLastUpdated': PROJECT_DATA.permits.roofingInspectionLastUpdated,
+				'roofingNotes': PROJECT_DATA.permits.roofingNotes,
+				
+				'otherPermitA': PROJECT_DATA.permits.otherAPermit,
+				'otherAPermitStatus': PROJECT_DATA.permits.otherAPermitStatus,
+				'otherAInspectionStatus': PROJECT_DATA.permits.otherAInspectionStatus,
+				'otherAInspectionLastUpdated': PROJECT_DATA.permits.otherAInspectionLastUpdated,
+				'otherANotes': PROJECT_DATA.permits.otherANotes,
+				
+				'otherBPermit': PROJECT_DATA.permits.otherBPermit,
+				'otherBPermitStatus': PROJECT_DATA.permits.otherBPermitStatus,
+				'otherBInspectionStatus': PROJECT_DATA.permits.otherBInspectionStatus,
+				'otherBInspectionLastUpdated': PROJECT_DATA.permits.otherBInspectionLastUpdated,
+				'otherBNotes': PROJECT_DATA.permits.otherBNotes,
 				
 				//Equipment Data
 				'vendor_eq': JSON.stringify(vendor_eqArray),
@@ -708,9 +883,9 @@ function createConfirmWindow()
 		width: 450,
 		modal: true,
 		buttons: {
-			"Continue Working": function() {
+			"Go to Project Manager": function() {
 				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;//TODO: How to get project id!
+				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
 			},
 			"Go to Home Page": function() {
 				window.location.href="homepage.html";

@@ -42,7 +42,8 @@ public class ProposalObjectService
 		
 		//Get all objects of type "domain"
         Query q = session.createQuery("from "+domain);
-        List<Object> list = q.list();
+        @SuppressWarnings("unchecked")
+		List<Object> list = q.list();
         tx.commit();
         
         return list;
@@ -61,6 +62,8 @@ public class ProposalObjectService
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
+		
+		@SuppressWarnings("rawtypes")
 		Class c;
 		try 
 		{
@@ -111,6 +114,8 @@ public class ProposalObjectService
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
+		
+		@SuppressWarnings("rawtypes")
 		Class c;
 		try 
 		{
@@ -162,6 +167,7 @@ public class ProposalObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get the Class from parsing the "domain" string.
+		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("proposalObjects."+domain);
 		
 		//Get object from database that matches the id
@@ -185,6 +191,8 @@ public class ProposalObjectService
 
 		Object o;	
 		Gson gson= new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		
+		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("proposalObjects."+domain);
 		
 		//When convering dates to JSON format, don't use units smaller than days
@@ -218,6 +226,8 @@ public class ProposalObjectService
 		int success = IS_OWNED_BY_OTHER_OBJECT;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
+		
+		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("proposalObjects."+domain);
 		
 		//Attempt to delete the object
@@ -311,6 +321,7 @@ public class ProposalObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get object from database
+		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("proposalObjects."+domain);
 		
 		ProjectObject oldObject2 = (ProjectObject) session.get(c, id);

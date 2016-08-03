@@ -37,13 +37,15 @@
 		<li id="newPost">
             <input placeholder="New Post Title" type="text" id="newPostTitle" /><br><br>
             <textarea id="newPostText"></textarea><br><br>
-            <button class="postButtons" onClick="submit()">Submit</button><button class="postButtons" onClick="discard()">Discard</button>
+            <button class="postButtons" onClick="submit()">Submit</button><button id="discardButton" class="postButtons" onClick="discard()">Discard</button>
 		</li>
 	</ul>
 </div>
 <div id="globalTriggers">
 	<ul id="alerts">
-		<li></li>
+		<li id="globalTriggersTitle"><p>Quick Tools</p></li>
+		<li id="allReports" onclick="generateAllReports()"><p>Generate All Reports</p></li>
+		<li id="generateReports" onclick="generateReports()"><p>Generate Meeting Reports</p></li>
 	</ul>
 </div>
 </div>

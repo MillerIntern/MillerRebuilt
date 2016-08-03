@@ -57,12 +57,12 @@ public class QueryService
 		Iterator<String> iter = paramNames.iterator();
 		//handles if how criteria for regions is added
 		boolean manyRegions = false;
-		SimpleExpression init = null;
+		/*SimpleExpression init = null;
 		SimpleExpression costco = null;
 		SimpleExpression proposal = null;
 		SimpleExpression schStart = null;
 		SimpleExpression schturnOver = null;
-		SimpleExpression actTurnOver = null;
+		SimpleExpression actTurnOver = null;*/
 		
 		
 		//Add the criteria that is concerned with object ids
@@ -190,6 +190,7 @@ public class QueryService
 		criteria.setResultTransformer(Criteria.ROOT_ENTITY);
 		
 		//Execute the query and return the results
+		@SuppressWarnings("unchecked")
 		List<Project> projects = criteria.list();
 		return projects;
 	}
@@ -259,6 +260,8 @@ public class QueryService
 		Criterion ret = null;
 		List<String> dataList = convertStringToList(map.get(propertyName)[0]);
 		System.out.println(dataList.toString());
+		
+		@SuppressWarnings("unused")
 		List<String> comparisonList = convertStringToList(map.get(propertyName+"Relation")[0]);
 		boolean isAnd = false;
 		
@@ -272,7 +275,7 @@ public class QueryService
 			{
 				System.out.println("Gets here!!!");
 					String date = dataList.get(i);
-					String relation = comparisonList.get(i);
+					//String relation = comparisonList.get(i);
 					
 					Date d1 = formatter.parse(date);
 					Date d2 = formatter.parse(dataList.get(i+1));
@@ -318,6 +321,7 @@ public class QueryService
 	{	
 		
 		//Put parameter names in an array
+		@SuppressWarnings("serial")
 		ArrayList<String> paramNames = new ArrayList<String>() {{
 		    add("warehouse.id");
 		    add("stage.id");
@@ -349,6 +353,7 @@ public class QueryService
 		}
 		
 		//Get results and convert them to a json array
+		@SuppressWarnings("unchecked")
 		List<Project> results = criteria.list();
 		System.out.println("size is: " + results.size());
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
@@ -369,6 +374,7 @@ public class QueryService
 	 */
 	public static Object getObjectByValues(Object [] values, String [] columns, String domain) throws ClassNotFoundException
 	{
+		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("projectObjects."+domain);
 		Criteria criteria = HibernateUtil.getSession().createCriteria(c);
 
@@ -380,6 +386,7 @@ public class QueryService
 		}
 		
 		Object o = null;
+		@SuppressWarnings("rawtypes")
 		List l = criteria.list();
 		if (l != null && l.size() > 0)
 			o = l.get(0);

@@ -10,11 +10,13 @@
 	float: left;
 	width: 70%;
 	height: 500px;
-	background-color: dimgray;
+	background-color: rgba(0, 0, 0, 0.0);
+	//background-color: dimgray;
 	overflow-y: auto;
-	-webkit-box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
-	-moz-box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
-	box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
+	overflow-x: hidden;
+	//-webkit-box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
+	//-moz-box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
+	//box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
 }
 
 #globalTriggers
@@ -22,32 +24,35 @@
 	float: right;
 	height: 500px;
 	width: 29%;
-	background-color: gray;
+	background-color: #3F3F3F;
 	-webkit-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
+	overflow-y: auto;
 }
 
 #posts
 {
-	background-color: gray;
+	//background-color: gray;
+		background-color: rgba(0, 0, 0, 0.0);
 	padding: 0;
 	margin: 0;
 }
 
 #posts li
 {
-	background-color: dimgray;
+	background-color: gray;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 	border-bottom: 1.5px solid #444444;
 	-webkit-transition: ease-in-out all .2s;
+	border-radius: 24px 0 0 24px;
 }
 
 #posts li:hover:not(.isHidden)
 {
-	background-color: #676767;
+	background-color: #868686;
 }
 
 #posts p
@@ -58,15 +63,19 @@ box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 #posts .postTitle
 {
 	width: 100%;
-	text-align: left;
-	margin-left: 256px;
+	text-align: center;
 	font-weight: bold;
 	font-size: 20px;	
 }
 
 #posts .isHidden
 {
-	background-color: #5D5D5D;
+	background-color: #6F6F6F;
+}
+
+#posts .isHidden:hover
+{
+	background-color: #676767;
 }
 
 #posts .postText, #posts .author
@@ -75,7 +84,6 @@ box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 	padding: 0px 8px;
 	font-size: 18px;
 	line-height: 1.1em;
-	//margin-top: 30px;
 }
 
 #posts li:nth-child(2) > p.postText
@@ -94,18 +102,21 @@ box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 	margin-top: 0px;
 	left: 8px;
 	font-size: 16px;
+	height: 30px;
 	padding: 8px 8px;
 	position: absolute;
-	background-color: dimgray;
+	background-color: gray;
 	border: 0;
 	border-right: 1px solid #444444;
 	border-bottom: 1px solid #444444;
 	outline: 0;
+	-webkit-transition: ease-in-out all .2s;
+	border-radius: 24px 0 0 0;
 }
 
 #createPost:hover
 {
-	background-color: gray;
+	background-color: dimgray;
 }
 
 #newPost
@@ -137,9 +148,78 @@ box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 .postButtons
 {
 	float: left;
-	margin-left: 8px;
+	margin-left: 16px;
 	margin-bottom: 8px;
 	font-size: 16px;
-	padding: 8px 8px;
-	
+	padding: 8px 8px;	
 }
+
+#alerts
+{
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#alerts li
+{	
+	width: 96%;
+	margin-left: 2%;
+	margin-top: 1%;
+	background: #333333;
+	border: 0;
+	border-radius: 16px;
+	-webkit-transition: ease-in-out all .2s;
+}
+
+#alerts li p
+{
+	text-align: center;
+	color: #D4d4d4;
+	width: 100%;
+	line-height: 1.0em;
+	-webkit-transition: ease-in-out all .2s;
+	-webkit-transition: ease-in-out all .3s;
+    -webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;  
+	cursor: pointer;
+}
+
+#alerts li:hover
+{	
+	background-color: #282828;
+}
+
+#alerts li:hover p
+{
+	color: white;
+	text-decoration: underline;
+}
+
+#alerts #globalTriggersTitle
+{
+	margin: 0;
+	width: 100%;
+	border-radius: 0px;
+	background-color: #222222;
+}
+
+#alerts #globalTriggersTitle > p
+{
+	line-height: 1px;
+}
+
+#alerts #globalTriggersTitle:hover
+{
+	background-color: #222222;
+}
+
+#alerts #globalTriggersTitle:hover p
+{
+	text-decoration: none;
+	color: #D4D4D4;
+}
+

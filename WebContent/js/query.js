@@ -5,7 +5,7 @@ var BOOL_RELATIONS = ["and", "or"];
 var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
 var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
-const REPORT_TYPES = ["Weekly","Steve Meyer","South East Refrigeration","North East Refrigeration",
+const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout", "Meeting", "Service + On Hold"];
 
 const REPORT_URL = "Report";
@@ -23,7 +23,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout"};
 
-var REPORT_VALS = {"Weekly":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
+var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service + On Hold" : "OTHER"};
 
@@ -1058,12 +1058,12 @@ function generateReport(reportType)
 	switch(reportType){
 		case PROPOSAL_WEEKLY:
 			stage.push(PROPOSAL_STAGE);
-			title = "Proposals";
+			title = "All Proposals";
 			break;
 			
 		case PROPOSAL_MEETING:
 			stage.push(PROPOSAL_STAGE);
-			title = "Proposals";
+			title = "Meeting Proposals";
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
@@ -1090,7 +1090,7 @@ function generateReport(reportType)
 			break;
 			
 		case ACTIVE_MEETING:
-			title = "Active Projects";
+			title = "Meeting Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_R);
@@ -1119,12 +1119,12 @@ function generateReport(reportType)
 		
 		case BUDGETARY_WEEKLY:
 			stage.push(BUDGETARY_STAGE);
-			title="Weekly Budgetary Projects";
+			title="All Budgetary Projects";
 			break;
 
 		case BUDGETARY_MEETING:
 			stage.push(BUDGETARY_STAGE);
-			title="Budgetary Projects";
+			title="Meeting Budgetary Projects";
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
