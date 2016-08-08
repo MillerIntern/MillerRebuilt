@@ -11,7 +11,7 @@ html{
     margin-bottom: 2%;
     /* To see the outline of the form */
     padding: 1em;
-    border: 1px solid black;
+    border: 1px solid #333333;
     border-radius: 1em;
     background: white;
 }
@@ -86,28 +86,6 @@ input:focus, textarea:focus{
 {
 	margin-bottom: 10px;
 }
-
-/*.equipmenttt
-{
-	position: relative;
-	float:left;
-	margin-left:10%;
-	border-style:solid;
-	padding:7px;
-	border-width: 2px;
-}
-
-.equipmentt
-{
-	position: relative;
-	float:left;
-	margin-left:12%;
-	border-style:solid;
-	padding:7px;
-	border-width: 2px;
-	
-	
-}*/
 
 button
 {

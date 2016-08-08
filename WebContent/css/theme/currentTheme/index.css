@@ -5,12 +5,13 @@
 	margin-top: 15%;
 	width: 360px;
 	padding: 8px;
-	border: 1px solid gray;
+	border: 1px solid dimgray;
 	background: #1d1d1d;
 	color: #FFFFFF;
 	font-family: arial;
 	top: 34px;
 	height: 160px;
+	border-radius: 16px;
 }
 
 input{
@@ -29,3 +30,12 @@ input{
 #loginButton
 {
 	padding: 4px;
+}
+
+#notification
+{
+	margin-top: 30px;
+}
+
+
+

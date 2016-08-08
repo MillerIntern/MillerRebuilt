@@ -10,8 +10,8 @@
 .tab-links  
 {
     width: 175px;
-    border: solid 2px black;
-
+    border-left: solid 2px #252525;
+    border-right: solid 2px #252525;
     border-radius: 8px;
     float:left;
     

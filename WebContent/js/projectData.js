@@ -66,6 +66,10 @@ $(document).ready(function()
 
         
 	PAGETYPE = getParameterByName("type");	
+	if(PAGETYPE == 'edit')
+		$('.title').text("Edit Project");
+	else
+		$('.title').text('Add Project');
 });
 
 //This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
@@ -162,7 +166,7 @@ function generateDropdowns(str, className)
 		}
 		else if(className=="warehouse" || className=="projecteq")
 		{
-			option.innerHTML = json[i].city.name+", "+json[i].state+" -- #"+json[i].warehouseID;
+			option.innerHTML = json[i].city.name+", "+json[i].state;
 		}
 		else
 		{
