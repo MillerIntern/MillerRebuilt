@@ -5,7 +5,7 @@ function logout()
 		type: 'POST',
 		url: 'Logout' 
 	});
-	window.location = '/MillerSite/index.html';
+	window.location.href = 'index.html';
 }
 
 function goBack()

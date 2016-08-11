@@ -43,7 +43,7 @@ public class Login extends HttpServlet
 			HttpSession session = req.getSession(true);
 			session.setAttribute("user", username);
 			session.setAttribute("verified", "true");
-			session.setMaxInactiveInterval(30*60);
+			session.setMaxInactiveInterval(100*60);
 			serverResponse = "true";
 		}
 		else

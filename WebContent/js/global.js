@@ -102,6 +102,7 @@ function goHome()
 
 function returnToLogin()
 {
+	$('.title').text('Login Session Expired!');
 	if(confirm("Login Session has expired. Would you like to relogin?"))
 		window.location.href = "index.html";
 }
