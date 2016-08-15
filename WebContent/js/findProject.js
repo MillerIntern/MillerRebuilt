@@ -69,7 +69,8 @@ function getDropdownFields()
 			$("#paramVal2").empty();
 			$("#paramVal2").append(stageOptions.cloneNode(true));
 			$(".project").html("Loading...");
-			filterProjects();
+			
+			checkInitFilter();			
 			document.body.style.cursor='default';
 		},
 		error: function(xhr)
@@ -102,7 +103,76 @@ function fillDropdowns(data)
 	generateDropdowns(data["type"], parameterFields[5]);
 	generateDropdowns(data["status"], parameterFields[6]);
 	generateDropdowns(data["stage"], parameterFields[7]);
+	
+
 }
+
+function checkInitFilter()
+{
+	if(getParameterByName('id') != '')
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data:
+			{
+				'domain': 'project',
+				'action': 'getManager',
+			},
+			success: function(data)
+			{
+				if(data != '')
+				{
+					$('#paramID1').val('Manager');
+					$("#paramVal1").empty();
+					$("#paramVal1").append(managerOptions.cloneNode(true));
+
+					console.log(document.getElementById('paramVal1'));
+					switch(data)
+					{
+						case "Bart":
+							document.getElementById('paramVal1').value = '14';
+							break;
+						case "Alex":
+							document.getElementById('paramVal1').value = '3';
+							break;
+						case "Andy":
+							document.getElementById('paramVal1').value = '2';
+							break;
+						case "Craig":
+							document.getElementById('paramVal1').value = '12';
+							break;
+						case "Daves":
+							document.getElementById('paramVal1').value = '7';
+							break;
+						case "David":
+							document.getElementById('paramVal1').value = '1';
+							break;
+						case "Jim": 
+							document.getElementById('paramVal1').value = '8';
+							break;
+						case "Joe":
+							document.getElementById('paramVal1').value = '5';
+							break;
+						case "Sai":
+							document.getElementById('paramVal1').value = '10';
+							break;
+						case "Tony":
+							document.getElementById('paramVal1').value = '4';
+							break;
+					}
+					
+					filterProjects();
+
+				}
+			}
+		});
+	}
+	else
+		filterProjects();
+
+}
+
 
 function generateDropdowns(str, className)
 {

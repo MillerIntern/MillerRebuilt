@@ -45,7 +45,7 @@ public class LoginService
 		if(request.getSession().getAttribute("verified") == null) return false;
 		if(!request.getSession().getAttribute("verified").equals("true")) return false;
 		if(request.getSession().getAttribute("user") == null) return false;
-		System.out.println(request.getSession().getAttribute("user") + " session: " + request.getSession().getAttribute("verified"));
+		//System.out.println(request.getSession().getAttribute("user") + " session: " + request.getSession().getAttribute("verified"));
 		return true;
 	}
 }

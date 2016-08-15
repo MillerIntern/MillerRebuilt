@@ -1,15 +1,23 @@
 @CHARSET "ISO-8859-1";
 
+body
+{
+	height: 80%;
+}
+
 #container
 {
 	margin-top: 4px;
+	height: 100%;
+	overflow-y: auto;
+	width: 100%;
 }
 
 #postsField
 {
 	float: left;
 	width: 70%;
-	height: 570px;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0.0);
 	//background-color: dimgray;
 	overflow-y: auto;

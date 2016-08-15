@@ -110,6 +110,11 @@ function discard()
 	$("#newPostText").val("");
 }
 
+function findUserProjects()
+{
+	document.location.href='findProject.html?type=search&id=user'
+}
+
 
 /*
  * Gets Meeting Active Projects in new tab

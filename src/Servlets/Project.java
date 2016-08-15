@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import objects.RequestHandler;
 import services.LoginService;
 import services.ProjectObjectService;
@@ -281,12 +283,48 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("getManager"))
+		{
+			response = getManager(req);
+		}
 		
 		if(!action.equals("getAllProjects"))
 			System.out.println(response);
 		out.println(response);
+	}
+
+	/**
+	 * @param req
+	 * @return
+	 */
+	private String getManager(HttpServletRequest req) 
+	{
+		String username = (String) req.getSession().getAttribute("user");
+		/* UNDEFINED USERS: Alex, Tony, Jim, Craig*/
+		if(username.equals("andy"))
+			username = "Andy";
+		else if(username.equals("joe"))
+			username = "Joe";
+		else if(username.equals("bart"))
+			username ="Bart";
+		else if(username.equals("dwgregory1"))
+			username = "David";
+		else if(username.equals("dschoener"))
+			username = "Daves";
+		else if(username.equals("sai"))
+			username = "Sai";
+		else if(username.equals("alex"))
+			username = "Alex";
+		else if(username.equals("jim"))
+			username = "Jim";
+		else if(username.equals("craig"))
+			username = "Craig";
+		else if(username.equals("tony"))
+			username = "Tony";
+		else username = "";
+		Gson gson = new Gson();
 		
-		
+		return gson.toJson(username);
 	}
 	
 }
