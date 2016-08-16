@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/global.js"></script>
+		<script type="text/javascript" src="js/additions.js"></script>
+
+
+		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
+        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
+                
+		<title>Miller Construction Site</title>
+		<meta charset="UTF-8">
+	</head>
+	
+<body onload='getStates()'>
+    <div class="header">
+        <p class="title">Database Additions</p>
+    </div>
+<br>
+		
+<ul class="side-borders">
+    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
+    <li class="dropdown">
+    <a class="dropbtn">Projects</a>
+    <div class="dropdown-content">
+        <a onClick="document.location.href='projectData.html'">Add</a>
+        <a onClick="document.location.href='findProject.html'">Find</a>
+    </div></li>
+    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
+    <li><a onClick="document.location.href='query.html'">Reports</a></li>
+    <li class="dropdown">
+   		<a class="active" class="dropbtn">Tools</a>
+   		<div class="dropdown-content">
+   			<a onClick="document.location.href='additions.html'">Add To Database</a>
+   		</div></li>
+    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
+</ul><br>
+
+<div class="container">
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="warehouse">Warehouse</li>
+		<li class="tab-link" data-tab="item">Project Item</li>
+	</ul>
+	
+	<div id="warehouse" class="tab-content current">
+		<table>
+			<tr>
+				<td>Warehouse</td><td></td>
+			</tr>
+				
+			<tr>
+				<td>City: </td>        					
+				<td><input id="city" type="text"></td>
+			</tr>
+			<tr>
+				<td>State:</td>        					
+				<td><select id="state"></select></td>
+			</tr>
+			<tr>
+				<td>Region:</td>        					
+				<td><select id="region"><option>NE</option>
+										<option>N</option>
+										<option>NW</option>
+										<option>E</option>
+										<option>W</option>
+										<option>SE</option>
+										<option>S</option>
+										<option>SW</option>
+										<option>MW</option>
+										</select></td>
+			</tr>
+		</table>
+		<button onclick="createWarehouse()">Create New Warehouse</button>		
+	</div>
+	<div id="item" class="tab-content">
+		<table>
+			<tr>
+				<td>Item</td>
+				<td>        
+				</td>
+			</tr>
+			<tr>
+				<td>Name:</td>        					
+				<td><input id="projectItem" type="text"></td>
+			</tr>
+		</table>
+		<button onclick="createItem()">Create New Item</button>		
+		
+	</div>
+</div>
+
+<div id="footer">
+</div>
+</body>
+</html>	

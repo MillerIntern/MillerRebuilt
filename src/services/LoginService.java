@@ -48,4 +48,35 @@ public class LoginService
 		//System.out.println(request.getSession().getAttribute("user") + " session: " + request.getSession().getAttribute("verified"));
 		return true;
 	}
+
+	/**
+	 * @param req
+	 * @return
+	 */
+	public static boolean verifyAdmin(HttpServletRequest req) 
+	{
+		if(req.getSession().getAttribute("isAdmin") == null) return false;
+		if(req.getSession().getAttribute("isAdmin").equals("true")) return true;
+		return false;
+	}
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	public static String isAdmin(String username) 
+	{
+		Criteria criteria = HibernateUtil.getSession().createCriteria(User.class);
+		criteria.add(Restrictions.eqOrIsNull("name", username));
+		
+		@SuppressWarnings("unchecked")
+		List<User> matchingUser = criteria.list();
+		
+		if (matchingUser == null  || matchingUser.size() == 0)
+			return "false";
+		else if (matchingUser.get(0).getPermission().isCanAccessAdminPage())
+			return "true";
+		
+		return "false";
+	}
 }
