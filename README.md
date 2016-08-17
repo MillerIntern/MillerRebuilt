@@ -275,9 +275,9 @@ So when I was given this project and there was very little documentation, almost
 
 Since then I abandoned that tree as it was simply easier start afresh, perhaps Rebuilt? So I cleaned out a lot of random garbage that was in there and created this repository. Since then I've been committing frequently to show the progression of tasks. So now if a new intern wants to see, perhaps, modify the query.js they could check out [Closeout Reports](https://github.com/MillerIntern/MillerRebuilt/commit/bd505b3d186fe6c9ab20fb45b970626193f2fd58) a commit I made after adding the closeout reports to the system. 
 
-So if nothing else, use git so that we have a history to work from so that new interns can arrive and not be given nothing. [Miller Temp](https://github.com/MillerIntern/MillerTemp) is the repository right before the transition and not the repository I was given, if you want to see that one just ask me or something. 
+So if nothing else, use git so that we have a history to work from so that new interns can arrive and not be given nothing. [MillerOld](https://github.com/MillerIntern/MillerOld) is the repository from before it was rebuilt. It's now kept for legacy reasons. 
 
-Let's help future us! 
+Commit yourself to git!
 [/2016, Josh Mackin]
 
 #####Actual Primer Now...
