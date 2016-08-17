@@ -1,4 +1,4 @@
-# MillerTemp
+# Miller Rebuilt
 ####The objective of this file is to explain the system to anyone who is working on it.
 Original Authors: Brian Fitzpatrick and Alex Campbell
 
@@ -6,6 +6,7 @@ Maintenance: Chris Taormino
 
 Summer 2015: Ken Bayron
 
+Vast* Improvements and Rebuilding: Josh Mackin
 
 
 This system is designed to present a front end for a database of projects. The objective is to allow Miller Personel to maintain 
@@ -197,3 +198,6 @@ to add to this document as more things are added to the software. If more inform
 		- For those who are new to mySQL
 			* make sure when you insert values into the Database keep to the already existing format.
 				- ex. if you misspell a state or put a space between the states such as New York the database will crash. 
+				
+				
+*vastness is relative
