@@ -11,8 +11,10 @@
 
 This system is designed to present a front end for a database of projects. The objective is to allow 
 Miller Personnel to maintain and query the database of projects while also generating reports based on 
-the database. The homepage is the first page beyond the login that Miller Personnel will access. 
-The page simply contains the nav bar which is present through the entire application, a plcae to put
+the database. 
+
+The homepage is the first page beyond the login that Miller Personnel will access. 
+The page simply contains the nav bar which is present through the entire application, a place to put
 notes and reminders and quick tools for ease of access. Most of the important functions though are 
 found in the nav bar;
 
@@ -21,25 +23,17 @@ found in the nav bar;
     
 Clicking the button sends you to findProject.html whichs allows the user to query based on any 
 basic project information. The two default fields are kept as Warehouse and Stage as the legacied
-editProject.html had those are required fields. These parameters then filter the 
+editProject.html had those as required fields. These parameters then filter the 
 projects for display.
 
 Clicking any of the displayed projects brings you to that project's projectManager.html page. 
 This page allows the user the change any information inside a project and then save the 
-changes. This  work is done through the projectData.js file. It calls the addProject() 
-function. This function checks to ensure all required fields are filled and then creates a 
-post request. The rest of the fucntions in this file are devoted to filling the data on entry 
-into projectData.html. The  post request in handled by Project.java in Servlets. The doPost() 
-function operates on the action variable in the request. It uses the parameters map in the 
-request to retrieve required information from the database. When submitting changed information 
-to the database, the same function is called but a different if statemnt is invoked. 
+changes. The projectManager page redirects users to other pages so that they can edit complex 
+project information. This information is submitted in ajax requests to our java servlets. 
 
-2015The parameters map is used to get all new information and then ProjectService.java in services is 
-used. The editProject() function is called with all relevant information and it uses hibernate to 
-update the database with all new information. This function creates a new project and then invokes 
-ProjectObjectService.java's editObject() method. This method finds the old project in the database,
-extracts it and then copies all new information from the new project into the old project. The old 
-project is then saved to the database with the new information in it.
+The post request is handled by Project.java in Servlets. The doPost() function operates 
+on the action variable in the request. It uses the parameters map in the request to 
+retrieve required information from the database. 
 
 ###Add Project
 	Add a Project is the page which allows Miller Personel to create a new project in the database.
@@ -51,7 +45,7 @@ the optional information subheading. Though more of the complex information must
 from the projectManager page.
 
 The process by which this information is saved is the same as in the previous paragraph, refer 
-to Edit a Project for more information. The only change woul be that instead of calling the 
+to Edit a Project for more information. The only change would be that instead of calling the 
 editProject() and editObject() methods in ProjectService.java and ProjectObjectService.java 
 respectively, the methods addProject() and addObject() would be called. These methods function 
 slightly differently in that they do not find an existing project in the database but rather
@@ -105,11 +99,11 @@ chain to the website where they are displayed.
 ##Notes on Startup.
 
 	Technologies Required: Java, Javascript/HTML/CSS, Apache Tomcat, A MySQL Server
-	Recommmended Stuffs: Maven, Git, MAMP|WAMP|LAMP
+	Recommmended Stuffs: Maven, Git, MAMP|WAMP|LAMP, Eclipse
 
 There are a few required technologies to work on this project. The first of which is Java which is what
 the entire backend/server is coded in. Javascript/HTML/CSS is also required. Any editor for these technologies 
-is acceptable, Eclipse and Vim have been used on this project so far with success. These tools are of cousre used
+is acceptable, Eclipse and Vim have been used on this project so far with success. These tools are of course used
 for the web development side of the application. 
 
 In addition to these languages, Apache Tomcat is required. This is the webserver that runs our webapp
@@ -185,7 +179,7 @@ Maven uses a file called pom.xml. This file is at the top level of the project a
 Inside the pom.xml file, you will see a number of sections of xml. Most of these are already set up and do not
 need to be touched. But one particular part of xml may need to be changed if newer versions of the software we
 use comes out or need software is required. The section looks like this:
-```
+```xml
 	<dependencies>
  			<dependency>
        				<groupId>org.hibernate</groupId>
@@ -254,27 +248,27 @@ Git	is the technology which allows us to version control our software.
 
 [2016, Josh Mackin] I don't know exactly when this was written but it was written with a good heart. Version control is incredibly important to the project. What I was given to start off with was a zip file full of code with actual compilation errors, tons of problems with the functional requirements of the program and only 4 commits. They were:
 
-```
+```json
 	{
-		title: hi
-		- no description
-		changes: all files added
+		"title": "hi",
+		"description": null,
+		"changes": "all files added"
 	},
 	{
-		title: create initialization.txt
-		- no description
-		changes: added init.txt to the project
+		"title": "create initialization.txt",
+		"description": null,
+		"changes": "added init.txt to the project"
 	},
 	{
-		title: starting out at miller refrig. Help
-		- no description 
-		changes: init.txt now has the text: "UPDATE FREQUENTLY TO GITHUB 
-											DOCUMENT AND COMMENT EVERYTHING"
+		"title": "starting out at miller refrig. Help",
+		"description": null, 
+		"changes": "init.txt now has the text: UPDATE FREQUENTLY TO GITHUB 
+						      DOCUMENT AND COMMENT EVERYTHING"
 	},
 	{
-		title: update init.txt
-		- no description
-		changes: more stuff in init.txt
+		"title": "update init.txt",
+		"description": null,
+		"changes": "more stuff in init.txt"
 	}
 ```
 So when I was given this project and there was very little documentation, almost nothing to work off of. It's almost silly that there are commits asking for help because if we had the entire tree that person could have referred to old code and found solutions there. I'm not saying that asking for help is bad, I'm saying that bad documentation is bad. 
