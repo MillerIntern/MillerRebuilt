@@ -32,13 +32,20 @@ body{
 	color: white;
 	font-size: 120%;
     border-radius: 10px;
-	-webkit-transition: ease-in-out all .4s;
-    
+	-webkit-transition: all .4ss ease-in-out;
+	-moz-transition: all .4ss ease-in-out;
+	-ms-transition: all .4ss ease-in-out;
+	-o-transition: all .4ss ease-in-out;
+	transition: all .4ss ease-in-out;    
 }
 
 #menuTab:hover
 {
-	-webkit-transition: ease-in-out all .4s;
+	-webkit-transition: all .4ss ease-in-out;
+	-moz-transition: all .4ss ease-in-out;
+	-ms-transition: all .4ss ease-in-out;
+	-o-transition: all .4ss ease-in-out;
+	transition: all .4ss ease-in-out;
 	background: grey;
 	cursor: pointer;
 }
@@ -89,7 +96,6 @@ body{
     font-size: 62px; 
     margin: 0 0 20px; 
     line-height: 0.2em;
-   // text-shadow: 10px 6px 10px rgba(30, 30, 30, .50);
    	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none;   /* Chrome/Safari/Opera */
 	-khtml-user-select: none;    /* Konqueror */

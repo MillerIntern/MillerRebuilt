@@ -27,7 +27,6 @@ import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
 import projectObjects.Equipment;
-import projectObjects.EquipmentStatus;
 import projectObjects.EquipmentVendor;
 import projectObjects.Inspections;
 import projectObjects.Permits;
@@ -179,8 +178,8 @@ public class ProjectService extends ProjectObjectService
 		{
 		System.out.println("in equipment");
 		
-		String[][] equipProj = getGSON2DArray(req, "project_eq");
-		String[][] equipComponent = getGSON2DArray(req, "component_eq");
+		//String[][] equipProj = getGSON2DArray(req, "project_eq");
+		//String[][] equipComponent = getGSON2DArray(req, "component_eq");
 		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
 		
 		//String[] equipIDS = getGSONArray(req, "equipIDS");
@@ -189,7 +188,7 @@ public class ProjectService extends ProjectObjectService
 		String[] equipName  = getGSONArray(req, "equipName"); 
 		String[] equipNotes = getGSONArray(req, "notes_eq");
 		
-		String[] equipStatus = getGSONArray(req, "status_eq");
+		//String[] equipStatus = getGSONArray(req, "status_eq");
 		
 		
 		
@@ -203,11 +202,9 @@ public class ProjectService extends ProjectObjectService
 		
 		/*-------Equipment Objects----------*/
 		Equipment equip;
-		Warehouse warehouse_eq;
-		ProjectItem item_eq;
+
 		EquipmentVendor vendor_eq;
-		EquipmentStatus status_eq;
-		
+
 		DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
 
 		
@@ -231,16 +228,12 @@ public class ProjectService extends ProjectObjectService
 			}
 
 			
-			 warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
-			 item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
+			 
 			 vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
-			 status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
 			 	// 2D arrays
 			 
-				equip.setWarehouse(warehouse_eq);
 				equip.setEquipmentVendor(vendor_eq);
-				equip.setProjectItem(item_eq);
-				equip.setEquipStatus(status_eq);
+
 				
 				//Regular Arrays
 				equip.setPO(longEquipPO[i]);
@@ -450,9 +443,9 @@ public class ProjectService extends ProjectObjectService
 		System.out.println("in equipment");
 		// ---------------------------Receiving ARRAYS -----------------------------------------------
 			
-		String[][] equipProj = getGSON2DArray(req, "project_eq");
+		/*String[][] equipProj = getGSON2DArray(req, "project_eq");
 		String[][] equipComponent = getGSON2DArray(req, "component_eq");
-		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
+		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");*/
 
 	 	// 2D arrays
 
@@ -463,7 +456,7 @@ public class ProjectService extends ProjectObjectService
 		String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
 		String[] equipName  = getGSONArray(req, "equipName"); 
 		String[] equipNotes = getGSONArray(req, "notes_eq");
-		String[] equipStatus = getGSONArray(req, "status_eq");
+		//String[] equipStatus = getGSONArray(req, "status_eq");
 		
 		
 		
@@ -478,10 +471,10 @@ public class ProjectService extends ProjectObjectService
 		
 		//Equipment Objects
 		Equipment equip;
-		Warehouse warehouse_eq;
-		ProjectItem item_eq;
-		EquipmentVendor vendor_eq;
-		EquipmentStatus status_eq;
+		//Warehouse warehouse_eq;
+		//ProjectItem item_eq;
+		//EquipmentVendor vendor_eq;
+		//EquipmentStatus status_eq;
 		
 		DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -504,20 +497,20 @@ public class ProjectService extends ProjectObjectService
 				dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
 			}
 			
-			 warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
-			 item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
-			 vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
-			 status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
+			// warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
+			 //item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
+			 //vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
+			 //status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
 			 
 				longEquipIds[i] = new Long(equipIDS[array[i]]);
 				System.out.println("equip ids" + longEquipIds[i]);
 			
 			 	// 2D arrays
 			 
-				equip.setWarehouse(warehouse_eq);
-				equip.setEquipmentVendor(vendor_eq);
-				equip.setProjectItem(item_eq);
-				equip.setEquipStatus(status_eq);
+			//	equip.setWarehouse(warehouse_eq);
+				//equip.setEquipmentVendor(vendor_eq);
+				//equip.setProjectItem(item_eq);
+				//equip.setEquipStatus(status_eq);
 				
 				//Regular Arrays
 				equip.setPO(longEquipPO[i]);

@@ -32,15 +32,13 @@ public class Equipment extends ProjectObject {
 	 * This is equipment vendorID for the piece of equipment
 	*/
 	private long projectID;
-	private Warehouse warehouse;
 	private long PO;
 	private EquipmentVendor equipmentVendor;
-	private ProjectItem component;
 	private Date estimatedDelivery;
+	private Date deliveryDate;
 	private String notes;
 	private String equipName;
 	private Long eqpd;
-	private EquipmentStatus equipStatus;
 	
 	
 
@@ -48,30 +46,23 @@ public class Equipment extends ProjectObject {
 	Date estimatedDelivery, long projectID, String notes, String equipName, long eqpd, EquipmentStatus equipStatus)
 	{
 		this.projectID = projectID;
-		this.warehouse = warehouse ;
 		this.PO = PO;
 
 
 		this.equipmentVendor = equipVendor;
-		this.component = component;
 		this.estimatedDelivery = estimatedDelivery;
 	
 		this.eqpd = eqpd;
 		this.notes = notes;
-		this.equipName = equipName;
-
-		this.equipStatus = equipStatus;
-		
+		this.equipName = equipName;		
 	}
 	
 	public Equipment()
 	{
 		this.projectID = -1;
-		this.warehouse = null ;
 		this.PO = -1;
 		
 		this.equipmentVendor = null;
-		this.component = null;
 		this.estimatedDelivery = null;
 		if(projectID==0)
 			this.eqpd = (long) 1;
@@ -80,7 +71,6 @@ public class Equipment extends ProjectObject {
 		this.notes = null;
 		this.equipName = null;
 
-		this.equipStatus = null;
 
 	}
 	
@@ -116,26 +106,6 @@ public class Equipment extends ProjectObject {
 		this.id = id;
 	}
 	
-	
-	/**
-	 * This method gets the project Item
-	 * @return the project Item
-	 */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	public ProjectItem getProjectItem() {
-		return this.component;
-	}
-
-	/**
-	 * This method sets the project item for the equipment
-	 * @param Current ProjectItem for the given equipment
-	 */
-	public void setProjectItem(ProjectItem pitem) {
-		this.component = pitem;
-	}
-	
-
 	/**
 	 * This method sets the PO number for the equipment 
 	 * @param Current PO for given project
@@ -169,24 +139,6 @@ public class Equipment extends ProjectObject {
 	public long getProjectID()
 	{
 		return this.projectID;
-	}
-	
-	/**
-	 * Returns warehouse object 
-	 * @return warehouse
-	 */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	public Warehouse getWarehouse() {
-		return warehouse;
-	}
-
-	/**
-	 * sets the current warehouse
-	 * @param warehouse object
-	 */
-	public void setWarehouse(Warehouse warehouse) {
-		this.warehouse = warehouse;
 	}
 	
 	/**
@@ -280,23 +232,12 @@ public class Equipment extends ProjectObject {
 		return this.eqpd;
 	}
 
-	/**
-	 * set status of equipment
-	 * @param id of status
-	 */
-	public void setEquipStatus(EquipmentStatus id)
-	{
-		this.equipStatus = id; 
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
-	/**
-	 * retrieves the current equipment status
-	 * @return equipment status object 
-	 */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	public EquipmentStatus getEquipStatus()
-	{
-		return this.equipStatus;
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 	
 }

@@ -88,18 +88,8 @@ public class Project extends ProjectObject
 	
 	private Set<ChangeOrder> changeOrders;
 	
-	//private Equipment equipment;
+	private Set<Equipment> equipment;
 	
-	//private CloseoutEnhanced closeout;
-	
-	private long eqpd;
-	/*
-	private Set<EquipmentType> equipmentList;
-	
-	private Set<EquipVendor> equipmentVendors;
-	*/
-	//private RequestForInfo rfi;
-
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
@@ -123,7 +113,6 @@ public class Project extends ProjectObject
 		this.costcoDueDate = costcoDueDate;
 		this.proposalSubmitted = proposalSubmitted;
 		this.closeoutDetails = closeoutDetails;
-		//this.closeout = closeout;
 		this.closeoutCheckList = closeoutCheckList;
 		this.setChangeOrders(changeOrders);
 		this.shouldInvoice = shouldInvoice;
@@ -164,6 +153,7 @@ public class Project extends ProjectObject
 		this.permits = new Permits();
 		this.inspections = new Inspections();
 		this.changeOrders = new HashSet<ChangeOrder>();
+		this.equipment = new HashSet<Equipment>();
 		
 		this.shouldInvoice = 0;
 		this.invoiced = 0;
@@ -177,11 +167,7 @@ public class Project extends ProjectObject
 		this.cost = null;
 		this.customerNumber = null;
 		this.permitApp = null;
-		//this.equipmentData = null;
 		this.DrawingsDue=null;
-		//this.equipmentList = new HashSet<EquipmentType>();
-		//this.equipmentVendors = new HashSet<EquipVendor>();
-		//this.rfi = null;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -451,19 +437,6 @@ public class Project extends ProjectObject
 		this.permitApp = permitApp;
 	}
 	
-	/*
-	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn
-	public Equipment getEquipmentData() {
-		return equipmentData;
-	}
-
-	public void setEquipmentData(Equipment equipmentData) {
-		this.equipmentData = equipmentData;
-	}*/
-	
-	
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
@@ -508,77 +481,18 @@ public class Project extends ProjectObject
 		this.permits=permits;
 	}
 	
-	/*
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ElementCollection
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Equipment getEquipment()
-	{
-		return this.equipment;
+	public Set<Equipment> getEquipment() {
+		return equipment;
 	}
-	
-	public void setEquipment(Equipment equipment)
-	{
+
+	public void setEquipment(Set<Equipment> equipment) {
 		this.equipment = equipment;
 	}
-	*/
-	
-	public void setEqpd(long id )
-	{
-		this.eqpd = id;
-	}
-	
-	public long getEqpd()
-	{
-		return this.eqpd;
-	}
-	
-	
-	
-	
-	//public 
-		
-	/*
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinTable(name = "equipmentType",
-	      joinColumns = {@JoinColumn(name = "equip_id")},
-	      inverseJoinColumns = @JoinColumn(name = "id"))
-	public Set<EquipmentType> getEquipment(){
-		return equipmentList;
-	}
-	
-	
-	public void setEquipList(Set<EquipmentType> equipList)
-	{
-		this.equipmentList = equipList;
-	}
-	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinTable(name = "equipVendor",
-	      joinColumns = {@JoinColumn(name = "vendor_id")},
-	      inverseJoinColumns = @JoinColumn(name = "id"))
-	public Set<EquipVendor> getEquipVendor(){
-		return equipmentVendors;
-	}
-	
-	
-	public void setEquipVendors(Set<EquipVendor> equipVens)
-	{
-		this.equipmentVendors = equipVens;
-	}
-	/*
-	public RequestForInfo getRequestForInformation()
-	{
-		return rfi;
-	}
-	
-	public void setRequestForInformation(RequestForInfo info)
-	{
-		this.rfi = info;
-	}
-	*/
+
 	public String toString()
 	{
 		return "Project ID: "  + id.toString();

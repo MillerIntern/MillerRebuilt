@@ -32,7 +32,6 @@ public class ReportHelper
 	{
 		if(value.equals("mcsNum"))
 		{
-			sb.append("<th>");
 			sb.append("MCS Number");
 		}
 		else if (value.equals("warehouse"))
@@ -420,6 +419,86 @@ public class ReportHelper
 		{
 			sb.append("<th>");
 			sb.append("Final Liens Notes");
+		}
+		else if(value.equals("buildingPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Building Permit");
+		}
+		else if(value.equals("mechanicalPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Mechanical Permit");
+		}
+		else if(value.equals("electricalPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Electrical Permit");
+		}
+		else if(value.equals("plumbingPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Plumbing Permit");
+		}
+		else if(value.equals("roofingPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Roofing Permit");
+		}
+		else if(value.equals("sprinklerPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Sprinkler Permit");
+		}
+		else if(value.equals("fireAlarmPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Fire Alarm Permit");
+		}
+		else if(value.equals("lowVoltagePermit"))
+		{
+			sb.append("<th>");
+			sb.append("Low Voltage Permit");
+		}
+		else if(value.equals("buildingInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Building Inspection");
+		}
+		else if(value.equals("mechanicalInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Mechanical Inspection");
+		}
+		else if(value.equals("electricalInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Electrical Inspection");
+		}
+		else if(value.equals("plumbingInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Plumbing Inspection");
+		}
+		else if(value.equals("roofingInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Roofing Inspection");
+		}
+		else if(value.equals("sprinklerInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Sprinkler Inspection");
+		}
+		else if(value.equals("fireAlarmInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Fire Alarm Inspection");
+		}
+		else if(value.equals("lowVoltageInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Low Voltage Inspection");
 		}
 	}
 	
@@ -1151,11 +1230,90 @@ public class ReportHelper
 		else if(value.equals("closeoutDocumentNotes") && p.getCloseoutDetails().getCloseoutDocumentsNotes() != null)
 			return p.getCloseoutDetails().getCloseoutDocumentsNotes();
 		
+		else if(value.equals("buildingPermit") && p.getPermits() != null && p.getPermits().getBuildingPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getBuildingPermitStatus());
+		}
+		else if(value.equals("mechanicalPermit") && p.getPermits() != null && p.getPermits().getMechanicalPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getMechanicalPermitStatus());
+		}
+		else if(value.equals("electricalPermit") && p.getPermits() != null && p.getPermits().getElectricalPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getElectricalPermitStatus());
+		}
+		else if(value.equals("plumbingPermit") && p.getPermits() != null && p.getPermits().getPlumbingPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getPlumbingPermitStatus());
+		}
+		else if(value.equals("roofingPermit") && p.getPermits() != null && p.getPermits().getRoofingPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getRoofingPermitStatus());
+		}
+		else if(value.equals("sprinklerPermit") && p.getPermits() != null && p.getPermits().getSprinklerPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getSprinklerPermitStatus());
+		}
+		else if(value.equals("fireAlarmPermit") && p.getPermits() != null && p.getPermits().getFireAlarmPermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getFireAlarmPermitStatus());
+		}
+		else if(value.equals("lowVoltagePermit") && p.getPermits() != null && p.getPermits().getVoltagePermitStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getVoltagePermitStatus());
+		}
+
+		else if(value.equals("buildingInspection") && p.getPermits() != null && p.getPermits().getBuildingInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getBuildingInspectionStatus());
+		}
+		else if(value.equals("mechanicalInspection") && p.getPermits() != null && p.getPermits().getMechanicalInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getMechanicalInspectionStatus());
+		}
+		else if(value.equals("electricalInspection") && p.getPermits() != null && p.getPermits().getElectricalInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getElectricalInspectionStatus());
+		}
+		else if(value.equals("plumbingInspection") && p.getPermits() != null && p.getPermits().getPlumbingInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getPlumbingInspectionStatus());
+		}
+		else if(value.equals("roofingInspection") && p.getPermits() != null && p.getPermits().getRoofingInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getRoofingInspectionStatus());
+		}
+		else if(value.equals("sprinklerInspection") && p.getPermits() != null && p.getPermits().getSprinklerInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getSprinklerInspectionStatus());
+		}
+		else if(value.equals("fireAlarmInspection") && p.getPermits() != null && p.getPermits().getFireAlarmInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getFireAlarmInspectionStatus());
+		}
+		else if(value.equals("lowVoltageInspection") && p.getPermits() != null && p.getPermits().getVoltageInspectionStatus() != null)
+		{
+			return convertPermitStatus(p.getPermits().getVoltageInspectionStatus());
+		}
+
 		else
 			return "---";	// If nothing else just fill the field with nothing
 	}
 	
 	
+	/**
+	 * @param buildingPermitStatus
+	 * @return
+	 */
+	private static String convertPermitStatus(String buildingPermitStatus) 
+	{
+		if(buildingPermitStatus.equals("1")) return "Preparing";
+		if(buildingPermitStatus.equals("2")) return "Submitted";
+		if(buildingPermitStatus.equals("3")) return "Issued";
+		if(buildingPermitStatus.equals("4")) return "Closed";
+		return "---";
+	}
+
 	/**
 	 * Gets the first person from a set. Though this should eventually 
 	 * be removed because only a single manager and supervisor will be assigned

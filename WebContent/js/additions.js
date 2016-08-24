@@ -94,7 +94,7 @@ function createItem()
 			success: function(data)
 			{
 				console.log(data);
-				$('#item').val('');
+				$('#projectItem').val('');
 				alert("Project Item Created Successfully!");
 			}
 		});

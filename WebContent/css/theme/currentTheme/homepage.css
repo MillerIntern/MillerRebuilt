@@ -9,7 +9,7 @@ body
 {
 	margin-top: 4px;
 	height: 100%;
-	overflow-y: auto;
+	//overflow-y: auto;
 	width: 100%;
 }
 
@@ -27,6 +27,46 @@ body
 	//box-shadow: -10px 10px 15px -10px rgba(0,0,0,0.75);
 }
 
+#userFields
+{
+	width: 25%;
+}
+
+#userFields label
+{
+	padding: 8px 8px;
+	font-size: 16px;
+	color: #121212;
+	//text-decoration: underline;
+	line-height: 24px;
+	-webkit-transition: all .4ss ease-in-out;
+	-moz-transition: all .4ss ease-in-out;
+	-ms-transition: all .4ss ease-in-out;
+	-o-transition: all .4ss ease-in-out;
+	transition: all .4ss ease-in-out;
+	}
+
+#userFields label:hover{color: #212121; text-decoration: underline;}
+
+#userFields legend
+{
+	font-size: 18px;
+	color: white;
+	background-color: #555555;
+	padding: 4px 8px;
+	border-radius: 4px;
+}
+
+#userFields fieldset
+{
+	background-color: #777777;
+	border: 1.5px solid #555555;
+	border-radius: 8px;
+	margin-top: 16px;
+}
+
+
+
 #globalTriggers
 {
 	float: right;
@@ -36,7 +76,7 @@ body
 	-webkit-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.75);
-	overflow-y: auto;
+	overflow-y: hidden;
 }
 
 #posts

@@ -46,6 +46,7 @@ p
 {
 	font-family: "Verdana", "sans-serif";
 	display:inLine;
+	font-size: 16px;
 }
 
 select
@@ -75,13 +76,14 @@ select:first-child
 
 .project
 {
+	padding-left: 8px;
     width: 100%;
     text-align: left;
     line-height: 2em;
     border: none;
     border-bottom: solid 1px #222222;
     font-family: 'proxima-nova',sans-serif;
-    font-size: 24px; 
+    font-size: 20px; 
     transition: all 0.4s ease 0s;
 }
 

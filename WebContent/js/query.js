@@ -6,7 +6,8 @@ var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
 var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
-                      "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", "Closeout", "Meeting", "Service + On Hold"];
+                      "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
+                      "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report'];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -25,7 +26,8 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
-					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service + On Hold" : "OTHER"};
+					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
+					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS"};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -43,7 +45,6 @@ const PROJECT_TYPE_CR=3;
 const PROJECT_TYPE_OH=2;
 const PROJECT_TYPE_H=8;
 const PROJECT_TYPE_RX = 9;
-const PROJECT_TYPE_RS = 10;
 const PROJECT_TYPE_RR = 11;
 const PROJECT_TYPE_BE=4;
 
@@ -55,7 +56,6 @@ const PROJECT_STATUS_AWAITING_DIRECTION = 4;
 const PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED = 6;
 const PROJECT_STATUS_PROPOSAL_RESUBMITTED = 7;
 const PROJECT_STATUS_REVISING_PROPOSAL = 8;
-const PROJECT_STATUS_PREPARING_PROPOSAL_TEMP = 9;
 const PROJECT_STATUS_AWAITING_DRAWINGS = 11;
 const PROJECT_STATUS_SITE_SURVEY = 12;
 const PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS = 14;
@@ -98,6 +98,9 @@ const PROPOSAL_MEETING = "MEETING_P";
 const PROPOSAL_OTHER = "OTHER_P";
 const BUDGETARY_MEETING = "MEETING_B";
 const BUDGETARY_OTHER = "OTHER_B";
+const ACTIVE_ON_HOLD = "ON-HOLD_A";
+const PROPOSAL_ON_HOLD = 'ON-HOLD_P';
+const BUDGETARY_ON_HOLD = 'ON-HOLD_B';
 
 const PROPOSAL_STEVE_MEYER = "STEVE_MEYER_P";
 const ACTIVE_STEVE_MEYER = "STEVE_MEYER_A";
@@ -159,6 +162,16 @@ const ACTIVE_CLOSEOUT = "CLOSEOUT_A";
 const BUDGETARY_CLOSEOUT = "CLOSEOUT_B";
 const CLOSED_CLOSEOUT = "CLOSEOUT_C";
 
+const PERMIT_ACTIVE = 'PERMIT_A';
+const PERMIT_PROPOSAL = 'PERMIT_P';
+const PERMIT_BUDGETARY = 'PERMIT_B';
+const PERMIT_CLOSED = 'PERMIT_C';
+
+const INSPECTION_ACTIVE = 'INSPECTIONS_A';
+const INSPECTION_PROPOSAL = 'INSPECTIONS_P';
+const INSPECTION_BUDGETARY = 'INSPECTIONS_B';
+const INSPECTION_CLOSED = 'INSPECTIONS_C';
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -186,47 +199,66 @@ const CLOSED_WEEKLY_KEYS = new Array("mcsNum", "stage", "warehouse", "item","sco
 									"permitsClosed","shouldInvoice","invoiced","projectNotes");
 
 //Fields to show with Steve Meyer and J Dempsey reports
-const PROPOSAL_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", "status", "initiated","proposalSubmitted");
-const ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class","manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
+const PROPOSAL_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", 
+												"region", "status", "initiated","proposalSubmitted");
+const ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
+				"manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
 
-const INACTIVE_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", "status", "initiated","proposalSubmitted");
+const INACTIVE_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor",
+												"region", "status", "initiated","proposalSubmitted");
 
-const BUDGETARY_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", "status", "initiated","proposalSubmitted");
+const BUDGETARY_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", 
+													"region", "status", "initiated","proposalSubmitted");
 
-const CLOSED_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", "status", "initiated","proposalSubmitted");
+const CLOSED_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", "region", 
+																	"status", "initiated","proposalSubmitted");
 
 //NE and SE report keys
-const PROPOSAL_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", "status", "permitApp", "initiated","costcoDueDate","proposalSubmitted", "zachNotes");
-const ACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", "status", "permitApp", "scheduledStartDate","scheduledTurnover","asBuilts","alarmHvacForm", "zachNotes");
+const PROPOSAL_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", 
+							"status", "permitApp", "initiated","costcoDueDate","proposalSubmitted", "zachNotes");
+const ACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", 
+							"status", "permitApp", "scheduledStartDate","scheduledTurnover","asBuilts","alarmHvacForm", "zachNotes");
 
-const INACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", "status", "permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
+const INACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", 
+							"status", "permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
 
-const BUDGETARY_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", "status", "permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
+const BUDGETARY_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", 
+							"status", "permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
 
-const CLOSED_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", "status", "permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
+const CLOSED_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", "status", 
+									"permitApp", "initiated","proposalSubmitted","asBuilts","salvageValue","alarmHvacForm", "zachNotes");
 
 
-const PROPOSAL_STEVE_MEYER_KEYS = new Array("region", "item", "warehouse", "scope","class","manager", "supervisor", "status", "initiated","proposalSubmitted");
+const PROPOSAL_STEVE_MEYER_KEYS = new Array("region", "item", "warehouse", "scope",
+									"class","manager", "supervisor", "status", "initiated","proposalSubmitted");
 
 
 //Fields to show with Invoice report
-const INVOICE_KEYS = new Array("mcsNum","warehouse", "item","class","scheduledStartDate", "initiated", "scheduledTurnover", "actualTurnover", "invoiced", "shouldInvoice", "projectNotes");
+const INVOICE_KEYS = new Array("mcsNum","warehouse", "item","class","scheduledStartDate",
+									"initiated", "scheduledTurnover", "actualTurnover", "invoiced", "shouldInvoice", "projectNotes");
 
-const ACTIVE_CONSTRUCTION_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", "region", "status","scheduledStartDate","scheduledTurnover","actualTurnover",
-							  "type","asBuilts","punchList","alarmHvacForm","salvageValue","airGas","permitsClosed","verisaeShutdownReport", "invoiced", "shouldInvoice", "projectNotes");
+const ACTIVE_CONSTRUCTION_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope",
+								"class","manager", "supervisor", "region", "status","scheduledStartDate","scheduledTurnover","actualTurnover",
+							  "type","asBuilts","punchList","alarmHvacForm","salvageValue","airGas","permitsClosed",
+							  "verisaeShutdownReport", "invoiced", "shouldInvoice", "projectNotes");
 
-const ACTIVE_REPAIR_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", "region", "status","scheduledStartDate","scheduledTurnover","actualTurnover",
-							  "type","asBuilts","punchList","alarmHvacForm","salvageValue","airGas","permitsClosed","verisaeShutdownReport", "invoiced", "shouldInvoice", "projectNotes");
+const ACTIVE_REPAIR_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", 
+									"region", "status","scheduledStartDate","scheduledTurnover","actualTurnover",
+									"type","asBuilts","punchList","alarmHvacForm","salvageValue","airGas","permitsClosed",
+									"verisaeShutdownReport", "invoiced", "shouldInvoice", "projectNotes");
 
 
 //Fields to show with HVAC report
-const PROPOSAL_HVAC_KEYS = new Array("warehouse", "item","scope","region","status","initiated", "siteSurvey", "costcoDueDate", "proposalSubmitted", "projectNotes");
+const PROPOSAL_HVAC_KEYS = new Array("warehouse", "item","scope","region","status","initiated", 
+									"siteSurvey", "costcoDueDate", "proposalSubmitted", "projectNotes");
 
 const ACTIVE_HVAC_KEYS = new Array("warehouse", "item","scope","region","status", "scheduledStartDate", "projectNotes");
 
 
 //Fields to show with Active/Complete report
-const ACTIVE_COMPLETE_KEYS = new Array("mcsNum","warehouse", "item", "scope","region", "scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed","shouldInvoice","invoiced","projectNotes");
+const ACTIVE_COMPLETE_KEYS = new Array("mcsNum","warehouse", "item", "scope","region", "scheduledStartDate",
+										"scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed",
+										"shouldInvoice","invoiced","projectNotes");
 
 // Fields to show for the closeout report, don't ever actually make this report. It doesn't look good.
 const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFinal", "electricalFinal", "plumbingFinal", 
@@ -257,8 +289,16 @@ const CLOSEOUT_KEYS_WARRANTIES = new Array("warehouse", "item", "status", "warra
 										"gcWarranty", "mechanicalWarranty", "electricalWarranty", "plumbingWarranty", "sprinklerWarranty", 
 										"roofingWarranty", "htiWarranty", "otherWarrantyA", "otherWarrantyB", "warrantyNotes");
 
-const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "liensCompleted", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
+const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "liensCompleted", "mcsLiens", "gcLiens", 
+										"mechLiens", "elecLiens", "plumbLiens", 
 										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "finalLiensNotes");
+
+const PERMIT_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'mechanicalPermit', 'electricalPermit', 
+							'plumbingPermit', 'roofingPermit', 'sprinklerPermit', 'fireAlarmPermit', 'lowVoltagePermit');
+
+const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspection', 'mechanicalInspection', 'electricalInspection',
+									'plumbingInspection', 'roofingInspection', 'sprinklerInspection', 'fireAlarmInspection', 
+									'lowVoltageInspection');
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
 var warehouseOptions;
@@ -1079,18 +1119,24 @@ function generateReport(reportType)
 			title = "Refrigeration and Construction Service Proposals";
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_RR);
-			pType.push(PROJECT_TYPE_OH);
-			pType.push(PROJECT_TYPE_BE);
-			pType.push(PROJECT_TYPE_RS);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			break;
 		
+		case PROPOSAL_ON_HOLD:
+			stage.push(PROPOSAL_STAGE);
+			title = "On Hold Proposals";
+			status.push(PROJECT_STATUS_ON_HOLD);
+			break;
 		case ACTIVE_WEEKLY:
 			stage.push(ACTIVE_STAGE);
 			title = "Active Projects";
 			break;
 			
 		case ACTIVE_MEETING:
-			title = "Meeting Projects";
+			title = "Meeting Active Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_R);
@@ -1108,15 +1154,18 @@ function generateReport(reportType)
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_CR);
 			pType.push(PROJECT_TYPE_RR);
-			pType.push(PROJECT_TYPE_OH);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
-			status.push(PROJECT_STATUS_ON_HOLD);
 			break;
-		
+		case ACTIVE_ON_HOLD:
+			stage.push(ACTIVE_STAGE);
+			status.push(PROJECT_STATUS_ON_HOLD);
+			title = "On Hold Active Projects";
+			break;
+			
 		case BUDGETARY_WEEKLY:
 			stage.push(BUDGETARY_STAGE);
 			title="All Budgetary Projects";
@@ -1133,10 +1182,13 @@ function generateReport(reportType)
 		case BUDGETARY_OTHER:
 			stage.push(BUDGETARY_STAGE);
 			title="Budgetary Projects";
-			status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			break;
-		
+		case BUDGETARY_ON_HOLD:
+			stage.push(BUDGETARY_STAGE);
+			title="On Hold Budgetary Projects";
+			status.push(PROJECT_STATUS_ON_HOLD);
+			break;
 		case INACTIVE_WEEKLY:
 			stage.push(INACTIVE_STAGE);
 			title="Weekly Inactive Projects";
@@ -1196,7 +1248,6 @@ function generateReport(reportType)
 			region.push("SE");
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_CR);
-			pType.push(PROJECT_TYPE_RS);
 			break;
 	
 		case ACTIVE_SE:
@@ -1224,7 +1275,6 @@ function generateReport(reportType)
 			title = "NE Refrigeration Proposals";
 			region.push("NE");
 			pType.push(PROJECT_TYPE_R);
-			pType.push(PROJECT_TYPE_RS);
 
 			break;
 	
@@ -1394,7 +1444,38 @@ function generateReport(reportType)
 			
 			status.push(PROJECT_STATUS_COMPLETE);
 			break;	
-		
+		case PERMIT_ACTIVE:
+			stage.push(ACTIVE_STAGE);
+			title = "Permits for Active Projects";
+			break;
+		case PERMIT_PROPOSAL:
+			stage.push(PROPOSAL_STAGE);
+			title = "Permits for Proposals";
+			break;
+		case PERMIT_BUDGETARY:
+			stage.push(BUDGETARY_STAGE);
+			title = "Permits for Budgetary Projects";
+			break;
+		case PERMIT_CLOSED:
+			stage.push(CLOSED_STAGE);
+			title = "Permits for Closed Projects";
+			break;
+		case INSPECTION_ACTIVE:
+			stage.push(ACTIVE_STAGE);
+			title = "Inspections for Active Projects";
+			break;
+		case INSPECTION_PROPOSAL:
+			stage.push(PROPOSAL_STAGE);
+			title = "Inspections for Proposals";
+			break;
+		case INSPECTION_BUDGETARY:
+			stage.push(BUDGETARY_STAGE);
+			title = "Inspections for Budgetary Projects";
+			break;
+		case INSPECTION_CLOSED:
+			stage.push(CLOSED_STAGE);
+			title = "Inspections for Closed Projects";
+			break;
 	
 		default:
 			alert("Invalid report type");
@@ -1479,16 +1560,19 @@ function getAllSpecifiedFields(reportType)
 		case PROPOSAL_OTHER:
 		case PROPOSAL_MEETING:
 		case PROPOSAL_WEEKLY:
+		case PROPOSAL_ON_HOLD:
 			genType=PROPOSAL_WEEKLY_KEYS;
 			break;
 		case OTHER_ACTIVE:
 		case ACTIVE_MEETING: 
 		case ACTIVE_WEEKLY:
+		case ACTIVE_ON_HOLD:
 			genType=ACTIVE_WEEKLY_KEYS;
 			break;
 		case BUDGETARY_MEETING:
 		case BUDGETARY_OTHER:
 		case BUDGETARY_WEEKLY:
+		case BUDGETARY_ON_HOLD:
 			genType=BUDGETARY_WEEKLY_KEYS;
 			break;
 		case INACTIVE_WEEKLY:
@@ -1563,6 +1647,18 @@ function getAllSpecifiedFields(reportType)
 		case BUDGETARY_CLOSEOUT:
 		case CLOSED_CLOSEOUT:
 			genType=CLOSEOUT_KEYS_SIMPLE;
+			break;
+		case PERMIT_ACTIVE:
+		case PERMIT_PROPOSAL:
+		case PERMIT_BUDGETARY:
+		case PERMIT_CLOSED:
+			genType = PERMIT_KEYS;
+			break;
+		case INSPECTION_ACTIVE:
+		case INSPECTION_PROPOSAL:
+		case INSPECTION_BUDGETARY:
+		case INSPECTION_CLOSED:
+			genType = INSPECTION_KEYS;
 			break;
 	
 	}
