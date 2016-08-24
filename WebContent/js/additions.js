@@ -104,3 +104,29 @@ function createItem()
 	}
 }
 
+function createVendor()
+{
+	var vendor = $('#vendor').val();
+	
+	if(vendor != '')
+	{
+		$.ajax(
+		{
+			type: 'POST',
+			url: 'Admin',
+			data:
+			{
+				'action': 'createVendor',
+				'vendor': vendor,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#vendor').val('');
+				alert("Vendor Created Successfully!");
+			}
+		});
+	}
+}
+
+

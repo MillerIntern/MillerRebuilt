@@ -38,7 +38,7 @@ public class Equipment extends ProjectObject {
 	private Date deliveryDate;
 	private String notes;
 	private String equipName;
-	private Long eqpd;
+	//private Long eqpd;
 	
 	
 
@@ -52,7 +52,7 @@ public class Equipment extends ProjectObject {
 		this.equipmentVendor = equipVendor;
 		this.estimatedDelivery = estimatedDelivery;
 	
-		this.eqpd = eqpd;
+		//this.eqpd = eqpd;
 		this.notes = notes;
 		this.equipName = equipName;		
 	}
@@ -64,10 +64,10 @@ public class Equipment extends ProjectObject {
 		
 		this.equipmentVendor = null;
 		this.estimatedDelivery = null;
-		if(projectID==0)
+		/*if(projectID==0)
 			this.eqpd = (long) 1;
 		else
-			this.eqpd = projectID;
+			this.eqpd = projectID;*/
 		this.notes = null;
 		this.equipName = null;
 
@@ -218,7 +218,7 @@ public class Equipment extends ProjectObject {
 	 * sets the identifier which is the current ID of the project
 	 * @param id of the current project
 	 */
-	public void setEqpd(long id)
+	/*public void setEqpd(long id)
 	{
 		this.eqpd = id;
 	}
@@ -227,10 +227,10 @@ public class Equipment extends ProjectObject {
 	 * retrieves the second id of the equipment which dictates which project the ID is coresponded to
 	 * @return id of the current project and Equipment identifier
 	 */
-	public Long getEqpd()
+	/*public Long getEqpd()
 	{
 		return this.eqpd;
-	}
+	}*/
 
 	public Date getDeliveryDate() {
 		return deliveryDate;

@@ -49,9 +49,7 @@ public class Project extends ProjectObject
 	private Date proposalSubmitted;
 	
 	private CloseoutDetails closeoutDetails;
-	
-	private CloseoutCheckList closeoutCheckList;
-	
+		
 	//private Set<ChangeOrder> changeOrders;
 	
 	private int shouldInvoice;
@@ -89,20 +87,18 @@ public class Project extends ProjectObject
 	private Set<ChangeOrder> changeOrders;
 	
 	private Set<Equipment> equipment;
+	private Set<NewEquipment> projEquipment;
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
-			CloseoutCheckList closeoutCheckList,
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
-			Inspections inspections, Permits permits)
-	{
-		// Set<EquipmentType> equips, Set<EquipVendor> vendorList
-		
+			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment)
+	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
 		this.projectManagers = projectManagers;
@@ -113,7 +109,6 @@ public class Project extends ProjectObject
 		this.costcoDueDate = costcoDueDate;
 		this.proposalSubmitted = proposalSubmitted;
 		this.closeoutDetails = closeoutDetails;
-		this.closeoutCheckList = closeoutCheckList;
 		this.setChangeOrders(changeOrders);
 		this.shouldInvoice = shouldInvoice;
 		this.invoiced = invoiced;
@@ -127,13 +122,11 @@ public class Project extends ProjectObject
 		this.cost = cst;
 		this.customerNumber = custNum;
 		this.permitApp = permitApp;
-		//this.equipmentData = equipList;
 		this.DrawingsDue=DrawingsDue;
 		this.inspections= inspections;
 		this.permits = permits;
-		//this.equipmentList = equips;
-		//this.equipmentVendors = vendorList;
-		//this.rfi = requestInfo;
+		this.setProjEquipment(projEquipment);
+
 	}
 	
 	public Project() 
@@ -149,7 +142,6 @@ public class Project extends ProjectObject
 		this.costcoDueDate = null;
 		this.proposalSubmitted = null;
 		this.closeoutDetails = new CloseoutDetails();
-		this.closeoutCheckList = new CloseoutCheckList();
 		this.permits = new Permits();
 		this.inspections = new Inspections();
 		this.changeOrders = new HashSet<ChangeOrder>();
@@ -168,6 +160,7 @@ public class Project extends ProjectObject
 		this.customerNumber = null;
 		this.permitApp = null;
 		this.DrawingsDue=null;
+		this.setProjEquipment(new HashSet<NewEquipment>());
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -310,17 +303,6 @@ public class Project extends ProjectObject
 
 	public void setProposalSubmitted(Date proposalSubmitted) {
 		this.proposalSubmitted = proposalSubmitted;
-	}
-
-	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn
-	public CloseoutCheckList getCloseoutCheckList() {
-		return closeoutCheckList;
-	}
-
-	public void setCloseoutCheckList(CloseoutCheckList closeoutCheckList) {
-		this.closeoutCheckList = closeoutCheckList;
 	}
 
 	@ElementCollection
@@ -482,7 +464,7 @@ public class Project extends ProjectObject
 	}
 	
 	@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
 	public Set<Equipment> getEquipment() {
@@ -496,5 +478,17 @@ public class Project extends ProjectObject
 	public String toString()
 	{
 		return "Project ID: "  + id.toString();
+	}
+
+	@ElementCollection
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn
+	public Set<NewEquipment> getProjEquipment() {
+		return projEquipment;
+	}
+
+	public void setProjEquipment(Set<NewEquipment> projEquipment) {
+		this.projEquipment = projEquipment;
 	}
 }

@@ -7,7 +7,8 @@ const BASIC_PAGE = 'projectData.html?type=edit&id=';
 const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id=';
 const CHANGE_ORDER_EDIT = 'changeOrderData.html?type=edit&id=';
 const CHANGE_ORDER_PRINT = 'changeOrderPrint.html?type=project&id=';
-
+const EQUIPMENT_PAGE = 'equipmentData.html?type=add&id=';
+const EQUIPMENT_EDIT = 'equipmentData.html?type=edit&id=';
 	
 var ID;
 var changeOrderCount;
@@ -72,6 +73,7 @@ function fillTabs(data)
 	buildChangeOrders(json);
 	
 	// Build Equipment tab
+	buildEquipment(json);
 	
 	// Build Permit Tab
 	buildPermit(json);
@@ -126,6 +128,11 @@ function printChangeOrders()
 	window.location.href = CHANGE_ORDER_PRINT+ID;
 }
 
+function navigateToEquipmentPage()
+{
+	window.location.href = EQUIPMENT_PAGE+ID;
+}
+
 function statusConverter(param)
 {
 	if(param == 1)
@@ -158,6 +165,29 @@ function buildProjectInformation(json)
 	projectEditButton.onclick = function() {navigateToEditPage(this)};
 	projectEditButton.innerHTML = "Edit Project Information";
 	$("#projectInformation").append(projectEditButton);		
+}
+
+function buildEquipment(json)
+{
+	var changeOrderAddButton = document.createElement("button");
+	changeOrderAddButton.onclick = function() {navigateToEquipmentPage(this)};
+	changeOrderAddButton.innerHTML = "Add Equipment";
+	changeOrderAddButton.style.marginRight = "10px";
+	$("#equipment").append(changeOrderAddButton);
+	
+	var editChangeOrderButton = document.createElement("button");
+	editChangeOrderButton.onclick = function() {editEquipment()};
+	editChangeOrderButton.innerHTML = "Edit Equipment";
+	editChangeOrderButton.setAttribute("id", "editButton");
+	editChangeOrderButton.style.marginRight = "10px";
+	editChangeOrderButton.disabled = true;
+	$("#equipment").append(editChangeOrderButton);
+	
+	var printChangeOrderButton = document.createElement("button");
+	printChangeOrderButton.onclick = function() {printEquipment()};
+	printChangeOrderButton.innerHTML = "Print Change Orders";
+	printChangeOrderButton.setAttribute("id", "printButton")
+	$("#equipment").append(printChangeOrderButton);
 }
 
 function buildChangeOrders(json)
@@ -258,15 +288,6 @@ function buildInspection(json)
 	$("#fireAlarmInspectionStatus").html(convertPermit(json.permits.fireAlarmInspectionStatus));
 	$("#lowVoltageInspection").html(json.permits.voltageInspectionLastUpdated);
 	$("#voltageInspectionStatus").html(convertPermit(json.permits.voltageInspectionStatus));
-	
-	/*$("#framingInspection").html(json.inspections.framing);
-	$("#celingInspection").html(json.inspections.ceiling);
-	$("#mechLightSmokeInspection").html(json.inspections.mechanicalLightSmoke);
-	$("#roughMechanicalInspection").html(json.inspections.roughin_mechanical);
-	$("#roughElectricalInspection").html(json.inspections.roughin_electric);
-	$("#roughPlumbingInspection").html(json.inspections.roughin_plumbing);
-	$("#fireMarshalInspection").html(json.inspections.fire_marshal);
-	$("#healthInspection").html(json.inspections.health);*/
 	
 	var projectEditButton = document.createElement("button");
 	projectEditButton.onclick = function() {navigateToInspectionPage(this)};
@@ -728,7 +749,7 @@ function generateTriggers(json)
 			triggerElement.innerHTML = "This project is trigger-free!";
 		else if(num > 59 && num < 80)
 			triggerElement.innerHTML = "No warning in project build!";
-		else if(num > 79 && num < 100)
+		else
 			triggerElement.innerHTML = "No triggers!";
 
 		$("#triggers").append(triggerElement);	

@@ -5,13 +5,12 @@
 		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
 		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/global.js"></script>
-        <!--  <script type="text/javascript" src="js/projectData/changeOrderData.js"></script>-->
+        <script type="text/javascript" src="js/projectData/equipmentData.js"></script>
 
 		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
         <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
         <link href="css/theme/currentTheme/closeoutData.css" type="text/css" rel="stylesheet" />
         
-		<script type="text/javascript" src="js/tab.js"></script>
         
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
@@ -19,12 +18,12 @@
 	
 <body onload="getProjectEnums();">
     <div class="header">
-        <p class="title">Change Orders</p>
+        <p class="title">Equipment</p>
     </div>
 <br>
 		
 
-<ul class="side-borders">
+<ul>
     <li><a onClick="document.location.href='homepage.html'">Home</a></li>
     <li class="dropdown">
     <a class="active" class="dropbtn">Projects</a>
@@ -48,7 +47,7 @@
     <div class="container">
 
 	<ul class="tabs">
-		<li class="tab-link current" data-tab="changeOrderInfo">Change Order</li>
+		<li class="tab-link current" data-tab="changeOrderInfo">Equipment Form</li>
         <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
 	</ul>
 
@@ -56,91 +55,41 @@
 	<div id="allPermits" class="tab-content current">
         <table class="dataTable">
         	<tr style="height: 0px;"></tr>
+        	<tr>
+        		<td>PO #</td>
+        		<td><input type="text" id="poNum" class="closeout-input"></td>
+        	</tr>
             <tr>
-                <td>*Customer CO#:</td>
+                <td>Equipment Name:</td>
                 <td>
-                    <select class="closeout-input" id="customerCO">
-                        <option value="default">--Customer--</option>
-                    </select>               
+                    <input type="text" class="closeout-input" id="equipmentName">
                 </td>
             </tr>
             <tr>
-                <td>MCS CO #:</td>
+                <td>Vendor:</td>
                 <td>
-                    <input type="text" id="mcsCO" />
+                    <select class="closeout-input" id="vendor">
+                        <option value="default">--Vendor--</option>
+                    </select>  
                 </td>   
             </tr>
             <tr>
-                <td>Sub CO #:</td>
+                <td>Component:</td>
                 <td>
-                    <input type="text" id="subCO" />
+                    <input type="text" id="component" />
                 </td>   
             </tr>
             <tr>
-                <td>Sub Name(s):</td>
+                <td>Delivery Date:</td>
                 <td>
-                    <input type="text" id="subNames" />
+                	<input type="text" id="deliveryDate" />
                 </td>   
             </tr>
             <tr>
-                <td>Proposal Date:</td>
-                <td>
-                	<input type="text" id="proposalDate" />
-                </td>   
-            </tr>
-            <tr>
-                <td>*Brief Description:</td>
-                <td>
-                    <textarea id="briefDescription"> </textarea>
-                </td>   
-            </tr>
-            <tr>
-                <td>*Cost ($):</td>
-                <td>
-                    <input type="text" id="cost" />
-                </td>   
-            </tr>
-            <tr>
-                <td>*Sell ($):</td>
+                <td>Estimated Delivery Date:</td>
  
                 <td>
-                	<input type="text" id="sell" />
-                </td>   
-            </tr>
-            <tr>
-                <td>*Status:</td>
- 
-                <td>
-                    <select class="closeout-input" id="status">
-                        <option value="default">--Status--</option>
-                    </select>                  
-                </td>   
-            </tr>
-            <tr>
-                <td>*Submitted To</td>
- 
-                <td>
-                	<input type="text" id="submittedTo" />
-                </td>   
-            </tr>
-            <tr>
-                <td>*Submitted Date:</td>
- 
-                <td>
-                	<input type="text" id="submittedDate" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Approved Date:</td>
- 
-                <td>
-                	<input type="text" id="approvedDate" />
-                </td>   
-            </tr>
-            <tr>
-                <td>Notes:</td>
-                <td>
-                    <textarea id="notes"> </textarea>
+                	<input type="text" id="estDeliveryDate" />
                 </td>   
             </tr>
         </table>

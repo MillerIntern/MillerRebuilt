@@ -8,22 +8,16 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import com.google.gson.Gson;
 
-import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
 import projectObjects.Equipment;
@@ -31,7 +25,6 @@ import projectObjects.EquipmentVendor;
 import projectObjects.Inspections;
 import projectObjects.Permits;
 import projectObjects.Person;
-import projectObjects.Post;
 import projectObjects.Project;
 import projectObjects.ProjectClass;
 import projectObjects.ProjectItem;
@@ -240,11 +233,11 @@ public class ProjectService extends ProjectObjectService
 				equip.setEstimatedDelivery(dateEquipEDD[i]);
 				equip.setEquipName(equipName[array[i]]);
 				equip.setNotes(equipNotes[array[i]]);
-				equip.setEqpd(maxID);
+				//equip.setEqpd(maxID);
 				
 				System.out.println("EQPD:" +  maxID);
 	
-				ProjectObjectService.addObject("Equipment", equip);
+				//ProjectObjectService.addObject("Equipment", equip);
 			}
 		}
 
@@ -517,14 +510,14 @@ public class ProjectService extends ProjectObjectService
 				equip.setEstimatedDelivery(dateEquipEDD[i]);
 				equip.setEquipName(equipName[array[i]]);
 				equip.setNotes(equipNotes[array[i]]);
-				equip.setEqpd(id);
+				//equip.setEqpd(id);
 				
 				if((Equipment) ProjectObjectService.get(longEquipIds[i], "Equipment")!=null)
-					ProjectObjectService.editObject("Equipment",longEquipIds[i],equip, 0);
+					;//ProjectObjectService.editObject("Equipment",longEquipIds[i],equip, 0);
 				else
 				{
 					System.out.println("here");
-					ProjectObjectService.addObject("Equipment", equip);
+					;//ProjectObjectService.addObject("Equipment", equip);
 				}	
 			}
 		}
@@ -721,22 +714,6 @@ public class ProjectService extends ProjectObjectService
 		map.put("projects", ProjectObjectService.getAllAsJsonString("Project"));
 		
 		return g.toJson(map);
-	}
-	
-	public static String getAllPostsAsJson()
-	{
-		//HashMap<String, String> map = new HashMap<String, String>();
-		Session session = HibernateUtil.getSession();
-		Gson gson = new Gson();
-		String posts = "FROM projectObjects.Post";
-		Query query = session.createQuery(posts);
-		
-		@SuppressWarnings("unchecked")
-		List<Post> results = query.list();
-		
-		Collections.sort(results);
-		
-		return gson.toJson(results);
 	}
 	
 	public static String getAllEnumsEquipAsJson()
@@ -1046,19 +1023,5 @@ public class ProjectService extends ProjectObjectService
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullChangeOrders();
-	}
-
-	/**
-	 * @param parameters 
-	 * @return
-	 */
-	public static String postNewPost(Map<String, String> parameters, String author) throws ClassNotFoundException, ParseException
-	{
-		Date date = new Date();
-		Post post = new Post(date, parameters.get("title"), parameters.get("text"), author);
-		
-		ProjectObjectService.addObject("Post", post);
-		
-		return "success";
 	}	
 }

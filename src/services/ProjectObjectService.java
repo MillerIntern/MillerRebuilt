@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.Inspections;
+import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.ProjectObject;
 
@@ -255,6 +256,10 @@ public class ProjectObjectService
 		{
 			o.setChangeOrders(new HashSet<ChangeOrder>());
 		}
+		if(o.getProjEquipment() == null)
+		{
+			o.setProjEquipment(new HashSet<NewEquipment>());
+		}
 	}
 
 	/**
@@ -286,7 +291,7 @@ public class ProjectObjectService
 		catch (Exception e) 
 		{
 			if (tx!=null) tx.rollback();
-			System.out.println("NOTHING WENT WRONG");
+			System.out.println("NOTHING WENT WRONG - kind of");
 		}
 		
 		return success;
@@ -354,8 +359,10 @@ public class ProjectObjectService
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 
-		Query q = session.createSQLQuery("delete from changeorder where changeOrders_id is NULL");
-		q.executeUpdate();
+		Query deleteChangeOrders = session.createSQLQuery("delete from changeorder where changeOrders_id is NULL");
+		deleteChangeOrders.executeUpdate();
+		//Query deleteEquipment = session.createSQLQuery("delete from newequipment where equipment_id is NULL");
+		//deleteEquipment.executeUpdate();
 		
 		tx.commit();
 		

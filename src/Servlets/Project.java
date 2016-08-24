@@ -259,30 +259,6 @@ public class Project extends HttpServlet
 			System.out.println("getting the projects!");
 			response = ProjectService.getAllProjectsAsJson();
 		}
-		else if(action.equals("postPost"))
-		{
-			try {
-				response = ProjectService.postNewPost(parameters, (String)req.getSession().getAttribute("user"));
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else if(action.equals("getPosts"))
-		{
-			try
-			{
-				System.out.println("getting posts");
-				response = ProjectService.getAllPostsAsJson();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
 		else if(action.equals("getManager"))
 		{
 			response = getManager(req);

@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import objects.RequestHandler;
 import projectObjects.City;
+import projectObjects.EquipmentVendor;
 import projectObjects.ProjectItem;
 import projectObjects.Region;
 import projectObjects.State;
@@ -77,7 +78,13 @@ public class Admin extends HttpServlet
 			ProjectObjectService.addObject("ProjectItem", pItem);
 			response = "projectItem created";
 		}
-		
+		else if(action.equals("createVendor"))
+		{
+			String vendorName = parameters.get("vendor");
+			EquipmentVendor vendor = new EquipmentVendor(vendorName);
+			ProjectObjectService.addObject("EquipmentVendor", vendor);
+			response = "vendor created";
+		}
 		/*if (domain.equals("status"))
 		{
 			if (action.equals("add"))
