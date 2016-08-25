@@ -6,19 +6,22 @@ const INSPECTION_PAGE = 'permitData.html?type=permit&id=';
 const BASIC_PAGE = 'projectData.html?type=edit&id=';
 const CHANGE_ORDER_PAGE = 'changeOrderData.html?type=add&id=';
 const CHANGE_ORDER_EDIT = 'changeOrderData.html?type=edit&id=';
-const CHANGE_ORDER_PRINT = 'changeOrderPrint.html?type=project&id=';
+const PRINTPAGE = 'projectDataPrint.html?id=';
 const EQUIPMENT_PAGE = 'equipmentData.html?type=add&id=';
 const EQUIPMENT_EDIT = 'equipmentData.html?type=edit&id=';
 	
 var ID;
+var title = '';
 var changeOrderCount;
 var changeOrderToEdit = null;
+var equipmentToEdit = null;
 
 $(document).ready(function(){
 	
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
 
+		console.log($(this).html() != 'Project Information');
 		$('ul.tabs li').removeClass('current');
 		$('.tab-content').removeClass('current');
 
@@ -65,7 +68,9 @@ function fillTabs(data)
 	var json = data;
 
 	$(".deleteThis").remove(); // Remove tmp fields in the HTML	
-
+	$('.projectIdentifier').html(data.warehouse.city.name 
+			+ ", " + data.warehouse.state + " --- " +  data.projectItem.name);
+	
 	// Build project information tab
 	buildProjectInformation(json);
 	
@@ -125,7 +130,12 @@ function navigateToChangeOrderPage(param)
 
 function printChangeOrders()
 {
-	window.location.href = CHANGE_ORDER_PRINT+ID;
+	window.location.href = PRINTPAGE+ID+'&type=changeOrders';
+}
+
+function printEquipment()
+{
+	window.location.href = PRINTPAGE+ID+'&type=equipment';
 }
 
 function navigateToEquipmentPage()
@@ -178,16 +188,53 @@ function buildEquipment(json)
 	var editChangeOrderButton = document.createElement("button");
 	editChangeOrderButton.onclick = function() {editEquipment()};
 	editChangeOrderButton.innerHTML = "Edit Equipment";
-	editChangeOrderButton.setAttribute("id", "editButton");
+	editChangeOrderButton.setAttribute("id", "editEquipmentButton");
 	editChangeOrderButton.style.marginRight = "10px";
 	editChangeOrderButton.disabled = true;
 	$("#equipment").append(editChangeOrderButton);
 	
 	var printChangeOrderButton = document.createElement("button");
 	printChangeOrderButton.onclick = function() {printEquipment()};
-	printChangeOrderButton.innerHTML = "Print Change Orders";
-	printChangeOrderButton.setAttribute("id", "printButton")
+	printChangeOrderButton.innerHTML = "Print Equipment";
+	printChangeOrderButton.setAttribute("id", "equipmentButton")
 	$("#equipment").append(printChangeOrderButton);
+	
+	for(var i = 0; i < json.projEquipment.length; i++)
+	{
+		var equipment = json.projEquipment[i];
+		var tableRow = document.createElement('tr');
+		tableRow.setAttribute("value", equipment.id);
+		tableRow.onclick = function() {toggleEquipment(this)};
+
+		var poNum = document.createElement('td');
+		poNum.appendChild(document.createTextNode(equipment.poNum));
+		
+		var equipmentName = document.createElement('td');
+		equipmentName.appendChild(document.createTextNode(equipment.equipmentName))
+		
+		var vendor = document.createElement('td');
+		vendor.appendChild(document.createTextNode(equipment.vendor));
+		
+		var estDeliveryDate = document.createElement('td');
+		if(equipment.estDeliveryDate === undefined)
+			estDeliveryDate.appendChild(document.createTextNode("---"));
+		else
+			estDeliveryDate.appendChild(document.createTextNode(equipment.estDeliveryDate));
+		
+		var deliveryDate = document.createElement('td');
+		if(equipment.deliveryDate === undefined)
+			deliveryDate.appendChild(document.createTextNode('---'));
+		else 
+			deliveryDate.appendChild(document.createTextNode(equipment.deliveryDate));
+		
+		tableRow.appendChild(poNum);
+		tableRow.appendChild(equipmentName);
+		tableRow.appendChild(vendor);
+		tableRow.appendChild(estDeliveryDate);
+		tableRow.appendChild(deliveryDate);
+		$("#equipmentTable").append(tableRow);
+		
+	}
 }
 
 function buildChangeOrders(json)
@@ -237,7 +284,7 @@ function buildChangeOrders(json)
 		submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
 		
 		var approvedDate = document.createElement('td');
-		if(changeOrder.approvedDate == 'Undefined')
+		if(changeOrder.approvedDate === undefined)
 			approvedDate.appendChild(document.createTextNode("---"))
 		else
 			approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
@@ -756,6 +803,13 @@ function generateTriggers(json)
 	}
 }
 
+function editEquipment()
+{
+	console.log(equipmentToEdit);
+	console.log('Ah, so you want the edit equipment page!');
+	window.location.href = EQUIPMENT_EDIT+ID+'&equipmentID='+$(equipmentToEdit).attr('value');
+}
+
 function editChangeOrder()
 {
 	console.log(changeOrderToEdit);
@@ -806,7 +860,60 @@ function toggleChangeOrder(param)
 	$("#editButton").prop("disabled", false);
 }
 
-function showChangeOrderTable()
+function toggleEquipment(param)
+{
+	if(equipmentToEdit != null)
+		$(equipmentToEdit).css('background-color', '#dCdCdC');
+	$(param).css('background-color', '#CCB4B4');
+	console.log($(param).attr('value'));
+	equipmentToEdit = param;
+	$('#editEquipmentButton').prop('disabled', false);
+}
+
+function convertCustomer(param)
+{
+	console.log(param);
+	if(param == '1')
+		return "COP";
+	else if(param == '2')
+		return "REF";
+	else if(param == '3')
+		return "WHS";
+	else if(param == '4')
+		return "FAC";
+	else if(param == '5')
+		return "VEN";
+	else if(param == '6')
+		return "UDF";
+	else return "UDF";
+}
+
+function convertStatus(param)
+{
+	if(param == '1')
+		return "Submitted";
+	else if(param == '2')
+		return "MCS Reviewing";
+	else
+		return "Undefined Status!";
+}
+
+function convertPermit(param)
+{
+	if(param == '1')
+		return "Preparing";
+	else if(param == '2')
+		return "Submitted";
+	else if(param == '3')
+		return "Issued";
+	else if(param == '4')
+		return "Closed";
+	else
+		return "---";
+}
+
+
+function showTable()
 {
 	console.log(getParameterByName("id"));
 	var PROJECT_ID = getParameterByName("id");
@@ -824,12 +931,16 @@ function showChangeOrderTable()
 		success: function(data)
 		{
 			console.log(data);
-			fillTable(data);
+			console.log(getParameterByName('type'))
+			if(getParameterByName('type') == 'changeOrders')
+				fillChangeOrderTable(data);
+			else if(getParameterByName('type') == 'equipment')
+				fillEquipmentTable(data);
 		}
 	});
 }
 
-function fillTable(json)
+function fillChangeOrderTable(json)
 {
 	$("p").css("line-height", "5px");
 
@@ -876,7 +987,7 @@ function fillTable(json)
 	header.appendChild(approvedDate);
 	header.appendChild(notes);
 	
-	$("#changeOrderTable").append(header);
+	$("#table").append(header);
 	
 	for(var i = 0; i < json.changeOrders.length; i++)
 	{
@@ -931,50 +1042,80 @@ function fillTable(json)
 		row.appendChild(approved);
 		row.appendChild(note);
 		
-		$("#changeOrderTable").append(row);
+		$("#table").append(row);
 	}
 }
 
-function convertCustomer(param)
+function fillEquipmentTable(json)
 {
-	console.log(param);
-	if(param == '1')
-		return "COP";
-	else if(param == '2')
-		return "REF";
-	else if(param == '3')
-		return "WHS";
-	else if(param == '4')
-		return "FAC";
-	else if(param == '5')
-		return "VEN";
-	else if(param == '6')
-		return "UDF";
-	else return "UDF";
-}
+	$("p").css("line-height", "5px");
 
-function convertStatus(param)
-{
-	if(param == '1')
-		return "Submitted";
-	else if(param == '2')
-		return "MCS Reviewing";
-	else
-		return "Undefined Status!";
-}
+	$("#location").text("Project Location: "  + json.warehouse.city.name + ", " + json.warehouse.state);
+	$("#scope").text("Project Scope: " + json.projectItem.name);
+	$("#manager").text("Project Manager: " + json.projectManagers.name);
 
-function convertPermit(param)
-{
-	if(param == '1')
-		return "Preparing";
-	else if(param == '2')
-		return "Submitted";
-	else if(param == '3')
-		return "Issued";
-	else if(param == '4')
-		return "Closed";
-	else
-		return "---";
-}
+	var header = document.createElement("tr");
+	var equipmentName = document.createElement("th");
+	equipmentName.appendChild(document.createTextNode("Equipment Name"));
+	var vendor = document.createElement("th");
+	vendor.appendChild(document.createTextNode("Vendor"));
+	var estDeliveryDate = document.createElement("th");
+	estDeliveryDate.appendChild(document.createTextNode("Estimated Delivery Date"));
+	var deliveryDate = document.createElement("th");
+	deliveryDate.appendChild(document.createTextNode("Actual Delivery Date"));
+	var notes = document.createElement("th");
+	notes.appendChild(document.createTextNode("Notes"));
 
+	
+	header.appendChild(equipmentName);
+	header.appendChild(vendor);
+	header.appendChild(estDeliveryDate);
+	header.appendChild(deliveryDate);
+
+	header.appendChild(notes);
+	
+	$("#table").append(header);
+	
+	for(var i = 0; i < json.projEquipment.length; i++)
+	{
+		var row = document.createElement("tr");
+		var equipment = document.createElement("td");
+		if(json.projEquipment[i].equipmentName == "" || json.projEquipment[i].equipmentName === undefined)
+			equipment.appendChild(document.createTextNode("---"));
+		else 
+			equipment.appendChild(document.createTextNode(json.projEquipment[i].equipmentName));
+		
+		var vendor = document.createElement("td");
+		if(json.projEquipment[i].vendor == "" || json.projEquipment[i].vendor === undefined)
+			vendor.appendChild(document.createTextNode("---"));
+		else
+			vendor.appendChild(document.createTextNode(json.projEquipment[i].vendor));		
+		
+		var estDeliveryDate = document.createElement("td");
+		if(json.projEquipment[i].estDeliveryDate == "" || json.projEquipment[i].estDeliveryDate === undefined)
+			estDeliveryDate.appendChild(document.createTextNode("---"));
+		else
+			estDeliveryDate.appendChild(document.createTextNode(json.projEquipment[i].estDeliveryDate));
+		
+		var deliveryDate = document.createElement("td");
+		if(json.projEquipment[i].deliveryDate == "" || json.projEquipment[i].deliveryDate === undefined)
+			deliveryDate.appendChild(document.createTextNode("---"));
+		else
+			deliveryDate.appendChild(document.createTextNode(json.projEquipment[i].deliveryDate));
+		
+		var note = document.createElement("td");
+		if(json.changeOrders[i].notes == " " || json.changeOrders[i].notes === undefined)
+			note.appendChild(document.createTextNode("---"));
+		else
+			note.appendChild(document.createTextNode(json.changeOrders[i].notes));
+		
+		row.appendChild(equipment);
+		row.appendChild(vendor);
+		row.appendChild(estDeliveryDate);
+		row.appendChild(deliveryDate);
+		row.appendChild(note);
+		
+		$("#table").append(row);
+	}
+}
 

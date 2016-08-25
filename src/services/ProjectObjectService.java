@@ -333,7 +333,7 @@ public class ProjectObjectService
 		//Get session and start transaction
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		
+				
 		//Get object from database
 		Class<?> c = Class.forName("projectObjects."+domain);
 		
@@ -361,26 +361,26 @@ public class ProjectObjectService
 
 		Query deleteChangeOrders = session.createSQLQuery("delete from changeorder where changeOrders_id is NULL");
 		deleteChangeOrders.executeUpdate();
-		//Query deleteEquipment = session.createSQLQuery("delete from newequipment where equipment_id is NULL");
-		//deleteEquipment.executeUpdate();
+		Query deleteEquipment = session.createSQLQuery("delete from newequipment where projEquipment_id is NULL");
+		deleteEquipment.executeUpdate();
 		
 		tx.commit();
 		
 	}
 
-	public static void addToSet(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
+	/*public static void editSetFromProject(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
 		System.out.println("add to set");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		
-		session.save(o);
+		session.saveOrUpdate(o);
 		//long txID = Long.parseLong((String)session.save(o));
        // System.out.println("ID OF TRANSACTION: " + txID);
         tx.commit();
         //return (long) txID;
-	}
+	}*/
 	
 	/**
 	 * This method copies the fields of the src object into the fields of the dest object,
@@ -414,9 +414,13 @@ public class ProjectObjectService
 		Field[] fields = klass.getDeclaredFields();
 		for (Field f : fields) 
 		{
-		
-			if((i2!=1 || !f.toString().contains("Inspections")) && (i2!=1 || !f.toString().contains("Closeout")) && (i2!=1 || !f.toString().contains("Permits"))
-					&& (i2!=1 || !f.toString().contains("Equipment")))
+			/*
+			 * I Don't know what this does, but it works...
+			 */
+			if((i2!=1 || !f.toString().contains("Inspections")) && 
+			   (i2!=1 || !f.toString().contains("Closeout")) && 
+			   (i2!=1 || !f.toString().contains("Permits")))
+			//&& (i2!=1 || !f.toString().contains("Equipment")))
 			{
 				if(i2!=2 || !f.toString().contains("SalvageV"))
 				{

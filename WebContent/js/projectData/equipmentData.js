@@ -1,7 +1,7 @@
 
 var PAGETYPE = "add";
 var PROJECT_ID;
-var CHANGE_ORDER_ID;
+var EQUIPMENT_ID;
 
 var PROJECT_DATA;
 
@@ -37,7 +37,7 @@ function getProjectEnums()
 			getDropdownInfo();
 			if(PAGETYPE == 'edit')
 			{
-				CHANGE_ORDER_ID = getParameterByName("changeOrderID");
+				EQUIPMENT_ID = getParameterByName("equipmentID");
 				PROJECT_DATA = data;
 			}
 
@@ -74,10 +74,26 @@ function fillDropdowns(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentVendor[i].name;
-		option.setAttribute("value", equipmentVendor[i].id);
+		option.setAttribute("value", equipmentVendor[i].name);
 		d.appendChild(option);
 	}
 	$("#vendor").append(d);
+}
+
+function fillTabs(json)
+{
+	var equipmentToEdit;
+	for(var i = 0; i < json.projEquipment.length; i++)
+		if(json.projEquipment[i].id == EQUIPMENT_ID)
+			equipmentToEdit = json.projEquipment[i];
+	
+	console.log(equipmentToEdit);
+	$('#poNum').val(equipmentToEdit.poNum);
+	$('#equipmentName').val(equipmentToEdit.equipmentName);
+	$('#vendor').val(equipmentToEdit.vendor);
+	$('#estDeliveryDate').val(equipmentToEdit.estDeliveryDate);
+	$('#deliveryDate').val(equipmentToEdit.deliveryDate);
+	$('#notes').val(equipmentToEdit.notes);
 }
 
 function saveProject()
@@ -85,15 +101,44 @@ function saveProject()
 	var poNum = $('#poNum').val();
 	var equipmentName = $('#equipmentName').val();
 	var vendor = $('#vendor').val();
-	var component = $('#component').val();
 	var deliveryDate = $('#deliveryDate').val();
 	var estDeliveryDate = $('#estDeliveryDate').val();
+	var notes = $('#notes').val();
 	
 	var dates = [deliveryDate, estDeliveryDate];
+	var action = 'addEquipment';
+	if(PAGETYPE == 'edit')
+		action = 'editEquipment';
 	
+	// TODO: Required Fields?
 	if(isValidInput(dates))
 	{
-		console.log('lets doet');
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data:
+			{
+				'domain': 'project',
+				'projectID': PROJECT_ID,
+				'equipmentID': EQUIPMENT_ID,
+				'action': action,
+				'poNum': poNum,
+				'equipmentName': equipmentName,
+				'vendor': vendor,
+				'deliveryDate': deliveryDate,
+				'estDeliveryDate': estDeliveryDate,
+				'notes': notes,
+			},
+			success:function(data){
+				
+				createConfirmWindow();
+				console.log(data);
+			},
+			error: function()
+			{
+				createConfirmWindow();
+			}
+		});
 	}
 }
 
@@ -116,4 +161,28 @@ function isValidInput(dates)
 		}
 	}
 	return true;
+}
+
+function createConfirmWindow()
+{
+	$("#saveConfirm").dialog({
+		resizable: false,
+		height: 350,
+		width: 450,
+		modal: true,
+		buttons: {
+			"Return to project manager": function() {
+				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
+				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
+			},
+			"Go to Home Page": function() {
+				window.location.href="homepage.html";
+			},
+			"Find another project": function() {
+				window.location.href="findProject.html";
+			},
+
+			
+		}
+	});	
 }

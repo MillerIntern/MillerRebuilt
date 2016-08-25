@@ -37,10 +37,13 @@
     <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
 </ul><br>
     
+    
+<div class="projectIdentifier"></div>
+
 <div class="container">
 
 	<ul class="tabs">
-		<li class="tab-link current" data-tab="projectInformation">Project Information </li>
+		<li class="tab-link current no-title" data-tab="projectInformation">Project Information </li>
 		<li class="tab-link" data-tab="changeOrders">Change Orders</li>
 		<li class="tab-link" data-tab="permits">Permits</li>
 		<li class="tab-link" data-tab="inspections">Inspections</li>
@@ -194,14 +197,13 @@
 	</div>
 	<div id="equipment" class="tab-content">
         <p class="deleteThis">Equipment</p>
-        <table>
+        <table id="equipmentTable">
         	<tr>
         		<td>PO #</td>
         		<td>Equipment Name</td>
         		<td>Vendor</td>
-        		<td>Component</td>
-        		<td>Delivery Date</td>
         		<td>Estimated Delivery Date</td>
+        		<td>Actual Delivery Date</td>
         	</tr>
         </table>
 	</div>

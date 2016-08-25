@@ -46,15 +46,3 @@ select, input, textarea
     font-size: 16px;
 }
 
-.projectIdentifier
-{
-	padding: 6px 5px;
-    background: #dAdAdA;
-	font-family: 'Raleway',sans-serif;
-    font-size: 20px;
-    border-top: 3px solid gray;
-    border-right: 1.5px solid gray;
-    border-bottom: 1.5px solid gray;
-    color: #222;
-    text-align:center;
-}

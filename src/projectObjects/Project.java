@@ -306,7 +306,7 @@ public class Project extends ProjectObject
 	}
 
 	@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
 	public Set<ChangeOrder> getChangeOrders() {
@@ -481,7 +481,7 @@ public class Project extends ProjectObject
 	}
 
 	@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
 	public Set<NewEquipment> getProjEquipment() {

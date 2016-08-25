@@ -23,6 +23,7 @@ import projectObjects.CloseoutDetails;
 import projectObjects.Equipment;
 import projectObjects.EquipmentVendor;
 import projectObjects.Inspections;
+import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Person;
 import projectObjects.Project;
@@ -36,6 +37,7 @@ import projectObjects.SalvageValue;
 import projectObjects.Warehouse;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
+import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
 import services.helpers.SalvageValueFiller;
@@ -610,15 +612,7 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 		
-		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
-		Iterator<ChangeOrder> iter = changeOrders.iterator();
-		while(iter.hasNext())
-		{
-			iter.next().setId(null);
-		}
-		p.setChangeOrders(changeOrders);
-		
+		fixSets(currentProject);
 			
 		 System.out.println("k = " + k);
 			ProjectObjectService.editObject("Project",id,p,k);
@@ -784,15 +778,7 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 		
-		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
-		Iterator<ChangeOrder> iter = changeOrders.iterator();
-		while(iter.hasNext())
-		{
-			iter.next().setId(null);
-		}
-		currentProject.setChangeOrders(changeOrders);
-		
+		fixSets(currentProject);
 		
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
@@ -854,14 +840,7 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 
-		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
-		Iterator<ChangeOrder> iter = changeOrders.iterator();
-		while(iter.hasNext())
-		{
-			iter.next().setId(null);
-		}
-		currentProject.setChangeOrders(changeOrders);
+		fixSets(currentProject);
 				
 		Permits permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
@@ -903,14 +882,7 @@ public class ProjectService extends ProjectObjectService
 			e.printStackTrace();
 		}
 		
-		// TODO: This is a temporary fix, I hope that there can be a way to do this without these lines
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
-		Iterator<ChangeOrder> iter = changeOrders.iterator();
-		while(iter.hasNext())
-		{
-			iter.next().setId(null);
-		}
-		currentProject.setChangeOrders(changeOrders);
+		fixSets(currentProject);
 		
 		Inspections inspection = new Inspections();
 		InspectionsFiller.fillInspections(inspection, params);
@@ -964,6 +936,14 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Iterator<NewEquipment> eqiter = newEquipment.iterator();
+		while(eqiter.hasNext())
+		{
+			eqiter.next().setId(null);
+		}
+		
+		
 		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		while(iter.hasNext())
@@ -980,6 +960,7 @@ public class ProjectService extends ProjectObjectService
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullChangeOrders();
 	}
 
 	/**
@@ -998,6 +979,14 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Iterator<NewEquipment> eqiter = newEquipment.iterator();
+		while(eqiter.hasNext())
+		{
+			eqiter.next().setId(null);
+		}
+		
+		
 		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();	
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		ChangeOrder oldOrder = new ChangeOrder();
@@ -1023,5 +1012,116 @@ public class ProjectService extends ProjectObjectService
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullChangeOrders();
+	}
+
+	/**
+	 * @param projectID
+	 * @param parameters
+	 */
+	public static void addEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Add Equipment:");
+		
+		Project currentProject = null;
+		try 
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			// TODO: We should do something meaningful in all of these catch blocks. Perhaps return with an error message?
+		}
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
+		while(iterCO.hasNext())
+		{
+			iterCO.next().setId(null);
+		}
+		
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Iterator<NewEquipment> iter = newEquipment.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+		
+		NewEquipment eq = new NewEquipment();
+		EquipmentFiller.fillNewEquipment(eq, params);
+		System.out.println(eq);
+		newEquipment.add(eq);
+		System.out.println(newEquipment);
+		currentProject.setProjEquipment(newEquipment);
+		System.out.println(currentProject);
+		int k;
+		
+		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
+		k = 1;
+		ProjectObjectService.editObject("Project",projectID,currentProject, k);
+		ProjectObjectService.deleteNullChangeOrders();
 	}	
+	
+	public static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Equipment:");
+		Long equipmentID = Long.parseLong(params.get("equipmentID"));
+		
+		Project currentProject = null;
+		try 
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> chiter = changeOrders.iterator();
+		while(chiter.hasNext())
+		{
+			chiter.next().setId(null);
+		}
+		
+		
+		Set<NewEquipment> equipment = currentProject.getProjEquipment();	
+		Iterator<NewEquipment> iter = equipment.iterator();
+		NewEquipment oldEquipment = new NewEquipment();
+		
+		while(iter.hasNext())
+		{
+			NewEquipment item = iter.next();
+
+			System.out.println(item.getId() + " is the ID compared to " + equipmentID);
+			if(item.getId().longValue() == equipmentID.longValue())
+			{
+				System.out.println("Found the correct equipment!");
+				oldEquipment = item;
+				EquipmentFiller.fillNewEquipment(oldEquipment, params);
+
+				
+			}
+			item.setId(null);
+		}
+		currentProject.setProjEquipment(equipment);
+		int k;
+		
+		k = 1;
+		ProjectObjectService.editObject("NewEquipment",equipmentID,oldEquipment,k);
+		ProjectObjectService.deleteNullChangeOrders();
+	}
+	
+	private static void fixSets(Project currentProject)
+	{
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
+		while(iterCO.hasNext())
+		{
+			iterCO.next().setId(null);
+		}
+		
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Iterator<NewEquipment> iter = newEquipment.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+	}
+
 }
+

@@ -29,7 +29,7 @@ ul.tabs li:last-child
     border-right: 1.5px solid #555555;
 }
 
-ul.tabs li:hover:not(:first-child)
+ul.tabs li:hover:not(.current)
 {
 	-webkit-transition: ease-in-out all .4s;
     background-color: #805050;
@@ -90,7 +90,7 @@ tr:nth-child(even)
 	background-color: #dCdCdC;
 }
 
-tr:hover
+tr:hover:not(:first-child)
 {
 	background-color: #c4c4c4;
 }
@@ -108,4 +108,25 @@ select, input, textarea
     font-family: 'Raleway',sans-serif;
     font-size: 16px;
 }
+
+
+.projectIdentifier
+{
+	padding: 6px 5px;
+    background: #dAdAdA;
+	font-family: 'Raleway',sans-serif;
+    font-size: 20px;
+    border-top: 3px solid gray;
+    border-right: 1.5px solid gray;
+    border-bottom: 1.5px solid gray;
+    color: #222;
+    text-align:center;
+    -webkit-transition: all .75s ease;
+	-moz-transition: all .75s ease;
+	-ms-transition: all .75s ease;
+	-o-transition: all .75s ease;
+	transition: all .75s ease;
+
+}
+
 

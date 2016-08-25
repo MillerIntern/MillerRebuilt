@@ -5,6 +5,15 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 /**
+ * this class holds the information about equipment for a project. 
+ * 
+ * It is important to note that this is the preferred equipment object
+ * over Equipment. I also created this class instead of just using 
+ * Equipment because the previous developer had code absolutely 
+ * everywhere for what is a simple task that he never got working
+ * and it really is going to be a task in itself to remove
+ * Equipment.java from the current codebase. /bash
+ *  
  * @author jmackin
  *
  */
@@ -14,20 +23,21 @@ public class NewEquipment extends ProjectObject
 	private String poNum;
 	private String equipmentName;
 	private String vendor;
-	private String component;
 	private Date deliveryDate;
 	private Date estDeliveryDate;
+	private String notes;
 	
 	public NewEquipment(String poNum, String equipmentName,
-						String vendor, String component,
-						Date deliveryDate, Date estDeliveryDate)
+						String vendor,
+						Date deliveryDate, Date estDeliveryDate,
+						String notes)
 	{
 		this.poNum = poNum;
 		this.equipmentName = equipmentName;
 		this.vendor = vendor;
-		this.component = component;
 		this.deliveryDate = deliveryDate;
 		this.estDeliveryDate = estDeliveryDate;
+		this.notes = notes;
 	}
 	
 	public NewEquipment()
@@ -35,9 +45,9 @@ public class NewEquipment extends ProjectObject
 		this.poNum = null;
 		this.equipmentName = null;
 		this.vendor = null;
-		this.component = null;
 		this.deliveryDate = null;
 		this.estDeliveryDate = null;
+		this.notes = null;
 	}
 
 	public String getPoNum() {
@@ -64,14 +74,6 @@ public class NewEquipment extends ProjectObject
 		this.vendor = vendor;
 	}
 
-	public String getComponent() {
-		return component;
-	}
-
-	public void setComponent(String component) {
-		this.component = component;
-	}
-
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -86,5 +88,13 @@ public class NewEquipment extends ProjectObject
 
 	public void setEstDeliveryDate(Date estDeliveryDate) {
 		this.estDeliveryDate = estDeliveryDate;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 }

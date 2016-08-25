@@ -232,10 +232,33 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("addEquipment"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.addEquipment(projectID,  parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("editEquipment"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.editEquipment(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else if (action.equals("get"))
 		{
 			System.out.println("GET");
-			System.out.println(response);
 			try 
 			{
 				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "Project");
@@ -253,7 +276,7 @@ public class Project extends HttpServlet
 		{
 			response = ProjectService.getAllEnumsEquipAsJson();
 		}
-		// Very aggressive request
+		// Very aggressive request TODO: Would be great to somehow minify this request
 		else if(action.equals("getAllProjects"))
 		{
 			System.out.println("getting the projects!");
