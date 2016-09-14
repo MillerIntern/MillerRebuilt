@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Set;
 
+import projectObjects.NewEquipment;
 import projectObjects.Person;
 import projectObjects.Project;
 
@@ -32,6 +33,7 @@ public class ReportHelper
 	{
 		if(value.equals("mcsNum"))
 		{
+			sb.append("<th>");
 			sb.append("MCS Number");
 		}
 		else if (value.equals("warehouse"))
@@ -499,6 +501,12 @@ public class ReportHelper
 		{
 			sb.append("<th>");
 			sb.append("Low Voltage Inspection");
+		}
+		else if(value.equals("equipmentName"))
+		{
+			sb.append("<th>Warehouse</th><th>Item</th><th>Project Status</th><th>Equipment Name</th>" +
+					  "<th>Vendor</th><th>Estimated Delivery Date</th>" +
+					  "<th>Actual Delivery Date</th><th class='longText'>Notes");
 		}
 	}
 	
@@ -1295,9 +1303,45 @@ public class ReportHelper
 		{
 			return convertPermitStatus(p.getPermits().getVoltageInspectionStatus());
 		}
+		/*
+		 * TODO: permit/inspection notes for bart report;
+		 */
+		else if(value.equals("equipmentName") && p.getProjEquipment() != null) 
+		{
+			int amountOfEquipment = p.getProjEquipment().size();
+			if(amountOfEquipment == 0) return "";
+			
+			StringBuilder equipmentBuilder = new StringBuilder();
+			Iterator<NewEquipment> iter = p.getProjEquipment().iterator();
+
+			while(iter.hasNext())
+			{
+				NewEquipment tmp = iter.next();
+				equipmentBuilder.append("<tr><td></td><td>" + p.getWarehouse().getCity().getName() + ", " + 
+													  p.getWarehouse().getState().getAbbreviation());
+				equipmentBuilder.append("</td><td>" + p.getProjectItem().getName());
+				equipmentBuilder.append("</td><td>" + p.getStatus().getName() + "</td><td>");
+				
+				equipmentBuilder.append(nullOrFull(tmp.getEquipmentName()) + "</td><td>" + 
+										nullOrFull(tmp.getVendor()) + "</td><td>" + 
+										nullOrFull(tmp.getEstDeliveryDate()) + "</td><td>" + 
+										nullOrFull(tmp.getDeliveryDate()) + "</td><td>" +
+										nullOrFull(tmp.getNotes()) + "</td>");
+				equipmentBuilder.append("</tr>");
+			}
+
+			return equipmentBuilder.toString();
+		}
 
 		else
 			return "---";	// If nothing else just fill the field with nothing
+	}
+	
+	public static Object nullOrFull(Object value)
+	{
+		if(value == null || value.toString().equals(""))
+			return "---";
+		else return value;
 	}
 	
 	

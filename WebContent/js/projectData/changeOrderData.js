@@ -203,16 +203,6 @@ function saveProject()
 
 function isValidInput(required, dates)
 {	
-	for(var i = 0; i < required.length; i++)
-	{
-		if(required[i] == "default" || required[i] == "")
-		{
-			alert("Default Fields Must be Filled In!");
-			return false;
-		}
-	}
-	
-	
 	//Check if all of the dates are in the correct format
 	for (var i = 0; i < dates.length; i++)
 	{

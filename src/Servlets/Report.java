@@ -103,20 +103,29 @@ public class Report extends HttpServlet
 		//Generate table contents
 		for (int i = 0; i < projects.size(); i++)
 		{
-			sb.append("<tr>");
-			sb.append("<td>"+(i+1)+"</td>");
 			projectObjects.Project p = projects.get(i);
-			for (int j = 0; j < shownFields.size(); j++)
-			{	
-				sb.append("<td>");
-				String value = getValueFromProject(shownFields.get(j), p);
-				//System.out.println(value);
+
+			if(shownFields.get(0).equals("equipmentName"))
+			{
+				String value = getValueFromProject(shownFields.get(0), p);
 				sb.append(value);
-				sb.append("</td>");		
-				
 			}
-			
-			sb.append("</tr>");
+			else
+			{
+				sb.append("<tr>");
+				sb.append("<td>"+(i+1)+"</td>");
+				for (int j = 0; j < shownFields.size(); j++)
+				{	
+					sb.append("<td>");
+					String value = getValueFromProject(shownFields.get(j), p);
+					//System.out.println(value);
+					sb.append(value);
+					sb.append("</td>");		
+					
+				}
+				
+				sb.append("</tr>");
+			}
 			
 		}
 		sb.append("<tbody>");

@@ -7,7 +7,8 @@ var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
-                      "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report'];
+                      "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
+                      'Equipment Report'];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -22,12 +23,12 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
 			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
-			"person": "Project Manager", "closeout": "Closeout"};
+			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report"};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
-					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS"};
+					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -172,6 +173,11 @@ const INSPECTION_PROPOSAL = 'INSPECTIONS_P';
 const INSPECTION_BUDGETARY = 'INSPECTIONS_B';
 const INSPECTION_CLOSED = 'INSPECTIONS_C';
 
+const EQUIPMENT_ACTIVE = 'EQUIPMENT_A';
+const EQUIPMENT_PROPOSAL = 'EQUIPMENT_P';
+const EQUIPMENT_BUDGETARY = 'EQUIPMENT_B';
+const EQUIPMENT_CLOSED = 'EQUIPMENT_C';
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,9 +187,7 @@ const PROPOSAL_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","cla
 
 const ACTIVE_WEEKLY_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","class","manager", "supervisor", "region", 
 									"status","scheduledStartDate","scheduledTurnover","actualTurnover",
-									"type",
-									/*TODO: Get rid of this"asBuilts","punchList","alarmHvacForm","salvageValue","airGas",
-									"permitsClosed","verisaeShutdownReport",*/ "invoiced", "shouldInvoice", "projectNotes");
+									"type", "invoiced", "shouldInvoice", "projectNotes");
 
 
 const INACTIVE_WEEKLY_KEYS = new Array("stage", "item","scope","status");
@@ -299,6 +303,11 @@ const PERMIT_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', '
 const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspection', 'mechanicalInspection', 'electricalInspection',
 									'plumbingInspection', 'roofingInspection', 'sprinklerInspection', 'fireAlarmInspection', 
 									'lowVoltageInspection');
+
+const EQUIPMENT_KEYS = new Array('equipmentName'); /* The system handles creating all of the keys but we only pass in one*/
+
+const BART_KEYS = new Array('warehouse', 'item', 'status');
+  /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
 var warehouseOptions;
@@ -1477,6 +1486,23 @@ function generateReport(reportType)
 			title = "Inspections for Closed Projects";
 			break;
 	
+		case EQUIPMENT_ACTIVE:
+			stage.push(ACTIVE_STAGE);
+			title = 'Equipment for Active Projects';
+			break;
+		case EQUIPMENT_PROPOSAL:
+			stage.push(PROPOSAL_STAGE);
+			title = "Equipment for Proposals";
+			break;
+		case EQUIPMENT_BUDGETARY:
+			stage.push(BUDGETARY_STAGE);
+			title = "Equipment for Budgetary Projects";
+			break;
+		case EQUIPMENT_CLOSED:
+			stage.push(CLOSED_STAGE);
+			title = "Equipment for Closed Projects";
+			break;
+			
 		default:
 			alert("Invalid report type");
 			return false;
@@ -1659,6 +1685,12 @@ function getAllSpecifiedFields(reportType)
 		case INSPECTION_BUDGETARY:
 		case INSPECTION_CLOSED:
 			genType = INSPECTION_KEYS;
+			break;
+		case EQUIPMENT_ACTIVE:
+		case EQUIPMENT_PROPOSAL:
+		case EQUIPMENT_BUDGETARY:
+		case EQUIPMENT_CLOSED:
+			genType = EQUIPMENT_KEYS;
 			break;
 	
 	}
