@@ -44,7 +44,7 @@ public class Login extends HttpServlet
 			session.setAttribute("user", username);
 			session.setAttribute("verified", "true");
 			session.setAttribute("isAdmin", LoginService.isAdmin(username));
-			session.setMaxInactiveInterval(100*60);
+			session.setMaxInactiveInterval(-1);	// A negative time indicates the session should never timeout.
 			serverResponse = "true";
 		}
 		else

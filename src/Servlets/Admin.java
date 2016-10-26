@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import objects.RequestHandler;
 import projectObjects.City;
 import projectObjects.EquipmentVendor;
+import projectObjects.Person;
 import projectObjects.ProjectItem;
 import projectObjects.Region;
 import projectObjects.State;
@@ -85,133 +86,13 @@ public class Admin extends HttpServlet
 			ProjectObjectService.addObject("EquipmentVendor", vendor);
 			response = "vendor created";
 		}
-		/*if (domain.equals("status"))
+		else if(action.equals("addPerson"))
 		{
-			if (action.equals("add"))
-			{
-				resp.setContentType("text/html");
-				AdminService.addStatus(parameters.get("name"));
-			}
-			else if (action.equals("getAll"))
-			{
-				response = AdminService.getAllStatuses();
-				resp.setContentType("application/json");
-			}
-			else if (action.equals("edit"))
-			{
-				Long id = Long.parseLong(parameters.get("id"));
-				String name = parameters.get("name");
-				AdminService.editStatus(id, name);
-				resp.setContentType("text/html");
-			}
-			else if (action.equals("delete"))
-			{
-				resp.setContentType("text/html");
-				Long id = Long.parseLong(parameters.get("id"));
-				int s = AdminService.deleteStatus(id);
-				if (s == -1)
-					response = "fail";
-			}
+			String username = parameters.get("username");
+			Person person = new Person(username);
+			ProjectObjectService.addObject("Person",  person);
+			response = "person added";
 		}
-		
-		else if (domain.equals("permission"))
-		{	
-			if (action.equals("getAll"))
-			{
-				response = AdminService.getAllPermissionsAsJson();
-				resp.setContentType("application/json");
-			}
-			else if (action.equals("add"))
-			{
-				resp.setContentType("text/html");
-				String name = parameters.get("name");
-				boolean query = Boolean.parseBoolean(parameters.get("canQuery"));
-				boolean list = Boolean.parseBoolean(parameters.get("canList"));
-				boolean admin = Boolean.parseBoolean(parameters.get("canAdmin"));
-				boolean projects = Boolean.parseBoolean(parameters.get("canEditProjects"));
-				System.out.println(query+" "+list+" "+admin+" "+projects);
-				
-				AdminService.addPermission(name, query, list, admin, projects);
-			}
-						
-			else if (action.equals("edit"))
-			{
-				resp.setContentType("text/html");
-				Long id = Long.parseLong(parameters.get("id"));
-				String name = parameters.get("name");
-				boolean query = Boolean.parseBoolean(parameters.get("canQuery"));
-				boolean list = Boolean.parseBoolean(parameters.get("canList"));
-				boolean admin = Boolean.parseBoolean(parameters.get("canAdmin"));
-				boolean projects = Boolean.parseBoolean(parameters.get("canEditProjects"));
-				
-				AdminService.editPermission(id, name, query, list, admin, projects);
-			}
-			else if (action.equals("delete"))
-			{
-				resp.setContentType("text/html");
-				Long id = Long.parseLong(parameters.get("id"));
-				int s = AdminService.deletePermission(id);
-				if (s == -1)
-					response = "fail";
-			}
-		}
-		
-		else if (domain.equals("user"))
-		{	
-			if (action.equals("add"))
-			{
-				resp.setContentType("text/html");
-				int s = AdminService.addUser(
-						parameters.get("username"),
-						parameters.get("password"),
-						Long.parseLong(parameters.get("statusID")),
-						Long.parseLong(parameters.get("permissionID"))
-				);
-				
-				if (s == -1)
-					response = "existing";
-			}
-			
-			else if (action.equals("getAll"))
-			{
-				response = AdminService.getAllAdminObjects();
-				resp.setContentType("application/json");
-			}
-			
-			else if (action.equals("edit"))
-			{
-				resp.setContentType("text/html");
-				AdminService.editUser(
-						Long.parseLong(parameters.get("id")),
-						parameters.get("username"),
-						parameters.get("password"),
-						Long.parseLong(parameters.get("statusID")),
-						Long.parseLong(parameters.get("permissionID"))
-				);
-			}
-			
-			else if (action.equals("delete"))
-			{
-				resp.setContentType("text/html");
-				Long id = Long.parseLong(parameters.get("id"));
-				int s = AdminService.deleteUser(id);
-				if (s == -1)
-					response = "fail";
-			}
-		}
-		
-		else if (domain.equals("item"))
-		{	
-			if (action.equals("add"))
-			{
-				resp.setContentType("text/html");
-				int s = AdminService.addItem(parameters.get("item"));
-					
-				if (s == -1)
-					response = "existing";
-			}
-		}*/
-		
 		
 		out.print(response);
 	}

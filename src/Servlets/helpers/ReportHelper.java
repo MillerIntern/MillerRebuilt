@@ -404,22 +404,22 @@ public class ReportHelper
 		}
 		else if(value.equals("closeoutDocumentNotes"))
 		{
-			sb.append("<th>");
+			sb.append("<th class = 'longText'>");
 			sb.append("Closeout Document Notes");
 		}
 		else if(value.equals("warrantyNotes"))
 		{
-			sb.append("<th>");
+			sb.append("<th class = 'longText'>");
 			sb.append("Warranty Notes");
 		}
 		else if(value.equals("finalInspectionNotes"))
 		{
-			sb.append("<th>");
+			sb.append("<th class = 'longText'>");
 			sb.append("Final Inspection Notes");
 		}
 		else if(value.equals("finalLiensNotes"))
 		{
-			sb.append("<th>");
+			sb.append("<th class = 'longText'>");
 			sb.append("Final Liens Notes");
 		}
 		else if(value.equals("buildingPermit"))

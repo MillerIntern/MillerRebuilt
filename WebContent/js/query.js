@@ -306,7 +306,7 @@ const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspec
 
 const EQUIPMENT_KEYS = new Array('equipmentName'); /* The system handles creating all of the keys but we only pass in one*/
 
-const BART_KEYS = new Array('warehouse', 'item', 'status');
+const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -1219,7 +1219,6 @@ function generateReport(reportType)
 			region.push("PR");
 			region.push("NE");
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_PREPARING_PROPOSAL_TEMP);
 			status.push(PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);

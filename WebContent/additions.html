@@ -44,6 +44,7 @@
 		<li class="tab-link current" data-tab="warehouse">Warehouse</li>
 		<li class="tab-link" data-tab="item">Project Item</li>
 		<li class="tab-link" data-tab="equipmentVendor">Equipment Vendor</li>
+		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
 	</ul>
 	
 	<div id="warehouse" class="tab-content current">
@@ -101,6 +102,19 @@
 			</tr>
 		</table>
 		<button onclick="createVendor()">Create New Equipment Vendor</button>		
+	</div>
+	
+	<div id="personTab" class="tab-content">
+		<table>
+			<tr>
+			<td>Person</td><td></td>
+			</tr>
+			<tr>
+			<td>Name:</td>
+			<td><input id="personName" type="text"></td>
+			</tr>
+		</table>
+		<button onclick="addPerson()">Add New Person</button>
 	</div>
 </div>
 

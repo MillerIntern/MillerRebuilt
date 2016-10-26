@@ -129,4 +129,28 @@ function createVendor()
 	}
 }
 
+function addPerson()
+{
+	var personName = $('#personName').val();
+	
+	if(personName != '')
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'addPerson', 
+				'username': personName, 
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#personName').val('');
+				alert("Person Added Successfully!");
+			}
+		});
+	}
+}
+
 

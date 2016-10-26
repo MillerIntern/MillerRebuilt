@@ -299,7 +299,7 @@ function addParameter()
 	removeTag.innerHTML = 'X';
 	
 	var selectObject2 = document.createElement("select");
-	selectObject2.className = "parameterID";
+	selectObject2.className = "parameterValue";
 	selectObject2.id = ("paramVal" + paramNum);
 	
 	var optionObject2 = document.createElement("option");
@@ -328,7 +328,8 @@ function populateParameters()
 		option.setAttribute("value", parameterFields[i]);
 		d.appendChild(option);
 	}
-	$("#paramID"+paramNum).append(d);
+	var ids = $('.paramHolder').children('.parameterID');
+	$(ids[ids.length - 1]).append(d);
 }
 
 function filterProjects()
@@ -336,11 +337,16 @@ function filterProjects()
 	console.log("filtering");
 	var json = JSON.parse(projects["projects"]);
 
+	var parameters = $('.paramHolder').children('select');
+	console.log(parameters);
+	
 	var remaining = json.length;
-	for(var i = 0; i < paramNum; i++)
+	for(var i = 0; i < (paramNum * 2); i+= 2)
 	{
-		var id = $("#paramID"+(i + 1)).val();
-		var val = $("#paramVal"+(i + 1)).val();
+		var id = $(parameters[i]).val();
+		var val = $(parameters[i + 1]).val();
+		console.log("Filter on: "+ id + " " + val);
+		
 		for(var j = 0; j < json.length; j++)
 		{
 			if(id == 'Warehouse')
@@ -453,8 +459,12 @@ function filterProjects()
 function removeParam(param)
 {
 	console.log(param);
+	
+	
+	
 	param.parentNode.remove();
 	paramNum--;
+	
 	filterProjects();
 }
 
