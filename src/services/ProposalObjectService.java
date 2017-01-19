@@ -1,9 +1,9 @@
 package services;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.List;
-
-import objects.HibernateUtil;
 
 import org.hibernate.Criteria;
 import org.hibernate.NonUniqueObjectException;
@@ -15,9 +15,8 @@ import org.hibernate.criterion.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import objects.HibernateUtil;
 import projectObjects.ProjectObject;
-import java.io.File;
-import java.io.PrintWriter;
 
 
 /**
@@ -171,6 +170,7 @@ public class ProposalObjectService
 		Class c = Class.forName("proposalObjects."+domain);
 		
 		//Get object from database that matches the id
+		@SuppressWarnings("unchecked")
 		Object o = session.get(c, id);
 		tx.commit();
 		return o;
@@ -184,6 +184,7 @@ public class ProposalObjectService
 	 * @return A JSON string representing the object.
 	 * @throws ClassNotFoundException
 	 */
+	@SuppressWarnings("unchecked")
 	public static String getAsJSON(Long id, String domain) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -233,7 +234,8 @@ public class ProposalObjectService
 		//Attempt to delete the object
 		try
 		{
-		    Object o = session.get(c, id); 
+		    @SuppressWarnings("unchecked")
+			Object o = session.get(c, id); 
 		    session.delete(o); 
 		    tx.commit();
 		    success = 1;
@@ -324,6 +326,7 @@ public class ProposalObjectService
 		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("proposalObjects."+domain);
 		
+		@SuppressWarnings("unchecked")
 		ProjectObject oldObject2 = (ProjectObject) session.get(c, id);
 		
 		//Copy fields of new object into old object, but keep the id

@@ -38,6 +38,8 @@ function getProject()
 	{
 		var PROJECT_ID = getParameterByName("id");
 		ID = PROJECT_ID;
+		if(ID === undefined)
+			return;
 
 		$.ajax({
 			type: 'POST',

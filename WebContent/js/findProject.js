@@ -109,8 +109,9 @@ function fillDropdowns(data)
 
 function checkInitFilter()
 {
-	if(getParameterByName('id') != '')
+	if(getParameterByName('id') == 'user')
 	{
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project',
@@ -165,6 +166,15 @@ function checkInitFilter()
 				filterProjects();
 			}
 		});
+	}
+	else if(getParameterByName('id') == 'activePermit')
+	{
+		$('#paramID1').val('Status');
+		$("#paramVal1").empty();
+		$("#paramVal1").append(statusOptions.cloneNode(true));
+
+		document.getElementById('paramVal1').value = '30';
+		filterProjects();
 	}
 	else
 		filterProjects();
@@ -446,9 +456,8 @@ function filterProjects()
 				var projectListing = document.createElement("li");
 				projectListing.className = "project";
 				projectListing.id = (json[i].id);
-				projectListing.innerHTML = (json[i].warehouse.city.name 
-						+ ", " + json[i].warehouse.state + " --- " +  json[i].projectItem.name); //+ " --- " + json[i].status.name);
-				projectListing.onclick = function() {manageThisProject(this)};
+				projectListing.innerHTML = ('<a class="projectLink" href=projectManager.html?type=navigateTo&id=' + json[i].id + '>' + json[i].warehouse.city.name 
+						+ ", " + json[i].warehouse.state + " --- " +  json[i].projectItem.name + '</a>');
 				
 				$("#projectHolder").append(projectListing);
 			}

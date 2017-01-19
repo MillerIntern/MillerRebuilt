@@ -1,0 +1,4 @@
+Mostly just revamping the way that triggers are handled. Flags will probably be turned off and on onto database objects so that specific sets
+of triggers can be requested and filtered through.
+
+Also the whole trigger system kind of just does not exist in the current build so the class might as well not exist. 

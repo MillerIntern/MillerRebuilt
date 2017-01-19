@@ -58,120 +58,20 @@ function getBudgetaryProjects()
 	window.open('/MillerRebuilt/Report?domain=project&action=query&warehouse.id=%5B%5D&stage.id=%5B8%5D&projectClass.id=%5B%5D&projectItem.id=%5B%5D&projectType.id=%5B%5D&region.region=%5B%5D&status.id=%5B%5D&projectInitiatedDate=%5B%5D&projectInitiatedDateRelation=%5B%5D&costcoDueDate=%5B%5D&costcoDueDateRelation=%5B%5D&proposalSubmitted=%5B%5D&proposalSubmittedRelation=%5B%5D&scheduledStartDate=%5B%5D&scheduledStartDateRelation=%5B%5D&scheduledTurnover=%5B%5D&scheduledTurnoverRelation=%5B%5D&actualTurnover=%5B%5D&actualTurnoverRelation=%5B%5D&onGoing=%5B%5D&onGoingRelation=%5B%5D&projectManagers.id=%5B%5D&title=All+Budgetary+Projects&shownFields=%5B%22stage%22%2C%22warehouse%22%2C%22item%22%2C%22scope%22%2C%22manager%22%2C%22supervisor%22%2C%22region%22%2C%22status%22%2C%22initiated%22%2C%22siteSurvey%22%2C%22costcoDueDate%22%2C%22proposalSubmitted%22%2C%22type%22%2C%22projectNotes%22%5D');
 }
 
-/*function loadPosts()
+
+function generatePermitReport()
 {
-	$.ajax({
-		type: 'POST',
-		url: 'Project', 
-		data: 
-		{
-			'action': 'getPosts',
-		},
-		complete: function(data)
-		{
-			if(data.responseText.slice(0, -1) == 'VERIFICATION_FAILURE') {returnToLogin(); return;}
-			
-			showPosts(data.responseJSON);
-		},
-	});
+	window.open('/MillerRebuilt/Report?domain=project&action=query&warehouse.id=%5B%5D&stage.id=%5B2%5D&projectClass.id=%5B%5D&projectItem.id=%5B%5D&projectType.id=%5B%5D&region.region=%5B%5D&status.id=%5B30%5D&projectInitiatedDate=%5B%5D&projectInitiatedDateRelation=%5B%5D&costcoDueDate=%5B%5D&costcoDueDateRelation=%5B%5D&proposalSubmitted=%5B%5D&proposalSubmittedRelation=%5B%5D&scheduledStartDate=%5B%5D&scheduledStartDateRelation=%5B%5D&scheduledTurnover=%5B%5D&scheduledTurnoverRelation=%5B%5D&actualTurnover=%5B%5D&actualTurnoverRelation=%5B%5D&onGoing=%5B%5D&onGoingRelation=%5B%5D&projectManagers.id=%5B%5D&title=Permits+for+Active+Projects&shownFields=%5B%22warehouse%22%2C%22item%22%2C%22status%22%2C%22buildingPermit%22%2C%22mechanicalPermit%22%2C%22electricalPermit%22%2C%22plumbingPermit%22%2C%22roofingPermit%22%2C%22sprinklerPermit%22%2C%22fireAlarmPermit%22%2C%22lowVoltagePermit%22%5D')
 }
 
-function showPosts(json)
+function findActivePermits()
 {
-	fixDates(json);
-	if(json.length == 0)
-	{
-		$("#newPost").css("display", "block");
-		$("#discardButton").prop('disabled', true);
-		return;
-	}
-	for(var i = 0; i < json.length; i++)
-	{
-		var node = document.createElement("li");
-		node.onclick = function(){hide(this)};
-
-		$(node).append("<p class='postTitle'>" + json[i].title + "</p>");
-		$(node).append("<p class='postText'>" + json[i].text + "</p>");
-		$(node).append("<p class='author'>- " + json[i].author + " on " + 
-									json[i].postDate + "</p>");
-		
-		$("#posts").append(node);
-	}
+	document.location.href='findProject.html?type=search&id=activePermit';
 }
 
-function hide(param)
-{
-	if($(param).hasClass('isHidden'))
-	{
-		$(param).removeClass('isHidden');
-		$(param).children('.postText').css('display', 'block');
-		$(param).children('.author').css('display', 'block');
-	}
-	else
-	{
-		$(param).addClass('isHidden');
-		$(param).children('.postText').css('display', 'none');
-		$(param).children('.author').css('display', 'none');
-	}
-}
-
-function fixDates(data)
-{
-	for(var i = 0; i < data.length; i++)
-	{
-		data[i].postDate = data[i].postDate.slice(0, 12);
-	}
-}
-
-function createPost()
-{
-	$("#newPost").css("display", "block");
-}
-
-function submit()
-{
-	var title = $("#newPostTitle").val();
-	var text = $("#newPostText").val();
-	
-	if(title != "" && text != "")
-		if(text.length < 255)
-			$.ajax({
-				type: 'POST',
-				url: 'Project', 
-				data: 
-				{
-					'action': 'postPost',
-					'title': title,
-					'text': text,
-				},
-				complete: function(data)
-				{
-					console.log(data);
-					if(data.responseText.slice(0, -1) == 'VERIFICATION_FAILURE') {returnToLogin(); return;} 
-					
-					$("#newPost").css('display', 'none');
-					$("#newPostTitle").val("");
-					$("#newPostText").val("");		
-					
-					location.reload();
-				},
-			});//ajaxcall
-		else
-			alert("Post too long! (max 254 characters)");
-	else
-		alert("Fill in all post information!");
-}
-
-function discard()
-{
-	$("#newPost").css('display', 'none');
-	$("#newPostTitle").val("");
-	$("#newPostText").val("");
-}
-*/
 function findUserProjects()
 {
-	document.location.href='findProject.html?type=search&id=user'
+	document.location.href='findProject.html?type=search&id=user';
 }
 
 

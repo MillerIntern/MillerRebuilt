@@ -84,7 +84,20 @@ select:first-child
     border-bottom: solid 1px #222222;
     font-family: 'proxima-nova',sans-serif;
     font-size: 20px; 
-    transition: all 0.4s ease 0s;
+    transition: all .5s ease 0s;
+    background-color: none;
+}
+
+.project a
+{
+	width: 100%;
+	display: block;
+	color: black;
+	margin:0;
+	padding: 0;
+	padding-left: 8px;
+	transition: all .5s ease 0s;
+	background-color: gray;
 }
 
 b
@@ -97,6 +110,7 @@ b
     border: none;
 }
 
+.project .projectLink:hover,
 .project:hover
 {
     background-color: dimgray;

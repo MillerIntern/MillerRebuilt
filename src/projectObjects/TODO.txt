@@ -1,0 +1,7 @@
+Which of these objects are actually used?
+
+Can any work be abstracted into the project object that handles that thing?
+
+Are there objects in the database that do no exist here?
+
+ -- Just play cleanup 

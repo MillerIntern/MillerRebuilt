@@ -1,0 +1,3 @@
+Like most almost every TODO, this package has a lot of unused code.
+
+Also moving things away from Project as appropriate would be good. Right now everything is just packed into the Project servlet.

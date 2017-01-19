@@ -29,6 +29,7 @@ public class LoginService
 		Criteria criteria = HibernateUtil.getSession().createCriteria(User.class);
 		criteria.add(Restrictions.eqOrIsNull("name", username));
 		
+
 		@SuppressWarnings("unchecked")
 		List<User> matchingUser = criteria.list();
 		

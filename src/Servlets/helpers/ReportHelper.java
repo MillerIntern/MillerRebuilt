@@ -69,12 +69,12 @@ public class ReportHelper
 		else if (value.equals("class"))
 		{
 			sb.append("<th>");
-			sb.append("Project Classification");
+			sb.append("Classification");
 		}
 		else if (value.equals("scope"))
 		{
 			sb.append("<th class = 'longText'>");
-			sb.append("Project Scope");
+			sb.append("Scope");
 		}
 		else if (value.equals("initiated"))
 		{
@@ -84,7 +84,7 @@ public class ReportHelper
 		else if (value.equals("status"))
 		{
 			sb.append("<th>");
-			sb.append("Project Status");
+			sb.append("Status");
 		}
 		else if (value.equals("scheduledStartDate"))
 		{
@@ -174,7 +174,7 @@ public class ReportHelper
 		else if (value.equals("projectNotes"))
 		{	
 			sb.append("<th class = 'longText'>");
-			sb.append("Project and Financial Notes");
+			sb.append("Notes");
 		
 		}
 		else if(value.equals("custNum"))
@@ -532,7 +532,7 @@ public class ReportHelper
 		}
 		else if (value.equals("warehouse") && p.getWarehouse() != null)
 		{
-			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation() + "-#" + p.getWarehouse().getWarehouseID());
+			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation());
 		}
 		else if (value.equals("stage") && p.getStage() != null)
 			return p.getStage().getName();

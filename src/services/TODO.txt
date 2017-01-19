@@ -1,0 +1,3 @@
+A lot of these are completely unused because they are designed to handle things that are just simply unnecessary for the system.
+
+ProjectService could use more pruning. It has a lot of repeated code, and mysterious code. It can be condensed to 500 lines if coded properly.

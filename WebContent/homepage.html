@@ -36,40 +36,31 @@
     <li style="float:right"><a href="logout.html">Logout</a></li>
 </ul>
 <div id="container">
-<!--<div id="postsField">
-	<button id="createPost" onclick="createPost()">+</button>
-	<ul id="posts">
-		<li id="newPost">
-            <input placeholder="New Post Title" type="text" id="newPostTitle" /><br><br>
-            <textarea id="newPostText"></textarea><br><br>
-            <button class="postButtons" onClick="submit()">Submit</button><button id="discardButton" class="postButtons" onClick="discard()">Discard</button>
-		</li>
-	</ul>
-</div>-->
+
 <div id='userFields'>
 	
 	<fieldset>
 		<legend>Manager Tools</legend>
-		-<label onclick='findUserProjects()'>Find Your Projects</label><br>
+		-<label onclick='findUserProjects()'><b>Find</b> Your Projects</label><br>
 		-<label onclick='comingSoon(this)'>Your Project Triggers</label><br>
+		<br>
 		<!---<label onclick='comingSoon(this)'>View Starred Projects</label>-->
 	</fieldset>
 	<fieldset>
 		<legend>Administrator Tools</legend>
-		-<label onclick="generateAllReports()">Generate Full Reports</label><br>
-		-<label onclick="generateReports()">Generate Meeting Reports</label><br>
+		-<label onclick="generateAllReports()">Generate Full <b>Reports</b></label><br>
+		-<label onclick="generateReports()">Generate Meeting <b>Reports</b></label><br>
 		-<label onclick='comingSoon(this)'>Get All Project Triggers</label>
+	</fieldset>
+	<fieldset>
+		<legend>Permits Tools</legend>
+		-<label onclick="findActivePermits()"><b>Find</b> Awaiting Permits</label><br>
+		-<label onclick="generatePermitReport()">Active Permits <b>Report</b></label><br>
+		<br>
 	</fieldset>
 
 </div>
-<!-- <div id="globalTriggers">
-	<ul id="alerts">
-		<li id="globalTriggersTitle" style='cursor: auto;'><p>Quick Tools</p></li>
-		<li id="allReports" onclick="generateAllReports()"><p>Generate All Reports</p></li>
-		<li id="generateReports" onclick="generateReports()"><p>Generate Meeting Reports</p></li>
-		<li id='findUserReports' onclick='findUserProjects()'><p>Find Your Projects</p></li>
-	</ul>
-</div> -->
+
 </div>
 
 </body>
