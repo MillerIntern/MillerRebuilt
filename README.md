@@ -170,7 +170,7 @@ Once you have the database running, you need to get java to run with it. Take th
 
 And that should be it! You should be able to startup the site and then login. If you still can't get access, check the tomcat logs for more information. 
 
-#### Maven Primer
+#### Primer
 
 Maven is a build tool used to compile and package software. It can be found on apache's main website as well and can also be installed into eclipse. Try [this](http://stackoverflow.com/questions/8620127/maven-in-eclipse-step-by-step-installation) to install into eclipse. Otherwise there are other online tutorials that are helpful for installation onto your particular OS (if not using eclipse). 
 
@@ -229,7 +229,7 @@ Once everything compiles properly, go into the target folder at the top level of
 	I strongly recommend doing nothing.
 				-- The Next Guy
 ```
-Honestly though, as bad as it is, I was given a filesystem where the depencies were just passed on like any ordinary .class file would be and not truly as 'depenendencies'. I might refactor the project in order to bring back dependency management and maven and everything but for now *don't worry about it*. That is unless I'm gone and I didn't bring back dependency management...
+At some point the maven build system was completely lost because a developer decided that it would be best to abandon good software engineering practices. It has more recently come back so that we can keep our software dependencies managed properly and up to date. Ensure that you continue to build this project with maven!
 
 #### Git Primer
 Git	is the technology which allows us to version control our software.
