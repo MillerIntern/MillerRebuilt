@@ -22,6 +22,11 @@ import projectObjects.Project;
  */
 public class ReportHelper 
 {
+	// constant statuses
+	private static final String NA = "3";
+	private static final String INCOMPLETE = "2";
+	private static final String COMPLETE = "1";
+	
 	/**
 	 * Creates table headers based on the values passed in from the report
 	 * For an example, report.js might send values [mcsNum, warehouse, stage]. This method will then be called
@@ -362,40 +367,20 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("Number of Change Orders");
 		}
-		else if(value.equals("numOfChangesCompleted"))
-		{
-			sb.append("<th>");
-			sb.append("Number of Change Orders Completed");
-		}
 		else if(value.equals("inspectionsRequired"))
 		{
 			sb.append("<th>");
 			sb.append("Number of Inspections Required");
-		}
-		else if(value.equals("inspectionsCompleted"))
-		{
-			sb.append("<th>");
-			sb.append("Number of Inspections Completed");
 		}
 		else if(value.equals("warrantiesRequired"))
 		{
 			sb.append("<th>");
 			sb.append("Number of Warranties Required");
 		}
-		else if(value.equals("warrantiesCompleted"))
-		{
-			sb.append("<th>");
-			sb.append("Number of Warranties Completed");
-		}
 		else if(value.equals("liensRequired"))
 		{
 			sb.append("<th>");
 			sb.append("Number of Liens Required");
-		}
-		else if(value.equals("liensCompleted"))
-		{
-			sb.append("<th>");
-			sb.append("Number of Liens Completed");
 		}
 		else if(value.equals("mg2Completion"))
 		{
@@ -501,6 +486,26 @@ public class ReportHelper
 		{
 			sb.append("<th>");
 			sb.append("Low Voltage Inspection");
+		}
+		else if(value.equals("certificateOfSubstantialCompletion"))
+		{
+			sb.append("<th>");
+			sb.append("Certificate of Substantial Completion");
+		}
+		else if(value.equals("paymentOfDebtsAndClaims"))
+		{
+			sb.append("<th>");
+			sb.append("Payment of Debts and Claims");
+		}
+		else if(value.equals("releaseOfLiens"))
+		{
+			sb.append("<th>");
+			sb.append("Release of Liens");
+		}
+		else if(value.equals("mulvannyG2SignOff"))
+		{
+			sb.append("<th>");
+			sb.append("Mulvanny G2 Sign Off");
 		}
 		else if(value.equals("equipmentName"))
 		{
@@ -1038,197 +1043,256 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("certificateOfSubstantialCompletion"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getSubstantialCompletionStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getSubstantialCompletionStatus()));
+			if(p.getCloseoutDetails().getSubstantialCompletionDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSubstantialCompletionDate()));
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
+		else if(value.equals("paymentOfDebtsAndClaims"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getPaymentOfDebtsAndClaimsStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getPaymentOfDebtsAndClaimsStatus()));
+			if(p.getCloseoutDetails().getPaymentOfDebtsAndClaimsDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPaymentOfDebtsAndClaimsDate()));
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
+		else if(value.equals("releaseOfLiens"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getReleaseOfLiensStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getReleaseOfLiensStatus()));
+			if(p.getCloseoutDetails().getReleaseOfLiensDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getReleaseOfLiensDate()));
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();	
+		}
+		else if(value.equals("mulvannyG2SignOff"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getMulvannySignOffStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getMulvannySignOffStatus()));
+			if(p.getCloseoutDetails().getMulvannySignOffDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMulvannySignOffDate()));
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("inspectionsRequired"))
 		{
-			int count = 7;
+			int required = 7;
+			int complete = 0;
 			if(p.getCloseoutDetails().getMechFinalStatus() != null)
-				if(p.getCloseoutDetails().getMechFinalStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getMechFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getMechFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getElecFinalStatus() != null)	
-				if(p.getCloseoutDetails().getElecFinalStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getElecFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getElecFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getPlumbingFinalStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingFinalStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getPlumbingFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getPlumbingFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleFinalStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleFinalStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getSprinkleFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getSprinkleFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getBuildingFinalStatus() != null)	
-				if(p.getCloseoutDetails().getBuildingFinalStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getTmpCertificateStatus() != null)	
-				if(p.getCloseoutDetails().getTmpCertificateStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getBuildingFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getBuildingFinalStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getTmpCertificateStatus() != null)
+			{
+				if(p.getCloseoutDetails().getTmpCertificateStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getTmpCertificateStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getCertificateStatus() != null)	
-				if(p.getCloseoutDetails().getCertificateStatus().equals("3"))
-					count--;
-			return String.valueOf(count);
-		}
-		else if(value.equals("inspectionsCompleted"))
-		{
-			int count = 0;
-			if(p.getCloseoutDetails().getMechFinalStatus() != null)
-				if(p.getCloseoutDetails().getMechFinalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getElecFinalStatus() != null)	
-				if(p.getCloseoutDetails().getElecFinalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getPlumbingFinalStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingFinalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getSprinkleFinalStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleFinalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getBuildingFinalStatus() != null)	
-				if(p.getCloseoutDetails().getBuildingFinalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getTmpCertificateStatus() != null)	
-				if(p.getCloseoutDetails().getTmpCertificateStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getCertificateStatus() != null)	
-				if(p.getCloseoutDetails().getCertificateStatus().equals("1"))
-					count++;
-			return String.valueOf(count);
-		}		
+			{
+				if(p.getCloseoutDetails().getCertificateStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getCertificateStatus().equals(COMPLETE))
+					complete++;
+			}
+			return complete + " / " + required;
+		}	
 		else if(value.equals("warrantiesRequired"))
 		{
-			int count = 10;
+			int required = 10;
+			int complete = 0;
 			if(p.getCloseoutDetails().getMCSWarrantyStatus() != null)
-				if(p.getCloseoutDetails().getMCSWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getMCSWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getMCSWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getGCWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getGCWarrantyStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getMechanicalWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getMechanicalWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getGCWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getGCWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getMechanicalWarrantyStatus() != null)
+			{
+				if(p.getCloseoutDetails().getMechanicalWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getMechanicalWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getElectricalWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getElectricalWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getElectricalWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getElectricalWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getPlumbingWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getPlumbingWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getPlumbingWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getRoofingWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getHTIWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getHTIWarrantyStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getHTIWarrantyStatus() != null)
+			{
+				if(p.getCloseoutDetails().getHTIWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getHTIWarrantyStatus().equals(COMPLETE))
+					complete++;
+
+			}
 			if(p.getCloseoutDetails().getOtherWarrantyStatusA() != null)	
-				if(p.getCloseoutDetails().getOtherWarrantyStatusA().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getOtherWarrantyStatusA().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getOtherWarrantyStatusA().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getOtherWarrantyStatusB() != null)	
-				if(p.getCloseoutDetails().getOtherWarrantyStatusB().equals("3"))
-					count--;
-			return String.valueOf(count);
+			{
+				if(p.getCloseoutDetails().getOtherWarrantyStatusB().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getOtherWarrantyStatusB().equals(COMPLETE))
+					complete++;
+			}
+			return complete + " / " + required;
 		}
-		else if(value.equals("warrantiesCompleted"))
-		{
-			int count = 0;
-			if(p.getCloseoutDetails().getMCSWarrantyStatus() != null)
-				if(p.getCloseoutDetails().getMCSWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getGCWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getGCWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getMechanicalWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getMechanicalWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getElectricalWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getElectricalWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getPlumbingWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getSprinkleWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getRoofingWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getHTIWarrantyStatus() != null)	
-				if(p.getCloseoutDetails().getHTIWarrantyStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getOtherWarrantyStatusA() != null)	
-				if(p.getCloseoutDetails().getOtherWarrantyStatusA().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getOtherWarrantyStatusB() != null)	
-				if(p.getCloseoutDetails().getOtherWarrantyStatusB().equals("1"))
-					count++;
-			return String.valueOf(count);
-		}
-		else if(value.equals("liensCompleted"))
-		{
-			int count = 0;
-			if(p.getCloseoutDetails().getMCSStatus() != null)
-				if(p.getCloseoutDetails().getMCSStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getGCStatus() != null)	
-				if(p.getCloseoutDetails().getGCStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getMechanicalStatus() != null)	
-				if(p.getCloseoutDetails().getMechanicalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getElectricalStatus() != null)	
-				if(p.getCloseoutDetails().getElectricalStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getPlumbingStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getSprinkleStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getRoofingStatus() != null)	
-				if(p.getCloseoutDetails().getRoofingStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getHTIStatus() != null)	
-				if(p.getCloseoutDetails().getHTIStatus().equals("1"))
-					count++;
-			if(p.getCloseoutDetails().getOtherFinalLeinsStatus() != null)	
-				if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals("1"))
-					count++;
-			return String.valueOf(count);
-		}
+
 		else if(value.equals("liensRequired"))
 		{
-			int count = 9;
+			int required = 9;
+			int complete = 0;
 			if(p.getCloseoutDetails().getMCSStatus() != null)
-				if(p.getCloseoutDetails().getMCSStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getGCStatus() != null)	
-				if(p.getCloseoutDetails().getGCStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getMechanicalStatus() != null)	
-				if(p.getCloseoutDetails().getMechanicalStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getElectricalStatus() != null)	
-				if(p.getCloseoutDetails().getElectricalStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getMCSStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getMCSStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getGCStatus() != null)
+			{
+				if(p.getCloseoutDetails().getGCStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getGCStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getMechanicalStatus() != null)
+			{
+				if(p.getCloseoutDetails().getMechanicalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getMechanicalStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getElectricalStatus() != null)
+			{
+				if(p.getCloseoutDetails().getElectricalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getElectricalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getPlumbingStatus() != null)	
-				if(p.getCloseoutDetails().getPlumbingStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getPlumbingStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getPlumbingStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleStatus() != null)	
-				if(p.getCloseoutDetails().getSprinkleStatus().equals("3"))
-					count--;
-			if(p.getCloseoutDetails().getRoofingStatus() != null)	
-				if(p.getCloseoutDetails().getRoofingStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getSprinkleStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getSprinkleStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getRoofingStatus() != null)
+			{
+				if(p.getCloseoutDetails().getRoofingStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getRoofingStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getHTIStatus() != null)	
-				if(p.getCloseoutDetails().getHTIStatus().equals("3"))
-					count--;
+			{
+				if(p.getCloseoutDetails().getHTIStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getHTIStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getOtherFinalLeinsStatus() != null)	
-				if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals("3"))
-					count--;
-			return String.valueOf(count);
+			{
+				if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals(COMPLETE))
+					complete++;
+			}
+			return complete + " / " + required;
 		}
 		
 		else if(value.equals("numOfChanges"))
-			return String.valueOf(p.getCloseoutDetails().getNumOfChangeOrders());
-		else if(value.equals("numOfChangesCompleted"))
-			return String.valueOf(p.getCloseoutDetails().getNumOfChangeOrdersCompleted());
+			return  String.valueOf(p.getCloseoutDetails().getNumOfChangeOrdersCompleted()) + 
+					" / " + String.valueOf(p.getCloseoutDetails().getNumOfChangeOrders());
 		else if(value.equals("finalLiensNotes") && p.getCloseoutDetails().getFinalLiensNotes() != null)
 			return p.getCloseoutDetails().getFinalLiensNotes();
 		else if(value.equals("finalInspectionNotes") && p.getCloseoutDetails().getFinalInspectionNotes() != null)
@@ -1351,9 +1415,9 @@ public class ReportHelper
 	 */
 	private static String convertPermitStatus(String buildingPermitStatus) 
 	{
-		if(buildingPermitStatus.equals("1")) return "Preparing";
-		if(buildingPermitStatus.equals("2")) return "Submitted";
-		if(buildingPermitStatus.equals("3")) return "Issued";
+		if(buildingPermitStatus.equals(COMPLETE)) return "Preparing";
+		if(buildingPermitStatus.equals(INCOMPLETE)) return "Submitted";
+		if(buildingPermitStatus.equals(NA)) return "Issued";
 		if(buildingPermitStatus.equals("4")) return "Closed";
 		return "---";
 	}
@@ -1378,15 +1442,15 @@ public class ReportHelper
 	 * converts closeoutstatus values. The statuses are stored in the database as 
 	 * strings from the initial form and are 1,2,3 or nothing. 
 	 * @param i - the databse held string for a given closeoutstatus
-	 * @return ["1": "Complete", "2": "Incomplete", "3": "N/A"] else ""
+	 * @return [COMPLETE: "Complete", INCOMPLETE: "Incomplete", NA: "N/A"] else ""
 	 */
 	private static String convert(String i)
 	{
-		if(i.equals("1"))
+		if(i.equals(COMPLETE))
 			return "Complete";
-		else if(i.equals("2"))
+		else if(i.equals(INCOMPLETE))
 			return "Incomplete";
-		else if(i.equals("3"))
+		else if(i.equals(NA))
 			return "N/A";
 
 		

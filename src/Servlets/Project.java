@@ -128,7 +128,7 @@ public class Project extends HttpServlet
 			if((String) parameters.get("inspections")=="")		
 				inspections = (long) -1;
 			else
-				inspections =Long.parseLong(parameters.get("inspections"));
+				inspections = Long.parseLong(parameters.get("inspections"));
 						
 			try 
 			{ 	
@@ -143,6 +143,7 @@ public class Project extends HttpServlet
 		}
 		else if (action.equals("edit"))
 		{
+			
 			System.out.println("edit");
 			Long inspections;
 			Long warehouse = Long.parseLong(parameters.get("warehouse"));
@@ -155,7 +156,7 @@ public class Project extends HttpServlet
 			//Long inspections= Long.parseLong(parameters.get("inspections"));
 			String scope = parameters.get("scope");
 			Long pType = Long.parseLong(parameters.get("pType"));
- 
+			System.out.println("hey");
 			
 			if((String) parameters.get("inspections")=="")		
 				inspections = (long) -1;
@@ -169,6 +170,7 @@ public class Project extends HttpServlet
 			  
 			} catch (ClassNotFoundException | ParseException e) 
 			{
+				System.out.println("something went wrong with the build");
 				e.printStackTrace();
 			}
 		}
@@ -285,6 +287,18 @@ public class Project extends HttpServlet
 		else if(action.equals("getManager"))
 		{
 			response = getManager(req);
+		}
+		else if(action.equals("deleteProject"))
+		{
+			System.out.println("deleting a project");
+			
+			try {
+				Gson gson = new Gson();
+				response = ProjectService.delete(Long.parseLong(parameters.get("id")), "Project");
+				response = gson.toJson(response);
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if(!action.equals("getAllProjects"))

@@ -8,7 +8,7 @@ var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
                       "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
-                      'Equipment Report'];
+                      'Equipment Report', "NE GC & Refrigeration", "SE GC & Refrigeration"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -28,7 +28,8 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
-					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT'};
+					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT', 
+					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -108,6 +109,18 @@ const ACTIVE_STEVE_MEYER = "STEVE_MEYER_A";
 const INACTIVE_STEVE_MEYER = "STEVE_MEYER_I";
 const CLOSED_STEVE_MEYER = "STEVE_MEYER_C";
 const BUDGETARY_STEVE_MEYER = "STEVE_MEYER_B";
+
+const PROPOSAL_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_P";
+const ACTIVE_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_A";
+const INACTIVE_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_I";
+const CLOSED_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_C";
+const BUDGETARY_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_B";
+
+const PROPOSAL_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_P";
+const ACTIVE_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_A";
+const INACTIVE_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_I";
+const CLOSED_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_C";
+const BUDGETARY_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_B";
 
 const PROPOSAL_SE = "SE_P";
 const ACTIVE_SE = "SE_A";
@@ -208,6 +221,13 @@ const PROPOSAL_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","m
 const ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
 				"manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
 
+//Fields to show with Steve Meyer and J Dempsey reports
+const GC_AND_REFRIGERATION_PROPOSAL_KEYS = new Array("warehouse", "item","scope","class",
+												"region", "status", "initiated","proposalSubmitted");
+
+const GC_AND_REFRIGERATION_ACTIVE_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
+									"region", "status", "scheduledStartDate","scheduledTurnover");
+
 const INACTIVE_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor",
 												"region", "status", "initiated","proposalSubmitted");
 
@@ -264,7 +284,7 @@ const ACTIVE_COMPLETE_KEYS = new Array("mcsNum","warehouse", "item", "scope","re
 										"scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm","permitsClosed",
 										"shouldInvoice","invoiced","projectNotes");
 
-// Fields to show for the closeout report, don't ever actually make this report. It doesn't look good.
+// Fields available for the closeout report. Don't ever actually make this report. It doesn't look good.
 const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFinal", "electricalFinal", "plumbingFinal", 
 								"sprinkleFinal", "buildingFinal", "tmpCertificate", "certififcateFinal", "equipmentSubmittal", 
 								"manuals", "punchList", "asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", 
@@ -275,25 +295,22 @@ const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFi
 
 const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "equipmentSubmittal", "manuals", "punchList",
 										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
-							
-										"inspectionsRequired", "inspectionsCompleted", "warrantiesRequired", "warrantiesCompleted", 
-										"liensRequired", "liensCompleted", "numOfChanges", "numOfChangesCompleted", "mg2Completion", 
+										"certificateOfSubstantialCompletion", "paymentOfDebtsAndClaims", "releaseOfLiens", 
+										"mulvannyG2SignOff",
+										"inspectionsRequired", "warrantiesRequired", 
+										"liensRequired", "numOfChanges", "mg2Completion", 
 										"closeoutDocumentNotes");
 
-const CLOSEOUT_KEYS_INSPECTIONS = new Array("warehouse", "item", "status", "inspectionsRequired", "inspectionsCompleted", "mechanicalFinal",
+const CLOSEOUT_KEYS_INSPECTIONS = new Array("warehouse", "item", "status", "inspectionsRequired", "mechanicalFinal",
 											"electricalFinal", "plumbingFinal", "sprinkleFinal", "buildingFinal", "tmpCertificate", 
 											"certififcateFinal", "finalInspectionNotes");
 
-// TODO: We don't use the document keys, delete if you see this (the general CLOSEOUT_KEYS_SIMPLE already has all of the stuffs)
-const CLOSEOUT_KEYS_DOCUMENTS = new Array("warehouse", "item", "status", "equipmentSubmittal", "manuals", "punchList", 
-										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
-										"mg2Completion", "numOfChanges", "numOfChangesCompleted");
 
-const CLOSEOUT_KEYS_WARRANTIES = new Array("warehouse", "item", "status", "warrantiesRequired", "warrantiesCompleted","mcsWarranty", 
+const CLOSEOUT_KEYS_WARRANTIES = new Array("warehouse", "item", "status", "warrantiesRequired","mcsWarranty", 
 										"gcWarranty", "mechanicalWarranty", "electricalWarranty", "plumbingWarranty", "sprinklerWarranty", 
 										"roofingWarranty", "htiWarranty", "otherWarrantyA", "otherWarrantyB", "warrantyNotes");
 
-const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "liensCompleted", "mcsLiens", "gcLiens", 
+const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequired", "mcsLiens", "gcLiens", 
 										"mechLiens", "elecLiens", "plumbLiens", 
 										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "finalLiensNotes");
 
@@ -1231,6 +1248,52 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
 			status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
 			break;
+		
+		case PROPOSAL_SE_GC_REFRIGERATION:
+			stage.push(PROPOSAL_STAGE);
+	 		title = "SE GC & Refrigeration Project Proposals";
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
+			region.push("SE");
+
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_SITE_SURVEY);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
+			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
+			status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
+			status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
+			status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
+			break;
+			
+		case PROPOSAL_NE_GC_REFRIGERATION:
+			stage.push(PROPOSAL_STAGE);
+	 		title = "NE GC & Refrigeration Project Proposals";
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
+			region.push("NE");
+
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_REVISED_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
+			status.push(PROJECT_STATUS_SITE_SURVEY);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
+			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
+			status.push(PROJECT_STATUS_UPDATING_PROPOSAL);
+			status.push(PROJECT_STATUS_UPDATED_PROPOSAL);
+			status.push(PROJECT_STATUS_PERFORMING_SITE_SURVEY);
+			break;
 	
 		case ACTIVE_STEVE_MEYER:
 			stage.push(ACTIVE_STAGE);
@@ -1241,6 +1304,36 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_H);
 			region.push("SE");
 			region.push("PR");
+			region.push("NE");
+			status.push(PROJECT_STATUS_SCHEDULING);
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
+			status.push(PROJECT_STATUS_AWAITING_PO);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			break;
+		
+		case ACTIVE_SE_GC_REFRIGERATION:
+			stage.push(ACTIVE_STAGE);
+			title = "SE GC & Refrigeration Active Projects";
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
+			region.push("SE");
+			status.push(PROJECT_STATUS_SCHEDULING);
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
+			status.push(PROJECT_STATUS_AWAITING_PO);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			break;
+		
+		case ACTIVE_NE_GC_REFRIGERATION:
+			stage.push(ACTIVE_STAGE);
+			title = "NE GC & Refrigeration Active Projects";
+			pType.push(PROJECT_TYPE_C);
+			pType.push(PROJECT_TYPE_R);
+			pType.push(PROJECT_TYPE_RX);
+			pType.push(PROJECT_TYPE_H);
 			region.push("NE");
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
@@ -1627,9 +1720,19 @@ function getAllSpecifiedFields(reportType)
 			break;
 		case ACTIVE_STEVE_MEYER:
 		case ACTIVE_J_DEMPSEY:
+
 			genType=ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS;
 			break;
+		case ACTIVE_NE_GC_REFRIGERATION:
+		case ACTIVE_SE_GC_REFRIGERATION:
+			genType = GC_AND_REFRIGERATION_ACTIVE_KEYS;
+			break;
+		case PROPOSAL_NE_GC_REFRIGERATION:
+		case PROPOSAL_SE_GC_REFRIGERATION:
+			genType = GC_AND_REFRIGERATION_PROPOSAL_KEYS;
+			break;
 		case PROPOSAL_STEVE_MEYER:
+
 			genType=PROPOSAL_STEVE_MEYER_KEYS;
 			break;
 		case PROPOSAL_INVOICE_REPORT:

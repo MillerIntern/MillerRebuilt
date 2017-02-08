@@ -135,4 +135,15 @@ select, input, textarea
 
 }
 
+#deleteButton
+{
+	background-color: #B33A3A;
+	border-color: #C33838;
+	color: #DFDFDF;
+}
+
+#deleteButton:hover
+{
+	background-color: #CC3030;
+}
 

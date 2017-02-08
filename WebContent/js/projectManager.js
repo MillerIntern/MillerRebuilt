@@ -1121,3 +1121,28 @@ function fillEquipmentTable(json)
 	}
 }
 
+function deleteConfirm () {
+	if (confirm("Are you sure you want to delete this project?")) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'deleteProject',
+				'id': ID,
+			},
+			complete: function(data)
+			{
+				console.log(data);
+				if(data.responseJSON === "PROJECT_DELETED")
+				{
+					alert("Project Deleted!");
+					window.location.href = 'findProject.html';
+				}
+				else
+					alert("Could not Delete Project");
+			}
+		});
+	}
+}

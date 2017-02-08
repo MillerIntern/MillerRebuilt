@@ -29,7 +29,7 @@ public class HibernateUtil {
 		if (sessionFactory == null || sessionFactory.isClosed())
 		{
 			// configures settings from hibernate.cfg.xml
-			Configuration configuration=new Configuration().configure("hibernate.cfg.xml"); 
+			Configuration configuration= new Configuration().configure("hibernate.cfg.xml"); 
 			
 			StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
 			
@@ -45,6 +45,7 @@ public class HibernateUtil {
 	
 	/**
 	 * This method is used to get the session factory specifically used in the testing environment
+	 * This method is never used in the current building of the system
 	 * @return the session factory
 	 * @throws HibernateException
 	 */

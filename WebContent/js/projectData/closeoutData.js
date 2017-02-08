@@ -63,6 +63,10 @@ $(document).ready(function(){
 		$("#closeoutPhotosCL").datepicker();
 		$("#alarmHvac").datepicker();
 		$("#verisae").datepicker();
+		$('#substantialCompletionDate').datepicker();
+		$('#paymentOfDebtsAndClaimsDate').datepicker();
+		$('#releaseOfLiensDate').datepicker();
+		$('#mulvannySignOffDate').datepicker();
 		
 		$("#salvageDate").datepicker();
 });
@@ -250,11 +254,24 @@ function fillTabs(data)
 		$("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
 		$("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
 		
+		$('#substantialCompletionStatus').val(json.closeoutDetails.substantialCompletionStatus);
+		$('#substantialCompletionDate').val(json.closeoutDetails.substantialCompletionDate);
+		
+		$('#paymentOfDebtsAndClaimsStatus').val(json.closeoutDetails.paymentOfDebtsAndClaimsStatus);
+		$('#paymentOfDebtsAndClaimsDate').val(json.closeoutDetails.paymentOfDebtsAndClaimsDate);
+		
+		$('#releaseOfLiensStatus').val(json.closeoutDetails.releaseOfLiensStatus);
+		$('#releaseOfLiensDate').val(json.closeoutDetails.releaseOfLiensDate);
+		
+		$('#mulvannySignOffStatus').val(json.closeoutDetails.mulvannySignOffStatus);
+		$('#mulvannySignOffDate').val(json.closeoutDetails.mulvannySignOffDate);
+		
 		if(json.closeoutDetails.salvageValue != null)
 		{
 			$("#salvageDate").val(json.closeoutDetails.salvageValue.date);
 			$("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
 		}
+		
 	}
 	
 }
@@ -421,6 +438,18 @@ function saveProject()
     
     var salvageDate = $("#salvageDate").val();
     var salvageAmount = $("#salvageAmount").val();
+    
+    var substantialCompletionStatus = $('#substantialCompletionStatus').val();
+    var substantialCompletionDate = $('#substantialCompletionDate').val();
+    
+    var paymentOfDebtsAndClaimsStatus = $('#paymentOfDebtsAndClaimsStatus').val();
+    var paymentOfDebtsAndClaimsDate = $('#paymentOfDebtsAndClaimsDate').val();
+    
+    var releaseOfLiensStatus = $('#releaseOfLiensStatus').val();
+    var releaseOfLiensDate = $('#releaseOfLiensDate').val();
+    
+    var mulvannySignOffStatus = $('#mulvannySignOffStatus').val();
+    var mulvannySignOffDate = $('#mulvannySignOffDate').val();
     ////////////// END NEW CONTENT
     
     var dates =[
@@ -441,7 +470,8 @@ function saveProject()
 				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, 
 				roofingWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
 				
-				manualDate, HVACstartupFormDate, salvageDate
+				manualDate, HVACstartupFormDate, salvageDate, substantialCompletionDate, 
+				paymentOfDebtsAndClaimsDate, releaseOfLiensDate, mulvannySignOffDate
                 ];
     
     
@@ -587,6 +617,18 @@ function saveProject()
 				
 				'salvageDate': salvageDate,
 				'salvageAmount': salvageAmount,
+				
+				'substantialCompletionDate': substantialCompletionDate,
+				'substantialCompletionStatus': substantialCompletionStatus,
+				
+				'paymentOfDebtsAndClaimsDate': paymentOfDebtsAndClaimsDate,
+				'paymentOfDebtsAndClaimsStatus': paymentOfDebtsAndClaimsStatus,
+				
+				'releaseOfLiensDate': releaseOfLiensDate,
+				'releaseOfLiensStatus': releaseOfLiensStatus,
+				
+				'mulvannySignOffDate': mulvannySignOffDate,
+				'mulvannySignOffStatus': mulvannySignOffStatus,
 			},
 			success:function(data){
 				
@@ -679,6 +721,8 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"plumbingWarrantyStatus", "roofingWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
                 				
                 				"equipmentSubmittalStatus", "manualStatus","punchListStatus", "asBuiltDrawingsStatus", 
-                                "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",                                                       
+                                "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",   
+                                'substantialCompletionStatus', 'paymentOfDebtsAndClaimsStatus', 'releaseOfLiensStatus',
+                                'mulvannySignOffStatus'
                                                 ];
 

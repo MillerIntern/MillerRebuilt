@@ -219,6 +219,15 @@ public class CloseoutDetails extends ProjectObject
 	private String closeoutDocumentsNotes;
 	private String warrantyNotes;
 	
+	private String substantialCompletionStatus;
+	private String paymentOfDebtsAndClaimsStatus;
+	private String releaseOfLiensStatus;
+	private String mulvannySignOffStatus;
+	
+	private Date substantialCompletionDate;
+	private Date paymentOfDebtsAndClaimsDate;
+	private Date releaseOfLiensDate;
+	private Date mulvannySignOffDate;
 
 	public CloseoutDetails(Date asBuilts, SalvageValue salvageValue,
 			Date punchList, Date alarmHvacForm, Date airGas,
@@ -251,7 +260,9 @@ public class CloseoutDetails extends ProjectObject
 			String buildingFinalStatus, String HVACstartupFormStatus, String otherWarrantyStatusB, Date otherWarrantyDateA, 
 			Date HTIWarrantyDate, String roofingWarrantyStatus, String roofingStatus, Date sprinkleDate, String plumbingStatus, 
 			Date mechanicalDate, String GCStatus, String warrantyNotes, String finalLiensNotes, String finalInspectionNotes,
-			String closeoutDocumentsNotes) 
+			String closeoutDocumentsNotes, String substantialCompletionStatus, Date substantialCompletionDate,
+			String paymentOfDebtsAndClaimsStatus, Date paymentOfDebtsAndClaimsDate, String releaseOfLiensStatus,
+			Date releaseOfLiensDate, String mulvannySignOffStatus, Date mulvannySignOffDate) 
 	{
 		this.asBuilts = asBuilts;
 		this.salvageValue = salvageValue;
@@ -371,6 +382,15 @@ public class CloseoutDetails extends ProjectObject
 		this.finalInspectionNotes = finalInspectionNotes;
 		this.finalLiensNotes = finalLiensNotes;
 		this.warrantyNotes = warrantyNotes;
+		
+		this.substantialCompletionDate = substantialCompletionDate;
+		this.substantialCompletionStatus = substantialCompletionStatus;
+		this.paymentOfDebtsAndClaimsDate = paymentOfDebtsAndClaimsDate;
+		this.paymentOfDebtsAndClaimsStatus = paymentOfDebtsAndClaimsStatus;
+		this.releaseOfLiensDate = releaseOfLiensDate;
+		this.releaseOfLiensStatus = releaseOfLiensStatus;
+		this.mulvannySignOffDate = mulvannySignOffDate;
+		this.mulvannySignOffStatus = mulvannySignOffStatus;
 	}
 	
 	public CloseoutDetails() 
@@ -491,6 +511,15 @@ public class CloseoutDetails extends ProjectObject
 		this.closeoutDocumentsNotes = null;
 		this.finalLiensNotes = null;
 		this.finalInspectionNotes = null;
+		
+		this.substantialCompletionDate = null;
+		this.substantialCompletionStatus = null;
+		this.paymentOfDebtsAndClaimsDate = null;
+		this.paymentOfDebtsAndClaimsStatus = null;
+		this.releaseOfLiensDate = null;
+		this.releaseOfLiensStatus = null;
+		this.mulvannySignOffDate = null;
+		this.mulvannySignOffStatus = null;
 	}
 	
 	/**
@@ -1268,5 +1297,69 @@ public class CloseoutDetails extends ProjectObject
 
 	public void setWarrantyNotes(String warrantyNotes) {
 		this.warrantyNotes = warrantyNotes;
+	}
+
+	public String getSubstantialCompletionStatus() {
+		return substantialCompletionStatus;
+	}
+
+	public void setSubstantialCompletionStatus(String substantialCompletionStatus) {
+		this.substantialCompletionStatus = substantialCompletionStatus;
+	}
+
+	public String getPaymentOfDebtsAndClaimsStatus() {
+		return paymentOfDebtsAndClaimsStatus;
+	}
+
+	public void setPaymentOfDebtsAndClaimsStatus(String paymentOfDebtsAndClaimsStatus) {
+		this.paymentOfDebtsAndClaimsStatus = paymentOfDebtsAndClaimsStatus;
+	}
+
+	public String getReleaseOfLiensStatus() {
+		return releaseOfLiensStatus;
+	}
+
+	public void setReleaseOfLiensStatus(String releaseOfLiensStatus) {
+		this.releaseOfLiensStatus = releaseOfLiensStatus;
+	}
+
+	public String getMulvannySignOffStatus() {
+		return mulvannySignOffStatus;
+	}
+
+	public void setMulvannySignOffStatus(String mulvannySignOffStatus) {
+		this.mulvannySignOffStatus = mulvannySignOffStatus;
+	}
+
+	public Date getSubstantialCompletionDate() {
+		return substantialCompletionDate;
+	}
+
+	public void setSubstantialCompletionDate(Date substantialCompletionDate) {
+		this.substantialCompletionDate = substantialCompletionDate;
+	}
+
+	public Date getPaymentOfDebtsAndClaimsDate() {
+		return paymentOfDebtsAndClaimsDate;
+	}
+
+	public void setPaymentOfDebtsAndClaimsDate(Date paymentOfDebtsAndClaimsDate) {
+		this.paymentOfDebtsAndClaimsDate = paymentOfDebtsAndClaimsDate;
+	}
+
+	public Date getReleaseOfLiensDate() {
+		return releaseOfLiensDate;
+	}
+
+	public void setReleaseOfLiensDate(Date releaseOfLiensDate) {
+		this.releaseOfLiensDate = releaseOfLiensDate;
+	}
+
+	public Date getMulvannySignOffDate() {
+		return mulvannySignOffDate;
+	}
+
+	public void setMulvannySignOffDate(Date mulvannySignOffDate) {
+		this.mulvannySignOffDate = mulvannySignOffDate;
 	}	
 }

@@ -33,7 +33,6 @@ import projectObjects.ProjectObject;
  */
 public class ProjectObjectService 
 {	
-	final static private int IS_OWNED_BY_OTHER_OBJECT = -1;
 	/**
 	 * This class returns all objects of a certain type from the database.
 	 * @param domain the type of object to be returned.
@@ -269,9 +268,9 @@ public class ProjectObjectService
 	 * @return a confirmation that the object has been deleted.
 	 * @throws ClassNotFoundException
 	 */
-	public static int delete(Long id, String domain) throws ClassNotFoundException
+	public static String delete(Long id, String domain) throws ClassNotFoundException
 	{
-		int success = IS_OWNED_BY_OTHER_OBJECT;
+		String success = "NOT_DELETED";
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		Class<?> c = Class.forName("projectObjects."+domain);
@@ -286,7 +285,7 @@ public class ProjectObjectService
 		    System.out.println("hi");
 		    tx.commit();
 		    System.out.println("hello");
-		    success = 1;
+		    success = "PROJECT_DELETED";
 		}
 		catch (Exception e) 
 		{

@@ -245,5 +245,43 @@ public class CloseoutDetailsFiller
 		cd.setCloseoutDocumentsNotes(params.get("closeoutDocumentsNotes"));
 		cd.setWarrantyNotes(params.get("warrantyNotes"));
 		
+		Date substantialCompletionDate = null;
+		if(params.get("substantialCompletionDate") != null)
+		if(!params.get("substantialCompletionDate").isEmpty())
+			substantialCompletionDate = formatter.parse(params.get("substantialCompletionDate"));
+		cd.setSubstantialCompletionDate(substantialCompletionDate);
+		if(params.get("substantialCompletionStatus") != null)
+		cd.setSubstantialCompletionStatus(params.get("substantialCompletionStatus"));
+		
+		Date paymentOfDebtsAndClaimsDate = null;
+		if(params.get("paymentOfDebtsAndClaimsDate") != null)
+
+		if(!params.get("paymentOfDebtsAndClaimsDate").isEmpty())
+			paymentOfDebtsAndClaimsDate = formatter.parse(params.get("paymentOfDebtsAndClaimsDate"));
+		cd.setPaymentOfDebtsAndClaimsDate(paymentOfDebtsAndClaimsDate);
+		if(params.get("paymentOfDebtsAndClaimsStatus") != null)
+
+		cd.setPaymentOfDebtsAndClaimsStatus(params.get("paymentOfDebtsAndClaimsStatus"));
+		
+		Date releaseOfLiensDate = null;
+		if(params.get("releaseOfLiensDate") != null)
+
+		if(!params.get("releaseOfLiensDate").isEmpty())
+			releaseOfLiensDate = formatter.parse(params.get("releaseOfLiensDate"));
+		cd.setReleaseOfLiensDate(releaseOfLiensDate);
+		if(params.get("releaseOfLiensStatus") != null)
+
+		cd.setReleaseOfLiensStatus(params.get("releaseOfLiensStatus"));
+		
+		Date mulvannySignOffDate = null;
+		if(params.get("mulvannySignOffDate") != null)
+
+		if(!params.get("mulvannySignOffDate").isEmpty())
+			mulvannySignOffDate = formatter.parse(params.get("mulvannySignOffDate"));
+		cd.setMulvannySignOffDate(mulvannySignOffDate);
+		if(params.get("mulvannySignOffStatus") != null)
+
+		cd.setMulvannySignOffStatus(params.get("mulvannySignOffStatus"));
+		
 	}
 }

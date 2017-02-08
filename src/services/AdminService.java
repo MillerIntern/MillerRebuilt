@@ -68,9 +68,9 @@ public class AdminService
 	 * THis method deleted a permission from the database
 	 * @param id the id of the permission to be deleted
 	 */
-	public static int deletePermission(Long id)
+	public static String deletePermission(Long id)
 	{
-		int s = 0;
+		String s = "0";
 		try {
 			s = ProjectObjectService.delete(id, "Permission");
 		} catch (ClassNotFoundException e) 
@@ -173,9 +173,9 @@ public class AdminService
 	 * This method deletes a user from the database
 	 * @param id the id of the user
 	 */
-	public static int deleteUser(Long id)
+	public static String deleteUser(Long id)
 	{
-		int s = 0;
+		String s = "0";
 		try 
 		{
 			s = ProjectObjectService.delete(id, "User");
@@ -228,9 +228,9 @@ public class AdminService
 	 * This method deletes a status from the database
 	 * @param id the id of the status to be deleted
 	 */
-	public static int deleteStatus(Long id)
+	public static String deleteStatus(Long id)
 	{
-		int s = 0;
+		String s = "0";
 		try 
 		{
 			s = ProjectObjectService.delete(id, "Status");

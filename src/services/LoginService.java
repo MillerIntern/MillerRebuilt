@@ -32,7 +32,7 @@ public class LoginService
 
 		@SuppressWarnings("unchecked")
 		List<User> matchingUser = criteria.list();
-		
+
 		if (matchingUser == null  || matchingUser.size() == 0)
 			loggedIn = false;
 		else if (!matchingUser.get(0).getPassword().equals(hashedPass))
