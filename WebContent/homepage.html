@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Homepage</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/global.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
+  </head>
+  <body>
+  
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Add Project</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li><a href="#">Reports</a></li>
+	      <li><a href="#">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+    <div class="container">
+		
+		<div class="widget" id="calendar">
+			<iframe id="embed-calendar" src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA&amp;height=300&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=3n7n110p1podh9id9nljebh5ko%40group.calendar.google.com&amp;color=%232952A3&amp;ctz=America%2FLos_Angeles"></iframe>	
+    	</div>
+    	
+    	<div class='stacker'>
+    	<div class="widget">
+	    	<div class="white-space tools" id="report-tools">
+	    		<p>Manager Tools</p>
+	    		<ul>
+	    			<li onclick='findUserProjects()'><b>Find</b> Your Projects</li>
+	    		</ul>
+	    	</div>
+    	</div>
+    	<div class="widget">
+	    	<div class="white-space tools" id="admin-tools">
+	    		<p>Administrator Tools</p>
+	    		<ul>
+	    			<li onclick='generateAllReports()'>Generate Full <b>Reports</b></li>
+	    			<li onclick='generateMeetingReports()'>Generate Meeting <b>Reports</b></li>
+	    		</ul>
+	    	</div>
+    	</div>
+    	<div class="widget">
+	    	<div class="white-space tools" id="permit-tools">
+	    		<p>Permit Tools</p>
+	    		<ul>
+	    			<li onclick='findActivePermits()'><b>Find</b> Awaiting Permits</li>
+	    			<li onclick='generatePermitReport()'>Active Permits <b>Report</b></li>
+	    		</ul>
+	    	</div>
+    	</div>
+    	</div>
+    	
+    </div>
+	
+	
+	<div id="logout" 
+	style="display:none;position:absolute;margin-left:auto;margin-right:auto;left:0;right:0">
+	Are you sure you want to logout?</div>
+  </body>
+</html>

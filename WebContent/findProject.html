@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Project Finder</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/global.js"></script>
+	<script src="js/findProject.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/findProject.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+
+  </head>
+  <body onload="getAllProjects()">
+  
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="active dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Add Project</a></li>
+	          <li class="active"><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li><a href="#">Reports</a></li>
+	      <li><a href="#">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+    <div class="container">
+   		<div id="param-field">
+   			<span>
+   			Search Criteria
+   			<button onClick="addParameter()" class="addParamButton btn btn-primary">Add Parameter</button>
+   			</span>
+		    <div class="paramHolder">
+		        <select class="parameterID" id="paramID1">
+		            <option value="default">-- Please select an option --</option>
+		        </select>
+		        <select class="parameterValue" id="paramVal1">
+		            <option value="default">---</option>
+		        </select>
+		        <span onClick="removeParam(this)">&times;</span>
+		   </div>
+		   <div class="paramHolder">
+		        <select class="parameterID" id="paramID2">
+		            <option value="default">-- Please select an option --</option>
+		        </select>
+		        <select class="parameterValue" id="paramVal2">
+		            <option value="default">---</option>
+		        </select>
+		        <span onClick="removeParam(this)">&times;</span>
+		   </div>
+   		</div>
+   		
+   		<table id="results" class="table table-hover">
+   			<tr class='head'><th>Warehouse</th><th>Item</th><th>Manager</th></tr>
+   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
+   		
+   		</table>
+  	
+    </div>
+
+  </body>
+</html>
