@@ -1,3 +1,16 @@
+'use strict';
+const HOMEPAGE = "homepage.html";
+const FINDPROJECT = "findProject.html";
+
+jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+                                                $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+                                                $(window).scrollLeft()) + "px");
+    return this;
+}
+
 //This function assigns an array of attributes to an element
 //Input: the HTML element, array (a mapping of strings and values)
 //Output: none (the element's attributes are assigned)
@@ -35,7 +48,7 @@ function isDate(str)
 }
 
 
-//This function retrieves all of the user data from the server
+/*//This function retrieves all of the user data from the server
 //Input: none
 //Output: none 
 $(document).ready(function() {
@@ -98,11 +111,16 @@ function goBack()
 function goHome()
 {
 	document.location.href = 'homepage.html';
+}*/
+
+function logout() {
+	//$('#logout').width(100);
+	//$('#logout').css('display', 'block');
+	//$('#logout').center();
 }
 
 function returnToLogin()
 {
-	$('.title').text('Login Session Expired!');
 	if(confirm("Login Session has expired. Would you like to relogin?"))
 		window.location.href = "index.html";
 }

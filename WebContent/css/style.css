@@ -1,0 +1,45 @@
+
+body {
+	background-color: #ECF0FC;
+}
+
+/* Contains the stylings for the navigation bar */
+
+nav {
+	margin-top: 8px;	
+}
+
+.navbar-default {
+	margin-bottom: 8px;
+}
+
+.container-fluid {
+	background-color: #3a69d9;
+}
+
+.navbar-default .navbar-brand {
+	border-right: solid #708ED5 1px;
+	cursor: default;
+}
+
+.navbar-default .navbar-brand, 
+.navbar-default .navbar-nav>li>a {
+	font-size: 16px;
+	color: white;
+}
+
+.navbar-default .navbar-brand:hover {color: white;}
+.navbar-default .navbar-nav>li>a:hover {
+	color: #fafafa;
+}
+
+.navbar-default .navbar-nav>li:hover {
+	background-color: #345EC3;
+}
+
+.navbar-default .navbar-nav>.active>a, 
+.navbar-default .navbar-nav>.active>a:focus, 
+.navbar-default .navbar-nav>.active>a:hover{
+	background-color: #1F3875;
+	color: #fafafa;
+}

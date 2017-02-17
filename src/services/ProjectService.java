@@ -697,6 +697,41 @@ public class ProjectService extends ProjectObjectService
 	}
 	
 	/**
+	 * previously we just got everything all the time. Now you send what you want
+	 * and get back only what you need. This saves tons of time. 
+	 * @param parameters
+	 * @return
+	 */
+	public static String getSpecificAsJson(Map<String, String> parameters) {
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+		if(parameters.get("warehouse") != null && !parameters.get("warehouse").isEmpty())
+			if(parameters.get("warehouse").equals("true")) 
+				map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
+		if(parameters.get("class") != null && !parameters.get("class").isEmpty())
+			if(parameters.get("class").equals("true"))
+				map.put("class", ProjectObjectService.getAllAsJsonString("ProjectClass"));
+		if(parameters.get("item") != null && !parameters.get("item").isEmpty())
+			if(parameters.get("item").equals("true"))
+				map.put("item", ProjectObjectService.getAllAsJsonString("ProjectItem"));
+		if(parameters.get("person") != null && !parameters.get("person").isEmpty())
+			if(parameters.get("person").equals("true"))
+				map.put("person", ProjectObjectService.getAllAsJsonString("Person"));
+		if(parameters.get("type") != null && !parameters.get("type").isEmpty())
+			if(parameters.get("type").equals("true"))
+				map.put("type", ProjectObjectService.getAllAsJsonString("ProjectType"));
+		if(parameters.get("status") != null && !parameters.get("status").isEmpty())
+			if(parameters.get("status").equals("true"))
+				map.put("status", ProjectObjectService.getAllAsJsonString("ProjectStatus"));
+		if(parameters.get("stage") != null && !parameters.get("stage").isEmpty())
+			if(parameters.get("stage").equals("true"))
+				map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
+
+				
+		return g.toJson(map);
+	}
+	
+	/**
 	 * This method gets all of the projects
 	 * @return A string representing a JSON array containing this information
 	 */
@@ -1122,6 +1157,5 @@ public class ProjectService extends ProjectObjectService
 			iter.next().setId(null);
 		}
 	}
-
 }
 

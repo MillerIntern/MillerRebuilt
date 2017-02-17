@@ -82,6 +82,9 @@ public class Project extends HttpServlet
 			System.out.println("get All Objects");
 			response = ProjectService.getAllEnumsAsJson();
 			
+		} else if (action.equals("getSpecificObjects")) {
+			System.out.println("getting specific objects");
+			response = ProjectService.getSpecificAsJson(parameters);
 		}
 		else if (action.equals("getEditQueryObjects"))
 		{

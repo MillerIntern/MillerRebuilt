@@ -1,0 +1,65 @@
+
+#param-field {
+	width: 100%;
+	background-color: white;
+	padding: 4px 4px 4px 4px;
+	border: 3px solid #223f82;
+	border-style:solid;
+	border-color: #4d78dc #1d346c #1d346c #2e54ad;
+	border-radius: 4px;
+}
+
+#param-field > span {
+	display: inline-block;
+	padding: 2px 2px;
+	border-bottom: 2px solid black;
+	color: black;
+	//border-radius: 4px;
+	font-size: 20px;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+#param-field > span > button {
+	float: right;
+	background-color: #172a56;
+	border: none;
+	color: white;
+}
+
+.paramHolder {
+	
+}
+
+.paramHolder > span {
+	font-size: 24px;
+	cursor: default;
+}
+
+.paramHolder > select {
+	width: 27%;
+}
+
+#param-field .paramHolder:last-child {
+	margin-bottom: 16px;
+}
+
+.paramHolder > span:hover {
+	transition-duration: .5s;
+	color: #7596e4;
+}
+
+.table > tbody > tr > th {
+	font-size: 20px;
+	border-bottom: 2px solid #333;
+}
+
+.table > tbody > tr > td {
+	font-size: 18px;
+	border-bottom: 2px solid #555;
+}
+
+.table > tbody > tr:hover td {
+	background-color: #d7e1f7;
+	transition-duration: .5s;
+}
