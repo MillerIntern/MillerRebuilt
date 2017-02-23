@@ -1,0 +1,142 @@
+
+#projectHeader {
+	font-family: 'Rubik', sans-serif;
+	margin-top: 8px;
+	color: #14254e;
+	//background-color: red;
+	text-align: center;
+	font-size: 22px;
+	line-height: 8px;
+}
+
+.nav-tabs {
+	border-bottom: none;
+}
+
+.info-tab {
+	padding: 12px 12px 12px 12px;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 0 4px 4px 4px;
+}
+
+.info-tab > .table {
+	border-bottom: 1px solid #dddddd;
+}
+
+.info-tab > .table > tbody > tr > td {
+	font-size: 16px;
+	
+}
+
+.info-tab > .table > tbody > tr > td:not(:last-child) {
+	border-right: 1px solid #cccccc;
+}
+
+.info-tab:not(.active) {
+	display:none;
+}
+
+.project-edit:not(.default) {
+	background-color: #172a56;
+	border: none;
+	color: white;
+}
+
+.project-edit:hover:not(.default) {
+	transition: .25s;
+	background-color: #3a69d9
+}
+
+.edit-submit { 
+	background-color:#3f662e;
+	color: white;
+}
+
+.edit-submit:hover {
+	background-color: #69885c;
+	color: white;
+}
+
+.edit-submit:not([disabled]) {
+	background-color: #2a5617;
+}
+
+#settings > button {
+	display: block;
+	margin-bottom: 8px;
+}
+
+
+/* datepicker customization */
+
+#ui-datepicker-div {
+	background-color: #cccccc;
+	padding: 8px 8px 8px 8px;
+	border: 1px solid #747474;
+	border-radius: 4px;
+	display: none;
+}
+
+#ui-datepicker-div > div {
+	padding-top: 4px;
+	padding-bottom: 8px;
+	background-color: gray;
+	border-radius: 4px;
+	padding-left: 8px;
+	padding-right: 8px;	
+}
+
+#ui-datepicker-div > div > a {
+	display: inline;
+	background-color: #dddddd;
+	padding: 4px 4px;
+	margin-right: 4px;
+	border: 1px solid #7777aa;
+	border-radius: 4px;
+}
+
+#ui-datepicker-div > div > div {
+	display: inline;
+	font-size: 18px;
+	font-weight: 500;
+}
+
+#ui-datepicker-div > table {
+	width: 100%;
+	
+}
+
+#ui-datepicker-div > table > thead > tr > th {
+	padding: 4px 4px;
+}
+
+#ui-datepicker-div > table >tbody {
+	font-size: 16px;
+}
+
+#ui-datepicker-div > table > tbody > tr > td {	
+	background-color: #fafafa;
+	padding: 6px 6px;
+	border: 1px solid #aaaaaa;	
+	text-align: center;
+}
+
+#ui-datepicker-div > table > tbody > tr > td:hover:not(.ui-datepicker-unselectable) {
+	background-color: #999999;
+	color: blue;
+}
+
+#ui-datepicker-div > table > tbody > tr > .ui-datepicker-unselectable {
+	border: none;
+	background-color: #cccccc;
+}
+
+#ui-datepicker-div > table > tbody > tr > .ui-datepicker-today {
+	background-color: #c9c9c9
+}
+#ui-datepicker-div > table > tbody > tr > .ui-datepicker-today > a {
+	color: #6666FF;	
+}

@@ -382,6 +382,6 @@ function filterProjects () {
 
 function navigateTo(source) {
 	console.log($(source).attr('id'));
-	window.location.href = 'projectManager.html?type=navigateTo&id=' + 
+	window.location.href = PROJECTMANAGER + '?id=' + 
 							$(source).attr('id').replace('project', '');
 }

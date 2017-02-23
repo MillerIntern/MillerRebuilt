@@ -726,8 +726,19 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("stage") != null && !parameters.get("stage").isEmpty())
 			if(parameters.get("stage").equals("true"))
 				map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
-
-				
+		if(parameters.get("permitstage") != null && !parameters.get("permitstage").isEmpty())
+			if(parameters.get("permitstage").equals("true"))
+				map.put("permitstage", ProjectObjectService.getAllAsJsonString("PermitStage"));
+		if(parameters.get("closeoutstatus") != null && !parameters.get("closeoutstatus").isEmpty())
+			if(parameters.get("closeoutstatus").equals("true"))
+				map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
+		if(parameters.get("changeorderstatus") != null && !parameters.get("changeorderstatus").isEmpty())
+			if(parameters.get("changeorderstatus").equals("true"))
+				map.put("changeorderstatus", ProjectObjectService.getAllAsJsonString("ChangeOrderStatus"));
+		if(parameters.get("changeordertype") != null && !parameters.get("changeordertype").isEmpty())
+			if(parameters.get("changeordertype").equals("true"))
+				map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
+		
 		return g.toJson(map);
 	}
 	

@@ -1,6 +1,11 @@
 'use strict';
 const HOMEPAGE = "homepage.html";
 const FINDPROJECT = "findProject.html";
+const PROJECTINFO = 'projectData.html';
+const PROJECTMANAGER = 'newprojectManager.html';
+const PROJECT_PERMITS_AND_INSPECTIONS = 'permitData.html';
+const PROJECT_CLOSEOUT = 'closeoutData.html';
+const PROJECT_CHANGE_ORDER = 'changeOrderData.html';
 
 jQuery.fn.center = function () {
     this.css("position","absolute");
@@ -14,11 +19,11 @@ jQuery.fn.center = function () {
 //This function assigns an array of attributes to an element
 //Input: the HTML element, array (a mapping of strings and values)
 //Output: none (the element's attributes are assigned)
-function setAttributes(el, attrs) {
+/*function setAttributes(el, attrs) {
 	  for(var key in attrs) {
 	    el.setAttribute(key, attrs[key]);
 	  }
-}
+}*/
 
 //This function gets parameters from the URL
 //Input: the parameter name
@@ -28,7 +33,7 @@ function getParameterByName(name)
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    return results == null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 //This function determines is a string is a valid date string
@@ -47,71 +52,13 @@ function isDate(str)
 		return false;
 }
 
-
-/*//This function retrieves all of the user data from the server
-//Input: none
-//Output: none 
-$(document).ready(function() {
-function getTriggers()
-{	
-	$.ajax({
-		type: 'POST',
-		url: 'Trigger', 
-		data: 
-		{
-			'action': 'getTriggers',
-		},
-		success: function(data)
-		{	
-			fillInNotificationPanes(data);
-		}
-	});
-}});
-
-//Input: JSON array (contains triggers)
-//Output: none (puts HTML elements in the document)
-//Purpose: This function fills each HTML trigger pane with the appropriate trigger notifications
-function fillInNotificationPanes(triggers)
-{
-	var infoCount = 0;
-	var warningCount = 0;
-	var severeCount = 0;
-	for (var i = 0; i < triggers.length; i++)
-	{
-		//Get all projects that fall under the trigger
-		var trigger = triggers[i];
-		var projects = trigger.projects;
-		
-		for (var j = 0; j < projects.length; j++)
-		{
-			if (trigger.severity == 0)
-				{
-					infoCount++;
-				}
-			else if (trigger.severity == 1)
-				{
-					warningCount++;
-				}
-			else
-				{
-					severeCount++;
-				}
-		}
-	}
-	$("#notificationBoxGreen").append("(" +infoCount+ ")");
-	$("#notificationBoxYellow").append("(" +warningCount+ ")");
-	$("#notificationBoxRed").append("(" + severeCount+ ")");
+function goHome (){
+	window.location.href = HOMEPAGE;
 }
 
-function goBack()
-{
-	document.location.href = "projectBrowser.html?type=edit&id="+getParameterByName("id");
+function returnToFindProject () {
+	window.location.href = FINDPROJECT;
 }
-
-function goHome()
-{
-	document.location.href = 'homepage.html';
-}*/
 
 function logout() {
 	//$('#logout').width(100);

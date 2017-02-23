@@ -6,18 +6,14 @@ var PROJECT_ID;
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
-	$('ul.tabs li').click(function()
-    {
-        
-		var tab_id = $(this).attr('data-tab');
-        if(tab_id == "saveButton")
-            return;
+	$('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
+		
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$('#saveButton > button').prop('disabled', true);
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
-
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
 	});
 	
 	$("#buildingPermitLastUpdated").datepicker();
@@ -45,10 +41,8 @@ $(document).ready(function(){
 function getProject()
 {
 	console.log(getParameterByName("id"));
-	if (PAGETYPE == 'permit')
-	{
 		PROJECT_ID = getParameterByName("id");
-		
+	if(PROJECT_ID !== null) {
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -62,12 +56,13 @@ function getProject()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
+				$('#projectHeader').text(data.warehouse.city.name + ', ' + 
+						 data.warehouse.state + ' --- ' + 
+						 data.projectItem.name);
 				fillTabs(PROJECT_DATA);
 			}
 		});
-	}
-	else
-	{
+	} else {
 		alert("That's weird... You might want to go back and try again");
 	}
 }
@@ -80,7 +75,8 @@ function getProjectEnums()
 		data: 
 		{
 			'domain': 'project',
-			'action': 'getAllObjects',			
+			'action': 'getSpecificObjects',	
+			'permitstage': true
 		},
 		success: function(data)
 		{
@@ -349,28 +345,30 @@ function saveProject()
 			},
 			success:function(data){
 				
-				createConfirmWindow();
 				console.log(data);
+
+				alert('Save Complete!');
+				$('#saveButton > button').prop('disabled', false);
+
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
 			 * Code works perfectly with error statement 
 			  Need to figure out how to fix this error to work 100 percent correctly*/
 			
 			 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			error: function()
+			error: function(data)
 			{
-			       //alert("Status: " + textStatus); 
-				   //alert("Error: " + errorThrown);
-			       createConfirmWindow();
-			//error:function(xhr){
-				//alert(xhr.responceText);
-				//console.log(xhr.responseText);
-							
+				console.log(data);
+				alert('Save Complete!');
+				$('#saveButton > button').prop('disabled', false);
+
 			}
 		});
+    }  
+}
 
-    }
-    
+function returnToProjectManager () {
+	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
 }
 
 function isValidInput(dates)
@@ -392,31 +390,4 @@ function isValidInput(dates)
 		}
 	}
 	return true;
-}
-
-function createConfirmWindow()
-{
-	$("#saveConfirm").dialog({
-		resizable: false,
-		height: 350,
-		width: 450,
-		modal: true,
-		buttons: {
-			"Stay on this page": function()
-			{
-				$("#saveConfirm").dialog('close');
-			},
-			"Return to project manager": function() {
-				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
-			},
-			"Go to Home Page": function() {
-				window.location.href="homepage.html";
-			},
-			"Find another project": function() {
-				window.location.href="findProject.html";
-			},
-
-			
-		}
-	});	
 }

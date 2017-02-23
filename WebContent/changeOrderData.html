@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script type="text/javascript" src="js/jquery.js" ></script>
-		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
-		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
-		<script type="text/javascript" src="js/global.js"></script>
-        <script type="text/javascript" src="js/projectData/changeOrderData.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Project Manager</title>
 
-		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
-        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
-        <link href="css/theme/currentTheme/closeoutData.css" type="text/css" rel="stylesheet" />
-                
-		<title>Miller Construction Site</title>
-		<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/projectData/changeOrderData.js"></script>
+    <script src="js/global.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
+    
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
 	</head>
 	
-<body onload="getProjectEnums();">
-    <div class="header">
-        <p class="title">Change Orders</p>
-    </div>
-<br>
-		
+<body onload="getDropdownInfo();">
 
-<ul class="side-borders">
-    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
-    <li class="dropdown">
-    <a class="active" class="dropbtn">Projects</a>
-    <div class="dropdown-content">
-        <a onClick="document.location.href='projectData.html'">Add</a>
-        <a onClick="document.location.href='findProject.html'">Find</a>
-    </div></li>
-    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
-    <li><a onClick="document.location.href='query.html'">Reports</a></li>
-            <li class="dropdown">
-   		<a class="dropbtn">Tools</a>
-   		<div class="dropdown-content">
-   			<a onClick="document.location.href='additions.html'">Add To Database</a>
-   		</div></li>
-    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
-</ul><br>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="active dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Add Project</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li><a href="query.html">Reports</a></li>
+	      <li><a href="#">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
 
-<div class="projectIdentifier"></div>
 
 
     <div class="container">
 
-	<ul class="tabs">
-		<li class="tab-link current" data-tab="changeOrderInfo">Change Order</li>
-        <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
+	<p id="projectHeader" class="projectIdentifier">---</p>
+
+
+	<ul class="nav nav-tabs">
+		<li role='presentation' class="active" data-tab="changeOrderInfo"><a>Change Order</a></li>
+        <li role='presentation' onClick="saveProject()" data-tab="saveButton">
+        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 
     <!-- Closeout Documents Tab--> 
-	<div id="allPermits" class="tab-content current">
-        <table class="dataTable">
+	<div id="changeOrderInfo" class="info-tab active">
+        <table class="table table-hover">
         	<tr style="height: 0px;"></tr>
             <tr>
                 <td>Customer CO#:</td>
@@ -143,13 +155,11 @@
             </tr>
         </table>
 	</div>
-    <!-- End Closeout Documents Tab--> 
-</div>
-
-<div id="saveConfirm" title="Project has been saved" style="display:none">
-    <p>
-        Change Order information has been successfully saved. What would you like to do?
-    </p>
+	<div class='info-tab' id='saveButton'>
+		<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+		<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+		<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+	</div>
 </div>
 
 <div id="footer">

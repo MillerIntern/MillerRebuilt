@@ -6,18 +6,14 @@ var PROJECT_ID;
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
-	$('ul.tabs li').click(function()
-    {
-        
-		var tab_id = $(this).attr('data-tab');
-        if(tab_id == "saveButton")
-            return;
-
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
-
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
+	$('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
+		
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		
+		$('#saveButton > button').prop('disabled', true);
 	});
 	
 	 	$("#MCSDate").datepicker();   
@@ -114,7 +110,8 @@ function getDropdownItems()
 		data: 
 		{
 			'domain': 'project',
-			'action': 'getAllObjects',
+			'action': 'getSpecificObjects',
+			'closeoutstatus': true
 		},
 		success: function(data)
 		{
@@ -632,8 +629,10 @@ function saveProject()
 			},
 			success:function(data){
 				
-				createConfirmWindow();
+				alert('Project Saved');
 				console.log(data);
+				$('#saveButton > button').prop('disabled', false);
+
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
 			 * Code works perfectly with error statement 
@@ -642,9 +641,11 @@ function saveProject()
 			 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			error: function()
 			{
+				alert('Project Saved');
+				$('#saveButton > button').prop('disabled', false);
+
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
-			       createConfirmWindow();
 			//error:function(xhr){
 				//alert(xhr.responceText);
 				//console.log(xhr.responseText);
@@ -677,32 +678,8 @@ function isValidInput(dates)
 	return true;
 }
 
-function createConfirmWindow()
-{
-	$("#saveConfirm").dialog({
-		resizable: false,
-		height: 350,
-		width: 450,
-		modal: true,
-		buttons: {
-			"Stay on this page": function()
-			{
-				$("#saveConfirm").dialog('close');
-			},
-			"Return to project manager": function() {
-				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
-			},
-			"Go to Home Page": function() {
-				window.location.href="homepage.html";
-			},
-			"Find another project": function() {
-				window.location.href="findProject.html";
-			},
-
-			
-		}
-	});	
+function returnToProjectManager () {
+	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
 }
 
 var CLOSEOUTSTATUS_DROPDOWNS = [

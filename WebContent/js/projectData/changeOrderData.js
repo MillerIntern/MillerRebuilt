@@ -6,59 +6,78 @@ var PROJECT_DATA;
 
 $(document).ready(function()
 {
+	$('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
+		
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$('#saveButton > button').prop('disabled', true);
+
+	});
+	
  	$("#proposalDate").datepicker();   
  	$("#submittedDate").datepicker();   
  	$("#approvedDate").datepicker();  
- 	
-	PAGETYPE = getParameterByName("type");	
-	PROJECT_ID = getParameterByName("id");
 });
 
-function getProjectEnums()
+function getProject()
 {
 	console.log(getParameterByName("id"));
-		
-	$.ajax({
-		type: 'POST',
-		url: 'Project', 
-		data: 
-		{
-			'domain': 'project',
-			'action': 'get',
-			'id': PROJECT_ID,
-			
-		},
-		success: function(data)
-		{
-			PROJECT_DATA = (data);
-			$(".projectIdentifier").html(data.warehouse.city.name 
-					+ ", " + data.warehouse.state + " --- " +  data.projectItem.name);
-			getDropdownInfo();
-			if(PAGETYPE == 'edit')
+	if(PROJECT_ID !== null) {	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
 			{
-				CHANGE_ORDER_ID = getParameterByName("changeOrderID");
-				PROJECT_DATA = data;
+				'domain': 'project',
+				'action': 'get',
+				'id': PROJECT_ID,
+				
+			},
+			success: function(data)
+			{
+				PROJECT_DATA = (data);
+				$("#projectHeader").text(data.warehouse.city.name 
+						+ ", " + data.warehouse.state + " --- " +  data.projectItem.name);
+				if(PAGETYPE == 'edit')
+				{
+					CHANGE_ORDER_ID = getParameterByName("changeOrderID");
+					PROJECT_DATA = data;
+					fillTabs(PROJECT_DATA);
+	
+				}
+	
 			}
-
-		}
-	});
+		});
+	} else {
+		alert('Something went wrong');
+	}
 }
 
 function getDropdownInfo()
 {
+	PAGETYPE = getParameterByName("type");	
+	PROJECT_ID = getParameterByName("id");
+	if(PROJECT_ID === null) {
+		alert('Invalid URL. Try returning to this page again.');
+	}
+	
+	//if(PROJECT_ID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
 		data: 
 		{
 			'domain': 'project',
-			'action': 'getAllObjects',			
+			'action': 'getSpecificObjects',		
+			'changeordertype': true,
+			'changeorderstatus': true
 		},
 		success: function(data)
 		{
 			fillDropdowns(data);
-			if(PAGETYPE == 'edit')
-				fillTabs(PROJECT_DATA);
+			getProject();
 		}
 	});
 }
@@ -157,13 +176,12 @@ function saveProject()
 	var sell = $("#sell").val();
 	
 	var dates = [proposalDate, submittedDate, approvedDate];
-	var required = [customerCO, briefDescription, cost, sell, status, submittedTo, submittedDate];
 	
 	var action = "addChangeOrder";
 	if(PAGETYPE == 'edit')
 		action = "editChangeOrder";
 	
-	if(isValidInput(required, dates))
+	if(isValidInput(dates))
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -191,17 +209,22 @@ function saveProject()
 			},
 			success:function(data){
 				
-				createConfirmWindow();
+				alert('Saved Change Order');
+				$('#saveButton > button').prop('disabled', false);
+
 				console.log(data);
 			},
-			error: function()
+			error: function(data)
 			{
+				alert('Saved Change Order');
+				$('#saveButton > button').prop('disabled', false);
+
 				createConfirmWindow();
 			}
 		});
 }
 
-function isValidInput(required, dates)
+function isValidInput(dates)
 {	
 	//Check if all of the dates are in the correct format
 	for (var i = 0; i < dates.length; i++)
@@ -246,8 +269,6 @@ function createConfirmWindow()
 	});	
 }
 
-
-
-
-
-
+function returnToProjectManager () {
+	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+}

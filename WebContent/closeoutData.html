@@ -1,60 +1,71 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script type="text/javascript" src="js/jquery.js" ></script>
-		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
-		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
-		<script type="text/javascript" src="js/global.js"></script>
-        <script type="text/javascript" src="js/projectData/closeoutData.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Project Manager</title>
 
-		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
-        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
-        <link href="css/theme/currentTheme/closeoutData.css" type="text/css" rel="stylesheet" />
-                
-		<title>Miller Construction Site</title>
-		<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/projectData/closeoutData.js"></script>
+    <script src="js/global.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
+    
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
 	</head>
 	
 <body onload="getDropdownItems();">
-    <div class="header">
-        <p class="title">Closeout Items</p>
-    </div>
-<br>
-		
-<ul id="navBar" class="side-borders">
-    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
-    <li class="dropdown">
-    <a class="active" class="dropbtn">Projects</a>
-    <div class="dropdown-content">
-        <a onClick="document.location.href='projectData.html'">Add</a>
-        <a onClick="document.location.href='findProject.html'">Find</a>
-    </div></li>
-    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
-    <li><a onClick="document.location.href='query.html'">Reports</a></li>
-            <li class="dropdown">
-   		<a class="dropbtn">Tools</a>
-   		<div class="dropdown-content">
-   			<a onClick="document.location.href='additions.html'">Add To Database</a>
-   		</div></li>
-    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
-</ul><br>
-
-<div class="projectIdentifier"></div>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="active dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Add Project</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li><a href="query.html">Reports</a></li>
+	      <li><a href="#">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
 
 <div class="container">
 
-	<ul class="tabs">
-		<li class="tab-link current" data-tab="closeoutDocuments">Closeout Documents </li>
-		<li class="tab-link" data-tab="finalInspections">Final Inspections</li>
-        <li class="tab-link" data-tab="warrantyLetters">Warranty Letters</li>
-		<li class="tab-link" data-tab="finalLiens">Final Liens</li>
-		<li class="tab-link" data-tab="otherItems">Other Items</li>
-        <li onClick="saveProject()" data-tab="saveButton">Save Changes</li>
+<p id='projectHeader' class="projectIdentifier">---</p>
+
+
+	<ul class="nav nav-tabs">
+		<li role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
+		<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
+        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
+		<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
+		<li role='presentation' data-tab="otherItems"><a>Other Items</a></li>
+        <li onClick="saveProject()" data-tab="saveButton">
+        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 
     <!-- Closeout Documents Tab--> 
-	<div id="closeoutDocuments" class="tab-content current">
-        <table>
+	<div id="closeoutDocuments" class="info-tab active">
+        <table class='table table-hover'>
             <tr style="height: 0px;"></tr>
         
             <tr>
@@ -157,8 +168,8 @@
     <!-- End Closeout Documents Tab--> 
 
     <!-- Final Inspections Tab -->
-	<div id="finalInspections" class="tab-content">
-        <table>
+	<div id="finalInspections" class="info-tab">
+        <table class='table table-hover'>
         <tr style="height: 0px;"></tr>
             <tr>
                 <td>Temp Certificate of Occupancy:</td>
@@ -250,8 +261,8 @@
     <!-- End Final Inspections Tab --> 
     
     <!-- Warranty Letters Tab -->
-	<div id="warrantyLetters" class="tab-content">
-        <table>
+	<div id="warrantyLetters" class="info-tab">
+        <table class='table table-hover'>
         <tr style="height: 0px;"></tr>
             <tr>
                 <td>MCS Warranty:</td>
@@ -375,8 +386,8 @@
     <!-- End Warranty Letters Tab -->
 
     <!-- Final Liens Tab -->
-	<div id="finalLiens" class="tab-content">
-		<table>
+	<div id="finalLiens" class="info-tab">
+		<table class='table table-hover'>
 		<tr style="height: 0px;"></tr>
             <tr>
                 <td>MCS Liens:</td>
@@ -489,8 +500,8 @@
     <!-- End Final Liens Tab -->
 
     <!-- Other Items Tab -->
-    <div id="otherItems" class="tab-content">
-        <table>
+    <div id="otherItems" class="info-tab">
+        <table class='table table-hover'>
         <tr style="height: 0px;"></tr>
             <tr>
                 <td>Number of Change Orders:</td>
@@ -563,7 +574,7 @@
             </tr> 
         </table><br>
         
-        <table>
+        <table class='table table-hover'>
         	<tr>
         	<td></td><td>Amount:</td><td>Date:</td>
         	</tr>
@@ -580,15 +591,14 @@
         </table>
     </div>
     <!-- end other Items Tab -->
+	<div class='info-tab' id='saveButton'>
+		<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+		<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+		<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+	</div>
+
 
 </div><!-- container -->
-
-
-<div id="saveConfirm" title="Project has been saved" style="display:none">
-    <p>
-        Closeout information has been successfully saved. What would you like to do?
-    </p>
-</div>
 
 <div id="footer">
 </div>
