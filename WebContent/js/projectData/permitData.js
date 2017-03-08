@@ -56,9 +56,8 @@ function getProject()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
-				$('#projectHeader').text(data.warehouse.city.name + ', ' + 
-						 data.warehouse.state + ' --- ' + 
-						 data.projectItem.name);
+				setProjectHeader(data);
+
 				fillTabs(PROJECT_DATA);
 			}
 		});

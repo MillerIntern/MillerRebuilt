@@ -2,10 +2,13 @@
 const HOMEPAGE = "homepage.html";
 const FINDPROJECT = "findProject.html";
 const PROJECTINFO = 'projectData.html';
-const PROJECTMANAGER = 'newprojectManager.html';
+const PROJECTMANAGER = 'projectManager.html';
 const PROJECT_PERMITS_AND_INSPECTIONS = 'permitData.html';
 const PROJECT_CLOSEOUT = 'closeoutData.html';
 const PROJECT_CHANGE_ORDER = 'changeOrderData.html';
+const CHANGE_ORDER_PRINT = 'projectDataPrint.html?type=changeOrders&';
+const PROJECT_EQUIPMENT = 'equipmentData.html';
+const EQUIPMENT_PRINT = 'projectDataPrint.html?type=equipment&';
 
 jQuery.fn.center = function () {
     this.css("position","absolute");
@@ -70,4 +73,20 @@ function returnToLogin()
 {
 	if(confirm("Login Session has expired. Would you like to relogin?"))
 		window.location.href = "index.html";
+}
+
+function setProjectHeader (projectData) {
+	let city = projectData.warehouse.city.name;
+	let state = projectData.warehouse.state;
+	
+	state = state.replace('_', ' ');
+	state = toTitleCase(state);
+	
+	let item = projectData.projectItem.name;
+	$("#projectHeader").text(city + ", " + state + " --- " +  item);
+}
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }

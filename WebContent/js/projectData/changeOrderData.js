@@ -38,8 +38,8 @@ function getProject()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
-				$("#projectHeader").text(data.warehouse.city.name 
-						+ ", " + data.warehouse.state + " --- " +  data.projectItem.name);
+				setProjectHeader(data);
+				
 				if(PAGETYPE == 'edit')
 				{
 					CHANGE_ORDER_ID = getParameterByName("changeOrderID");
@@ -61,6 +61,7 @@ function getDropdownInfo()
 	PROJECT_ID = getParameterByName("id");
 	if(PROJECT_ID === null) {
 		alert('Invalid URL. Try returning to this page again.');
+		return;
 	}
 	
 	//if(PROJECT_ID !== null) {}
@@ -218,8 +219,6 @@ function saveProject()
 			{
 				alert('Saved Change Order');
 				$('#saveButton > button').prop('disabled', false);
-
-				createConfirmWindow();
 			}
 		});
 }
@@ -243,30 +242,6 @@ function isValidInput(dates)
 		}
 	}
 	return true;
-}
-
-function createConfirmWindow()
-{
-	$("#saveConfirm").dialog({
-		resizable: false,
-		height: 350,
-		width: 450,
-		modal: true,
-		buttons: {
-			"Return to project manager": function() {
-				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
-			},
-			"Go to Home Page": function() {
-				window.location.href="homepage.html";
-			},
-			"Find another project": function() {
-				window.location.href="findProject.html";
-			},
-
-			
-		}
-	});	
 }
 
 function returnToProjectManager () {

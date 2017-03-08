@@ -8,7 +8,7 @@ var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
                       "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
-                      'Equipment Report', "NE GC & Refrigeration", "SE GC & Refrigeration"];
+                      'Equipment Report', 'Change Order Report', "NE GC & Refrigeration", "SE GC & Refrigeration"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -23,13 +23,13 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
 			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
-			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report"};
+			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report'};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT', 
-					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION'};
+					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order Report': 'CO_REPORT'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -191,6 +191,11 @@ const EQUIPMENT_PROPOSAL = 'EQUIPMENT_P';
 const EQUIPMENT_BUDGETARY = 'EQUIPMENT_B';
 const EQUIPMENT_CLOSED = 'EQUIPMENT_C';
 
+const CO_ACTIVE = 'CO_REPORT_A';
+const CO_PROPOSAL = 'CO_REPORT_P';
+const CO_BUDGETARY = 'CO_REPORT_B';
+const CO_CLOSED = 'CO_REPORT_C';
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -322,6 +327,8 @@ const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspec
 									'lowVoltageInspection');
 
 const EQUIPMENT_KEYS = new Array('equipmentName'); /* The system handles creating all of the keys but we only pass in one*/
+
+const CO_KEYS = new Array('changeOrder');
 
 const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
@@ -1602,7 +1609,22 @@ function generateReport(reportType)
 			stage.push(CLOSED_STAGE);
 			title = "Equipment for Closed Projects";
 			break;
-			
+		case CO_ACTIVE:
+			stage.push(ACTIVE_STAGE);
+			title = 'Change Orders for Active Projects';
+			break;
+		case CO_PROPOSAL:
+			stage.push(PROPOSAL_STAGE);
+			title = 'Change Orders for Project Proposals';
+			break;
+		case CO_BUDGETARY:
+			stage.push(BUDGETARY_STAGE);
+			title = 'Change Orders for Budgetary Projects';
+			break;
+		case CO_CLOSED:
+			stage.push(CLOSED_STAGE);
+			title = 'Change Orders for Closed Projects';
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -1802,6 +1824,13 @@ function getAllSpecifiedFields(reportType)
 		case EQUIPMENT_CLOSED:
 			genType = EQUIPMENT_KEYS;
 			break;
+		case CO_ACTIVE:
+		case CO_PROPOSAL:
+		case CO_BUDGETARY:
+		case CO_CLOSED:
+			genType = CO_KEYS;
+			break;
+
 	
 	}
 	return genType;

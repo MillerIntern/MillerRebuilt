@@ -105,7 +105,7 @@ public class Report extends HttpServlet
 		{
 			projectObjects.Project p = projects.get(i);
 
-			if(shownFields.get(0).equals("equipmentName"))
+			if(shownFields.get(0).equals("equipmentName") || shownFields.get(0).equals("changeOrder"))
 			{
 				String value = getValueFromProject(shownFields.get(0), p);
 				sb.append(value);

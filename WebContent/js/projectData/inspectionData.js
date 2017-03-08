@@ -48,6 +48,7 @@ function getProjectEnums()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
+				setProjectHeader(data);
 
 				fillTabs(data);
 			}
@@ -61,8 +62,6 @@ function getProjectEnums()
 
 function fillTabs(json)
 {
-	$(".projectIdentifier").html(json.warehouse.city.name 
-			+ ", " + json.warehouse.state + " --- " +  json.projectItem.name);
 	console.log(json);
 	$("#fireMarshalInspection").val(json.inspections.fire_marshal);
 	$("#healthInspection").val(json.inspections.health);

@@ -2,9 +2,11 @@ package Servlets.helpers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import projectObjects.ChangeOrder;
 import projectObjects.NewEquipment;
 import projectObjects.Person;
 import projectObjects.Project;
@@ -492,26 +494,24 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("Certificate of Substantial Completion");
 		}
-		else if(value.equals("paymentOfDebtsAndClaims"))
-		{
+		else if (value.equals("paymentOfDebtsAndClaims")) {
 			sb.append("<th>");
 			sb.append("Payment of Debts and Claims");
-		}
-		else if(value.equals("releaseOfLiens"))
-		{
+		} else if (value.equals("releaseOfLiens")) {
 			sb.append("<th>");
 			sb.append("Release of Liens");
-		}
-		else if(value.equals("mulvannyG2SignOff"))
-		{
+		} else if (value.equals("mulvannyG2SignOff")) {
 			sb.append("<th>");
 			sb.append("Mulvanny G2 Sign Off");
-		}
-		else if(value.equals("equipmentName"))
-		{
-			sb.append("<th>Warehouse</th><th>Item</th><th>Project Status</th><th>Equipment Name</th>" +
+		} else if (value.equals("equipmentName")) {
+			sb.append("<th>Warehouse</th><th>Item</th><th>Status</th><th>Equipment Name</th>" +
 					  "<th>Vendor</th><th>Estimated Delivery Date</th>" +
 					  "<th>Actual Delivery Date</th><th class='longText'>Notes");
+		} else if (value.equals("changeOrder")) {
+			sb.append("<th>Warehouse</th><th>Item</><th>Manager</th><th>Customer CO#</th><th>MCS CO#</th>" + 
+					  "<th>Sub Names(s)</th><th>Proposal Date</th><th class='longText'>Brief Description</th><th>Cost</th>" + 
+					  "<th>Sell</th><th>Status</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
+					  "<th class='longText'>Notes");
 		}
 	}
 	
@@ -1388,24 +1388,57 @@ public class ReportHelper
 				
 				equipmentBuilder.append(nullOrFull(tmp.getEquipmentName()) + "</td><td>" + 
 										nullOrFull(tmp.getVendor()) + "</td><td>" + 
-										nullOrFull(tmp.getEstDeliveryDate()) + "</td><td>" + 
-										nullOrFull(tmp.getDeliveryDate()) + "</td><td>" +
+										tryDateFormat(dForm, tmp.getEstDeliveryDate()) + "</td><td>" + 
+										tryDateFormat(dForm, tmp.getDeliveryDate()) + "</td><td>" +
 										nullOrFull(tmp.getNotes()) + "</td>");
 				equipmentBuilder.append("</tr>");
 			}
 
 			return equipmentBuilder.toString();
+		} else if (value.equals("changeOrder") && p.getChangeOrders() != null) {
+			int amountOfChangeOrders = p.getChangeOrders().size();
+			if (amountOfChangeOrders == 0) return "";
+			
+			StringBuilder changeOrders = new StringBuilder();
+			Iterator<ChangeOrder> iter = p.getChangeOrders().iterator();
+			
+			while(iter.hasNext()) {
+				ChangeOrder tmp = iter.next();
+				changeOrders.append("<tr><td></th><td>" + p.getWarehouse().getCity().getName() + 
+									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
+				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");
+				changeOrders.append("<td>" + p.getProjectManagers().getName() + "</td>");
+				changeOrders.append("<td>" + convertChangeOrderType(tmp.getType()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getMcsCO()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");
+				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getProposalDate()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");
+				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
+				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
+				changeOrders.append("<td>" + convertChangeOrderStatus(tmp.getStatus()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
+				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
+				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
+			}
+			
+			return changeOrders.toString();
 		}
-
 		else
 			return "---";	// If nothing else just fill the field with nothing
 	}
 	
-	public static Object nullOrFull(Object value)
+	private static Object nullOrFull(Object value)
 	{
 		if(value == null || value.toString().equals(""))
 			return "---";
 		else return value;
+	}
+	
+	private static String tryDateFormat(DateFormat dForm, Date value) {
+		if(value == null) return "---";
+		
+		return dForm.format(value);
 	}
 	
 	
@@ -1455,5 +1488,34 @@ public class ReportHelper
 
 		
 		return "";
+	}
+	
+	private static String convertChangeOrderType(String i) {
+		if(i == null) return "---";
+		if(i.equals("1"))
+			return "MG2";
+		else if(i.equals("2")) 
+			return "Costco Refrigeration";
+		else if(i.equals("3")) 
+			return "Costco Warehouse";
+		else if(i.equals("4")) 
+			return "Costco Facilities";
+		else if(i.equals("5"))
+			return "Vendor";
+		else if(i.equals("6"))
+			return "Undefined";
+					
+		return "---";
+	}
+	
+	private static String convertChangeOrderStatus(String i) {
+		if (i == null) return "---";
+		
+		if(i.equals("1"))
+			return "Submitted";
+		else if(i.equals("2"))
+			return "MCS Reviewing";
+		
+		return "---";
 	}
 }

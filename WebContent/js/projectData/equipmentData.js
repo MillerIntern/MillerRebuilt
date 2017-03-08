@@ -6,63 +6,82 @@ var EQUIPMENT_ID;
 var PROJECT_DATA;
 
 $(document).ready(function()
-		{
-		 	$("#estDeliveryDate").datepicker();   
-		 	$("#deliveryDate").datepicker();   
-		 	
-			PAGETYPE = getParameterByName("type");	
-			PROJECT_ID = getParameterByName("id");
-		});
-
-
-function getProjectEnums()
 {
-	console.log(getParameterByName("id"));
+	$('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
 		
-	$.ajax({
-		type: 'POST',
-		url: 'Project', 
-		data: 
-		{
-			'domain': 'project',
-			'action': 'get',
-			'id': PROJECT_ID,
-			
-		},
-		success: function(data)
-		{
-			PROJECT_DATA = (data);
-			$(".projectIdentifier").html(data.warehouse.city.name 
-					+ ", " + data.warehouse.state + " --- " +  data.projectItem.name);
-			getDropdownInfo();
-			if(PAGETYPE == 'edit')
-			{
-				EQUIPMENT_ID = getParameterByName("equipmentID");
-				PROJECT_DATA = data;
-			}
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$('#saveButton > button').prop('disabled', true);
 
-		}
 	});
-}
+	
+ 	$("#estDeliveryDate").datepicker();   
+ 	$("#deliveryDate").datepicker();   
+});
 
 function getDropdownInfo()
 {
+	PAGETYPE = getParameterByName("type");	
+	PROJECT_ID = getParameterByName("id");
+	if(PROJECT_ID === null) {
+		alert('Invalid URL. Try returning to this page again.');
+		return;
+	}
+	
+	//if(PROJECT_ID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
 		data: 
 		{
 			'domain': 'project',
-			'action': 'getAllObjects',			
+			'action': 'getSpecificObjects',		
+			'equipmentvendor': true,
 		},
 		success: function(data)
 		{
 			fillDropdowns(data);
-			if(PAGETYPE == 'edit')
-				fillTabs(PROJECT_DATA);
+			getProject();
 		}
 	});
 }
+
+function getProject()
+{
+	console.log(getParameterByName("id"));
+	if(PROJECT_ID !== null) {	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'get',
+				'id': PROJECT_ID,
+				
+			},
+			success: function(data)
+			{
+				PROJECT_DATA = (data);
+				setProjectHeader(data);
+				
+				if(PAGETYPE == 'edit')
+				{
+					EQUIPMENT_ID = getParameterByName("equipmentID");
+					PROJECT_DATA = data;
+					fillTabs(PROJECT_DATA);
+	
+				}
+	
+			}
+		});
+	} else {
+		alert('Something went wrong');
+	}
+}
+
 
 function fillDropdowns(json)
 {
@@ -81,7 +100,7 @@ function fillDropdowns(json)
 }
 
 function fillTabs(json)
-{
+{	
 	var equipmentToEdit;
 	for(var i = 0; i < json.projEquipment.length; i++)
 		if(json.projEquipment[i].id == EQUIPMENT_ID)
@@ -130,13 +149,14 @@ function saveProject()
 				'notes': notes,
 			},
 			success:function(data){
-				
-				createConfirmWindow();
+				alert('Saved Equipment');
+				$('#saveButton > button').prop('disabled', false);
 				console.log(data);
 			},
 			error: function()
 			{
-				createConfirmWindow();
+				alert('Saved Change Order');
+				$('#saveButton > button').prop('disabled', false);
 			}
 		});
 	}
@@ -163,26 +183,6 @@ function isValidInput(dates)
 	return true;
 }
 
-function createConfirmWindow()
-{
-	$("#saveConfirm").dialog({
-		resizable: false,
-		height: 350,
-		width: 450,
-		modal: true,
-		buttons: {
-			"Return to project manager": function() {
-				console.log("in order to make it so duplicates aren't made, make this navigate you to the ?edit:id=X page or whatever");
-				window.location.href="projectManager.html?type=navigateTo&id=" + PROJECT_ID;
-			},
-			"Go to Home Page": function() {
-				window.location.href="homepage.html";
-			},
-			"Find another project": function() {
-				window.location.href="findProject.html";
-			},
-
-			
-		}
-	});	
+function returnToProjectManager () {
+	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
 }

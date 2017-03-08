@@ -89,6 +89,7 @@ function getProjectEnums()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
+				setProjectHeader(data);
 
 				fillTabs(data);
 			}
@@ -124,9 +125,6 @@ function getDropdownItems()
 function fillTabs(data)
 {
 	var json = data;
-	$(".projectIdentifier").html(json.warehouse.city.name 
-			+ ", " + json.warehouse.state + " --- " +  json.projectItem.name);
-
 	console.log(json);
 	if (json.closeoutDetails != null)
 	{	

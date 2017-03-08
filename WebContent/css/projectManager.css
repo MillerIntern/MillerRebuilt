@@ -35,9 +35,7 @@
 	border-right: 1px solid #cccccc;
 }
 
-.info-tab:not(.active) {
-	display:none;
-}
+.info-tab:not(.active) {display: none;}
 
 .project-edit:not(.default) {
 	background-color: #172a56;

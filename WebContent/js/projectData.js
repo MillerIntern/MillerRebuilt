@@ -520,7 +520,7 @@ function addProject()
 
     // Probably going to get rid of this
 	var k = 0;
-	for(var i= 0;i<vendor_eqArray.length;i++)
+	/*for(var i= 0;i<vendor_eqArray.length;i++)
 	{
 		if(eqpid_array[i]== PROJECT_ID)
 		{
@@ -528,7 +528,7 @@ function addProject()
 		k++;
 		console.log(k);
 		}
-	}
+	}*/
 	
 	
 	
@@ -715,17 +715,17 @@ function addProject()
 				'otherBNotes': PROJECT_DATA.permits.otherBNotes,
 				
 				//Equipment Data
-				'vendor_eq': JSON.stringify(vendor_eqArray),
-				'project_eq' : JSON.stringify(project_eqArray),
-				'po_eq' : JSON.stringify(po_eqArray),
-				'estimatedDeliveryDate_eq' : JSON.stringify(estimatedDeliveryDate_eqArray),
-				'component_eq' : JSON.stringify(component_eqArray),
-				'vendorDate_eq' : JSON.stringify(vendorDate_eqArray),
-				'notes_eq' : JSON.stringify(notes_eqArray),
-				'equipName' : JSON.stringify(equipNameArray),
-				'equipIDS' : JSON.stringify(equip_ids),
-				'newEquip' : JSON.stringify(new_equip),
-				'status_eq' : JSON.stringify(status_arr),
+				'vendor_eq': JSON.stringify('hello'),
+				'project_eq' : JSON.stringify('hello'),
+				'po_eq' : JSON.stringify('hello'),
+				'estimatedDeliveryDate_eq' : JSON.stringify('hello'),
+				'component_eq' : JSON.stringify('hello'),
+				'vendorDate_eq' : JSON.stringify('hello'),
+				'notes_eq' : JSON.stringify('hello'),
+				'equipName' : JSON.stringify('hello'),
+				'equipIDS' : JSON.stringify('hello'),
+				'newEquip' : JSON.stringify('hello'),
+				'status_eq' : JSON.stringify('hello'),
 				
 				//Rest of closeout information
 

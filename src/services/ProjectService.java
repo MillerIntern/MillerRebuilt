@@ -69,6 +69,7 @@ public class ProjectService extends ProjectObjectService
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
+	@SuppressWarnings("unused")
 	public  long addProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope, 
 			Map<String, String>params, Long inspectionTN, HttpServletRequest req) throws ClassNotFoundException, ParseException, NumberFormatException, IOException
 	{
@@ -167,80 +168,80 @@ public class ProjectService extends ProjectObjectService
 //---------------------------------------------Receiving ARRAYS ------------------------------------------------------------
 		
 		//If there were any added equipments
-		String[] equipToAdd = getGSONArray(req, "newEquip");
+		String[] equipToAdd = null;
 
-		if(equipToAdd.length!=0)
+		if(equipToAdd != null)
 		{
-		System.out.println("in equipment");
-		
-		//String[][] equipProj = getGSON2DArray(req, "project_eq");
-		//String[][] equipComponent = getGSON2DArray(req, "component_eq");
-		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
-		
-		//String[] equipIDS = getGSONArray(req, "equipIDS");
-		String[] equipPO = getGSONArray(req, "po_eq");
-		String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
-		String[] equipName  = getGSONArray(req, "equipName"); 
-		String[] equipNotes = getGSONArray(req, "notes_eq");
-		
-		//String[] equipStatus = getGSONArray(req, "status_eq");
-		
-		
-		
-		long longEquipPO[] = new long[equipToAdd.length];
-		Date[] dateEquipEDD = new Date[equipToAdd.length];
-		//Date[] dateEquipVD = new Date[equipToAdd.length];
-		int[] array = new int[equipToAdd.length];
-		
-		
-//-------------------------------------------------------------------------------------------------------
-		
-		/*-------Equipment Objects----------*/
-		Equipment equip;
-
-		EquipmentVendor vendor_eq;
-
-		DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-
-		
-		for(int i=0; i<equipToAdd.length;i++)
-		{
-			equip = new Equipment();
-			
-			// Convert Arrays to either int, long or Date
-			array[i] =(int) Long.parseLong(equipToAdd[i]);
-			
-			//crashing
-			if(!equipPO[array[i]].equals(""))
-			{
-				longEquipPO[i] = new Long(equipPO[array[i]]);
-			}
-			
-			if(!equipEDD[array[i]].equals(""))
-			{
-				dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
-				System.out.println(dateEquipEDD[i]);
-			}
-
-			
-			 
-			 vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
-			 	// 2D arrays
-			 
-				equip.setEquipmentVendor(vendor_eq);
-
+						System.out.println("in equipment");
+						
+						//String[][] equipProj = getGSON2DArray(req, "project_eq");
+						//String[][] equipComponent = getGSON2DArray(req, "component_eq");
+						String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
+						
+						//String[] equipIDS = getGSONArray(req, "equipIDS");
+						String[] equipPO = getGSONArray(req, "po_eq");
+						String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
+						String[] equipName  = getGSONArray(req, "equipName"); 
+						String[] equipNotes = getGSONArray(req, "notes_eq");
+						
+						//String[] equipStatus = getGSONArray(req, "status_eq");
+						
+						
+						
+						long longEquipPO[] = new long[equipToAdd.length];
+						Date[] dateEquipEDD = new Date[equipToAdd.length];
+						//Date[] dateEquipVD = new Date[equipToAdd.length];
+						int[] array = new int[equipToAdd.length];
+						
+						
+				//-------------------------------------------------------------------------------------------------------
+						
+						/*-------Equipment Objects----------*/
+						Equipment equip;
 				
-				//Regular Arrays
-				equip.setPO(longEquipPO[i]);
-				equip.setEstimatedDelivery(dateEquipEDD[i]);
-				equip.setEquipName(equipName[array[i]]);
-				equip.setNotes(equipNotes[array[i]]);
-				//equip.setEqpd(maxID);
+						EquipmentVendor vendor_eq;
 				
-				System.out.println("EQPD:" +  maxID);
-	
-				//ProjectObjectService.addObject("Equipment", equip);
-			}
+						DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+				
+						
+						for(int i=0; i<equipToAdd.length;i++)
+						{
+							equip = new Equipment();
+							
+							// Convert Arrays to either int, long or Date
+							array[i] =(int) Long.parseLong(equipToAdd[i]);
+							
+							//crashing
+							if(!equipPO[array[i]].equals(""))
+							{
+								longEquipPO[i] = new Long(equipPO[array[i]]);
+							}
+							
+							if(!equipEDD[array[i]].equals(""))
+							{
+								dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
+								System.out.println(dateEquipEDD[i]);
+							}
+				
+							
+							 
+							 vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
+							 	// 2D arrays
+							 
+								equip.setEquipmentVendor(vendor_eq);
+				
+								
+								//Regular Arrays
+								equip.setPO(longEquipPO[i]);
+								equip.setEstimatedDelivery(dateEquipEDD[i]);
+								equip.setEquipName(equipName[array[i]]);
+								equip.setNotes(equipNotes[array[i]]);
+								//equip.setEqpd(maxID);
+								
+								System.out.println("EQPD:" +  maxID);
+					
+								//ProjectObjectService.addObject("Equipment", equip);
+							}
 		}
 
 
@@ -326,6 +327,7 @@ public class ProjectService extends ProjectObjectService
 	 * @throws ClassNotFoundException
 	 * @throws ParseException
 	 */
+	@SuppressWarnings("unused")
 	public static void editProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, 
 			Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN, 
 			HttpServletRequest req) throws ClassNotFoundException, ParseException
@@ -430,98 +432,98 @@ public class ProjectService extends ProjectObjectService
 // ************************Optional Inspections************************ \\
 		
 		Long id = Long.parseLong(params.get("projectID"));
-		String[] equipToAdd = getGSONArray(req, "newEquip");
+		String[] equipToAdd = null;
 		
 
-		if(equipToAdd != null&& equipToAdd.length!=0)
+		if(equipToAdd != null)
 		{
-		System.out.println("in equipment");
-		// ---------------------------Receiving ARRAYS -----------------------------------------------
+					System.out.println("in equipment");
+					// ---------------------------Receiving ARRAYS -----------------------------------------------
+						
+					/*String[][] equipProj = getGSON2DArray(req, "project_eq");
+					String[][] equipComponent = getGSON2DArray(req, "component_eq");
+					String[][] equipVendor = getGSON2DArray(req, "vendor_eq");*/
 			
-		/*String[][] equipProj = getGSON2DArray(req, "project_eq");
-		String[][] equipComponent = getGSON2DArray(req, "component_eq");
-		String[][] equipVendor = getGSON2DArray(req, "vendor_eq");*/
-
-	 	// 2D arrays
-
-	
-		
-		String[] equipIDS = getGSONArray(req, "equipIDS");
-		String[] equipPO = getGSONArray(req, "po_eq");
-		String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
-		String[] equipName  = getGSONArray(req, "equipName"); 
-		String[] equipNotes = getGSONArray(req, "notes_eq");
-		//String[] equipStatus = getGSONArray(req, "status_eq");
-		
-		
-		
-		long longEquipPO[] = new long[equipToAdd.length];
-		Date[] dateEquipEDD = new Date[equipToAdd.length];
-		int[] array = new int[equipToAdd.length];
-		long[] longEquipIds = new long[equipIDS.length];
-		System.out.println("equip length" + array.length);
-		
-		
-		//-------------------------------------------------------------------------------------------------
-		
-		//Equipment Objects
-		Equipment equip;
-		//Warehouse warehouse_eq;
-		//ProjectItem item_eq;
-		//EquipmentVendor vendor_eq;
-		//EquipmentStatus status_eq;
-		
-		DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-
-		
-		for(int i=0; i<equipToAdd.length;i++)
-			{
-			equip = new Equipment();
-			// Convert Arrays to either int, long or Date
-			array[i] =(int) Long.parseLong(equipToAdd[i]);
+				 	// 2D arrays
 			
-			//crashing
-			if(!equipPO[array[i]].equals(""))
-			{
-				longEquipPO[i] = new Long(equipPO[array[i]]);
-			}
-			
-			if(!equipEDD[array[i]].equals(""))
-			{
-				System.out.println("estimated date " + equipEDD[array[i]]);
-				dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
-			}
-			
-			// warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
-			 //item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
-			 //vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
-			 //status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
-			 
-				longEquipIds[i] = new Long(equipIDS[array[i]]);
-				System.out.println("equip ids" + longEquipIds[i]);
-			
-			 	// 2D arrays
-			 
-			//	equip.setWarehouse(warehouse_eq);
-				//equip.setEquipmentVendor(vendor_eq);
-				//equip.setProjectItem(item_eq);
-				//equip.setEquipStatus(status_eq);
 				
-				//Regular Arrays
-				equip.setPO(longEquipPO[i]);
-				equip.setEstimatedDelivery(dateEquipEDD[i]);
-				equip.setEquipName(equipName[array[i]]);
-				equip.setNotes(equipNotes[array[i]]);
-				//equip.setEqpd(id);
-				
-				if((Equipment) ProjectObjectService.get(longEquipIds[i], "Equipment")!=null)
-					;//ProjectObjectService.editObject("Equipment",longEquipIds[i],equip, 0);
-				else
-				{
-					System.out.println("here");
-					;//ProjectObjectService.addObject("Equipment", equip);
-				}	
-			}
+					
+					String[] equipIDS = getGSONArray(req, "equipIDS");
+					String[] equipPO = getGSONArray(req, "po_eq");
+					String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
+					String[] equipName  = getGSONArray(req, "equipName"); 
+					String[] equipNotes = getGSONArray(req, "notes_eq");
+					//String[] equipStatus = getGSONArray(req, "status_eq");
+					
+					
+					
+					long longEquipPO[] = new long[equipToAdd.length];
+					Date[] dateEquipEDD = new Date[equipToAdd.length];
+					int[] array = new int[equipToAdd.length];
+					long[] longEquipIds = new long[equipIDS.length];
+					System.out.println("equip length" + array.length);
+					
+					
+					//-------------------------------------------------------------------------------------------------
+					
+					//Equipment Objects
+					Equipment equip;
+					//Warehouse warehouse_eq;
+					//ProjectItem item_eq;
+					//EquipmentVendor vendor_eq;
+					//EquipmentStatus status_eq;
+					
+					DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+			
+					
+					for(int i=0; i<equipToAdd.length;i++)
+						{
+						equip = new Equipment();
+						// Convert Arrays to either int, long or Date
+						array[i] =(int) Long.parseLong(equipToAdd[i]);
+						
+						//crashing
+						if(!equipPO[array[i]].equals(""))
+						{
+							longEquipPO[i] = new Long(equipPO[array[i]]);
+						}
+						
+						if(!equipEDD[array[i]].equals(""))
+						{
+							System.out.println("estimated date " + equipEDD[array[i]]);
+							dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
+						}
+						
+						// warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
+						 //item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
+						 //vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
+						 //status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
+						 
+							longEquipIds[i] = new Long(equipIDS[array[i]]);
+							System.out.println("equip ids" + longEquipIds[i]);
+						
+						 	// 2D arrays
+						 
+						//	equip.setWarehouse(warehouse_eq);
+							//equip.setEquipmentVendor(vendor_eq);
+							//equip.setProjectItem(item_eq);
+							//equip.setEquipStatus(status_eq);
+							
+							//Regular Arrays
+							equip.setPO(longEquipPO[i]);
+							equip.setEstimatedDelivery(dateEquipEDD[i]);
+							equip.setEquipName(equipName[array[i]]);
+							equip.setNotes(equipNotes[array[i]]);
+							//equip.setEqpd(id);
+							
+							if((Equipment) ProjectObjectService.get(longEquipIds[i], "Equipment")!=null)
+								;//ProjectObjectService.editObject("Equipment",longEquipIds[i],equip, 0);
+							else
+							{
+								System.out.println("here");
+								;//ProjectObjectService.addObject("Equipment", equip);
+							}	
+						}
 		}
 				//set inspection fields
 		System.out.println(inspectionTN);
@@ -686,7 +688,7 @@ public class ProjectService extends ProjectObjectService
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
-		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
+		//map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
 		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
 		map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
@@ -738,7 +740,9 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("changeordertype") != null && !parameters.get("changeordertype").isEmpty())
 			if(parameters.get("changeordertype").equals("true"))
 				map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
-		
+		if(parameters.get("equipmentvendor") != null && !parameters.get("equipmentvendor").isEmpty())
+			if(parameters.get("equipmentvendor").equals("true"))
+				map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
 		return g.toJson(map);
 	}
 	
