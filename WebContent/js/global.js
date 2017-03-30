@@ -90,3 +90,25 @@ function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
+
+function getToday() {
+	var today = new Date();
+	var day = today.getDate();
+	var month = today.getMonth() + 1; // 0 is jan
+	var year = today.getFullYear();
+	
+	if (day < 10) {
+		day = '0' + day;
+	}
+	if (month < 10) {
+		month = '0' + month;
+	}
+	
+	today = month + '/' + day + '/' + year;
+	return today;
+}
+
+function comingSoon(source) {
+	if($(source).is('button'))
+		$(source).html('Coming Soon!');
+}

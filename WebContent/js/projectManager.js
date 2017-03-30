@@ -32,6 +32,7 @@ function getProject() {
 				setProjectHeader(data);
 
 				fillTabs(data);
+				
 			}, error: function (data) {
 				alert('Server Error!');
 			}
@@ -124,39 +125,39 @@ function fillPermitsAndInspecionts (data) {
 	
 	// permits 
 	$('#buildingPermitDate').text(tabData.building);
-	$('#buildingPermit').text(convertPermit(tabData.buildingPermitStatus));
+	$('#buildingPermit').text(tabData.buildingPermitStatus);
 	$('#roofingPermitDate').text(tabData.roofing);
-	$('#roofingPermit').text(convertPermit(tabData.roofingPermitStatus));
+	$('#roofingPermit').text(tabData.roofingPermitStatus);
 	$('#mechanicalPermitDate').text(tabData.mechanical);
-	$('#mechanicalPermit').text(convertPermit(tabData.mechanicalPermitStatus));
+	$('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
 	$('#electricalPermitDate').text(tabData.electrical);
-	$('#electricalPermit').text(convertPermit(tabData.electricalPermitStatus));
+	$('#electricalPermit').text(tabData.electricalPermitStatus);
 	$('#plumbingPermitDate').text(tabData.plumbing);
-	$('#plumbingPermit').text(convertPermit(tabData.plumbingPermitStatus));
+	$('#plumbingPermit').text(tabData.plumbingPermitStatus);
 	$('#sprinklerPermitDate').text(tabData.fire_sprinkler);
-	$('#sprinklerPermit').text(convertPermit(tabData.sprinklerPermitStatus));
+	$('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
 	$('#fireAlarmPermitDate').text(tabData.fire_alarm);
-	$('#fireAlarmPermit').text(convertPermit(tabData.fireAlarmPermitStatus));
+	$('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
 	$('#lowVoltagePermitDate').text(tabData.low_voltage);
-	$('#lowVoltagePermit').text(convertPermit(tabData.voltagePermitStatus));
+	$('#lowVoltagePermit').text(tabData.voltagePermitStatus);
 	
 	// inspections
 	$('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
-	$('#buildingInspection').text(convertPermit(tabData.buildingInspectionStatus));
+	$('#buildingInspection').text(tabData.buildingInspectionStatus);
 	$('#roofingInspectionDate').text(tabData.roofingInspectionLastUpdated);
-	$('#roofingInspection').text(convertPermit(tabData.roofingInspectionStatus));
+	$('#roofingInspection').text(tabData.roofingInspectionStatus);
 	$('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
-	$('#mechanicalInspection').text(convertPermit(tabData.mechanicalInspectionStatus));
+	$('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
 	$('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
-	$('#electricalInspection').text(convertPermit(tabData.electricalInspectionStatus));
+	$('#electricalInspection').text(tabData.electricalInspectionStatus);
 	$('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
-	$('#plumbingInspection').text(convertPermit(tabData.plumbingInspectionStatus));
+	$('#plumbingInspection').text(tabData.plumbingInspectionStatus);
 	$('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
-	$('#sprinklerInspection').text(convertPermit(tabData.sprinklerInspectionStatus));
+	$('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
 	$('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
-	$('#fireAlarmInspection').text(convertPermit(tabData.fireAlarmInspectionStatus));
+	$('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
 	$('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
-	$('#lowVoltageInspection').text(convertPermit(tabData.voltageInspectionStatus));
+	$('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
 }
 
 function fillEquipment (data) {
@@ -517,4 +518,25 @@ function editSelectedEquipment () {
 
 function equipmentReport () {
 	window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
+}
+
+function deleteConfirm () {
+	if (confirm("Are you sure you want to delete this project permanently?")) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				'domain': 'project',
+				'action': 'deleteProject',
+				'id': projectID,
+			}, complete: function(data) {
+				console.log(data);
+				if(data.responseJSON === "PROJECT_DELETED") {
+					alert("Project Deleted!");
+					window.location.href = 'findProject.html';
+				} else
+					alert("Could not Delete Project");
+			}
+		});
+	}
 }

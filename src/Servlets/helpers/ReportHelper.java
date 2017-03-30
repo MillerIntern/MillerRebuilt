@@ -512,6 +512,12 @@ public class ReportHelper
 					  "<th>Sub Names(s)</th><th>Proposal Date</th><th class='longText'>Brief Description</th><th>Cost</th>" + 
 					  "<th>Sell</th><th>Status</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
 					  "<th class='longText'>Notes");
+		} else if(value.equals("permitNotes")) {
+			sb.append("<th>");
+			sb.append("Permit Notes");
+		} else if(value.equals("inspectionNotes")) {
+			sb.append("<th>");
+			sb.append("Inspection Notes");
 		}
 	}
 	
@@ -1304,72 +1310,72 @@ public class ReportHelper
 		
 		else if(value.equals("buildingPermit") && p.getPermits() != null && p.getPermits().getBuildingPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getBuildingPermitStatus());
+			return p.getPermits().getBuildingPermitStatus();
 		}
 		else if(value.equals("mechanicalPermit") && p.getPermits() != null && p.getPermits().getMechanicalPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getMechanicalPermitStatus());
+			return p.getPermits().getMechanicalPermitStatus();
 		}
 		else if(value.equals("electricalPermit") && p.getPermits() != null && p.getPermits().getElectricalPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getElectricalPermitStatus());
+			return p.getPermits().getElectricalPermitStatus();
 		}
 		else if(value.equals("plumbingPermit") && p.getPermits() != null && p.getPermits().getPlumbingPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getPlumbingPermitStatus());
+			return p.getPermits().getPlumbingPermitStatus();
 		}
 		else if(value.equals("roofingPermit") && p.getPermits() != null && p.getPermits().getRoofingPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getRoofingPermitStatus());
+			return p.getPermits().getRoofingPermitStatus();
 		}
 		else if(value.equals("sprinklerPermit") && p.getPermits() != null && p.getPermits().getSprinklerPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getSprinklerPermitStatus());
+			return p.getPermits().getSprinklerPermitStatus();
 		}
 		else if(value.equals("fireAlarmPermit") && p.getPermits() != null && p.getPermits().getFireAlarmPermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getFireAlarmPermitStatus());
+			return p.getPermits().getFireAlarmPermitStatus();
 		}
 		else if(value.equals("lowVoltagePermit") && p.getPermits() != null && p.getPermits().getVoltagePermitStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getVoltagePermitStatus());
+			return p.getPermits().getVoltagePermitStatus();
+		} else if(value.equals("permitNotes") && p.getPermits() != null && p.getPermits().getPermitNotes() != null) {
+			return p.getPermits().getPermitNotes();
+		} else if(value.equals("inspectionNotes") && p.getPermits() != null && p.getPermits().getInspectionNotes() != null) {
+			return p.getPermits().getInspectionNotes();
 		}
-
 		else if(value.equals("buildingInspection") && p.getPermits() != null && p.getPermits().getBuildingInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getBuildingInspectionStatus());
+			return p.getPermits().getBuildingInspectionStatus();
 		}
 		else if(value.equals("mechanicalInspection") && p.getPermits() != null && p.getPermits().getMechanicalInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getMechanicalInspectionStatus());
+			return p.getPermits().getMechanicalInspectionStatus();
 		}
 		else if(value.equals("electricalInspection") && p.getPermits() != null && p.getPermits().getElectricalInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getElectricalInspectionStatus());
+			return p.getPermits().getElectricalInspectionStatus();
 		}
 		else if(value.equals("plumbingInspection") && p.getPermits() != null && p.getPermits().getPlumbingInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getPlumbingInspectionStatus());
+			return p.getPermits().getPlumbingInspectionStatus();
 		}
 		else if(value.equals("roofingInspection") && p.getPermits() != null && p.getPermits().getRoofingInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getRoofingInspectionStatus());
+			return p.getPermits().getRoofingInspectionStatus();
 		}
 		else if(value.equals("sprinklerInspection") && p.getPermits() != null && p.getPermits().getSprinklerInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getSprinklerInspectionStatus());
+			return p.getPermits().getSprinklerInspectionStatus();
 		}
 		else if(value.equals("fireAlarmInspection") && p.getPermits() != null && p.getPermits().getFireAlarmInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getFireAlarmInspectionStatus());
+			return p.getPermits().getFireAlarmInspectionStatus();
 		}
 		else if(value.equals("lowVoltageInspection") && p.getPermits() != null && p.getPermits().getVoltageInspectionStatus() != null)
 		{
-			return convertPermitStatus(p.getPermits().getVoltageInspectionStatus());
+			return p.getPermits().getVoltageInspectionStatus();
 		}
-		/*
-		 * TODO: permit/inspection notes for bart report;
-		 */
 		else if(value.equals("equipmentName") && p.getProjEquipment() != null) 
 		{
 			int amountOfEquipment = p.getProjEquipment().size();
@@ -1442,18 +1448,7 @@ public class ReportHelper
 	}
 	
 	
-	/**
-	 * @param buildingPermitStatus
-	 * @return
-	 */
-	private static String convertPermitStatus(String buildingPermitStatus) 
-	{
-		if(buildingPermitStatus.equals(COMPLETE)) return "Preparing";
-		if(buildingPermitStatus.equals(INCOMPLETE)) return "Submitted";
-		if(buildingPermitStatus.equals(NA)) return "Issued";
-		if(buildingPermitStatus.equals("4")) return "Closed";
-		return "---";
-	}
+
 
 	/**
 	 * Gets the first person from a set. Though this should eventually 

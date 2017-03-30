@@ -54,7 +54,7 @@ public class Trigger
 	 * @param exp the criteria to add
 	 */
 	public void addExpression(Criterion exp)
-	{
+	{		
 		criterion.add(exp);
 	}
 	

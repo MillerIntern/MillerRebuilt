@@ -8,67 +8,58 @@ import javax.persistence.Entity;
 @Embeddable
 public class Permits extends ProjectObject
 {
+	private String permitNotes;
+	private String inspectionNotes;
 	
 	private Date building;
 	private String buildingPermitStatus;
 	private String buildingInspectionStatus;
 	private Date buildingInspectionLastUpdated;
-	private String buildingNotes;
 	
 	private Date mechanical;
 	private String mechanicalPermitStatus;
 	private String mechanicalInspectionStatus;
 	private Date mechanicalInspectionLastUpdated;
-	private String mechanicalNotes;
 	
 	private Date electrical;
 	private String electricalPermitStatus;
 	private String electricalInspectionStatus;
 	private Date electricalInspectionLastUpdated;
-	private String electricalNotes;
 	
 	private Date plumbing;
 	private String plumbingPermitStatus;
 	private String plumbingInspectionStatus;
 	private Date plumbingInspectionLastUpdated;
-	private String plumbingNotes;
 	
 	private Date fire_sprinkler;
 	private String sprinklerPermitStatus;
 	private String sprinklerInspectionStatus;
 	private Date sprinklerInspectionLastUpdated;
-	private String sprinklerNotes;
 	
 	private Date fire_alarm;
 	private String fireAlarmPermitStatus;
 	private String fireAlarmInspectionStatus;
 	private Date fireAlarmInspectionLastUpdated;
-	private String fireAlarmNotes;
 	
 	private Date low_voltage;
 	private String voltagePermitStatus;
 	private String voltageInspectionStatus;
 	private Date voltageInspectionLastUpdated;
-	private String voltageNotes;
 	
 	private Date roofing;
 	private String roofingPermitStatus;
 	private String roofingInspectionStatus;
 	private Date roofingInspectionLastUpdated;
-	private String roofingNotes;
 	
 	private Date otherAPermit;
 	private String otherAPermitStatus;
 	private String otherAInspectionStatus;
 	private Date otherAInspectionLastUpdated;
-	private String otherANotes;
 	
 	private Date otherBPermit;
 	private String otherBPermitStatus;
 	private String otherBInspectionStatus;
-	private Date otherBInspectionLastUpdated;
-	private String otherBNotes;
-	
+	private Date otherBInspectionLastUpdated;	
 	
 	public Permits()
 	{
@@ -192,14 +183,6 @@ public class Permits extends ProjectObject
 		this.buildingInspectionLastUpdated = buildingInspectionLastUpdated;
 	}
 
-	public String getBuildingNotes() {
-		return buildingNotes;
-	}
-
-	public void setBuildingNotes(String buildingNotes) {
-		this.buildingNotes = buildingNotes;
-	}
-
 	public Date getMechanical() {
 		return mechanical;
 	}
@@ -230,14 +213,6 @@ public class Permits extends ProjectObject
 
 	public void setMechanicalInspectionLastUpdated(Date mechanicalInspectionLastUpdated) {
 		this.mechanicalInspectionLastUpdated = mechanicalInspectionLastUpdated;
-	}
-
-	public String getMechanicalNotes() {
-		return mechanicalNotes;
-	}
-
-	public void setMechanicalNotes(String mechanicalNotes) {
-		this.mechanicalNotes = mechanicalNotes;
 	}
 
 	public Date getElectrical() {
@@ -272,14 +247,6 @@ public class Permits extends ProjectObject
 		this.electricalInspectionLastUpdated = electricalInspectionLastUpdated;
 	}
 
-	public String getElectricalNotes() {
-		return electricalNotes;
-	}
-
-	public void setElectricalNotes(String electricalNotes) {
-		this.electricalNotes = electricalNotes;
-	}
-
 	public Date getPlumbing() {
 		return plumbing;
 	}
@@ -310,14 +277,6 @@ public class Permits extends ProjectObject
 
 	public void setPlumbingInspectionLastUpdated(Date plumbingInspectionLastUpdated) {
 		this.plumbingInspectionLastUpdated = plumbingInspectionLastUpdated;
-	}
-
-	public String getPlumbingNotes() {
-		return plumbingNotes;
-	}
-
-	public void setPlumbingNotes(String plumbingNotes) {
-		this.plumbingNotes = plumbingNotes;
 	}
 
 	public Date getFire_sprinkler() {
@@ -352,14 +311,6 @@ public class Permits extends ProjectObject
 		this.sprinklerInspectionLastUpdated = sprinklerInspectionLastUpdated;
 	}
 
-	public String getSprinklerNotes() {
-		return sprinklerNotes;
-	}
-
-	public void setSprinklerNotes(String sprinklerNotes) {
-		this.sprinklerNotes = sprinklerNotes;
-	}
-
 	public Date getFire_alarm() {
 		return fire_alarm;
 	}
@@ -390,14 +341,6 @@ public class Permits extends ProjectObject
 
 	public void setFireAlarmInspectionLastUpdated(Date fireAlarmInspectionLastUpdated) {
 		this.fireAlarmInspectionLastUpdated = fireAlarmInspectionLastUpdated;
-	}
-
-	public String getFireAlarmNotes() {
-		return fireAlarmNotes;
-	}
-
-	public void setFireAlarmNotes(String fireAlarmNotes) {
-		this.fireAlarmNotes = fireAlarmNotes;
 	}
 
 	public Date getLow_voltage() {
@@ -432,14 +375,6 @@ public class Permits extends ProjectObject
 		this.voltageInspectionLastUpdated = voltageInspectionLastUpdated;
 	}
 
-	public String getVoltageNotes() {
-		return voltageNotes;
-	}
-
-	public void setVoltageNotes(String voltageNotes) {
-		this.voltageNotes = voltageNotes;
-	}
-
 	public Date getRoofing() {
 		return roofing;
 	}
@@ -470,14 +405,6 @@ public class Permits extends ProjectObject
 
 	public void setRoofingInspectionLastUpdated(Date roofingInspectionLastUpdated) {
 		this.roofingInspectionLastUpdated = roofingInspectionLastUpdated;
-	}
-
-	public String getRoofingNotes() {
-		return roofingNotes;
-	}
-
-	public void setRoofingNotes(String roofingNotes) {
-		this.roofingNotes = roofingNotes;
 	}
 
 	public Date getOtherAPermit() {
@@ -512,14 +439,6 @@ public class Permits extends ProjectObject
 		this.otherAInspectionLastUpdated = otherAInspectionLastUpdated;
 	}
 
-	public String getOtherANotes() {
-		return otherANotes;
-	}
-
-	public void setOtherANotes(String otherANotes) {
-		this.otherANotes = otherANotes;
-	}
-
 	public Date getOtherBPermit() {
 		return otherBPermit;
 	}
@@ -552,18 +471,19 @@ public class Permits extends ProjectObject
 		this.otherBInspectionLastUpdated = otherBInspectionLastUpdated;
 	}
 
-	public String getOtherBNotes() {
-		return otherBNotes;
+	public String getPermitNotes() {
+		return permitNotes;
 	}
 
-	public void setOtherBNotes(String otherBNotes) {
-		this.otherBNotes = otherBNotes;
+	public void setPermitNotes(String permitNotes) {
+		this.permitNotes = permitNotes;
 	}
-	
 
-	
-	
-	
-	
-	
+	public String getInspectionNotes() {
+		return inspectionNotes;
+	}
+
+	public void setInspectionNotes(String inspectionNotes) {
+		this.inspectionNotes = inspectionNotes;
+	}
 }

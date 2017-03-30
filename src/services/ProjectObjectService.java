@@ -113,13 +113,9 @@ public class ProjectObjectService
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
 			}
-			/*else if(domain.equals("Post"))
-			{
-				criteria.createAlias("post", "c");
-				criteria.addOrder(Order.asc("c.postDate"));
-			}*/
 			
 	        List<?> list = criteria.list();
+	        
 	        tx.commit();
 
 	        return gson.toJson(list);
@@ -318,6 +314,8 @@ public class ProjectObjectService
 	
 	
 	/**
+	 * TODO: I'm pretty sure this is awful garbage code that we don't need. See ProjectService.editExistingProject()
+	 * 
 	 * This method replaces an object in the database with a new object. This simpler and more efficient than
 	 * getting an object from a database, changing specific fields, and updating the database.
 	 * 
@@ -326,7 +324,7 @@ public class ProjectObjectService
 	 * @param newObject the object that is to replace the object in the database.
 	 * @throws ClassNotFoundException
 	 */	
-	public static void editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
+	public static long editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
 		//Get session and start transaction
@@ -346,14 +344,14 @@ public class ProjectObjectService
 		session.saveOrUpdate(oldObject2);
 		tx.commit();
 
-		//Save the change
+		return id;
 	}
 	
 	/**
-	 * TODO: This is a really hacky way to fix a problem with the whole changeorder process
+	 * TODO: This is a really hacky way to fix a problem with sets in projects
 	 * @param session
 	 */
-	public static void deleteNullChangeOrders() 
+	public static void deleteNullSetObjects() 
 	{
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();

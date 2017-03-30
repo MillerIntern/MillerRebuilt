@@ -68,12 +68,12 @@
 	<div id="permits" class="info-tab active">
 		<table class="manager table table-hover">
 		<tr>
-			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td>
 		</tr>
 		<tr>
 			<td>Building:</td>
 			<td>
-				<select class="status" id="buildingPermitStatus">
+				<select data-associated-date='buildingPermitLastUpdated' class="permitStatus" id="buildingPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -81,22 +81,19 @@
             	<input type="text" id="buildingPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="buildingInspectionStatus">
+				<select data-associated-date='buildingInspectionLastUpdated' class="inspectionStatus" id="buildingInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="buildingInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="buildingNotes"> </textarea>
-			</td>
 		</tr>
 		
 				<tr>
 			<td>Roofing:</td>
 			<td>
-				<select class="status" id="roofingPermitStatus">
+				<select data-associated-date='roofingPermitLastUpdated' class="permitStatus" id="roofingPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -104,15 +101,12 @@
             	<input type="text" id="roofingPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="roofingInspectionStatus">
+				<select data-associated-date='roofingInspectionLastUpdated' class="inspectionStatus" id="roofingInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="roofingInspectionLastUpdated" />
-			</td>
-			<td>
-                <textarea id="roofingNotes"> </textarea>
 			</td>
 		</tr>
 		
@@ -122,12 +116,12 @@
 	<div id="technicalPermits" class="info-tab">
 	        <table class="manager table table-hover">
         <tr>
-			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td>
 		</tr>
 		<tr>
 			<td>Mechanical:</td>
 			<td>
-				<select class="status" id="mechanicalPermitStatus">
+				<select data-associated-date='mechanicalPermitLastUpdated' class="permitStatus" id="mechanicalPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -135,22 +129,19 @@
             	<input type="text" id="mechanicalPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="mechanicalInspectionStatus">
+				<select data-associated-date='mechanicalInspectionLastUpdated' class="inspectionStatus" id="mechanicalInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="mechanicalInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="mechanicalNotes"> </textarea>
-			</td>
 		</tr>
 		
 		<tr>
 			<td>Electrical:</td>
 			<td>
-				<select class="status" id="electricalPermitStatus">
+				<select data-associated-date='electricalPermitLastUpdated' class="permitStatus" id="electricalPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -158,22 +149,19 @@
             	<input type="text" id="electricalPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="electricalInspectionStatus">
+				<select data-associated-date='electricalInspectionLastUpdated' class="inspectionStatus" id="electricalInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="electricalInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="electricalNotes"> </textarea>
-			</td>
 		</tr>
 		
 		<tr>
 			<td>Plumbing:</td>
 			<td>
-				<select class="status" id="plumbingPermitStatus">
+				<select data-associated-date='plumbingPermitLastUpdated' class="permitStatus" id="plumbingPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -181,15 +169,12 @@
             	<input type="text" id="plumbingPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="plumbingInspectionStatus">
+				<select data-associated-date='plumbingInspectionLastUpdated' class="inspectionStatus" id="plumbingInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="plumbingInspectionLastUpdated" />
-			</td>
-			<td>
-                <textarea id="plumbingNotes"> </textarea>
 			</td>
 		</tr>
 		
@@ -199,12 +184,12 @@
 	<div id="safetyPermits" class="info-tab">
 			        <table class="manager table table-hover">
         <tr>
-			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td>
 		</tr>
 		<tr>
 			<td>Sprinkler:</td>
 			<td>
-				<select class="status" id="sprinklerPermitStatus">
+				<select data-associated-date='sprinklerPermitLastUpdated' class="permitStatus" id="sprinklerPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -212,22 +197,19 @@
             	<input type="text" id="sprinklerPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="sprinklerInspectionStatus">
+				<select data-associated-date='sprinklerInspectionLastUpdated' class="inspectionStatus" id="sprinklerInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="sprinklerInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="sprinklerNotes"> </textarea>
-			</td>
 		</tr>
 		
 		<tr>
 			<td>Fire Alarm:</td>
 			<td>
-				<select class="status" id="fireAlarmPermitStatus">
+				<select data-associated-date='fireAlarmPermitLastUpdated' class="permitStatus" id="fireAlarmPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -235,22 +217,19 @@
             	<input type="text" id="fireAlarmPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="fireAlarmInspectionStatus">
+				<select data-associated-date='fireAlarmInspectionLastUpdated' class="inspectionStatus" id="fireAlarmInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="fireAlarmInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="fireAlarmNotes"> </textarea>
-			</td>
 		</tr>
 		
 		<tr>
 			<td>Low-Voltage:</td>
 			<td>
-				<select class="status" id="voltagePermitStatus">
+				<select data-associated-date='voltagePermitLastUpdated' class="permitStatus" id="voltagePermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -258,15 +237,12 @@
             	<input type="text" id="voltagePermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="voltageInspectionStatus">
+				<select data-associated-date='voltageInspectionLastUpdated' class="inspectionStatus" id="voltageInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="voltageInspectionLastUpdated" />
-			</td>
-			<td>
-                <textarea id="voltageNotes"> </textarea>
 			</td>
 		</tr>
 		
@@ -276,12 +252,12 @@
 	<div class="info-tab " id="otherPermits">
 	       <table class="manager table table-hover">
         <tr>
-			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td><td>Notes</td>
+			<td></td><td>Permit</td><td>Permit Status Date</td><td>Inspection</td><td>Inspection Status Date</td>
 		</tr>
 		<tr>
 			<td>Other Permit (A):</td>
 			<td>
-				<select class="status" id="otherAPermitStatus">
+				<select data-associated-date='otherAPermitLastUpdated' class="permitStatus" id="otherAPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -289,22 +265,19 @@
             	<input type="text" id="otherAPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="otherAInspectionStatus">
+				<select data-associated-date='otherAInspectionLastUpdated' class="inspectionStatus" id="otherAInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="otherAInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="otherANotes"> </textarea>
-			</td>
 		</tr>
 		
 		<tr>
 			<td>Other Permit (B):</td>
 			<td>
-				<select class="status" id="otherBPermitStatus">
+				<select data-associated-date='otherBPermitLastUpdated' class="permitStatus" id="otherBPermitStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
@@ -312,17 +285,25 @@
             	<input type="text" id="otherBPermitLastUpdated" />
 			</td>
 			<td>
-				<select class="status" id="otherBInspectionStatus">
+				<select data-associated-date='otherBInspectionLastUpdated' class="inspectionStatus" id="otherBInspectionStatus">
 					<option value="default">--Status--</option>
 				</select>
 			</td>
 			<td>
            		<input type="text" id="otherBInspectionLastUpdated" />
 			</td>
-			<td>
-                <textarea id="otherBNotes"> </textarea>
-			</td>
 		</tr>
+		</table>
+		
+		<table class='table table-hover'>
+			<tr>
+				<td>Permit Notes:</td>
+				<td><textarea id='permitNotes' rows="5" cols="30"></textarea></td>
+			</tr>
+			<tr>
+				<td>Inspection Notes:</td>
+				<td><textarea id='inspectionNotes' rows='5' cols='30'></textarea></td>
+			</tr>
 		</table>
 	</div>
 	<div class='info-tab' id='saveButton'>

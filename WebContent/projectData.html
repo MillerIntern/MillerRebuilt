@@ -1,866 +1,228 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script type="text/javascript" src="js/jquery.js" ></script>
-		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
-		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
-		<script type="text/javascript" src="js/global.js"></script>
-		<script type="text/javascript" src="js/projectData.js"></script>
-		<link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
-        
-		<link href = "css/theme/currentTheme/tabContent.css" type = "text/css" rel="stylesheet" />
-        <link href="css/theme/currentTheme/projectData.css" type="text/css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Project Manager</title>
 
-		<script type="text/javascript" src="js/tab.js"></script>
-        
-        
-        <!-- Don't delete this line (it reads functions from this file) -->
-		<!--  <script type="text/javascript" src="js/equipment.js"></script>-->
-		<!--  Eventually delete it because it feels very band-aided on -->
-		
-		<title>Add Project</title>
-		<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/projectData.js"></script>
+    <script src="js/global.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
+    
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
 	</head>
 	
 <body onload="getProjectEnums();">
-    <div class="header">
-        <p class="title">Project</p>
-    </div>
-<br>
+	
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="active dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html">Add Project</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li><a href="query.html">Reports</a></li>
+	      <li><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
 
-		
-<ul class="side-borders">
-    <li><a onClick="document.location.href='homepage.html'">Home</a></li>
-    <li class="dropdown">
-    <a class="dropbtn">Projects</a>
-    <div class="dropdown-content">
-        <a class="active"onClick="document.location.href='projectData.html'">Add</a>
-        <a onClick="document.location.href='findProject.html'">Find</a>
-    </div></li>
-    <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
-    <li><a onClick="document.location.href='query.html'">Reports</a></li>
-            <li class="dropdown">
-   		<a class="dropbtn">Tools</a>
-   		<div class="dropdown-content">
-   			<a onClick="document.location.href='additions.html'">Add To Database</a>
-   		</div></li>
-    <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
-</ul>
+ 
+<div class='container'> 
+	<p id='projectHeader' class="projectIdentifier">---</p>
+	<ul class="nav nav-tabs">
+		<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
+		<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
+		<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
+        <li id='saveProjectLink' onClick="saveProject()" data-tab="saveButton">
+        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+	</ul>
+	
+	<div id="generalInformation" class="info-tab active">
+		<table class='table table-hover'>
+	
+		<tr>
+        <td>MCS Project#:</td>
+        <td><input id="mcsNumber" type="text"></td>
+        </tr>
 
-    
-<div class="tabs">
-            
-<ul class="tab-links">
-    <!-- <li class="active"><a href="#tab1">General Information</a></li>
-    <li class="dropdown">
-        <a class="dropbtn">More Information</a>
-        <div class="dropdown-content-sideways">
-        <a href="#tab2">Scheduling</a>
-        <a href="#tab2b">Financial</a>
-        </div>
-    </li> -->
-    <li class="active"><a href="#tab1">General Information</a></li>
-    <li><a href="#tab2">Scheduling</a></li>
-    <li><a href="#tab2b">Financial</a></li>
-    <!--<li><a href="#tab4">Permits</a></li>-->
-   <!--  <li class="dropdown">
-    <a class="dropbtn">Inspections</a>
-    <div class="dropdown-content-sideways">
-        <a href="#tab3">General Inspections</a>
-        <a href="#tab3b">Rough-In Inspections</a>
-        <a href="#tab3d">Safety Inspections</a>
-    </div>
-    </li>--> 
-    <!-- <li class="dropdown">
-        <a class="dropbtn">Closeout</a>
-        <div class="dropdown-content-sideways">
-            <a href="#tab7a">General Closeout Items</a>
-            <a href="#tab3c">Final Inspections</a>
-            <a href="#tab7d">Closeout Documents</a>
-            <a href="#tab7c">Warranty Letters</a>
-            <a href="#tab7b">Final Liens</a>
-            <a href="#tab7">Old Listing (Going Away Soon!)</a>
-        </div>
-    </li> -->
-
-    <li> <button onclick="addProject()">Save the Project</button></li>
-</ul>
-    
-            
-<!-- How necassary are these dividers? --> 
-<div class="tab-content">
-<div id="projectForm" >
-           
-<!-- ##### TAB 1 GENERAL INFORMATION --> 
-<div id="tab1" class="tab active">
-<div id="projectPicker" style="display:none"></div>
-
-    <fieldset id='required'>
-    <legend>General Information</legend>
-        <div class="pair">
-        <label for="mcsNumber">MCS Project#:</label>
-        <input id="mcsNumber" type="text">
-        </div>
-
-        <div class="pair">
-        <label for="warehouse">Warehouse:</label>
+		<tr>
+        <td><b>Warehouse:</b></td>
+        <td>
         <select id="warehouse"><option value="default">--Please select an option--</option></select>
-        </div>
+        </td>
+        </tr>
 
-        <div class="pair">
-        <label for="class">Project Classification:</label>
-        <select id="class"><option value="default">--Please select an option--</option></select></div>
+        <tr>
+        <td><b>Classification:</b></td>
+       	<td>
+        <select id="class"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
 
-        <div class="pair">
-        <label for="project">Project:</label>
-        <select id="project"><option value="default">--Please select an option--</option></select></div>
+        <tr>
+        <td><b>Item:</b></td>
+        <td>
+        <select id="project"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
 
+        <tr>
+        <td><b>Manager:</b></td>
+        <td>
+        <select id="manager"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
 
-        <div class="pair">
-        <label for="manager">Project Manager:</label>
-        <select id="manager"><option value="default">--Please select an option--</option></select></div>
-
-        <div class="pair">
-        <label for="supervisor">Supervisor:</label>
+        <tr>
+        <td><b>Supervisor:</b></td>
+        <td>
         <select id="supervisor"><option value="default">--Please select an option--</option></select>
-        </div>
+        </td>
+        </tr>
 
-        <div class="pair">
-        <label for="stage">Project Stage:</label>
-        <select id="stage"><option value="default">--Please select an option--</option></select></div>
+        <tr>
+        <td><b>Stage:</b></td>
+        <td>
+        <select id="stage"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
+	
+        <tr>	
+        <td><b>Status:</b></td>
+        <td>
+        <select id="status"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
 
-        <div class="pair">	
-        <label for="status">Project Status:</label>
-        <select id="status"><option value="default">--Please select an option--</option></select></div>
+        <tr>
+        <td><b>Type:</b></td>
+        <td>
+        <select id="pType"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>
 
-        <div class="pair">
-        <label for="pType">Project Type:</label>
-        <select id="pType"><option value="default">--Please select an option--</option></select></div>
-
-        <div class="pair">
-        <label for="scope">Project Scope:</label>
-        <textarea id="scope" ></textarea>
-        <br>
-        </div>
-    </fieldset>
-</div>
-
-<!-- ##### TAB 2 ##### --> 
-<div id="tab2" class="tab"> 
-<div id="dialog-window">
-    <fieldset id='optional'>
-
-        <legend>Scheduling Information:</legend>
-
-        <div class="pair">
-        <label for="initiatedDate">Project Initiation Date:</label>
-            <input type="text" id="initiatedDate" />
-        </div>
-
-        <div class="pair">
-        <label for="surveyDate">Site Survey Date:</label>
-        <input type="text" id="surveyDate" />
-        </div>
-
-        <div class="pair">
-        <label for="costcoDate">Costco Due Date:</label>
-        <input type="text" id="costcoDate" />
-        </div>
-
-        <div class="pair">
-        <label for="proposalDate">Proposal Submitted Date:</label>
-        <input type="text" id="proposalDate" />
-        </div>	
-
-        <div class="pair">
-        <label for="startDate">Scheduled Start Date:</label>
-        <input type="text" id="startDate" />
-        </div>
-
-        <div class="pair">
-        <label for="scheduledTurnover">Scheduled Turnover:</label>
-        <input type="text" id="scheduledTurnover" />
-        </div>		
-
-        <div class="pair">
-        <label for="actualTurnover">Actual Turnover:</label>
-        <input type="text" id="actualTurnover" />
-        </div>
-
-        <div class="pair">
-        <label for="permitApp">Permit Application:</label>
-        <input type="text" id="permitApp" />
-        </div>
-
-    </fieldset>
-</div>
-</div>
-					
-<!-- ##### TAB 2B ##### -->         
-<div id="tab2b" class="tab"> 
-<div id="dialog-window">
-    <fieldset id='optional'>
-        <legend>Financial Information:</legend>
-
-            <div class="pair">
-            <label for="shouldInvoice">Should Invoice %:</label>
-            <input type="text" id="shouldInvoice" value="0"/>%
-            </div>		
-
-            <div class="pair">
-            <label for="actualInvoice">Actual Invoice %:</label>
-            <input type="text" id="actualInvoice" value="0" />%
-            </div>		
-
-            <div class="pair">
-            <label for="notes">Project / Financial Notes:</label>
-            <textarea id="notes" ></textarea>
-            </div>
-
-            <div class="pair">
-            <label for="zUpdates">Refrigeration Notes:</label>
-            <textarea id="zUpdates" ></textarea>
-            </div>	
-
-            <div class="pair">
-            <label for="projectCost">Project Cost:</label>
-            <input type="text" id="projectCost" value="" />
-            </div>		
-
-            <div class="pair">
-            <label for="custNum">Customer Number:</label>
-            <input type="text" id="custNum" value="" />
-            </div>
-    </fieldset>
-</div>
-</div>
-                					
-<!-- ##### TAB 3 ##### --> 		
-<div id="tab3" class="tab">
-<div id="dialog-window">
-    <fieldset id='Inspection'>
-        <legend>General Inspection Information:</legend>
-
-        <div class="pair">
-        <label for="inspections">Inspection Ticket Number:</label>
-        <input type="text" id="inspections"></div>
-
-        <div class="pair">
-        <label for="framing">Framing Inspection Date:</label>
-        <input type="text" id="framingDate"></div>
-
-        <div class="pair">
-        <label for="ceiling"> Ceiling Inspecion Date:</label>
-        <input type="text" id="ceilingDate"></div>
-
-        <div class="pair">
-        <label for="mechlightsmoke">Mechanical, Light and Smoke Inspection Date:</label>
-        <input type="text" id="mechlightsmokeDate"></div>
+        <tr>
+        <td>Scope:</td>
+        <td><textarea id="scope" ></textarea></td>
+        </tr>
         
-    </fieldset>
-</div>
-</div>
-    
-    
-<!-- ##### TAB 3b ##### --> 		
-<div id="tab3b" class="tab">
-<div id="dialog-window">
-    <fieldset id='Inspection'>
-        <legend>Rough-In Inspection Information:</legend>
-        
-        <div class="pair">
-        <label for="roughmech">Rough-In Mechanical Inspection Date:</label>
-        <input type="text" id="roughmechDate"></div>
-
-        <div class="pair">
-        <label for="roughelecDate">Rough-In Electric Inspection Date:</label>
-        <input type="text" id="roughelecDate"></div>
-
-        <div class="pair">
-        <label for="roughplumbDate">Rough-In Plumbing Inspection Date:</label>
-        <input type="text" id="roughplumbDate"></div>
-
-    </fieldset>
-</div>
-</div>
-    
-
-    
-<!-- ##### TAB 3d ##### --> 		
-<div id="tab3d" class="tab">
-<div id="dialog-window">
-    <fieldset id='Inspection'>
-        <legend>Safety Inspection Information:</legend>
-        <div class="pair">
-        <label for="firemarshal">Fire Marshal Inspection Date:</label>
-        <input type="text" id="firemarshalDate"></div>
-
-        <div class="pair">
-        <label for="health">Health Inspection Date:</label>
-        <input type="text" id="healthDate"></div>
-    </fieldset>
-</div>
-</div>
-    
-					
-<!-- ##### TAB 4 #####--> 
-<div id="tab4" class="tab">
-
-    <fieldset id='Permits'>
-        <legend>Permit Information:</legend>
-
-        <div class="pair">
-        <label for="buildingp">Building Permit Date:</label>
-        <input type="text" id="building_p"></div>
-
-        <div class="pair">
-        <label for="mechanicalp">Mechanical Permit Date:</label>
-        <input type="text" id="mechanical_p"></div>
-
-        <div class="pair">
-        <label for="electricalp"> Electrical Permit Date:</label>
-        <input type="text" id="electrical_p"></div>
-
-        <div class="pair">
-        <label for="plumbingp">Plumbing Permit Date:</label>
-        <input type="text" id="plumbing_p"></div>
-
-        <div class="pair">
-        <label for="firesprinklerp">Fire-Sprinkler Permit Date:</label>
-        <input type="text" id="firesprinkler_p"></div>
-
-        <div class="pair">
-        <label for="firealarmp">Fire-Alarm Permit Date:</label>
-        <input type="text" id="firealarm_p"></div>
-
-        <div class="pair">
-        <label for="lowvoltagep">Low-Voltage Permit Date:</label>
-        <input type="text" id="lowvoltage_p"></div>
-
-
-    </fieldset>
-</div>
-			
-<!--######### Actual garbage ############# -->
-<!-- <div id="tab5" class="tab">
-<div id="dialog-window">
-    <fieldset id='Equipment'>
-        <div id="contentBox">
-
-            <div class = backToEquipment>
-            <br />
-            <a href = "#tab6" rel = "tab6"> Back To Equipment </a>
-            </div>
-
-            <div id= "info">
-                    <label for="defect">Defect# :</label>
-                    <input id="defect" type="text" readonly="readonly"  ></input></br>
-                    <label for="equipName">Equipment Name:</label>
-                    <input id="equipName" type="text" ></input></br>
-                    <label for="equipStatus">Status:</label>
-                    <select id="equipStatus"><option value="default">--Please select an option--</option></select></br></br>
-            </div>
-
-
-                <br></br>
-                <div id= "detail">
-                    <br></br>
-
-                    <label for="projecteq">Warehouse:</label>
-                    <select id="projecteq"><option value="default">--Please select an option--</option></select></br></br>
-
-                    <label for="component">Project:</label>
-                    <select id="component"><option value="default">--Please select an option--</option></select></br></br>
-
-                    <label for="po">PO#:</label>
-                    <input id="po" type="text" ></input></br></br>
-
-                    <label for="vendor">Vendor:</label>
-                    <select id="vendor"><option value="default">--Please select an option--</option></select></br></br>
-
-            <!-- 
-                    <label for="enteredBy">Entered By:</label>
-                    <select id="enteredBy"><option value="default">--Please select an option--</option></select></br></br> 
-
-                    <label for="vendorDate">Vendor Date:</label>
-                    <input id="vendorDate" type="text"></input></br></br>
-
-
-
-                    <label for="estimatedDeliveryDate">Estimated Delivery Date:</label>
-                    <input id="estimatedDeliveryDate" type="text"></input></br></br>
-
-
-                    <p>Notes:</p>
-                    <textarea name="noteseq" id="noteseq" rows="6" cols="80" style="right:-120px; position:relative; width: 60%;" >Notes </textarea>
-
-                    <br></br>
-
-
-
-                </div>
-            <div class = applyChanges>
-            <a id = "applyChanges" href = "#tab6" rel = "tab6"> Submit and Apply Changes </a>
-            </div>	
-
-            </div>
-    </fieldset>
-</div>
-</div>-->
-
-
-<!--<legend>Equipment:</legend>
-<label for="searchEqp">Search Field:</label>
-<select id="searchEqp"><option value=""></option></select></br></br>
-
-
-<div class = equipmenttt>
-<a id = "simulate2" href = "#tab5" rel = "tab5" > Create New Equipment </a>
-</div>
-<div class = equipmentt>
-<a id = "simulate" href = "#tab5" rel = "tab5"> Edit Existing Equipment </a>
-</div>
-
-
-<table id="myTable" >
-    <tr>
-        <th><b>selection ID</b></th>
-        <th><b>Number</b></th>  
-        <th><b>Project</b></th> 
-        <th><b>PO#</b></th> 
-        <th><b>Equipment Name</b></th> 
-        <th><b>Vendor</b></th> 
-        <th><b>Component</b></th> 
-        <th><b>Estimated Delivery Date</b></th> 
-    </tr>			
-
-
-</table>-->
-							
-<!-- ##### TAB 7 ##### -->					
-<div id="tab7" class="tab">
-<div id="dialog-window">
-    <fieldset id='CloseOutList'>
-        <legend>Close Out List Information:</legend>
-
-            <div class="pair">
-            <label for="inspectionSOCL">Inspection Sign offs:</label>
-            <input id="inspectionSOCL" type="text"></input></div>
-
-            <div class="pair">
-            <label for="certCompletionCL">Certificate of completion:</label>
-            <input id="certCompletionCL" type="text"></input></div>
-
-            <div class="pair">
-            <label for="mPunchListCL">MulvannyG2 PunchList:</label>
-            <input id="mPunchListCL" type="text"></input></div>
-
-            <div class="pair">
-            <label for="subConWarrantiesCL">Subcontractor's Warranties:</label>
-            <input id="subConWarrantiesCL" type="text"></input></div>
-
-            <div class="pair">
-            <label for="traneCL">Trane Submittal:</label>
-            <input id="traneCL" type="text"></input></div>
-
-            <div class="pair">
-            <label for="closeoutNotes">Closeout Notes Date:</label>
-            <input type="text" id="closeoutNotes" /></div>	
-
-            <div class="pair">
-            <label for="airGas">Air Gas:</label>
-            <input type="text" id="airGas" /></div>
-
-            <div class="pair">
-            <label for="permits">Permits Closed:</label>
-            <input type="text" id="permits" /></div>
-
-            <div class="pair">
-            <label for="salvageDate">Salvage Value Date:</label>
-            <input type="text" id="salvageDate" /></div>		
-
-            <div class="pair">
-            <label for="salvageAmount">Salvage Value Amount:</label>
-            <input type="text" id="salvageAmount" /></div>
-
-    </fieldset>		
-</div>
-</div>
-
-<!-- ##### TAB 7A ##### --> 
-<div id="tab7a" class="tab">
-<div id="dialog-window">
-    <fieldset id='CloseOutList'>
-        <Legend>General Closeout Items:</Legend>
-        	
-            <div class="pair">
-            <label for="numOfChangeOrders">Number of Change Orders:</label>
-            <input type="text" id="numOfChangeOrders" /></div>    
-            
-            <div class="pair">
-            <label for="numOfChangeOrdersCompleted">Number of Change Orders Completed:</label>
-            <input type="text" id="numOfChangeOrdersCompleted" /></div>
-            
-            <div class="pair">
-                <label for="mg2CompletionDate">MG2 Completion:</label>
-                <select class="closeout-input" id="mg2CompletionStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="mg2CompletionDate"/>
-            </div>
-        
-    </fieldset>
-</div>
-</div> 
-
-<!-- ##### TAB 7B ##### --> 
-<div id="tab7b" class="tab">
-<div id="dialog-window">
-    <fieldset id='CloseOutList'>
-        <Legend>Closeout Final Liens:</Legend>
-        
-            <div class="pair">
-                <label for="MCSDate">MCS Liens:</label>
-                <select class="closeout-input" id="MCSStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="MCSDate"/>
-            </div>
-        
-            <div class="pair">
-                <label for="GCDate">GC Liens:</label>
-                <select class="closeout-input" id="GCStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="GCDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="mechanicalDate">Mechanical Liens:</label>
-                <select class="closeout-input" id="mechanicalStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="mechanicalDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="electricalDate">Eletrical Liens:</label>
-                <select class="closeout-input" id="electricalStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="electricalDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="plumbingDate">Plumbing Liens:</label>
-                <select class="closeout-input" id="plumbingStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="plumbingDate" />
-            </div>
-                               
-            <div class="pair">
-                <label for="sprinkleDate">Sprinkler Liens:</label>
-                <select class="closeout-input" id="sprinkleStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="sprinkleDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="roofingDate">Roofing Liens:</label>
-                <select class="closeout-input" id="roofingStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="roofingDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="HTIDate">HTI Liens:</label>
-                <select class="closeout-input" id="HTIStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="HTIDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="otherFinalLiensDate">Other Liens:</label>
-                <select class="closeout-input" id="otherFinalLiensStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="otherFinalLiensDate" />
-            </div>
-            
-            <br>
-            <label for="finalLiensNotes">Final Liens Notes:</label>
-            <textarea id="finalLiensNotes"> </textarea>
-            <br>
-      </fieldset>
-</div>
-</div> 
-    
-<!-- ##### TAB 3c ##### Could be renamed...--> 		
-<div id="tab3c" class="tab">
-<div id="dialog-window">
-    <fieldset id='Inspection'>
-        <legend>Final Inspection Information:</legend>
-        
-        <div class="pair">
-            <label for="tmpCertificateDate">Temp Certificate of Occupancy:</label>
-            <select class="closeout-input" id="tmpCertificateStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="tmpCertificateDate" />
-        </div>
-        
-        <div class="pair">
-            <label for="mechFinalDate">Mechanical Final Inspection:</label>
-            <select class="closeout-input" id="mechFinalStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="mechFinalDate" />
-        </div>
-        
-        <div class="pair">
-            <label for="elecFinalStatus">Electrical Final Inspection:</label>
-            <select class="closeout-input" id="elecFinalStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="elecFinalDate" />
-        </div>
-        
-        <div class="pair">
-            <label for="plumbingFinalDate">Plumbing Final Inspection:</label>
-            <select class="closeout-input" id="plumbingFinalStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="plumbingFinalDate" />
-        </div>
-        
-        <div class="pair">
-            <label for="sprinkleFinalDate">Sprinkler Final Inspection:</label>
-            <select class="closeout-input" id="sprinkleFinalStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="sprinkleFinalDate" />
-        </div>
-    
-        <div class="pair">
-            <label for="certificateDate">Certificate of Occupancy:</label>
-            <select class="closeout-input" id="certificateStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input type="text" id="certificateDate" />
-        </div>
-        
-        <div class="pair">
-            <label for="buildingPermitCL">Building Final Inspection:</label>
-            <select class="closeout-input" id="buildFinalStatus">
-                <option value="default">--Status--</option>
-            </select>
-            <input id="buildingPermitCL" type="text"></input>
-        </div>
-        
-        <br>
-        <label for="finalInspectionNotes">Final Inspection Notes:</label>
-        <textarea id="finalInspectionNotes"> </textarea>
-		<br>
-    </fieldset>
-</div>
-</div>
-
-<!-- ##### TAB 7C ##### --> 
-<div id="tab7c" class="tab">
-<div id="dialog-window">
-    <fieldset id='CloseOutList'>
-        <Legend>Closeout Warranty Letters:</Legend>
-        
-            <div class="pair">
-                <label for="MCSWarranty">MCS Warranty:</label>
-                <select class="closeout-input" id="MCSWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-            <input id="MCSWarranty" type="text"></input>
-            </div>
-        
-            <div class="pair">
-                <label for="GCWarrantyDate">GC Warranty:</label>
-                <select class="closeout-input" id="GCWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="GCWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="mechanicalWarrantyDate">Mechanical Warranty:</label>
-                <select class="closeout-input" id="mechanicalWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="mechanicalWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="electricalWarrantyDate">Eletrical Warranty:</label>
-                <select class="closeout-input" id="electricalWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="electricalWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="plumbingWarrantyDate">Plumbing Warranty:</label>
-                <select class="closeout-input" id="plumbingWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="plumbingWarrantyDate" />
-            </div>
-                               
-            <div class="pair">
-                <label for="sprinkleWarrantyDate">Sprinkler Warranty:</label>
-                <select class="closeout-input" id="sprinkleWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="sprinkleWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="roofingWarrantyDate">Roofing Warranty:</label>
-                <select class="closeout-input" id="roofingWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="roofingWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="HTIWarrantyDate">HTI Warranty:</label>
-                <select class="closeout-input" id="HTIWarrantyStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="HTIWarrantyDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="otherWarrantyDateA">Other Warranty (A):</label>
-                <select class="closeout-input" id="otherWarrantyStatusA">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="otherWarrantyDateA" />
-            </div>
-        
-            <div class="pair">
-                <label for="otherWarrantyDateB">Other Warranty (B):</label>
-                <select class="closeout-input" id="otherWarrantyStatusB">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="otherWarrantyDateB" />
-            </div>
-            
-            <br>
-            <label for="warrantyNotes">Warranty Notes:</label>
-            <textarea id="warrantyNotes"> </textarea>
-            <br>
-    </fieldset>
-</div>
-</div> 
-
-<!-- ##### TAB 7d ##### --> 
-<div id="tab7d" class="tab">
-<div id="dialog-window">
-    <fieldset id='CloseOutList'>
-        <Legend>Closeout Documents:</Legend>
-
-        	<label id="closedocsProjectClass" style="white-space: nowrap;">
-        	Project Classification: AIA/PO</label><br><br>
-
-            <div class="pair">
-                <label for="equipmentSubCL">Equipment Submittal:</label>
-                <select class="closeout-input" id="equipmentSubmittalStatus">
-                    <option value="default">--Status--</option>
-                </select>
-            <input id="equipmentSubCL" type="text"></input>
-            </div>
-        
-            <div class="pair">
-                <label for="manualDate">Operations and Maintenance Manuals:</label>
-                <select class="closeout-input" id="manualStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="manualDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="punchList">Punch List:</label>
-                <select class="closeout-input" id="punchListStatus">
-                    <option value="default">--Status--</option>
-                </select>
-            <input type="text" id="punchList" />
-            </div>
-        
-            <div class="pair">
-                <label for="asBuilts">As-Built Drawings:</label>
-                <select class="closeout-input" id="asBuiltDrawingsStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="asBuilts" />
-            </div>
-        
-            <div class="pair">
-                <label for="closeoutPhotosCL">Close Out Photos:</label>
-                <select class="closeout-input" id="closeOutPhotosStatus">
-                    <option value="default">--Status--</option>
-                </select>
-            <input id="closeoutPhotosCL" type="text"></input>
-            </div>
-        
-            <div class="pair">
-                <label for="HVACstartupFormDate">HVAC Startup Form:</label>
-                <select class="closeout-input" id="HVACstartupFormStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="HVACstartupFormDate" />
-            </div>
-        
-            <div class="pair">
-                <label for="alarmHvac">Alarm Form:</label>
-                <select class="closeout-input" id="alarmFormStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="alarmHvac" />
-            </div>
-        
-            <div class="pair">
-                <label for="verisae">Verisae Report:</label>
-                <select class="closeout-input" id="verisaeReportStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                <input type="text" id="verisae" />	
-            </div>
-            
-            <br>
-            <label for="closeoutDocumentsNotes">Closeout Documents Notes:</label>      
-            <textarea id="closeoutDocumentsNotes"> </textarea>
-            <br>
-    </fieldset>
-</div>
-</div> 
-
-
-
-</div></div>
-
-
-</div>
-
-
-<div id="saveConfirm" title="Project has been saved" style="display:none">
-    <p>
-        The project has been successfully saved. What would you like to do?
-    </p>
-</div>
-
-		
-<div id="footer">
-</div>
+        </table>
+	</div> <!-- End General Information -->
+	
+	<div id="schedulingInformation" class="info-tab"> 
+	    <table class='table table-hover'>
+	
+	
+	        <tr>
+	        <td>Initiation Date:</td>
+	            <td><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	        <tr>
+	        <td>Site Survey Date:</td>
+	        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	        <tr>
+	        <td>Costco Due Date:</td>
+	        <td><input type="text" id="costcoDate" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	        <tr>
+	        <td>Proposal Submitted Date:</td>
+	        <td><input type="text" id="proposalDate" placeholder="Select a Date"/></td>
+	        </tr>	
+	
+	        <tr>
+	        <td>Scheduled Start Date:</td>
+	        <td><input type="text" id="startDate" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	        <tr>
+	        <td>Scheduled Turnover:</td>
+	        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
+	        </tr>		
+	
+	        <tr>
+	        <td>Actual Turnover:</td>
+	        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	        <tr>
+	        <td>Permit Application:</td>
+	        <td><input type="text" id="permitApp" placeholder="Select a Date"/></td>
+	        </tr>
+	
+	    </table>
+	</div> <!-- End Scheduling Information -->
+	
+	<div id='financialInformation' class='info-tab'>
+		<table class='table table-hover'>
+
+            <tr>
+            <td>Should Invoice %:</td>
+            <td><input type="text" id="shouldInvoice" value="0"/>%</td>
+            </tr>		
+
+            <tr>
+            <td>Actual Invoice %:</td>
+            <td><input type="text" id="actualInvoice" value="0" />%</td>
+            </tr>		
+
+            <tr>
+            <td>Project / Financial Notes:</td>
+            <td><textarea id="notes" ></textarea></td>
+            </tr>
+
+            <tr>
+            <td>Refrigeration Notes:</td>
+            <td><textarea id="zUpdates" ></textarea></td>
+            </tr>	
+
+            <tr>
+            <td>Project Cost:</td>
+            <td><input type="text" id="projectCost" value="" /></td>
+            </tr>		
+
+            <tr>
+            <td>Customer Number:</td>
+            <td><input type="text" id="custNum" value="" /></td>
+            </tr>
+    	</table>
+	</div> <!-- End Financial Information -->
+	
+	
+	<div class='info-tab' id='saveButton'>
+		<button onclick='returnToProjectManager()' class='btn btn-primary'>Go to Project Manager</button>
+		<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+		<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+	</div>
+
+</div>  <!-- End Container -->
+   
 </body>
 </html>
 						

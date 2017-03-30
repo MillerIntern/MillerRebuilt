@@ -20,6 +20,9 @@ let statusOptions;
 let stageOptions;
 
 function getAllProjects() {
+	
+	clearAndAddSingleRow("Retrieving Projects...");
+	
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -34,6 +37,9 @@ function getAllProjects() {
 }
 
 function getSearchCriteria() {
+	
+	clearAndAddSingleRow("Retrieving Search Criteria...");
+	
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -66,6 +72,24 @@ function getSearchCriteria() {
 			alert('Something has gone horribly wrong!');
 		}
 	});
+}
+
+function clearAndAddSingleRow(msg) {
+	
+	$('#results > tbody').children('tr:not(.head)').remove();
+	
+	let placeHolder = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');	
+	
+	listDetails0.innerHTML = msg;
+	
+	$(placeHolder).append(listDetails0);
+	$(placeHolder).append(listDetails1);
+	$(placeHolder).append(listDetails2);
+	
+	$('#results > tbody').append(placeHolder);
 }
 
 function checkInitFilter () {
@@ -329,27 +353,9 @@ function filterProjects () {
 
 		$('#results > tbody').children('tr:not(.head)').remove();
 		if (remaining == 0) {
-			let projectListing = document.createElement('tr');
-			let listDetails0 = document.createElement('td');
-			let listDetails1 = document.createElement('td');
-			let listDetails2 = document.createElement('td');
-			
-			listDetails1.innerHTML = 'No Results :(';
-			$(projectListing).append(listDetails0);
-			$(projectListing).append(listDetails1);
-			$(projectListing).append(listDetails2);
-			$('#results > tbody').append(projectListing);
+			clearAndAddSingleRow('No Results Found!');
 		} else if (remaining > 50) {
-			let projectListing = document.createElement('tr');
-			let listDetails0 = document.createElement('td');
-			let listDetails1 = document.createElement('td');
-			let listDetails2 = document.createElement('td');
-			
-			listDetails1.innerHTML = 'Too many results. Refine your search.';
-			$(projectListing).append(listDetails0);
-			$(projectListing).append(listDetails1);
-			$(projectListing).append(listDetails2);
-			$('#results > tbody').append(projectListing);
+			clearAndAddSingleRow('Too many results. Refine your search.');
 		} else {
 			for (var k = 0; k < json.length; k++) {
 				if(json[k] != null) {

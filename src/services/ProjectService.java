@@ -16,8 +16,12 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.google.gson.Gson;
 
+import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
 import projectObjects.Equipment;
@@ -40,6 +44,7 @@ import services.helpers.CloseoutDetailsFiller;
 import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
+import services.helpers.ProjectInformationFiller;
 import services.helpers.SalvageValueFiller;
 
 
@@ -50,6 +55,45 @@ import services.helpers.SalvageValueFiller;
  */
 public class ProjectService extends ProjectObjectService
 {
+	/**
+	 * @param parameters
+	 */
+	public static long addNewProject(Map<String, String> parameters) throws ClassNotFoundException, ParseException, NumberFormatException {
+		Project project = new Project();
+		ProjectInformationFiller.fillProjectInformation(project, parameters);
+		
+		long projectID = ProjectObjectService.addObject("Project", project);
+
+		return projectID;
+	}
+	
+	/**
+	 * @param projID
+	 * @param parameters
+	 */
+	public static long editExistingProject(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		ProjectInformationFiller.fillProjectInformation(currentProject, parameters);
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+		
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+		
+		return projID;
+	}
+	
+	
 	/**
 	 * This method adds a project to the database. The fields REQUIRED for a project are specific arguments.
 	 * The OPTIONAL fields for a projects are parsed from the HTTP Request parameter mapping
@@ -757,6 +801,7 @@ public class ProjectService extends ProjectObjectService
 		
 		map.put("projects", ProjectObjectService.getAllAsJsonString("Project"));
 		
+		
 		return g.toJson(map);
 	}
 	
@@ -866,7 +911,7 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 
 	}
 
@@ -907,7 +952,7 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 
 	}
 
@@ -949,7 +994,7 @@ public class ProjectService extends ProjectObjectService
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 
 	}
 
@@ -1010,7 +1055,7 @@ public class ProjectService extends ProjectObjectService
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 	}
 
 	/**
@@ -1061,7 +1106,7 @@ public class ProjectService extends ProjectObjectService
 		
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 	}
 
 	/**
@@ -1106,7 +1151,7 @@ public class ProjectService extends ProjectObjectService
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject, k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 	}	
 	
 	public static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
@@ -1153,7 +1198,7 @@ public class ProjectService extends ProjectObjectService
 		
 		k = 1;
 		ProjectObjectService.editObject("NewEquipment",equipmentID,oldEquipment,k);
-		ProjectObjectService.deleteNullChangeOrders();
+		ProjectObjectService.deleteNullSetObjects();
 	}
 	
 	private static void fixSets(Project currentProject)
@@ -1172,5 +1217,8 @@ public class ProjectService extends ProjectObjectService
 			iter.next().setId(null);
 		}
 	}
+
+
+
 }
 

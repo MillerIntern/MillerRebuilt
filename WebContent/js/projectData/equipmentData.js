@@ -155,7 +155,7 @@ function saveProject()
 			},
 			error: function()
 			{
-				alert('Saved Change Order');
+				alert('Saved Equipment');
 				$('#saveButton > button').prop('disabled', false);
 			}
 		});

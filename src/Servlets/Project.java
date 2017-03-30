@@ -41,29 +41,7 @@ public class Project extends HttpServlet
      * an action. This method will result in data being written back out to 
      * the caller. 
      * 
-     * important calls
-     * 	{	
-     * 		[
-     * 		action: "getAllObjects",
-     * 		response: JSON object of information from databse
-     * 		],
-     * 		[
-     * 		action: "add",
-     *		params: JSON information of project,
-     * 		response: ID of new project,
-     * 		],
-     * 		[
-     * 		action : 'edit<*>', 
-     * 		params: JSON infomration of project,
-     * 		],
-     * 		[
-     * 		action : GET 
-     * 		params: id of project to get
-     * 		response: JSON'd project information
-     * 		]
-     * 		
-     * }
-     */
+	*/
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
@@ -142,6 +120,31 @@ public class Project extends HttpServlet
 			{
 				
 				e.printStackTrace();
+			}
+		} else if(action.equals("addNewProject")) {
+			System.out.println("addingNewProject");
+			
+			try
+			{
+			Long projID = ProjectService.addNewProject(parameters);
+			response = Long.toString(projID);
+			}
+			catch(ClassNotFoundException | ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		} else if(action.equals("editExistingProject")) {
+			System.out.println("editExistingProject");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));
+				ProjectService.editExistingProject(projID, parameters);
+				
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
 			}
 		}
 		else if (action.equals("edit"))

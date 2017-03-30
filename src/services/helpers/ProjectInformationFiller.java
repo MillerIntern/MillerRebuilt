@@ -18,27 +18,36 @@ import services.ProjectObjectService;
 
 public class ProjectInformationFiller 
 {
-	public static void fillCloseoutDetails(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
+	public static void fillProjectInformation(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
 	{
-		currentProject.setWarehouse((Warehouse) ProjectObjectService.get(Long.parseLong(params.get("mcsNumber")), "Warehouse"));
+		// required
+		currentProject.setWarehouse((Warehouse) ProjectObjectService.get(Long.parseLong(params.get("warehouse")), "Warehouse"));
+		currentProject.setProjectClass((ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
+		currentProject.setProjectItem((ProjectItem) ProjectObjectService.get(Long.parseLong(params.get("item")), "ProjectItem"));
 		currentProject.setProjectManagers((Person) ProjectObjectService.get(Long.parseLong(params.get("manager")), "Person"));
 		currentProject.addSupervisor((Person) ProjectObjectService.get(Long.parseLong(params.get("supervisor")), "Person"));
-		currentProject.setProjectClass((ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
 		currentProject.setStatus((ProjectStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "ProjectStatus"));
-		currentProject.setProjectItem((ProjectItem) ProjectObjectService.get(Long.parseLong(params.get("projectItem")), "ProjectItem"));
 		currentProject.setStage((ProjectStage) ProjectObjectService.get(Long.parseLong(params.get("stage")), "ProjectStage"));
 		currentProject.setProjectType((ProjectType) ProjectObjectService.get(Long.parseLong(params.get("pType")), "ProjectType"));
-		currentProject.setMcsNumber(Integer.parseInt(params.get("mcsNumber")));
+		
+		String mcsNumberString = params.get("mcsNumber");
+		try {
+			int mcsNum = Integer.parseInt(mcsNumberString);
+			currentProject.setMcsNumber(mcsNum);
+		} catch(NumberFormatException e) {
+			currentProject.setMcsNumber(0);
+
+		}
 		currentProject.setScope(params.get("scope"));
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		
 		//Additional fields
-		currentProject.setZachUpdates(params.get("zachUpdates"));
-		currentProject.setCost(params.get("cost"));
-		currentProject.setCustomerNumber(params.get("customerNumber"));
 		currentProject.setShouldInvoice(Integer.parseInt(params.get("shouldInvoice")));
 		currentProject.setInvoiced(Integer.parseInt(params.get("actualInvoice")));
 		currentProject.setProjectNotes(params.get("notes"));
+		currentProject.setZachUpdates(params.get("refrigNotes"));
+		currentProject.setCost(params.get("cost"));
+		currentProject.setCustomerNumber(params.get("customerNumber"));
 		
 		Date finitiatedDate = null;
 		if (!(params.get("initiated")).isEmpty())
@@ -56,8 +65,8 @@ public class ProjectInformationFiller
 		currentProject.setCostcoDueDate(fcostco);
 		
 		Date fproposal = null;
-		if (!(params.get("proposal")).isEmpty())
-			fproposal = formatter.parse(params.get("proposal"));
+		if (!(params.get("proposalDate")).isEmpty())
+			fproposal = formatter.parse(params.get("proposalDate"));
 		currentProject.setProposalSubmitted(fproposal);
 		
 		Date fstart = null;

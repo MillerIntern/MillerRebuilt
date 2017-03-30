@@ -66,12 +66,11 @@
     <!-- Closeout Documents Tab--> 
 	<div id="closeoutDocuments" class="info-tab active">
         <table class='table table-hover'>
-            <tr style="height: 0px;"></tr>
         
             <tr>
                 <td>Equipment Submittal:</td>
                 <td>  
-                    <select class="closeout-input" id="equipmentSubmittalStatus">
+                    <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -82,7 +81,7 @@
             <tr>
                 <td>Operations and Maintenance Manuals:</td>
                 <td>  
-                    <select class="closeout-input" id="manualStatus">
+                    <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -93,7 +92,7 @@
             <tr>
                 <td>Punch List:</td>
                 <td>  
-                    <select class="closeout-input" id="punchListStatus">
+                    <select data-associated-date='punchList' class="closeout-input" id="punchListStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -104,7 +103,7 @@
             <tr>
                 <td>As-Built Drawings:</td>
                 <td>  
-                    <select class="closeout-input" id="asBuiltDrawingsStatus">
+                    <select data-associated-date='asBuilts' class="closeout-input" id="asBuiltDrawingsStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -115,7 +114,7 @@
             <tr>
                 <td>Close Out Photos:</td>
                 <td>  
-                    <select class="closeout-input" id="closeOutPhotosStatus">
+                    <select data-associated-date='closeoutPhotosCL' class="closeout-input" id="closeOutPhotosStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -126,7 +125,7 @@
             <tr>
                 <td>HVAC Startup Form:</td>
                 <td>  
-                    <select class="closeout-input" id="HVACstartupFormStatus">
+                    <select data-associated-date='HVACstartupFormDate' class="closeout-input" id="HVACstartupFormStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -137,7 +136,7 @@
             <tr>
                 <td>Alarm Form:</td>
                 <td>  
-                <select class="closeout-input" id="alarmFormStatus">
+                <select data-associated-date='alarmHvac' class="closeout-input" id="alarmFormStatus">
                     <option value="default">--Status--</option>
                 </select>
                 </td>
@@ -148,7 +147,7 @@
             <tr>
                 <td>Verisae Report:</td>
                 <td>  
-                    <select class="closeout-input" id="verisaeReportStatus">
+                    <select data-associated-date='verisae' class="closeout-input" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -174,7 +173,7 @@
             <tr>
                 <td>Temp Certificate of Occupancy:</td>
                 <td>  
-                    <select class="closeout-input" id="tmpCertificateStatus">
+                    <select data-associated-date='tmpCertificateDate' class="closeout-input" id="tmpCertificateStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -185,7 +184,7 @@
             <tr>
                 <td>Mechanical Final Inspection:</td>
                 <td>  
-                    <select class="closeout-input" id="mechFinalStatus">
+                    <select data-associated-date='mechFinalDate' class="closeout-input" id="mechFinalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -196,7 +195,7 @@
             <tr>
                 <td>Electrical Final Inspection:</td>
                 <td>  
-                    <select class="closeout-input" id="elecFinalStatus">
+                    <select data-associated-date='elecFinalDate' class="closeout-input" id="elecFinalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -207,7 +206,7 @@
             <tr>
                 <td>Plumbing Final Inspection:</td>
                 <td>  
-                    <select class="closeout-input" id="plumbingFinalStatus">
+                    <select data-associated-date='plumbingFinalDate' class="closeout-input" id="plumbingFinalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -218,7 +217,7 @@
             <tr>
                 <td>Sprinkler Final Inspection:</td>
                 <td>  
-                    <select class="closeout-input" id="sprinkleFinalStatus">
+                    <select data-associated-date='sprinkleFinalDate' class="closeout-input" id="sprinkleFinalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -229,7 +228,7 @@
             <tr>
                 <td>Certificate of Occupancy:</td>
                 <td>  
-                    <select class="closeout-input" id="certificateStatus">
+                    <select data-associated-date='certificateDate' class="closeout-input" id="certificateStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -240,7 +239,7 @@
             <tr>
                 <td>Building Final Inspection:</td>
                 <td>  
-                    <select class="closeout-input" id="buildFinalStatus">
+                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -267,7 +266,7 @@
             <tr>
                 <td>MCS Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="MCSWarrantyStatus">
+                    <select data-associated-date='MCSWarranty' class="closeout-input" id="MCSWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -278,7 +277,7 @@
             <tr>
                 <td>GC Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="GCWarrantyStatus">
+                    <select data-associated-date='GCWarrantyDate' class="closeout-input" id="GCWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -289,7 +288,7 @@
             <tr>
                 <td>Mechanical Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="mechanicalWarrantyStatus">
+                    <select data-associated-date='mechanicalWarrantyDate' class="closeout-input" id="mechanicalWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -300,7 +299,7 @@
             <tr>
                 <td>Eletrical Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="electricalWarrantyStatus">
+                    <select data-associated-date='electricalWarrantyDate' class="closeout-input" id="electricalWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -311,7 +310,7 @@
             <tr>
                 <td>Plumbing Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="plumbingWarrantyStatus">
+                    <select data-associated-date='plumbingWarrantyDate' class="closeout-input" id="plumbingWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -322,7 +321,7 @@
             <tr>
                 <td>Sprinkler Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="sprinkleWarrantyStatus">
+                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input" id="sprinkleWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -333,7 +332,7 @@
             <tr>
                 <td>Roofing Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="roofingWarrantyStatus">
+                    <select data-associated-date='roofingWarrantyDate' class="closeout-input" id="roofingWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -344,7 +343,7 @@
             <tr>
                 <td>HTI Warranty:</td>
                 <td>  
-                    <select class="closeout-input" id="HTIWarrantyStatus">
+                    <select data-associated-date='HTIWarrantyDate' class="closeout-input" id="HTIWarrantyStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -355,7 +354,7 @@
             <tr>
                 <td>Other Warranty (A):</td>
                 <td>  
-                    <select class="closeout-input" id="otherWarrantyStatusA">
+                    <select data-associated-date='otherWarrantyDateA' class="closeout-input" id="otherWarrantyStatusA">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -366,7 +365,7 @@
             <tr>
                 <td>Other Warranty (B):</td>
                 <td>  
-                    <select class="closeout-input" id="otherWarrantyStatusB">
+                    <select data-associated-date='otherWarrantyDateB' class="closeout-input" id="otherWarrantyStatusB">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -392,7 +391,7 @@
             <tr>
                 <td>MCS Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="MCSStatus">
+                    <select data-associated-date='MCSDate' class="closeout-input" id="MCSStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -403,7 +402,7 @@
             <tr>
                 <td>GC Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="GCStatus">
+                    <select data-associated-date='GCDate' class="closeout-input" id="GCStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -414,7 +413,7 @@
             <tr>
                 <td>Mechanical Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="mechanicalStatus">
+                    <select data-associated-date='mechanicalDate' class="closeout-input" id="mechanicalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -425,7 +424,7 @@
             <tr>
                 <td>Eletrical Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="electricalStatus">
+                    <select data-associated-date='electricalDate' class="closeout-input" id="electricalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -436,7 +435,7 @@
             <tr>
                 <td>Plumbing Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="plumbingStatus">
+                    <select data-associated-date='plumbingDate' class="closeout-input" id="plumbingStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -447,7 +446,7 @@
             <tr>
                 <td>Sprinkler Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="sprinkleStatus">
+                    <select data-associated-date='sprinkleDate' class="closeout-input" id="sprinkleStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -458,7 +457,7 @@
             <tr>
                 <td>Roofing Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="roofingStatus">
+                    <select data-associated-date='roofingDate' class="closeout-input" id="roofingStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -469,7 +468,7 @@
             <tr>
                 <td>HTI Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="HTIStatus">
+                    <select data-associated-date='HTIDate' class="closeout-input" id="HTIStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -480,7 +479,7 @@
             <tr>
                 <td>Other Liens:</td>
                 <td>  
-                    <select class="closeout-input" id="otherFinalLiensStatus">
+                    <select data-associated-date='otherFinalLiensDate' class="closeout-input" id="otherFinalLiensStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
@@ -520,7 +519,7 @@
             <tr>
                 <td>MG2 Completion:</td>
                 <td>  
-                    <select class="closeout-input" id="mg2CompletionStatus">
+                    <select data-associated-date='mg2CompletionDate' class="closeout-input" id="mg2CompletionStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
@@ -531,7 +530,7 @@
             <tr>
                 <td>Certificate of Substantial Completion:</td>
                 <td>  
-                    <select class="closeout-input" id="substantialCompletionStatus">
+                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
@@ -542,7 +541,7 @@
             <tr>
                 <td>Payment of Debts and Claims G706:</td>
                 <td>  
-                    <select class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
+                    <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
@@ -553,7 +552,7 @@
             <tr>
                 <td>Release Of Liens G706A:</td>
                 <td>  
-                    <select class="closeout-input" id="releaseOfLiensStatus">
+                    <select data-associated-date='releaseOfLiensDate' class="closeout-input" id="releaseOfLiensStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
@@ -564,7 +563,7 @@
             <tr>
                 <td>MulvannyG2 Sign Off:</td>
                 <td>  
-                    <select class="closeout-input" id="mulvannySignOffStatus">
+                    <select data-associated-date='mulvannySignOffDate' class="closeout-input" id="mulvannySignOffStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 

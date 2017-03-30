@@ -65,6 +65,11 @@ $(document).ready(function(){
 		$('#mulvannySignOffDate').datepicker();
 		
 		$("#salvageDate").datepicker();
+		
+	$('.closeout-input').change(function () {
+		console.log($(this).attr('data-associated-date'));
+		$('#' + $(this).attr('data-associated-date')).val(getToday());
+	});
 });
 
 
