@@ -319,10 +319,10 @@ const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequir
 										"mechLiens", "elecLiens", "plumbLiens", 
 										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "finalLiensNotes");
 
-const PERMIT_KEYS = new Array('warehouse', 'item', 'buildingPermit', 'mechanicalPermit', 'electricalPermit', 
+const PERMIT_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'mechanicalPermit', 'electricalPermit', 
 							'plumbingPermit', 'roofingPermit', 'sprinklerPermit', 'fireAlarmPermit', 'lowVoltagePermit', 'permitNotes');
 
-const INSPECTION_KEYS = new Array('warehouse', 'item', 'buildingInspection', 'mechanicalInspection', 'electricalInspection',
+const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspection', 'mechanicalInspection', 'electricalInspection',
 									'plumbingInspection', 'roofingInspection', 'sprinklerInspection', 'fireAlarmInspection', 
 									'lowVoltageInspection', 'inspectionNotes');
 
@@ -1554,14 +1554,14 @@ function generateReport(reportType)
 			break;	
 		case PERMIT_ACTIVE:
 			stage.push(ACTIVE_STAGE);
-			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			//status.push(PROJECT_STATUS_AWAITING_PERMIT);
 
 			title = "Permits for Active Projects";
 
 			break;
 		case PERMIT_PROPOSAL:
 			stage.push(PROPOSAL_STAGE);
-			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			//status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			/*
 			 * TODO: Change this up to be what the meeting report is, and have the BART report (Awaiting Permit) be something else.
 			 */
@@ -1569,7 +1569,7 @@ function generateReport(reportType)
 			break;
 		case PERMIT_BUDGETARY:
 			stage.push(BUDGETARY_STAGE);
-			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			//status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			title = "Permits for Budgetary Projects";
 			break;
 		case PERMIT_CLOSED:

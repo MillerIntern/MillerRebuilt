@@ -2,3 +2,42 @@
 #search {
 	width: 100%;
 }
+
+.paramHolder:first-child {
+	margin-top:8px;
+}
+
+.paramHolder:last-child {
+	margin-bottom: 8px;
+}
+
+
+.param-field {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	width: 100%;
+	background-color: white;
+	padding: 4px 4px 4px 4px;
+	border: 3px solid #223f82;
+	border-style:solid;
+	border-color: #4d78dc #1d346c #1d346c #2e54ad;
+	border-radius: 4px;
+}
+
+.param-field > span {
+	display: inline-block;
+	padding: 2px 2px;
+	border-bottom: 2px solid black;
+	color: black;
+	//border-radius: 4px;
+	font-size: 20px;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.param-field > span > button {
+	float: right;
+	background-color: #172a56;
+	border: none;
+	color: white;
+}

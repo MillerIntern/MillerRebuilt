@@ -112,13 +112,13 @@ public class Report extends HttpServlet
 			}
 			else
 			{
+				// if(shownFields.contains("permitReport""))
 				sb.append("<tr>");
 				sb.append("<td>"+(i+1)+"</td>");
 				for (int j = 0; j < shownFields.size(); j++)
 				{	
 					sb.append("<td>");
 					String value = getValueFromProject(shownFields.get(j), p);
-					//System.out.println(value);
 					sb.append(value);
 					sb.append("</td>");		
 					

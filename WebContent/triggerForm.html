@@ -5,29 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Trigger Browser</title>
+    <title>Trigger Form</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
-	<script src='js/triggerBrowser.js'></script>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/findProject.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href='css/triggerBrowser.css' rel='stylesheet'>
-	
-	<script>
-	
-	function goToTriggerForm () {
-		window.location.href = 'triggerForm.html';
-	}
-	
-	</script>
+    
+    
+    <script src='js/triggerForm.js'></script>
 
   </head>
-  <body onload="getAllTriggers()">
+  <body onload='generateDropdowns()'>
   
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -41,7 +34,7 @@
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
 	          <li><a href="projectData.html">Add Project</a></li>
-	          <li class='active'><a href="findProject.html">Find Projects</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
 	        </ul>
 	      </li>
 	      <li class='active'><a href="triggerBrowser.html">Triggers</a></li>
@@ -55,24 +48,23 @@
 	</nav>
 	
     <div class="container">
-    	<button onclick='goToTriggerForm()' class='btn btn-primary' style='margin: 8px'>Create New Trigger</button>
-   		<div id="param-field">
-   			<span>
-   			Search Criteria
-   			<button onclick='hideParams()' class='addParmButton btn btn-primary'>Hide Parameters</button>
-   			<button onClick="addParameter()" class="addParamButton btn btn-primary" style='margin-right:8px'>Add Parameter</button>
-   			</span>
+		<button onclick='submitTestTrigger()'>Submit Test Trigger</button>
+				
+		<div>
+   			<h4 style='display:inline'>Trigger Parameters</h4>
+   			<button onClick="addParameter()" class="addParamButton btn btn-primary">Add Parameter</button>
    		</div>
+   		<div class="param-field">
+		    <div class="paramHolder">
+		        <select class="paramType">
+		        </select>
+		        <select class="paramTypeValue">
+		        </select>
+		        <button class='btn btn-danger' style='padding: 4px'>Remove This Parameter</button>
+		   </div>
+   		</div>
+   		<button onclick='submitTrigger()' class='btn btn-primary'>Create Trigger</button>
    		
-   		<table id="results" class="table table-hover">
-   			<tr><td><input id='search' type='text' placeholder='Filter for Item or Warehouse'/>
-   			</td><td></td>
-   			<td align='center'><span class="glyphicon glyphicon-triangle-top"></span> <span class="glyphicon glyphicon-triangle-bottom"></span></td></tr>
-   			<tr class='head'><th>Project</th><th>Description</th><th style="text-align:center">Severity</th></tr>
-   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Forklift Repair. Baltimore, MD</td><td>Past due date and final building inspection not submitted.</td><td>3</td></tr> -->
-   		
-   		</table>
-  	
     </div>
 
   </body>

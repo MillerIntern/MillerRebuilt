@@ -138,6 +138,7 @@ function checkInitFilter () {
 							document.getElementById('paramVal1').value = '4';
 							break;
 					}
+				filterProjects();
 				}
 			}
 		});
