@@ -54,16 +54,49 @@
    			<h4 style='display:inline'>Trigger Parameters</h4>
    			<button onClick="addParameter()" class="addParamButton btn btn-primary">Add Parameter</button>
    		</div>
-   		<div class="param-field">
-		    <div class="paramHolder">
-		        <select class="paramType">
-		        </select>
-		        <select class="paramTypeValue">
-		        </select>
-		        <button class='btn btn-danger' style='padding: 4px'>Remove This Parameter</button>
-		   </div>
+   		<div class="param-field empty">
+	    	<table class='table'>
+		    	<tr>
+			    	<td><label for='objectType'>For:</label></td>
+			    	<td class='objectEntry'><select class='objectType'></select></td>
+		    	</tr>
+		    	<tr>
+			        <td><label for='paramType'>Type:</label></td>
+			        <td class='typeEntry'><select class="paramType">
+			        </select></td>
+		        </tr>
+		        <tr>
+		        	<td><label for='paramTypeVal'>Field:</label></td>
+		        	<td class='fieldEntry'><select class="paramTypeValue">
+			        </select></td>
+		        </tr>
+		        <tr>
+		        	<td><label>Check Value:</label></td>
+		        	<td class='dataValueEntry'>
+	        			<label>Field is:</label>
+		        		<select>
+		        			<option>Less Than</option>
+		        			<option>Equals</option>
+		        			<option>More Than</option>
+		        		</select>
+		        		<input type='text'/>
+		        	</td>
+		        </tr>
+		        <tr>
+		        	<td><label>Severity</label></td>
+		        	<td>
+		        		<select>
+		        			<option value='0'>0 - Info</option>
+		        			<option value='1'>1 - Watch</option>
+		        			<option value='2'>2 - Warning</option>
+		        			<option value='3'>3 - Severe</option>
+		        		</select>
+		        	</td>
+		        </tr>
+	        </table>
+	        <button class='btn btn-danger' style='padding: 4px'>Remove This Parameter</button>
    		</div>
-   		<button onclick='submitTrigger()' class='btn btn-primary'>Create Trigger</button>
+   		<button onclick='submitTrigger()' class='btn btn-success'>Create Trigger</button>
    		
     </div>
 

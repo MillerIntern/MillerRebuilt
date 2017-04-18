@@ -184,7 +184,7 @@ function generateDropdowns(jsonData, field) {
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
 		if (field == 'Warehouse') {
-			option.innerHTML = json[i].city.name + ", " + json[i].state;
+			option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
 		} else {
 			option.innerHTML = json[i].name;
 		}
@@ -370,9 +370,8 @@ function filterProjects () {
 						navigateTo(projectListing);
 					}
 					
-					
 					listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
-											json[k].warehouse.state;
+											toTitleCase(json[k].warehouse.state.replace('_', ' '));
 					listDetails1.innerHTML = json[k].projectItem.name;
 					listDetails2.innerHTML = json[k].projectManagers.name;
 					

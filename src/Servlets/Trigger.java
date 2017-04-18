@@ -47,8 +47,8 @@ public class Trigger extends HttpServlet
 		} else if(action.equals("submitTrigger")) {
 			System.out.println("submitTrigger");
 			
-			String[] params = {/*"cost = 0", "mcsNumber=-1", */"CURDATE() between DATE_SUB(scheduledStartDate,INTERVAL 14 DAY) and DATE_SUB(scheduledStartDate,INTERVAL 7 DAY)"};
-			projectObjects.Trigger trigger = new projectObjects.Trigger("Cost is zero!", 2, params);
+			String[] params = {/*"cost = 0", "mcsNumber=-1"*/"CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 200 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 0 DAY)"};
+			projectObjects.Trigger trigger = new projectObjects.Trigger(projectObjects.Project.class, "Cost is zero!", 2, params);
 			trigger.runTrigger();
 			//s.addExpression(Restrictions.sqlRestriction("(shouldInvoice - invoiced) != 0"));
 
