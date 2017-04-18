@@ -1,12 +1,12 @@
 # Miller Rebuilt
-###The objective of this file is to explain the system to anyone who is working on it.
-####Original Authors: Brian Fitzpatrick and Alex Campbell
+### The objective of this file is to explain the system to anyone who is working on it.
+#### Original Authors: Brian Fitzpatrick and Alex Campbell
 
-####Maintenance: Chris Taormino
+#### Maintenance: Chris Taormino
 
-######Summer 2015: Ken Bayron 
+###### Summer 2015: Ken Bayron 
 
-####Vast* Improvements and Rebuilding: Josh Mackin
+#### Vast* Improvements and Rebuilding: Josh Mackin
 
 
 This system is designed to present a front end for a database of projects. The objective is to allow 
@@ -35,7 +35,7 @@ The post request is handled by Project.java in Servlets. The doPost() function o
 on the action variable in the request. It uses the parameters map in the request to 
 retrieve required information from the database. 
 
-###Add Project
+### Add Project
 	Add a Project is the page which allows Miller Personel to create a new project in the database.
 
 This button will send the user directly to the projectData.html page but without any data 
@@ -51,7 +51,7 @@ respectively, the methods addProject() and addObject() would be called. These me
 slightly differently in that they do not find an existing project in the database but rather
 create a new project and then add it directly.
 
-###Generate Reports.
+### Generate Reports.
 	This page allows Miller Personel to create reports. This page is debatably the 
 	most important on the entire site. 
 
@@ -84,7 +84,7 @@ This method calls the queryProjects() method in QueryService.java in services. T
 method queries the database for the projects with the proper prerequisite attributes 
 and compiles them into a string which can later be put into adocument.
 	
-###Triggers
+### Triggers
      Triggers is a system set up by Brian, it is intended to alert website users of projects 
      which need to be updated. There are 3 levels of triggers; info, warning and severe. 
   
@@ -96,7 +96,7 @@ are initialized and then run. Running a trigger means to run the arraylist of cr
 queries the database for any projects which match the criteria. These projects are returned up the
 chain to the website where they are displayed.
 
-##Notes on Startup.
+## Notes on Startup.
 
 	Technologies Required: Java, Javascript/HTML/CSS, Apache Tomcat, A MySQL Server
 	Recommmended Stuffs: Maven, Git, MAMP|WAMP|LAMP, Eclipse
@@ -111,7 +111,7 @@ both on the server and what we use to test locally. Never deploy to the server w
 stablity and functionality of an update. Miller Personnel use this software on a daily basis and any 
 interruption in service is severe and to be avoided at all costs. 
 
-####Tomcat Primer
+#### Tomcat Primer
 
 Tomcat is the server used both for local testing and server deployment. You can find the download [here](http://tomcat.apache.org/download-80.cgi). At this page you will want to download the core-zip file. 
 Once unzipped, you practically have tomcat installed. But how?! You might be asking. There's two files that you will
@@ -145,7 +145,7 @@ You also will be able to host your tomcat server from eclipse which makes it so 
 
 If you installed the webtools correctly, you should be able to create a server via Prefernces -> Server -> Apache TomcatvX. These [instructions](http://www.vogella.com/tutorials/EclipseWTP/article.html) may help you getting eclipse setup. 
 
-####MySQL w/ Java Primer
+#### MySQL w/ Java Primer
 If you're following along, you just deployed a webapp to a tomcat server and have access to the index.html page of your website. If you try to login, noting happens! In fact, things break and ~~there's no solution~~ you need not worry. The database is not connected with your site yet! 
 
 The first thing we need to do is get a MySQL server up and running locally. You will want to download/install the [bitnami stack](https://bitnami.com/stacks) for your OS. 
@@ -229,7 +229,7 @@ Once everything compiles properly, go into the target folder at the top level of
 	I strongly recommend doing nothing.
 				-- The Next Guy
 ```
-At some point the maven build system was completely lost because a developer decided that it would be best to abandon good software engineering practices. It has more recently come back so that we can keep our software dependencies managed properly and up to date. Ensure that you continue to build this project with maven!
+At some point the maven build system was completely lost because a developer decided that it would be best to abandon good software engineering practices. It has more recently come back (Spring 2017) so that we can keep our software dependencies managed properly and up to date. Ensure that you continue to build this project with maven!
 
 #### Git Primer
 Git	is the technology which allows us to version control our software.
@@ -280,7 +280,7 @@ So if nothing else, use git so that we have a history to work from so that new i
 Commit yourself to git!
 [/2016, Josh Mackin]
 
-#####Actual Primer Now...
+##### Actual Primer Now...
 
 There are a variety of tutorials online to help with the installation and use of git. Git has a similar process to svn.
 
@@ -291,11 +291,11 @@ When the development is finished, you must join it back to the master branch. It
 Or you can just noob it up and use GitHub desktop like me. Super easy. 
 
 
-####End Notes
+#### End Notes
 That should be most of what anyone working on this project needs to know on starting with the software. Any future developers should feel free to add to this document as more things are added to the software. If more information is required, contact the last developer.
 
 
-#####Updating Tasks
+##### Updating Tasks
 
 	Reports
 		- To add new reports of already existing data within the Database the code in 
