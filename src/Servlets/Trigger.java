@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import objects.RequestHandler;
 import services.LoginService;
 import services.TriggerService;
@@ -47,13 +50,24 @@ public class Trigger extends HttpServlet
 		} else if(action.equals("submitTrigger")) {
 			System.out.println("submitTrigger");
 			
-			String[] params = {/*"cost = 0", "mcsNumber=-1"*/"CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 200 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 0 DAY)"};
-			projectObjects.Trigger trigger = new projectObjects.Trigger(projectObjects.Project.class, "Cost is zero!", 2, params);
-			trigger.runTrigger();
-			//s.addExpression(Restrictions.sqlRestriction("(shouldInvoice - invoiced) != 0"));
+			JsonParser parser = new JsonParser();
+			// TODO parameters.get("parameters") will yield a list of JSON object(s), not a single JSON object
+			JsonObject o = null;
+			if(!parameters.get("parameters").isEmpty() && parameters.get("parameters") != null)
+				o = parser.parse(parameters.get("parameters")).getAsJsonObject();
+			System.out.println(o);
 
-			
-			response = "submittedTrigger";
+			if(o == null) {
+				response = "Something has gone horribly wrong";
+			} else {
+				String[] params = {"cost=43"};
+				//String[] params = {/*"cost = 0", "mcsNumber=-1"*/"CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 5 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 0 DAY)"};
+				projectObjects.Trigger trigger = new projectObjects.Trigger(projectObjects.Project.class, "Cost is zero!", 2, params);
+				trigger.runTrigger();
+
+				
+				response = "submittedTrigger";
+			}
 		}
 		
 		System.out.println("Response: " + response);

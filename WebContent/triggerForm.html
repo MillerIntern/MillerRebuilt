@@ -73,19 +73,31 @@
 		        <tr>
 		        	<td><label>Check Value:</label></td>
 		        	<td class='dataValueEntry'>
-	        			<label>Field is:</label>
+	        			<!--<label>Field is:</label>
 		        		<select>
 		        			<option>Less Than</option>
 		        			<option>Equals</option>
 		        			<option>More Than</option>
 		        		</select>
-		        		<input type='text'/>
+		        		<input type='number'/>
+		        		
+		        		<label>Date between</label>
+		        		<input type='number'/>
+		        		<label>and</label>
+		        		<input type='number'/>
+		        		<label>days from current date.</label>
+						<div>Ex: <b>Scheduled Startdate</b> between <b>0</b> and <b>5</b> days from the current date would</div>
+						<div> check for Scheduled Startdates that are within the next 5 days.</div>-->
 		        	</td>
 		        </tr>
 		        <tr>
+		        	<td><label>Description:</label></td>
+		        	<td class='descriptionEntry'><input class='description' placeholder='Short Description of Trigger'/></td>
+		        </tr>
+		        <tr>
 		        	<td><label>Severity</label></td>
-		        	<td>
-		        		<select>
+		        	<td class='severityEntry'>
+		        		<select class='severity'>
 		        			<option value='0'>0 - Info</option>
 		        			<option value='1'>1 - Watch</option>
 		        			<option value='2'>2 - Warning</option>
