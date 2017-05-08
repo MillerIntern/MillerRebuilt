@@ -33,6 +33,17 @@ function submitTestTrigger () {
 
 function submitTrigger () {
 	let triggerParams = [];
+	
+	let baseInfo = $('.base-field').children('table').children('tbody').children();
+	let description = $(baseInfo).children('.descriptionEntry').children('input.description').val();
+	let severity = $(baseInfo).children('.severityEntry').children('select.severity').val();
+	console.log(description);
+	console.log(severity);
+	
+	if(typeof description === 'undefined' || description ==='') return alert('Check Description Field!');
+	if(typeof severity === 'undefined' || severity === '') return alert('Check Severity Field!');
+	let info = {'description': description, 'severity': severity};
+	
 	$('.param-field').each(function (field) {
 		let tableRows = $(this).children('table').children('tbody').children();
 
@@ -41,23 +52,17 @@ function submitTrigger () {
 		let typeVal = $(tableRows).children('.typeEntry').children('select.paramType').val();
 		let fieldVal = $(tableRows).children('.fieldEntry').children('select.paramTypeValue').val();
 		let valueEntry = $(tableRows).children('.dataValueEntry');
-		let description = $(tableRows).children('.descriptionEntry').children('input.description').val();
-		let severity = $(tableRows).children('.severityEntry').children('select.severity').val();
 		
 		console.log(objectVal);
 		console.log(typeVal);
 		console.log(fieldVal);
-		console.log(description);
-		console.log(severity);
-		
+
 		// None of these should be hit ever
 		if(typeof objectVal === 'undefined' || objectVal === '') return alert('Check "For" Dropdowns!');
 		if(typeof typeVal === 'undefined' || typeVal === '') return alert('Check "Type" Dropdowns!');
 		if(typeof fieldVal === 'undefined' || fieldVal ==='') return alert('Check "Field" Dropdowns!');
-		if(typeof severity === 'undefined' || severity === '') return alert('Check "Severity" Dropdowns!');
 		
 		// Description should have contents
-		if(typeof description === 'undefined' || description === '') return alert('Descriptions Must be filled out!');
 		
 		if (typeVal === 'Date') {
 			console.log('retrieving DATE from check value');
@@ -68,7 +73,7 @@ function submitTrigger () {
 				return alert('Both Date entry fields must have information!');
 			} else {
 				console.log(lowDate + ' low - ' + highDate + ' high');
-				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal, 'severity': severity, 'description': description,
+				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal,
 						'highDate': highDate, 'lowDate': lowDate};
 				triggerParams = param; // TODO: Change to triggerParams.push(param);
 			}
@@ -81,7 +86,7 @@ function submitTrigger () {
 				return alert('You must fill out a comparison value!');
 			} else {
 				console.log(comparisonType + ' type - ' + compareValue + ' value');
-				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal, 'severity': severity, 'description': description,
+				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal,
 							'comparisonType': comparisonType, 'compareValue': compareValue};
 				triggerParams = param; // TODO: Change to triggerParams.push(param);
 			}
@@ -99,6 +104,7 @@ function submitTrigger () {
 		{
 			'domain': 'trigger',
 			'action': 'submitTrigger',
+			'info': JSON.stringify(info),
 			'parameters': JSON.stringify(triggerParams)
 		},
 		complete: function(data)

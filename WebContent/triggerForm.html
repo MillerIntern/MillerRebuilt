@@ -48,7 +48,27 @@
 	</nav>
 	
     <div class="container">
-		<button onclick='submitTestTrigger()'>Submit Test Trigger</button>
+    		
+   		<h4 style='display:inline'>Trigger Information</h4>
+		<div class='base-field'>
+		<table>
+			<tr>
+	        	<td><label>Description:</label></td>
+	        	<td class='descriptionEntry'><input class='description' placeholder='Short Description of Trigger'/></td>
+	        </tr>
+	        <tr>
+	        	<td><label>Severity</label></td>
+	        	<td class='severityEntry'>
+	        		<select class='severity'>
+	        			<option value='0'>0 - Info</option>
+	        			<option value='1'>1 - Watch</option>
+	        			<option value='2'>2 - Warning</option>
+	        			<option value='3'>3 - Severe</option>
+	        		</select>
+	        	</td>
+	        </tr>
+		</table>
+		</div>
 				
 		<div>
    			<h4 style='display:inline'>Trigger Parameters</h4>
@@ -88,21 +108,6 @@
 		        		<label>days from current date.</label>
 						<div>Ex: <b>Scheduled Startdate</b> between <b>0</b> and <b>5</b> days from the current date would</div>
 						<div> check for Scheduled Startdates that are within the next 5 days.</div>-->
-		        	</td>
-		        </tr>
-		        <tr>
-		        	<td><label>Description:</label></td>
-		        	<td class='descriptionEntry'><input class='description' placeholder='Short Description of Trigger'/></td>
-		        </tr>
-		        <tr>
-		        	<td><label>Severity</label></td>
-		        	<td class='severityEntry'>
-		        		<select class='severity'>
-		        			<option value='0'>0 - Info</option>
-		        			<option value='1'>1 - Watch</option>
-		        			<option value='2'>2 - Warning</option>
-		        			<option value='3'>3 - Severe</option>
-		        		</select>
 		        	</td>
 		        </tr>
 	        </table>

@@ -1218,6 +1218,19 @@ public class ProjectService extends ProjectObjectService
 		}
 	}
 
+	/**
+	 * @return
+	 */
+	public static String getAllAlertsAsJson() {
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		//map.put("projects", ProjectObjectService.getAllAsJsonString("Alert"));
+		
+		
+		return g.toJson(map);
+	}
+
 
 
 }

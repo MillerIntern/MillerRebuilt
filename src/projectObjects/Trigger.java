@@ -56,15 +56,18 @@ public class Trigger extends ProjectObject {
 		
 		System.out.println(this);
 		System.out.println(projects.size());
+		
+		for(int i = 0; i < projects.size(); i++) {
+			Alert a = new Alert(projects.get(i), this);
+			
+			// TODO: hibernate.save(a);
+		}
 		} catch (SQLGrammarException e) {
 			System.out.println("Class/Field association mapping failed");
 		}
-		/*for(int i = 0; i < projects.size(); i++) {
-			System.out.println(projects.get(i));
-		}*/
 	}
 	
 	public String toString() {
-		return this.description + " - Serverity: " + this.severity; 
+		return this.description + " - Severity: " + this.severity; 
 	}
 }

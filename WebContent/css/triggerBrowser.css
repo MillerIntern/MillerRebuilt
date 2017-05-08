@@ -12,7 +12,7 @@
 }
 
 
-.param-field {
+.param-field, .base-field {
 	margin-top: 8px;
 	margin-bottom: 8px;
 	width: 100%;
