@@ -1225,7 +1225,7 @@ public class ProjectService extends ProjectObjectService
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 		
-		//map.put("projects", ProjectObjectService.getAllAsJsonString("Alert"));
+		map.put("projects", ProjectObjectService.getAllAsJsonString("Alert"));
 		
 		
 		return g.toJson(map);

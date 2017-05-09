@@ -15,6 +15,7 @@ import com.google.gson.JsonParser;
 
 import objects.RequestHandler;
 import services.LoginService;
+import services.ProjectService;
 import services.TriggerService;
 
 /**
@@ -90,7 +91,8 @@ public class Trigger extends HttpServlet
 				response = "submittedTrigger";
 			}
 		} else if (action.equals("getAlerts")) {
-			
+			System.out.println("getting the triggers!");
+			response = ProjectService.getAllAlertsAsJson();
 		}
 		
 		System.out.println("Response: " + response);

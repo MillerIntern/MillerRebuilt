@@ -1,5 +1,7 @@
 package projectObjects;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 
 /**
@@ -11,6 +13,7 @@ public class Alert extends ProjectObject {
 	
 	private Project referencedProject;
 	private Trigger setTrigger;
+	private Date setDate;
 	
 	public Alert (Project project, Trigger trigger) {
 		this.setReferencedProject(project);
