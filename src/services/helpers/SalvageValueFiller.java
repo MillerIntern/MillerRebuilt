@@ -9,7 +9,10 @@ import java.util.Map;
 import projectObjects.CloseoutDetails;
 import projectObjects.SalvageValue;
 
-public class SalvageValueFiller 
+/**
+ * @author Josh Mackin
+ */
+public class SalvageValueFiller
 {
 	public static SalvageValue fillSalvageValue(CloseoutDetails cd, Map<String, String>params) throws ParseException
 	{
@@ -22,8 +25,8 @@ public class SalvageValueFiller
 			{
 				salvageAmount = Double.parseDouble(params.get("salvageAmount"));
 			}catch(NumberFormatException nfe){}
-        
-		
+
+
 		Date fsalvageDate  = null;
 		if ((params.get("salvageDate") != null) && !(params.get("salvageDate")).isEmpty())
 			fsalvageDate = formatter.parse(params.get("salvageDate"));

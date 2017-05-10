@@ -61,12 +61,12 @@ public class ProjectService extends ProjectObjectService
 	public static long addNewProject(Map<String, String> parameters) throws ClassNotFoundException, ParseException, NumberFormatException {
 		Project project = new Project();
 		ProjectInformationFiller.fillProjectInformation(project, parameters);
-		
+
 		long projectID = ProjectObjectService.addObject("Project", project);
 
 		return projectID;
 	}
-	
+
 	/**
 	 * @param projID
 	 * @param parameters
@@ -78,26 +78,26 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		ProjectInformationFiller.fillProjectInformation(currentProject, parameters);
-		
+
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		session.clear();
 		session.update(currentProject);
 		tx.commit();
 
-		
+
 		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
-		
+
 		return projID;
 	}
-	
-	
+
+
 	/**
 	 * This method adds a project to the database. The fields REQUIRED for a project are specific arguments.
 	 * The OPTIONAL fields for a projects are parsed from the HTTP Request parameter mapping
-	 * 
+	 *
 	 * @param warehouseID the warehouse id
 	 * @param managerID the manager id
 	 * @param supervisorID the supervisor id
@@ -110,28 +110,28 @@ public class ProjectService extends ProjectObjectService
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws ParseException
-	 * @throws IOException 
-	 * @throws NumberFormatException 
+	 * @throws IOException
+	 * @throws NumberFormatException
 	 */
 	@SuppressWarnings("unused")
-	public  long addProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope, 
+	public  long addProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, Long statusID, Long stageID, Long typeID, String scope,
 			Map<String, String>params, Long inspectionTN, HttpServletRequest req) throws ClassNotFoundException, ParseException, NumberFormatException, IOException
 	{
 		System.out.println("in add");
 		System.out.println(params);
 		//Initialize Services
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-	
+
 		//Read Max ID from file
 		File file = new File("C:\\TestEnvironment\\projectIdCount.txt");
 		Integer maxId = 0;
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(file));
-		 
+
 			String line = null;
 			while ((line = br.readLine()) != null) {
-		
+
 				maxId = Integer.parseInt(line)+1;
 			}
 			br.close();
@@ -140,8 +140,8 @@ public class ProjectService extends ProjectObjectService
 		{
 			System.out.println("Hah, I havent broken yet!");
 		}
-	
-			Long maxID = (long) maxId;	
+
+			Long maxID = (long) maxId;
 			System.out.println("Current ID: " + maxID);
 		//Get REQUIRED project data
 		Warehouse warehouse = (Warehouse) ProjectObjectService.get(warehouseID, "Warehouse");
@@ -153,7 +153,7 @@ public class ProjectService extends ProjectObjectService
 		ProjectStage stage = (ProjectStage) ProjectObjectService.get(stageID, "ProjectStage");
 		ProjectType pType = (ProjectType) ProjectObjectService.get(typeID, "ProjectType");
 		String mcsNumString = params.get("mcsNumber");
-		
+
 		int mcsNum = -1;
 		//int fpo = -1;
 		//Parse mcsNumber, change to -1 if it's not a number
@@ -162,8 +162,8 @@ public class ProjectService extends ProjectObjectService
 			mcsNum = Integer.parseInt(mcsNumString);
 			//fpo = Integer.parseInt(fpoString);
 			System.out.println(mcsNum);
-			
-			
+
+
 		}catch(Exception e){}
 
 		//Get invoice values and notes
@@ -174,7 +174,7 @@ public class ProjectService extends ProjectObjectService
 		//Create and persist change orders if they exist
 		//String changeOrderJsonString = params.get("coItems");
 		//HashSet<ChangeOrder> changeOrders = ChangeOrderService.getChangeOrdersFromString(changeOrderJsonString);
-				
+
 		//assign values to dates, if they are not null
 		Date finitiatedDate = null;
 		Date fsurvey = null;
@@ -185,117 +185,117 @@ public class ProjectService extends ProjectObjectService
 		Date factual = null;
 
 		Date permitApp = null;
-		
+
 		//Create CloseoutDetails Object.
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
 		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
 		cd.setSalvageValue(sv);
-		
+
 		//Additional Fields
 		String zachNotes = params.get("zachUpdates");
 		String cost = params.get("cost");
 		String customerNumber = params.get("customerNumber");
-		
+
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
-		
+
 		if (!(params.get("survey")).isEmpty())
 			fsurvey = formatter.parse(params.get("survey"));
-		
+
 		if (!(params.get("costco")).isEmpty())
 			fcostco = formatter.parse(params.get("costco"));
-		
+
 		if (!(params.get("proposal")).isEmpty())
 			fproposal = formatter.parse(params.get("proposal"));
-		
+
 //---------------------------------------------Receiving ARRAYS ------------------------------------------------------------
-		
+
 		//If there were any added equipments
 		String[] equipToAdd = null;
 
 		if(equipToAdd != null)
 		{
 						System.out.println("in equipment");
-						
+
 						//String[][] equipProj = getGSON2DArray(req, "project_eq");
 						//String[][] equipComponent = getGSON2DArray(req, "component_eq");
 						String[][] equipVendor = getGSON2DArray(req, "vendor_eq");
-						
+
 						//String[] equipIDS = getGSONArray(req, "equipIDS");
 						String[] equipPO = getGSONArray(req, "po_eq");
 						String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
-						String[] equipName  = getGSONArray(req, "equipName"); 
+						String[] equipName  = getGSONArray(req, "equipName");
 						String[] equipNotes = getGSONArray(req, "notes_eq");
-						
+
 						//String[] equipStatus = getGSONArray(req, "status_eq");
-						
-						
-						
+
+
+
 						long longEquipPO[] = new long[equipToAdd.length];
 						Date[] dateEquipEDD = new Date[equipToAdd.length];
 						//Date[] dateEquipVD = new Date[equipToAdd.length];
 						int[] array = new int[equipToAdd.length];
-						
-						
+
+
 				//-------------------------------------------------------------------------------------------------------
-						
+
 						/*-------Equipment Objects----------*/
 						Equipment equip;
-				
+
 						EquipmentVendor vendor_eq;
-				
+
 						DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-				
-						
+
+
 						for(int i=0; i<equipToAdd.length;i++)
 						{
 							equip = new Equipment();
-							
+
 							// Convert Arrays to either int, long or Date
 							array[i] =(int) Long.parseLong(equipToAdd[i]);
-							
+
 							//crashing
 							if(!equipPO[array[i]].equals(""))
 							{
 								longEquipPO[i] = new Long(equipPO[array[i]]);
 							}
-							
+
 							if(!equipEDD[array[i]].equals(""))
 							{
 								dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
 								System.out.println(dateEquipEDD[i]);
 							}
-				
-							
-							 
+
+
+
 							 vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
 							 	// 2D arrays
-							 
+
 								equip.setEquipmentVendor(vendor_eq);
-				
-								
+
+
 								//Regular Arrays
 								equip.setPO(longEquipPO[i]);
 								equip.setEstimatedDelivery(dateEquipEDD[i]);
 								equip.setEquipName(equipName[array[i]]);
 								equip.setNotes(equipNotes[array[i]]);
 								//equip.setEqpd(maxID);
-								
+
 								System.out.println("EQPD:" +  maxID);
-					
+
 								//ProjectObjectService.addObject("Equipment", equip);
 							}
 		}
 
 
-	
-		
-//-------------------------Inspections -------------------------------------------------------------------	
+
+
+//-------------------------Inspections -------------------------------------------------------------------
 		Inspections inspections = new Inspections();
 		if(inspectionTN!=-1)
 			inspections= (Inspections) ProjectObjectService.get(inspectionTN, "Inspections");
-		
+
 		//set inspection fields
 		System.out.println("inspection ticket number " + inspectionTN);
 		InspectionsFiller.fillInspections(inspections, params);
@@ -303,7 +303,7 @@ public class ProjectService extends ProjectObjectService
 		//Permit Fields
 		Permits	permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
-		
+
 		//Set required fields
 		Project p = new Project();
 		p.setMcsNumber(mcsNum);
@@ -316,11 +316,11 @@ public class ProjectService extends ProjectObjectService
 		p.setProjectItem(item);
 		p.setStage(stage);
 		p.setProjectType(pType);
-		
+
 //***********Set optional fields*******************\\
-		
+
 		//objects for different tables\\
-		
+
 		p.setInspections(inspections);
 		p.setCloseoutDetails(cd);
 		p.setPermits(permits);
@@ -340,25 +340,25 @@ public class ProjectService extends ProjectObjectService
 		p.setCost(cost);
 		p.setCustomerNumber(customerNumber);
 		p.setPermitApplication(permitApp);
-		
+
 		System.out.println(p.getCloseoutDetails().getId() + " closeout id");
 		System.out.println(p.getPermits().getId() + "  status id");
 		System.out.println(p.getInspections().getId() + "  inspection id");
-		
+
 		//Add the project to the database.
 		long projectID = ProjectObjectService.addObject("Project", p);
-	
-		
+
+
 		PrintWriter writer = new PrintWriter(file.getAbsoluteFile(),"UTF-8" );
 		writer.println(maxID);
 		writer.close();
-        return projectID;  
+        return projectID;
 	}
-	
+
 	/**
 	 * This method edits a project that exists in the database. The REQUIRED fields for a project are given as arguments,
 	 * while optional fields for a project are parsed from the HTTP request parameter mapping.
-	 * 
+	 *
 	 * @param warehouseID the warehouse id
 	 * @param managerID the manager id
 	 * @param supervisorID the supervisor id
@@ -372,8 +372,8 @@ public class ProjectService extends ProjectObjectService
 	 * @throws ParseException
 	 */
 	@SuppressWarnings("unused")
-	public static void editProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID, 
-			Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN, 
+	public static void editProject(Long warehouseID, Long managerID, Long supervisorID, Long classID, Long projectItemID,
+			Long statusID, Long stageID, Long typeID, String scope, Map<String, String>params, Long inspectionTN,
 			HttpServletRequest req) throws ClassNotFoundException, ParseException
 	{
 		System.out.println(params);
@@ -389,22 +389,22 @@ public class ProjectService extends ProjectObjectService
 		ProjectItem item = (ProjectItem) ProjectObjectService.get(new Long(projectItemID), "ProjectItem");
 		ProjectStage stage = (ProjectStage) ProjectObjectService.get(stageID, "ProjectStage");
 		ProjectType pType = (ProjectType) ProjectObjectService.get(typeID, "ProjectType");
-		
+
 		String mcsNumString = params.get("mcsNumber");
-		
-		//ID's 
+
+		//ID's
 		String iIDString = params.get("inspectionID");
 		String closeoutIDString = params.get("closeoutID");
 		String salvageIDString = params.get("salvageID");
 		String permitsIDString = params.get("permitsID");
-		
+
 		int mcsNum = -1;
 		Long iID = (long)-1;
 		Long closeoutID = (long)-1;
 		Long salvageID = (long)-1;
 		Long permitsID = (long)-1;
 
-		
+
 		//Parse mcsNumber, change to -1 if it's not a number
 		try
 		{
@@ -412,22 +412,22 @@ public class ProjectService extends ProjectObjectService
 			iID = Long.parseLong(iIDString);
 			closeoutID = Long.parseLong(closeoutIDString);
 			salvageID = Long.parseLong(salvageIDString);
-			permitsID = Long.parseLong(permitsIDString);		
-			
+			permitsID = Long.parseLong(permitsIDString);
+
 		}catch(Exception e){}
-		
+
 		System.out.println("inspection ID : " + iID);
 		System.out.println("closeoutID : " + closeoutID);
 
 		int shouldInvoice = Integer.parseInt(params.get("shouldInvoice"));
 		int actualInvoice = Integer.parseInt(params.get("actualInvoice"));
 		String notes = params.get("notes");
-		
+
 		//Additional fields
 		String zachNotes = params.get("zachUpdates");
 		String cost = params.get("cost");
 		String customerNumber = params.get("customerNumber");
-		
+
 		Date finitiatedDate = null;
 		Date fsurvey = null;
 		Date fcostco = null;
@@ -437,136 +437,136 @@ public class ProjectService extends ProjectObjectService
 		Date factual = null;
 
 		Date permitApp = null;
-		
+
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
-		
+
 		if (!(params.get("survey")).isEmpty())
 			fsurvey = formatter.parse(params.get("survey"));
-		
+
 		if (!(params.get("costco")).isEmpty())
 			fcostco = formatter.parse(params.get("costco"));
-		
+
 		if (!(params.get("proposal")).isEmpty())
 			fproposal = formatter.parse(params.get("proposal"));
-		
+
 //********************CLOSEOUTDETAILS OPTIONAL**************************\\
-		
+
 		if (!params.get("startDate").isEmpty())
 			fstart = formatter.parse(params.get("startDate"));
-		
+
 		if (!params.get("scheduledTurnover").isEmpty())
 			fscheduled = formatter.parse(params.get("scheduledTurnover"));
-		
+
 		if (!params.get("actualTurnover").isEmpty())
 			factual = formatter.parse(params.get("actualTurnover"));
-		
+
 		if (!params.get("permitApp").isEmpty())
 			permitApp = formatter.parse(params.get("permitApp"));
-		
+
 		// Closeout!
-		
+
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
 		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
 		cd.setSalvageValue(sv);
 		//ID's
 		System.out.println("Salvage ID: " + salvageID);
-		
+
 // ************************Optional Inspections************************ \\
-		
+
 		Long id = Long.parseLong(params.get("projectID"));
 		String[] equipToAdd = null;
-		
+
 
 		if(equipToAdd != null)
 		{
 					System.out.println("in equipment");
 					// ---------------------------Receiving ARRAYS -----------------------------------------------
-						
+
 					/*String[][] equipProj = getGSON2DArray(req, "project_eq");
 					String[][] equipComponent = getGSON2DArray(req, "component_eq");
 					String[][] equipVendor = getGSON2DArray(req, "vendor_eq");*/
-			
+
 				 	// 2D arrays
-			
-				
-					
+
+
+
 					String[] equipIDS = getGSONArray(req, "equipIDS");
 					String[] equipPO = getGSONArray(req, "po_eq");
 					String[] equipEDD = getGSONArray(req, "estimatedDeliveryDate_eq");
-					String[] equipName  = getGSONArray(req, "equipName"); 
+					String[] equipName  = getGSONArray(req, "equipName");
 					String[] equipNotes = getGSONArray(req, "notes_eq");
 					//String[] equipStatus = getGSONArray(req, "status_eq");
-					
-					
-					
+
+
+
 					long longEquipPO[] = new long[equipToAdd.length];
 					Date[] dateEquipEDD = new Date[equipToAdd.length];
 					int[] array = new int[equipToAdd.length];
 					long[] longEquipIds = new long[equipIDS.length];
 					System.out.println("equip length" + array.length);
-					
-					
+
+
 					//-------------------------------------------------------------------------------------------------
-					
+
 					//Equipment Objects
 					Equipment equip;
 					//Warehouse warehouse_eq;
 					//ProjectItem item_eq;
 					//EquipmentVendor vendor_eq;
 					//EquipmentStatus status_eq;
-					
+
 					DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-			
-					
+
+
 					for(int i=0; i<equipToAdd.length;i++)
 						{
 						equip = new Equipment();
 						// Convert Arrays to either int, long or Date
 						array[i] =(int) Long.parseLong(equipToAdd[i]);
-						
+
 						//crashing
 						if(!equipPO[array[i]].equals(""))
 						{
 							longEquipPO[i] = new Long(equipPO[array[i]]);
 						}
-						
+
 						if(!equipEDD[array[i]].equals(""))
 						{
 							System.out.println("estimated date " + equipEDD[array[i]]);
 							dateEquipEDD[i] = format1.parse(equipEDD[array[i]]) ;
 						}
-						
-						// warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");	
+
+						// warehouse_eq = (Warehouse) ProjectObjectService.get(Long.parseLong(equipProj[array[i]][2]), "Warehouse");
 						 //item_eq = (ProjectItem) ProjectObjectService.get(Long.parseLong(equipComponent[array[i]][1]), "ProjectItem");
 						 //vendor_eq = (EquipmentVendor) ProjectObjectService.get(new Long(equipVendor[array[i]][1]), "EquipmentVendor");
 						 //status_eq = (EquipmentStatus) ProjectObjectService.get(new Long(equipStatus[array[i]]), "EquipmentStatus");
-						 
+
 							longEquipIds[i] = new Long(equipIDS[array[i]]);
 							System.out.println("equip ids" + longEquipIds[i]);
-						
+
 						 	// 2D arrays
-						 
+
 						//	equip.setWarehouse(warehouse_eq);
 							//equip.setEquipmentVendor(vendor_eq);
 							//equip.setProjectItem(item_eq);
 							//equip.setEquipStatus(status_eq);
-							
+
 							//Regular Arrays
 							equip.setPO(longEquipPO[i]);
 							equip.setEstimatedDelivery(dateEquipEDD[i]);
 							equip.setEquipName(equipName[array[i]]);
 							equip.setNotes(equipNotes[array[i]]);
 							//equip.setEqpd(id);
-							
+
 							if((Equipment) ProjectObjectService.get(longEquipIds[i], "Equipment")!=null)
 								;//ProjectObjectService.editObject("Equipment",longEquipIds[i],equip, 0);
 							else
 							{
 								System.out.println("here");
 								;//ProjectObjectService.addObject("Equipment", equip);
-							}	
+							}
 						}
 		}
 				//set inspection fields
@@ -576,10 +576,10 @@ public class ProjectService extends ProjectObjectService
 		Inspections inspection = new Inspections();
 		inspection.setTicketNumber(inspectionTN);
 		InspectionsFiller.fillInspections(inspection, params);
-		
+
 		Permits	permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
-		
+
 		//Create new project to replace the old one
 		Project p = new Project();
 		p.setMcsNumber(mcsNum);
@@ -610,32 +610,32 @@ public class ProjectService extends ProjectObjectService
 		p.setCloseoutDetails(cd);
 		p.setInspections(inspection);
 		p.setPermits(permits);
-		
-		System.out.println("Project ID : " + id);	
+
+		System.out.println("Project ID : " + id);
 		System.out.println("SV number: " + salvageID);
-		System.out.println("PERMITS number: " + permitsID); 		
-		
+		System.out.println("PERMITS number: " + permitsID);
+
 	int i = 0;
 	int k = 0;
 		if(iID!=0)
 		{
 			 i = 0;
-			ProjectObjectService.editObject("Inspections",iID,inspection, i);	
+			ProjectObjectService.editObject("Inspections",iID,inspection, i);
 			k = 1;
 		}
 		if(closeoutID!=0 && salvageID ==0)
-		{	
+		{
 			i=0;
 			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
 			k=1;
 		}
 		if(closeoutID!=0 && salvageID !=0)
-		{	
+		{
 			i=2;
 			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
 			k=1;
 		}
-		
+
 		if(salvageID!=0)
 		{
 			i=0;
@@ -647,25 +647,25 @@ public class ProjectService extends ProjectObjectService
 		{
 			System.out.println("We get here");
 			i=0;
-			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
+			ProjectObjectService.editObject("Permits",permitsID,permits, i);
 			k = 1;
 		}
-		
+
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(id,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		fixSets(currentProject);
-			
+
 		 System.out.println("k = " + k);
 			ProjectObjectService.editObject("Project",id,p,k);
 			//ProjectObjectService.editObjects(iDs,domains, objects);
-		System.out.println("END");		
+		System.out.println("END");
 	}
-	
+
 	/**
 	 * This method gets all of the enumerated data that is needed by the dropdowns for the
 	 * editSelect.html page
@@ -675,7 +675,7 @@ public class ProjectService extends ProjectObjectService
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
 		map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
 		map.put("item", ProjectObjectService.getAllAsJsonString("ProjectItem"));
@@ -683,10 +683,10 @@ public class ProjectService extends ProjectObjectService
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
-		
+
 		return g.toJson(map);
 	}
-	
+
 	/**
 	 * This method returns the data needed for the dropdowns on the query.html page
 	 * @return a string repsenting a JSON array containing the data
@@ -695,7 +695,7 @@ public class ProjectService extends ProjectObjectService
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
 		map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
 		map.put("item", ProjectObjectService.getAllAsJsonString("ProjectItem"));
@@ -707,12 +707,12 @@ public class ProjectService extends ProjectObjectService
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
 		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
-		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));	
-		
+		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
+
 		//Turn the hashmap into a JSON array and return it
 		return g.toJson(map);
 	}
-	
+
 	/**
 	 * This method gets all of the information in the database.
 	 * @return A string representing a JSON array containing this information
@@ -721,7 +721,7 @@ public class ProjectService extends ProjectObjectService
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
 		map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
 		map.put("item", ProjectObjectService.getAllAsJsonString("ProjectItem"));
@@ -731,20 +731,20 @@ public class ProjectService extends ProjectObjectService
 		map.put("type", ProjectObjectService.getAllAsJsonString("ProjectType"));
 		map.put("inspections", ProjectObjectService.getAllAsJsonString("Inspections"));
 		map.put("permits",ProjectObjectService.getAllAsJsonString("Permits"));
-		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
+		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
 		//map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
 		map.put("closeoutstatus", ProjectObjectService.getAllAsJsonString("CloseoutStatus"));
 		map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
 		map.put("changeorderstatus", ProjectObjectService.getAllAsJsonString("ChangeOrderStatus"));
 		map.put("permitstage", ProjectObjectService.getAllAsJsonString("PermitStage"));
-		
+
 		return g.toJson(map);
 	}
-	
+
 	/**
 	 * previously we just got everything all the time. Now you send what you want
-	 * and get back only what you need. This saves tons of time. 
+	 * and get back only what you need. This saves tons of time.
 	 * @param parameters
 	 * @return
 	 */
@@ -752,7 +752,7 @@ public class ProjectService extends ProjectObjectService
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 		if(parameters.get("warehouse") != null && !parameters.get("warehouse").isEmpty())
-			if(parameters.get("warehouse").equals("true")) 
+			if(parameters.get("warehouse").equals("true"))
 				map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
 		if(parameters.get("class") != null && !parameters.get("class").isEmpty())
 			if(parameters.get("class").equals("true"))
@@ -786,10 +786,10 @@ public class ProjectService extends ProjectObjectService
 				map.put("changeordertype", ProjectObjectService.getAllAsJsonString("ChangeOrderType"));
 		if(parameters.get("equipmentvendor") != null && !parameters.get("equipmentvendor").isEmpty())
 			if(parameters.get("equipmentvendor").equals("true"))
-				map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
+				map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
 		return g.toJson(map);
 	}
-	
+
 	/**
 	 * This method gets all of the projects
 	 * @return A string representing a JSON array containing this information
@@ -798,56 +798,56 @@ public class ProjectService extends ProjectObjectService
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("projects", ProjectObjectService.getAllAsJsonString("Project"));
-		
-		
+
+
 		return g.toJson(map);
 	}
-	
+
 	public static String getAllEnumsEquipAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("person", ProjectObjectService.getAllAsJsonString("Person"));
 		map.put("warehouse", ProjectObjectService.getAllAsJsonString("Warehouse"));
 		map.put("item", ProjectObjectService.getAllAsJsonString("ProjectItem"));
-		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));	
+		map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
 		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
-		
+
 		return g.toJson(map);
 	}
-	
+
 	public static String getAllEquipmentAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("equipment",ProjectObjectService.getAllAsJsonString("Equipment"));
 		return g.toJson(map);
 	}
-	
+
 	public static String[][] getGSON2DArray(HttpServletRequest req, String var)
 	{
 		Gson gson = new Gson();
 		String[][] dummy = new String[0][0];  // The same type as your "newMap"
 		String[][] array;
-		
+
 		array = gson.fromJson(req.getParameter(var), dummy.getClass());
-		return array;	
+		return array;
 	}
-	
+
 	public static String[] getGSONArray(HttpServletRequest req, String var)
 	{
 		Gson gson = new Gson();
 		String[] dummy = new String[0];  // The same type as your "newMap"
 		String[] array;
-		
+
 		array = gson.fromJson(req.getParameter(var), dummy.getClass());
-		
-		return array;	
+
+		return array;
 	}
 
 	public static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
@@ -861,33 +861,33 @@ public class ProjectService extends ProjectObjectService
 
 		try
 		{
-			closeoutID = Long.parseLong(closeoutIDString);	
+			closeoutID = Long.parseLong(closeoutIDString);
 			salvageID = Long.parseLong(salvageIDString);
 		}catch(Exception e){}
-		
-		
+
+
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		fixSets(currentProject);
-		
+
 		CloseoutDetails cd = new CloseoutDetails();
 		CloseoutDetailsFiller.fillCloseoutDetails(cd, params);
 		SalvageValue sv = SalvageValueFiller.fillSalvageValue(cd, params);
 		cd.setSalvageValue(sv);
 		currentProject.setCloseoutDetails(cd);
-		
+
 		int i = 0;
 		int k = 0;
 		System.out.println(cd.getId());
 
 		System.out.println(closeoutID);
 		if(closeoutID!=0 && salvageID ==0)
-		{	
+		{
 			i=0;
 			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
 			System.out.println(cd.getId()+ " is the id");
@@ -895,14 +895,14 @@ public class ProjectService extends ProjectObjectService
 			k=1;
 		}
 		if(closeoutID!=0 && salvageID !=0)
-		{	
+		{
 			i=2;
 			ProjectObjectService.editObject("CloseoutDetails",closeoutID,cd,i);
 			System.out.println(cd.getId() + " is the id");
 
 			k=1;
 		}
-		
+
 		if(salvageID!=0)
 		{
 			i=0;
@@ -924,10 +924,10 @@ public class ProjectService extends ProjectObjectService
 
 		try
 		{
-			permitsID = Long.parseLong(permitsIDString);		
+			permitsID = Long.parseLong(permitsIDString);
 		}catch(Exception e){}
-		
-		
+
+
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
@@ -936,19 +936,19 @@ public class ProjectService extends ProjectObjectService
 		}
 
 		fixSets(currentProject);
-				
+
 		Permits permits = new Permits();
 		PermitsFiller.fillPermits(permits, params);
-		
+
 		currentProject.setPermits(permits);
-		
+
 		int i = 0;
 		int k = 0;
 
 		if(permitsID!=0)
 		{
 			i=0;
-			ProjectObjectService.editObject("Permits",permitsID,permits, i);	
+			ProjectObjectService.editObject("Permits",permitsID,permits, i);
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
@@ -965,32 +965,32 @@ public class ProjectService extends ProjectObjectService
 
 		try
 		{
-			inspectionID = Long.parseLong(inspectionIDString);		
+			inspectionID = Long.parseLong(inspectionIDString);
 		}catch(Exception e){}
 		System.out.println(inspectionID);
-		
-		
+
+
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		fixSets(currentProject);
-		
+
 		Inspections inspection = new Inspections();
 		InspectionsFiller.fillInspections(inspection, params);
-		
+
 		currentProject.setInspections(inspection);
-		
+
 		int i = 0;
 		int k = 0;
 
 		if(inspectionID!=0)
 		{
 			i=0;
-			ProjectObjectService.editObject("Inspections",inspectionID,inspection, i);	
+			ProjectObjectService.editObject("Inspections",inspectionID,inspection, i);
 			k = 1;
 		}
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
@@ -1007,11 +1007,11 @@ public class ProjectService extends ProjectObjectService
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		ProjectInformationFiller.fillCloseoutDetails(currentProject, params);
-		
+
 		int k = 1;
-		
+
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 
 	}*/
@@ -1023,35 +1023,35 @@ public class ProjectService extends ProjectObjectService
 	public static void addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Add Change Order:");
-		
+
 		Project currentProject = null;
-		try 
+		try
 		{
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> eqiter = newEquipment.iterator();
 		while(eqiter.hasNext())
 		{
 			eqiter.next().setId(null);
 		}
-		
-		
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+
+
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		while(iter.hasNext())
 		{
 			iter.next().setId(null);
 		}
-		
+
 		ChangeOrder co = new ChangeOrder();
 		ChangeOrderFiller.fillChangeOrder(co, params);
 		changeOrders.add(co);
 		currentProject.setChangeOrders(changeOrders);
 		int k;
-		
+
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
@@ -1066,26 +1066,26 @@ public class ProjectService extends ProjectObjectService
 	{
 		System.out.println("In Edit Change Order:");
 		Long changeOrderID = Long.parseLong(params.get("changeOrderID"));
-		
+
 		Project currentProject = null;
-		try 
+		try
 		{
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> eqiter = newEquipment.iterator();
 		while(eqiter.hasNext())
 		{
 			eqiter.next().setId(null);
 		}
-		
-		
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();	
+
+
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
 		Iterator<ChangeOrder> iter = changeOrders.iterator();
 		ChangeOrder oldOrder = new ChangeOrder();
-		
+
 		while(iter.hasNext())
 		{
 			ChangeOrder item = iter.next();
@@ -1097,13 +1097,13 @@ public class ProjectService extends ProjectObjectService
 				oldOrder = item;
 				ChangeOrderFiller.fillChangeOrder(oldOrder, params);
 
-				
+
 			}
 			item.setId(null);
 		}
 		currentProject.setChangeOrders(changeOrders);
 		int k;
-		
+
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullSetObjects();
@@ -1116,29 +1116,29 @@ public class ProjectService extends ProjectObjectService
 	public static void addEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Add Equipment:");
-		
+
 		Project currentProject = null;
-		try 
+		try
 		{
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			// TODO: We should do something meaningful in all of these catch blocks. Perhaps return with an error message?
 		}
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
 		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
 		while(iterCO.hasNext())
 		{
 			iterCO.next().setId(null);
 		}
-		
-		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> iter = newEquipment.iterator();
 		while(iter.hasNext())
 		{
 			iter.next().setId(null);
 		}
-		
+
 		NewEquipment eq = new NewEquipment();
 		EquipmentFiller.fillNewEquipment(eq, params);
 		System.out.println(eq);
@@ -1147,37 +1147,37 @@ public class ProjectService extends ProjectObjectService
 		currentProject.setProjEquipment(newEquipment);
 		System.out.println(currentProject);
 		int k;
-		
+
 		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject, k);
 		ProjectObjectService.deleteNullSetObjects();
-	}	
-	
+	}
+
 	public static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Equipment:");
 		Long equipmentID = Long.parseLong(params.get("equipmentID"));
-		
+
 		Project currentProject = null;
-		try 
+		try
 		{
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
 		Iterator<ChangeOrder> chiter = changeOrders.iterator();
 		while(chiter.hasNext())
 		{
 			chiter.next().setId(null);
 		}
-		
-		
-		Set<NewEquipment> equipment = currentProject.getProjEquipment();	
+
+
+		Set<NewEquipment> equipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> iter = equipment.iterator();
 		NewEquipment oldEquipment = new NewEquipment();
-		
+
 		while(iter.hasNext())
 		{
 			NewEquipment item = iter.next();
@@ -1189,28 +1189,28 @@ public class ProjectService extends ProjectObjectService
 				oldEquipment = item;
 				EquipmentFiller.fillNewEquipment(oldEquipment, params);
 
-				
+
 			}
 			item.setId(null);
 		}
 		currentProject.setProjEquipment(equipment);
 		int k;
-		
+
 		k = 1;
 		ProjectObjectService.editObject("NewEquipment",equipmentID,oldEquipment,k);
 		ProjectObjectService.deleteNullSetObjects();
 	}
-	
+
 	private static void fixSets(Project currentProject)
 	{
-		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();		
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
 		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
 		while(iterCO.hasNext())
 		{
 			iterCO.next().setId(null);
 		}
-		
-		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();		
+
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> iter = newEquipment.iterator();
 		while(iter.hasNext())
 		{
@@ -1219,19 +1219,33 @@ public class ProjectService extends ProjectObjectService
 	}
 
 	/**
+	 * @author Josh Mackin
 	 * @return
 	 */
 	public static String getAllAlertsAsJson() {
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("projects", ProjectObjectService.getAllAsJsonString("Alert"));
-		
-		
+
+
+		return g.toJson(map);
+	}
+
+	/**
+	 * @author Josh Mackin
+	 * @return
+	 */
+	public static String getAllAlertsAsJson() {
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("projects", ProjectObjectService.getAllAsJsonString("Trigger"));
+
+
 		return g.toJson(map);
 	}
 
 
 
 }
-
