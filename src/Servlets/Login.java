@@ -29,7 +29,8 @@ public class Login extends HttpServlet
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		
+		out = resp.getWriter();
+		out.println("Hello!");;
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 

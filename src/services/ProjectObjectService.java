@@ -214,20 +214,6 @@ public class ProjectObjectService
 			checkNullRows((projectObjects.Project)o);
 
 		tx.commit();
-
-	try
-	{
-		//What is this??
-		File f= new File("/home/chris/Desktop/getAsJSON.txt");
-		PrintWriter p= new PrintWriter(f);
-
-		p.write("projectObjects."+domain+" "+id+"\n");
-		p.write(gson.toJson(o));
-		p.flush();
-		p.close();
-	}
-	catch(Exception e){System.out.println("Always an exception in ProjectObjectService@getAsJSON");}
-	
 	
 		return gson.toJson(o);
 	}

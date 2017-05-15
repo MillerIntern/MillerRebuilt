@@ -4,7 +4,7 @@ let types = ['Date', 'Value'];
 
 // We could ask the server for these values but having them here means that there is less waiting time
 // Serverside checks will make sure that the submitted values match expected. 
-let objects = [{'name': 'Project Information', 'field': 'Project'}, {'name': 'Closeout Information', 'field': 'CloseoutDetails'}];
+let objects = [{'name': 'Project Information', 'field': 'Project'}];//, {'name': 'Closeout Information', 'field': 'CloseoutDetails'}];
 let dates = [{'name': 'Actual Turnover', 'field': 'actualTurnover', 'object': 'Project'},
              {'name': 'Scheduled Turnover', 'field': 'scheduledTurnover', 'object': 'Project'}];
 let values = [{'name': 'Cost', 'field': 'cost', 'object': 'Project'},
@@ -37,28 +37,29 @@ function submitTrigger () {
 	let baseInfo = $('.base-field').children('table').children('tbody').children();
 	let description = $(baseInfo).children('.descriptionEntry').children('input.description').val();
 	let severity = $(baseInfo).children('.severityEntry').children('select.severity').val();
+	let objectKey = $(baseInfo).children('.objectEntry').children('select.objectType').val();
+
 	console.log(description);
 	console.log(severity);
+	console.log(objectKey);
 	
 	if(typeof description === 'undefined' || description ==='') return alert('Check Description Field!');
 	if(typeof severity === 'undefined' || severity === '') return alert('Check Severity Field!');
-	let info = {'description': description, 'severity': severity};
+	if(typeof objectKey === 'undefined' || objectKey === '') return alert('Check "For" Field!');
+	let info = {'description': description, 'severity': severity, 'object': objectKey};
 	
 	$('.param-field').each(function (field) {
 		let tableRows = $(this).children('table').children('tbody').children();
 
 		// Object key in order to 
-		let objectVal = $(tableRows).children('.objectEntry').children('select.objectType').val();
 		let typeVal = $(tableRows).children('.typeEntry').children('select.paramType').val();
 		let fieldVal = $(tableRows).children('.fieldEntry').children('select.paramTypeValue').val();
 		let valueEntry = $(tableRows).children('.dataValueEntry');
 		
-		console.log(objectVal);
 		console.log(typeVal);
 		console.log(fieldVal);
 
 		// None of these should be hit ever
-		if(typeof objectVal === 'undefined' || objectVal === '') return alert('Check "For" Dropdowns!');
 		if(typeof typeVal === 'undefined' || typeVal === '') return alert('Check "Type" Dropdowns!');
 		if(typeof fieldVal === 'undefined' || fieldVal ==='') return alert('Check "Field" Dropdowns!');
 		
@@ -73,9 +74,9 @@ function submitTrigger () {
 				return alert('Both Date entry fields must have information!');
 			} else {
 				console.log(lowDate + ' low - ' + highDate + ' high');
-				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal,
+				let param = {'type': typeVal, 'field': fieldVal,
 						'highDate': highDate, 'lowDate': lowDate};
-				triggerParams = param; // TODO: Change to triggerParams.push(param);
+				triggerParams.push(param);
 			}
 		} else if (typeVal === 'Value') {
 			console.log('retrieving VALUE from check value');
@@ -86,9 +87,9 @@ function submitTrigger () {
 				return alert('You must fill out a comparison value!');
 			} else {
 				console.log(comparisonType + ' type - ' + compareValue + ' value');
-				let param = {'object': objectVal, 'type': typeVal, 'field': fieldVal,
+				let param = {'type': typeVal, 'field': fieldVal,
 							'comparisonType': comparisonType, 'compareValue': compareValue};
-				triggerParams = param; // TODO: Change to triggerParams.push(param);
+				triggerParams.push(param);
 			}
 		} else {
 			return alert('Check Your Trigger Types!');
@@ -142,12 +143,16 @@ function generateDropdowns () {
 	setTriggerFieldAndValue();
 }
 
-function setTriggerFieldAndValue() {	
+function setTriggerFieldAndValue() {
+	
+	let baseInfo = $('.base-field').children('table').children('tbody').children();
+	let objectKey = $(baseInfo).children('.objectEntry').children('select.objectType').val();
+	console.log(objectKey);
+	
 	$('.param-field.empty').each(function (field) {
 		let tableRows = $(this).children('table').children('tbody').children();
 
 		// Object key in order to 
-		let objectKey = $(tableRows).children('.objectEntry').children('select.objectType').val();
 		let typeKey = $(tableRows).children('.typeEntry').children('select.paramType').val();
 		let fieldSelect = $(tableRows).children('.fieldEntry').children('select.paramTypeValue');
 		let valueEntry = $(tableRows).children('.dataValueEntry');
@@ -185,6 +190,15 @@ function setTriggerFieldAndValue() {
 	});
 }
 
+function addParameter () {
+	console.log('adding parameter');
+	
+	console.log($('.param-field'));
+	$('.param-field:last').after(TRIGGER_PARAM_BLOCK);
+	$('.paramType.empty').append(typeDropdownItems.cloneNode(true));
+	setTriggerFieldAndValue();
+}
+
 $(document).on('change', 'select.paramType', function () {
 	// this line is pretty good
 	$(this).parent().parent().parent().parent().parent().addClass('empty');
@@ -214,3 +228,15 @@ const VALUE_HTML_BLOCK = "<label class='fieldVal' " + SLIGHT_MARGIN + ">Field is
 						"<option value='more'>More Than</option>" + 
 						"</select>" +
 						"<input class='compareVal' type='number' " + SLIGHT_MARGIN + "/>";
+
+const TRIGGER_PARAM_BLOCK = '<div class="param-field empty">' + 
+	    					'<table class="table"><tr>' + 
+	    					'<td><label for="paramType">Type:</label></td>' + 
+	    					'<td class="typeEntry"><select class="paramType empty">' + 
+	    					'</select></td></tr><tr>' + 
+	    					'<td><label for="paramTypeVal">Field:</label></td>'+ 
+	    					'<td class="fieldEntry"><select class="paramTypeValue">' +
+	    					'</select></td></tr><tr>' +
+	    					'<td><label>Check Value:</label></td>' + 
+	    					'<td class="dataValueEntry"></td></tr></table>' + 
+	    					'<button class="btn btn-danger" onclick="removeThisParam()" style="padding: 4px">Remove This Parameter</button></div>';

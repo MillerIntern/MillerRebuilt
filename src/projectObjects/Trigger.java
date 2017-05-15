@@ -1,9 +1,15 @@
 package projectObjects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -19,17 +25,17 @@ import objects.HibernateUtil;
 @Entity
 public class Trigger extends ProjectObject {
 
-	@SuppressWarnings("rawtypes")
-	private Class objectClass;
 	private String description;
 	private int severity;
-	private ArrayList<String> criteria;
+	private Set<String> criteria;
+	@SuppressWarnings("rawtypes")
+	private Class objectClass;
 	
 	public Trigger (@SuppressWarnings("rawtypes") Class objectClass, String description, int severity, String[] criteria) {
 		this.objectClass = objectClass;
 		this.description = description;
 		this.severity = severity;
-		this.criteria = new ArrayList<String>();
+		this.criteria = new HashSet<String>();
 		for(int i = 0; i < criteria.length; i++) {
 			this.criteria.add(criteria[i]);
 		}
@@ -38,10 +44,15 @@ public class Trigger extends ProjectObject {
 	public void runTrigger() {
 
 		ArrayList<Criterion> criterion = new ArrayList<Criterion>();
-		for (int i = 0; i < criteria.size(); i++) {
-			Criterion c = Restrictions.sqlRestriction(criteria.get(i));
+		Iterator<String> it = criteria.iterator();
+		while(it.hasNext()) {
+			Criterion c = Restrictions.sqlRestriction(it.next());
 			criterion.add(c);
 		}
+		/*for (int i = 0; i < criteria.size(); i++) {
+			Criterion c = Restrictions.sqlRestriction(criteria.);
+			criterion.add(c);
+		}*/
 		
 		Criteria criteria = HibernateUtil.getSession().createCriteria(objectClass);
 		
@@ -67,6 +78,40 @@ public class Trigger extends ProjectObject {
 		}
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(int severity) {
+		this.severity = severity;
+	}
+
+	@ElementCollection(targetClass=String.class)
+    @JoinColumn
+	public Set<String> getCriteria() {
+		return criteria;
+	}
+
+	public void setCriteria(Set<String> criteria) {
+		this.criteria = criteria;
+	}
+
+	public Class getObjectClass() {
+		return objectClass;
+	}
+
+	public void setObjectClass(Class objectClass) {
+		this.objectClass = objectClass;
+	}
+
 	public String toString() {
 		return this.description + " - Severity: " + this.severity; 
 	}

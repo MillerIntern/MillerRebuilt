@@ -1236,7 +1236,7 @@ public class ProjectService extends ProjectObjectService
 	 * @author Josh Mackin
 	 * @return
 	 */
-	public static String getAllAlertsAsJson() {
+	public static String getAllTriggersAsJson() {
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 

@@ -24,7 +24,12 @@
 	border-radius: 4px;
 }
 
-.param-field > span {
+.table {
+	/* Remove Bootstrap table margin bottom */
+	margin-bottom: 0px;
+}
+
+.param-field > span, .base-field > span {
 	display: inline-block;
 	padding: 2px 2px;
 	border-bottom: 2px solid black;

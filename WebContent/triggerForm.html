@@ -51,7 +51,7 @@
     		
    		<h4 style='display:inline'>Trigger Information</h4>
 		<div class='base-field'>
-		<table>
+		<table class='table'>
 			<tr>
 	        	<td><label>Description:</label></td>
 	        	<td class='descriptionEntry'><input class='description' placeholder='Short Description of Trigger'/></td>
@@ -67,6 +67,10 @@
 	        		</select>
 	        	</td>
 	        </tr>
+        	<tr>
+		    	<td><label for='objectType'>For:</label></td>
+		    	<td class='objectEntry'><select class='objectType'></select></td>
+	    	</tr>
 		</table>
 		</div>
 				
@@ -76,10 +80,6 @@
    		</div>
    		<div class="param-field empty">
 	    	<table class='table'>
-		    	<tr>
-			    	<td><label for='objectType'>For:</label></td>
-			    	<td class='objectEntry'><select class='objectType'></select></td>
-		    	</tr>
 		    	<tr>
 			        <td><label for='paramType'>Type:</label></td>
 			        <td class='typeEntry'><select class="paramType">
@@ -111,7 +111,7 @@
 		        	</td>
 		        </tr>
 	        </table>
-	        <button class='btn btn-danger' style='padding: 4px'>Remove This Parameter</button>
+	        <button class='btn btn-danger' onclick='removeThisParam()' style='padding: 4px'>Remove This Parameter</button>
    		</div>
    		<button onclick='submitTrigger()' class='btn btn-success'>Create Trigger</button>
    		

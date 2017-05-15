@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import objects.RequestHandler;
 import services.LoginService;
+import services.ProjectObjectService;
 import services.ProjectService;
 import services.TriggerService;
 
@@ -34,8 +36,8 @@ public class Trigger extends HttpServlet
         super();
     }
 
-	@SuppressWarnings("unused")
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		resp.setContentType("application/json");
@@ -47,7 +49,7 @@ public class Trigger extends HttpServlet
 		if (action.equals("getTriggers")) {
 			// TODO: Currently triggers are created but not managable (editable, deletable), they should be further refinable.
 			System.out.println("getting the alerts!");
-			response = ProjectService.getAllTriggerssAsJson();
+			response = ProjectService.getAllAlertsAsJson();
 		} else if(action.equals("getProjectTriggers")) {
 			TriggerService ts = new TriggerService(Long.parseLong(req.getParameter("project_id")));
 			response = ts.getAllSpecificTriggersAsJson();
@@ -67,14 +69,14 @@ public class Trigger extends HttpServlet
 				; // error handling but shouldnt happen with client side validation
 
 			// TODO parameters.get("parameters") will yield a list of JSON object(s), not a single JSON object
-			JsonObject params = null;
+			JsonArray params = null;
 			if(!parameters.get("parameters").isEmpty() && parameters.get("parameters") != null)
-				params = parser.parse(parameters.get("parameters")).getAsJsonObject();
-			System.out.println(params);
-
+				params = parser.parse(parameters.get("parameters")).getAsJsonArray();
+			System.out.println("Params = " + params);
+			
 			@SuppressWarnings("rawtypes")
-			Class specifiedClass = matchObjectClass(params.get("object").getAsString());
-			if (specifiedClass == null)
+			Class specifiedClass = matchObjectClass(info.get("object").getAsString());
+			if (specifiedClass == null) 
 				; // error handling
 
 			if(params == null) {
@@ -82,15 +84,19 @@ public class Trigger extends HttpServlet
 			} else {
 				String[] triggerParams = getTriggerParams(params);
 				System.out.println(triggerParams);
-				//String[] params = {/*"cost = 0", "mcsNumber=-1"*/"CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 5 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 0 DAY)"};
-				projectObjects.Trigger trigger = new projectObjects.Trigger(specifiedClass,
-																		info.get("description").getAsString(),
-																		info.get("severity").getAsInt(),
-																		triggerParams);
-				trigger.runTrigger();
+				if (triggerParams == null) {
+					System.out.println("trigger submission failed");
+					response = "badFields";
+				} else {
+					projectObjects.Trigger trigger = new projectObjects.Trigger(specifiedClass, 
+							info.get("description").getAsString(), 
+							info.get("severity").getAsInt(), 
+							triggerParams);
+					//ProjectObjectService.addObject("projectObject.Trigger", trigger);
+					trigger.runTrigger();
 
-
-				response = "submittedTrigger";
+					response = "submittedTrigger";
+				}
 			}
 		} else if (action.equals("getAlerts")) {
 			System.out.println("getting the alerts!");
@@ -105,28 +111,27 @@ public class Trigger extends HttpServlet
 	 * @param params
 	 * @return
 	 */
-	private String[] getTriggerParams(JsonObject params) {
-		if (params.get("type").getAsString().equals("Date")) {
-			String[] triggerParams = {"CURDATE() between DATE_SUB(" + params.get("field").getAsString() +
-										", INTERVAL " + params.get("highDate").getAsString() + " DAY) and DATE_SUB(" +
-										params.get("field").getAsString() + ", INTERVAL " + params.get("lowDate").getAsString() + " DAY)"};
-			return triggerParams;
-		} else if (params.get("type").getAsString().equals("Value")) {
-			System.out.println("hello");;
-			if (params.get("comparisonType").getAsString().equals("equal")) {
-				System.out.println("elloooo");
-				String[] triggerParams = {params.get("field").getAsString() + " = " + params.get("compareValue").getAsString()};
-				return triggerParams;
-			} else if (params.get("comparisonType").getAsString().equals("less")) {
-				String[] triggerParams = {params.get("field").getAsString() + " < " + params.get("compareValue").getAsString()};
-				return triggerParams;
-			} else if (params.get("comparisonType").getAsString().equals("more")) {
-				String[] triggerParams = {params.get("field").getAsString() + " > " + params.get("compareValue").getAsString()};
-				return triggerParams;
+
+	private String[] getTriggerParams(JsonArray params) {
+		String[] tParams = new String[params.size()];
+		
+		for (int i = 0; i < params.size(); i++) {
+			JsonObject e = params.get(i).getAsJsonObject();
+			if(e.get("type").getAsString().equals("Date")) {
+				tParams[i] = "CURDATE() between DATE_SUB(" + e.get("field").getAsString() +
+						", INTERVAL " + e.get("highDate").getAsString() + " DAY) and DATE_SUB(" + 
+						e.get("field").getAsString() + ", INTERVAL " + e.get("lowDate").getAsString() + " DAY)";
+			} else if (e.get("type").getAsString().equals("Value")) {
+				if (e.get("comparisonType").getAsString().equals("equal")) {
+					tParams[i] = e.get("field").getAsString() + " = " + e.get("compareValue").getAsString();
+				} else if (e.get("comparisonType").getAsString().equals("less")) {
+					tParams[i] = e.get("field").getAsString() + " < " + e.get("compareValue").getAsString();
+				} else if (e.get("comparisonType").getAsString().equals("more")) {
+					tParams[i] = e.get("field").getAsString() + " > " + e.get("compareValue").getAsString();
+				}
 			}
 		}
-		// TODO Auto-generated method stub
-		return null;
+		return tParams;
 	}
 
 	/**

@@ -2,7 +2,7 @@ package services;
 
 import java.util.ArrayList;
 
-import objects.Trigger;
+import objects.TriggerOld;
 
 import org.hibernate.criterion.Restrictions;
 
@@ -18,19 +18,19 @@ public class TriggerService
 	/**
 	 * This holds all of the triggers of the system
 	 */
-	ArrayList<Trigger> triggers;
-
+	ArrayList<TriggerOld> triggers;
+	
 	Long projectNum;
 
 	public TriggerService()
 	{
-		triggers = new ArrayList<Trigger>();
+		triggers = new ArrayList<TriggerOld>();
 		initializeTriggers();
 	}
 
 	public TriggerService(long pID)
 	{
-		triggers = new ArrayList<Trigger>();
+		triggers = new ArrayList<TriggerOld>();
 		projectNum = pID;
 		initializeTriggers();
 	}
@@ -58,10 +58,10 @@ public class TriggerService
 	 * than a project's "invoiced" field.
 	 * @return the Invoice Trigger
 	 */
-	public Trigger getInvoiceTrigger()
+	public TriggerOld getInvoiceTrigger()
 	{
 		String desc = "Should Invoice/Actual Invoice Mismatch";
-		Trigger s = new Trigger(1, desc);
+		TriggerOld s = new TriggerOld(1, desc);
 		s.addExpression(Restrictions.sqlRestriction("(shouldInvoice - invoiced) != 0"));
 		return s;
 	}
@@ -70,10 +70,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects have an MCS number that is -1
 	 * @return the MCSNumber trigger
 	 */
-	public Trigger getUnassignedMCS()
+	public TriggerOld getUnassignedMCS()
 	{
 		String desc = "MCS Number not assigned";
-		Trigger s = new Trigger(1, desc);
+		TriggerOld s = new TriggerOld(1, desc);
 		s.addExpression(Restrictions.sqlRestriction("mcsNumber = -1 AND stage_id = 2"));
 		return s;
 	}
@@ -82,10 +82,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 2 weeks
 	 * @return the timeElapsed
 	 */
-	public Trigger startDateInfo()
+	public TriggerOld startDateInfo()
 	{
 		String desc = "Project is starting soon!";
-		Trigger s = new Trigger(0, desc);
+		TriggerOld s = new TriggerOld(0, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledStartDate,INTERVAL 14 DAY) and DATE_SUB(scheduledStartDate,INTERVAL 7 DAY)"));
 		return s;
 	}
@@ -94,10 +94,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public Trigger startDateWarning()
+	public TriggerOld startDateWarning()
 	{
 		String desc = "Project is starting soon!";
-		Trigger s = new Trigger(1, desc);
+		TriggerOld s = new TriggerOld(1, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledStartDate,INTERVAL 6 DAY) and DATE_SUB(scheduledStartDate,INTERVAL 3 DAY)"));
 		return s;
 	}
@@ -106,18 +106,18 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 3 days
 	 * @return the timeElapsed
 	 */
-	public Trigger startDateSevere()
+	public TriggerOld startDateSevere()
 	{
 		String desc = "Project is starting soon!";
-		Trigger s = new Trigger(2, desc);
+		TriggerOld s = new TriggerOld(2, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledStartDate,INTERVAL 2 DAY) and scheduledStartDate"));
 		return s;
 	}
 
-	public Trigger costcoDueDateInfo()
+	public TriggerOld costcoDueDateInfo()
 	{
 		String desc = "Costco due date is soon!";
-		Trigger s = new Trigger(0, desc);
+		TriggerOld s = new TriggerOld(0, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(costcoDueDate,INTERVAL 7 DAY) and DATE_SUB(costcoDueDate,INTERVAL 4 DAY)"));
 		return s;
 	}
@@ -126,10 +126,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public Trigger costcoDueDateWarning()
+	public TriggerOld costcoDueDateWarning()
 	{
 		String desc = "Costco due date is soon!";
-		Trigger s = new Trigger(1, desc);
+		TriggerOld s = new TriggerOld(1, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(costcoDueDate,INTERVAL 3 DAY) and DATE_SUB(costcoDueDate,INTERVAL 2 DAY)"));
 		return s;
 	}
@@ -138,18 +138,18 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next day
 	 * @return the timeElapsed
 	 */
-	public Trigger costcoDueDateSevere()
+	public TriggerOld costcoDueDateSevere()
 	{
 		String desc = "Costco due date is soon!";
-		Trigger s = new Trigger(2, desc);
+		TriggerOld s = new TriggerOld(2, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(costcoDueDate,INTERVAL 1 DAY) and costcoDueDate"));
 		return s;
 	}
-
-	public Trigger scheduledTurnOverInfo()
+	
+	public TriggerOld scheduledTurnOverInfo()
 	{
 		String desc = "Turn over is soon!";
-		Trigger s = new Trigger(0, desc);
+		TriggerOld s = new TriggerOld(0, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 7 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 4 DAY)"));
 		return s;
 	}
@@ -158,10 +158,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public Trigger scheduledTurnOverWarning()
+	public TriggerOld scheduledTurnOverWarning()
 	{
 		String desc = "Turn over is soon!";
-		Trigger s = new Trigger(1, desc);
+		TriggerOld s = new TriggerOld(1, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 3 DAY) and DATE_SUB(scheduledTurnover,INTERVAL 2 DAY)"));
 		return s;
 	}
@@ -170,10 +170,10 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next day
 	 * @return the timeElapsed
 	 */
-	public Trigger scheduledTurnOverSevere()
+	public TriggerOld scheduledTurnOverSevere()
 	{
 		String desc = "Turn over is soon!";
-		Trigger s = new Trigger(2, desc);
+		TriggerOld s = new TriggerOld(2, desc);
 		s.addExpression(Restrictions.sqlRestriction("CURDATE() between DATE_SUB(scheduledTurnover,INTERVAL 1 DAY) and scheduledTurnover"));
 		return s;
 	}

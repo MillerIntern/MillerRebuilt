@@ -13,19 +13,17 @@ import projectObjects.User;
 
 public class LoginService 
 {
-	public static boolean Login(String username, String password) 
-	{
+	public static boolean Login(String username, String password) {
 		HashGen hG = new HashGen();
+		
 		String hashedPass = null;
-		try
-		{
-		hashedPass = hG.getHash(password);
-		}
-		catch(Exception e)
-		{
+		try {
+			hashedPass = hG.getHash(password);
+		} catch(Exception e) {
 			System.out.println("Hashing went wrong");
 		}
 		boolean loggedIn = true;
+		
 		Criteria criteria = HibernateUtil.getSession().createCriteria(User.class);
 		criteria.add(Restrictions.eqOrIsNull("name", username));
 		
@@ -33,7 +31,7 @@ public class LoginService
 		@SuppressWarnings("unchecked")
 		List<User> matchingUser = criteria.list();
 
-		if (matchingUser == null  || matchingUser.size() == 0)
+		if (matchingUser == null  || matchingUser.size() == 0 || matchingUser.size() > 1)
 			loggedIn = false;
 		else if (!matchingUser.get(0).getPassword().equals(hashedPass))
 			loggedIn = false;

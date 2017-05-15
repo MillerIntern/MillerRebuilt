@@ -15,7 +15,7 @@ import projectObjects.Project;
  * @author Alex Campbell
  *
  */
-public class Trigger 
+public class TriggerOld 
 {
 	/**
 	 * This holds all of the criteria that fires the trigger
@@ -41,7 +41,7 @@ public class Trigger
 	public static int WARNING = 1;
 	public static int SEVERE = 2;
 	
-	public Trigger(int severity, String desc)
+	public TriggerOld(int severity, String desc)
 	{
 		criterion = new ArrayList<Criterion>();
 		this.severity = severity;
