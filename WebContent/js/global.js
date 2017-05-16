@@ -9,6 +9,7 @@ const PROJECT_CHANGE_ORDER = 'changeOrderData.html';
 const CHANGE_ORDER_PRINT = 'projectDataPrint.html?type=changeOrders&';
 const PROJECT_EQUIPMENT = 'equipmentData.html';
 const EQUIPMENT_PRINT = 'projectDataPrint.html?type=equipment&';
+const TASK_CREATOR = 'taskForm.html';
 
 jQuery.fn.center = function () {
     this.css("position","absolute");

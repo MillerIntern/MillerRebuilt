@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Task Form</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	    <link href='css/projectManager.css' rel='stylesheet'>
+	
+	
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/global.js"></script>
+	
+	<script>
+	'use strict';
+	
+	$(document).ready(function () {
+	 	$("#dueDate").datepicker();   
+		$('#initDate').datepicker();
+		
+		$('#initDate').val(getToday());
+	});
+	
+	function getUsers () {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getUsers',
+			}, complete: function (data) {
+				console.log(data);
+				if (data.responseJSON) {
+					createDropdown(data.responseJSON);
+				}
+			}
+			
+		});
+	}
+	
+	function createDropdown (json) {
+		let d = document.createDocumentFragment();
+		
+		for (var i = 0; i < json.length; i++) {
+			let option = document.createElement('option');
+			
+			// when users store both username and name, access the user's name and username fields
+			option.innerHTML = json[i];
+			option.setAttribute("value", json[i]);
+			d.appendChild(option);
+		}
+		$('#assigneeEntry').append(d);
+	}
+	
+	function submitTask () {
+		let title = $('#titleEntry').val();
+		let description = $('#descriptionEntry').val();
+		let assignee = $('#assigneeEntry').val();
+		let initiatedDate = $('#initDate').val();
+		let dueDate = $('#dueDate').val();
+		let severity = $('#severity').val();
+		let notes = $('#notes').val();
+		
+		let projectID = getParameterByName('id');
+		console.log(projectID);
+		if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+		
+		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
+		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
+		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
+		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
+		if (!isValidInput([dueDate, initiatedDate])) return alert('Bad Dates');
+	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				'title': title,
+				'action': 'createTask',
+				'project': projectID,
+				'description': description,
+				'assignee': assignee,
+				'initiatedDate': initiatedDate,
+				'dueDate': dueDate,
+				'severity': severity,
+				'notes': notes
+			}, complete: function (data) {
+				console.log(data);
+				let response = $.trim(data.responseText);
+				if (response === 'TASK_ADDED') {
+					alert('Task Added Successfully');
+					window.location.href='taskBrowser.html'
+				}
+			}
+		});
+		
+	}
+	
+	// TODO: Honestly, this function should probably be in global.js
+	function isValidInput(dates)
+	{	
+		//Check if all of the dates are in the correct format
+		for (var i = 0; i < dates.length; i++)
+		{
+			var date = dates[i];
+			if (date != "" && !isDate(date))
+			{
+				console.log("----------");
+
+				console.log(date);
+				console.log("----------");
+				console.log(i);
+
+				alert("Dates must be in this format: mm/dd/yyyy");
+				return false
+			}
+		}
+		return true;
+	}
+	
+	
+	</script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/triggerBrowser.css' rel='stylesheet'>
+  </head>
+  <body onload='getUsers()'>
+  
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html">Add Project</a></li>
+	          <li><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li class='active'><a href="triggerBrowser.html">Triggers</a></li>
+	      <li><a href="query.html">Reports</a></li>
+	      <li><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	
+    <div class="container">
+    		
+   		<h4 style='display:inline'>Task Form</h4>
+		<div class='base-field'>
+			<table class='table'>
+				<tr>
+					<td><label for='titleEntry'>Title:</label>
+					<td><input type='text' id='titleEntry' placeholder='Task Title'/>
+				</tr>
+				<tr>
+					<td><label for='descriptionEntry'>Description:</label>
+					<td><input type='text' id='descriptionEntry' placeholder='Task Description'/>
+				</tr>
+				<tr>
+					<td><label>Assignee:</label></td>
+					<td class='userEntry'>
+						<select id='assigneeEntry'>
+						
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><label for='initDate'>Initiated Date:</label></td>
+					<td><input type='text' id='initDate' placeholder='Task Initiated'/>
+				</tr>
+				<tr>
+					<td><label for='dueDate'>Due Date</label></td>
+					<td><input type='text' id='dueDate' placeholder='Task Due'/>
+				</tr>
+		        <tr>
+		        	<td><label>Severity:</label></td>
+		        	<td class='severityEntry'>
+		        		<select id='severity'>
+		        			<option value='1'>1 </option>
+		        			<option value='2'>2</option>
+		        			<option value='3'>3</option>
+		        		</select>
+		        	</td>
+		        </tr>
+		        <tr>
+		        	<td><label>Notes:</label></td>
+		        	<td>
+		        	<textarea id='notes'></textarea>
+		        	</td>
+		        </tr>
+			</table>
+			<button onclick='submitTask()' class='btn btn-success'>Submit Task</button>
+		</div>
+	</div>
+
+  </body>
+</html>

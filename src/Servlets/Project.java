@@ -53,8 +53,13 @@ public class Project extends HttpServlet
 		//Get the domain and desired action
 		//String domain = parameters.get("domain");
 		String action = parameters.get("action");
-		ProjectService ps = new ProjectService();
 		
+		if(action == null) {
+			resp.setContentType("plain/text"); 
+			out = resp.getWriter(); 
+			out.println("ACTION_FAILURE"); 
+			return;
+		}
 		if (action.equals("getAllObjects"))
 		{
 			System.out.println("get All Objects");
@@ -91,36 +96,6 @@ public class Project extends HttpServlet
 			String projectID = (parameters.get("projectID"));
 			//String inspections=(parameters.get("inspections"));
 			response = QueryService.getProjectToEdit(warehouse, stage, classID, itemID, projectID);
-		}
-		else if (action.equals("add"))
-		{
-			System.out.println("add");
-			Long inspections;
-			Long warehouse = Long.parseLong(parameters.get("warehouse"));
-			Long projectClass = Long.parseLong(parameters.get("class"));
-			Long projectItem = Long.parseLong(parameters.get("projectItem"));
-			Long manager = Long.parseLong(parameters.get("manager"));
-			Long supervisor = Long.parseLong(parameters.get("supervisor"));
-			Long status = Long.parseLong(parameters.get("status"));
-			Long stage = Long.parseLong(parameters.get("stage"));
-			String scope = parameters.get("scope");
-			Long pType = Long.parseLong(parameters.get("pType"));	
-		
-			if((String) parameters.get("inspections")=="")		
-				inspections = (long) -1;
-			else
-				inspections = Long.parseLong(parameters.get("inspections"));
-						
-			try 
-			{ 	
-				Long projID = ps.addProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
-				response = ProjectService.getAsJSON(projID, "Project");
-					
-			} catch (ClassNotFoundException | ParseException e) 
-			{
-				
-				e.printStackTrace();
-			}
 		} else if(action.equals("addNewProject")) {
 			System.out.println("addingNewProject");
 			
@@ -146,41 +121,7 @@ public class Project extends HttpServlet
 			} catch(ClassNotFoundException | ParseException e) {
 				System.out.println("Some other error!");
 			}
-		}
-		else if (action.equals("edit"))
-		{
-			
-			System.out.println("edit");
-			Long inspections;
-			Long warehouse = Long.parseLong(parameters.get("warehouse"));
-			Long projectClass = Long.parseLong(parameters.get("class"));
-			Long projectItem = Long.parseLong(parameters.get("projectItem"));
-			Long manager = Long.parseLong(parameters.get("manager"));
-			Long supervisor = Long.parseLong(parameters.get("supervisor"));
-			Long status = Long.parseLong(parameters.get("status"));
-			Long stage = Long.parseLong(parameters.get("stage"));
-			//Long inspections= Long.parseLong(parameters.get("inspections"));
-			String scope = parameters.get("scope");
-			Long pType = Long.parseLong(parameters.get("pType"));
-			System.out.println("hey");
-			
-			if((String) parameters.get("inspections")=="")		
-				inspections = (long) -1;
-			else
-				inspections =Long.parseLong(parameters.get("inspections"));
-			
-			try 
-			{
-				    System.out.println("inspections in edit: " + inspections);
-				    ProjectService.editProject(warehouse, manager, supervisor, projectClass, projectItem, status, stage, pType, scope, parameters,inspections, req);
-			  
-			} catch (ClassNotFoundException | ParseException e) 
-			{
-				System.out.println("something went wrong with the build");
-				e.printStackTrace();
-			}
-		}
-		else if (action.equals("editCloseout"))
+		} else if (action.equals("editCloseout"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
@@ -305,6 +246,21 @@ public class Project extends HttpServlet
 			} catch (NumberFormatException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
+		} else if (action.equals("getUsers")) {
+			System.out.println("Gettng Names of All Users");
+			// TODO: Store User's name under User.class this implementation is really bad
+			String[] users = {"Andy", "Joe", "Bart", "David", "Daves",
+							  "Sandy"};
+			Gson gson = new Gson();
+			response = gson.toJson(users);
+		} else if (action.equals("createTask")) {
+			System.out.println("Creating Task");
+			
+			try {
+			response = ProjectService.createTask(parameters, (String) req.getSession().getAttribute("user"));
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if(!action.equals("getAllProjects"))
@@ -330,8 +286,6 @@ public class Project extends HttpServlet
 			username = "David";
 		else if(username.equals("dschoener"))
 			username = "Daves";
-		else if(username.equals("sai"))
-			username = "Sai";
 		else if(username.equals("alex"))
 			username = "Alex";
 		else if(username.equals("jim"))

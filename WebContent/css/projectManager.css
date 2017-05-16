@@ -133,8 +133,18 @@
 }
 
 #ui-datepicker-div > table > tbody > tr > .ui-datepicker-today {
-	background-color: #c9c9c9
+	background-color: #d4d4d4;
 }
 #ui-datepicker-div > table > tbody > tr > .ui-datepicker-today > a {
 	color: #6666FF;	
 }
+
+#ui-datepicker-div > table > tbody > tr > .ui-datepicker-current-day {
+	background-color: #445FAA;
+}
+
+#ui-datepicker-div > table > tbody > tr > .ui-datepicker-current-day > a {
+	color: white;
+}
+
+

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Homepage</title>
+    <title>Miller Home</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -36,7 +36,24 @@
 	          <li><a href="findProject.html">Find Projects</a></li>
 	        </ul>
 	      </li>
-	      <li><a href="triggerBrowser.html">Triggers</a></li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Triggers
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='triggerBrowser.html'>Browse Alerts</a></li>
+	      		<li><a href='triggerForm.html'>Create Trigger</a></li>
+	      	</ul>
+	      </li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='taskBrowser.html'>Your Tasks</a></li>
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
+	      	</ul>
+	      </li>
 	      <li><a href="query.html">Reports</a></li>
 	      <li><a href="additions.html">Tools</a></li>
 	    </ul>

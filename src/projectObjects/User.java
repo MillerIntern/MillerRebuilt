@@ -11,17 +11,19 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 public class User extends ProjectObject
 {
-	String name;
-	String password;
-	Status status;
-	Permission permission;
+	private String name;
+	private String password;
+	private String firstName;
+	private Status status;
+	private Permission permission;
 	
-	public User(String name, String pass, Status status, Permission permission)
+	public User(String name, String pass, Status status, Permission permission, String firstName)
 	{
 		this.name = name;
 		this.password = pass;
 		this.status = status;
 		this.permission = permission;
+		this.firstName = firstName;
 	}
 	
 	public User()
@@ -30,6 +32,7 @@ public class User extends ProjectObject
 		this.password = "";
 		this.status = null;
 		this.permission = null;
+		this.firstName = null;
 	}
 
 	public String getName() {
@@ -69,5 +72,13 @@ public class User extends ProjectObject
 
 	public void setPermission(Permission permission) {
 		this.permission = permission;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 }

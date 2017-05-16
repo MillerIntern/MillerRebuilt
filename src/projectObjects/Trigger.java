@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;

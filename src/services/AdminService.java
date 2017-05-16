@@ -124,7 +124,7 @@ public class AdminService
 		
 		if (u == null)
 		{
-			User newUser = new User(name, hashPass, s, p);
+			User newUser = new User(name, hashPass, s, p, "No Name");
 			ProjectObjectService.addObject("User", newUser);
 			status = 1;
 		}
@@ -163,7 +163,7 @@ public class AdminService
 
 			Permission p = (Permission) ProjectObjectService.get(permissionID, "Permission");
 		
-			User newUser = new User(name, password, s, p);
+			User newUser = new User(name, password, s, p, "No Name");
 			ProjectObjectService.editObject("User", userID, newUser,0);
 		}
 		catch(Exception e){e.printStackTrace();}

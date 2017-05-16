@@ -19,9 +19,15 @@ let typeOptions;
 let statusOptions;
 let stageOptions;
 
+let taskFinder;
+
 function getAllProjects() {
 	
 	clearAndAddSingleRow("Retrieving Projects...");
+	if (getParameterByName('type') === 'findTaskProject') {
+		$('#param-field').before('<h3>Select a Project to Create Task for:</h3>');
+		taskFinder = true;
+	} else taskFinder = false;
 	
 	$.ajax({
 		type: 'POST',
@@ -388,6 +394,12 @@ function filterProjects () {
 
 function navigateTo(source) {
 	console.log($(source).attr('id'));
-	window.location.href = PROJECTMANAGER + '?id=' + 
-							$(source).attr('id').replace('project', '');
+	if(taskFinder) {
+		window.location.href = TASK_CREATOR + '?id=' + 
+			$(source).attr('id').replace('project', '');
+	} else {
+		window.location.href = PROJECTMANAGER + '?id=' + 
+			$(source).attr('id').replace('project', '');
+	}
+
 }
