@@ -1,5 +1,7 @@
 package projectObjects;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -7,6 +9,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import services.ProjectObjectService;
 
 @Entity
 public class User extends ProjectObject
@@ -80,5 +84,39 @@ public class User extends ProjectObject
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	
+	// This method compares the firstnames that are sent to the task form against
+	// the firstnames in the database. Also compares the session stored username against 
+	// users' usernames in the database. 
+	// TODO: This method makes patchwork of first names which should be in the database
+	public static User mapNameToUser(String name) {
+		if (name == null) return null;
+		List<Object> users = ProjectObjectService.getAll("User");
+		
+		for (int i = 0; i < users.size(); i++) {
+			User u = (User)users.get(i);
+			// This catches both when the first names from the task form
+			// and also the session saved username name
+			if (name.equals(u.getFirstName()) || name.equals(u.getName())) {
+				return u;
+			
+			// prune all else if once names are in database
+			} else if (name.equals("Andy") && u.getName().equals("andy")) {
+				return u;
+			} else if (name.equals("Joe") && u.getName().equals("joe")) { 
+				return u;
+			} else if (name.equals("Bart") && u.getName().equals("bart")) {
+				return u;
+			} else if (name.equals("David") && u.getName().equals("dwgregory1")) {
+				return u;
+			} else if (name.equals("Daves") && u.getName().equals("dschoener")) {
+				return u;
+			} else if (name.equals("Sandy") && u.getName().equals("sandy")) {
+				return u;
+			}
+		}
+		
+		return null;
 	}
 }

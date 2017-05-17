@@ -1,7 +1,7 @@
 var PAGETYPE = 'closeout';
 
 var PROJECT_DATA;
-var PROJECT_ID;
+var projectID;
 
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
@@ -79,7 +79,7 @@ function getProjectEnums()
 	console.log(getParameterByName("id"));
 	if (PAGETYPE == 'closeout')
 	{
-		PROJECT_ID = getParameterByName("id");
+		projectID = getParameterByName("id");
 		
 		$.ajax({
 			type: 'POST',
@@ -88,7 +88,7 @@ function getProjectEnums()
 			{
 				'domain': 'project',
 				'action': 'get',
-				'id': PROJECT_ID,
+				'id': projectID,
 				
 			},
 			success: function(data)
@@ -97,6 +97,7 @@ function getProjectEnums()
 				setProjectHeader(data);
 
 				fillTabs(data);
+				getTasks();
 			}
 		});
 	}
@@ -682,7 +683,7 @@ function isValidInput(dates)
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
 
 var CLOSEOUTSTATUS_DROPDOWNS = [

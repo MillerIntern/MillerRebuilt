@@ -18,12 +18,49 @@
 	<script>
 	'use strict';
 	
+	let projectID;
+	
 	$(document).ready(function () {
 	 	$("#dueDate").datepicker();   
 		$('#initDate').datepicker();
 		
 		$('#initDate').val(getToday());
 	});
+	
+	function getProject () {
+		projectID = getParameterByName('id');
+		
+		if (typeof projectID === 'undefined') {
+			alert('Invalid Project Selected');
+			window.location.href = 'findProject.html?type=findTaskProject';
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID
+			}, success: function (data) {
+				console.log(data);
+				
+				let city = data.warehouse.city.name;
+				let state = data.warehouse.state;
+				
+				state = state.replace('_', ' ');
+				state = toTitleCase(state);
+				
+				let item = data.projectItem.name;
+				
+				$('#title').html('Task Form: ' + city + ', ' + state + ' --- ' + item);
+				getUsers();
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	}
 	
 	function getUsers () {
 		$.ajax({
@@ -122,6 +159,11 @@
 		return true;
 	}
 	
+	function navigateToProjManager() {
+		if (confirm('Are you sure you want to leave this form?')) {
+			window.location.href = "projectManager.html?id=" + projectID;
+		}
+	}
 	
 	</script>
 
@@ -130,7 +172,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href='css/triggerBrowser.css' rel='stylesheet'>
   </head>
-  <body onload='getUsers()'>
+  <body onload='getProject()'>
   
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -147,23 +189,33 @@
 	          <li><a href="findProject.html">Find Projects</a></li>
 	        </ul>
 	      </li>
-	      <li class='active'><a href="triggerBrowser.html">Triggers</a></li>
+	      <li><a href="triggerBrowser.html">Triggers</a></li>
+	      <li class='dropdown active'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='taskBrowser.html'>Your Tasks</a></li>
+	      		<li class='active'><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
+	      	</ul>
+	      </li>
 	      <li><a href="query.html">Reports</a></li>
 	      <li><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 	    </ul>
 	  </div>
 	</nav>
 	
     <div class="container">
     		
-   		<h4 style='display:inline'>Task Form</h4>
+   		<h4 id='title' style='display:inline'></h4>
+   		<button style='margin: 4px' type='button' class='button' onclick='navigateToProjManager()'>Project Manager</button>
 		<div class='base-field'>
 			<table class='table'>
 				<tr>
-					<td><label for='titleEntry'>Title:</label>
+					<td><label for='titleEntry'>Task:</label>
 					<td><input type='text' id='titleEntry' placeholder='Task Title'/>
 				</tr>
 				<tr>
@@ -187,7 +239,7 @@
 					<td><input type='text' id='dueDate' placeholder='Task Due'/>
 				</tr>
 		        <tr>
-		        	<td><label>Severity:</label></td>
+		        	<td><label>Priority:</label></td>
 		        	<td class='severityEntry'>
 		        		<select id='severity'>
 		        			<option value='1'>1 </option>

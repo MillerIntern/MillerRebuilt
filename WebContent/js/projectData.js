@@ -3,7 +3,7 @@
 var numChangeOrders = 0;
 var PAGETYPE = "add";
 var changeOrders = [];
-var PROJECT_ID = 0;
+var projectID = 0;
 var PROJECT_DATA = null;
 var stages=["Active", "Proposal", "Budgetary", "Closed", "Inactive"];
 var INSPECTION_ID = 0;
@@ -75,8 +75,9 @@ function getProjectEnums()
 			if(PAGETYPE == 'edit') {
 				getProject();
 			}
-			else
+			else {
 				$("#projectHeader").text("New Project");
+			}
 		}
 	});
 }
@@ -211,7 +212,7 @@ function saveProject() {
 			data: {
 				'domain': 'project',
 				'action': action,
-				'projectID': PROJECT_ID,
+				'projectID': projectID,
 				'mcsNumber': mcsNumber,
 				
 				'warehouse': warehouse,
@@ -251,7 +252,7 @@ function saveProject() {
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
 
 //This function validates the nunmerous fields of this page, separated by categories
@@ -297,9 +298,9 @@ function isValidInput(requiredFields, dates)
 //Output: none
 function getProject()
 {
-	PROJECT_ID = getParameterByName("id");
+	projectID = getParameterByName("id");
 	
-	if (PROJECT_ID)
+	if (projectID)
 	{
 		$.ajax({
 			type: 'POST',
@@ -308,13 +309,14 @@ function getProject()
 			{
 				'domain': 'project',
 				'action': 'get',
-				'id': PROJECT_ID
+				'id': projectID
 			},
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
 				setProjectHeader(data);
 				fillForm(data);
+				getTasks();
 			}
 		});
 	}

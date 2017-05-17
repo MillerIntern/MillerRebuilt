@@ -11,17 +11,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.google.gson.Gson;
 
+import objects.HibernateUtil;
 import objects.RequestHandler;
+import projectObjects.Task;
+import projectObjects.User;
 import services.LoginService;
 import services.ProjectObjectService;
 import services.ProjectService;
 import services.QueryService;
+import services.helpers.TaskFiller;
 
 /**
  * Always code as if the guy who ends up maintaining your code 
  * will be a violent psychopath who knows where you live.
+ * 
+ *  -- Never Forgetti the Quoteroli 
  * 
  */
 @WebServlet("/Project")
@@ -36,6 +45,9 @@ public class Project extends HttpServlet
     }
 
     /**
+     * TODO: This is pretty sloppy, if we could separate into different servlets or 
+     * 				normalize the way we do stuff that would be great. It's just all over the place right now. 
+     * 
      * This is where most of the java work is called from. The whatever.js
      * page will send a request to this URL given a set of parameters with 
      * an action. This method will result in data being written back out to 
@@ -261,9 +273,67 @@ public class Project extends HttpServlet
 			} catch(ClassNotFoundException | ParseException e) {
 				e.printStackTrace();
 			}
+		} else if (action.equals("getTasks")) {
+			try {
+				System.out.println("Getting Tasks");
+				response = ProjectObjectService.getAllAsJsonString("Task");
+
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		} else if (action.equals("getUserInfo")) {
+			System.out.println("getting User Info");
+			Gson g = new Gson();
+			response = g.toJson(User.mapNameToUser((String) req.getSession().getAttribute("user")));
+		} else if (action.equals("updateTask")) {
+			System.out.println("Updating Task");
+			
+			Task currentTask = null;
+			try {
+				long taskID = Long.parseLong(parameters.get("taskID"));
+				currentTask = (Task)ProjectObjectService.get(taskID,  "Task");
+			} catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				TaskFiller.fillTaskInformation(currentTask, parameters, (String) req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
+			session.clear();
+			session.update(currentTask);
+			tx.commit();
+
+			response =  "UPDATED_TASK";
+			
+		} else if (action.equals("getProjectTasks")) {
+			System.out.println("getting Project tasks");
+			response = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("id")));
+		} else if (action.equals("closeTask")) {
+			System.out.println("Closing Task");
+			try {
+				Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
+				
+				task.setCompleted(true);
+				
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(task);
+				tx.commit();
+				response = "TASK_CLOSED";
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		if(!action.equals("getAllProjects"))
+		if(!action.equals("getAllProjects") && !action.equals("getTasks"))
 			System.out.println(response);
 		out.println(response);
 	}

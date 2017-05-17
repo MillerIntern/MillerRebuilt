@@ -10,7 +10,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.TransactionException;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -81,7 +83,14 @@ public class ProjectObjectService
 			c = Class.forName("projectObjects."+domain);
 			
 			Criteria criteria = session.createCriteria(c);
-			if (!domain.equals("Warehouse") && !domain.equals("Project") && !domain.equals("Inspections") && !domain.equals("Permits")  && !domain.equals("Equipment")&& !domain.equals("EquipmentStatus") && !domain.equals("Proposal"))
+			if (!domain.equals("Warehouse") && 
+				!domain.equals("Project") && 
+				!domain.equals("Inspections") && 
+				!domain.equals("Permits")  && 
+				!domain.equals("Equipment")&& 
+				!domain.equals("EquipmentStatus") && 
+				!domain.equals("Proposal") && 
+				!domain.equals("Task"))
 				criteria.addOrder(Order.asc("name"));
 			else if(domain.equals("Inspections"))
 			{
@@ -104,12 +113,12 @@ public class ProjectObjectService
 			else if(domain.equals("EquipmentStatus"))
 			{
 				criteria.addOrder(Order.asc("id"));
-			}
-			
-			else if (domain.equals("Warehouse"))
-			{
+			} else if (domain.equals("Warehouse")){
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
+			} else if (domain.equals("Task")) {
+				Criterion criteriaRestriction = Restrictions.sqlRestriction("completed = 0");
+				criteria.add(criteriaRestriction);
 			}
 			
 	        List<?> list = criteria.list();
@@ -284,7 +293,7 @@ public class ProjectObjectService
 	 */
 	public static long addObject(String domain, Object o)
 	{
-		System.out.println("add Project");
+		System.out.println("add Object");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		//session.save(o);
@@ -444,5 +453,43 @@ public class ProjectObjectService
 		{
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * @param parseLong
+	 * @return
+	 */
+	public static String getProjectTasksAsJSON(long projectID) {
+        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+		} catch(TransactionException ex) {	
+			tx.commit();
+			return "ERROR";
+		}
+		Class<?> c;
+		
+		try {
+			c = Class.forName("projectObjects.Task");
+			
+			Criteria criteria = session.createCriteria(c);
+
+			Criterion completedRestriction = Restrictions.sqlRestriction("completed = 0");
+			criteria.add(completedRestriction);
+			Criterion projectIDRestriction = Restrictions.sqlRestriction("project_id = " + projectID);
+			criteria.add(projectIDRestriction);
+			
+	        List<?> list = criteria.list();
+	        
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
 	}
 }

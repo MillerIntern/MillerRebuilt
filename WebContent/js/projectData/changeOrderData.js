@@ -1,5 +1,5 @@
 var PAGETYPE = "add";
-var PROJECT_ID;
+var projectID;
 var CHANGE_ORDER_ID;
 
 var PROJECT_DATA;
@@ -24,7 +24,7 @@ $(document).ready(function()
 function getProject()
 {
 	console.log(getParameterByName("id"));
-	if(PROJECT_ID !== null) {	
+	if(projectID !== null) {	
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -32,7 +32,7 @@ function getProject()
 			{
 				'domain': 'project',
 				'action': 'get',
-				'id': PROJECT_ID,
+				'id': projectID,
 				
 			},
 			success: function(data)
@@ -45,7 +45,7 @@ function getProject()
 					CHANGE_ORDER_ID = getParameterByName("changeOrderID");
 					PROJECT_DATA = data;
 					fillTabs(PROJECT_DATA);
-	
+					getTasks();
 				}
 	
 			}
@@ -58,13 +58,13 @@ function getProject()
 function getDropdownInfo()
 {
 	PAGETYPE = getParameterByName("type");	
-	PROJECT_ID = getParameterByName("id");
-	if(PROJECT_ID === null) {
+	projectID = getParameterByName("id");
+	if(projectID === null) {
 		alert('Invalid URL. Try returning to this page again.');
 		return;
 	}
 	
-	//if(PROJECT_ID !== null) {}
+	//if(projectID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
@@ -192,7 +192,7 @@ function saveProject()
 				'domain': 'project',
 				'action': action,
 				
-				'projectID': PROJECT_ID,
+				'projectID': projectID,
 				'changeOrderID': CHANGE_ORDER_ID,
 				'proposalDate': proposalDate,
 				'submittedDate': submittedDate,
@@ -245,5 +245,5 @@ function isValidInput(dates)
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }

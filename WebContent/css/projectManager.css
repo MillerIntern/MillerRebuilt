@@ -67,6 +67,14 @@
 	margin-bottom: 8px;
 }
 
+#taskTable > tbody > tr > td {
+	font-size: 14.75px;
+}
+
+#taskTable {
+	margin-top: 16px;
+}
+
 
 /* datepicker customization */
 

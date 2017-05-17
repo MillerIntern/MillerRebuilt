@@ -16,7 +16,6 @@ import com.google.gson.JsonParser;
 
 import objects.RequestHandler;
 import services.LoginService;
-import services.ProjectObjectService;
 import services.ProjectService;
 import services.TriggerService;
 

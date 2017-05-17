@@ -663,7 +663,6 @@ public class ProjectService extends ProjectObjectService
 	 * @return
 	 */
 	public static String createTask(Map<String, String> parameters, String username) throws ClassNotFoundException, ParseException {
-		Gson g = new Gson();
 		Task t = new Task();
 
 		TaskFiller.fillTaskInformation(t, parameters, username);

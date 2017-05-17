@@ -376,8 +376,8 @@ function filterProjects () {
 						navigateTo(projectListing);
 					}
 					
-					listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
-											toTitleCase(json[k].warehouse.state.replace('_', ' '));
+					listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
+											json[k].warehouse.warehouseID;
 					listDetails1.innerHTML = json[k].projectItem.name;
 					listDetails2.innerHTML = json[k].projectManagers.name;
 					

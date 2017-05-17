@@ -84,7 +84,7 @@ function setProjectHeader (projectData) {
 	state = toTitleCase(state);
 	
 	let item = projectData.projectItem.name;
-	$("#projectHeader").text(city + ", " + state + " --- " +  item);
+	$("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
 }
 
 function toTitleCase(str)
@@ -112,4 +112,34 @@ function getToday() {
 function comingSoon(source) {
 	if($(source).is('button'))
 		$(source).html('Coming Soon!');
+}
+
+/* *
+ * Expected input, button with value attribute equal to task to close
+ */
+function closeTaskById (source) {
+	let taskID = $(source).val();
+	console.log('taskID: ' + $(source).val());
+	
+	if(typeof taskID === 'undefined') return alert('Invalid Task ID. Try to reload!');
+	
+	$.ajax({
+		type: 'POST', 
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'closeTask',
+			'taskID': taskID
+		}, complete: function (data) {
+			console.log(data);
+			if ($.trim(data.responseText) === 'TASK_CLOSED') {
+				alert('Task Closed!');
+				console.log($(source).parent('tr'));
+				$(source).parent().parent('tr').remove();
+				if($('#taskWell')) {
+					$('#taskWell').slideUp();
+				}
+			}
+		}
+	});
 }

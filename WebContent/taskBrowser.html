@@ -8,18 +8,36 @@
     <title>Task Browser</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
-	<script src="js/findProject.js"></script>
+	<Script src='js/taskBrowser.js'></Script>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/findProject.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
     
+	<style>
+		#taskWell > * {
+			display:block;
+			margin: 6px;
+		}
+		
+		#taskWell > div > p {
+			margin-bottom: 0px;
+		}
+		
+		#taskWell textarea {
+			width: 50%;
+		}
+		
 
+	</style>
   </head>
-  <body onload="">
+  <body onload="getUserData()">
   
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -28,7 +46,7 @@
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li><a href="homepage.html">Home</a></li>
-	      <li class="active dropdown">
+	      <li class="dropdown">
 	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
@@ -37,31 +55,72 @@
 	        </ul>
 	      </li>
 	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown active'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li class='active'><a href='taskBrowser.html'>Your Tasks</a></li>
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
+	      	</ul>
+	      </li>
 	      <li><a href="query.html">Reports</a></li>
 	      <li><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 	    </ul>
 	  </div>
 	</nav>
 	
     <div class="container">
-   		
+   		<h4 id='formFor'></h4>
+   		<div id='taskWell' class='well' style='display:none'>
+   			<h4 class='title'></h4>
+   			<div>
+   			<p><b>Description of Task:</b></p>
+   			<textarea class='description'></textarea>
+   			</div>
+   			<span><b>Priority:</b>
+   			<select class='severity'>
+   				<option>1</option>
+   				<option>2</option>
+   				<option>3</option>
+   			</select></span>
+   			<p class='assignedDate'></p>
+   			<span><span style='margin-right: 4px;'><b>Due Date:</b></span><input type='text' class='dueDate taskUpdate'/></span>
+   			<p class='assignedBy'></p>
+   			<span>
+   				<span><b>Assigned To:</b></span>
+   				<select class='assignedTo'>
+   					
+   				</select>
+   			</span>
+   			<div>
+   			<p><b>Notes:</b></p>
+   			<textarea class='notes'></textarea>
+   			</div>
+   			<span>
+   			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
+   			<button class='btn' onclick='navigateToSelectedProject()'>Navigate to Project</button>
+   			<button class='btn' onclick='saveTaskChanges()'>Update Task</button>
+   			</span>
+   		</div>
    		<table id="results" class="table table-hover">
-   			<tr>
-   				<th><input type='text' placeholder='Search For Project'/></th>
+   			<tr class='head'>
+   				<td><input type='text' placeholder='Search For Project'/></td>
    				<th></th>
-   				<th><input type='text' placeholder='Filter Descriptions'/></th>
+   				<td><input type='text' placeholder='Filter Descriptions'/></td>
    				<th></th><th></th><th></th>
    			</tr>
    			<tr class='head'>
    				<th>Project</th>
-   				<th>Title</th>
+   				<th>Task</th>
    				<th>Description</th>
    				<th>Created</th>
    				<th>Due</th>
-   				<th>Severity</th>
+   				<th onclick='sortByPriority()'>Priority&#8645;</th>
+   				<th></th>
    			</tr>
    		</table>
   	

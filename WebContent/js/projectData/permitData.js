@@ -1,7 +1,7 @@
 var PAGETYPE = 'permit';
 
 var PROJECT_DATA;
-var PROJECT_ID;
+var projectID;
 
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
@@ -47,8 +47,8 @@ $(document).ready(function(){
 function getProject()
 {
 	console.log(getParameterByName("id"));
-		PROJECT_ID = getParameterByName("id");
-	if(PROJECT_ID !== null) {
+		projectID = getParameterByName("id");
+	if(projectID !== null) {
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -56,7 +56,7 @@ function getProject()
 			{
 				'domain': 'project',
 				'action': 'get',
-				'id': PROJECT_ID,
+				'id': projectID,
 				
 			},
 			success: function(data)
@@ -65,6 +65,7 @@ function getProject()
 				setProjectHeader(data);
 
 				fillTabs(PROJECT_DATA);
+				getTasks();
 			}
 		});
 	} else {
@@ -365,7 +366,7 @@ function saveProject()
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
 
 function isValidInput(dates)

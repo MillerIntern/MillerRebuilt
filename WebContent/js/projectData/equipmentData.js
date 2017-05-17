@@ -1,6 +1,6 @@
 
 var PAGETYPE = "add";
-var PROJECT_ID;
+var projectID;
 var EQUIPMENT_ID;
 
 var PROJECT_DATA;
@@ -24,13 +24,13 @@ $(document).ready(function()
 function getDropdownInfo()
 {
 	PAGETYPE = getParameterByName("type");	
-	PROJECT_ID = getParameterByName("id");
-	if(PROJECT_ID === null) {
+	projectID = getParameterByName("id");
+	if(projectID === null) {
 		alert('Invalid URL. Try returning to this page again.');
 		return;
 	}
 	
-	//if(PROJECT_ID !== null) {}
+	//if(projectID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
@@ -51,7 +51,7 @@ function getDropdownInfo()
 function getProject()
 {
 	console.log(getParameterByName("id"));
-	if(PROJECT_ID !== null) {	
+	if(projectID !== null) {	
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -59,7 +59,7 @@ function getProject()
 			{
 				'domain': 'project',
 				'action': 'get',
-				'id': PROJECT_ID,
+				'id': projectID,
 				
 			},
 			success: function(data)
@@ -74,7 +74,7 @@ function getProject()
 					fillTabs(PROJECT_DATA);
 	
 				}
-	
+				getTasks();
 			}
 		});
 	} else {
@@ -138,7 +138,7 @@ function saveProject()
 			data:
 			{
 				'domain': 'project',
-				'projectID': PROJECT_ID,
+				'projectID': projectID,
 				'equipmentID': EQUIPMENT_ID,
 				'action': action,
 				'poNum': poNum,
@@ -184,5 +184,5 @@ function isValidInput(dates)
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + PROJECT_ID;
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }

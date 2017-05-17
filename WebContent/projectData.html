@@ -13,6 +13,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/projectData.js"></script>
     <script src="js/global.js"></script>
+    <script type='text/javascript' src='js/taskAbstraction.js'></script>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,11 +41,20 @@
 	        </ul>
 	      </li>
 	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='taskBrowser.html'>Your Tasks</a></li>
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
+	      	</ul>
+	      </li>
 	      <li><a href="query.html">Reports</a></li>
 	      <li><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li onclick='logout()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 	    </ul>
 	  </div>
 	</nav>
@@ -216,9 +226,21 @@
 	
 	
 	<div class='info-tab' id='saveButton'>
-		<button onclick='returnToProjectManager()' class='btn btn-primary'>Go to Project Manager</button>
-		<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
-		<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+		<button onclick='returnToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
+		<button onclick='returnToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
+		<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
+		
+		<table class='table table-hover' id='taskTable'>
+			<tr class='head'>
+				<th>Task</th>
+				<th>Description</th>
+				<th>Assigned</th>
+				<th>Due</th>
+				<th>Priority</th>
+				<th style='width: 200px;'>Notes</th>
+				<th></th>
+			</tr>
+		</table>
 	</div>
 
 </div>  <!-- End Container -->
