@@ -1569,7 +1569,7 @@ function generateReport(reportType)
 			break;
 		case PERMIT_BUDGETARY:
 			stage.push(BUDGETARY_STAGE);
-			//status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			title = "Permits for Budgetary Projects";
 			break;
 		case PERMIT_CLOSED:

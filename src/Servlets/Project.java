@@ -263,6 +263,7 @@ public class Project extends HttpServlet
 			// TODO: Store User's name under User.class this implementation is really bad
 			String[] users = {"Andy", "Joe", "Bart", "David", "Daves",
 							  "Sandy"};
+			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(users);
 		} else if (action.equals("createTask")) {
@@ -302,7 +303,7 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			Session session = HibernateUtil.getSession();
 			Transaction tx = session.beginTransaction();
 			session.clear();

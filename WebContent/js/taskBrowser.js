@@ -1,3 +1,4 @@
+'use strict';
 
 let user;
 let task;
@@ -16,7 +17,7 @@ function getUserData () {
 			'domain': 'project',
 			'action': 'getUserInfo'
 		}, complete: function (data) {
-			console.log(data.responseJSON);
+			console.log(data);
 			if(data.responseJSON) {
 				user = data.responseJSON;
 				$('#formFor').html('Tasks for: ' + user.firstName);
@@ -77,14 +78,15 @@ function createDropdown (json) {
 	$('#taskWell > span > .assignedTo').append(d);
 }
 
-function createTaskTable (json) {
-	console.log(json);
+function createTaskTable () {
+	console.log(tasks);
 	var count = 0;
-	for (var i = 0; i < json.length; i++) {
-		if (json[i].assignee.name === user.name) {
+	for (var i = 0; i < tasks.length; i++) {
+		console.log(tasks[i].assignee.name + ' ' + user.name);
+		if (tasks[i].assignee.name === user.name) {
 			count++;
 			let taskListing = document.createElement('tr');
-			taskListing.value = json[i].id;
+			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
 				expandTaskInfo(this); 
 			}; 
@@ -100,19 +102,19 @@ function createTaskTable (json) {
 			let closeButton = document.createElement('button');
 			closeButton.innerHTML = 'Close'
 			closeButton.classname = 'btn';
-			closeButton.value = json[i].id;
+			closeButton.value = tasks[i].id;
 			closeButton.onclick = function () {
 				closeTaskById(this);
 			};
 			
-			projectDetails.innerHTML = json[i].project.warehouse.city.name + 
-						' #' + json[i].project.warehouse.warehouseID +
-						' - ' + json[i].project.projectItem.name;
-			taskTitle.innerHTML = json[i].title;
-			taskDesc.innerHTML = json[i].description;
-			createdDate.innerHTML = json[i].assignedDate;
-			dueDate.innerHTML = json[i].dueDate;
-			severity.innerHTML = json[i].severity;
+			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
+						' #' + tasks[i].project.warehouse.warehouseID +
+						' - ' + tasks[i].project.projectItem.name;
+			taskTitle.innerHTML = tasks[i].title;
+			taskDesc.innerHTML = tasks[i].description;
+			createdDate.innerHTML = tasks[i].assignedDate;
+			dueDate.innerHTML = tasks[i].dueDate;
+			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
 			closeTask.appendChild(closeButton);
 			
@@ -193,7 +195,6 @@ function expandTaskInfo(param) {
 	$('#taskWell > div > .notes').val(task.notes);
 	
 	$('#taskWell').slideDown();
-	collapsed = false;
 }
 
 function navigateToSelectedProject () {

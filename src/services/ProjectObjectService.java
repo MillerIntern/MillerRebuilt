@@ -92,34 +92,28 @@ public class ProjectObjectService
 				!domain.equals("Proposal") && 
 				!domain.equals("Task"))
 				criteria.addOrder(Order.asc("name"));
-			else if(domain.equals("Inspections"))
-			{
+			else if(domain.equals("Inspections")) {
 				criteria.addOrder(Order.asc("id"));
-			}
-			else if(domain.equals("Proposal"))
-			{
+			} else if(domain.equals("Proposal")) {
 				criteria.addOrder(Order.asc("id"));
-			}
-			else if(domain.equals("Permits"))
-			{
+			} else if(domain.equals("Permits")) {
 				criteria.addOrder(Order.asc("id"));
-			}
-			
-			else if(domain.equals("Equipment"))
-			{
+			} else if(domain.equals("Equipment")) {
 				criteria.addOrder(Order.asc("id"));
-			}
-			
-			else if(domain.equals("EquipmentStatus"))
-			{
+			} else if(domain.equals("EquipmentStatus")) {
 				criteria.addOrder(Order.asc("id"));
 			} else if (domain.equals("Warehouse")){
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
-			} else if (domain.equals("Task")) {
-				Criterion criteriaRestriction = Restrictions.sqlRestriction("completed = 0");
-				criteria.add(criteriaRestriction);
+			} else if (domain.equals("Project")) {
+				Criterion deletedProjects = Restrictions.sqlRestriction("stage_id != 6"); //deleted projects
+				criteria.add(deletedProjects);
+				Criterion lostProjects = Restrictions.sqlRestriction("stage_id != 7"); //lost projects
+				criteria.add(lostProjects);
+				Criterion inactiveProjects = Restrictions.sqlRestriction("stage_id != 10"); //inactive projects
+				criteria.add(inactiveProjects);
 			}
+		
 			
 	        List<?> list = criteria.list();
 	        
@@ -476,8 +470,6 @@ public class ProjectObjectService
 			
 			Criteria criteria = session.createCriteria(c);
 
-			Criterion completedRestriction = Restrictions.sqlRestriction("completed = 0");
-			criteria.add(completedRestriction);
 			Criterion projectIDRestriction = Restrictions.sqlRestriction("project_id = " + projectID);
 			criteria.add(projectIDRestriction);
 			

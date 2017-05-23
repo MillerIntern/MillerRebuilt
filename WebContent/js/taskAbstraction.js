@@ -1,3 +1,13 @@
+'use strict';
+let tasks;
+
+$(document).on('change', '#taskSelector', function () {
+	clearTaskTable();
+	fillTasksTable(tasks);
+});
+
+
+
 function getTasks() {
 	console.log(projectID);
 	$.ajax({
@@ -9,8 +19,10 @@ function getTasks() {
 			'id': projectID
 		}, success: function (data) {
 			console.log(data);
-			if (data)
-				fillTasksTable(data);
+			if (data) {
+				tasks = data;
+				fillTasksTable(tasks);
+			}
 		}, error: function (data) {
 			alert('Server Error!');
 		}
@@ -18,8 +30,15 @@ function getTasks() {
 }
 
 function fillTasksTable(json) {
+	let selector = $('#taskSelector').val();
+	console.log(selector);
+	
 	let count = 0;
 	for (var i = 0; i < json.length; i++) {
+		if((selector === 'incomplete' && json[i].completed) || 
+			(selector === 'complete' && !json[i].completed)) 
+			continue; // do nothing
+
 		count++;
 		let taskListing = document.createElement('tr');
 		taskListing.value = json[i].id;
@@ -87,4 +106,8 @@ function clearAndAddSingleRow(msg) {
 	$(placeHolder).append(listDetails5);
 	
 	$('#taskTable > tbody').append(placeHolder);
+}
+
+function clearTaskTable () {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
 }

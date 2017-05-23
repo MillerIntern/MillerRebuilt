@@ -120,6 +120,11 @@
 		<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
 		<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
 		<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+		<select style='margin: 4px' id='taskSelector' class='form-control'>
+			<option value='incomplete'>Incomplete</option>
+			<option value='complete'>Complete</option>
+			<option value='all'>All</option>
+		</select>
 		<table class='table table-hover' id='taskTable'>
    			<tr class='head'>
    				<th>Task</th>

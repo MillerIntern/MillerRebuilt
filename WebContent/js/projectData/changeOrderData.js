@@ -40,13 +40,13 @@ function getProject()
 				PROJECT_DATA = (data);
 				setProjectHeader(data);
 				
-				if(PAGETYPE == 'edit')
-				{
+				if(PAGETYPE == 'edit') {
 					CHANGE_ORDER_ID = getParameterByName("changeOrderID");
 					PROJECT_DATA = data;
 					fillTabs(PROJECT_DATA);
-					getTasks();
 				}
+				getTasks();
+
 	
 			}
 		});

@@ -21,6 +21,9 @@ let stageOptions;
 
 let taskFinder;
 
+let t0;
+let t1;
+
 function getAllProjects() {
 	
 	clearAndAddSingleRow("Retrieving Projects...");
@@ -29,6 +32,7 @@ function getAllProjects() {
 		taskFinder = true;
 	} else taskFinder = false;
 	
+	t0 = new Date().getTime();
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -37,6 +41,8 @@ function getAllProjects() {
 			'action': 'getAllProjects'
 		}, success: function (data) {
 			projects = data;
+			t1 = new Date().getTime();
+			console.log('took: ' + (t1 - t0) + 'ms');
 			getSearchCriteria();
 		}
 	});

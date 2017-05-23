@@ -39,6 +39,7 @@ public class TaskFiller {
 		t.setSeverity(Integer.parseInt(params.get("severity")));
 		t.setNotes(params.get("notes"));
 
+		// TODO: Do different methods mapUsernameToUser & mapFirstnameToUser
 		t.setAssignee(User.mapNameToUser(params.get("assignee")));
 		t.setAssigner(User.mapNameToUser(sessionName));
 		

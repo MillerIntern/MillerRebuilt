@@ -22,3 +22,5 @@ local.properties
 .settings/
 /build/
 /target/
+
+Initialization.txt
