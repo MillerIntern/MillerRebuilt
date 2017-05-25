@@ -230,11 +230,15 @@
 		<button onclick='returnToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
 		<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
 		
-		<select style='margin: 4px' id='taskSelector' class='form-control'>
-			<option value='incomplete'>Incomplete</option>
-			<option value='complete'>Complete</option>
+        
+		<select style='margin: 4px' id ='taskSelector' class='form-control'>
 			<option value='all'>All</option>
+			<option value='complete'>Complete</option>
+			<option value='incomplete'>Incomplete</option>
+			
 		</select>
+		
+      
 		<table class='table table-hover' id='taskTable'>
 			<tr class='head'>
 				<th>Task</th>
@@ -246,6 +250,7 @@
 				<th></th>
 			</tr>
 		</table>
+		
 	</div>
 
 </div>  <!-- End Container -->

@@ -1,18 +1,16 @@
 'use strict';
-
+if(typeof tasks == undefined){
 let tasks;
-
-
-
+}
 $(document).on('change', '#taskSelector', function () {
 	clearTaskTable();
+	$('#notes').show();
 	fillTasksTable(tasks);
-	console.log("Right here \n");
 });
 
 
 
-function getTasks() {
+function getTasks2() {
 	console.log(projectID);
 	$.ajax({
 		type: 'POST',
@@ -35,6 +33,7 @@ function getTasks() {
 
 function fillTasksTable(json) {
 	let selector = $('#taskSelector').val();
+	console.log("tasking");
 	console.log(selector);
 	
 	let count = 0;
@@ -42,11 +41,12 @@ function fillTasksTable(json) {
 		if((selector === 'incomplete' && json[i].completed) || 
 			(selector === 'complete' && !json[i].completed)) 
 			continue; // do nothing
-
+        console.log(json[i]);
 		count++;
 		let taskListing = document.createElement('tr');
 		taskListing.value = json[i].id;
 		
+		let project = document.createElement('td');
 		let taskTitle = document.createElement('td');
 		let taskDesc = document.createElement('td');
 		let assignedTo = document.createElement('td');
@@ -63,6 +63,10 @@ function fillTasksTable(json) {
 			closeTaskById(this);
 		};
 		
+		console.log(json[i].project.projectItem.name);
+		
+		project.innerHTML = " " + json[i].project.warehouse.city.name + "  #"+ json[i].project.warehouse.warehouseID + "  -  " 
+		     + json[i].project.projectItem.name;
 		taskTitle.innerHTML = json[i].title;
 		taskDesc.innerHTML = json[i].description;
 		assignedTo.innerHTML = json[i].assignee.firstName;
@@ -72,6 +76,7 @@ function fillTasksTable(json) {
 		notes.innerHTML = json[i].notes;
 		closeTask.appendChild(closeButton);
 		
+		$(taskListing).append(project);
 		$(taskListing).append(taskTitle);
 		$(taskListing).append(taskDesc);
 		$(taskListing).append(assignedTo);
@@ -114,4 +119,5 @@ function clearAndAddSingleRow(msg) {
 
 function clearTaskTable () {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
+	
 }

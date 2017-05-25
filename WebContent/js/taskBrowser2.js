@@ -271,49 +271,7 @@ function isValidInput(dates)
 	return true;
 }
 
-function sortByDate() {
-	console.log(tasks); 
-    tasks.sort(function(a,b){
-      var dateA, dateB;
-      dateA = a.dueDate.split("/");
-      dateB = b.dueDate.split("/");
-      if(dateA[2] < dateB[2]) return -1;
-      if(dateA[2] > dateB[2]) return 1;
-      if(dateA[0] < dateB[0]) return -1;
-      if(dateA[0] > dateB[0]) return 1;
-      if(dateA[1] < dateB[1]) return -1;
-      if(dateA[1] > dateB[1]) return 1;
-      return 0;
-    })
-    console.log("post sort");
-    console.log(tasks); 	
-    clearTaskTable();
-	$('#notes').show();
-	fillTasksTable(tasks);
-    		
-    }
-    
-	/**
-	 * tasks.sort(function(a,b){
-		  if (a.severity < b.severity) return -1;
-		  if (a.severity > b.severity) return 1; return 0;
-		});
-		
-		*/
-
 function sortByPriority () {
-	console.log(tasks);  
-		tasks.sort(function(a,b){
-		  if (a.severity < b.severity) return -1;
-		  if (a.severity > b.severity) return 1; return 0;
-		});
-		
-		clearTaskTable();
-		$('#notes').show();
-		fillTasksTable(tasks);
+	console.log(tasks);
+	
 }
-
-
-
-
-

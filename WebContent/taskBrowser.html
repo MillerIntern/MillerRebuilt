@@ -12,8 +12,10 @@
 	
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
-	<Script src='js/taskBrowser.js'></Script>
-
+	<script src='js/taskBrowser.js'></script>
+	<script src='js/taskAbstraction2.js'></script>
+	
+	
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/findProject.css" rel="stylesheet">
@@ -34,10 +36,15 @@
 			width: 50%;
 		}
 		
+		#notes	{
+			display: none;
+		}
+		
 
 	</style>
   </head>
   <body onload="getUserData()">
+ 
   
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -51,7 +58,7 @@
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
 	          <li><a href="projectData.html">Add Project</a></li>
-	          <li><a href="findProject.html">Find Projects</a></li>
+	          <li class='active'><a href="findProject.html">Find Projects</a></li>
 	        </ul>
 	      </li>
 	      <li><a href="#">Triggers</a></li>
@@ -106,23 +113,37 @@
    			<button class='btn' onclick='saveTaskChanges()'>Update Task</button>
    			</span>
    		</div>
-   		<table id="results" class="table table-hover">
+   		
+   		
+   		<select id ='taskSelector' class='form-control'>
+			<option value='all'>All</option>
+			<option value='complete'>Complete</option>         
+			<option value='incomplete'>Incomplete</option>
+		</select>
+		
+		
+		
+		
+		<table id="taskTable" class="table table-hover">
    			<tr class='head'>
    				<td><input type='text' placeholder='Search For Project'/></td>
    				<th></th>
    				<td><input type='text' placeholder='Filter Descriptions'/></td>
    				<th></th><th></th><th></th>
    			</tr>
+   		
    			<tr class='head'>
    				<th>Project</th>
    				<th>Task</th>
    				<th>Description</th>
    				<th>Created</th>
-   				<th>Due</th>
+   				<th onclick='sortByDate()'>Due&#8645;</th>
    				<th onclick='sortByPriority()'>Priority&#8645;</th>
+   				<th id = "notes">Notes</th>
    				<th></th>
    			</tr>
    		</table>
+   		
   	
     </div>
 
