@@ -13,7 +13,6 @@
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
 	<script src='js/taskBrowser.js'></script>
-	<script src='js/taskAbstraction2.js'></script>
 	
 	
     <!-- Bootstrap -->
@@ -129,7 +128,21 @@
    				<td><input type='text' placeholder='Search For Project'/></td>
    				<th></th>
    				<td><input type='text' placeholder='Filter Descriptions'/></td>
-   				<th></th><th></th><th></th>
+   				<th></th>
+   				<td>
+   				  <select id = 'sortSelector'>
+   				     <option value="" disabled selected hidden=true>Sort By...</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				  </select>
+   				<th></th>
+   				<td>
+   				   <select id = 'sortOrder'>
+   				     <option value='ascending'>Ascending</option>
+   				     <option value='descending'>Descending</option>
+   				  </select>
+   			    </td>
+   				<th></th>
    			</tr>
    		
    			<tr class='head'>
@@ -137,8 +150,8 @@
    				<th>Task</th>
    				<th>Description</th>
    				<th>Created</th>
-   				<th onclick='sortByDate()'>Due&#8645;</th>
-   				<th onclick='sortByPriority()'>Priority&#8645;</th>
+   				<th onclick='sortByDateAscending()'>Due&#8645;</th>
+   				<th onclick='sortByPriorityAscending()'>Priority&#8645;</th>
    				<th id = "notes">Notes</th>
    				<th></th>
    			</tr>

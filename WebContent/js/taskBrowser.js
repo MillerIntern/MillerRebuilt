@@ -9,6 +9,39 @@ $(document).ready(function () {
 	$('#taskWell > span > .dueDate').datepicker();
 });
 
+$(document).on('change', '#taskSelector', function () {
+	clearTaskTable();
+	$('#notes').show();
+	createTaskTable(tasks);
+});
+
+$(document).on('change', '#sortSelector', function () {
+	
+	console.log("in itttttt");
+	console.log(document.getElementById("sortSelector").value);
+	if(document.getElementById("sortSelector").value == 'priority' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByPriorityAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByPriorityDescending();
+		}
+	}
+	if(document.getElementById("sortSelector").value == 'date' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByDateAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByDateDescending();
+		}
+		console.log("Right hizzzzer");
+	}
+	
+   // clearTaskTable();
+	//createTaskTable(tasks);
+	
+});
+
 function getUserData () {
 	
 	$.ajax({
@@ -21,6 +54,11 @@ function getUserData () {
 			console.log(data);
 			if(data.responseJSON) {
 				user = data.responseJSON;
+				
+				if (user.permission.id === 1) {
+					// show the admin dropdown
+				}
+				
 				$('#formFor').html('Tasks for: ' + user.firstName);
 				getTasks();
 			} else {
@@ -81,9 +119,14 @@ function createDropdown (json) {
 }
 
 function createTaskTable () {
+	let selector = $('#taskSelector').val();
+	console.log(selector);
 	console.log(tasks);
 	var count = 0;
 	for (var i = 0; i < tasks.length; i++) {
+		if((selector === 'incomplete' && tasks[i].completed) || 
+				(selector === 'complete' && !tasks[i].completed)) 
+				continue; // do nothing
 		console.log(tasks[i].assignee.name + ' ' + user.name);
 		if (tasks[i].assignee.name === user.name) {
 			count++;
@@ -271,7 +314,7 @@ function isValidInput(dates)
 	return true;
 }
 
-function sortByDate() {
+function sortByDateAscending() {
 	console.log(tasks); 
     tasks.sort(function(a,b){
       var dateA, dateB;
@@ -289,10 +332,41 @@ function sortByDate() {
     console.log(tasks); 	
     clearTaskTable();
 	$('#notes').show();
-	fillTasksTable(tasks);
+	createTaskTable(tasks);
+    		
+    }
+
+function sortByDateDescending() {
+	console.log(tasks); 
+    tasks.sort(function(a,b){
+      var dateA, dateB;
+      dateA = a.dueDate.split("/");
+      dateB = b.dueDate.split("/");
+      if(dateA[2] < dateB[2]) return 1;
+      if(dateA[2] > dateB[2]) return -1;
+      if(dateA[0] < dateB[0]) return 1;
+      if(dateA[0] > dateB[0]) return -1;
+      if(dateA[1] < dateB[1]) return 1;
+      if(dateA[1] > dateB[1]) return -1;
+      return 0;
+    })
+    console.log("post sort");
+    console.log(tasks); 	
+    clearTaskTable();
+	$('#notes').show();
+	createTaskTable(tasks);
     		
     }
     
+function sortByPriority () {
+	if (ascendingPriority) {
+		sortByPriorityAscending();
+	} else {
+		sortByPriorityDescending();
+	}
+}
+
+
 	/**
 	 * tasks.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
@@ -301,7 +375,7 @@ function sortByDate() {
 		
 		*/
 
-function sortByPriority () {
+function sortByPriorityAscending() {
 	console.log(tasks);  
 		tasks.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
@@ -310,9 +384,24 @@ function sortByPriority () {
 		
 		clearTaskTable();
 		$('#notes').show();
-		fillTasksTable(tasks);
+		createTaskTable(tasks);
 }
 
+function sortByPriorityDescending() {
+	console.log(tasks);  
+		tasks.sort(function(a,b){
+		  if (a.severity < b.severity) return 1;
+		  if (a.severity > b.severity) return -1; return 0;
+		});
+		
+		clearTaskTable();
+		$('#notes').show();
+		createTaskTable(tasks);
+}
+
+function clearTaskTable () {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
+}
 
 
 
