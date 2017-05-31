@@ -3,44 +3,42 @@
 let user;
 let task;
 let tasks;
+
 let selectedProjID;
+
 
 $(document).ready(function () {
 	$('#taskWell > span > .dueDate').datepicker();
 });
 
-$(document).on('change', '#taskSelector', function () {
-	clearTaskTable();
-	$('#notes').show();
-	createTaskTable(tasks);
-});
 
-$(document).on('change', '#sortSelector', function () {
+
+
+/*
+$('.taskManager').each(function(i, obj){
+	console.log("on click stuffffffffffff___" + obj.id + "__" + obj.value);
+	$(obj.id).on('click', function(){
+		console.log("we in herrrrre");
+	   if(obj.value == 'off') {obj.value = 'on'; console.log("on click stufff" + obj);}
+	   else if(obj.value == 'on') {obj.value = 'off';console.log("on click stufff" + obj);}
+	})
+})
+*/
+
+
+
+
+
+$(document).on('change', '.sortSelection', function () {
 	
 	console.log("in itttttt");
 	console.log(document.getElementById("sortSelector").value);
-	if(document.getElementById("sortSelector").value == 'priority' ){
-		if(document.getElementById("sortOrder").value == 'ascending'){
-			sortByPriorityAscending();
-		}
-		if(document.getElementById("sortOrder").value == 'descending'){
-			sortByPriorityDescending();
-		}
-	}
-	if(document.getElementById("sortSelector").value == 'date' ){
-		if(document.getElementById("sortOrder").value == 'ascending'){
-			sortByDateAscending();
-		}
-		if(document.getElementById("sortOrder").value == 'descending'){
-			sortByDateDescending();
-		}
-		console.log("Right hizzzzer");
-	}
-	
-   // clearTaskTable();
-	//createTaskTable(tasks);
+	if(user.permission.id != 1) basicUserSort();
+	else if(user.permission.id == 1) basicUserSort();
+
 	
 });
+
 
 function getUserData () {
 	
@@ -54,13 +52,19 @@ function getUserData () {
 			console.log(data);
 			if(data.responseJSON) {
 				user = data.responseJSON;
-				
 				if (user.permission.id === 1) {
-					// show the admin dropdown
+					document.getElementById("projectManagerSelection").style.display = 'inline';
+					document.getElementById("submitButton").style.display = 'inline';
+					tasksByManager();
+					
+					
+					//console.log("inetest" + managersOfInterest);
+					//createTaskTableByManager(tasks, managersOfInterest);
 				}
-				
-				$('#formFor').html('Tasks for: ' + user.firstName);
+				else { $('#formFor').html('Tasks for: ' + user.firstName);}
 				getTasks();
+
+				
 			} else {
 				alert('Server Failure!');
 				
@@ -68,6 +72,17 @@ function getUserData () {
 		}
 	});
 }
+
+function tasksByManager()
+{
+	$('#formFor').html('Tasks for: ');
+	console.log("getting users");
+	getProjectManagers();
+	
+	//getTasksByManager();
+    
+}
+
 
 function getTasks() {
 	$.ajax({
@@ -102,6 +117,78 @@ function getUsers () {
 		}
 		
 	});
+	
+}
+
+function getProjectManagers () {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjectManagers',
+		}, complete: function (data) {
+			console.log("Gettting project managersssss");
+			console.log(data);
+			if (data.responseJSON) {
+				createManagerQueue(data.responseJSON);
+			}
+		}
+		
+	});
+}
+
+function createManagerQueue(json)
+{
+    let d = document.createDocumentFragment();
+	let row = document.createElement('tr');
+	let name = document.createElement('td');
+	let checkBox = document.createElement('td');
+	let input = document.createElement('input');
+	let breakPoint = document.createElement('br')
+	row.setAttribute("value", 'all');
+	name.innerHTML = 'All';
+	input.setAttribute("type","checkbox");
+	input.setAttribute("value",'off');
+	input.setAttribute("id", "AllTasks");
+	input.setAttribute("class","taskManager");
+	d.appendChild(row);
+	d.appendChild(name);
+	d.appendChild(checkBox);
+	d.appendChild(input);
+	d.appendChild(breakPoint);
+
+
+	for (var i = 0; i < json.length; i++) {
+		console.log("creating manager drop down" + json[i]);
+		// when users store both username and name, access the user's name and username fields
+		let row = document.createElement('tr');
+		let name = document.createElement('td');
+		let checkBox = document.createElement('td');
+		let input = document.createElement('input');
+		let breakPoint = document.createElement('br');
+		row.setAttribute("value", json[i]);
+		name.innerHTML = json[i];
+		input.setAttribute("type","checkbox");
+		if(user.firstName.toLowerCase() == json[i].toLowerCase()){
+			input.setAttribute("value",'on');
+			input.setAttribute("checked","true");
+		}
+		else input.setAttribute("value",'off');
+		input.setAttribute("id", json[i]+"Tasks");
+		input.setAttribute("class","taskManager");
+		d.appendChild(row);
+		d.appendChild(name);
+		d.appendChild(checkBox);
+		d.appendChild(input);
+		d.appendChild(breakPoint);
+	}
+	
+	
+	
+	$('.container > #projectManagerSelection').append(d);
+
+    
 }
 
 function createDropdown (json) {
@@ -109,13 +196,16 @@ function createDropdown (json) {
 	
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
-		
+		console.log("creating drop down");
 		// when users store both username and name, access the user's name and username fields
 		option.innerHTML = json[i];
 		option.setAttribute("value", json[i]);
+		option.setAttribute("id", json[i] + "Option");
 		d.appendChild(option);
 	}
 	$('#taskWell > span > .assignedTo').append(d);
+	
+	
 }
 
 function createTaskTable () {
@@ -128,7 +218,7 @@ function createTaskTable () {
 				(selector === 'complete' && !tasks[i].completed)) 
 				continue; // do nothing
 		console.log(tasks[i].assignee.name + ' ' + user.name);
-		if (tasks[i].assignee.name === user.name) {
+		if (tasks[i].assignee.name === user.name || document.getElementById('projectManagerSelection').value=='all') {  
 			count++;
 			let taskListing = document.createElement('tr');
 			taskListing.value = tasks[i].id;
@@ -142,6 +232,7 @@ function createTaskTable () {
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
 			let severity = document.createElement('td');
+			let notes = document.createElement('td');
 			let closeTask = document.createElement('td');
 			
 			let closeButton = document.createElement('button');
@@ -161,6 +252,7 @@ function createTaskTable () {
 			dueDate.innerHTML = tasks[i].dueDate;
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
+			notes.innerHTML = tasks[i].notes;
 			closeTask.appendChild(closeButton);
 			
 			$(taskListing).append(projectDetails);
@@ -169,6 +261,7 @@ function createTaskTable () {
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
 			$(taskListing).append(severity);
+			$(taskListing).append(notes);
 			$(taskListing).append(closeTask);
 			
 			$('#taskTable > tbody').append(taskListing);
@@ -178,6 +271,8 @@ function createTaskTable () {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}
 }
+
+
 
 function clearAndAddSingleRow(msg) {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
@@ -314,7 +409,30 @@ function isValidInput(dates)
 	return true;
 }
 
-function sortByDateAscending() {
+function basicUserSort() 
+{
+	if(document.getElementById("sortSelector").value == 'none') return;
+	if(document.getElementById("sortSelector").value == 'priority' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByPriorityAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByPriorityDescending();
+		}
+	}
+	if(document.getElementById("sortSelector").value == 'date' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByDateAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByDateDescending();
+		}
+		console.log("Right hizzzzer");
+	}
+}
+
+function sortByDateAscending() 
+{
 	console.log(tasks); 
     tasks.sort(function(a,b){
       var dateA, dateB;
@@ -331,7 +449,6 @@ function sortByDateAscending() {
     console.log("post sort");
     console.log(tasks); 	
     clearTaskTable();
-	$('#notes').show();
 	createTaskTable(tasks);
     		
     }
@@ -353,7 +470,6 @@ function sortByDateDescending() {
     console.log("post sort");
     console.log(tasks); 	
     clearTaskTable();
-	$('#notes').show();
 	createTaskTable(tasks);
     		
     }
@@ -377,14 +493,22 @@ function sortByPriority () {
 
 function sortByPriorityAscending() {
 	console.log(tasks);  
+	console.log("user = ");
+	console.log(user);
 		tasks.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
 		  if (a.severity > b.severity) return 1; return 0;
 		});
-		
-		clearTaskTable();
-		$('#notes').show();
+	clearTaskTable();
+    if(user.permission.id != 1){
 		createTaskTable(tasks);
+    }
+    else if(user.permission.id == 1){
+    	createTaskTableByManager(tasks);
+    }
+    else{
+    	
+    }
 }
 
 function sortByPriorityDescending() {
@@ -395,7 +519,6 @@ function sortByPriorityDescending() {
 		});
 		
 		clearTaskTable();
-		$('#notes').show();
 		createTaskTable(tasks);
 }
 

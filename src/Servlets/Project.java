@@ -258,7 +258,18 @@ public class Project extends HttpServlet
 			} catch (NumberFormatException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		} else if (action.equals("getUsers")) {
+		} 
+		else if(action.equals("getProjectManagers"))
+		{
+			System.out.println("Gettng Names of All Project Managers");
+			// TODO: Store User's name under User.class this implementation is really bad
+			String[] projectManagers = {"Joe", "Bart", "David", "Daves",
+							  "Alex", "Scott", "Craig", "Adrienne", "Andy"};
+			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
+			Gson gson = new Gson();
+			response = gson.toJson(projectManagers);
+		}
+		else if (action.equals("getUsers")) {
 			System.out.println("Gettng Names of All Users");
 			// TODO: Store User's name under User.class this implementation is really bad
 			String[] users = {"Andy", "Joe", "Bart", "David", "Daves",

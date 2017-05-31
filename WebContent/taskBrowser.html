@@ -13,6 +13,7 @@
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
 	<script src='js/taskBrowser.js'></script>
+	<script src='js/taskBrowserAdmin.js'></script>
 	
 	
     <!-- Bootstrap -->
@@ -35,9 +36,6 @@
 			width: 50%;
 		}
 		
-		#notes	{
-			display: none;
-		}
 		
 
 	</style>
@@ -80,7 +78,11 @@
 	</nav>
 	
     <div class="container">
-   		<h4 id='formFor'></h4>
+   		<h4 id='formFor'>  </h4>
+   		<table class = 'table table-responsive taskManager' id = 'projectManagerSelection' style='display: none'>
+   		
+        </table>
+        <button type = 'button' id = 'submitButton' style='display: none'> Get Tasks </button>
    		<div id='taskWell' class='well' style='display:none'>
    			<h4 class='title'></h4>
    			<div>
@@ -130,19 +132,20 @@
    				<td><input type='text' placeholder='Filter Descriptions'/></td>
    				<th></th>
    				<td>
-   				  <select id = 'sortSelector'>
-   				     <option value="" disabled selected hidden=true>Sort By...</option>
+   				  <select class = 'sortSelection form-control' id = 'sortSelector'>
+   				     <option value='none' disabled selected hidden=true>Sort By...</option>
    				     <option value='priority'>Priority</option>
    				     <option value='date'>Due Date</option>
    				  </select>
    				<th></th>
    				<td>
-   				   <select id = 'sortOrder'>
+   				   <select class = 'sortSelection form-control' id = 'sortOrder'>
    				     <option value='ascending'>Ascending</option>
    				     <option value='descending'>Descending</option>
    				  </select>
    			    </td>
    				<th></th>
+   			
    			</tr>
    		
    			<tr class='head'>
@@ -150,12 +153,13 @@
    				<th>Task</th>
    				<th>Description</th>
    				<th>Created</th>
-   				<th onclick='sortByDateAscending()'>Due&#8645;</th>
-   				<th onclick='sortByPriorityAscending()'>Priority&#8645;</th>
-   				<th id = "notes">Notes</th>
+   				<th>Due</th>
+   				<th>Priority</th>
+   				<th>Notes</th>
    				<th></th>
    			</tr>
    		</table>
+   
    		
   	
     </div>

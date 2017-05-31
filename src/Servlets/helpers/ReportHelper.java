@@ -1310,35 +1310,59 @@ public class ReportHelper
 		
 		else if(value.equals("buildingPermit") && p.getPermits() != null && p.getPermits().getBuildingPermitStatus() != null)
 		{
-			return p.getPermits().getBuildingPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getBuildingPermitStatus()); 
+			if(p.getPermits().getBuilding() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getBuilding());
+			return retVal;
 		}
 		else if(value.equals("mechanicalPermit") && p.getPermits() != null && p.getPermits().getMechanicalPermitStatus() != null)
 		{
-			return p.getPermits().getMechanicalPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getMechanicalPermitStatus()); 
+			if(p.getPermits().getMechanicalPermitDate() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getMechanicalPermitDate());
+			return retVal;
 		}
 		else if(value.equals("electricalPermit") && p.getPermits() != null && p.getPermits().getElectricalPermitStatus() != null)
 		{
-			return p.getPermits().getElectricalPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getElectricalPermitStatus()); 
+			if(p.getPermits().getElectrical() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getElectrical());
+			return retVal;
 		}
 		else if(value.equals("plumbingPermit") && p.getPermits() != null && p.getPermits().getPlumbingPermitStatus() != null)
 		{
-			return p.getPermits().getPlumbingPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getPlumbingPermitStatus()); 
+			if(p.getPermits().getPlumbingPermitDate() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getPlumbingPermitDate());
+			return retVal;
 		}
 		else if(value.equals("roofingPermit") && p.getPermits() != null && p.getPermits().getRoofingPermitStatus() != null)
 		{
-			return p.getPermits().getRoofingPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getRoofingPermitStatus()); 
+			if(p.getPermits().getFireAlarmPermitDate() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
+			return retVal;
 		}
 		else if(value.equals("sprinklerPermit") && p.getPermits() != null && p.getPermits().getSprinklerPermitStatus() != null)
 		{
-			return p.getPermits().getSprinklerPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getSprinklerPermitStatus()); 
+			if(p.getPermits().getFireSprinklerDate() != null)
+			  retVal = convertStatusNumber(retVal)  + " " + dForm.format(p.getPermits().getFireSprinklerDate());
+			return retVal;
 		}
 		else if(value.equals("fireAlarmPermit") && p.getPermits() != null && p.getPermits().getFireAlarmPermitStatus() != null)
 		{
-			return p.getPermits().getFireAlarmPermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getFireAlarmPermitStatus()); 
+			if(p.getPermits().getFireAlarmPermitDate() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
+			return retVal;
 		}
 		else if(value.equals("lowVoltagePermit") && p.getPermits() != null && p.getPermits().getVoltagePermitStatus() != null)
 		{
-			return p.getPermits().getVoltagePermitStatus();
+			String retVal = convertStatusNumber(p.getPermits().getVoltagePermitStatus()); 
+			if(p.getPermits().getLowVoltagePermitDate() != null)
+			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getLowVoltagePermitDate());
+			return retVal;
 		} else if(value.equals("permitNotes") && p.getPermits() != null && p.getPermits().getPermitNotes() != null) {
 			return p.getPermits().getPermitNotes();
 		} else if(value.equals("inspectionNotes") && p.getPermits() != null && p.getPermits().getInspectionNotes() != null) {
@@ -1434,6 +1458,15 @@ public class ReportHelper
 			return "---";	// If nothing else just fill the field with nothing
 	}
 	
+	private static String convertStatusNumber(String retVal) {
+		if (retVal.equals("0"))	return "Preparing";
+		else if (retVal.equals("1"))	return "Submitted";
+		else if (retVal.equals("2"))	return "Issued";
+		else if (retVal.equals("3"))	return "Closed";
+		else if(retVal.equals(""))      return "---";
+		return retVal;
+	}
+
 	private static Object nullOrFull(Object value)
 	{
 		if(value == null || value.toString().equals(""))

@@ -242,6 +242,7 @@ function saveProject() {
 				'customerNumber': customerNumber,
 			}, complete: function (data) {
 				console.log(data);
+				projectID = data.responseJSON;
 				alert('Save Complete!');
 				$('#saveButton > button').prop('disabled', false);
 
