@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -37,6 +38,7 @@ public class Login extends HttpServlet
 	{
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		
 		String serverResponse = "";
 
 		if (LoginService.Login(username, password))
@@ -54,6 +56,7 @@ public class Login extends HttpServlet
 		resp.setContentType("text/plain");
 		out = resp.getWriter();
 		out.println(serverResponse);
+		
 	}
 }
 

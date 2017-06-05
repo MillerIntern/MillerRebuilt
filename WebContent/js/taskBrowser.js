@@ -3,7 +3,7 @@
 let user;
 let task;
 let tasks;
-
+let sorts;
 let selectedProjID;
 
 
@@ -13,31 +13,37 @@ $(document).ready(function () {
 
 
 
-
-/*
-$('.taskManager').each(function(i, obj){
-	console.log("on click stuffffffffffff___" + obj.id + "__" + obj.value);
-	$(obj.id).on('click', function(){
-		console.log("we in herrrrre");
-	   if(obj.value == 'off') {obj.value = 'on'; console.log("on click stufff" + obj);}
-	   else if(obj.value == 'on') {obj.value = 'off';console.log("on click stufff" + obj);}
-	})
-})
-*/
-
-
-
-
-
-$(document).on('change', '.sortSelection', function () {
-	
+$(document).on('change', '.sortSelection', function () {	
 	console.log("in itttttt");
 	console.log(document.getElementById("sortSelector").value);
-	if(user.permission.id != 1) basicUserSort();
-	else if(user.permission.id == 1) basicUserSort();
+	basicUserSort();
+});
 
+$(document).on('click', '#advancedSort', function (){
+	console.log("clickig");
+	$('.advancedSortingOptions').show();
+});
+
+$(document).on('click', '#secondaryKey', function (){
+	if(document.getElementById('primaryKey').value == 'none') alert("need a primary key");
+});
+
+$(document).on('click', '#tertiaryKey', function (){
+	if(document.getElementById('primaryKey').value == 'none') {alert("need a primary key"); return;}
+	else if(document.getElementById('secondaryKey').value == 'none') alert("need a secondary key");
+});
+
+$(document).on('click', '#advancedSortButton', function(){
+	if(document.getElementById('primaryKey').value == 'none') {alert("need a primary key before sorting"); return;}
+	else if(document.getElementById('primaryKey').value == document.getElementById('secondaryKey').value
+            || document.getElementById('secondaryKey').value == document.getElementById('tertiaryKey').value
+            || document.getElementById('primaryKey').value == document.getElementById('tertiaryKey').value) {
+		alert("Keys cannot have same value");
+	    return;
+	}
 	
 });
+
 
 
 function getUserData () {
@@ -54,14 +60,13 @@ function getUserData () {
 				user = data.responseJSON;
 				if (user.permission.id === 1) {
 					document.getElementById("projectManagerSelection").style.display = 'inline';
-					document.getElementById("submitButton").style.display = 'inline';
+					
 					tasksByManager();
-					
-					
-					//console.log("inetest" + managersOfInterest);
-					//createTaskTableByManager(tasks, managersOfInterest);
+			    
+				} else { 
+					$('#formFor').html('Tasks for: ' + user.firstName);
+					$(".advancedSortingOptions").hide();
 				}
-				else { $('#formFor').html('Tasks for: ' + user.firstName);}
 				getTasks();
 
 				
@@ -95,12 +100,16 @@ function getTasks() {
 			console.log(data);
 			if (data.responseJSON) {
 				tasks = data.responseJSON;
-				createTaskTable(data.responseJSON);
+				clearTaskTable();
+				createProperTaskTable();
+				console.log("users = ", user);
 				getUsers();
 			}
 		}
 	});
+	
 }
+
 
 function getUsers () {
 	$.ajax({
@@ -138,58 +147,7 @@ function getProjectManagers () {
 	});
 }
 
-function createManagerQueue(json)
-{
-    let d = document.createDocumentFragment();
-	let row = document.createElement('tr');
-	let name = document.createElement('td');
-	let checkBox = document.createElement('td');
-	let input = document.createElement('input');
-	let breakPoint = document.createElement('br')
-	row.setAttribute("value", 'all');
-	name.innerHTML = 'All';
-	input.setAttribute("type","checkbox");
-	input.setAttribute("value",'off');
-	input.setAttribute("id", "AllTasks");
-	input.setAttribute("class","taskManager");
-	d.appendChild(row);
-	d.appendChild(name);
-	d.appendChild(checkBox);
-	d.appendChild(input);
-	d.appendChild(breakPoint);
 
-
-	for (var i = 0; i < json.length; i++) {
-		console.log("creating manager drop down" + json[i]);
-		// when users store both username and name, access the user's name and username fields
-		let row = document.createElement('tr');
-		let name = document.createElement('td');
-		let checkBox = document.createElement('td');
-		let input = document.createElement('input');
-		let breakPoint = document.createElement('br');
-		row.setAttribute("value", json[i]);
-		name.innerHTML = json[i];
-		input.setAttribute("type","checkbox");
-		if(user.firstName.toLowerCase() == json[i].toLowerCase()){
-			input.setAttribute("value",'on');
-			input.setAttribute("checked","true");
-		}
-		else input.setAttribute("value",'off');
-		input.setAttribute("id", json[i]+"Tasks");
-		input.setAttribute("class","taskManager");
-		d.appendChild(row);
-		d.appendChild(name);
-		d.appendChild(checkBox);
-		d.appendChild(input);
-		d.appendChild(breakPoint);
-	}
-	
-	
-	
-	$('.container > #projectManagerSelection').append(d);
-
-    
-}
 
 function createDropdown (json) {
 	let d = document.createDocumentFragment();
@@ -218,7 +176,7 @@ function createTaskTable () {
 				(selector === 'complete' && !tasks[i].completed)) 
 				continue; // do nothing
 		console.log(tasks[i].assignee.name + ' ' + user.name);
-		if (tasks[i].assignee.name === user.name || document.getElementById('projectManagerSelection').value=='all') {  
+		if (tasks[i].assignee.name === user.name) {  
 			count++;
 			let taskListing = document.createElement('tr');
 			taskListing.value = tasks[i].id;
@@ -228,6 +186,7 @@ function createTaskTable () {
 			
 			let projectDetails = document.createElement('td');
 			let taskTitle = document.createElement('td');
+			let taskAssignee = document.createElement('td');
 			let taskDesc = document.createElement('td');
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
@@ -239,6 +198,7 @@ function createTaskTable () {
 			closeButton.innerHTML = 'Close'
 			closeButton.classname = 'btn';
 			closeButton.value = tasks[i].id;
+			console.log("the tasks areeee",tasks);
 			closeButton.onclick = function () {
 				closeTaskById(this);
 			};
@@ -247,6 +207,7 @@ function createTaskTable () {
 						' #' + tasks[i].project.warehouse.warehouseID +
 						' - ' + tasks[i].project.projectItem.name;
 			taskTitle.innerHTML = tasks[i].title;
+			taskAssignee.innerHTML = tasks[i].assignee.firstName;
 			taskDesc.innerHTML = tasks[i].description;
 			createdDate.innerHTML = tasks[i].assignedDate;
 			dueDate.innerHTML = tasks[i].dueDate;
@@ -257,6 +218,7 @@ function createTaskTable () {
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskAssignee);
 			$(taskListing).append(taskDesc);
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
@@ -269,6 +231,16 @@ function createTaskTable () {
 	}
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
+	}
+}
+
+function createProperTaskTable()
+{
+	if(user.permission.id != 1){
+		createTaskTable();
+	} else {
+		establishManagersOfInterest();
+		createTaskTableByManager(tasks);
 	}
 }
 
@@ -429,6 +401,46 @@ function basicUserSort()
 		}
 		console.log("Right hizzzzer");
 	}
+	if(document.getElementById("sortSelector").value == 'assignee' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByAssigneeAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByAssigneeDescending();
+		}
+		console.log("sorting by assignee");
+	}
+}
+
+function sortByAssigneeAscending()
+{
+	tasks.sort(function(a,b){
+	if(a.assignee.firstName < b.assignee.firstName) return -1;
+	if(a.assignee.firstName > b.assignee.firstName) return 1;
+	return 0;
+	})
+	clearTaskTable();
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    else{
+    	console.log("Unprepared for this ELSE condition");
+    }
+	
+}
+
+function sortByAssigneeDescending()
+{
+	tasks.sort(function(a,b){
+	if(a.assignee.firstName < b.assignee.firstName) return 1;
+	if(a.assignee.firstName > b.assignee.firstName) return -1;
+	return 0;
+	})
+	clearTaskTable();
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    else{
+    	console.log("Unprepared for this ELSE condition");
+    }
 }
 
 function sortByDateAscending() 
@@ -449,7 +461,12 @@ function sortByDateAscending()
     console.log("post sort");
     console.log(tasks); 	
     clearTaskTable();
-	createTaskTable(tasks);
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    
+    else{
+    	console.log("Unprepared for this ELSE condition");
+    }
     		
     }
 
@@ -470,26 +487,14 @@ function sortByDateDescending() {
     console.log("post sort");
     console.log(tasks); 	
     clearTaskTable();
-	createTaskTable(tasks);
-    		
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    else{
+    	console.log("Unprepared for this ELSE condition");
     }
+    		
+ }
     
-function sortByPriority () {
-	if (ascendingPriority) {
-		sortByPriorityAscending();
-	} else {
-		sortByPriorityDescending();
-	}
-}
-
-
-	/**
-	 * tasks.sort(function(a,b){
-		  if (a.severity < b.severity) return -1;
-		  if (a.severity > b.severity) return 1; return 0;
-		});
-		
-		*/
 
 function sortByPriorityAscending() {
 	console.log(tasks);  
@@ -497,17 +502,15 @@ function sortByPriorityAscending() {
 	console.log(user);
 		tasks.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
-		  if (a.severity > b.severity) return 1; return 0;
+		  if (a.severity > b.severity) return 1;
+		  return 0;
 		});
 	clearTaskTable();
-    if(user.permission.id != 1){
-		createTaskTable(tasks);
-    }
-    else if(user.permission.id == 1){
-    	createTaskTableByManager(tasks);
-    }
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    
     else{
-    	
+    	console.log("Unprepared for this ELSE condition");
     }
 }
 
@@ -515,11 +518,19 @@ function sortByPriorityDescending() {
 	console.log(tasks);  
 		tasks.sort(function(a,b){
 		  if (a.severity < b.severity) return 1;
-		  if (a.severity > b.severity) return -1; return 0;
+		  if (a.severity > b.severity) return -1;
+		  return 0;
 		});
-		
-		clearTaskTable();
-		createTaskTable(tasks);
+	clearTaskTable();
+    if(user.permission.id != 1) createTaskTable(tasks);
+    else if(user.permission.id == 1) createTaskTableByManager(tasks);
+    else{
+    	console.log("Unprepared for this ELSE condition");
+    }
+}
+
+function advancedSortValidation(){
+	console.log("advanced validation!!");
 }
 
 function clearTaskTable () {

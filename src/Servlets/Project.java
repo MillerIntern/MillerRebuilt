@@ -263,8 +263,8 @@ public class Project extends HttpServlet
 		{
 			System.out.println("Gettng Names of All Project Managers");
 			// TODO: Store User's name under User.class this implementation is really bad
-			String[] projectManagers = {"Joe", "Bart", "David", "Daves",
-							  "Alex", "Scott", "Craig", "Adrienne", "Andy"};
+			String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Daves",
+							   "David", "Joe", "Scott"};
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(projectManagers);
@@ -343,6 +343,8 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if(action.equals("changePassword")){
+			System.out.println("Changing Password");
 		}
 		
 		if(!action.equals("getAllProjects") && !action.equals("getTasks"))

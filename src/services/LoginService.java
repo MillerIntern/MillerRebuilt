@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Criteria;
@@ -70,6 +71,7 @@ public class LoginService
 		
 		@SuppressWarnings("unchecked")
 		List<User> matchingUser = criteria.list();
+		System.out.println(matchingUser.get(0).getPermission().isCanAccessAdminPage());
 		
 		if (matchingUser == null  || matchingUser.size() == 0)
 			return "false";

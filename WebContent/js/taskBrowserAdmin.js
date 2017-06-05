@@ -1,13 +1,23 @@
 'use strict';
+
 //This document is used to queue all managers of interest that you would like to see tasks for
 let managersOfInterest;
-$(document).on('click', '#submitButton', function(){
-	console.log("You hit the submit button!")
-})
+
+
+
 
 $(document).on('change', '#AllTasks', function(){
-	if(document.getElementById("AllTasks").value == 'off') document.getElementById("AllTasks").value = 'on';
-    else if(document.getElementById("AllTasks").value == 'on') document.getElementById("AllTasks").value = 'off';
+	if(document.getElementById("AllTasks").value == 'off'){
+		//document.getElementById("AllTasks").value = 'on';
+		$('.taskManager > input').each(function(i, obj) {
+		    obj.value = 'on';
+		    obj.checked = true;
+		});
+	}
+    else if(document.getElementById("AllTasks").value == 'on') {
+    	document.getElementById("AllTasks").value = 'off';
+    }
+	
 })
 $(document).on('change', '#JoeTasks', function(){
 	if(document.getElementById("JoeTasks").value == 'off') document.getElementById("JoeTasks").value = 'on';
@@ -50,19 +60,7 @@ $(document).on('click', '#AndyTasks', function(){
 
 $(document).on('change', '#taskSelector', function () {
 	console.log(user);
-	if(user.permission.id != 1){
-	  clearTaskTable();
-	  createTaskTable(tasks);
-	}
-	else{
-		clearTaskTable();
-		establishManagersOfInterest();
-		
-		
-		console.log("inetest" + managersOfInterest);
-		createTaskTableByManager(tasks, managersOfInterest);
-	}
-	
+	getTasks();
 });
 
 function establishManagersOfInterest()
@@ -77,8 +75,9 @@ function establishManagersOfInterest()
 	});
 }
 
-function createTaskTableByManager (tasks, managersOfInterest) {
+function createTaskTableByManager (tasks) {
 	let selector = $('#taskSelector').val();
+
 	console.log(selector);
 	console.log(tasks);
 	console.log(managersOfInterest);
@@ -103,6 +102,7 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			
 			let projectDetails = document.createElement('td');
 			let taskTitle = document.createElement('td');
+			let taskAssignee = document.createElement('td');
 			let taskDesc = document.createElement('td');
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
@@ -115,13 +115,25 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			closeButton.classname = 'btn';
 			closeButton.value = tasks[i].id;
 			closeButton.onclick = function () {
-				closeTaskById(this);
+				let taskID = $(this).val();
+				let elTask;
+				for(var z = 0; z < tasks.length; z++){
+					if(tasks[z].id == taskID) elTask = tasks[z];
+				}
+				console.log("assigner id = ", elTask.assigner.id);
+				console.log("user id = ", user.id);
+
+				if(elTask.assigner.id != user.id){
+					if(confirm("You're about to close a task you did not assign!  Are you sure you want to?") == true){
+					    closeTaskById(this);}
+				} else closeTaskById(this);		
 			};
 			
 			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
 						' #' + tasks[i].project.warehouse.warehouseID +
 						' - ' + tasks[i].project.projectItem.name;
 			taskTitle.innerHTML = tasks[i].title;
+			taskAssignee.innerHTML = tasks[i].assignee.firstName;
 			taskDesc.innerHTML = tasks[i].description;
 			createdDate.innerHTML = tasks[i].assignedDate;
 			dueDate.innerHTML = tasks[i].dueDate;
@@ -132,6 +144,7 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskAssignee);
 			$(taskListing).append(taskDesc);
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
@@ -140,8 +153,6 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			$(taskListing).append(closeTask);
 			
 			$('#taskTable > tbody').append(taskListing);
-			
-			
 			
 			}
 		else if(!all){
@@ -159,6 +170,7 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			
 			let projectDetails = document.createElement('td');
 			let taskTitle = document.createElement('td');
+			let taskAssignee = document.createElement('td');
 			let taskDesc = document.createElement('td');
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
@@ -178,6 +190,7 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 						' #' + tasks[i].project.warehouse.warehouseID +
 						' - ' + tasks[i].project.projectItem.name;
 			taskTitle.innerHTML = tasks[i].title;
+			taskAssignee.innerHTML = tasks[i].assignee.firstName;
 			taskDesc.innerHTML = tasks[i].description;
 			createdDate.innerHTML = tasks[i].assignedDate;
 			dueDate.innerHTML = tasks[i].dueDate;
@@ -188,6 +201,7 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskAssignee);
 			$(taskListing).append(taskDesc);
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
@@ -203,5 +217,58 @@ function createTaskTableByManager (tasks, managersOfInterest) {
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}
+}
+
+function createManagerQueue(json)
+{
+    let d = document.createDocumentFragment();
+	let row = document.createElement('tr');
+	let name = document.createElement('td');
+	let checkBox = document.createElement('td');
+	let input = document.createElement('input');
+	let breakPoint = document.createElement('br')
+	row.setAttribute("value", 'all');
+	name.innerHTML = "<h4> All </h4>";
+	input.setAttribute("type","checkbox");
+	input.setAttribute("value",'off');
+	input.setAttribute("id", "AllTasks");
+	input.setAttribute("class","taskManager");
+	d.appendChild(row);
+	d.appendChild(name);
+	d.appendChild(checkBox);
+	d.appendChild(input);
+	d.appendChild(breakPoint);
+
+
+	for (var i = 0; i < json.length; i++) {
+		console.log("creating manager drop down" + json[i]);
+		// when users store both username and name, access the user's name and username fields
+		//let row = document.createElement('tr');
+		let name = document.createElement('td');
+		let checkBox = document.createElement('td');
+		let input = document.createElement('input');
+		//let breakPoint = document.createElement('br');
+		//row.setAttribute("value", json[i]);
+		name.innerHTML = "<h4> &nbsp&nbsp&nbsp;"+json[i]+ "</h4>";
+		input.setAttribute("type","checkbox");
+		if(user.firstName.toLowerCase() == json[i].toLowerCase()){
+			input.setAttribute("value",'on');
+			input.setAttribute("checked","true");
+		}
+		else input.setAttribute("value",'off');
+		input.setAttribute("id", json[i]+"Tasks");
+		input.setAttribute("class","taskManager");
+        //d.appendChild(row);
+		d.appendChild(name);
+		d.appendChild(checkBox);
+		d.appendChild(input);
+		//d.appendChild(breakPoint);
+	}
+
+	
+	
+	
+	$('.container > #projectManagerSelection').append(d);
+	document.getElementById("assigneeSort").style.display = 'inline';
 }
 

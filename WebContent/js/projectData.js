@@ -69,6 +69,7 @@ function getProjectEnums()
 		success: function(data)
 		{
 			console.log(data);
+			console.log("about ot fill dropdowns");
 			fillDropdowns(data);
 			
 			PAGETYPE = getParameterByName("type");	
@@ -88,6 +89,7 @@ function getProjectEnums()
 //Output: none (fills dropdowns with data)
 function fillDropdowns(data)
 {
+	console.log("here comes data" , data["status"]);
 	generateDropdowns(data["warehouse"], "warehouse");
 	generateDropdowns(data["class"], "class");
 	generateDropdowns(data["item"], "project");

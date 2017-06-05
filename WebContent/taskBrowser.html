@@ -82,7 +82,7 @@
    		<table class = 'table table-responsive taskManager' id = 'projectManagerSelection' style='display: none'>
    		
         </table>
-        <button type = 'button' id = 'submitButton' style='display: none'> Get Tasks </button>
+
    		<div id='taskWell' class='well' style='display:none'>
    			<h4 class='title'></h4>
    			<div>
@@ -124,6 +124,31 @@
 		
 		
 		
+		  <button id='advancedSort' class='btn advancedSortingOptions'> Advanced Sorting </button>
+		  
+		  <select class = 'advancedSortingOptions' id='primaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Primary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <select class = 'advancedSortingOptions' id='secondaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Secondary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <select class = 'advancedSortingOptions' id='tertiaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Tertiary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <button id='advancedSortButton' class='btn advancedSortingOptions' style='display:none' onclick='advancedSortValidation()'> Sort </button>
+   		  
+   		
+		
+		
 		
 		<table id="taskTable" class="table table-hover">
    			<tr class='head'>
@@ -136,7 +161,9 @@
    				     <option value='none' disabled selected hidden=true>Sort By...</option>
    				     <option value='priority'>Priority</option>
    				     <option value='date'>Due Date</option>
+   				     <option value='assignee' style='display:none' id='assigneeSort'> Assignee </option>
    				  </select>
+   				</td>
    				<th></th>
    				<td>
    				   <select class = 'sortSelection form-control' id = 'sortOrder'>
@@ -151,6 +178,7 @@
    			<tr class='head'>
    				<th>Project</th>
    				<th>Task</th>
+   				<th>Assignee</th>
    				<th>Description</th>
    				<th>Created</th>
    				<th>Due</th>
