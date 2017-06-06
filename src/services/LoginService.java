@@ -71,7 +71,6 @@ public class LoginService
 		
 		@SuppressWarnings("unchecked")
 		List<User> matchingUser = criteria.list();
-		System.out.println(matchingUser.get(0).getPermission().isCanAccessAdminPage());
 		
 		if (matchingUser == null  || matchingUser.size() == 0)
 			return "false";

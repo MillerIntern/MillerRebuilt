@@ -14,6 +14,7 @@
 	<script src="js/global.js"></script>
 	<script src='js/taskBrowser.js'></script>
 	<script src='js/taskBrowserAdmin.js'></script>
+	<script src='js/taskBrowserSorting.js'></script>
 	
 	
     <!-- Bootstrap -->
@@ -124,27 +125,27 @@
 		
 		
 		
-		  <button id='advancedSort' class='btn advancedSortingOptions'> Advanced Sorting </button>
+		  <button id='advancedSort' class='btn-primary advancedSortingOptions' value='off'> Advanced Sorting </button>
 		  
-		  <select class = 'advancedSortingOptions' id='primaryKey' style='display:none'>
+		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='primaryKey' style='display:none'>
    				     <option value='none' disabled selected hidden=true>Primary Key..</option>
    				     <option value='priority'>Priority</option>
    				     <option value='date'>Due Date</option>
    				     <option value='assignee'> Assignee </option>
    		  </select>
-   		  <select class = 'advancedSortingOptions' id='secondaryKey' style='display:none'>
+   		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='secondaryKey' style='display:none'>
    				     <option value='none' disabled selected hidden=true>Secondary Key..</option>
    				     <option value='priority'>Priority</option>
    				     <option value='date'>Due Date</option>
    				     <option value='assignee'> Assignee </option>
    		  </select>
-   		  <select class = 'advancedSortingOptions' id='tertiaryKey' style='display:none'>
+   		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='tertiaryKey' style='display:none'>
    				     <option value='none' disabled selected hidden=true>Tertiary Key..</option>
    				     <option value='priority'>Priority</option>
    				     <option value='date'>Due Date</option>
    				     <option value='assignee'> Assignee </option>
    		  </select>
-   		  <button id='advancedSortButton' class='btn advancedSortingOptions' style='display:none' onclick='advancedSortValidation()'> Sort </button>
+   		  <button id='advancedSortButton' class='btn advancedSortingOptions advancedSortingSelector' style='display:none' onclick='advancedSortValidation()'> Sort </button>
    		  
    		
 		

@@ -3,7 +3,7 @@
 let user;
 let task;
 let tasks;
-let sorts;
+
 let selectedProjID;
 
 
@@ -11,37 +11,17 @@ $(document).ready(function () {
 	$('#taskWell > span > .dueDate').datepicker();
 });
 
-
-
-$(document).on('change', '.sortSelection', function () {	
-	console.log("in itttttt");
-	console.log(document.getElementById("sortSelector").value);
-	basicUserSort();
-});
-
-$(document).on('click', '#advancedSort', function (){
-	console.log("clickig");
-	$('.advancedSortingOptions').show();
-});
-
-$(document).on('click', '#secondaryKey', function (){
-	if(document.getElementById('primaryKey').value == 'none') alert("need a primary key");
-});
-
-$(document).on('click', '#tertiaryKey', function (){
-	if(document.getElementById('primaryKey').value == 'none') {alert("need a primary key"); return;}
-	else if(document.getElementById('secondaryKey').value == 'none') alert("need a secondary key");
-});
-
-$(document).on('click', '#advancedSortButton', function(){
-	if(document.getElementById('primaryKey').value == 'none') {alert("need a primary key before sorting"); return;}
-	else if(document.getElementById('primaryKey').value == document.getElementById('secondaryKey').value
-            || document.getElementById('secondaryKey').value == document.getElementById('tertiaryKey').value
-            || document.getElementById('primaryKey').value == document.getElementById('tertiaryKey').value) {
-		alert("Keys cannot have same value");
-	    return;
+$(document).on('load', function () {
+	if (user.permission.id === 1) {
+		document.getElementById("projectManagerSelection").style.display = 'inline';
+		
+		tasksByManager();
+    
+	} else { 
+		$('#formFor').html('Tasks for: ' + user.firstName);
+		$(".advancedSortingOptions").hide();
 	}
-	
+	getTasks();
 });
 
 
@@ -57,17 +37,17 @@ function getUserData () {
 		}, complete: function (data) {
 			console.log(data);
 			if(data.responseJSON) {
-				user = data.responseJSON;
-				if (user.permission.id === 1) {
-					document.getElementById("projectManagerSelection").style.display = 'inline';
-					
-					tasksByManager();
-			    
-				} else { 
-					$('#formFor').html('Tasks for: ' + user.firstName);
-					$(".advancedSortingOptions").hide();
-				}
-				getTasks();
+			  user = data.responseJSON;
+			  if (user.permission.id === 1) {
+				 document.getElementById("projectManagerSelection").style.display = 'inline';
+				
+				 tasksByManager();
+		    
+			 } else { 
+			 	$('#formFor').html('Tasks for: ' + user.firstName);
+			 	$(".advancedSortingOptions").hide();
+			 }
+			  getTasks();
 
 				
 			} else {
@@ -138,10 +118,12 @@ function getProjectManagers () {
 			'action': 'getProjectManagers',
 		}, complete: function (data) {
 			console.log("Gettting project managersssss");
-			console.log(data);
+			console.log("data = ",data);
+			console.log("response JSON = ", data.responseJSON);
 			if (data.responseJSON) {
 				createManagerQueue(data.responseJSON);
 			}
+			else{console.log("no response JSON");}
 		}
 		
 	});
@@ -381,157 +363,9 @@ function isValidInput(dates)
 	return true;
 }
 
-function basicUserSort() 
-{
-	if(document.getElementById("sortSelector").value == 'none') return;
-	if(document.getElementById("sortSelector").value == 'priority' ){
-		if(document.getElementById("sortOrder").value == 'ascending'){
-			sortByPriorityAscending();
-		}
-		if(document.getElementById("sortOrder").value == 'descending'){
-			sortByPriorityDescending();
-		}
-	}
-	if(document.getElementById("sortSelector").value == 'date' ){
-		if(document.getElementById("sortOrder").value == 'ascending'){
-			sortByDateAscending();
-		}
-		if(document.getElementById("sortOrder").value == 'descending'){
-			sortByDateDescending();
-		}
-		console.log("Right hizzzzer");
-	}
-	if(document.getElementById("sortSelector").value == 'assignee' ){
-		if(document.getElementById("sortOrder").value == 'ascending'){
-			sortByAssigneeAscending();
-		}
-		if(document.getElementById("sortOrder").value == 'descending'){
-			sortByAssigneeDescending();
-		}
-		console.log("sorting by assignee");
-	}
-}
 
-function sortByAssigneeAscending()
-{
-	tasks.sort(function(a,b){
-	if(a.assignee.firstName < b.assignee.firstName) return -1;
-	if(a.assignee.firstName > b.assignee.firstName) return 1;
-	return 0;
-	})
-	clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-	
-}
 
-function sortByAssigneeDescending()
-{
-	tasks.sort(function(a,b){
-	if(a.assignee.firstName < b.assignee.firstName) return 1;
-	if(a.assignee.firstName > b.assignee.firstName) return -1;
-	return 0;
-	})
-	clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-}
 
-function sortByDateAscending() 
-{
-	console.log(tasks); 
-    tasks.sort(function(a,b){
-      var dateA, dateB;
-      dateA = a.dueDate.split("/");
-      dateB = b.dueDate.split("/");
-      if(dateA[2] < dateB[2]) return -1;
-      if(dateA[2] > dateB[2]) return 1;
-      if(dateA[0] < dateB[0]) return -1;
-      if(dateA[0] > dateB[0]) return 1;
-      if(dateA[1] < dateB[1]) return -1;
-      if(dateA[1] > dateB[1]) return 1;
-      return 0;
-    })
-    console.log("post sort");
-    console.log(tasks); 	
-    clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-    		
-    }
-
-function sortByDateDescending() {
-	console.log(tasks); 
-    tasks.sort(function(a,b){
-      var dateA, dateB;
-      dateA = a.dueDate.split("/");
-      dateB = b.dueDate.split("/");
-      if(dateA[2] < dateB[2]) return 1;
-      if(dateA[2] > dateB[2]) return -1;
-      if(dateA[0] < dateB[0]) return 1;
-      if(dateA[0] > dateB[0]) return -1;
-      if(dateA[1] < dateB[1]) return 1;
-      if(dateA[1] > dateB[1]) return -1;
-      return 0;
-    })
-    console.log("post sort");
-    console.log(tasks); 	
-    clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-    		
- }
-    
-
-function sortByPriorityAscending() {
-	console.log(tasks);  
-	console.log("user = ");
-	console.log(user);
-		tasks.sort(function(a,b){
-		  if (a.severity < b.severity) return -1;
-		  if (a.severity > b.severity) return 1;
-		  return 0;
-		});
-	clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-}
-
-function sortByPriorityDescending() {
-	console.log(tasks);  
-		tasks.sort(function(a,b){
-		  if (a.severity < b.severity) return 1;
-		  if (a.severity > b.severity) return -1;
-		  return 0;
-		});
-	clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) createTaskTableByManager(tasks);
-    else{
-    	console.log("Unprepared for this ELSE condition");
-    }
-}
-
-function advancedSortValidation(){
-	console.log("advanced validation!!");
-}
 
 function clearTaskTable () {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();

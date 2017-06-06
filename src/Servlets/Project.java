@@ -1,9 +1,11 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,7 @@ import services.ProjectObjectService;
 import services.ProjectService;
 import services.QueryService;
 import services.helpers.TaskFiller;
+import objects.HashGen;
 
 /**
  * Always code as if the guy who ends up maintaining your code 
@@ -263,7 +266,7 @@ public class Project extends HttpServlet
 		{
 			System.out.println("Gettng Names of All Project Managers");
 			// TODO: Store User's name under User.class this implementation is really bad
-			String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Daves",
+			String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Dave",
 							   "David", "Joe", "Scott"};
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
@@ -272,7 +275,7 @@ public class Project extends HttpServlet
 		else if (action.equals("getUsers")) {
 			System.out.println("Gettng Names of All Users");
 			// TODO: Store User's name under User.class this implementation is really bad
-			String[] users = {"Andy", "Joe", "Bart", "David", "Daves",
+			String[] users = {"Andy", "Joe", "Bart", "David", "Dave",
 							  "Sandy"};
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
@@ -345,6 +348,33 @@ public class Project extends HttpServlet
 			}
 		} else if(action.equals("changePassword")){
 			System.out.println("Changing Password");
+			try {
+				User user = (User)ProjectObjectService.get(Long.parseLong(parameters.get("id")), "User");
+				String pass = parameters.get("newPassword");
+				System.out.println("NEW PASSWORD IS ......." + pass);
+
+				
+				HashGen hG = new HashGen();
+				try{
+					pass = hG.getHash(pass);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				System.out.println("NEWER PASSWORD IS ......." + pass);
+				user.setPassword(pass);
+				
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(user);
+				tx.commit();
+				response = "USER_UPDATED";
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if(!action.equals("getAllProjects") && !action.equals("getTasks"))
@@ -369,7 +399,7 @@ public class Project extends HttpServlet
 		else if(username.equals("dwgregory1"))
 			username = "David";
 		else if(username.equals("dschoener"))
-			username = "Daves";
+			username = "Dave";
 		else if(username.equals("alex"))
 			username = "Alex";
 		else if(username.equals("jim"))

@@ -1,6 +1,7 @@
 package services;
 
 import objects.HashGen;
+
 import java.util.Scanner;
 
 public class PasswordGenerator {

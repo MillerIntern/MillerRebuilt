@@ -110,7 +110,7 @@ public class User extends ProjectObject
 				return u;
 			} else if (name.equals("David") && u.getName().equals("dwgregory1")) {
 				return u;
-			} else if (name.equals("Daves") && u.getName().equals("dschoener")) {
+			} else if (name.equals("Dave") && u.getName().equals("dschoener")) {
 				return u;
 			} else if (name.equals("Sandy") && u.getName().equals("sandy")) {
 				return u;
