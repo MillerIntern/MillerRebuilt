@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -266,17 +267,20 @@ public class Project extends HttpServlet
 		{
 			System.out.println("Gettng Names of All Project Managers");
 			// TODO: Store User's name under User.class this implementation is really bad
-			String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Dave",
-							   "David", "Joe", "Scott"};
+			//String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Dave",
+			//				   "David", "Joe", "Scott"};
+			List<Object> projectManagers = ProjectObjectService.getAll("Person");
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(projectManagers);
+			System.out.println("Proj managers = " + response);
 		}
 		else if (action.equals("getUsers")) {
 			System.out.println("Gettng Names of All Users");
 			// TODO: Store User's name under User.class this implementation is really bad
-			String[] users = {"Andy", "Joe", "Bart", "David", "Dave",
-							  "Sandy"};
+			List<Object> users= ProjectObjectService.getAll("User");
+			
+			
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(users);
@@ -298,8 +302,10 @@ public class Project extends HttpServlet
 			}
 		} else if (action.equals("getUserInfo")) {
 			System.out.println("getting User Info");
+			System.out.println(User.mapNameToUser((String)req.getSession().getAttribute("user")));
 			Gson g = new Gson();
 			response = g.toJson(User.mapNameToUser((String) req.getSession().getAttribute("user")));
+			System.out.println("response = " +response);
 		} else if (action.equals("updateTask")) {
 			System.out.println("Updating Task");
 			
@@ -360,8 +366,10 @@ public class Project extends HttpServlet
 				}
 				catch(Exception e)
 				{
+					System.out.println("hashing went really wrong!");
 					e.printStackTrace();
 				}
+				finally{
 				System.out.println("NEWER PASSWORD IS ......." + pass);
 				user.setPassword(pass);
 				
@@ -370,7 +378,9 @@ public class Project extends HttpServlet
 				session.clear();
 				session.update(user);
 				tx.commit();
+				//HibernateUtil.closeDownSession();
 				response = "USER_UPDATED";
+				}
 			} catch (NumberFormatException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -378,7 +388,7 @@ public class Project extends HttpServlet
 		}
 		
 		if(!action.equals("getAllProjects") && !action.equals("getTasks"))
-			System.out.println(response);
+			System.out.println("huga " + response);
 		out.println(response);
 	}
 

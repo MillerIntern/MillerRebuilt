@@ -49,6 +49,7 @@ public class Report extends HttpServlet
 	{
 		resp.setContentType("text/html");
 		out = resp.getWriter();
+		System.out.println("DOING ACTIVE MEETING STUFF");
 				
 		//Get the list of projects
 		Map<String, String[]> map = req.getParameterMap();
@@ -56,7 +57,7 @@ public class Report extends HttpServlet
 		try 
 		{
 			projects = QueryService.queryProjects(map);
-			System.out.println(projects.size());
+			System.out.println("Projects size = " +projects.size());
 		} 
 		catch (ParseException e) 
 		{
@@ -84,6 +85,10 @@ public class Report extends HttpServlet
 	 */
 	public String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
+		System.out.println("PROJECTS OF INTEREST");
+		for(int i = 0; i<projects.size();i++){
+			System.out.println(projects.get(i));
+		}
 		StringBuilder sb = new StringBuilder();
 		//Generate the html header
 		sb.append(HtmlGenerator.generateHtmlHeader(reportName));

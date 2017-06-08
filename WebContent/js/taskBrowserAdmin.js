@@ -60,7 +60,8 @@ $(document).on('click', '#AndyTasks', function(){
 
 $(document).on('change', '#taskSelector', function () {
 	console.log(user);
-	getTasks();
+	clearTaskTable();
+	createProperTaskTable();
 });
 
 function establishManagersOfInterest()
@@ -239,7 +240,12 @@ function createManagerQueue(json)
 	d.appendChild(input);
 	d.appendChild(breakPoint);
 
-
+    json.sort(function(a,b){
+    	if(a.name < b.name) return -1;
+    	else if(a.name > b.name) return 1;
+    	return 0;
+    });
+    
 	for (var i = 0; i < json.length; i++) {
 		console.log("creating manager drop down" + json[i]);
 		// when users store both username and name, access the user's name and username fields
@@ -249,14 +255,14 @@ function createManagerQueue(json)
 		let input = document.createElement('input');
 		//let breakPoint = document.createElement('br');
 		//row.setAttribute("value", json[i]);
-		name.innerHTML = "<h4> &nbsp&nbsp&nbsp;"+json[i]+ "</h4>";
+		name.innerHTML = "<h4> &nbsp&nbsp&nbsp;"+json[i].name+ "</h4>";
 		input.setAttribute("type","checkbox");
-		if(user.firstName.toLowerCase() == json[i].toLowerCase()){
+		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()){
 			input.setAttribute("value",'on');
 			input.setAttribute("checked","true");
 		}
 		else input.setAttribute("value",'off');
-		input.setAttribute("id", json[i]+"Tasks");
+		input.setAttribute("id", json[i].name+"Tasks");
 		input.setAttribute("class","taskManager");
         //d.appendChild(row);
 		d.appendChild(name);

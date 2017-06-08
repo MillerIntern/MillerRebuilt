@@ -86,6 +86,11 @@ public class User extends ProjectObject
 		this.firstName = firstName;
 	}
 	
+	public String toString(){
+		return "name = " + this.name + " firstName = " + this.firstName;
+        
+	}
+	
 	// This method compares the firstnames that are sent to the task form against
 	// the firstnames in the database. Also compares the session stored username against 
 	// users' usernames in the database. 
@@ -102,17 +107,19 @@ public class User extends ProjectObject
 				return u;
 			
 			// prune all else if once names are in database
-			} else if (name.equals("Andy") && u.getName().equals("andy")) {
+			} else if (name.equals("andy") && u.getName().equals("Andy")) {
 				return u;
-			} else if (name.equals("Joe") && u.getName().equals("joe")) { 
+			} else if (name.equals("joe") && u.getName().equals("Joe")) { 
 				return u;
-			} else if (name.equals("Bart") && u.getName().equals("bart")) {
+			} else if (name.equals("bart") && u.getName().equals("Bart")) {
 				return u;
-			} else if (name.equals("David") && u.getName().equals("dwgregory1")) {
+			} else if (name.equals("david") && u.getName().equals("Dwgregory1")) {
 				return u;
-			} else if (name.equals("Dave") && u.getName().equals("dschoener")) {
+			} else if (name.equals("dave") && u.getName().equals("Dschoener")) {
 				return u;
-			} else if (name.equals("Sandy") && u.getName().equals("sandy")) {
+			} else if (name.equals("sandy") && u.getName().equals("Sandy")) {
+				return u;
+			} else if(name.equals("andrew") && u.getName().equals("Andrew")) {
 				return u;
 			}
 		}

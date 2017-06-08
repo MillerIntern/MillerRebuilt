@@ -1,29 +1,27 @@
 'use strict';
 
 let user;
+let projectManagers;
 let task;
 let tasks;
-
 let selectedProjID;
 
-
 $(document).ready(function () {
-	$('#taskWell > span > .dueDate').datepicker();
-});
-
-$(document).on('load', function () {
-	if (user.permission.id === 1) {
-		document.getElementById("projectManagerSelection").style.display = 'inline';
-		
-		tasksByManager();
-    
-	} else { 
-		$('#formFor').html('Tasks for: ' + user.firstName);
-		$(".advancedSortingOptions").hide();
-	}
 	getTasks();
+    $('#taskWell > span > .dueDate').datepicker();
+	
 });
 
+$(document).on('change', '#projectSearch', function(){
+	if(tasks == 'undefined') {
+		alert("No tasks to search through");
+		return;
+	} else{
+		let search = document.getElementById('projectSearch').value;
+		console.log("tasks = ", tasks);
+	}
+	
+});
 
 
 function getUserData () {
@@ -35,22 +33,28 @@ function getUserData () {
 			'domain': 'project',
 			'action': 'getUserInfo'
 		}, complete: function (data) {
-			console.log(data);
 			if(data.responseJSON) {
+			  getUsers();
+			  console.log("data for user = ", data.responseJSON);
 			  user = data.responseJSON;
+			  console.log("data for USER = ", user);
+			  
 			  if (user.permission.id === 1) {
-				 document.getElementById("projectManagerSelection").style.display = 'inline';
-				
-				 tasksByManager();
-		    
-			 } else { 
-			 	$('#formFor').html('Tasks for: ' + user.firstName);
-			 	$(".advancedSortingOptions").hide();
-			 }
-			  getTasks();
+					 document.getElementById("projectManagerSelection").style.display = 'inline';
+					 console.log("into the selection");
+					 createTaskTable();
+					 tasksByManager();
+
+				 } else { 
+				 	$('#formFor').html('Tasks for: ' + user.firstName);
+				 	$(".advancedSortingOptions").hide();
+				 	createTaskTable();
+				 }
+			  
 
 				
 			} else {
+				console.log("user data = ",data);
 				alert('Server Failure!');
 				
 			}
@@ -77,13 +81,12 @@ function getTasks() {
 			'domain': 'project',
 			'action': 'getTasks',
 		}, complete: function (data) {
-			console.log(data);
+			console.log("got the tasks",data);
+			getUserData();
 			if (data.responseJSON) {
 				tasks = data.responseJSON;
-				clearTaskTable();
-				createProperTaskTable();
-				console.log("users = ", user);
-				getUsers();
+				//createProperTaskTable();
+				console.log("users at tasks= ", user);
 			}
 		}
 	});
@@ -99,7 +102,7 @@ function getUsers () {
 			'domain': 'project',
 			'action': 'getUsers',
 		}, complete: function (data) {
-			console.log(data);
+			console.log("response JSON = ",data.responseJSON);
 			if (data.responseJSON) {
 				createDropdown(data.responseJSON);
 			}
@@ -118,8 +121,9 @@ function getProjectManagers () {
 			'action': 'getProjectManagers',
 		}, complete: function (data) {
 			console.log("Gettting project managersssss");
-			console.log("data = ",data);
-			console.log("response JSON = ", data.responseJSON);
+			console.log("data in project managers = ",data);
+			console.log("manager JSON = ", data.responseJSON);
+			projectManagers = data.responseJSON;
 			if (data.responseJSON) {
 				createManagerQueue(data.responseJSON);
 			}
@@ -133,14 +137,19 @@ function getProjectManagers () {
 
 function createDropdown (json) {
 	let d = document.createDocumentFragment();
-	
+	console.log("length = ",json.length);
+	json.sort(function(a,b){
+		if(a.firstName < b.firstName) return -1;
+		else if(a.firstName > b.firstName) return 1;
+		return 0;
+	})
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
 		console.log("creating drop down");
 		// when users store both username and name, access the user's name and username fields
-		option.innerHTML = json[i];
-		option.setAttribute("value", json[i]);
-		option.setAttribute("id", json[i] + "Option");
+		option.innerHTML = json[i].firstName;
+		option.setAttribute("value", json[i].firstName);
+		option.setAttribute("id", json[i].firstName + "Option");
 		d.appendChild(option);
 	}
 	$('#taskWell > span > .assignedTo').append(d);
@@ -151,7 +160,7 @@ function createDropdown (json) {
 function createTaskTable () {
 	let selector = $('#taskSelector').val();
 	console.log(selector);
-	console.log(tasks);
+	console.log("tasks == ", tasks);
 	var count = 0;
 	for (var i = 0; i < tasks.length; i++) {
 		if((selector === 'incomplete' && tasks[i].completed) || 

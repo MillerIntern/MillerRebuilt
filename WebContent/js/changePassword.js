@@ -18,7 +18,8 @@ $(document).on('change', '#confirmNewPassword',function(){
 $(document).on('click', '#changePasswordButton',function(){
 	console.log("clicked the button!");
 	if(document.getElementById('newPasswordDropdown').style.display == 'inline'){
-		if(passwordConfirmer()) changeUserPassword();
+		if(passwordConfirmer() && validPassword()) changeUserPassword();
+		else{alert('Invalid Password!')}
 	}
 	else{login()}
 });
@@ -88,10 +89,10 @@ function changeUserPassword () {
 		data: {
 			'domain': 'project',
 			'action': 'changePassword',
-			'id'  : user.id ,
+			'id'  : user.id,
 			'newPassword' : confirmNewPassword
 		}, complete: function (data) {
-			console.log(data);
+			console.log("data = ", data);
 			if(data) {
 			  alert('Password Changed');
 			  location.href = 'homepage.html';
@@ -126,4 +127,24 @@ function getUserData () {
 
 function passwordConfirmer() {
 	return(newPassword == confirmNewPassword);
+}
+/*
+ * password must have at least 10 characters
+ * password also must have either a number or capital letter
+ * TODO MUST FIX REQUIREMENTS
+ */
+function validPassword() {
+	var valid = false;
+	if(newPassword.length < 8) return valid;
+	for(var i=0; i<newPassword.length;i++){
+		if(newPassword[i] == newPassword[i].toUpperCase()) {valid = true; break; }
+	}
+	if(valid == false) return valid;
+	var q = 0;
+	for(; q<newPassword.length;q++){
+		if(isNaN(newPassword[q])) {valid = true; console.log("pass = ", newPassword[q]);break;}
+	}
+	if(q == newPassword.length) valid = false;
+	console.log("valid = ",valid);
+	return valid;
 }
