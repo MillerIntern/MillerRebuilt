@@ -86,9 +86,7 @@ public class Report extends HttpServlet
 	public String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
 		System.out.println("PROJECTS OF INTEREST");
-		for(int i = 0; i<projects.size();i++){
-			System.out.println(projects.get(i));
-		}
+
 		StringBuilder sb = new StringBuilder();
 		//Generate the html header
 		sb.append(HtmlGenerator.generateHtmlHeader(reportName));

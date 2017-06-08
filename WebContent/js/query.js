@@ -1172,7 +1172,6 @@ function generateReport(reportType)
 			break;
 			
 		case ACTIVE_MEETING:
-			console.log("WE DOING ACTIVE MEETING");
 			title = "Meeting Active Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_C);
@@ -1183,7 +1182,6 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-			//Added IN CLOSEOUT
 			status.push(PROJECT_STATUS_IN_CLOSEOUT);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			break;
@@ -1559,6 +1557,10 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_COMPLETE);
 			break;	
 		case PERMIT_ACTIVE:
+
+			status.push(PROJECT_STATUS_SCHEDULING); 
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			stage.push(ACTIVE_STAGE);
 			//status.push(PROJECT_STATUS_AWAITING_PERMIT);
 

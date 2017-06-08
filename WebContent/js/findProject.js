@@ -376,20 +376,23 @@ function filterProjects () {
 					let listDetails0 = document.createElement('td');
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
+					let listDetails3 = document.createElement('td');
 					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
 					}
-					
+
 					listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
 											json[k].warehouse.warehouseID;
-					listDetails1.innerHTML = json[k].projectItem.name;
-					listDetails2.innerHTML = json[k].projectManagers.name;
+					listDetails1.innerHTML = json[k].McsNumber;
+					listDetails2.innerHTML = json[k].projectItem.name;
+					listDetails3.innerHTML = json[k].projectManagers.name;
 					
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
+					$(projectListing).append(listDetails3);
 					
 					$('#results > tbody').append(projectListing);
 				}

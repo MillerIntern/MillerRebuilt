@@ -72,9 +72,9 @@ public class QueryService
 			Disjunction or = Restrictions.disjunction();
 			System.out.println();
 
-			System.out.println("Param Name = " + paramName);
+
 			String v = pars.get(paramName)[0];
-			System.out.println("V = " + v);
+
 			if (!v.isEmpty() && v != null && !v.equals("none") && !paramName.equals("domain") && !paramName.equals("action") && !paramName.equals("title") && !paramName.equals("projectInitiatedDateRelation")
 					&& !paramName.equals("costcoDueDateRelation") && !paramName.equals("proposalSubmittedRelation") && !paramName.equals("scheduledStartRelation") && !paramName.equals("scheduledTurnoverRelation") && !paramName.equals("actualTurnoverRelation") && !paramName.equals("onGoingRelation"))
 			{
