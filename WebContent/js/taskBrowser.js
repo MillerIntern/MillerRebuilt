@@ -9,9 +9,7 @@ let projectsOfInterest = new Array();
 let selectedProjID;
 
 $(document).ready(function () {
-	console.log(window.location, "about to fail");
     if(window.location.href.indexOf("taskReport.html") != -1) return;
-    else{console.log("NOOOOO ELSSSSEEEEE");}
 	$('#taskWell > span > .dueDate').datepicker();
     getUserData();
 });
@@ -504,22 +502,34 @@ function printButton(){
 		return;
 		}
 	console.log("MOVING");
-	window.location.assign("taskReport.html");
+	printTasks(projectsOfInterest);
+	
  
 }
 
-function printTasks() {
-    var para = document.createElement("p");
-    para.innerHTML = "HIIII";
+function printTasks(projectsOfInterest) {
+	console.log("Projects  ==== ", projectsOfInterest);
+	document.body.innerHTML="";
+    document.body.style.backgroundColor = "white";
+	var div = document.createElement("div");
+	div.id = "insertTable";
+	var title = document.createElement("h1");
+	title.innerHTML = "Task Report";
+	title.align = 'center';
 	var table = document.createElement("Table");
 	table.id = "table"
+    table.class = "table";
+	table.border ="1px solid black";
 	
+	
+	var indexCol = document.createElement("col");
+	indexCol.style = "width: 5%";
 	var projCol = document.createElement("col");
 	projCol.style ="width: 15%";
 	var taskCol = document.createElement("col");
 	taskCol.style ="width: 11%";
 	var assigneeCol = document.createElement("col");
-	assigneeCol.style ="width: 13%";
+	assigneeCol.style ="width: 10%";
 	var descriptionCol = document.createElement("col");
 	descriptionCol.style ="width: 25%";
 	var createdCol = document.createElement("col");
@@ -527,9 +537,10 @@ function printTasks() {
 	var dueCol = document.createElement("col");
 	dueCol.style ="width: 11%";
 	var priorityCol = document.createElement("col");
-	priorityCol.style ="width: 11%";
+	priorityCol.style ="width: 7%";
 	var notesCol = document.createElement("col");
 	notesCol.style ="width: 25%";
+	table.appendChild(indexCol);
     table.appendChild(projCol);
     table.appendChild(taskCol);
     table.appendChild(assigneeCol);
@@ -543,25 +554,41 @@ function printTasks() {
 	head.id = "tableHeader";
 	var headRow = table.insertRow();
 	headRow.id = "head";
+	var indexHead = document.createElement("th");
+	indexHead.innerHTML = "Index";
+	indexHead.align = 'center';
 	var projectHead = document.createElement("th");
 	projectHead.innerHTML = "Project";
+	projectHead.align = 'center';
 	var taskHead = document.createElement("th");
 	taskHead.innerHTML = "Task";
+	taskHead.align = 'center';
 	var assigneeHead = document.createElement("th");
 	assigneeHead.innerHTML = "Assignee";
+	assigneeHead.align = 'center';
 	var descriptionHead = document.createElement("th");
 	descriptionHead.innerHTML = "Description";
+	descriptionHead.align = 'center';
 	var createdHead = document.createElement("th");
 	createdHead.innerHTML = "Created";
+	createdHead.align = 'center';
 	var dueHead = document.createElement("th");
 	dueHead.innerHTML = "Due";
+	dueHead.align = 'center';
 	var priorityHead = document.createElement("th");
 	priorityHead.innerHTML = "Priority";
+	priorityHead.align = 'center';
 	var notesHead = document.createElement("th");
 	notesHead.innerHTML = "Notes";
+	notesHead.align = 'center';
+	document.body.appendChild(div);
+	document.getElementById("insertTable").appendChild(title);
 	document.getElementById("insertTable").appendChild(table);
+	document.getElementById("table").setAttribute("border-spacing", "8px");
+	document.getElementById("table").setAttribute("border-collapse", "separate");
 	document.getElementById("table").appendChild(head);
 	document.getElementById("tableHeader").appendChild(headRow);
+	document.getElementById("head").appendChild(indexHead);
 	document.getElementById("head").appendChild(projectHead);
 	document.getElementById("head").appendChild(taskHead);
 	document.getElementById("head").appendChild(assigneeHead);
@@ -571,17 +598,29 @@ function printTasks() {
 	document.getElementById("head").appendChild(priorityHead);
 	document.getElementById("head").appendChild(notesHead);
 	console.log("projects of interest length = ",projectsOfInterest.length);
+	var count = 0;
 	for(var i = 0;i<projectsOfInterest.length; i++){
+		count++;
 		var row = table.insertRow();
+		var index = row.insertCell();
+		index.align = "center";
 		var project = row.insertCell();
+		project.align = "center";
 		var task = row.insertCell();
+		task.align = 'center';
 		var assignee = row.insertCell();
+		assignee.align = 'center';
 		var description = row.insertCell();
+		description.align = 'center';
 		var created = row.insertCell();
+		created.align = 'center';
 		var due = row.insertCell();
+		due.align = 'center';
 		var priority = row.insertCell();
+		priority.align = 'center';
 		var notes = row.insertCell();
 
+		index.innerHTML = (count);
 		project.innerHTML = projectsOfInterest[i].project.warehouse.city.name + 
 		' #' + projectsOfInterest[i].project.warehouse.warehouseID +
 		' - ' + projectsOfInterest[i].project.projectItem.name;
@@ -594,7 +633,7 @@ function printTasks() {
 		priority.align = 'center';
 		notes.innerHTML = projectsOfInterest[i].notes;
 		
-		
+		row.appendChild(index);
 		row.appendChild(project);
 		row.appendChild(task);
 		row.appendChild(assignee);
@@ -605,6 +644,9 @@ function printTasks() {
 		row.appendChild(notes);
 		table.appendChild(row);
 	}
+	
+	
+	window.print();
 	
 }
 
