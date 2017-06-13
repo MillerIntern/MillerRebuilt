@@ -38,7 +38,11 @@
 		}
 		
 		
-
+		#taskTable {
+		   table-layout: fixed;
+		
+		}
+		
 	</style>
   </head>
   <body>
@@ -150,11 +154,25 @@
    		
 		
 		
-		<table id="taskTable" class="table table-hover">
+		<table id="taskTable" class="table table-hover table-responsive" >
+		      
+		   <col style="width: 15%">
+		   <col style="width: 11%">
+		   <col style="width: 11%">
+		   <col style="width: 25%">
+		   <col style="width: 11%">
+		   <col style="width: 11%">
+		   <col style="width: 11%">
+		   <col style="width: 25%">
+		   <col style="width: 5%">
+		   
+		   
+		   
+		   
    			<tr class='head'>
    				<td><input id="projectSearch" type='text' placeholder='Search For Project'/></td>
    				<th></th>
-   				<td><input type='text' placeholder='Filter Descriptions'/></td>
+   				<td><input id="descriptionSearch" type='text' placeholder='Filter Descriptions'/></td>
    				<th></th>
    				<td>
    				  <select class = 'sortSelection form-control' id = 'sortSelector'>

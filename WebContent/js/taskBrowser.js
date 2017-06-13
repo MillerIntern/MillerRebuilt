@@ -4,12 +4,13 @@ let user;
 let projectManagers;
 let task;
 let tasks;
+let tasksOfInterest = new Array();
+let projectsOfInterest = new Array();
 let selectedProjID;
 
 $(document).ready(function () {
-	getTasks();
     $('#taskWell > span > .dueDate').datepicker();
-	
+    getUserData();
 });
 
 $(document).on('change', '#projectSearch', function(){
@@ -18,10 +19,35 @@ $(document).on('change', '#projectSearch', function(){
 		return;
 	} else{
 		let search = document.getElementById('projectSearch').value;
-		console.log("tasks = ", tasks);
+		console.log("tasks = ", tasksOfInterest);
+		console.log("projects of interest = ", projectsOfInterest);
+		projectsOfInterest = new Array();
+		searchProjects(search);
+		clearTaskTable();
+		createTaskTableFromFilter(projectsOfInterest);
+		
 	}
 	
 });
+
+$(document).on('change', '#descriptionSearch', function(){
+	if(tasks == 'undefined') {
+		alert("No tasks to search through");
+		return;
+	} else{
+		let search = document.getElementById('descriptionSearch').value;
+		console.log("tasks = ", tasksOfInterest);
+		console.log("projects of interest = ", projectsOfInterest);
+		projectsOfInterest = new Array();
+		searchDescriptions(search);
+		clearTaskTable();
+		createTaskTableFromFilter(projectsOfInterest);
+		
+	}
+	
+});
+
+
 
 
 function getUserData () {
@@ -34,23 +60,10 @@ function getUserData () {
 			'action': 'getUserInfo'
 		}, complete: function (data) {
 			if(data.responseJSON) {
-			  getUsers();
 			  console.log("data for user = ", data.responseJSON);
 			  user = data.responseJSON;
 			  console.log("data for USER = ", user);
-			  
-			  if (user.permission.id === 1) {
-					 document.getElementById("projectManagerSelection").style.display = 'inline';
-					 console.log("into the selection");
-					 createTaskTable();
-					 tasksByManager();
-
-				 } else { 
-				 	$('#formFor').html('Tasks for: ' + user.firstName);
-				 	$(".advancedSortingOptions").hide();
-				 	createTaskTable();
-				 }
-			  
+		      getUsers();		  
 
 				
 			} else {
@@ -68,7 +81,6 @@ function tasksByManager()
 	console.log("getting users");
 	getProjectManagers();
 	
-	//getTasksByManager();
     
 }
 
@@ -81,13 +93,17 @@ function getTasks() {
 			'domain': 'project',
 			'action': 'getTasks',
 		}, complete: function (data) {
-			console.log("got the tasks",data);
-			getUserData();
+			console.log("got the tasks",data);			
 			if (data.responseJSON) {
 				tasks = data.responseJSON;
-				//createProperTaskTable();
-				console.log("users at tasks= ", user);
+				console.log("tasks ARE = ", tasks);
+				preparePageForUserStatus();
 			}
+			else { 
+				console.log("data = ", data);
+				alert("Somethinh went wrong while retrieving tasks from the server!");
+			}
+			
 		}
 	});
 	
@@ -105,6 +121,7 @@ function getUsers () {
 			console.log("response JSON = ",data.responseJSON);
 			if (data.responseJSON) {
 				createDropdown(data.responseJSON);
+				getTasks();
 			}
 		}
 		
@@ -127,10 +144,25 @@ function getProjectManagers () {
 			if (data.responseJSON) {
 				createManagerQueue(data.responseJSON);
 			}
+
 			else{console.log("no response JSON");}
 		}
 		
 	});
+}
+
+function preparePageForUserStatus(){
+	if (user.permission.id === 1) {
+		 document.getElementById("projectManagerSelection").style.display = 'inline';
+		 console.log("into the selection");
+		 createTaskTable();
+		 tasksByManager();
+
+	 } else { 
+	 	$('#formFor').html('Tasks for: ' + user.firstName);
+	 	$(".advancedSortingOptions").hide();
+	 	createTaskTable();
+	 }	
 }
 
 
@@ -158,6 +190,7 @@ function createDropdown (json) {
 }
 
 function createTaskTable () {
+	tasksOfInterest = new Array();
 	let selector = $('#taskSelector').val();
 	console.log(selector);
 	console.log("tasks == ", tasks);
@@ -166,9 +199,10 @@ function createTaskTable () {
 		if((selector === 'incomplete' && tasks[i].completed) || 
 				(selector === 'complete' && !tasks[i].completed)) 
 				continue; // do nothing
-		console.log(tasks[i].assignee.name + ' ' + user.name);
+        if(tasks[i].assignee == null) continue; 
 		if (tasks[i].assignee.name === user.name) {  
 			count++;
+			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			let taskListing = document.createElement('tr');
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
@@ -220,9 +254,74 @@ function createTaskTable () {
 			$('#taskTable > tbody').append(taskListing);
 		}
 	}
+	projectsOfInterest = tasksOfInterest;
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}
+}
+
+function createTaskTableFromFilter(){
+	console.log("projects of interest == ", projectsOfInterest);
+	var count = 0;
+	for (var i = 0; i < projectsOfInterest.length; i++) {
+		console.log(projectsOfInterest[i].assignee.name + ' ' + user.name);
+			count++;
+			let taskListing = document.createElement('tr');
+			taskListing.value = projectsOfInterest[i].id;
+			taskListing.onclick = function () { 
+				expandTaskInfo(this); 
+			}; 
+			
+			let projectDetails = document.createElement('td');
+			let taskTitle = document.createElement('td');
+			let taskAssignee = document.createElement('td');
+			let taskDesc = document.createElement('td');
+			let createdDate = document.createElement('td');
+			let dueDate = document.createElement('td');
+			let severity = document.createElement('td');
+			let notes = document.createElement('td');
+			let closeTask = document.createElement('td');
+			
+			let closeButton = document.createElement('button');
+			closeButton.innerHTML = 'Close'
+			closeButton.classname = 'btn';
+			closeButton.value = projectsOfInterest[i].id;
+			console.log("the tasks areeee",tasks);
+			closeButton.onclick = function () {
+				closeTaskById(this);
+			};
+			
+			projectDetails.innerHTML = projectsOfInterest[i].project.warehouse.city.name + 
+						' #' + projectsOfInterest[i].project.warehouse.warehouseID +
+						' - ' + projectsOfInterest[i].project.projectItem.name;
+			taskTitle.innerHTML = projectsOfInterest[i].title;
+			taskAssignee.innerHTML = projectsOfInterest[i].assignee.firstName;
+			taskDesc.innerHTML = projectsOfInterest[i].description;
+			createdDate.innerHTML = projectsOfInterest[i].assignedDate;
+			dueDate.innerHTML = projectsOfInterest[i].dueDate;
+			severity.innerHTML = projectsOfInterest[i].severity;
+			severity.align = 'center';
+			notes.innerHTML = projectsOfInterest[i].notes;
+			closeTask.appendChild(closeButton);
+			
+			$(taskListing).append(projectDetails);
+			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskAssignee);
+			$(taskListing).append(taskDesc);
+			$(taskListing).append(createdDate);
+			$(taskListing).append(dueDate);
+			$(taskListing).append(severity);
+			$(taskListing).append(notes);
+			$(taskListing).append(closeTask);
+			
+			$('#taskTable > tbody').append(taskListing);
+		
+	}
+	if (count === 0) {
+		clearAndAddSingleRow('No Tasks to Display!');
+	}
+	
+	
 }
 
 function createProperTaskTable()
@@ -370,6 +469,22 @@ function isValidInput(dates)
 		}
 	}
 	return true;
+}
+
+function searchProjects(searchQuery){
+	for(var i=0; i<tasksOfInterest.length; i++){
+		let contentToSearchThrough = tasksOfInterest[i].project.warehouse.city.name + 
+		' #' + tasksOfInterest[i].project.warehouse.warehouseID +
+		' - ' + tasksOfInterest[i].project.projectItem.name;
+		if(contentToSearchThrough.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) projectsOfInterest.push(tasksOfInterest[i]);
+	}
+}
+
+function searchDescriptions(searchQuery){
+	for(var i=0; i<tasksOfInterest.length; i++){
+		let contentToSearchThrough = tasksOfInterest[i].description;
+		if(contentToSearchThrough.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) projectsOfInterest.push(tasksOfInterest[i]);
+	}
 }
 
 

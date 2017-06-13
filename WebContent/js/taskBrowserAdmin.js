@@ -6,6 +6,7 @@ let managersOfInterest;
 
 
 
+
 $(document).on('change', '#AllTasks', function(){
 	if(document.getElementById("AllTasks").value == 'off'){
 		//document.getElementById("AllTasks").value = 'on';
@@ -31,9 +32,9 @@ $(document).on('change', '#DavidTasks', function(){
 	if(document.getElementById("DavidTasks").value == 'off') document.getElementById("DavidTasks").value = 'on';
 	else if(document.getElementById("DavidTasks").value == 'on') document.getElementById("DavidTasks").value = 'off';
 })
-$(document).on('change', '#DavesTasks', function(){
-	if(document.getElementById("DavesTasks").value == 'off') document.getElementById("DavesTasks").value = 'on';
-	else if(document.getElementById("DavesTasks").value == 'on') document.getElementById("DavesTasks").value = 'off';
+$(document).on('change', '#DaveTasks', function(){
+	if(document.getElementById("DaveTasks").value == 'off') document.getElementById("DaveTasks").value = 'on';
+	else if(document.getElementById("DaveTasks").value == 'on') document.getElementById("DaveTasks").value = 'off';
 })
 $(document).on('change', '#AlexTasks', function(){
 	if(document.getElementById("AlexTasks").value == 'off') document.getElementById("AlexTasks").value = 'on';
@@ -78,7 +79,7 @@ function establishManagersOfInterest()
 
 function createTaskTableByManager (tasks) {
 	let selector = $('#taskSelector').val();
-
+    tasksOfInterest = new Array();
 	console.log(selector);
 	console.log(tasks);
 	console.log(managersOfInterest);
@@ -94,6 +95,7 @@ function createTaskTableByManager (tasks) {
 		if(all == true)
 			{
 			console.log("taks = " + tasks[i].assignee);
+			tasksOfInterest.push(tasks[i]);
 			count++;
 			let taskListing = document.createElement('tr');
 			taskListing.value = tasks[i].id;
@@ -135,12 +137,21 @@ function createTaskTableByManager (tasks) {
 						' - ' + tasks[i].project.projectItem.name;
 			taskTitle.innerHTML = tasks[i].title;
 			taskAssignee.innerHTML = tasks[i].assignee.firstName;
+			taskAssignee.id = "assigneeDisplay";
+			console.log("iddddd = ", taskAssignee.id);
+			taskAssignee.width = "10px";
 			taskDesc.innerHTML = tasks[i].description;
+			taskDesc.width = "200%";
+			taskDesc.style ="white-space: normal";
+			//taskDesc.style ="max-width: 750px";
 			createdDate.innerHTML = tasks[i].assignedDate;
 			dueDate.innerHTML = tasks[i].dueDate;
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
+			severity.width = "30%";
 			notes.innerHTML = tasks[i].notes;
+			notes.width = "500%";
+			notes.style ="white-space: normal";
 			closeTask.appendChild(closeButton);
 			
 			$(taskListing).append(projectDetails);
@@ -163,6 +174,7 @@ function createTaskTableByManager (tasks) {
 	    	console.log("interesr in " + managersOfInterest[q]);
 		if (tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) {
 			count++;
+			tasksOfInterest.push(tasks[i]);
 			let taskListing = document.createElement('tr');
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
@@ -215,6 +227,7 @@ function createTaskTableByManager (tasks) {
 	  }
      } 
 	}
+	projectsOfInterest = tasksOfInterest;
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}

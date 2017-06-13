@@ -108,6 +108,7 @@ public class Task extends ProjectObject {
 		return assignee;
 	}
 	public void setAssignee(User assignee) {
+		if(assignee == null) System.out.println("IT WAS NULLLLL");
 		this.assignee = assignee;
 	}
 	public boolean isCompleted() {

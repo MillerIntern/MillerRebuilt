@@ -96,6 +96,7 @@ public class User extends ProjectObject
 	// users' usernames in the database. 
 	// TODO: This method makes patchwork of first names which should be in the database
 	public static User mapNameToUser(String name) {
+		
 		if (name == null) return null;
 		List<Object> users = ProjectObjectService.getAll("User");
 		
@@ -107,19 +108,19 @@ public class User extends ProjectObject
 				return u;
 			
 			// prune all else if once names are in database
-			} else if (name.equals("andy") && u.getName().equals("Andy")) {
+			} else if (name.equals("Andy") && u.getName().equals("andy")) {
 				return u;
-			} else if (name.equals("joe") && u.getName().equals("Joe")) { 
+			} else if (name.equals("Joe") && u.getName().equals("joe")) { 
 				return u;
-			} else if (name.equals("bart") && u.getName().equals("Bart")) {
+			} else if (name.equals("Bart") && u.getName().equals("bart")) {
 				return u;
-			} else if (name.equals("david") && u.getName().equals("Dwgregory1")) {
+			} else if (name.equals("David") && u.getName().equals("dwgregory1")) {
 				return u;
-			} else if (name.equals("dave") && u.getName().equals("Dschoener")) {
+			} else if (name.equals("Dave") && u.getName().equals("dschoener")) {
 				return u;
-			} else if (name.equals("sandy") && u.getName().equals("Sandy")) {
+			} else if (name.equals("Sandy") && u.getName().equals("sandy")) {
 				return u;
-			} else if(name.equals("andrew") && u.getName().equals("Andrew")) {
+			} else if(name.equals("Andrew") && u.getName().equals("andrew")) {
 				return u;
 			}
 		}

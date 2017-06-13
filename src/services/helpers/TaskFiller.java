@@ -42,6 +42,7 @@ public class TaskFiller {
 		// TODO: Do different methods mapUsernameToUser & mapFirstnameToUser
 		t.setAssignee(User.mapNameToUser(params.get("assignee")));
 		t.setAssigner(User.mapNameToUser(sessionName));
+
 		
 		t.setProject((Project)ProjectObjectService.get(Long.parseLong(params.get("project")), "Project"));
 		

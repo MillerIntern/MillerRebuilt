@@ -93,7 +93,7 @@ function basicUserSort()
 
 function sortByAssigneeAscending()
 {
-	tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
 	if(a.assignee.firstName < b.assignee.firstName) return -1;
 	if(a.assignee.firstName > b.assignee.firstName) return 1;
 	return 0;
@@ -103,7 +103,7 @@ function sortByAssigneeAscending()
 
 function sortByAssigneeDescending()
 {
-	tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
 	if(a.assignee.firstName < b.assignee.firstName) return 1;
 	if(a.assignee.firstName > b.assignee.firstName) return -1;
 	return 0;
@@ -114,7 +114,7 @@ function sortByAssigneeDescending()
 function sortByDateAscending() 
 {
 	console.log(tasks); 
-    tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
       var dateA, dateB;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
@@ -133,7 +133,7 @@ function sortByDateAscending()
 
 function sortByDateDescending() {
 	console.log(tasks); 
-    tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
       var dateA, dateB;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
@@ -155,7 +155,7 @@ function sortByPriorityAscending() {
 	console.log(tasks);  
 	console.log("user = ");
 	console.log(user);
-		tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
 		  if (a.severity > b.severity) return 1;
 		  return 0;
@@ -166,7 +166,7 @@ function sortByPriorityAscending() {
 
 function sortByPriorityDescending() {
 	console.log(tasks);  
-		tasks.sort(function(a,b){
+	projectsOfInterest.sort(function(a,b){
 		  if (a.severity < b.severity) return 1;
 		  if (a.severity > b.severity) return -1;
 		  return 0;
@@ -229,13 +229,13 @@ function advancedSorting(){
 	console.log("advanced Sorting!");
 	advancedSort = true;
 	if(document.getElementById('primaryKey').value == 'priority'){
-		tasks.sort(function compare(a,b){return sortElementByPriority(a,b)});	
+		projectsOfInterest.sort(function compare(a,b){return sortElementByPriority(a,b)});	
 		console.log("priority is primary");
 	} else if(document.getElementById('primaryKey').value == 'date'){
-		tasks.sort(function compare(a,b){return sortElementByDate(a,b)});
+		projectsOfInterest.sort(function compare(a,b){return sortElementByDate(a,b)});
 		console.log("date is primary");
 	} else if(document.getElementById('primaryKey').value == 'assignee'){
-		tasks.sort(function compare(a,b){return sortElementByAssignee(a,b)});	
+		projectsOfInterest.sort(function compare(a,b){return sortElementByAssignee(a,b)});	
 		console.log("assignee is primary");
 	} else if(document.getElementById('primaryKey').value == 'none'){console.log("advanced sorting error!");}
 	
@@ -263,8 +263,8 @@ function advancedSortValidation(){
 
 function displaySortingResults(){
 	clearTaskTable();
-    if(user.permission.id != 1) createTaskTable(tasks);
-    else if(user.permission.id == 1) {console.log("post sortttt"); createTaskTableByManager(tasks);}
+    if(user.permission.id != 1) createTaskTableFromFilter();
+    else if(user.permission.id == 1) {console.log("post sortttt"); createTaskTableFromFilter();}
     
     else{
     	console.log("Unprepared for this ELSE condition");
