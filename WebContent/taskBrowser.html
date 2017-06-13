@@ -69,8 +69,15 @@
 	      		<span class='caret'></span>
 	      	</a>
 	      	<ul class='dropdown-menu'>
-	      		<li class='active'><a href='taskBrowser.html'>Your Tasks</a></li>
-	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
+	      	
+	      		<li class='active'><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'"
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
 	      	</ul>
 	      </li>
 	      <li><a href="query.html">Reports</a></li>
@@ -158,7 +165,7 @@
 		      
 		   <col style="width: 15%">
 		   <col style="width: 11%">
-		   <col style="width: 11%">
+		   <col style="width: 13%">
 		   <col style="width: 25%">
 		   <col style="width: 11%">
 		   <col style="width: 11%">
@@ -209,6 +216,7 @@
    		
   	
     </div>
+    <button onclick='printButton()' class='btn btn-default'>Print Tasks</button>
 
   </body>
 </html>

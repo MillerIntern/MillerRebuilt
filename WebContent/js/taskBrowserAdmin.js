@@ -145,7 +145,7 @@ function createTaskTableByManager (tasks) {
 			taskDesc.style ="white-space: normal";
 			//taskDesc.style ="max-width: 750px";
 			createdDate.innerHTML = tasks[i].assignedDate;
-			dueDate.innerHTML = tasks[i].dueDate;
+			dueDate.innerHTML = tasks[i].assignedDate;
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
 			severity.width = "30%";

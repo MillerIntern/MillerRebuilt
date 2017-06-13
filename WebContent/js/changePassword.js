@@ -94,7 +94,7 @@ function changeUserPassword () {
 		}, complete: function (data) {
 			console.log("data = ", data);
 			if(data) {
-			  alert('Password Changed');
+			  alert('Password Changed :)');
 			  location.href = 'homepage.html';
 			} else {
 				alert('Server Failed!');
