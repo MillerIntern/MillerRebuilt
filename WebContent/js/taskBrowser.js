@@ -1,3 +1,7 @@
+/*
+ * This document provides all of the functionality for taskBrowser.html
+ * 
+ */
 'use strict';
 
 let user;
@@ -237,7 +241,7 @@ function createTaskTable () {
 			taskAssignee.innerHTML = tasks[i].assignee.firstName;
 			taskDesc.innerHTML = tasks[i].description;
 			createdDate.innerHTML = tasks[i].assignedDate;
-			dueData.innerHTML = tasks[i].dueDate;
+			dueDate.innerHTML = tasks[i].dueDate;
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
 			notes.innerHTML = tasks[i].notes;

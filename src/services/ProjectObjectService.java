@@ -113,6 +113,9 @@ public class ProjectObjectService
 				criteria.add(lostProjects);
 				Criterion inactiveProjects = Restrictions.sqlRestriction("stage_id != 10"); //inactive projects
 				criteria.add(inactiveProjects);
+			} else if(domain.equals("Task")) {
+				System.out.println("Task id = " + Order.asc("id"));
+				criteria.addOrder(Order.asc("id"));
 			}
 		
 			

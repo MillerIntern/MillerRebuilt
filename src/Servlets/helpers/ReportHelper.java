@@ -10,6 +10,7 @@ import projectObjects.ChangeOrder;
 import projectObjects.NewEquipment;
 import projectObjects.Person;
 import projectObjects.Project;
+import projectObjects.Task;
 
 /**
  * Helper Classes will be statically called to do perform actions.
@@ -518,6 +519,27 @@ public class ReportHelper
 		} else if(value.equals("inspectionNotes")) {
 			sb.append("<th>");
 			sb.append("Inspection Notes");
+		} else if(value.equals("task_title")) {
+			sb.append("<th>");
+			sb.append("Title");
+		} else if(value.equals("task_assignee")) {
+			sb.append("<th>");
+			sb.append("Assignee");
+		} else if(value.equals("task_description")) {
+			sb.append("<th>");
+			sb.append("Description");
+		} else if(value.equals("task_created_date")) {
+			sb.append("<th>");
+			sb.append("Created");
+		} else if(value.equals("task_due_date")) {
+			sb.append("<th>");
+			sb.append("Due");
+		} else if(value.equals("task_priority")) {
+			sb.append("<th>");
+			sb.append("Priority");
+		} else if(value.equals("task_notes")) {
+			sb.append("<th>");
+			sb.append("Notes");
 		}
 	}
 	
@@ -1467,6 +1489,42 @@ public class ReportHelper
 		}
 		else
 			return "---";	// If nothing else just fill the field with nothing
+	}
+	
+	/**
+	 * Gets the report value given a task and a key. 
+	 * This method checks every possible value for tasks against the passed in value-key 
+	 * and retrieves and formats that value for display on the table
+	 * @param value - the key of the value to be found
+	 * @param t - the task containing the values
+	 * @return - a string containing the value
+	 */
+	public static String getReportVal(String value, Task t){
+		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
+		String returnVal;
+		if(value.equals("warehouse")){
+		     returnVal = t.getProject().getWarehouse().getCity().getName() + " #" + t.getProject().getWarehouse().getWarehouseID();
+		} else if(value.equals("task_title")){
+			returnVal = t.getTitle();
+		} else if(value.equals("task_assignee")) {
+			returnVal = t.getAssignee().getFirstName();
+		} else if(value.equals("task_description")) {
+			returnVal = t.getDescription();
+		} else if(value.equals("task_created_date")) {
+			returnVal = dForm.format(t.getAssignedDate()).toString();
+		} else if(value.equals("task_due_date")) {
+			if(t.getDueDate() != null) returnVal = dForm.format(t.getDueDate()).toString();
+			else returnVal = "---";
+		} else if(value.equals("task_priority")) {
+			returnVal = Integer.toString(t.getSeverity());
+		} else if(value.equals("task_notes")) {
+			returnVal = t.getNotes();
+		} else {
+			return "---";
+		}
+		
+		return returnVal;
+		
 	}
 	
 	private static String convertStatusNumber(String retVal) {

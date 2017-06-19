@@ -1,63 +1,32 @@
 'use strict';
 
-//This document is used to queue all managers of interest that you would like to see tasks for
+/*
+ * This document is used to prepare the taskBrowser.html page for administrative privileges
+ * All functions found in this document contribute to prepare the page's functionality and
+ * appearance for an administrative user
+ */
 let managersOfInterest;
 
 
 
 
 
-$(document).on('change', '#AllTasks', function(){
-	if(document.getElementById("AllTasks").value == 'off'){
-		//document.getElementById("AllTasks").value = 'on';
+$(document).on('click', '#AllTasks', function(){
+	console.log("checked == ", document.getElementById("AllTasks").checked);
+	if(document.getElementById("AllTasks").checked == true){
 		$('.taskManager > input').each(function(i, obj) {
-		    obj.value = 'on';
 		    obj.checked = true;
 		});
 	}
-    else if(document.getElementById("AllTasks").value == 'on') {
-    	document.getElementById("AllTasks").value = 'off';
-    }
-	
-})
-$(document).on('change', '#JoeTasks', function(){
-	if(document.getElementById("JoeTasks").value == 'off') document.getElementById("JoeTasks").value = 'on';
-	else if(document.getElementById("JoeTasks").value == 'on') document.getElementById("JoeTasks").value = 'off';
-})
-$(document).on('change', '#BartTasks', function(){
-	if(document.getElementById("BartTasks").value == 'off') document.getElementById("BartTasks").value = 'on';
-	else if(document.getElementById("BartTasks").value == 'on') document.getElementById("BartTasks").value = 'off';
-})
-$(document).on('change', '#DavidTasks', function(){
-	if(document.getElementById("DavidTasks").value == 'off') document.getElementById("DavidTasks").value = 'on';
-	else if(document.getElementById("DavidTasks").value == 'on') document.getElementById("DavidTasks").value = 'off';
-})
-$(document).on('change', '#DaveTasks', function(){
-	if(document.getElementById("DaveTasks").value == 'off') document.getElementById("DaveTasks").value = 'on';
-	else if(document.getElementById("DaveTasks").value == 'on') document.getElementById("DaveTasks").value = 'off';
-})
-$(document).on('change', '#AlexTasks', function(){
-	if(document.getElementById("AlexTasks").value == 'off') document.getElementById("AlexTasks").value = 'on';
-	else if(document.getElementById("AlexTasks").value == 'on') document.getElementById("AlexTasks").value = 'off';
-})
-$(document).on('change', '#ScottTasks', function(){
-	if(document.getElementById("ScottTasks").value == 'off') document.getElementById("ScottTasks").value = 'on';
-	else if(document.getElementById("ScottTasks").value == 'on') document.getElementById("ScottTasks").value = 'off';
-})
-$(document).on('change', '#CraigTasks', function(){
-	if(document.getElementById("CraigTasks").value == 'off') document.getElementById("CraigTasks").value = 'on';
-	else if(document.getElementById("CraigTasks").value == 'on') document.getElementById("CraigTasks").value = 'off';
-})
-$(document).on('change', '#AdrienneTasks', function(){
-	if(document.getElementById("AdrienneTasks").value == 'off') document.getElementById("AdrienneTasks").value = 'on';
-	else if(document.getElementById("AdrienneTasks").value == 'on') document.getElementById("AdrienneTasks").value = 'off';
-})
-$(document).on('click', '#AndyTasks', function(){
-	
-	if(document.getElementById("AndyTasks").value == 'off') document.getElementById("AndyTasks").value = 'on';
-	else if(document.getElementById("AndyTasks").value == 'on') document.getElementById("AndyTasks").value = 'off';
-})
+});
 
+$(document).on('click', '.taskManager', function(){
+	console.log("checked == ", document.getElementById("AllTasks").checked);
+    if(document.getElementById("AllTasks").checked == true){
+		this.checked = true;
+	}
+	
+});
 
 $(document).on('change', '#taskSelector', function () {
 	console.log(user);
@@ -69,11 +38,9 @@ function establishManagersOfInterest()
 {
 	managersOfInterest = [];
 	$('.taskManager').each(function(i, obj) {
-		console.log(obj);
-		var userName = "" +obj.id+"";
-		userName = userName.replace("Tasks","");
-		console.log("user = " + userName);
-	    if(obj.value == 'on') managersOfInterest.push(userName);
+		console.log("Man of interest == ", obj.value, obj.checked)
+		if(!obj.value) return;
+	    if(obj.checked == true) managersOfInterest.push(obj.value);
 	});
 }
 
@@ -82,7 +49,7 @@ function createTaskTableByManager (tasks) {
     tasksOfInterest = new Array();
 	console.log(selector);
 	console.log(tasks);
-	console.log(managersOfInterest);
+	console.log("managers of interest  == ",managersOfInterest);
 	//console.log("Manager " + managersOfInterest[0]);
 	var count = 0;
 	var all = false;
@@ -244,9 +211,10 @@ function createManagerQueue(json)
 	row.setAttribute("value", 'all');
 	name.innerHTML = "<h4> All </h4>";
 	input.setAttribute("type","checkbox");
-	input.setAttribute("value",'off');
+	input.value ='all';
 	input.setAttribute("id", "AllTasks");
 	input.setAttribute("class","taskManager");
+	input.checked = false;
 	d.appendChild(row);
 	d.appendChild(name);
 	d.appendChild(checkBox);
@@ -262,29 +230,22 @@ function createManagerQueue(json)
 	for (var i = 0; i < json.length; i++) {
 		console.log("creating manager drop down" + json[i]);
 		// when users store both username and name, access the user's name and username fields
-		//let row = document.createElement('tr');
 		let name = document.createElement('td');
 		let checkBox = document.createElement('td');
-		let input = document.createElement('input');
-		//let breakPoint = document.createElement('br');
-		//row.setAttribute("value", json[i]);
+		let managerInput = document.createElement('input');
 		name.innerHTML = "<h4> &nbsp&nbsp&nbsp;"+json[i].name+ "</h4>";
-		input.setAttribute("type","checkbox");
-		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()){
-			input.setAttribute("value",'on');
-			input.setAttribute("checked","true");
-		}
-		else input.setAttribute("value",'off');
-		input.setAttribute("id", json[i].name+"Tasks");
-		input.setAttribute("class","taskManager");
-        //d.appendChild(row);
+		managerInput.setAttribute("type","checkbox");
+		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()) 
+			managerInput.checked = true;
+		else {managerInput.checked = false;}
+		managerInput.setAttribute("value", json[i].name);
+		managerInput.setAttribute("id", json[i].name+"Tasks");
+		managerInput.setAttribute("class","taskManager");
 		d.appendChild(name);
 		d.appendChild(checkBox);
-		d.appendChild(input);
-		//d.appendChild(breakPoint);
-	}
+		d.appendChild(managerInput);
+}
 
-	
 	
 	
 	$('.container > #projectManagerSelection').append(d);

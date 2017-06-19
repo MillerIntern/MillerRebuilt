@@ -8,7 +8,8 @@ var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
                       "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
-                      'Equipment Report', 'Change Order Report', "NE GC & Refrigeration", "SE GC & Refrigeration"];
+                      'Equipment Report', 'Change Order Report', "NE GC & Refrigeration", "SE GC & Refrigeration",
+                      "Task"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -23,13 +24,16 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
 			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
-			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report'};
+			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
+			"task_title":"Title", "task_assignee":"Assignee", "task_description":"Description", "task_created_date":"Created", "task_due_date":"Due",
+			"task_priority":"Priority", "task_notes":"Notes"};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT', 
-					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order Report': 'CO_REPORT'};
+					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order Report': 'CO_REPORT',
+					'Task': 'TASK'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -199,6 +203,10 @@ const CO_PROPOSAL = 'CO_REPORT_P';
 const CO_BUDGETARY = 'CO_REPORT_B';
 const CO_CLOSED = 'CO_REPORT_C';
 
+const TASK = 'TASK';
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -334,6 +342,9 @@ const EQUIPMENT_KEYS = new Array('equipmentName'); /* The system handles creatin
 const CO_KEYS = new Array('changeOrder');
 
 const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
+
+const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_description','task_created_date',
+		                  'task_due_date','task_priority','task_notes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -889,6 +900,8 @@ function submitQuery()
         };
    
     data['shownFields'] = selectedFields;	
+    console.log("selected fields equals to....  ", selectedFields);
+    alert("WAITTT");
     var params = $.param(data);
     document.location.href = REPORT_URL+"?"+params;
 }
@@ -904,8 +917,10 @@ function checkAll()
 
 function reportCreator(elem)
 {
+	console.log("elem = ", elem.value);
 	switch(elem.value){
-		case 'Active':
+		
+	    case 'Active':
 			generateReport($('.reportTypePicker :selected').val()+'_A');
 			break;
 
@@ -924,6 +939,9 @@ function reportCreator(elem)
 		case 'Closed':
 			generateReport($('.reportTypePicker :selected').val()+'_C');
 			break;
+		case 'Tasks':
+			generateTaskReport($('.reportTypePicker :selected').val());
+			break;
 	}
 	/*if(elem.value == 'Active')
 		generateReport($('.reportTypePicker :selected').val()+'_A');
@@ -936,6 +954,48 @@ function reportCreator(elem)
 	else if(elem.value == 'Closed')
 		generateReport($('.reportTypePicker :selected').val()+'_C');*/	
 }
+
+function generateTaskReport(reportType){
+	console.log("report type == ", reportType);
+	var genType = getAllSpecifiedFields(reportType);
+	var selectedFields = JSON.stringify(genType);
+	var title = undefined;
+	
+	switch(reportType){
+		case TASK:
+			title = 'Tasks for All Projects';
+			//stage.push(ACTIVE_STAGE);
+			break;
+		default:
+			alert("Invalid report type");
+			return false;
+			break;
+	}
+
+
+if($('#reportTitle').val() != null && $('#reportTitle').val() != '')
+{
+title = $('#reportTitle').val();
+}
+
+// 'mcsNum','task_title','task_assignee','task_description','task_created_date',
+// 'task_due_date','task_priority','task_notes'
+var data = {
+		'domain': 'task',
+		'action': 'query', 
+		'task_title':title,
+};
+
+console.log(data);
+data['shownFields'] = selectedFields;
+console.log("selected fields == ", selectedFields);
+var params = $.param(data);
+console.log(REPORT_URL+"?"+params)
+document.location.href = REPORT_URL+"?"+params;
+}
+
+	
+
 
 function generateReport(reportType)
 {
@@ -1633,6 +1693,10 @@ function generateReport(reportType)
 			stage.push(CLOSED_STAGE);
 			title = 'Change Orders for Closed Projects';
 			break;
+		case TASK:
+			title = 'Tasks for All Projects';
+			//stage.push(ACTIVE_STAGE);
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -1837,6 +1901,9 @@ function getAllSpecifiedFields(reportType)
 		case CO_BUDGETARY:
 		case CO_CLOSED:
 			genType = CO_KEYS;
+			break;
+		case TASK:
+			genType = TASK_KEYS;
 			break;
 
 	

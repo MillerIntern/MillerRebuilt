@@ -1,3 +1,9 @@
+/*
+ * This document provides all of the sorting functionality for taskBrowser.html
+ * It allows administrators to sort by multiple keys [priority, due date, assignee]
+ * NON-admin users are able to sort by one key at a time [priority or due date]
+ */
+
 'use strict';
 
 var advancedSort = false;
@@ -115,6 +121,7 @@ function sortByDateAscending()
 {
 	console.log(tasks); 
 	projectsOfInterest.sort(function(a,b){
+	 console.log("A = ", a, " b = ",b);
       var dateA, dateB;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
@@ -175,6 +182,7 @@ function sortByPriorityDescending() {
 }
 
 function sortElementByPriority(a,b){
+	  if(!a.severity || !b.severity) return;
 	  if (a.severity < b.severity) return -1;
 	  if (a.severity > b.severity) return 1;
 	  if(document.getElementById("tertiaryKey").value == 'priority') return 0;
@@ -190,6 +198,7 @@ function sortElementByPriority(a,b){
 
 function sortElementByDate(a,b){
     var dateA, dateB;
+    if(!a.dueDate || !b.dueDate) return;
     dateA = a.dueDate.split("/");
     dateB = b.dueDate.split("/");
     if(dateA[2] < dateB[2]) return -1;

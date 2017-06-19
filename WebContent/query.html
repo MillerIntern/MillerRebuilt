@@ -2,14 +2,24 @@
 <html>
 
 <head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/global.js"></script>
-    <script type="text/javascript" src="js/query.js"></script>
+    <script type="text/javascript" src="js/queryNew.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
-    <link href="css/theme/currentTheme/global.css" type="text/css" rel="stylesheet" />
-    <link href="css/theme/currentTheme/query.css" type="text/css" rel="stylesheet" />
-    <link href="css/theme/currentTheme/menu.css" type="text/css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/findProject.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
+
 
     <meta charset="UTF-8">
     <title>Report generator</title>
@@ -17,30 +27,46 @@
 
 <body>
 
-    <div class="header">
-        <p class="title">Reports</p>
-    </div>
-
-    <br>
-
-    <ul>
-        <li><a onClick="document.location.href='homepage.html'">Home</a></li>
-        <li class="dropdown">
-            <a class="dropbtn">Projects</a>
-            <div class="dropdown-content">
-                <a onClick="document.location.href='projectData.html'">Add</a>
-                <a onClick="document.location.href='findProject.html'">Find</a>
-            </div>
-        </li>
-        <li><a onClick="document.location.href='triggers.html'">Triggers</a></li>
-        <li><a class="active" onClick="document.location.href='query.html'">Reports</a></li>
-            <li class="dropdown">
-   		<a class="dropbtn">Tools</a>
-   		<div class="dropdown-content">
-   			<a onClick="document.location.href='additions.html'">Add To Database</a>
-   		</div></li>
-        <li style="float:right"><a onClick="document.location.href='logout.html'">Logout</a></li>
-    </ul>
+    <nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html">Add Project</a></li>
+	          <li class='active'><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'"
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      <li class='active'><a href="query.html">Reports</a></li>
+	      <li><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
 
 
     
@@ -50,43 +76,67 @@
        <!--<input type='text' class="reportTitle" id='reportTitle' placeholder='Title(Optional)'></input>-->
 
         <!--<br>  -->
-        <div class=paramTableWrapper>
-            
+        <div class=paramTableWrapper id='param-field'>
+            <span> Report Generator </span>
             <!--</br>  -->
 
             <div class=reportGenTable>
-                <Select class="reportTypePicker">
-                    <option>Select A Report</option>
+                <Select id="broadReportType" class="form-control">
+                    <option value='none' disabled selected hidden=true>Select General Report Type...</option>
+                	<option value='GeneralProjects'>General Projects</option>
+                	<option value='ProjectManagement'>Project Management</option>
+                	<option value='ProjectTypes'>Project Types</option>        
                 </Select>
                 <br>
-                <button value="Active" onclick="reportCreator(this)">Active</button>
-                <button value="Proposals" onclick="reportCreator(this)">Proposals</button>
-                <button value="Budgetary" onclick="reportCreator(this)">Budgetary</button>
-                <button value="Inactive" onclick="reportCreator(this)">Inactive</button>
-                <button value="Closed" onclick="reportCreator(this)">Closed</button>
+                <Select class="reportTypePicker form-control" style='display: none' id='specificReports'>
+                    <option>Select A Report</option>
+                </Select>
+
+                
+               
+                <br>
+                <br>
+               
+                <div id ='ProjectStages' style='display:none;'>
+                <Select id='ProjectStagesDropDown' class="form-control">
+                <option value='none' disabled selected hidden=true>Select Project Phase...</option>
+                <option  value="Active" >Active </option>
+                <option  value="Proposals" >Proposals</option>
+                <option value="Budgetary" >Budgetary</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Closed">Closed</option>          
+                </Select>
+                </div>
+                
+                
                 <!--  <input type="button" value="Proposals" onclick="reportCreator(this)"></input>
                 <input type="button" value="Inactive" onclick="reportCreator(this)"></input>
                 <input type="button" value="Closed" onclick="reportCreator(this)"></input>-->
 
 
-
-                <div class="but">
+				<div id='RemainingCriteria' style='display:none'>
+				<div id='AdditionalParamters'>
+                
                     <div class="leftButtons">
                     </div>
+                    <button id='generateReport'> Generate Report </button>
                     <div id="addParam">
-                        <input class="leftButton" type="button" value="Add Parameter" onclick="addParamCell()"></input>
+                        <input class="btn-success" type="button" value="Add Parameter" onclick="addParamCell()"></input>
                     </div>
                     <div id="addDateParam">
-                        <input class="leftButton" type="button" value="Add Date Parameter" onclick="addDateParamCell()"></input>
+                        <input class="btn-default" type="button" value="Add Date Parameter" onclick="addDateParamCell()"></input>
                     </div>
                     <div id="submit">
-                        <input class="leftButton" type="button" value="Search" onclick="createModalFieldSelector()"></input>
+                        <input class="btn-default" type="button" value="Search" onclick="createModalFieldSelector()"></input>
                     </div>
 
+              
                 </div>
+                
 
                 <div class=paramTable> </div>
-
+           </div>
+           
 
 
 
@@ -128,8 +178,8 @@
 				 </div> -->
 
             </div>
-        </div>
-    </div>
+                       </div>
+   </div>
 
 
 </body>
