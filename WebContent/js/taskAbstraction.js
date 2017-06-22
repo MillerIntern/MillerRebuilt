@@ -3,12 +3,14 @@
 let tasks;
 
 
-
+/*
 $(document).on('change', '#taskSelector', function () {
 	clearTaskTable();
 	fillTasksTable(tasks);
 	console.log("Right here \n");
 });
+*/
+
 
 
 

@@ -2,6 +2,7 @@ package projectObjects;
 
 import java.util.Date;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -25,9 +26,11 @@ public class Task extends ProjectObject {
 	private User assignee;
 	private boolean completed;
 	private String notes;
+	private TaskStatus status;
+	
 	
 	public Task (String title, String description, Project p, int s, Date due, 
-			Date assigned, User assigner, User assignee, boolean c, String notes) {
+			Date assigned, User assigner, User assignee, boolean c, String notes, TaskStatus status) {
 		this.title = title;
 		this.description = description;
 		this.project = p;
@@ -38,6 +41,7 @@ public class Task extends ProjectObject {
 		this.assignee = assignee;
 		this.completed = c;
 		this.setNotes(notes);
+		this.status = status;
 	}
 	
 	public Task() {
@@ -51,6 +55,7 @@ public class Task extends ProjectObject {
 		assignee = null;
 		completed = false;
 		setNotes(null);
+		status = null;
 	}
 	
 	public String getTitle() {
@@ -125,6 +130,18 @@ public class Task extends ProjectObject {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	public TaskStatus getTaskStatus() {
+		return status;
+	}
+	
+	public void setTaskStatus(TaskStatus status) {
+		this.status = status;
+	}
+	
+	
 
 	public String toString() {
 		return this.title + ": " + this.description;

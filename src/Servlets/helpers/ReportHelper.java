@@ -388,7 +388,7 @@ public class ReportHelper
 		else if(value.equals("mg2Completion"))
 		{
 			sb.append("<th>");
-			sb.append("MG2 Completion (G704)");
+			sb.append("MG2 Substantial Completion (G704)");
 		}
 		else if(value.equals("closeoutDocumentNotes"))
 		{
@@ -540,7 +540,10 @@ public class ReportHelper
 		} else if(value.equals("task_notes")) {
 			sb.append("<th>");
 			sb.append("Notes");
-		}
+		} else if(value.equals("task_status")) {
+			sb.append("<th>");
+			sb.append("Status");
+		} 
 	}
 	
 	/**
@@ -1334,67 +1337,77 @@ public class ReportHelper
 		{
 			String retVal = convertStatusNumber(p.getPermits().getBuildingPermitStatus()); 
 			
-			if(p.getPermits().getBuilding() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getBuilding());
-            if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getBuilding() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getBuilding());
+			}
+			
 			return retVal;
 		}
 		else if(value.equals("mechanicalPermit") && p.getPermits() != null && p.getPermits().getMechanicalPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getMechanicalPermitStatus()); 
-			if(p.getPermits().getMechanicalPermitDate() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getMechanicalPermitDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getMechanicalPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getMechanicalPermitDate());
+			}
 			return retVal;
 		}
 		else if(value.equals("electricalPermit") && p.getPermits() != null && p.getPermits().getElectricalPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getElectricalPermitStatus());
 			
-			if(p.getPermits().getElectrical() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getElectrical());
-			
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getElectrical() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getElectrical());
+			}
+			  
 			return retVal;
 		}
 		else if(value.equals("plumbingPermit") && p.getPermits() != null && p.getPermits().getPlumbingPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getPlumbingPermitStatus()); 
-			if(p.getPermits().getPlumbingPermitDate() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getPlumbingPermitDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getPlumbingPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getPlumbingPermitDate());
+			}
 			return retVal;
 		}
 		else if(value.equals("roofingPermit") && p.getPermits() != null && p.getPermits().getRoofingPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getRoofingPermitStatus()); 
-			if(p.getPermits().getFireAlarmPermitDate() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getFireAlarmPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
+			}
 			return retVal;
 		}
 		else if(value.equals("sprinklerPermit") && p.getPermits() != null && p.getPermits().getSprinklerPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getSprinklerPermitStatus()); 
-			if(p.getPermits().getFireSprinklerDate() != null)
-			  retVal = convertStatusNumber(retVal)  + " " + dForm.format(p.getPermits().getFireSprinklerDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getFireSprinklerDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal  + " " + dForm.format(p.getPermits().getFireSprinklerDate());
+			}
 			return retVal;
 		}
 		else if(value.equals("fireAlarmPermit") && p.getPermits() != null && p.getPermits().getFireAlarmPermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getFireAlarmPermitStatus()); 
-			if(p.getPermits().getFireAlarmPermitDate() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getFireAlarmPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
+			} 
+			
 			return retVal;
 		}
 		else if(value.equals("lowVoltagePermit") && p.getPermits() != null && p.getPermits().getVoltagePermitStatus() != null)
 		{
 			String retVal = convertStatusNumber(p.getPermits().getVoltagePermitStatus()); 
-			if(p.getPermits().getLowVoltagePermitDate() != null)
-			  retVal = convertStatusNumber(retVal) + " " + dForm.format(p.getPermits().getLowVoltagePermitDate());
-			if(retVal.equalsIgnoreCase("---")) retVal = "N/A";  
+			if(p.getPermits().getLowVoltagePermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getLowVoltagePermitDate());
+			}
 			return retVal;
 		} else if(value.equals("permitNotes") && p.getPermits() != null && p.getPermits().getPermitNotes() != null) {
 			return p.getPermits().getPermitNotes();
@@ -1519,6 +1532,8 @@ public class ReportHelper
 			returnVal = Integer.toString(t.getSeverity());
 		} else if(value.equals("task_notes")) {
 			returnVal = t.getNotes();
+		} else if(value.equals("task_status")){
+			returnVal = t.getTaskStatus().getStatus();
 		} else {
 			return "---";
 		}
@@ -1528,13 +1543,17 @@ public class ReportHelper
 	}
 	
 	private static String convertStatusNumber(String retVal) {
-		if (retVal.equals("0"))	return "Preparing";
-		else if (retVal.equals("1"))	return "Submitted";
-		else if (retVal.equals("2"))	return "Issued";
-		else if (retVal.equals("3"))	return "Closed";
-		else if(retVal.equals(""))      return "N/A";
 		
-		return retVal;
+		if(retVal == null || retVal.equals("0")) return "tbd";
+		else if (retVal.equals("1") || retVal.equalsIgnoreCase("preparing"))	return "Preparing";
+		else if (retVal.equals("2") || retVal.equalsIgnoreCase("submitted"))	return "Submitted";
+		else if (retVal.equals("3") || retVal.equalsIgnoreCase("approved"))	return "Approved";
+		else if (retVal.equals("4") || retVal.equalsIgnoreCase("issued"))	return "Issued";
+		else if(retVal.equals("5") || retVal.equalsIgnoreCase("closed"))      return "Closed";
+		else if(retVal.equals("6") || retVal.equalsIgnoreCase("n/a"))     return "N/A";
+		else return "tbd";
+		
+	
 	}
 
 	private static Object nullOrFull(Object value)

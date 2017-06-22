@@ -8,6 +8,7 @@ import java.util.Map;
 
 import projectObjects.Project;
 import projectObjects.Task;
+import projectObjects.TaskStatus;
 import projectObjects.User;
 import services.ProjectObjectService;
 
@@ -45,6 +46,10 @@ public class TaskFiller {
 
 		
 		t.setProject((Project)ProjectObjectService.get(Long.parseLong(params.get("project")), "Project"));
+		
+		if(!(params.get("status") == null || params.get("status").isEmpty()))
+			t.setTaskStatus((TaskStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "TaskStatus"));
+		else t.setTaskStatus(new TaskStatus("open"));
 		
 		t.setCompleted(false);
 	}

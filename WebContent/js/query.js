@@ -26,7 +26,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
 			"task_title":"Title", "task_assignee":"Assignee", "task_description":"Description", "task_created_date":"Created", "task_due_date":"Due",
-			"task_priority":"Priority", "task_notes":"Notes"};
+			"task_priority":"Priority", "task_notes":"Notes" , "task_status":"Status"};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
@@ -83,6 +83,7 @@ const PROJECT_STATUS_AWAITING_PO = 31;
 const PROJECT_STATUS_AWAITING_BID_DOCUMENTS = 33;
 const PROJECT_STATUS_LOST = 34;
 const PROJECT_STATUS_CLOSEOUT = 35;
+const PROJECT_STATUS_CLOSED = 36;
 
 //Project Classification
 const PROJECT_CLASS_HVAC = 4;
@@ -309,9 +310,9 @@ const CLOSEOUT_KEYS_ALL = new Array("warehouse", "item", "status", "mechanicalFi
 								"otherWarrantyB", "mcsLiens", "gcLiens", "mechLiens", "elecLiens", "plumbLiens", 
 								"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "numOfChanges", "numOfChangesCompleted");
 
-const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "item", "equipmentSubmittal", "manuals", "punchList",
+const CLOSEOUT_KEYS_SIMPLE = new Array("warehouse", "mcsNum", "item", "equipmentSubmittal", "manuals", "punchList",
 										"asBuiltDrawings", "closeoutPhotos", "hvacStartup", "alarmHvacForm", "verisaeShutdownReport", 
-										"certificateOfSubstantialCompletion", "paymentOfDebtsAndClaims", "releaseOfLiens", 
+										"certificateOfSubstantialCompletion", "releaseOfLiens", 
 										"mulvannyG2SignOff",
 										"inspectionsRequired", "warrantiesRequired", 
 										"liensRequired", "numOfChanges", "mg2Completion", 
@@ -344,7 +345,7 @@ const CO_KEYS = new Array('changeOrder');
 const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
 
 const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_description','task_created_date',
-		                  'task_due_date','task_priority','task_notes');
+		                  'task_due_date', 'task_status', 'task_priority','task_notes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -1515,7 +1516,7 @@ function generateReport(reportType)
 	
 		case ACTIVE_COMPLETE_REPORT:
 			stage.push(ACTIVE_STAGE);
-			status.push(PROJECT_STATUS_COMPLETE);
+			status.push(PROJECT_STATUS_CLOSEOUT);
 			title = "Completed Actives Report";
 			break;	
 
@@ -1599,7 +1600,7 @@ function generateReport(reportType)
 			if(title == undefined)
 				title = "Closeout Summary for Active Projects";
 			
-			status.push(PROJECT_STATUS_COMPLETE);
+			status.push(PROJECT_STATUS_CLOSEOUT);
 			break;
 
 		case BUDGETARY_CLOSEOUT:
@@ -1607,14 +1608,14 @@ function generateReport(reportType)
 			if(title == undefined)
 				title="Closeout Summary for Budgetary Projects";
 			
-			status.push(PROJECT_STATUS_COMPLETE);
+			status.push(PROJECT_STATUS_CLOSEOUT);
 			break;
 		case CLOSED_CLOSEOUT:
 			stage.push(CLOSED_STAGE);
 			if(title == undefined)
 				title="Closeout Summary for Closed Projects";
 			
-			status.push(PROJECT_STATUS_COMPLETE);
+			status.push(PROJECT_STATUS_CLOSEOUT);
 			break;	
 		case PERMIT_ACTIVE:
 

@@ -115,13 +115,14 @@ public class ProjectObjectService
 				criteria.add(inactiveProjects);
 			} else if(domain.equals("Task")) {
 				System.out.println("Task id = " + Order.asc("id"));
-				criteria.addOrder(Order.asc("id"));
 			}
 		
-			
+
 	        List<?> list = criteria.list();
 	        
+	        
 	        tx.commit();
+	       
 
 	        return gson.toJson(list);
 		} 

@@ -15,7 +15,18 @@ $(document).on('click', '#AllTasks', function(){
 	console.log("checked == ", document.getElementById("AllTasks").checked);
 	if(document.getElementById("AllTasks").checked == true){
 		$('.taskManager > input').each(function(i, obj) {
-		    obj.checked = true;
+			if(obj.id == "NoTasks") obj.checked = false;
+			else {obj.checked = true;}
+		});
+	}
+});
+
+$(document).on('click', '#NoTasks', function(){
+	console.log("checked == ", document.getElementById("NoTasks").checked);
+	if(document.getElementById("NoTasks").checked == true){
+		$('.taskManager > input').each(function(i, obj) {
+			if(obj.id == "NoTasks") obj.checked = true;
+			else {obj.checked = false;}
 		});
 	}
 });
@@ -28,11 +39,19 @@ $(document).on('click', '.taskManager', function(){
 	
 });
 
+/*
 $(document).on('change', '#taskSelector', function () {
 	console.log(user);
 	clearTaskTable();
 	createProperTaskTable();
 });
+*/
+
+function displayTasks() {
+	createProperTaskTable();
+	console.log("Right here \n");
+}
+
 
 function establishManagersOfInterest()
 {
@@ -47,21 +66,30 @@ function establishManagersOfInterest()
 function createTaskTableByManager (tasks) {
 	let selector = $('#taskSelector').val();
     tasksOfInterest = new Array();
-	console.log(selector);
+	console.log("Selector ==== " ,selector);
 	console.log(tasks);
 	console.log("managers of interest  == ",managersOfInterest);
-	//console.log("Manager " + managersOfInterest[0]);
+	tasks.sort(function(a,b){
+		if(a.assignee.name < b.assignee.name) return -1;
+		if(a.assignee.name > b.assignee.name) return 1;
+		else{
+			if(a.severity < b.severity) return -1;
+			if(a.severity > b.severity) return 1;
+			return 0;
+		}
+	});
 	var count = 0;
 	var all = false;
 	for(var k = 0; k < managersOfInterest.length; k++)
 		if(managersOfInterest[k].toLowerCase() == "all") all = true;
 	for (var i = 0; i < tasks.length; i++) {
-		if((selector === 'incomplete' && tasks[i].completed) || 
-				(selector === 'complete' && !tasks[i].completed)) 
+		if((selector === 'open' && tasks[i].status.id != 1) || 
+				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
 		if(all == true)
 			{
-			console.log("taks = " + tasks[i].assignee);
+			//console.log("taks = " + tasks[i].assignee);
 			tasksOfInterest.push(tasks[i]);
 			count++;
 			let taskListing = document.createElement('tr');
@@ -77,27 +105,9 @@ function createTaskTableByManager (tasks) {
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
 			let severity = document.createElement('td');
+			let status = document.createElement('td');
 			let notes = document.createElement('td');
-			let closeTask = document.createElement('td');
 			
-			let closeButton = document.createElement('button');
-			closeButton.innerHTML = 'Close'
-			closeButton.classname = 'btn';
-			closeButton.value = tasks[i].id;
-			closeButton.onclick = function () {
-				let taskID = $(this).val();
-				let elTask;
-				for(var z = 0; z < tasks.length; z++){
-					if(tasks[z].id == taskID) elTask = tasks[z];
-				}
-				console.log("assigner id = ", elTask.assigner.id);
-				console.log("user id = ", user.id);
-
-				if(elTask.assigner.id != user.id){
-					if(confirm("You're about to close a task you did not assign!  Are you sure you want to?") == true){
-					    closeTaskById(this);}
-				} else closeTaskById(this);		
-			};
 			
 			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
 						' #' + tasks[i].project.warehouse.warehouseID +
@@ -116,10 +126,12 @@ function createTaskTableByManager (tasks) {
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
 			severity.width = "30%";
+			status.innerHTML = tasks[i].status.status;
+			status.align = 'center';
 			notes.innerHTML = tasks[i].notes;
 			notes.width = "500%";
 			notes.style ="white-space: normal";
-			closeTask.appendChild(closeButton);
+			
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
@@ -128,17 +140,18 @@ function createTaskTableByManager (tasks) {
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
 			$(taskListing).append(severity);
+			$(taskListing).append(status);
 			$(taskListing).append(notes);
-			$(taskListing).append(closeTask);
+	
 			
 			$('#taskTable > tbody').append(taskListing);
 			
 			}
 		else if(!all){
-	    console.log("tasks assignee = " + tasks[i].assignee.firstName);
+	    //console.log("tasks assignee = " + tasks[i].assignee.firstName);
 	    for(var q = 0; q < managersOfInterest.length; q++)
 	    {
-	    	console.log("interesr in " + managersOfInterest[q]);
+	    	//console.log("interesr in " + managersOfInterest[q]);
 		if (tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) {
 			count++;
 			tasksOfInterest.push(tasks[i]);
@@ -155,16 +168,10 @@ function createTaskTableByManager (tasks) {
 			let createdDate = document.createElement('td');
 			let dueDate = document.createElement('td');
 			let severity = document.createElement('td');
+			let status = document.createElement('td');
 			let notes = document.createElement('td');
-			let closeTask = document.createElement('td');
-			
-			let closeButton = document.createElement('button');
-			closeButton.innerHTML = 'Close'
-			closeButton.classname = 'btn';
-			closeButton.value = tasks[i].id;
-			closeButton.onclick = function () {
-				closeTaskById(this);
-			};
+	
+
 			
 			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
 						' #' + tasks[i].project.warehouse.warehouseID +
@@ -176,8 +183,9 @@ function createTaskTableByManager (tasks) {
 			dueDate.innerHTML = tasks[i].dueDate;
 			severity.innerHTML = tasks[i].severity;
 			severity.align = 'center';
+			status.innerHTML = tasks[i].status.status;
 			notes.innerHTML = tasks[i].notes;
-			closeTask.appendChild(closeButton);
+			
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
@@ -186,8 +194,9 @@ function createTaskTableByManager (tasks) {
 			$(taskListing).append(createdDate);
 			$(taskListing).append(dueDate);
 			$(taskListing).append(severity);
+			$(taskListing).append(status);
 			$(taskListing).append(notes);
-			$(taskListing).append(closeTask);
+			
 			
 			$('#taskTable > tbody').append(taskListing);
 		}
@@ -205,20 +214,32 @@ function createManagerQueue(json)
     let d = document.createDocumentFragment();
 	let row = document.createElement('tr');
 	let name = document.createElement('td');
+	let none = document.createElement('td');
 	let checkBox = document.createElement('td');
+	let noneBox = document.createElement('td');
 	let input = document.createElement('input');
+	let inputNone = document.createElement('input');
 	let breakPoint = document.createElement('br')
 	row.setAttribute("value", 'all');
 	name.innerHTML = "<h4> All </h4>";
+	none.innerHTML = "<h4> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp; None </h4>"
 	input.setAttribute("type","checkbox");
 	input.value ='all';
 	input.setAttribute("id", "AllTasks");
 	input.setAttribute("class","taskManager");
 	input.checked = false;
+	inputNone.setAttribute("type","checkbox");
+	inputNone.value ='none';
+	inputNone.setAttribute("id", "NoTasks");
+	inputNone.setAttribute("class","taskManager");
+	inputNone.checked = false;
 	d.appendChild(row);
 	d.appendChild(name);
 	d.appendChild(checkBox);
 	d.appendChild(input);
+	d.appendChild(none);
+	d.appendChild(noneBox);
+	d.appendChild(inputNone);
 	d.appendChild(breakPoint);
 
     json.sort(function(a,b){
