@@ -174,6 +174,8 @@ function saveProject() {
 	var stage = $("#stage").val();
 	var pType = $('#pType').val();
 	var scope = $("#scope").val();
+	var managerNotes = $("#managerNotes").val();
+	
 
 	// scheduling
 	var initiated = $("#initiatedDate").val();
@@ -226,6 +228,7 @@ function saveProject() {
 				'status': status,
 				'pType': pType,
 				'scope': scope,
+				'managerNotes': managerNotes,
 				
 				'initiated': initiated,
 				'survey': survey,
@@ -343,6 +346,7 @@ function fillForm(data)
 	$("#status").val(json.status.id);
 	$("#pType").val(json.projectType.id);
 	$("#scope").val(json.scope);
+	$("#managerNotes").val(json.managerNotes);
 	
 	$("#initiatedDate").val(json.projectInitiatedDate);;
 	$("#surveyDate").val(json.siteSurvey);

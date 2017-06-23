@@ -49,6 +49,7 @@ public class ProjectInformationFiller
 		currentProject.setShouldInvoice(Integer.parseInt(params.get("shouldInvoice")));
 		currentProject.setInvoiced(Integer.parseInt(params.get("actualInvoice")));
 		currentProject.setProjectNotes(params.get("notes"));
+		currentProject.setManagerNotes(params.get("managerNotes"));
 		currentProject.setZachUpdates(params.get("refrigNotes"));
 		currentProject.setCost(params.get("cost"));
 		currentProject.setCustomerNumber(params.get("customerNumber"));

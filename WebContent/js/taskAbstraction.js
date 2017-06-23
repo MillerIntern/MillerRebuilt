@@ -3,13 +3,13 @@
 let tasks;
 
 
-/*
-$(document).on('change', '#taskSelector', function () {
+
+$(document).on('change', '#taskSelector2', function () {
 	clearTaskTable();
 	fillTasksTable(tasks);
 	console.log("Right here \n");
 });
-*/
+
 
 
 
@@ -36,14 +36,15 @@ function getTasks() {
 }
 
 function fillTasksTable(json) {
-	let selector = $('#taskSelector').val();
+	let selector = $('#taskSelector2').val();
 	console.log(selector);
 	
 	let count = 0;
 	for (var i = 0; i < json.length; i++) {
-		if((selector === 'incomplete' && json[i].completed) || 
-			(selector === 'complete' && !json[i].completed)) 
-			continue; // do nothing
+		if((selector === 'open' && tasks[i].status.id != 1) || 
+				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'closed' && tasks[i].status.id != 3)) 
+				continue; // do nothing
 
 		count++;
 		let taskListing = document.createElement('tr');
@@ -54,16 +55,11 @@ function fillTasksTable(json) {
 		let assignedTo = document.createElement('td');
 		let dueDate = document.createElement('td');
 		let severity = document.createElement('td');
+		let status = document.createElement('td');
 		let notes = document.createElement('td');
-		let closeTask = document.createElement('td');
+
 		
-		let closeButton = document.createElement('button');
-		closeButton.innerHTML = 'Close'
-		closeButton.classname = 'btn';
-		closeButton.value = json[i].id;
-		closeButton.onclick = function () {
-			closeTaskById(this);
-		};
+		
 		
 		taskTitle.innerHTML = json[i].title;
 		taskDesc.innerHTML = json[i].description;
@@ -71,16 +67,18 @@ function fillTasksTable(json) {
 		dueDate.innerHTML = json[i].dueDate;
 		severity.innerHTML = json[i].severity;
 		severity.align = 'center';
+		status.innerHTML = json[i].status.status;
 		notes.innerHTML = json[i].notes;
-		closeTask.appendChild(closeButton);
+		
 		
 		$(taskListing).append(taskTitle);
 		$(taskListing).append(taskDesc);
 		$(taskListing).append(assignedTo);
 		$(taskListing).append(dueDate);
 		$(taskListing).append(severity);
+		$(taskListing).append(status);
 		$(taskListing).append(notes);
-		$(taskListing).append(closeTask);
+		
 		
 		$('#taskTable > tbody').append(taskListing);
 	}

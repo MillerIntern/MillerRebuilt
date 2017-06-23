@@ -19,7 +19,7 @@
 	'use strict';
 	
 	let projectID;
-	
+	let user;
 	$(document).ready(function () {
 	 	$("#dueDate").datepicker();   
 		$('#initDate').datepicker();
@@ -55,9 +55,34 @@
 				let item = data.projectItem.name;
 				
 				$('#title').html('Task Form: ' + city + ', ' + state + ' --- ' + item);
-				getUsers();
+				//getUsers();
+				 getUserData();
 			}, error: function (data) {
 				alert('Server Error!');
+			}
+		});
+	}
+	function getUserData () {
+		
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getUserInfo'
+			}, complete: function (data) {
+				if(data.responseJSON) {
+				  console.log("data for user = ", data.responseJSON);
+				  user = data.responseJSON;
+				  console.log("data for USER = ", user);
+			      getUsers();		  
+
+					
+				} else {
+					console.log("user data = ",data);
+					alert('Server Failure!');
+					
+				}
 			}
 		});
 	}
@@ -87,16 +112,17 @@
 			else if(a.firstName > b.firstName) return 1;
 			return 0;
 		});
-		
+		var assigneeVal;
 		for (var i = 0; i < json.length; i++) {
 			let option = document.createElement('option');
-			
+			if(user.firstName == json[i].firstName) assigneeVal = json[i].firstName;
 			// when users store both username and name, access the user's name and username fields
 			option.innerHTML = json[i].firstName;
 			option.setAttribute("value", json[i].firstName);
 			d.appendChild(option);
 		}
 		$('#assigneeEntry').append(d);
+		$('#assigneeEntry').val(assigneeVal);
 	}
 	
 	function submitTask () {

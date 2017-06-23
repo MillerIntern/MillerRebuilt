@@ -14,7 +14,6 @@
 
 }
 
-
 .paramTable{
 	padding: 2px;
 	position: relative;
@@ -44,6 +43,7 @@
 	border-radius: 10px;
 }
 
+
 .reportGenTable{
     margin-top: .5%;
     margin-left: .5%;
@@ -55,8 +55,8 @@
 	color: white;
 	position: relative;
 	min-width: 300px;
-	
 }
+
 
 .tableHead{
 	width: 30%;
@@ -170,7 +170,7 @@ button
 	bottom: -10px;
     padding-bottom: 1%;
 }
-}
+
 
 
 

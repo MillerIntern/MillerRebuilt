@@ -98,13 +98,14 @@ public class User extends ProjectObject
 	public static User mapNameToUser(String name) {
 		
 		if (name == null) return null;
+		name = name.replaceAll("\\s+","");	
 		List<Object> users = ProjectObjectService.getAll("User");
 		
 		for (int i = 0; i < users.size(); i++) {
 			User u = (User)users.get(i);
 			// This catches both when the first names from the task form
 			// and also the session saved username name
-			if (name.equals(u.getFirstName()) || name.equals(u.getName())) {
+			if (name.equalsIgnoreCase(u.getFirstName()) || name.equalsIgnoreCase(u.getName())) {
 				return u;
 			
 			// prune all else if once names are in database

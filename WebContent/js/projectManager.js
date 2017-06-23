@@ -46,7 +46,8 @@ function getProject() {
 				'action': 'get',
 				'id': projectID
 			}, success: function (data) {
-				console.log(data);
+				
+				console.log("the data eqausl == " ,data);
 				setProjectHeader(data);
 
 				fillTabs(data);
@@ -100,6 +101,7 @@ function fillProjectInformation (data) {
 	$('#projectStage').text(data.stage.name);
 	$('#projectManager').text(data.projectManagers.name);
 	$('#projectSupervisor').text(data.supervisors[0].name);
+	$('#projectManagerNotes').text(data.managerNotes);
 } // fillProjectInformation
 
 function fillChangeOrders (data) {

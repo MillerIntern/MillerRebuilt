@@ -59,7 +59,7 @@ function printPage()
 
 function backPage()
 {
-	document.location.href = "query.html";
+	document.location.href = "OGqueryCode.html";
 }
 
 $(document).ready(function() {

@@ -58,6 +58,8 @@ public class Project extends ProjectObject
 	
 	private String projectNotes;
 	
+	private String managerNotes;
+	
 	private Date scheduledStartDate;
 	
 	private Date scheduledTurnover;
@@ -97,7 +99,7 @@ public class Project extends ProjectObject
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
-			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment)
+			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes)
 	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
@@ -126,6 +128,7 @@ public class Project extends ProjectObject
 		this.inspections= inspections;
 		this.permits = permits;
 		this.setProjEquipment(projEquipment);
+		this.managerNotes = managerNotes;
 
 	}
 	
@@ -150,6 +153,7 @@ public class Project extends ProjectObject
 		this.shouldInvoice = 0;
 		this.invoiced = 0;
 		this.projectNotes = null;
+		this.managerNotes = null;
 		this.scheduledStartDate = null;
 		this.scheduledTurnover = null;
 		this.actualTurnover = null;
@@ -490,5 +494,13 @@ public class Project extends ProjectObject
 
 	public void setProjEquipment(Set<NewEquipment> projEquipment) {
 		this.projEquipment = projEquipment;
+	}
+	
+	public String getManagerNotes() {
+		return managerNotes;
+	}
+	
+	public void setManagerNotes(String managerNotes) {
+		this.managerNotes = managerNotes;
 	}
 }

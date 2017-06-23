@@ -302,6 +302,7 @@ public class Project extends HttpServlet
 			}
 		} else if (action.equals("getUserInfo")) {
 			System.out.println("getting User Info");
+			System.out.println("GET == " + req.getSession().getAttribute("user"));
 			System.out.println(User.mapNameToUser((String)req.getSession().getAttribute("user")));
 			Gson g = new Gson();
 			response = g.toJson(User.mapNameToUser((String) req.getSession().getAttribute("user")));

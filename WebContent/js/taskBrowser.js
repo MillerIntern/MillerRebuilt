@@ -26,11 +26,10 @@ $(document).on('change', '#projectSearch', function(){
 		let search = document.getElementById('projectSearch').value;
 		console.log("tasks of INTR= ", tasksOfInterest);
 		console.log("projects of interest = ", projectsOfInterest);
-		projectsOfInterest = tasksOfInterest;
-		searchProjects(search);
+		projectsOfInterest = new Array();
+		searchProjects(search);		
 		clearTaskTable();
 		createTaskTableFromFilter(projectsOfInterest);
-		
 	}
 	
 });
@@ -224,6 +223,7 @@ function createTaskTable () {
 			count++;
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			let taskListing = document.createElement('tr');
+			taskListing.id = tasks[i].id;
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
 				expandTaskInfo(this); 
@@ -311,7 +311,7 @@ function createTaskTableFromFilter(){
 			dueDate.innerHTML = projectsOfInterest[i].dueDate;
 			severity.innerHTML = projectsOfInterest[i].severity;
 			severity.align = 'center';
-			status.innerHTML = tasks[i].status.status;
+			status.innerHTML = projectsOfInterest[i].status.status;
 			status.align = 'center';
 			notes.innerHTML = projectsOfInterest[i].notes;
 			
@@ -496,6 +496,7 @@ function searchProjects(searchQuery){
 		' - ' + tasksOfInterest[i].project.projectItem.name;
 		if(contentToSearchThrough.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) projectsOfInterest.push(tasksOfInterest[i]);
 	}
+
 }
 
 function searchDescriptions(searchQuery){

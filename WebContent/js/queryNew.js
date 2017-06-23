@@ -409,6 +409,19 @@ $(document).on('change', '#specificReports', function(){
 	document.getElementById("RemainingCriteria").style = 'display: inline';
 	
 });
+
+$(document).on('click', '#advancedReport', function() {
+
+	    $('#reportGenerator').toggle('push-in animated');
+		$('#customReport').toggle('push-out animated');
+});
+
+$(document).on('click', '#advancedReportCloser', function() {
+
+	$('#customReport').toggle('push-in animated');
+    $('#reportGenerator').toggle('push-out animated');
+});
+
 var reportString;
 $(document).on('change', '#ProjectStagesDropDown', function(){
 	if(this.value == 'none') return; 
@@ -1004,7 +1017,6 @@ function submitQuery()
    
     data['shownFields'] = selectedFields;	
     console.log("selected fields equals to....  ", selectedFields);
-    alert("WAITTT");
     var params = $.param(data);
     document.location.href = REPORT_URL+"?"+params;
 }
@@ -1342,7 +1354,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-			status.push(PROJECT_STATUS_CLOSEOUT);
+			//status.push(PROJECT_STATUS_CLOSEOUT);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			break;
 

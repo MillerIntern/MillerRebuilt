@@ -1,5 +1,5 @@
 
-#param-field {
+.param-field {
 	width: 100%;
 	background-color: white;
 	padding: 4px 4px 4px 4px;
@@ -9,7 +9,7 @@
 	border-radius: 4px;
 }
 
-#param-field > span {
+.param-field > span {
 	display: inline-block;
 	padding: 2px 2px;
 	border-bottom: 2px solid black;
@@ -20,7 +20,7 @@
 	margin-bottom: 8px;
 }
 
-#param-field > span > button {
+.param-field > span > button {
 	float: right;
 	background-color: #172a56;
 	border: none;

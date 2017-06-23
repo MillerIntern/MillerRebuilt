@@ -18,7 +18,7 @@ $(document).on('click', '#advancedSort', function (){
 	console.log("clickig");
 	if(document.getElementById('advancedSort').value == 'off') {
 		$('.advancedSortingSelector').toggle('push-out animated');
-		document.getElementById('advancedSort').value = 'on';
+		//document.getElementById('advancedSort').value = 'on';
 	}
 	else if(document.getElementById('advancedSort').value == 'on') {
 		$('.advancedSortingSelector').toggle('push-in animated fadeOutLeft');

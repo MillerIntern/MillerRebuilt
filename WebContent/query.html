@@ -15,6 +15,7 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/queryNew.css" type="text/css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/findProject.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -76,7 +77,7 @@
        <!--<input type='text' class="reportTitle" id='reportTitle' placeholder='Title(Optional)'></input>-->
 
         <!--<br>  -->
-        <div class=paramTableWrapper id='param-field'>
+        <div class='paramTableWrapper param-field' id="reportGenerator">
             <span> Report Generator </span>
             <!--</br>  -->
 
@@ -113,72 +114,58 @@
                 <input type="button" value="Inactive" onclick="reportCreator(this)"></input>
                 <input type="button" value="Closed" onclick="reportCreator(this)"></input>-->
 
-
+				<br><br>
 				<div id='RemainingCriteria' style='display:none'>
-				<div id='AdditionalParamters'>
-                
-                    <div class="leftButtons">
-                    </div>
-                    <button id='generateReport'> Generate Report </button>
-                    <div id="addParam">
-                        <input class="btn-success" type="button" value="Add Parameter" onclick="addParamCell()"></input>
-                    </div>
-                    <div id="addDateParam">
-                        <input class="btn-default" type="button" value="Add Date Parameter" onclick="addDateParamCell()"></input>
-                    </div>
-                    <div id="submit">
-                        <input class="btn-default" type="button" value="Search" onclick="createModalFieldSelector()"></input>
-                    </div>
-
-              
+                    <button class ="btn-lg btn-info" id='generateReport'> Generate Report </button>
+                    
+                    <br><br>
                 </div>
+                    <button class ="btn-warning" id='advancedReport' value='off'> Custom Report </button>
+
+            </div>
+            
+                       </div>
+           <div class='paramTableWrapper param-field' id="customReport" style='display:none'>
+            <span> Custom Report Generator </span>
+            <!--</br>  -->
+
+            <div class=reportGenTable>
+
+				<div id='RemainingCriteria'>
+                    <br><br>
+                
+                <div id='AdditionalParameters'> 
+                <table>
+                <tr>
+                <td>
+                    <div id="addParam">
+                        <button class="btn-primary" value="Add Parameter" onclick="addParamCell()">Add Parameter</button>
+                    </div>
+                </td>
+                <td>
+                    <div id="addDateParam">
+                        <button class="btn-primary" value="Add Date Parameter" onclick="addDateParamCell()">Add Date Parameter</button>
+                    </div>
+                </td>
+                <td>
+                    <div id="submit">
+                        <button class="btn-info btn-md" value="Search" onclick="createModalFieldSelector()"> Generate Report</button>
+                    </div>
+                </td>
+                </tr>
+				</table>
+				</div>
+                </div>
+                
                 
 
                 <div class=paramTable> </div>
-           </div>
-           
+                
+                <br><br>
+                    <button class ="btn-warning" id='advancedReportCloser' value='off'> Pre-Made Report </button>
+           </div>  
 
-
-
-
-               <!-- <div class=headers>
-					<div class=tableHead>Type</div>
-					<div class=tableHead>Active</div>
-					<div class=tableHead>Proposal</div>
-				</div>
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>WEEKLY</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('WEEKLY_A')"></input></div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('WEEKLY_P')"></input></div>
-				</div>
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>STEVE MEYER</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('STEVE_MEYER_A')"></input></div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('STEVE_MEYER_P')"></input></div>
-				</div>
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>SOUTH EAST</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('SE_A')"></input></div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('SE_P')"></input></div>
-				</div>
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>NORTH EAST</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('NE_A')"></input></div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('NE_P')"></input></div>
-				</div>	
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>J_DEMPSEY</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('J_DEMPSEY_A')"></input></div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('J_DEMPSEY_P')"></input></div>
-				</div>
-				<div class=reportTypeRow>
-					<div class=reportTypeCell>INVOICE</div>
-					<div class=reportTypeCell><input type="button" class="reportButton" value="CREATE" onclick="generateReport('INVOICED')"></input></div>
-				
-				 </div> -->
-
-            </div>
-                       </div>
+                     
    </div>
 
 

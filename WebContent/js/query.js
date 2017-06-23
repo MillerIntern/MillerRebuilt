@@ -1243,7 +1243,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-			status.push(PROJECT_STATUS_CLOSEOUT);
+			//status.push(PROJECT_STATUS_CLOSEOUT);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			break;
 
