@@ -9,7 +9,7 @@ const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
                       "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
                       'Equipment Report', 'Change Order Report', "NE GC & Refrigeration", "SE GC & Refrigeration",
-                      "Task"];
+                      "Task","David Hearing Center"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -33,7 +33,7 @@ var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrig
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT', 
 					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order Report': 'CO_REPORT',
-					'Task': 'TASK'};
+					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -93,6 +93,13 @@ const PROJECT_ITEM_PHARMACY_SALES_COUNTER = 76;
 const PROJECT_ITEM_PHARMACY_TRIPPLE_WINDOW = 154;
 const PROJECT_ITEM_PHARMACY_LAMINATE_FLOOR = 209;
 const PROJECT_ITEM_PHARMACY_FLOOR = 233;
+
+const PROJECT_ITEM_HEARING_CENTER_AND_VAULT = 39;
+const PROJECT_ITEM_HEARING_CENTER = 48;
+const PROJECT_ITEM_HEARING_CENTER_AND_DEMO_ROOM = 49;
+const PROJECT_ITEM_HEARING_CENTER_EXPANDED = 174;
+const PROJECT_ITEM_HEARING_CENTER_AND_PHOTO = 315;
+ 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Constants that are button passed arguments, must be consistent names sent from buttons
 
@@ -205,6 +212,8 @@ const CO_BUDGETARY = 'CO_REPORT_B';
 const CO_CLOSED = 'CO_REPORT_C';
 
 const TASK = 'TASK';
+
+const DAVID_HAC_ACTIVE = 'DAVID_HAC_A';
 
 
 
@@ -346,6 +355,9 @@ const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'bu
 
 const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_description','task_created_date',
 		                  'task_due_date', 'task_status', 'task_priority','task_notes');
+
+const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
+		                         'scheduledStartDate','scheduledTurnover', 'buildingPermit', 'zachNotes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -1698,6 +1710,23 @@ function generateReport(reportType)
 			title = 'Tasks for All Projects';
 			//stage.push(ACTIVE_STAGE);
 			break;
+		case DAVID_HAC_ACTIVE:
+			title = "Hearing Center Report";
+			stage.push(ACTIVE_STAGE);
+			stage.push(PROPOSAL_STAGE);
+			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_SCHEDULING);
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			//status.push(PROJECT_STATUS_CLOSEOUT);
+			item.push(PROJECT_ITEM_HEARING_CENTER);
+			item.push(PROJECT_ITEM_HEARING_CENTER_AND_DEMO_ROOM);
+			item.push(PROJECT_ITEM_HEARING_CENTER_EXPANDED);
+			item.push(PROJECT_ITEM_HEARING_CENTER_AND_PHOTO);
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -1905,6 +1934,9 @@ function getAllSpecifiedFields(reportType)
 			break;
 		case TASK:
 			genType = TASK_KEYS;
+			break;
+		case DAVID_HAC_ACTIVE:
+			genType = DAVID_HAC_KEYS;
 			break;
 
 	

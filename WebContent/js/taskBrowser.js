@@ -5,6 +5,7 @@
 'use strict';
 
 let user;
+let users = new Array();
 let projectManagers;
 let task;
 let tasks;
@@ -118,8 +119,10 @@ function getUsers () {
 			'domain': 'project',
 			'action': 'getUsers',
 		}, complete: function (data) {
-			console.log("response JSON = ",data.responseJSON);
+			console.log("response JSON for users = ",data.responseJSON);
 			if (data.responseJSON) {
+				users = data.responseJSON;
+				console.log("response USERS for users = ",users);
 				createDropdown(data.responseJSON);
 				getTasks();
 			}
@@ -166,6 +169,8 @@ function preparePageForUserStatus(){
 		 console.log("into the selection");
 		 createTaskTable();
 		 tasksByManager();
+		 //createTaskTableByManager(tasks);
+		 
 
 	 } else { 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
@@ -202,7 +207,7 @@ function createTaskTable () {
 	tasksOfInterest = new Array();
 	let selector = $('#taskSelector').val();
 	console.log("taskSelector == " , selector);
-	console.log("tasks == ", tasks);
+	console.log("tasksw while creating == ", tasks);
 	tasks.sort(function(a,b){
 		if(a.assignee.name < b.assignee.name) return -1;
 		if(a.assignee.name > b.assignee.name) return 1;
@@ -216,10 +221,13 @@ function createTaskTable () {
 	for (var i = 0; i < tasks.length; i++) {
 		if((selector === 'open' && tasks[i].status.id != 1) || 
 				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'open_complete' && tasks[i].status.id == 3) ||
 				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
+		console.log("task before if == ", tasks[i]);
         if(tasks[i].assignee == null) continue; 
 		if (tasks[i].assignee.name === user.name) {  
+			console.log("tasks IIII == ", tasks[i]);
 			count++;
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			let taskListing = document.createElement('tr');
@@ -409,7 +417,7 @@ function expandTaskInfo(param) {
 	$('#taskWell > span > .dueDate').val(task.dueDate);						
 	$('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
 	$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
-	$('#taskWell > span > .taskStatus').val(task.status.id);
+	$('#taskWell > span > .taskStatus').val(task.status.status);
 	$('#taskWell > div > .notes').val(task.notes);
 	
 	$('#taskWell').slideDown();
@@ -423,7 +431,9 @@ function saveTaskChanges () {
 	if(typeof task === 'undefined')
 		return alert("No Task Selected, try reloading!");
 	
-	console.log(task);
+	
+	
+	console.log("UPDATING TASK == ", task, "USERS = ", users);
 	let title = task.title;
 	let description = $('#taskWell > div > .description').val();
 	let severity = $('#taskWell > span > .severity').val();
@@ -432,9 +442,66 @@ function saveTaskChanges () {
 	let assignedBy = user.id;	// changes to whoever made the update
 	let assignedTo = $('#taskWell > span > .assignedTo').val();
 	let taskStatus = $('#taskWell > span > .taskStatus').val();
+	
+	if(taskStatus == "Open") taskStatus = 1;
+	else if(taskStatus == "Completed") taskStatus = 2;
+	else taskStatus = 3;
+	
 	let notes = $('#taskWell > div > .notes').val();
 	let projectID = task.project.id;
 	console.log("project id is defined");
+	
+	for(var i = 0; i < users.length; i++){
+		if(users[i].firstName == assignedTo){ assignedTo = users[i]; console.log("users[i] == " , users[i]); break;}
+	}
+	
+	$('#taskWell > span > .assignedTo').val(assignedTo);
+	var i = 0;
+	for(; i < tasks.length; i++){
+		if(tasks[i].id == task.id)
+		{ console.log("tasks[i] == ", tasks[i]);
+		  tasks[i].description = description;
+		  tasks[i].severity = severity;
+		  tasks[i].dueDate = dueDate;
+		  tasks[i].assignee = assignedTo;
+		  tasks[i].status.id = taskStatus;
+		  if(tasks[i].status.id == 1) tasks[i].status.status = 'Open';
+		  else if(tasks[i].status.id == 2) tasks[i].status.status = 'Completed';
+		  else  tasks[i].status.status = 'Closed';
+		  tasks[i].notes = notes;
+		break;}
+		
+	}
+	for(i=0; i < projectsOfInterest.length; i++){
+		if(projectsOfInterest[i].id == task.id){ 
+			console.log("POI[i] == ", projectsOfInterest[i]);
+			  projectsOfInterest[i].description = description;
+			  projectsOfInterest[i].severity = severity;
+			  projectsOfInterest[i].dueDate = dueDate;
+			  projectsOfInterest[i].assignee = assignedTo;
+			  projectsOfInterest[i].status.id = taskStatus;
+			  if(projectsOfInterest[i].status.id == 1) projectsOfInterest[i].status.status = 'Open';
+			  else if(projectsOfInterest[i].status.id == 2) projectsOfInterest[i].status.status = 'Completed';
+			  else  projectsOfInterest[i].status.status = 'Closed';
+			  projectsOfInterest[i].notes = notes;
+			
+			break;}
+		}
+	
+	for(i=0; i < tasksOfInterest.length; i++){
+		if(tasksOfInterest[i].id == task.id){
+			console.log("TOI[i] == ", tasksOfInterest[i]);
+			 tasksOfInterest[i].description = description;
+			 tasksOfInterest[i].severity = severity;
+			 tasksOfInterest[i].dueDate = dueDate;
+			 tasksOfInterest[i].assignee = assignedTo;
+			 tasksOfInterest[i].status.id = taskStatus;
+			 if(tasksOfInterest[i].status.id == 1) tasksOfInterest[i].status.status = 'Open';
+			 else if(tasksOfInterest[i].status.id == 2) tasksOfInterest[i].status.status = 'Completed';
+			 else  tasksOfInterest[i].status.status = 'Closed';
+			 tasksOfInterest[i].notes = notes;
+			break;}
+		}
 	
 	if (isValidInput([dueDate])) {
 		$.ajax({
@@ -446,7 +513,7 @@ function saveTaskChanges () {
 				'title': title,
 				'project': projectID,
 				'description': description,
-				'assignee': assignedTo,
+				'assignee': assignedTo.firstName,
 				'initiatedDate': assignedDate,
 				'dueDate': dueDate,
 				'severity': severity,
@@ -457,7 +524,9 @@ function saveTaskChanges () {
 				let response = $.trim(data.responseText);
 				if (response === 'UPDATED_TASK') {
 					alert('Task Updated Successfully');
-					window.location.href='taskBrowser.html'
+					$('#taskWell').slideUp();
+					clearTaskTable();
+					createProperTaskTable();
 				}
 			}
 		});
@@ -489,6 +558,7 @@ function isValidInput(dates)
 	return true;
 }
 
+
 function searchProjects(searchQuery){
 	for(var i=0; i<tasksOfInterest.length; i++){
 		let contentToSearchThrough = tasksOfInterest[i].project.warehouse.city.name + 
@@ -511,6 +581,9 @@ function searchDescriptions(searchQuery){
 function clearTaskTable () {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
 }
+
+
+
 
 function printButton(){
 	

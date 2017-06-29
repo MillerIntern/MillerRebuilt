@@ -77,7 +77,6 @@
 				<tr><td>Stage</td><td id='projectStage'></td></tr>
 				<tr><td>Manager</td><td id='projectManager'></td></tr>
 				<tr><td>Supervisor</td><td id='projectSupervisor'></td></tr>
-				<tr><td>Manager Notes</td><td  id='projectManagerNotes'></td></tr>
 			</table>	
 			<button onclick='editProjectInfo()' type="button" class="project-edit btn btn-primary">Edit Project Information</button>
 		</div> <!-- Project Information -->
@@ -146,6 +145,7 @@
 		<div class='info-tab' id='tasks'>
 			<select id ='taskSelector2' class='form-control'>
 				<option value='all'>All</option>
+				<option value='open_complete' selected = "selected">Open &amp; Complete </option>
 				<option value='open'>Open</option>
 				<option value='complete'>Complete</option>
 				<option value='closed'>Closed</option>

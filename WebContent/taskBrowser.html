@@ -100,7 +100,7 @@
    			<h4 class='title'></h4>
    			<div>
    			<p><b>Description of Task:</b></p>
-   			<textarea class='description'></textarea>
+   			<textarea  maxlength="254" class='description'></textarea>
    			</div>
    			<span><b>Priority:</b>
    			<select class='severity'>
@@ -120,14 +120,14 @@
    			<span>
    			   <span><b>Status:</b></span>
    			   <select class='taskStatus'>
-   			       <option value="1"> Open </option>
-   			       <option value="2"> Complete </option>
-   			       <option value="3"> Closed </option>
+   			       <option value="Open"> Open </option>
+   			       <option value="Completed"> Completed </option>
+   			       <option value="Closed"> Closed </option>
    			   </select>
    			</span>
    			<div>
    			<p><b>Notes:</b></p>
-   			<textarea class='notes'></textarea>
+   			<textarea  maxlength="254" class='notes'></textarea>
    			</div>
    			<span>
    			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
@@ -144,6 +144,7 @@
    		<tr><td>
    		<select id ='taskSelector' class='form-control'>
 			<option value='all'>All</option>
+			<option value='open_complete' selected = "selected"> Open &amp; Complete</option>		
 			<option value='open'>Open</option>         
 			<option value='complete'>Complete</option>
 			<option value='closed'>Closed</option>

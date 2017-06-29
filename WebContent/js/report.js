@@ -3,6 +3,7 @@ const DELETE = 46;
 
 
 $(document).ready( function () {
+	
     $('.dataTable').dataTable( {
     	"aaSorting": [],
         "dom": 'T<"clear">lfrtip',

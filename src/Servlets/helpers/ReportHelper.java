@@ -198,7 +198,7 @@ public class ReportHelper
 		else if(value.equals("zachNotes"))
 		{
 			sb.append("<th class = 'longText'>");
-			sb.append("Refrigeration Notes");				
+			sb.append("Customer Notes");				
 		}
 		else if(value.equals("permitApp"))
 		{

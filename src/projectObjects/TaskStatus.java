@@ -25,7 +25,7 @@ public class TaskStatus extends ProjectObject
 	public TaskStatus()
 	{
 		id = new Long(-1);
-		status = "open";
+		status = "Open";
 	}
 	
 	public TaskStatus(String status)

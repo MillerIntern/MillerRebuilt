@@ -49,7 +49,7 @@ public class TaskFiller {
 		
 		if(!(params.get("status") == null || params.get("status").isEmpty()))
 			t.setTaskStatus((TaskStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "TaskStatus"));
-		else t.setTaskStatus(new TaskStatus("open"));
+		else t.setTaskStatus(new TaskStatus("Open"));
 		
 		t.setCompleted(false);
 	}

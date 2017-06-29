@@ -43,6 +43,7 @@ function fillTasksTable(json) {
 	for (var i = 0; i < json.length; i++) {
 		if((selector === 'open' && tasks[i].status.id != 1) || 
 				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'open_complete' && tasks[i].status.id == 3) ||
 				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
 

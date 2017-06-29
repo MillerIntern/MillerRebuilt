@@ -116,12 +116,16 @@
 
 				<br><br>
 				<div id='RemainingCriteria' style='display:none'>
-                    <button class ="btn-lg btn-info" id='generateReport'> Generate Report </button>
+                    <button class ="btn-lg btn-success" id='generateReport'> Generate Report </button>
                     
                     <br><br>
                 </div>
-                    <button class ="btn-warning" id='advancedReport' value='off'> Custom Report </button>
-
+               
+                <button class="btn-primary" id="meetingProposals">Meeting Proposals</button>
+                <button class="btn-primary" id="meetingActive">Meeting Active Projects</button>
+                <button class="btn-primary" id="meetingBudgetary">Meeting Budgetary Projects</button>
+                <button class ="btn-warning" id='advancedReport' value='off'> Custom Report </button>
+				
             </div>
             
                        </div>
@@ -132,7 +136,7 @@
             <div class=reportGenTable>
 
 				<div id='RemainingCriteria'>
-                    <br><br>
+                    
                 
                 <div id='AdditionalParameters'> 
                 <table>
@@ -149,7 +153,7 @@
                 </td>
                 <td>
                     <div id="submit">
-                        <button class="btn-info btn-md" value="Search" onclick="createModalFieldSelector()"> Generate Report</button>
+                        <button class="btn-success btn-md" value="Search" onclick="createModalFieldSelector()"> Generate Report</button>
                     </div>
                 </td>
                 </tr>

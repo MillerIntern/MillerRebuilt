@@ -422,6 +422,11 @@ $(document).on('click', '#advancedReportCloser', function() {
     $('#reportGenerator').toggle('push-out animated');
 });
 
+$(document).on('click', '#meetingProposals', function(){generateReport(PROPOSAL_MEETING)});
+$(document).on('click', '#meetingActive', function(){generateReport(ACTIVE_MEETING)});
+$(document).on('click', '#meetingBudgetary', function(){generateReport(BUDGETARY_MEETING)});
+
+
 var reportString;
 $(document).on('change', '#ProjectStagesDropDown', function(){
 	if(this.value == 'none') return; 
