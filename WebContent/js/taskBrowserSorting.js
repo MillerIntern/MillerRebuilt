@@ -9,13 +9,12 @@
 var advancedSort = false;
 
 $(document).on('change', '.sortSelection', function () {	
-	console.log("in itttttt");
+	console.log("ABOUT TO INVOKE basicUserSort()");
 	console.log(document.getElementById("sortSelector").value);
 	basicUserSort();
 });
 
 $(document).on('click', '#advancedSort', function (){
-	console.log("clickig");
 	if(document.getElementById('advancedSort').value == 'off') {
 		$('.advancedSortingSelector').toggle('push-out animated');
 		//document.getElementById('advancedSort').value = 'on';
@@ -84,7 +83,6 @@ function basicUserSort()
 		if(document.getElementById("sortOrder").value == 'descending'){
 			sortByDateDescending();
 		}
-		console.log("Right hizzzzer");
 	}
 	if(document.getElementById("sortSelector").value == 'assignee' ){
 		if(document.getElementById("sortOrder").value == 'ascending'){
@@ -93,7 +91,6 @@ function basicUserSort()
 		if(document.getElementById("sortOrder").value == 'descending'){
 			sortByAssigneeDescending();
 		}
-		console.log("sorting by assignee");
 	}
 }
 
@@ -119,9 +116,8 @@ function sortByAssigneeDescending()
 
 function sortByDateAscending() 
 {
-	console.log(tasks); 
+	console.log("sortByDateAscending() TASKS == " , tasks); 
 	projectsOfInterest.sort(function(a,b){
-	 console.log("A = ", a, " b = ",b);
       var dateA, dateB;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
@@ -133,8 +129,7 @@ function sortByDateAscending()
       if(dateA[1] > dateB[1]) return 1;
       return 0;
     })
-    console.log("post sort");
-    console.log(tasks); 	
+    console.log("sortByDateAscending() POST SORT TASKS == ", tasks); 	
     displaySortingResults();    		
     }
 
@@ -152,16 +147,12 @@ function sortByDateDescending() {
       if(dateA[1] > dateB[1]) return -1;
       return 0;
     })
-    console.log("post sort");
-    console.log(tasks); 	
+    console.log("sortByDateDescending() POST SORT TASKS == ", tasks); 		
     displaySortingResults();    		
  }
     
 
 function sortByPriorityAscending() {
-	console.log(tasks);  
-	console.log("user = ");
-	console.log(user);
 	projectsOfInterest.sort(function(a,b){
 		  if (a.severity < b.severity) return -1;
 		  if (a.severity > b.severity) return 1;
@@ -172,7 +163,6 @@ function sortByPriorityAscending() {
 
 
 function sortByPriorityDescending() {
-	console.log(tasks);  
 	projectsOfInterest.sort(function(a,b){
 		  if (a.severity < b.severity) return 1;
 		  if (a.severity > b.severity) return -1;
@@ -235,7 +225,7 @@ function sortElementByAssignee(a,b){
 
 
 function advancedSorting(){
-	console.log("advanced Sorting!");
+	console.log("advancedSorting() INVOKED");
 	advancedSort = true;
 	if(document.getElementById('primaryKey').value == 'priority'){
 		projectsOfInterest.sort(function compare(a,b){return sortElementByPriority(a,b)});	
@@ -253,7 +243,7 @@ function advancedSorting(){
 
 function advancedSortValidation(){
 	
-	console.log("advanced validation!!");
+	console.log("advancedSortValidation() INVOKED");
 	if(document.getElementById('primaryKey').value == 'none') {alert("Must have a primary key before sorting"); return;}
 	else if(document.getElementById('secondaryKey').value == 'none') {alert("Must have a secondary key before sorting"); return;}
 	else if(document.getElementById('tertiaryKey').value == 'none') {alert("Must have a tertiary key before sorting"); return;}
@@ -273,8 +263,7 @@ function advancedSortValidation(){
 function displaySortingResults(){
 	clearTaskTable();
     if(user.permission.id != 1) createTaskTableFromFilter();
-    else if(user.permission.id == 1) {console.log("post sortttt"); createTaskTableFromFilter();}
-    
+    else if(user.permission.id == 1) createTaskTableFromFilter();
     else{
     	console.log("Unprepared for this ELSE condition");
     }

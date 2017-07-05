@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -20,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import Servlets.helpers.ReportHelper;
 import comparators.ProjectItemComparator;
 import comparators.ProjectRegionComparator;
+import comparators.TaskComparator;
 import comparators.WarehouseComparator;
 import projectObjects.Project;
 import projectObjects.Task;
@@ -83,10 +85,12 @@ public class Report extends HttpServlet
 	
 		out.println(generateProjectReport(projects, title, shownFields ));
 		} else {
-			List<Object> tasks = null;
+			List<projectObjects.Task> tasks = null;
             title = req.getParameter("task_title");
-			tasks = (List<Object>) ProjectObjectService.getAll("Task");
-				System.out.println("Tasks size = " +tasks.size());
+            
+            tasks = acquireProperTasks(req);
+			
+            System.out.println("Tasks size = " +tasks.size());
 			
 					
 	       //System.out.println(req.getParameter("onGoing"));
@@ -98,9 +102,26 @@ public class Report extends HttpServlet
 			shownFields.toString();
 			
 			//Send HTML table of projects to front end
-		
+		   
 			out.println(generateTaskReport(tasks, title, shownFields ));
 		}
+	}
+	
+	
+	/**
+	 * This function retrieves a list of tasks meeting a certain query
+	 * @param The request containing the query info
+	 * @return List of tasks
+	 */
+	public List<projectObjects.Task> acquireProperTasks(HttpServletRequest req){
+		String assignee_id = req.getParameter("task_assignee");
+		String status = req.getParameter("task_status");
+		List<projectObjects.Task> tasks = null;
+		
+		if(assignee_id.equals("all") && status.equals("all")) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
+		else tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, status);
+		
+		return tasks;
 	}
 	
 	
@@ -174,7 +195,7 @@ public class Report extends HttpServlet
 	 * @param reportName the name of the report
 	 * @return a String representing the HTML the report page.
 	 */
-	public String generateTaskReport(List<Object> tasks, String reportName, List<String> shownFields)
+	public String generateTaskReport(List<projectObjects.Task> tasks, String reportName, List<String> shownFields)
 	{
 		System.out.println("TASKS OF INTEREST");
 
@@ -192,8 +213,8 @@ public class Report extends HttpServlet
 			System.out.print(shownFields.get(i)+" ");
 		
 		}
-
-		//sortProjects(tasks);
+        
+		sortTasks(tasks);
 		sb.append("<tbody>");
 		//Generate table contents
 		for (int i = 0; i < tasks.size(); i++)
@@ -205,7 +226,9 @@ public class Report extends HttpServlet
 				sb.append("<td>"+(i+1)+"</td>");
 				for (int j = 0; j < shownFields.size(); j++)
 				{	
-					sb.append("<td>");
+					if(shownFields.get(j).equals("task_notes") || shownFields.get(j).equals("task_description")) 
+						sb.append("<td>");
+					else sb.append("<td align = 'center'>");
 					String value = getValueFromTask(shownFields.get(j), t);
 					sb.append(value);
 					sb.append("</td>");		
@@ -268,6 +291,12 @@ public class Report extends HttpServlet
 		Collections.sort(projects, new WarehouseComparator());
 		Collections.sort(projects, new ProjectItemComparator());
 		Collections.sort(projects, new ProjectRegionComparator());		
+	}
+	
+	public void sortTasks(List<projectObjects.Task> tasks)
+	{
+		Collections.sort(tasks, new TaskComparator());
+		
 	}
 	
 	public static String makePrintButton()

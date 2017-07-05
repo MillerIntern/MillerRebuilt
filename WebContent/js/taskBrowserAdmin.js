@@ -12,7 +12,6 @@ let managersOfInterest;
 
 
 $(document).on('click', '#AllTasks', function(){
-	console.log("checked == ", document.getElementById("AllTasks").checked);
 	if(document.getElementById("AllTasks").checked == true){
 		$('.taskManager > input').each(function(i, obj) {
 			if(obj.id == "NoTasks") obj.checked = false;
@@ -22,7 +21,6 @@ $(document).on('click', '#AllTasks', function(){
 });
 
 $(document).on('click', '#NoTasks', function(){
-	console.log("checked == ", document.getElementById("NoTasks").checked);
 	if(document.getElementById("NoTasks").checked == true){
 		$('.taskManager > input').each(function(i, obj) {
 			if(obj.id == "NoTasks") obj.checked = true;
@@ -32,7 +30,6 @@ $(document).on('click', '#NoTasks', function(){
 });
 
 $(document).on('click', '.taskManager', function(){
-	console.log("checked == ", document.getElementById("AllTasks").checked);
     if(document.getElementById("AllTasks").checked == true){
 		this.checked = true;
 	}
@@ -49,7 +46,6 @@ $(document).on('change', '#taskSelector', function () {
 
 function displayTasks() {
 	createProperTaskTable();
-	console.log("Right here \n");
 }
 
 
@@ -57,7 +53,6 @@ function establishManagersOfInterest()
 {
 	managersOfInterest = [];
 	$('.taskManager').each(function(i, obj) {
-		console.log("Man of interest == ", obj.value, obj.checked)
 		if(!obj.value) return;
 	    if(obj.checked == true) managersOfInterest.push(obj.value);
 	});
@@ -66,9 +61,8 @@ function establishManagersOfInterest()
 function createTaskTableByManager (tasks) {
 	let selector = $('#taskSelector').val();
     tasksOfInterest = new Array();
-	console.log("Selector ==== " ,selector);
-	console.log(tasks);
-	console.log("managers of interest  == ",managersOfInterest);
+	console.log("SELECTOR ==== " ,selector);
+	console.log("MANAGERS OF INTEREST  == ",managersOfInterest);
 	tasks.sort(function(a,b){
 		if(a.assignee.name < b.assignee.name) return -1;
 		if(a.assignee.name > b.assignee.name) return 1;
@@ -116,7 +110,6 @@ function createTaskTableByManager (tasks) {
 			taskTitle.innerHTML = tasks[i].title;
 			taskAssignee.innerHTML = tasks[i].assignee.firstName;
 			taskAssignee.id = "assigneeDisplay";
-			console.log("iddddd = ", taskAssignee.id);
 			taskAssignee.width = "10px";
 			taskDesc.innerHTML = tasks[i].description;
 			taskDesc.width = "200%";
@@ -250,7 +243,6 @@ function createManagerQueue(json)
     });
     
 	for (var i = 0; i < json.length; i++) {
-		console.log("creating manager drop down" + json[i]);
 		// when users store both username and name, access the user's name and username fields
 		let name = document.createElement('td');
 		let checkBox = document.createElement('td');

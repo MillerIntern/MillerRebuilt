@@ -2,6 +2,7 @@ package services;
 
 import java.lang.reflect.Field;
 
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.ProjectObject;
+import projectObjects.Task;
 
 
 /**
@@ -49,6 +51,58 @@ public class ProjectObjectService
         Query q = session.createQuery("from "+domain);
         @SuppressWarnings("unchecked")
 		List<Object> list = q.list();
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
+	 * This function returns all Tasks from the database.
+	 * @return a list of all Tasks of a specific type in the database.
+	 */
+	public static List<projectObjects.Task> getAllTasks()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Task");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Task> list = q.list();
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
+	 * This function returns all Tasks from the database.
+	 * @param task assignee_id
+	 * @return a list of all Tasks of a specific assignee in the database.
+	 */
+	public static List<projectObjects.Task> getAllTasksForAssignee(String assignee_id, String status_id)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+		Query q = null;
+        if(status_id.equals("all")) q = session.createQuery("from Task where assignee_id = " + assignee_id);
+        else if(assignee_id.equals("all")) {
+        	if(status_id.equals("1")) q = session.createQuery("from Task where taskStatus_id = 1");
+        	else if(status_id.equals("2")) q = session.createQuery("from Task where taskStatus_id = 2");
+        	else if(status_id.equals("3")) q = session.createQuery("from Task where taskStatus_id = 3");
+        	else if(status_id.equals("12")) q = session.createQuery("from Task where taskStatus_id != 3");
+        }
+        else if(!assignee_id.equals("all")) {
+        	if(status_id.equals("1")) q = session.createQuery("from Task where taskStatus_id = 1 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("2")) q = session.createQuery("from Task where taskStatus_id = 2 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("3")) q = session.createQuery("from Task where taskStatus_id = 3 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("12")) q = session.createQuery("from Task where taskStatus_id != 3 and assignee_id = " +assignee_id);
+        }
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Task> list = q.list();
         tx.commit();
         
         return list;

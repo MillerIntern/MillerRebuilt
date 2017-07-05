@@ -1524,7 +1524,8 @@ public class ReportHelper
 		} else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
 		} else if(value.equals("task_created_date")) {
-			returnVal = dForm.format(t.getAssignedDate()).toString();
+			if(t.getAssignedDate() != null) returnVal = dForm.format(t.getAssignedDate()).toString();
+			else returnVal = "---";
 		} else if(value.equals("task_due_date")) {
 			if(t.getDueDate() != null) returnVal = dForm.format(t.getDueDate()).toString();
 			else returnVal = "---";

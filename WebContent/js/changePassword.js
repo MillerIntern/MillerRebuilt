@@ -131,7 +131,6 @@ function passwordConfirmer() {
 /*
  * password must have at least 10 characters
  * password also must have either a number or capital letter
- * TODO MUST FIX REQUIREMENTS
  */
 function validPassword() {
 	var valid = false;

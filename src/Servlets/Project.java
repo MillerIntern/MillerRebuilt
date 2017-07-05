@@ -388,8 +388,9 @@ public class Project extends HttpServlet
 			}
 		}
 		
-		if(!action.equals("getAllProjects") && !action.equals("getTasks"))
-			System.out.println("RESPONSE = " + response);
+		if(!(action.equals("getAllProjects") || action.equals("getTasks") ||
+				action.equals("getSpecificObjects")))
+			System.out.println(action + "__RESPONSE = " + response);
 		out.println(response);
 	}
 

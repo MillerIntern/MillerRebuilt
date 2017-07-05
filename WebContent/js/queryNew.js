@@ -5,20 +5,19 @@ var BOOL_RELATIONS = ["and", "or"];
 var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
 var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
-const REPORT_TYPES = ["All","NE & SE Facility","SE Refrigeration","NE Refrigeration",
-                      "Invoice", "Completed", "Construction", "Repair", "HVAC", "Pharmacy", 
-                      "Closeout", "Meeting", "Service", "On Hold", "Permit", 'Inspection',
-                      'Equipment', 'Change Order', "NE GC & Refrigeration", "SE GC & Refrigeration",
-                      "Task"];
+const REPORT_TYPES = ["All", "Change Order", "Closeout", "Completed", "Construction", 
+    				"David Hearing Center", "Equipment", "HVAC", "Inspection", "Invoice", 
+    				"Meeting", "NE & SE Facility", "NE GC & Refrigeration", "NE Refrigeration", 
+    				"On Hold", "Permit", "Pharmacy", "Repair", "SE GC & Refrigeration", 
+    				"SE Refrigeration", "Service", "Task"];
+
 const GENERAL_PROJECT_REPORT_TYPES = ["All", "NE & SE Facility", "SE Refrigeration", "NE Refrigeration",
 									   "Service", "NE GC Refrigeration", "SE GC & Refrigeration" ];
 
 const PROJECT_MANAGEMENT_REPORT_TYPES = ["Invoice", "Completed","Closeout","Meeting","On Hold", "Permit",
 										"Inspection", "Equipment", "Change Order", "Task"];
 
-//const PHASES_REPORT_TYPES = []
-
-const PROJECT_TYPES_REPORT_TYPES =["Construction", "HVAC", "Repair", "Pharmacy"];
+const PROJECT_TYPES_REPORT_TYPES =["Construction", "HVAC", "Repair", "Pharmacy", "David Hearing Center"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -42,7 +41,7 @@ var REPORT_VALS = {"All":"WEEKLY","NE & SE Facility":"STEVE_MEYER","SE Refrigera
 					"Repair":"REPAIR", "HVAC" : "HVAC", "Pharmacy":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit": "PERMIT", 'Inspection': "INSPECTIONS", 'Equipment': 'EQUIPMENT', 
 					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order': 'CO_REPORT',
-					'Task': 'TASK'};
+					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC'};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -101,6 +100,12 @@ const PROJECT_ITEM_PHARMACY_SALES_COUNTER = 76;
 const PROJECT_ITEM_PHARMACY_TRIPPLE_WINDOW = 154;
 const PROJECT_ITEM_PHARMACY_LAMINATE_FLOOR = 209;
 const PROJECT_ITEM_PHARMACY_FLOOR = 233;
+
+const PROJECT_ITEM_HEARING_CENTER_AND_VAULT = 39;
+const PROJECT_ITEM_HEARING_CENTER = 48;
+const PROJECT_ITEM_HEARING_CENTER_AND_DEMO_ROOM = 49;
+const PROJECT_ITEM_HEARING_CENTER_EXPANDED = 174;
+const PROJECT_ITEM_HEARING_CENTER_AND_PHOTO = 315;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Constants that are button passed arguments, must be consistent names sent from buttons
 
@@ -213,6 +218,9 @@ const CO_BUDGETARY = 'CO_REPORT_B';
 const CO_CLOSED = 'CO_REPORT_C';
 
 const TASK = 'TASK';
+const TASK_ASSIGNEE = 'TASK_ASSIGNEE';
+
+const DAVID_HAC = 'DAVID_HAC';
 
 
 
@@ -354,6 +362,9 @@ const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'bu
 
 const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_description','task_created_date',
 		                  'task_due_date','task_status', 'task_priority','task_notes');
+
+const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
+        'scheduledStartDate','scheduledTurnover', 'buildingPermit', 'zachNotes');
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -369,6 +380,9 @@ var closeoutOptions;
 
 //Keeps track of what values go with which parameter
 var paramNum = 0;
+var users;
+var valueToParam = new Array();
+var selectedParameters = new Array();
 
 $(document).on('change', 'select.params',function(){
 	setVals($(this));
@@ -376,6 +390,7 @@ $(document).on('change', 'select.params',function(){
 
 $(document).ready(function() 
 {
+	
 	getProjectEnums();
 	populateParameters();
 	populateReportTypePicker();
@@ -388,13 +403,14 @@ $(document).on('change', '#broadReportType', function()
 		{
 			if(document.getElementById('broadReportType').value == 'none') return;
 			else{
-				getProjectEnums();
-				populateParameters();
+				//getProjectEnums();
+				//populateParameters();
 				populateReportTypePicker();
 				$(".remove").click(function(){
 					$(this).parent().remove();
 				});
 			}
+			document.getElementById("TaskOptions").style = 'display: none';
 			document.getElementById("specificReports").style = "display: inline";
 			document.getElementById("ProjectStages").style = "display:inline;";
 
@@ -403,9 +419,20 @@ $(document).on('change', '#broadReportType', function()
 });	
 
 $(document).on('change', '#specificReports', function(){
-	if(document.getElementById('specificReports').value == 'TASK')
+	
+	if(document.getElementById('specificReports').value == TASK){
 		document.getElementById("ProjectStages").style = "display: none";
-	else {document.getElementById("ProjectStages").style = "display: inline";}
+		generateManagerDropDown();
+	}
+	else if(document.getElementById('specificReports').value == DAVID_HAC){
+		document.getElementById("ProjectStages").style = "display: none";
+		document.getElementById("TaskOptions").style = 'display: none';
+	}
+	else {
+		document.getElementById("ProjectStages").style = "display: inline";
+		document.getElementById("TaskOptions").style = 'display: none';
+	}
+	
 	document.getElementById("RemainingCriteria").style = 'display: inline';
 	
 });
@@ -425,6 +452,22 @@ $(document).on('click', '#advancedReportCloser', function() {
 $(document).on('click', '#meetingProposals', function(){generateReport(PROPOSAL_MEETING)});
 $(document).on('click', '#meetingActive', function(){generateReport(ACTIVE_MEETING)});
 $(document).on('click', '#meetingBudgetary', function(){generateReport(BUDGETARY_MEETING)});
+
+$(document).on('click', '#addParam', function() {
+	
+   for(var i = 0; i < paramNum; i++){
+	   if(!document.getElementById('param'+i)) continue;
+	   console.log("PARAM == ", document.getElementById('param'+i).value);
+	  // console.log("VAL == ", document.getElementById('val'+i).text);
+	   console.log("VAL === ", valueToParam[document.getElementById('val'+i).value])
+	   selectedParameters.push(valueToParam[document.getElementById('val'+i).value]);
+   }
+});
+
+$(document).on('click', '#addDateParam', function() {
+
+	console.log("clicked add DATE param");
+});
 
 
 var reportString;
@@ -457,7 +500,10 @@ $(document).on('change', '#ProjectStagesDropDown', function(){
 });
 
 $(document).on('click', '#generateReport', function(){
-	if(document.getElementById("specificReports").value == "TASK") generateTaskReport("TASK");
+	if(document.getElementById("specificReports").value == TASK) {
+		generateTaskReport(TASK);
+	}
+	else if(document.getElementById("specificReports").value == DAVID_HAC) generateReport(DAVID_HAC);
 	else {generateReport(reportString);}
 });
 
@@ -533,8 +579,38 @@ function getProjectEnums()
 		success: function(data)
 		{
 			fillDropdown(data);
+			getUsers();
 		}
 	});
+}
+
+function generateManagerDropDown()
+{
+	if(document.getElementById('TaskOptionsCreated')) { 
+		document.getElementById('TaskOptions').style.display = 'inline';
+		return;
+	}
+	users.sort(function(a,b){
+		if(a.firstName < b.firstName) return -1;
+		else if(a.firstName > b.firstName) return 1;
+		else return 0;
+	})
+	
+	var select = document.getElementById('ProjectManagersDropDown');
+	var option = document.createElement("option");
+	option.id = "TaskOptionsCreated";
+	option.value = "all";
+	option.text = "All";
+	select.add(option);
+	for(var i=0; i < users.length; i++){
+	  var option = document.createElement("option");
+	  option.value = users[i].id;
+	  option.text = users[i].firstName;
+	  select.add(option);
+	}
+	
+
+	document.getElementById('TaskOptions').style.display = 'inline';
 }
 
 //passes data from ajax call from projectEnums to generate values for drop downs
@@ -694,9 +770,12 @@ function addParamCell()
 function populateParameters()
 {
 	var option ='';
-	for(var i = 0; i < ITEM_TYPES.length; i++)
+	for(var i = 0; i < ITEM_TYPES.length; i++){
 		option += '<option value="'+ ITEM_TYPES[i] + '">' + FIELDS_TO_SHOW[ITEM_TYPES[i]] + '</option>';
+		valueToParam[ITEM_TYPES[i]] = FIELDS_TO_SHOW[ITEM_TYPES[i]];
+	}
 	$('#param'+paramNum).append(option);
+	console.log("LENGTH === ",valueToParam.length);
 	//populateBoolComparators();
 	paramNum++;
 }
@@ -712,6 +791,7 @@ function populateParameters()
 function populateReportTypePicker()
 {
 	var option ='';
+
 	for(var i = 0; i < REPORT_TYPES.length; i++){
 		if(document.getElementById('broadReportType').value == 'GeneralProjects') {
 			for(var j=0;j< GENERAL_PROJECT_REPORT_TYPES.length; j++){
@@ -1077,11 +1157,22 @@ function generateTaskReport(reportType){
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
 	var title = undefined;
-	
+	var assignee = document.getElementById('ProjectManagersDropDown');
+	var task_status = document.getElementById('TaskStatusDropDown').value;
+	var task_manager;
+	for(var i = 0; i < users.length; i++){
+		if(users[i].id == assignee.value) task_manager = users[i].firstName;
+	}
+	if(assignee.value != 'all'){
+          reportType = TASK_ASSIGNEE;
+	}
 	switch(reportType){
 		case TASK:
 			title = 'Tasks for All Projects';
 			//stage.push(ACTIVE_STAGE);
+			break;
+		case TASK_ASSIGNEE:
+			title = "Tasks for " + task_manager;
 			break;
 		default:
 			alert("Invalid report type");
@@ -1101,6 +1192,8 @@ var data = {
 		'domain': 'task',
 		'action': 'query', 
 		'task_title':title,
+		'task_assignee': assignee.value,
+		'task_status': task_status
 };
 
 console.log(data);
@@ -1814,6 +1907,23 @@ function generateReport(reportType)
 			title = 'Tasks for All Projects';
 			//stage.push(ACTIVE_STAGE);
 			break;
+		case DAVID_HAC:
+			title = "Hearing Center Report";
+			stage.push(ACTIVE_STAGE);
+			stage.push(PROPOSAL_STAGE);
+			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
+			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
+			status.push(PROJECT_STATUS_SCHEDULING);
+			status.push(PROJECT_STATUS_SCHEDULED);
+			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			//status.push(PROJECT_STATUS_CLOSEOUT);
+			item.push(PROJECT_ITEM_HEARING_CENTER);
+			item.push(PROJECT_ITEM_HEARING_CENTER_AND_DEMO_ROOM);
+			item.push(PROJECT_ITEM_HEARING_CENTER_EXPANDED);
+			item.push(PROJECT_ITEM_HEARING_CENTER_AND_PHOTO);
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -2022,6 +2132,9 @@ function getAllSpecifiedFields(reportType)
 		case TASK:
 			genType = TASK_KEYS;
 			break;
+		case DAVID_HAC:
+			genType = DAVID_HAC_KEYS;
+			break;
 
 	
 	}
@@ -2037,4 +2150,24 @@ function hasStage(stageList, stage)
 	}
 
 	return false;
+}
+
+function getUsers () {
+	console.log("ABOUT TO GET PROJECT MANAGERS");
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUsers',
+		}, complete: function (data) {
+			console.log("response JSON for Users = ",data.responseJSON);
+			if (data.responseJSON) {
+				users = data.responseJSON;
+				console.log("Users are ",users);
+			}
+		}
+		
+	});
+	
 }

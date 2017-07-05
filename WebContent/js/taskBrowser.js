@@ -25,8 +25,7 @@ $(document).on('change', '#projectSearch', function(){
 		return;
 	} else{
 		let search = document.getElementById('projectSearch').value;
-		console.log("tasks of INTR= ", tasksOfInterest);
-		console.log("projects of interest = ", projectsOfInterest);
+		console.log("TASKS OF INTEREST = ", tasksOfInterest);
 		projectsOfInterest = new Array();
 		searchProjects(search);		
 		clearTaskTable();
@@ -41,8 +40,7 @@ $(document).on('change', '#descriptionSearch', function(){
 		return;
 	} else{
 		let search = document.getElementById('descriptionSearch').value;
-		console.log("tasks = ", tasksOfInterest);
-		console.log("projects of interest = ", projectsOfInterest);
+		console.log("TASKS OF INTEREST = ", tasksOfInterest);
 		projectsOfInterest = new Array();
 		searchDescriptions(search);
 		clearTaskTable();
@@ -67,14 +65,13 @@ function getUserData () {
 			'action': 'getUserInfo'
 		}, complete: function (data) {
 			if(data.responseJSON) {
-			  console.log("data for user = ", data.responseJSON);
 			  user = data.responseJSON;
-			  console.log("data for USER = ", user);
+			  console.log("USER = ", user);
 		      getUsers();		  
 
 				
 			} else {
-				console.log("user data = ",data);
+				console.log("GetUserData() RESPONSE = ",data);
 				alert('Server Failure!');
 				
 			}
@@ -93,15 +90,15 @@ function getTasks() {
 			'domain': 'project',
 			'action': 'getTasks',
 		}, complete: function (data) {
-			console.log("got the tasks",data);			
+			console.log("RESPONSE FROM getTasks() = ",data);			
 			if (data.responseJSON) {
 				tasks = data.responseJSON;
 				projectsOfInterest = tasks;
-				console.log("tasks ARE = ", tasks);
+				console.log("TASK ARE = ", tasks);
 				preparePageForUserStatus();
 			}
 			else { 
-				console.log("data = ", data);
+				console.log("ERROR RESPONE FROM getTasks() = ", data);
 				alert("Something went wrong while retrieving tasks from the server!");
 			}
 			
@@ -119,10 +116,10 @@ function getUsers () {
 			'domain': 'project',
 			'action': 'getUsers',
 		}, complete: function (data) {
-			console.log("response JSON for users = ",data.responseJSON);
+			console.log("RESPONSE JSON FOR getUsers() = ",data.responseJSON);
 			if (data.responseJSON) {
 				users = data.responseJSON;
-				console.log("response USERS for users = ",users);
+				console.log("USERS = ",users);
 				createDropdown(data.responseJSON);
 				getTasks();
 			}
@@ -140,15 +137,13 @@ function getProjectManagers () {
 			'domain': 'project',
 			'action': 'getProjectManagers',
 		}, complete: function (data) {
-			console.log("Gettting project managersssss");
-			console.log("data in project managers = ",data);
-			console.log("manager JSON = ", data.responseJSON);
+			console.log("REPONSE JSON FROM getProjectManagers() = ",data.responseJSON);
 			projectManagers = data.responseJSON;
 			if (data.responseJSON) {
 				createManagerQueue(data.responseJSON);
 			}
 
-			else{console.log("no response JSON");}
+			else{console.log("NO RESPONSE JSON FROM getProjectManagers()");}
 		}
 		
 	});
@@ -157,7 +152,7 @@ function getProjectManagers () {
 function tasksByManager()
 {
 	$('#formFor').html('Tasks for: ');
-	console.log("getting users");
+	console.log("tasksByManager() INVOKED");
 	getProjectManagers();
 	
     
@@ -166,7 +161,7 @@ function tasksByManager()
 function preparePageForUserStatus(){
 	if (user.permission.id === 1) {
 		 document.getElementById("projectManagerSelection").style.display = 'inline';
-		 console.log("into the selection");
+		 console.log("preparePageForUserStatus() INVOKED");
 		 createTaskTable();
 		 tasksByManager();
 		 //createTaskTableByManager(tasks);
@@ -183,7 +178,7 @@ function preparePageForUserStatus(){
 
 function createDropdown (json) {
 	let d = document.createDocumentFragment();
-	console.log("length = ",json.length);
+
 	json.sort(function(a,b){
 		if(a.firstName < b.firstName) return -1;
 		else if(a.firstName > b.firstName) return 1;
@@ -191,7 +186,6 @@ function createDropdown (json) {
 	})
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
-		console.log("creating drop down");
 		// when users store both username and name, access the user's name and username fields
 		option.innerHTML = json[i].firstName;
 		option.setAttribute("value", json[i].firstName);
@@ -206,8 +200,8 @@ function createDropdown (json) {
 function createTaskTable () {
 	tasksOfInterest = new Array();
 	let selector = $('#taskSelector').val();
-	console.log("taskSelector == " , selector);
-	console.log("tasksw while creating == ", tasks);
+	console.log("taskSelector EQUALS " , selector);
+	console.log("TASKS WHILE CREATING TABLE == ", tasks);
 	tasks.sort(function(a,b){
 		if(a.assignee.name < b.assignee.name) return -1;
 		if(a.assignee.name > b.assignee.name) return 1;
@@ -224,10 +218,9 @@ function createTaskTable () {
 				(selector === 'open_complete' && tasks[i].status.id == 3) ||
 				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
-		console.log("task before if == ", tasks[i]);
+	
         if(tasks[i].assignee == null) continue; 
 		if (tasks[i].assignee.name === user.name) {  
-			console.log("tasks IIII == ", tasks[i]);
 			count++;
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			let taskListing = document.createElement('tr');
@@ -280,17 +273,15 @@ function createTaskTable () {
 		}
 	}
 	projectsOfInterest = tasksOfInterest;
-	console.log("PROJ OF INT ", projectsOfInterest);
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}
 }
 
 function createTaskTableFromFilter(){
-	console.log("projects of interest == ", projectsOfInterest);
+	console.log("PROJECTS OF INTEREST == ", projectsOfInterest);
 	var count = 0;
 	for (var i = 0; i < projectsOfInterest.length; i++) {
-		console.log(projectsOfInterest[i].assignee.name + ' ' + user.name);
 			count++;
 			let taskListing = document.createElement('tr');
 			taskListing.value = projectsOfInterest[i].id;
@@ -405,12 +396,13 @@ function expandTaskInfo(param) {
 			break;
 		}
 	}
-	console.log("task ===== " , task);
+	console.log("expandTaskInfo() TASK === " , task);
 	selectedProjID = task.project.id;
 	
 	$('#taskWell > .title').html(task.project.warehouse.city.name +
 			' #' + task.project.warehouse.warehouseID + 
-			' - ' + task.project.projectItem.name + ' Task: ' +task.title);
+			' - ' + task.project.projectItem.name);
+	$('#taskWell > #title').val(task.title);
 	$('#taskWell > div > .description').val(task.description);
 	$('#taskWell > span > .severity').val(task.severity);
 	$('#taskWell > .assignedDate').html('<b>Assigned Date:</b> ' + task.assignedDate);
@@ -428,13 +420,15 @@ function navigateToSelectedProject () {
 }
 
 function saveTaskChanges () {
+	if(!$('#taskWell > #title').val() || $('#taskWell > #title').val() == ""){ alert("Tasks much have a title"); return;}
+	if(!$('#taskWell > div > .description').val() || $('#taskWell > div > .description').val() == "") { alert("Tasks much have a description"); return;}
 	if(typeof task === 'undefined')
 		return alert("No Task Selected, try reloading!");
 	
 	
 	
 	console.log("UPDATING TASK == ", task, "USERS = ", users);
-	let title = task.title;
+	let title = $('#taskWell > #title').val();
 	let description = $('#taskWell > div > .description').val();
 	let severity = $('#taskWell > span > .severity').val();
 	let assignedDate =task.assignedDate;
@@ -452,14 +446,15 @@ function saveTaskChanges () {
 	console.log("project id is defined");
 	
 	for(var i = 0; i < users.length; i++){
-		if(users[i].firstName == assignedTo){ assignedTo = users[i]; console.log("users[i] == " , users[i]); break;}
+		if(users[i].firstName == assignedTo){ assignedTo = users[i]; break;}
 	}
 	
 	$('#taskWell > span > .assignedTo').val(assignedTo);
 	var i = 0;
 	for(; i < tasks.length; i++){
 		if(tasks[i].id == task.id)
-		{ console.log("tasks[i] == ", tasks[i]);
+		{ 
+		  tasks[i].title = title;
 		  tasks[i].description = description;
 		  tasks[i].severity = severity;
 		  tasks[i].dueDate = dueDate;
@@ -474,7 +469,7 @@ function saveTaskChanges () {
 	}
 	for(i=0; i < projectsOfInterest.length; i++){
 		if(projectsOfInterest[i].id == task.id){ 
-			console.log("POI[i] == ", projectsOfInterest[i]);
+			  projectsOfInterest[i].title = title;
 			  projectsOfInterest[i].description = description;
 			  projectsOfInterest[i].severity = severity;
 			  projectsOfInterest[i].dueDate = dueDate;
@@ -490,7 +485,7 @@ function saveTaskChanges () {
 	
 	for(i=0; i < tasksOfInterest.length; i++){
 		if(tasksOfInterest[i].id == task.id){
-			console.log("TOI[i] == ", tasksOfInterest[i]);
+			 tasksOfInterest[i].title = title;
 			 tasksOfInterest[i].description = description;
 			 tasksOfInterest[i].severity = severity;
 			 tasksOfInterest[i].dueDate = dueDate;
@@ -520,7 +515,7 @@ function saveTaskChanges () {
 				'status': taskStatus,
 				'notes': notes
 			}, complete: function (data) {
-				console.log(data);
+				console.log("DATA AFTER TASK SAVE == ", data);
 				let response = $.trim(data.responseText);
 				if (response === 'UPDATED_TASK') {
 					alert('Task Updated Successfully');
@@ -591,14 +586,13 @@ function printButton(){
 		alert("No tasks to print!");
 		return;
 		}
-	console.log("MOVING");
 	printTasks(projectsOfInterest);
 	
  
 }
 
 function printTasks(projectsOfInterest) {
-	console.log("Projects  ==== ", projectsOfInterest);
+	console.log("PROJECTS OF INTEREST  ==== ", projectsOfInterest);
 	document.body.innerHTML="";
     document.body.style.backgroundColor = "white";
 	var div = document.createElement("div");
@@ -687,7 +681,6 @@ function printTasks(projectsOfInterest) {
 	document.getElementById("head").appendChild(dueHead);
 	document.getElementById("head").appendChild(priorityHead);
 	document.getElementById("head").appendChild(notesHead);
-	console.log("projects of interest length = ",projectsOfInterest.length);
 	var count = 0;
 	for(var i = 0;i<projectsOfInterest.length; i++){
 		count++;

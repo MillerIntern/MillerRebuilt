@@ -216,6 +216,21 @@ public class ProjectService extends ProjectObjectService
 
 		return g.toJson(map);
 	}
+	
+	/**
+	 * This method gets all of the tasks
+	 * @return A string representing a JSON array containing this information
+	 */
+	public static String getAllTasksAsJson()
+	{
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("tasks", ProjectObjectService.getAllAsJsonString("Task"));
+
+
+		return g.toJson(map);
+	}
 
 	public static String getAllEnumsEquipAsJson()
 	{

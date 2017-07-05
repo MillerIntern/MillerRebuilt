@@ -218,8 +218,10 @@
 	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
-	          <li><a href="projectData.html">Add Project</a></li>
-	          <li><a href="findProject.html">Find Projects</a></li>
+	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Add Project</a></li>
+	          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 	        </ul>
 	      </li>
 	      <li><a href="triggerBrowser.html">Triggers</a></li>
@@ -228,9 +230,11 @@
 	      		<span class='caret'></span>
 	      	</a>
 	      	<ul class='dropdown-menu'>
-	      		<li><a href='taskBrowser.html' 
+	      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'"
 	      		 >Your Tasks</a></li>
-	      		<li class='active'><a onclick="window.location.href='findProject.html?type=findTaskProject'"
+	      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'"
 	      		 >Create Task</a></li>
 	      	</ul>
 	      </li>
@@ -286,7 +290,7 @@
 		        <tr>
 		        	<td><label>Notes:</label></td>
 		        	<td>
-		        	<textarea maxlength="254" id='notes'></textarea>
+		        	<textarea maxlength="999" id='notes'></textarea>
 		        	</td>
 		        </tr>
 			</table>

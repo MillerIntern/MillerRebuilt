@@ -9,7 +9,7 @@ const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East
                       "J Dempsey", "Invoice", "Completed", "Construction", "Repair", "HVAC", "RX", 
                       "Closeout", "Meeting", "Service", "On Hold", "Permit Report", 'Inspection Report',
                       'Equipment Report', 'Change Order Report', "NE GC & Refrigeration", "SE GC & Refrigeration",
-                      "Task","David Hearing Center"];
+                      "Task","David Hearing Center", "Adrienne"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -33,7 +33,7 @@ var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrig
 					"Repair":"REPAIR", "HVAC" : "HVAC", "RX":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit Report": "PERMIT", 'Inspection Report': "INSPECTIONS", 'Equipment Report': 'EQUIPMENT', 
 					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order Report': 'CO_REPORT',
-					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC'};
+					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC', "Adrienne":"ADRIENNE"};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -213,7 +213,9 @@ const CO_CLOSED = 'CO_REPORT_C';
 
 const TASK = 'TASK';
 
+//Personal Reports
 const DAVID_HAC_ACTIVE = 'DAVID_HAC_A';
+const ADRIENNE = 'ADRIENNE';
 
 
 
@@ -358,6 +360,9 @@ const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_descr
 
 const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
 		                         'scheduledStartDate','scheduledTurnover', 'buildingPermit', 'zachNotes');
+
+const ADRIENNE_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","manager", "supervisor", "region", 
+		"status","scheduledStartDate", "projectNotes");
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -387,6 +392,11 @@ $(document).ready(function()
 		$(this).parent().remove();
 	});
 });	
+
+$(document).on('change', '.reportTypePicker',function(){
+	console.log("value  == ", this.value);
+	if(this.value == ADRIENNE) generateReport(ADRIENNE);
+});
 
 //Sets the values of a drop down whenever the parameter type is changed
 function setVals(thisParam)
@@ -842,8 +852,9 @@ function submitQuery()
     	}
     	else
     	{
+    	console.log("PARAM TYPE = ", paramType);
 		switch(paramType){
-
+			
 			case 'region':
     				var valType = $('#val'+i).val();
     				region.push(valType);
@@ -1727,6 +1738,12 @@ function generateReport(reportType)
 			item.push(PROJECT_ITEM_HEARING_CENTER_EXPANDED);
 			item.push(PROJECT_ITEM_HEARING_CENTER_AND_PHOTO);
 			break;
+		case ADRIENNE:
+			title = "Adrienne's Report";
+			stage.push(ACTIVE_STAGE);
+			stage.push(PROPOSAL_STAGE);
+			manager.push(17);
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -1938,7 +1955,9 @@ function getAllSpecifiedFields(reportType)
 		case DAVID_HAC_ACTIVE:
 			genType = DAVID_HAC_KEYS;
 			break;
-
+		case ADRIENNE:
+			genType = ADRIENNE_KEYS;
+			break;
 	
 	}
 	return genType;

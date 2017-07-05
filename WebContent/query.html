@@ -109,10 +109,25 @@
                 </Select>
                 </div>
                 
+                <div id ='TaskOptions' style='display:none;'>
+                <Select id='ProjectManagersDropDown' class="form-control">
+                   <option value='all' disabled selected hidden=true>Select Project Manager...</option>
+                </Select>
                 
-                <!--  <input type="button" value="Proposals" onclick="reportCreator(this)"></input>
-                <input type="button" value="Inactive" onclick="reportCreator(this)"></input>
-                <input type="button" value="Closed" onclick="reportCreator(this)"></input>-->
+                <br>
+                
+                <Select id='TaskStatusDropDown' class="form-control">
+                   <option value='12' disabled selected hidden=true>Select Task Status...</option>
+                   <option value='all'>All</option>
+                   <option value='12'>Open &amp; Completed </option>
+                   <option value='1'>Open</option>
+                   <option value='2'>Completed</option>
+                   <option value='3'>Closed</option>
+                </Select>
+                </div>
+                
+                
+               
 
 				<br><br>
 				<div id='RemainingCriteria' style='display:none'>
@@ -121,10 +136,10 @@
                     <br><br>
                 </div>
                
+                <button class ="btn-warning" id='advancedReport' value='off'> Additional Report Criteria </button>
                 <button class="btn-primary" id="meetingProposals">Meeting Proposals</button>
                 <button class="btn-primary" id="meetingActive">Meeting Active Projects</button>
                 <button class="btn-primary" id="meetingBudgetary">Meeting Budgetary Projects</button>
-                <button class ="btn-warning" id='advancedReport' value='off'> Custom Report </button>
 				
             </div>
             
@@ -140,7 +155,7 @@
                 
                 <div id='AdditionalParameters'> 
                 <table>
-                <tr>
+                <tr>         
                 <td>
                     <div id="addParam">
                         <button class="btn-primary" value="Add Parameter" onclick="addParamCell()">Add Parameter</button>
@@ -157,6 +172,7 @@
                     </div>
                 </td>
                 </tr>
+   				<tr><td><br></td></tr>
 				</table>
 				</div>
                 </div>

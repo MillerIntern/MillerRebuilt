@@ -60,8 +60,10 @@
 	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
-	          <li><a href="projectData.html">Add Project</a></li>
-	          <li class='active'><a href="findProject.html">Find Projects</a></li>
+	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Add Project</a></li>
+	          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 	        </ul>
 	      </li>
 	      <li><a href="#">Triggers</a></li>
@@ -71,11 +73,11 @@
 	      	</a>
 	      	<ul class='dropdown-menu'>
 	      	
-	      		<li class='active'><a href='taskBrowser.html'  
+	      		<li><a href='taskBrowser.html'  
 	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
 	      		
-	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'"
+	      		<li><a href='findProject.html?type=findTaskProject'
 	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Create Task</a></li>
 	      		
@@ -98,6 +100,8 @@
 
    		<div id='taskWell' class='well' style='display:none'>
    			<h4 class='title'></h4>
+   			<p><b>Title of Task: </b></p>
+   			<input maxlength ="254" type='text' id='title' placeholder='Task Title'/>
    			<div>
    			<p><b>Description of Task:</b></p>
    			<textarea  maxlength="254" class='description'></textarea>
@@ -127,7 +131,7 @@
    			</span>
    			<div>
    			<p><b>Notes:</b></p>
-   			<textarea  maxlength="254" class='notes'></textarea>
+   			<textarea  maxlength="999" class='notes'></textarea>
    			</div>
    			<span>
    			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
