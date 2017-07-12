@@ -19,6 +19,7 @@
 	'use strict';
 	
 	let projectID;
+	let project;
 	let user;
 	$(document).ready(function () {
 	 	$("#dueDate").datepicker();   
@@ -46,6 +47,7 @@
 			}, success: function (data) {
 				console.log(data);
 				
+				project = data;
 				let city = data.warehouse.city.name;
 				let state = data.warehouse.state;
 				
@@ -144,7 +146,20 @@
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (!isValidInput([dueDate, initiatedDate])) return alert('Bad Dates');
+		
+		let taskData = {
+			'title': title,
+			'action': 'createTask',
+			'project': projectID,
+			'description': description,
+			'assignee': assignee,
+			'initiatedDate': initiatedDate,
+			'dueDate': dueDate,
+			'severity': severity,
+			'notes': notes
+		};
 	
+		console.log("PROJECT == ", project);
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -158,16 +173,40 @@
 				'dueDate': dueDate,
 				'severity': severity,
 				'notes': notes
-			}, complete: function (data) {
-				console.log(data);
-				let response = $.trim(data.responseText);
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
 				if (response === 'TASK_ADDED') {
 					alert('Task Added Successfully');
+					sendTaskAlert(taskData);
 					window.location.href='taskBrowser.html'
 				}
 			}
 		});
 		
+	}
+	
+	function sendTaskAlert(taskData)
+	{
+	   	console.log("IN: sendTaskAlert()");
+	   	$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'sendTaskAlert',
+				'projectItem': project.projectItem.name,
+				'warehouseCity': project.warehouse.city.name,
+				'warehouseID': project.warehouse.warehouseID,
+				'warehouseState':project.warehouse.state,
+				'assignee': taskData.assignee,
+				'severity' : taskData.severity,
+				'dueDate' : taskData.dueDate,
+			}, complete: function (response) {
+				console.log("RESPONSE FROM sendTaskAlert() = ", response);			
+			}
+		});
+	   	alert('sentMail!');
 	}
 	
 	// TODO: Honestly, this function should probably be in global.js

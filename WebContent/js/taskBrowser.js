@@ -206,10 +206,32 @@ function createTaskTable () {
 		if(a.assignee.name < b.assignee.name) return -1;
 		if(a.assignee.name > b.assignee.name) return 1;
 		else{
-			if(a.severity < b.severity) return -1;
-			if(a.severity > b.severity) return 1;
-			return 0;
-		}
+			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
+				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
+				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
+				else{
+					if(a.project.projectItem.name < b.project.projectItem.name) return -1;
+					if(a.project.projectItem.name > b.project.projectItem.name) return 1;
+					else{
+						if(a.severity < b.severity) return -1;
+						if(a.severity > b.severity) return 1;
+						return 0;
+					}
+				}
+			} else{ //SORTS BY SEVERITY IF USER IS ADMIN
+				if(a.severity < b.severity) return -1;
+				if(a.severity > b.severity) return 1;
+				else{
+					if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
+					if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
+					else{
+						if(a.project.projectItem.name < b.project.projectItem.name) return -1;
+						if(a.project.projectItem.name > b.project.projectItem.name) return 1;
+						return 0;
+					}
+				}
+			}
+		}  
 	});
 	var count = 0;
 	for (var i = 0; i < tasks.length; i++) {
@@ -387,6 +409,7 @@ function collapseWell() {
 }
 
 function expandTaskInfo(param) {
+	console.log("this == ", param);
 	let taskID = $(param).val();
 	console.log(taskID);
 	
@@ -413,6 +436,7 @@ function expandTaskInfo(param) {
 	$('#taskWell > div > .notes').val(task.notes);
 	
 	$('#taskWell').slideDown();
+	
 }
 
 function navigateToSelectedProject () {
@@ -731,6 +755,30 @@ function printTasks(projectsOfInterest) {
 	
 	window.print();
 	
+}
+
+
+
+function sendTaskAlert(data)
+{
+   	console.log("IN: new sendMail()");
+   	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'sendTaskAlert',
+		}, complete: function (response) {
+			console.log("RESPONSE FROM sendMail() = ",response);			
+			if (response.responseJSON) {
+				console.log(response);
+			}
+			else { 
+				console.log("ERROR RESPONE FROM sendTaskAlert() = ", response);
+			}
+			
+		}
+	});
 }
 
 

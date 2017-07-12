@@ -137,13 +137,18 @@
                 </div>
                
                 <button class ="btn-warning" id='advancedReport' value='off'> Additional Report Criteria </button>
+				<!--
                 <button class="btn-primary" id="meetingProposals">Meeting Proposals</button>
                 <button class="btn-primary" id="meetingActive">Meeting Active Projects</button>
                 <button class="btn-primary" id="meetingBudgetary">Meeting Budgetary Projects</button>
-				
+                -->
+                
             </div>
-            
-                       </div>
+         
+           </div>
+   
+                   
+           
            <div class='paramTableWrapper param-field' id="customReport" style='display:none'>
             <span> Custom Report Generator </span>
             <!--</br>  -->
@@ -151,29 +156,21 @@
             <div class=reportGenTable>
 
 				<div id='RemainingCriteria'>
-                    
-                
+                 
                 <div id='AdditionalParameters'> 
-                <table>
-                <tr>         
-                <td>
-                    <div id="addParam">
+                <table style = "border: none">
+                <tr>
+                    <td> <div id="addParam">
                         <button class="btn-primary" value="Add Parameter" onclick="addParamCell()">Add Parameter</button>
-                    </div>
-                </td>
-                <td>
-                    <div id="addDateParam">
+                    </div> </td>
+                    <td> <div id="addDateParam">
                         <button class="btn-primary" value="Add Date Parameter" onclick="addDateParamCell()">Add Date Parameter</button>
-                    </div>
-                </td>
-                <td>
-                    <div id="submit">
+                    </div> </td>
+                    <td> <div id="submit">
                         <button class="btn-success btn-md" value="Search" onclick="createModalFieldSelector()"> Generate Report</button>
-                    </div>
-                </td>
+                    </div> </td>
                 </tr>
-   				<tr><td><br></td></tr>
-				</table>
+                </table>
 				</div>
                 </div>
                 
@@ -183,10 +180,23 @@
                 
                 <br><br>
                     <button class ="btn-warning" id='advancedReportCloser' value='off'> Pre-Made Report </button>
+                
            </div>  
-
-                     
+          
    </div>
+   
+   				    <div id = "paramDisplay">
+   					<br><br>
+   					    <div id="displayParamsDiv" style='display:none'>
+                        <table id='displayParams'> <tbody id=paramBody></tbody></table> 
+                         </div>
+                         <div id="displayDateParamsDiv" style='display:none'>
+                         <table id='displayDateParams'><tbody id=paramDatesBody></tbody> </table>
+                         </div>
+                    </div>
+   
+   					
+   
 
 
 </body>

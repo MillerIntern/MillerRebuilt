@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import Servlets.helpers.ReportHelper;
 import comparators.ProjectItemComparator;
 import comparators.ProjectRegionComparator;
+import comparators.ProjectStageComparator;
 import comparators.TaskComparator;
 import comparators.WarehouseComparator;
 import projectObjects.Project;
@@ -150,8 +151,8 @@ public class Report extends HttpServlet
 		
 		}
 
-		
-		sortProjects(projects);
+		if(reportName.equals("Adrienne's Report")) sortProjectsStage(projects);
+		else sortProjects(projects);
 		sb.append("<tbody>");
 		//Generate table contents
 		for (int i = 0; i < projects.size(); i++)
@@ -291,6 +292,14 @@ public class Report extends HttpServlet
 		Collections.sort(projects, new WarehouseComparator());
 		Collections.sort(projects, new ProjectItemComparator());
 		Collections.sort(projects, new ProjectRegionComparator());		
+	}
+	
+	public void sortProjectsStage(List<projectObjects.Project> projects)
+	{
+		Collections.sort(projects, new WarehouseComparator());
+		Collections.sort(projects, new ProjectItemComparator());
+		Collections.sort(projects, new ProjectRegionComparator());	
+		Collections.sort(projects, new ProjectStageComparator());
 	}
 	
 	public void sortTasks(List<projectObjects.Task> tasks)

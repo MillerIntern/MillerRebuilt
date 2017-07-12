@@ -92,6 +92,14 @@ function basicUserSort()
 			sortByAssigneeDescending();
 		}
 	}
+	if(document.getElementById("sortSelector").value == 'project' ){
+		if(document.getElementById("sortOrder").value == 'ascending'){
+			sortByProjectAscending();
+		}
+		if(document.getElementById("sortOrder").value == 'descending'){
+			sortByProjectDescending();
+		}
+	}
 }
 
 function sortByAssigneeAscending()
@@ -167,6 +175,32 @@ function sortByPriorityDescending() {
 		  if (a.severity < b.severity) return 1;
 		  if (a.severity > b.severity) return -1;
 		  return 0;
+		});
+	displaySortingResults();
+}
+
+function sortByProjectAscending() {
+	projectsOfInterest.sort(function(a,b){
+		if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
+		if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
+		else{
+		   if(a.project.projectItem.name < b.project.projectItem.name) return -1;
+		   if(a.project.projectItem.name > b.project.projectItem.name) return 1;
+		   return 0;
+		   }
+		});
+	displaySortingResults();
+}
+
+function sortByProjectDescending() {
+	projectsOfInterest.sort(function(a,b){
+		if(a.project.warehouse.city.name < b.project.warehouse.city.name) return 1;
+		if(a.project.warehouse.city.name > b.project.warehouse.city.name) return -1;
+		else{
+		   if(a.project.projectItem.name < b.project.projectItem.name) return 1;
+		   if(a.project.projectItem.name > b.project.projectItem.name) return -1;
+		   return 0;
+		   }
 		});
 	displaySortingResults();
 }

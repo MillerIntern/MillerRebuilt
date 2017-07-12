@@ -438,36 +438,63 @@ $(document).on('change', '#specificReports', function(){
 });
 
 $(document).on('click', '#advancedReport', function() {
-
+		$('#paramDisplay').hide();
 	    $('#reportGenerator').toggle('push-in animated');
 		$('#customReport').toggle('push-out animated');
 });
 
 $(document).on('click', '#advancedReportCloser', function() {
-
 	$('#customReport').toggle('push-in animated');
     $('#reportGenerator').toggle('push-out animated');
+    $('#paramDisplay').show();
 });
 
 $(document).on('click', '#meetingProposals', function(){generateReport(PROPOSAL_MEETING)});
 $(document).on('click', '#meetingActive', function(){generateReport(ACTIVE_MEETING)});
 $(document).on('click', '#meetingBudgetary', function(){generateReport(BUDGETARY_MEETING)});
 
-$(document).on('click', '#addParam', function() {
+$(document).on('change', '.paramTable', function(){
+	var params = getParameters();
+	getDateParameters();
+	console.log("THE PARAMS = ", params);
+	updateParameterDisplay();
+	updateDateParameterDisplay()
+});
+
+
+
+function getParameters(){
+	var params = $(".paramTable").find(".paramCell > select :selected");
+	var parameters = new Array();
+	for(var i=0; i<params.length; i+=2){
+		var parameter = {
+				paramType: params[i].text,
+				paramVal: params[i + 1].text
+		};
+		parameters.push(parameter);
+	}
+	console.log("PARAMETERS == ", parameters);
+	return parameters;
+}
+
+function getDateParameters(){
+	var params = $(".paramTable").find(".paramDateCell > select :selected");
+	var dateBox = $(".paramTable").find(".dateBox");
+    var dateParameters = new Array();
+    var q = 0;
+	for(var i=0; i<params.length; i+=2){
+		var date = {
+			dateType: params[i].text,
+			dateComparison: params[i+1].text,
+		    date: dateBox[q].value
+		};
+		dateParameters.push(date);
+		q++;
+	}
+	console.log("DATES == ", dateParameters);
+	return dateParameters;
 	
-   for(var i = 0; i < paramNum; i++){
-	   if(!document.getElementById('param'+i)) continue;
-	   console.log("PARAM == ", document.getElementById('param'+i).value);
-	  // console.log("VAL == ", document.getElementById('val'+i).text);
-	   console.log("VAL === ", valueToParam[document.getElementById('val'+i).value])
-	   selectedParameters.push(valueToParam[document.getElementById('val'+i).value]);
-   }
-});
-
-$(document).on('click', '#addDateParam', function() {
-
-	console.log("clicked add DATE param");
-});
+}
 
 
 var reportString;
@@ -504,7 +531,7 @@ $(document).on('click', '#generateReport', function(){
 		generateTaskReport(TASK);
 	}
 	else if(document.getElementById("specificReports").value == DAVID_HAC) generateReport(DAVID_HAC);
-	else {generateReport(reportString);}
+	else {console.log("REPORT STRING = ", reportString); generateReport(reportString);}
 });
 
 
@@ -646,11 +673,13 @@ function generateDropdown(str, className)
 		{
 			option.innerHTML = json[i].city.name+", "+json[i].state+" -- #"+json[i].warehouseID;
 			option.setAttribute("value", json[i].id);
+			option.setAttribute("label", json[i].city.name+", "+json[i].state+" -- #"+json[i].warehouseID);
 		}
 		else if (className == "region")
 		{
 			option.innerHTML = json[i];
 			option.setAttribute("value", json[i]);
+			option.setAttribute("label", json[i]);
 		}
 		else if(className=="stage")
 		{
@@ -658,6 +687,7 @@ function generateDropdown(str, className)
 			{
 				option.innerHTML=json[i].name;
 				option.setAttribute("value", json[i].id);
+				option.setAttribute("label", json[i].name);
 			}
 			else
 				sent=false;
@@ -666,6 +696,7 @@ function generateDropdown(str, className)
 		{
 			option.innerHTML = json[i].name;
 			option.setAttribute("value", json[i].id);
+			option.setAttribute("label", json[i].name);
 		}
 	
 		if(sent)
@@ -724,6 +755,7 @@ function generateCloseoutDropdown()
 //add a parameter cell to the paramTable
 function addParamCell()
 {
+	paramNum++;
 	//create param cell
 	var paraCell = document.createElement("div");
 	paraCell.className = 'paramCell';
@@ -741,7 +773,12 @@ function addParamCell()
 	//create the remove tag for the param cell
 	var removeTag = document.createElement("div");
 	removeTag.className = 'remove';
-	removeTag.onclick = function() {removeParam(this)};
+	removeTag.onclick = function() {
+		removeParam(this);
+		var params = getParameters();
+		getDateParameters();
+		console.log("THE PARAMS FROM REMOVE = ", params);
+	}
 	removeTag.innerHTML = 'X';
 	
 	//create a break tag
@@ -764,6 +801,108 @@ function addParamCell()
 	paraCell.appendChild(selObj2);
 	$(".paramTable").append(paraCell);
 	populateParameters();
+	updateParameterDisplay();
+	
+}
+
+function updateParameterDisplay() {
+	var params = getParameters();
+	$('#displayParams').find('tr').remove();
+	if(params.length == 0) return;
+	var table = document.getElementById('displayParams');
+	table.tableLayout = "fixed";
+	var header = table.createTHead();
+	header.id = "tableHead";
+	var row, cellIndex, cellParamType, cellParamVal;
+	row = header.insertRow(0);
+	cellIndex = row.insertCell(0);
+	cellIndex.innerHTML = "<b>#</b>";
+	cellIndex.width = "100";
+	cellParamType = row.insertCell(1);
+	cellParamType.innerHTML = "<b> Type </b>";
+	cellParamType.width = "100";
+	cellParamVal = row.insertCell(2);
+	cellParamVal.innerHTML = "<b> Value ";
+	cellParamVal.width = "100";
+	console.log("table = ", table);
+	
+	var body = document.getElementById('paramBody');
+	console.log("NBODY = ", body);
+    
+	var paramCount = 1;
+	console.log("PARAMS LENGTH = ", params.length);
+	for(var i = 0; i < params.length; i++){
+		console.log("IN UPDATE PARAMS");
+		if(params[i].paramType == 'Select Parameter') continue;
+		row = body.insertRow(-1);
+		cellIndex = row.insertCell(0);
+		cellIndex.innerHTML = "<b>"+(paramCount++)+"</b>";
+		cellIndex.width = "75";
+		cellParamType = row.insertCell(1);
+		cellParamType.innerHTML = "<b>"+params[i].paramType+"</b>";
+		cellParamType.width = "150";
+		cellParamVal = row.insertCell(2);
+		cellParamVal.innerHTML = "<b>"+params[i].paramVal+"</b>";
+		cellParamVal.width = "300";
+	}
+	
+	document.getElementById('displayParamsDiv').style.display ='inline-block';
+	document.getElementById('displayParamsDiv').style.float = 'left';
+
+}
+
+function updateDateParameterDisplay() {
+	var params = getDateParameters();
+	$('#displayDateParams').find('tr').remove();
+	if(params.length == 0) return;
+	var table = document.getElementById('displayDateParams');
+	table.tableLayout = "fixed";
+	var header = table.createTHead();
+	header.id = 'tableHead';
+	var row, cellIndex, cellDateComparison, cellDateType, cellDate;
+	row = header.insertRow(0);
+	cellIndex = row.insertCell(0);
+	cellIndex.innerHTML = "<b> # </b>";
+	cellIndex.width = "75";
+	cellDateComparison = row.insertCell(1);
+	cellDateComparison.innerHTML = "<b> Comparison </b>";
+	cellDateComparison.width = "100";
+	cellDateType = row.insertCell(2);
+	cellDateType.innerHTML = "<b> Type </b>";
+	cellDateType.width = "175";
+	cellDate = row.insertCell(3);
+	cellDate.innerHTML = "<b> Date </b>";
+	cellDate.width = "100";
+		
+	console.log("table = ", table);
+	
+	var body = document.getElementById('paramDatesBody');
+	console.log("NBODY = ", body);
+    
+	var paramCount = 1;
+	for(var i = 0; i < params.length; i++){
+		console.log("IN UPDATE DATE PARAMS");
+		if(params[i].dateComparison == 'Select Comparison' || 
+		      params[i].dateType == 'Select Date Type' || !params[i].date) 
+			  continue;
+		row = body.insertRow(-1);
+		cellIndex = row.insertCell(0);
+		cellIndex.innerHTML = (paramCount++);
+		cellIndex.width = "75";
+		cellDateComparison = row.insertCell(1);
+		cellDateComparison.innerHTML = params[i].dateComparison;
+		cellDateComparison.width = "100";
+		cellDateType = row.insertCell(2);
+		cellDateType.innerHTML = params[i].dateType;
+		cellDateType.width = "175";
+		cellDate = row.insertCell(3);
+		cellDate.innerHTML = params[i].date;
+		cellDate.width = "100";
+	}
+
+	document.getElementById('displayDateParamsDiv').style.display = 'inline-block';
+	document.getElementById('displayDateParamsDiv').style.float = 'right';
+
 }
 
 //populate the parameters of the most recently created paramCell
@@ -771,13 +910,14 @@ function populateParameters()
 {
 	var option ='';
 	for(var i = 0; i < ITEM_TYPES.length; i++){
-		option += '<option value="'+ ITEM_TYPES[i] + '">' + FIELDS_TO_SHOW[ITEM_TYPES[i]] + '</option>';
+		option += '<option value="'+ ITEM_TYPES[i] + '" label="'+  FIELDS_TO_SHOW[ITEM_TYPES[i]] +'">' + FIELDS_TO_SHOW[ITEM_TYPES[i]] + '</option>';
+		//option += '<option value="'+  ITEM_TYPES[i] +'">' + FIELDS_TO_SHOW[ITEM_TYPES[i]] + '</option>';
 		valueToParam[ITEM_TYPES[i]] = FIELDS_TO_SHOW[ITEM_TYPES[i]];
 	}
 	$('#param'+paramNum).append(option);
-	console.log("LENGTH === ",valueToParam.length);
-	//populateBoolComparators();
-	paramNum++;
+	console.log("PARAM NUM === ",paramNum);
+	populateBoolComparators();
+	
 }
 
 //const GENERAL_PROJECT_REPORT_TYPES = ["All", "Steve Meyer", "South East Refrigeration", "North East Refrigeration",
@@ -827,22 +967,28 @@ function removeParam(elem)
 {
 	elem.parentNode.remove();
 	paramNum--;
+	updateParameterDisplay();
+	updateDateParameterDisplay();
 }
 
 //adds a date paramCell at the end of the 
 function addDateParamCell()
 {
+	paramNum++;
 	$(".paramTable").append("<div class=paramDateCell>" +
 			"<select class='drop params' id ='param" + paramNum + "'><option value='none'>Select Date Type</option></select><div class='remove' onclick='removeParam(this)'>X</div></br>" +	    	
 			"<select class='drop values' id ='val" + paramNum +"'><option value='none'>Select Comparison</option></select></br>" +
-			"<input type='text' id='dateBox"+ paramNum + "'/>");
+			"<input type='text' class='dateBox' id='dateBox"+ paramNum + "'/>");
 			"<select class='drop boolVal' id='bool" + paramNum +"'></select></div>" +
 	$('#dateBox'+paramNum).datepicker();
 	populateDateParameters();
+	updateDateParameterDisplay();
+	
 }
 
 function populateDateParameters()
 {
+	console.log("POPULATING DATES");
 	var option ='';
 	for(var i = 0; i < DATE_TYPES.length; i++)
 	{
@@ -863,8 +1009,8 @@ function populateDateComparators()
 	for(var i = 0; i < DATE_RELATIONS.length; i++)
 		option += '<option value="'+ DATE_RELATIONS[i] + '">' + DATE_COMPARATORS[DATE_RELATIONS[i]] + '</option>';
 	$('#val'+paramNum).append(option);
-	//populateBoolComparators();
-	paramNum++;
+	populateBoolComparators();
+	
 }
 
 function populateBoolComparators()
@@ -873,7 +1019,7 @@ function populateBoolComparators()
 	for(var i = 0; i < BOOL_RELATIONS.length; i++)
 		option += '<option value="'+ BOOL_RELATIONS[i] + '">' + BOOL_COMPARATORS[BOOL_RELATIONS[i]] + '</option>';
 	$('#bool'+paramNum).append(option);
-	paramNum++;
+	//paramNum++;
 }
 
 
@@ -972,7 +1118,7 @@ function submitQuery()
 	var onGoingRelation = new Array();
 	var title = $('#reportTitle').val();
     
-    for(var i = 0; i < paramNum;i++)
+    for(var i = 1; i <= paramNum;i++)
     {
     	var paramType = $('#param'+i).val();
     	if($('#param'+i).parent().attr('class') == 'paramDateCell')
@@ -989,7 +1135,7 @@ function submitQuery()
     				var valType = $('#val'+i).val();
     				costcoRelation.push(valType);
     				var date = $('#dateBox'+i).val();
-				costco.push(date);
+				    costco.push(date);
     				break;
 
     			case 'proposalSubmitted':
@@ -1237,7 +1383,7 @@ function generateReport(reportType)
 	var title = undefined;
 	
     console.log(paramNum);
-	 for(var i = 0; i < paramNum;i++)
+	 for(var i = 1; i <= paramNum;i++)
 	    {
 	    	var paramType = $('#param'+i).val();
 	    	if($('#param'+i).parent().attr('class') == 'paramDateCell')

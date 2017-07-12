@@ -2,11 +2,13 @@ package Servlets;
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +31,14 @@ import services.ProjectService;
 import services.QueryService;
 import services.helpers.TaskFiller;
 import objects.HashGen;
+
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
+
+
 
 /**
  * Always code as if the guy who ends up maintaining your code 
@@ -58,6 +68,7 @@ public class Project extends HttpServlet
      * the caller. 
      * 
 	*/
+	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
@@ -65,6 +76,7 @@ public class Project extends HttpServlet
 		out = resp.getWriter();
 		String response = "";
 		Map<String, String> parameters = RequestHandler.getParameters((req.getParameterMap()));
+		System.out.println("IN: doPost()\n");
 		
 		//Get the domain and desired action
 		//String domain = parameters.get("domain");
@@ -81,6 +93,81 @@ public class Project extends HttpServlet
 			System.out.println("get All Objects");
 			response = ProjectService.getAllEnumsAsJson();
 			
+		} else if(action.equals("sendTaskAlert")) {
+			System.out.println("SENDING TASK ALERT");
+	         String assignee = parameters.get("assignee");
+	         User recipient = User.mapNameToUser(assignee);
+			// Recipient's email ID needs to be mentioned.
+		      String to = recipient.getEmail();
+
+		      // Sender's email ID needs to be mentioned
+		      String from = "mcstaskalert@gmail.com";
+
+		      // Assuming you are sending email from localhost
+		      String host = "localhost";
+
+		      // Get system properties
+		      Properties properties = System.getProperties();
+
+		      // Setup mail server
+		      properties.setProperty("mail.smtp.host", host);
+
+
+		      // Get the default Session object.
+		      javax.mail.Session session = javax.mail.Session.getDefaultInstance(properties);
+
+		      try {
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(from));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+		         // Set Subject: header field
+		         String subject, body;
+		        
+		         subject = "MCS Task Alert";		        
+		         String projectItem = parameters.get("projectItem");
+		         String warehouseCity = parameters.get("warehouseCity");
+		         String warehouseID = parameters.get("warehouseID");
+		         String warehouseState = parameters.get("warehouseState");
+		         String severity = parameters.get("severity");
+		         String dueDate = parameters.get("dueDate");
+		         
+		         if(dueDate != null ) {
+		         System.out.println("Proj Item: "+projectItem+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
+		        		 "\nState: "+warehouseState+"\nSeverity: "+severity); 
+		         }
+		         else {
+		        	 System.out.println("Proj Item: "+projectItem+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
+			        		 "\nState: "+warehouseState+"\nSeverity: "+severity+"\nDue Date: "+dueDate); 
+		         }
+
+		         
+		         if(dueDate != null && !dueDate.equals("")) {
+		         body = "Project:  " + warehouseCity + ", " + warehouseState +
+		                " --- " + projectItem + "\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity + "\n\nDue Date: " +
+		                dueDate;
+		         } else {
+		        	 body = "Project:  " + warehouseCity + ", " + warehouseState +
+					            " --- " + projectItem + "\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity;
+		         }
+		         
+
+		         message.setSubject(subject);
+
+		         // Now set the actual message
+		         message.setText(body);
+
+		         // Send message
+		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		      }
 		} else if (action.equals("getSpecificObjects")) {
 			System.out.println("getting specific objects");
 			response = ProjectService.getSpecificAsJson(parameters);
@@ -300,6 +387,7 @@ public class Project extends HttpServlet
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
+
 		} else if (action.equals("getUserInfo")) {
 			System.out.println("getting User Info");
 			System.out.println("GET == " + req.getSession().getAttribute("user"));
@@ -353,7 +441,8 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if(action.equals("changePassword")){
+		}  else if(action.equals("changePassword")){
+		
 			System.out.println("Changing Password");
 			try {
 				User user = (User)ProjectObjectService.get(Long.parseLong(parameters.get("id")), "User");
@@ -390,7 +479,7 @@ public class Project extends HttpServlet
 		
 		if(!(action.equals("getAllProjects") || action.equals("getTasks") ||
 				action.equals("getSpecificObjects")))
-			System.out.println(action + "__RESPONSE = " + response);
+			System.out.println("ACTION = " + action + "\nRESPONSE = " + response);
 		out.println(response);
 	}
 

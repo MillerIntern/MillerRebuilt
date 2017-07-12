@@ -69,7 +69,15 @@ function createTaskTableByManager (tasks) {
 		else{
 			if(a.severity < b.severity) return -1;
 			if(a.severity > b.severity) return 1;
-			return 0;
+			else{
+				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
+				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
+				else{
+					if(a.project.projectItem.name < b.project.projectItem.name) return -1;
+					if(a.project.projectItem.name > b.project.projectItem.name) return 1;
+					return 0;
+				}
+			}
 		}
 	});
 	var count = 0;

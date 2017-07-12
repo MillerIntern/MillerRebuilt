@@ -141,6 +141,26 @@ button
 	bottom: -10px;
     padding-bottom: 1%;
 }
+
+table, th, td
+{
+	border: 1px solid blue;	
+	padding: 5px;
+	text-align: center;
+    
+}
+
+#tableHead
+{
+	background-color: rgb(66, 119, 244);;
+	color: white;
+}
+
+#paramBody
+{
+	background-color: white;
+}
+
 }
 
 

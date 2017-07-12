@@ -18,16 +18,18 @@ public class User extends ProjectObject
 	private String name;
 	private String password;
 	private String firstName;
+	private String email;
 	private Status status;
 	private Permission permission;
 	
-	public User(String name, String pass, Status status, Permission permission, String firstName)
+	public User(String name, String pass, Status status, Permission permission, String firstName, String email)
 	{
 		this.name = name;
 		this.password = pass;
 		this.status = status;
 		this.permission = permission;
 		this.firstName = firstName;
+		this.email = email;
 	}
 	
 	public User()
@@ -37,6 +39,7 @@ public class User extends ProjectObject
 		this.status = null;
 		this.permission = null;
 		this.firstName = null;
+		this.email = null;
 	}
 
 	public String getName() {
@@ -84,6 +87,14 @@ public class User extends ProjectObject
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public String toString(){

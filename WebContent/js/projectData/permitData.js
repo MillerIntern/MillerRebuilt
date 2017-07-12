@@ -37,10 +37,12 @@ $(document).ready(function(){
 	$("#otherAInspectionLastUpdated").datepicker();
 	$("#otherBInspectionLastUpdated").datepicker();
 	
+	/*
 	$('.permitStatus, .inspectionStatus').change(function () {
-		console.log($(this).attr('data-associated-date'));
+		//console.log($(this).attr('data-associated-date'));
 		$('#' + $(this).attr('data-associated-date')).val(getToday());
 	});
+	*/
 	
 });
 
