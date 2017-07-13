@@ -3,11 +3,12 @@ package Servlets;
 import java.io.IOException;
 
 
+
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+
 
 
 import javax.servlet.ServletException;
@@ -35,7 +36,6 @@ import objects.HashGen;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 
 
@@ -68,7 +68,6 @@ public class Project extends HttpServlet
      * the caller. 
      * 
 	*/
-	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
@@ -101,7 +100,7 @@ public class Project extends HttpServlet
 		      String to = recipient.getEmail();
 
 		      // Sender's email ID needs to be mentioned
-		      String from = "mcstaskalert@gmail.com";
+		      String from = "mcstaskalert@millerconstructionservices.com";
 
 		      // Assuming you are sending email from localhost
 		      String host = "localhost";
@@ -136,24 +135,25 @@ public class Project extends HttpServlet
 		         String warehouseState = parameters.get("warehouseState");
 		         String severity = parameters.get("severity");
 		         String dueDate = parameters.get("dueDate");
+		         String description = parameters.get("description");
 		         
 		         if(dueDate != null ) {
-		         System.out.println("Proj Item: "+projectItem+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
+		         System.out.println("Proj Item: "+projectItem+"\nDescription: "+description+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
 		        		 "\nState: "+warehouseState+"\nSeverity: "+severity); 
 		         }
 		         else {
-		        	 System.out.println("Proj Item: "+projectItem+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
+		        	 System.out.println("Proj Item: "+projectItem+"\nDescription: "+description+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
 			        		 "\nState: "+warehouseState+"\nSeverity: "+severity+"\nDue Date: "+dueDate); 
 		         }
 
 		         
 		         if(dueDate != null && !dueDate.equals("")) {
 		         body = "Project:  " + warehouseCity + ", " + warehouseState +
-		                " --- " + projectItem + "\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity + "\n\nDue Date: " +
+		                " --- " + projectItem + "\n\nDescription: "+description+"\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity + "\n\nDue Date: " +
 		                dueDate;
 		         } else {
 		        	 body = "Project:  " + warehouseCity + ", " + warehouseState +
-					            " --- " + projectItem + "\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity;
+					            " --- " + projectItem + "\n\nDescription: "+description+"\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity;
 		         }
 		         
 
@@ -443,7 +443,7 @@ public class Project extends HttpServlet
 			}
 		}  else if(action.equals("changePassword")){
 		
-			System.out.println("Changing Password");
+			System.out.println("Change Password");
 			try {
 				User user = (User)ProjectObjectService.get(Long.parseLong(parameters.get("id")), "User");
 				String pass = parameters.get("newPassword");

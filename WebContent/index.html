@@ -17,13 +17,16 @@
     
     <script>
     	'use strict';
+    	let clickedEnter = false;
     	
     	$(document).ready(function () {
         	$('.form-signin').fadeIn('slow');
         	
         	$('.form-signin').submit(function (event) {
         		event.preventDefault();
-        		login();
+        		if(clickedEnter == false) {
+        			login();
+        		}
         	});
         	
      		$('#inputUsername, #inputPassword').focus(function () {
@@ -38,6 +41,7 @@
     	$(function() {
     	    $("body").keypress(function (e) {
     	        if ((e.which && e.which == ENTER) || (e.keyCode && e.keyCode == ENTER)) {
+    	        	clickedEnter = true;
     	            login();
     	        }
     	    });

@@ -44,6 +44,11 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("MCS Number");
 		}
+		else if(value.equals("warehouse_and_id"))
+		{
+			sb.append("<th>");
+			sb.append("Warehouse");
+		}
 		else if (value.equals("warehouse"))
 		{
 			sb.append("<th>");
@@ -569,6 +574,11 @@ public class ReportHelper
 		else if (value.equals("warehouse") && p.getWarehouse() != null)
 		{
 			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation());
+		}
+		else if(value.equals("warehouse_and_id") && p.getWarehouse() != null)
+		{
+			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation()
+				      +"\n#"+ p.getWarehouse().getWarehouseID());
 		}
 		else if (value.equals("stage") && p.getStage() != null)
 			return p.getStage().getName();

@@ -26,7 +26,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
 			"task_title":"Title", "task_assignee":"Assignee", "task_description":"Description", "task_created_date":"Created", "task_due_date":"Due",
-			"task_priority":"Priority", "task_notes":"Notes" , "task_status":"Status"};
+			"task_priority":"Priority", "task_notes":"Notes" , "task_status":"Status", 'warehouse_and_id':'Warehouse ID'};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
@@ -266,9 +266,9 @@ const CLOSED_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","man
 																	"status", "initiated","proposalSubmitted");
 
 //NE and SE report keys
-const PROPOSAL_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", 
+const PROPOSAL_SE_AND_NE_KEYS = new Array("warehouse_and_id", "item","scope","manager","supervisor", 
 							"status", "permitApp", "initiated","costcoDueDate","proposalSubmitted", "zachNotes");
-const ACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope","manager","supervisor", 
+const ACTIVE_SE_AND_NE_KEYS = new Array("warehouse_and_id", "item","scope","manager","supervisor", 
 							"status", "permitApp", "scheduledStartDate","scheduledTurnover","asBuilts","alarmHvacForm", "zachNotes");
 
 const INACTIVE_SE_AND_NE_KEYS = new Array("warehouse", "item","scope", "region", 
@@ -792,6 +792,7 @@ function submitQuery()
 	var actTurnoverDateRelation = new Array();
 	var onGoing = new Array();
 	var onGoingRelation = new Array();
+	var manager = new Array();
 	var title = $('#reportTitle').val();
     
     for(var i = 0; i < paramNum;i++)
@@ -889,6 +890,10 @@ function submitQuery()
     				var valType = $('#val'+i).val();
     				stage.push(valType);
 				break;
+				
+    			case 'person':
+    				var valType = $('#val'+i).val();
+                    manager.push(valType);
 		}
     	}
     }
@@ -920,6 +925,7 @@ function submitQuery()
     			'actualTurnoverRelation':JSON.stringify(actTurnoverDateRelation),
     			'onGoing':JSON.stringify(onGoing),
     			'onGoingRelation':JSON.stringify(onGoingRelation),
+    			'projectManagers.id':JSON.stringify(manager),
     			'title':title,
         };
    

@@ -161,6 +161,8 @@ public class ProjectObjectService
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
 			} else if (domain.equals("Project")) {
+				//Criterion closedProjects = Restrictions.sqlRestriction("stage_id != 4");
+				//criteria.add(closedProjects);
 				Criterion deletedProjects = Restrictions.sqlRestriction("stage_id != 6"); //deleted projects
 				criteria.add(deletedProjects);
 				Criterion lostProjects = Restrictions.sqlRestriction("stage_id != 7"); //lost projects

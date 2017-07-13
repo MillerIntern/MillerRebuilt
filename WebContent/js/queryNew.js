@@ -9,7 +9,7 @@ const REPORT_TYPES = ["All", "Change Order", "Closeout", "Completed", "Construct
     				"David Hearing Center", "Equipment", "HVAC", "Inspection", "Invoice", 
     				"Meeting", "NE & SE Facility", "NE GC & Refrigeration", "NE Refrigeration", 
     				"On Hold", "Permit", "Pharmacy", "Repair", "SE GC & Refrigeration", 
-    				"SE Refrigeration", "Service", "Task"];
+    				"SE Refrigeration", "Service", "Task", "Adrienne"];
 
 const GENERAL_PROJECT_REPORT_TYPES = ["All", "NE & SE Facility", "SE Refrigeration", "NE Refrigeration",
 									   "Service", "NE GC Refrigeration", "SE GC & Refrigeration" ];
@@ -17,7 +17,7 @@ const GENERAL_PROJECT_REPORT_TYPES = ["All", "NE & SE Facility", "SE Refrigerati
 const PROJECT_MANAGEMENT_REPORT_TYPES = ["Invoice", "Completed","Closeout","Meeting","On Hold", "Permit",
 										"Inspection", "Equipment", "Change Order", "Task"];
 
-const PROJECT_TYPES_REPORT_TYPES =["Construction", "HVAC", "Repair", "Pharmacy", "David Hearing Center"];
+const PROJECT_TYPES_REPORT_TYPES =["Construction", "HVAC", "Repair", "Pharmacy", "David Hearing Center", "Adrienne"];
 
 const REPORT_URL = "Report";
 const DATE_COMPARATORS = {"<":"Before", "=":"On",">":"After"};
@@ -34,14 +34,14 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
 			"task_title":"Title", "task_assignee":"Assignee", "task_description":"Description", "task_created_date":"Created", "task_due_date":"Due",
-			"task_priority":"Priority", "task_notes":"Notes", "task_status":"Status"};
+			"task_priority":"Priority", "task_notes":"Notes", "task_status":"Status","warehouse_id":"Warehouse w/ ID"};
 
 var REPORT_VALS = {"All":"WEEKLY","NE & SE Facility":"STEVE_MEYER","SE Refrigeration":"SE","NE Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
 					"Repair":"REPAIR", "HVAC" : "HVAC", "Pharmacy":"RX", "Closeout": "CLOSEOUT", "Meeting": "MEETING", "Service" : "OTHER", 
 					"On Hold": "ON-HOLD", "Permit": "PERMIT", 'Inspection': "INSPECTIONS", 'Equipment': 'EQUIPMENT', 
 					'NE GC & Refrigeration': 'NE_GC_REFRIGERATION', 'SE GC & Refrigeration': 'SE_GC_REFRIGERATION', 'Change Order': 'CO_REPORT',
-					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC'};
+					'Task': 'TASK', 'David Hearing Center':'DAVID_HAC', "Adrienne":"ADRIENNE"};
 
 const PROPOSAL_STAGE = 1;
 const ACTIVE_STAGE = 2;
@@ -221,6 +221,7 @@ const TASK = 'TASK';
 const TASK_ASSIGNEE = 'TASK_ASSIGNEE';
 
 const DAVID_HAC = 'DAVID_HAC';
+const ADRIENNE = 'ADRIENNE';
 
 
 
@@ -365,6 +366,9 @@ const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_descr
 
 const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
         'scheduledStartDate','scheduledTurnover', 'buildingPermit', 'zachNotes');
+
+const ADRIENNE_KEYS = new Array("mcsNum","stage", "warehouse", "item","scope","manager", "supervisor", "region", 
+		"status","scheduledStartDate", "projectNotes");
   /* Actual keys would look like: warehouse, item, status, equipmentName, vendor, estDeliveryDate, actualDeliveryDate, notes*/
 
 //Fields that will hold the options to populate the drop downs quickly avoids making a server call every time
@@ -397,7 +401,8 @@ $(document).ready(function()
 	$(".remove").click(function(){
 		$(this).parent().remove();
 	});
-});	
+});
+
 
 $(document).on('change', '#broadReportType', function() 
 		{
@@ -420,11 +425,12 @@ $(document).on('change', '#broadReportType', function()
 
 $(document).on('change', '#specificReports', function(){
 	
-	if(document.getElementById('specificReports').value == TASK){
+	specificVal = document.getElementById('specificReports');
+	if(specificVal.value == TASK){
 		document.getElementById("ProjectStages").style = "display: none";
 		generateManagerDropDown();
 	}
-	else if(document.getElementById('specificReports').value == DAVID_HAC){
+	else if(specificVal.value == DAVID_HAC || specificVal.value == ADRIENNE){
 		document.getElementById("ProjectStages").style = "display: none";
 		document.getElementById("TaskOptions").style = 'display: none';
 	}
@@ -531,6 +537,7 @@ $(document).on('click', '#generateReport', function(){
 		generateTaskReport(TASK);
 	}
 	else if(document.getElementById("specificReports").value == DAVID_HAC) generateReport(DAVID_HAC);
+	else if(document.getElementById('specificReports').value == ADRIENNE) generateReport(ADRIENNE);
 	else {console.log("REPORT STRING = ", reportString); generateReport(reportString);}
 });
 
@@ -967,8 +974,37 @@ function removeParam(elem)
 {
 	elem.parentNode.remove();
 	paramNum--;
+	updateParameterIDs();
 	updateParameterDisplay();
 	updateDateParameterDisplay();
+}
+
+function updateParameterIDs()
+{
+	var foundNull = false;
+	for(var i=1;i<=paramNum+1; i++){
+		if(document.getElementById('param'+i) == null) {
+			foundNull = true;
+			continue;
+		}
+		if(foundNull == true){
+			document.getElementById('param'+i).id = 'param' + (i-1);
+		}
+	}
+	
+	foundNull = false;
+	for(var i=1;i<=paramNum+1; i++){
+		if(document.getElementById('val'+i) == null) {
+			foundNull = true;
+			continue;
+		}
+		if(foundNull == true){
+			document.getElementById('val'+i).id = 'val' + (i-1);
+		}
+	}
+	
+	
+
 }
 
 //adds a date paramCell at the end of the 
@@ -1102,6 +1138,7 @@ function submitQuery()
 	var pType = new Array();
 	var region = new Array();
 	var status = new Array();
+	var manager = new Array();
 	var initiated = new Array();
 	var initiatedRelation = new Array();
 	var costco = new Array();
@@ -1212,6 +1249,11 @@ function submitQuery()
     				var valType = $('#val'+i).val();
     				stage.push(valType);
 				break;
+				
+    			case 'person':
+    				var valType = $('#val'+i).val();
+                    manager.push(valType);
+                    break;
 		}
     	}
     }
@@ -1243,6 +1285,7 @@ function submitQuery()
     			'actualTurnoverRelation':JSON.stringify(actTurnoverDateRelation),
     			'onGoing':JSON.stringify(onGoing),
     			'onGoingRelation':JSON.stringify(onGoingRelation),
+    			'projectManagers.id':JSON.stringify(manager),
     			'title':title,
         };
    
@@ -1471,19 +1514,20 @@ function generateReport(reportType)
 	    				break;
 
 	    			case 'status':
-					var valType = $('#val'+i).val();
-					status.push(valType);
-					break;
+						var valType = $('#val'+i).val();
+						status.push(valType);
+						break;
 
 	    			case 'stage':
 	    				var valType = $('#val'+i).val();
 	    				stage.push(valType);
-					break;
+					    break;
                     
                     case 'person':
 	    				var valType = $('#val'+i).val();
                         manager.push(valType);
 	    				console.log(valType);
+	    				break;
 
                         
                     case 'closeout':
@@ -2070,6 +2114,12 @@ function generateReport(reportType)
 			item.push(PROJECT_ITEM_HEARING_CENTER_EXPANDED);
 			item.push(PROJECT_ITEM_HEARING_CENTER_AND_PHOTO);
 			break;
+		case ADRIENNE:
+			title = "Adrienne's Report";
+			stage.push(ACTIVE_STAGE);
+			stage.push(PROPOSAL_STAGE);
+			manager.push(17);
+			break;
 		default:
 			alert("Invalid report type");
 			return false;
@@ -2280,6 +2330,9 @@ function getAllSpecifiedFields(reportType)
 			break;
 		case DAVID_HAC:
 			genType = DAVID_HAC_KEYS;
+			break;
+		case ADRIENNE:
+			genType = ADRIENNE_KEYS;
 			break;
 
 	

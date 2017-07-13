@@ -156,7 +156,8 @@
 			'initiatedDate': initiatedDate,
 			'dueDate': dueDate,
 			'severity': severity,
-			'notes': notes
+			'notes': notes,
+			'description': description,
 		};
 	
 		console.log("PROJECT == ", project);
@@ -172,7 +173,7 @@
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
 				'severity': severity,
-				'notes': notes
+				'notes': notes,
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
@@ -202,11 +203,11 @@
 				'assignee': taskData.assignee,
 				'severity' : taskData.severity,
 				'dueDate' : taskData.dueDate,
+				'description': taskData.description,
 			}, complete: function (response) {
 				console.log("RESPONSE FROM sendTaskAlert() = ", response);			
 			}
 		});
-	   	alert('sentMail!');
 	}
 	
 	// TODO: Honestly, this function should probably be in global.js

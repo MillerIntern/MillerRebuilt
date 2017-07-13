@@ -54,7 +54,6 @@ public class Login extends HttpServlet
 			serverResponse = "false";
 		
 		resp.setContentType("text/plain");
-		System.out.println("ENV == " + System.getProperty("java.class.path"));
 		out = resp.getWriter();
 		out.println(serverResponse);
 		
