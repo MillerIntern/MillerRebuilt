@@ -386,7 +386,7 @@ public class ProjectObjectService
 		
 		//Copy fields of new object into old object, but keep the id
 		newObject.setId(id);
-		System.out.println(newObject + " " + oldObject2);
+		//System.out.println(newObject + " " + oldObject2);
 		copyFieldByField(newObject, oldObject2, i2);
 				
 		session.saveOrUpdate(oldObject2);
@@ -469,7 +469,7 @@ public class ProjectObjectService
 			{
 				if(i2!=2 || !f.toString().contains("SalvageV"))
 				{
-					System.out.println("class: " + " " + src.getClass() +" Field: "  + f);
+					//System.out.println("class: " + " " + src.getClass() +" Field: "  + f);
 					f.setAccessible(true);
 					copyFieldValue(src, dest, f);
 				}
@@ -499,7 +499,7 @@ public class ProjectObjectService
 		{
 			//if src is of the Inspection object slip
 			Object value = f.get(src);
-			System.out.println(f);
+			//System.out.println(f);
 			f.set(dest, value);
 			
 				
