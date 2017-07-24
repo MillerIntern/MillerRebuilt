@@ -1,0 +1,23 @@
+
+.table > tbody > tr > th {
+	font-size: 20px;
+	border-bottom: 2px solid #333;
+}
+
+.table > tbody > tr > td {
+	font-size: 16px;
+	border-bottom: 2px solid #555;
+}
+
+.table > tbody > tr:hover td {
+	background-color: #d7e1f7;
+	transition-duration: .5s;
+}
+
+#taskTable > tbody > tr > td {
+	font-size: 14.75px;
+}
+
+#taskTable {
+	margin-top: 16px;
+}

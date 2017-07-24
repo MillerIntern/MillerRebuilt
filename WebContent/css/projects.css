@@ -1,3 +1,43 @@
-.editProjct {
+.editProject {
 	display: none;
 }
+
+.info-tab-schedulingInformation{
+	margin-left: 30px;
+	margin-right: auto;
+	padding: 12px 12px 12px 12px;
+	width: 50%;
+	height: 100%;
+	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 0 4px 4px 4px;
+}
+
+.info-tab-financialInformation{
+	margin-left: 30px;
+	margin-right: auto;
+	padding: 12px 12px 12px 12px;
+	width: 50%;
+	height: 100%;
+	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 0 4px 4px 4px;
+}
+
+.info-tab-closeoutDocuments{
+	margin-left: 0px;
+	margin-right: auto;
+	padding: 12px 12px 12px 12px;
+	width: 80%;
+	height: 100%;
+	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 0 4px 4px 4px;
+}
+
+.permitEditHeader{
+	background-color: #ECF0FC;
+}
+
+
+

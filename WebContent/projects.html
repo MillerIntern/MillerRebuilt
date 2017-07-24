@@ -8,24 +8,26 @@
     <title>Projects</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
 	<script src="js/projects.js"></script>
+	
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/findProject.css" rel="stylesheet">
-    <link href="css/projectManager.css" rel="stylesheet">
+    <link href="css/findProjectNew.css" rel="stylesheet">
+    <link href="css/projectManagerNew.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/projects.css" rel="stylesheet">
+    
     
     <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
 	
 	</head>
 	<body onload = "getAllProjects()">
 	
-	<div id = 'findProject'>
-		<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
@@ -62,13 +64,39 @@
 		    </ul>
 		  </div>
 		</nav>
-		
+	
+	
+	<div id = 'findProject'>
 	    <div class="container">
 	   		<div id="param-field" class="param-field">
 	   			<span>
 	   			Search Criteria
 	   			<button onClick="addParameter()" class="addParamButton btn btn-primary">Add Parameter</button>
 	   			</span>
+				
+				<div id = "stagesOfInterest">
+				
+				<!--  THE INPUT VALUES CORRESPOND TO THE PROJECTSTAGE DATABASE ID -->
+				<input id="AllStages" type ="checkbox" value="all" checked = 'true'> All
+				<input id="NoStages" type = "checkbox" value="none"> None &nbsp;&nbsp; : &nbsp;&nbsp;
+				 
+				
+				<input class = "commonStage stage" type ="checkbox" value="8" checked = 'true'>Budgetary
+				<input class = "commonStage stage" type ="checkbox" value="1" checked = 'true'>Proposal
+				<input class = "commonStage stage" type ="checkbox" value="2" checked = 'true'>Active
+				<input class = "commonStage stage" type ="checkbox" value="17" checked = 'true'>Closeout
+				<input class = "commonStage stage" type ="checkbox" value="16" checked = 'true'>Billing Closeout
+				<br>
+				<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class ="stage" type ="checkbox" value="4">Closed
+				<input class ="stage" type ="checkbox" value="9">On Hold
+				<input class ="stage" type ="checkbox" value="15">Canceled
+				</div>
+				<br>
+				<button onclick = "updateFrontEnd()">Reload Projects </button>
+				<br>
+	   			
 			    <div class="paramHolder">
 			        <select class="parameterID" id="paramID1">
 			            <option value="default">-- Please select an option --</option>
@@ -102,45 +130,13 @@
 	</div>  <!-- THIS ENDS THE DIV FOR FIND PROJECT -->
 	
 	<div id = 'projectManager' class ='editProject'>
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="homepage.html">Home</a></li>
-		      <li class="active dropdown">
-		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
-		        <span class="caret"></span></a>
-		        <ul class="dropdown-menu">
-		          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Add Project</a></li>
-		          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
-		        </ul>
-		      </li>
-		      <li><a href="#">Triggers</a></li>
-		      <li class='dropdown'>
-		      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
-		      		<span class='caret'></span>
-		      	</a>
-		      	<ul class='dropdown-menu'>
-		      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
-		      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Create Task</a></li>
-		      	</ul>
-		      </li>
-		      <li><a href="OGqueryCode.html">Reports</a></li>
-		      <li><a href="additions.html">Tools</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-		    </ul>
-		  </div>
-		</nav>
+		
 	    <div class="container">
+	    	<p id='pageLocation'> </p>
+	    	<br>
 	    	<p id='projectHeader'>---</p>
+	    	<button onclick="document.getElementById('projectManager').style.display = 'none';document.getElementById('findProject').style.display = 'inline'; setCurrentDivLocation('findProject');">Return to Find Project</button>
+	    	               
 			<ul class='nav nav-tabs'>
 				<li role='presentation' class='active' data-tab='projectInformation'><a>Project Information</a></li>
 				<li role='presentation' data-tab='equipment'><a>Equipment</a></li>
@@ -152,15 +148,15 @@
 				<li role='presentation' data-tab='tasks'><a>Tasks</a></li>
 				<li role='presentation' data-tab='settings'><a>Settings</a></li>
 			</ul>	
-			<div class='info-tab active' id='projectInformation'>
-				<table class='table table-hover table-striped'>
-					<tr><td>MCS Number</td><td id='mcsNumber'></td></tr>
-					<tr><td>Item</td><td id='projectItem'></td></tr>
-					<tr><td>Status</td><td id='projectStatus'></td></tr>
-					<tr><td>Type</td><td id='projectType'></td></tr>
-					<tr><td>Stage</td><td id='projectStage'></td></tr>
-					<tr><td>Manager</td><td id='projectManager'></td></tr>
-					<tr><td>Supervisor</td><td id='projectSupervisor'></td></tr>
+			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
+				<table class='table table-hover table-striped infoTable'>
+					<tr><td width=30% class = "bold">MCS Number:</td><td id='mcsNumber' class ="italics" ></td></tr>
+					<tr><td class = "bold">Item:</td><td id='projectItem' class ="italics"></td></tr>
+					<tr><td class = "bold">Status:</td><td id='projectStatus' class ="italics"></td></tr>
+					<tr><td class = "bold">Type:</td><td id='projectType' class ="italics"></td></tr>
+					<tr><td class = "bold">Stage:</td><td id='projectStage' class ="italics"></td></tr>
+					<tr><td class = "bold">Manager:</td><td id='projectManager' class ="italics"></td></tr>
+					<tr><td class = "bold">Supervisor:</td><td id='projectSupervisor' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editProjectInfo()' type="button" class="project-edit btn btn-primary">Edit Project Information</button>
 			</div> <!-- Project Information -->
@@ -172,31 +168,31 @@
 				<button id='editChangeOrder' onclick='editSelectedChangeOrder()' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
-			<div class='info-tab' id='permits'>
+			<div class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped'>
 					<tr><th></th><th>Permit Stage</th><th>Permit Last Updated</th></tr>
-					<tr><td>Building Permit</td><td id='buildingPermit'></td><td id='buildingPermitDate'></td></tr>
-					<tr><td>Roofing Permit</td><td id='roofingPermit'></td><td id='roofingPermitDate'></td></tr>
-					<tr><td>Mechanical Permit</td><td id='mechanicalPermit'></td><td id='mechanicalPermitDate'></td></tr>
-					<tr><td>Electrical Permit</td><td id='electricalPermit'></td><td id='electricalPermitDate'></td></tr>
-					<tr><td>Plumbing Permit</td><td id='plumbingPermit'></td><td id='plumbingPermitDate'></td></tr>
-					<tr><td>Fire Sprinkler Permit</td><td id='sprinklerPermit'></td><td id='sprinklerPermitDate'></td></tr>
-					<tr><td>Fire Alarm Permit</td><td id='fireAlarmPermit'></td><td id='fireAlarmPermitDate'></td></tr>
-					<tr><td>Low Voltage Permit</td><td id='lowVoltagePermit'></td><td id='lowVoltagePermitDate'></td></tr>
+					<tr><td width = 25% class = "bold">Building Permit:</td><td id='buildingPermit' class ="italics" width = 20%></td><td id='buildingPermitDate' class ="italics" width = 20%></td></tr>
+					<tr><td class = "bold">Roofing Permit:</td><td id='roofingPermit' class ="italics"></td><td id='roofingPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Mechanical Permit:</td><td id='mechanicalPermit' class ="italics"></td><td id='mechanicalPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Electrical Permit:</td><td id='electricalPermit' class ="italics"></td><td id='electricalPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Plumbing Permit:</td><td id='plumbingPermit' class ="italics"></td><td id='plumbingPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Permit:</td><td id='sprinklerPermit' class ="italics"></td><td id='sprinklerPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Alarm Permit:</td><td id='fireAlarmPermit' class ="italics"></td><td id='fireAlarmPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Low Voltage Permit:</td><td id='lowVoltagePermit' class ="italics"></td><td id='lowVoltagePermitDate' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
-			<div class='info-tab' id='inspections'>
+			<div class='info-tab info-tab-inspections' id='inspections'>
 				<table class='table table-hover table-striped'>
 					<tr><th></th><th>Inspection Stage</th><th>Inspection Last Updated</th></tr>
-					<tr><td>Building Inspection</td><td id='buildingInspection'></td><td id='buildingInspectionDate'></td></tr>
-					<tr><td>Roofing Inspection</td><td id='roofingInspection'></td><td id='roofingInspectionDate'></td></tr>
-					<tr><td>Mechanical Inspection</td><td id='mechanicalInspection'></td><td id='mechanicalInspectionDate'></td></tr>
-					<tr><td>Electrical Inspection</td><td id='electricalInspection'></td><td id='electricalInspectionDate'></td></tr>
-					<tr><td>Plumbing Inspection</td><td id='plumbingInspection'></td><td id='plumbingInspectionDate'></td></tr>
-					<tr><td>Fire Sprinkler Inspection</td><td id='sprinklerInspection'></td><td id='sprinklerInspectionDate'></td></tr>
-					<tr><td>Fire Alarm Inspection</td><td id='fireAlarmInspection'></td><td id='fireAlarmInspectionDate'></td></tr>
-					<tr><td>Low Voltage Inspection</td><td id='lowVoltageInspection'></td><td id='lowVoltageInspectionDate'></td></tr>
+					<tr><td class = "bold">Building Inspection:</td><td id='buildingInspection' class ="italics"></td><td id='buildingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Roofing Inspection:</td><td id='roofingInspection' class ="italics"></td><td id='roofingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Mechanical Inspection:</td><td id='mechanicalInspection' class ="italics"></td><td id='mechanicalInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Electrical Inspection:</td><td id='electricalInspection' class ="italics"></td><td id='electricalInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Plumbing Inspection:</td><td id='plumbingInspection' class ="italics"></td><td id='plumbingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Inspection:</td><td id='sprinklerInspection' class ="italics"></td><td id='sprinklerInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Alarm Inspection:</td><td id='fireAlarmInspection' class ="italics"></td><td id='fireAlarmInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Low Voltage Inspection:</td><td id='lowVoltageInspection' class ="italics"></td><td id='lowVoltageInspectionDate' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -208,18 +204,18 @@
 				<button id='editEquipment' onclick='editSelectedEquipment()' type="button" class="btn edit-submit" disabled>Edit Equipment</button>
 				<button type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
-			<div class='info-tab' id='closeout'>
+			<div class='info-tab info-tab-closeout' id='closeout'>
 				<table class='table table-hover table-striped'>
-					<tr><th>Closeout Documents</th><th></th></tr>
-					<tr><td>MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
-					<tr><td>Punch List</td><td id='punchList'></td></tr>
-					<tr><td>Verisae Report</td><td id='verisaeReport'></td></tr>
+					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
+					<tr><td width = 35% class="bold">MG2 Completion (G704 Form):</td><td id='mg2Completion'></td></tr>
+					<tr><td class="bold">Punch List:</td><td id='punchList'></td></tr>
+					<tr><td class="bold">Verisae Report:</td><td id='verisaeReport'></td></tr>
 				</table>	
 				<table class='table table-hover table-striped'>
-					<tr><th>Closeout Completion</th><th></th></tr>
-					<tr><td>Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
-					<tr><td>Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
-					<tr><td>Final Liens</td><td id='finalLiensRequired'></td></tr>
+					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
+					<tr><td width = 35% class="bold">Final Inspections:</td><td id='finalInspectionsRequired'></td></tr>
+					<tr><td class="bold">Final Warranties:</td><td id='finalWarrantiesRequired'></td></tr>
+					<tr><td class="bold">Final Liens:</td><td id='finalLiensRequired'></td></tr>
 				</table>
 				<button onclick='editCloseout()' type="button" class="project-edit btn btn-primary">Edit Closeout</button>
 			</div> <!-- Closeout -->
@@ -270,52 +266,17 @@
 		
 	</div>  <!-- THIS ENDS THE DIV FOR PROJECT MANAGER-->
     <div id = 'projectData' class ='editProject'>
-	    <nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="homepage.html">Home</a></li>
-		      <li class="active dropdown">
-		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
-		        <span class="caret"></span></a>
-		        <ul class="dropdown-menu">
-		          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Add Project</a></li>
-		          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
-		        </ul>
-		      </li>
-		      <li><a href="#">Triggers</a></li>
-		      <li class='dropdown'>
-		      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
-		      		<span class='caret'></span>
-		      	</a>
-		      	<ul class='dropdown-menu'>
-		      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
-		      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-		      		onmouseout="style='background-color: none;'">Create Task</a></li>
-		      	</ul>
-		      </li>
-		      <li><a href="OGqueryCode.html">Reports</a></li>
-		      <li><a href="additions.html">Tools</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-		    </ul>
-		  </div>
-		</nav>
-	
-	 
+	   
 	<div class='container'> 
+		<p id='pageLocation'> </p>
+	    <br>
 		<p id='projectHeader' class="projectIdentifier">---</p>
+		<button onclick="document.getElementById('projectData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
 		<ul class="nav nav-tabs">
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        <li id='saveProjectLink' onClick="saveProject()" data-tab="saveButton">
+	        <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		</ul>
 		
@@ -385,90 +346,90 @@
 	
 	        <tr>
 	        <td>Scope:</td>
-	        <td><textarea  maxlength="999" id="scope" ></textarea></td>
+	        <td><textarea  maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
 	        </tr>
 	        
 	        <tr>
 	        <td>MCS Notes:</td>
-	        <td><textarea  maxlength="999" id="notes" ></textarea></td>
+	        <td><textarea  maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
 	        </tr>
 	
 	        <tr>
 	        <td>Customer Notes:</td>
-	        <td><textarea  maxlength="999" id="zUpdates" ></textarea></td>
+	        <td><textarea  maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
 	        </tr>	        
 	        
 	        
 	        </table>
 		</div> <!-- End General Information -->
 		
-		<div id="schedulingInformation" class="info-tab"> 
+		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
 		    <table class='table table-hover'>
 		
 		
 		        <tr>
-		        <td>Initiation Date:</td>
+		        <td width = 50% class = "bold">Initiation Date:</td>
 		            <td><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td>Site Survey Date:</td>
+		        <td class = "bold">Site Survey Date:</td>
 		        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td>Costco Due Date:</td>
+		        <td class = "bold">Costco Due Date:</td>
 		        <td><input type="text" id="costcoDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td>Proposal Submitted Date:</td>
+		        <td class = "bold">Proposal Submitted Date:</td>
 		        <td><input type="text" id="proposalDate" placeholder="Select a Date"/></td>
 		        </tr>	
 		
 		        <tr>
-		        <td>Scheduled Start Date:</td>
+		        <td class = "bold">Scheduled Start Date:</td>
 		        <td><input type="text" id="startDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td>Scheduled Turnover:</td>
+		        <td class = "bold">Scheduled Turnover:</td>
 		        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
 		        </tr>		
 		
 		        <tr>
-		        <td>Actual Turnover:</td>
+		        <td class = "bold">Actual Turnover:</td>
 		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td>Permit Application:</td>
+		        <td class = "bold">Permit Application:</td>
 		        <td><input type="text" id="permitApp" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		    </table>
 		</div> <!-- End Scheduling Information -->
 		
-		<div id='financialInformation' class='info-tab'>
+		<div id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table class='table table-hover'>
 	
 	            <tr>
-	            <td>Should Invoice %:</td>
+	            <td class = "bold">Should Invoice %:</td>
 	            <td><input type="text" id="shouldInvoice" value="0"/>%</td>
 	            </tr>		
 	
 	            <tr>
-	            <td>Actual Invoice %:</td>
+	            <td class = "bold">Actual Invoice %:</td>
 	            <td><input type="text" id="actualInvoice" value="0" />%</td>
 	            </tr>		
 	
 	            <tr>
-	            <td>Project Cost:</td>
+	            <td class = "bold">Project Cost:</td>
 	            <td><input type="text" id="projectCost" value="" /></td>
 	            </tr>		
 	
 	            <tr>
-	            <td>Customer Number:</td>
+	            <td class = "bold">Customer Number:</td>
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
@@ -476,8 +437,8 @@
 		
 		
 		<div class='info-tab' id='saveButton'>
-			<button onclick='returnToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
-			<button onclick='returnToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
+			<button onclick='goToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
+			<button onclick='goToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
 			<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
 			
 	        
@@ -506,59 +467,21 @@
 	    </div>  <!-- End Container -->
 			
 		
+		
 	</div>  <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	
 	<div id = 'permitData' class ='editProject'>
-			  <nav class="navbar navbar-default">
-			  <div class="container-fluid">
-			    <div class="navbar-header">
-			      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
-			    </div>
-			    <ul class="nav navbar-nav">
-			      <li><a href="homepage.html">Home</a></li>
-			      <li class="active dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-			      		onmouseout="style='background-color: none;'">Add Project</a></li>
-			          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-			      		onmouseout="style='background-color: none;'">Find Projects</a></li>
-			        </ul>
-			      </li>
-			      <li><a href="#">Triggers</a></li>
-			      <li class='dropdown'>
-			      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
-			      		<span class='caret'></span>
-			      	</a>
-			      	<ul class='dropdown-menu'>
-			      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-			      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
-			      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
-			      		onmouseout="style='background-color: none;'">Create Task</a></li>
-			      	</ul>
-			      </li>
-			      <li><a href="OGqueryCode.html">Reports</a></li>
-			      <li><a href="additions.html">Tools</a></li>
-			    </ul>
-			    <ul class="nav navbar-nav navbar-right">
-			      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-			    </ul>
-			  </div>
-			</nav>
-		
-		
-		
-		    <div class="container">
-		
+	   <div class="container">
+			<p id='pageLocation'> </p>
+	    	<br>
 			<p id="projectHeader">---</p>
-		
+		    <button onclick="document.getElementById('permitData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
 		
 			<ul class="nav nav-tabs">
-				<li role='presentation' class='active' data-tab="permits"><a>Building Permits</a></li>
+				<li id="buildingPermit" role='presentation' class='active' data-tab="permits"><a>Building Permits</a></li>
 				<li role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
 				<li role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
 				<li role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
-		        <li role='presentation' onClick="saveProject()" data-tab="saveButton">
+		        <li role='presentation' onClick="saveProject_PERMIT()" data-tab="saveButton">
 		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 			</ul>
 		
@@ -566,10 +489,13 @@
 			<div id="permits" class="info-tab active">
 				<table class="manager table table-hover">
 				<tr>
-					<td></td><td>Permit</td><td>Permit Date</td><td>Inspection</td><td>Inspection Date</td>
+					<td></td><td class = "bold permitEditHeader">Permit</td>
+					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection</td>
+					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td>Building:</td>
+					<td class = "bold">Building:</td>
 					<td>
 					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='buildingPermitLastUpdated' TO SELECT -->
 						<select class="permitStatus" id="buildingPermitStatus">
@@ -590,7 +516,7 @@
 				</tr>
 				
 						<tr>
-					<td>Roofing:</td>
+					<td class = "bold">Roofing:</td>
 					<td>
 						<select class="permitStatus" id="roofingPermitStatus">
 							<option value="default"> TBD </option>
@@ -615,10 +541,13 @@
 			<div id="technicalPermits" class="info-tab">
 			        <table class="manager table table-hover">
 		        <tr>
-					<td></td><td>Permit</td><td>Permit Date</td><td>Inspection</td><td>Inspection Date</td>
+					<td></td><td class = "bold permitEditHeader">Permit</td>
+					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection</td>
+					<td  class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td>Mechanical:</td>
+					<td class = "bold">Mechanical:</td>
 					<td>
 						<select class="permitStatus" id="mechanicalPermitStatus">
 							<option value="default">TBD</option>
@@ -638,7 +567,7 @@
 				</tr>
 				
 				<tr>
-					<td>Electrical:</td>
+					<td class = "bold">Electrical:</td>
 					<td>
 						<select class="permitStatus" id="electricalPermitStatus">
 							<option value="default">TBD</option>
@@ -658,7 +587,7 @@
 				</tr>
 				
 				<tr>
-					<td>Plumbing:</td>
+					<td class = "bold">Plumbing:</td>
 					<td>
 						<select class="permitStatus" id="plumbingPermitStatus">
 							<option value="default">TBD</option>
@@ -683,10 +612,14 @@
 			<div id="safetyPermits" class="info-tab">
 					        <table class="manager table table-hover">
 		        <tr>
-					<td></td><td>Permit</td><td>Permit Date</td><td>Inspection</td><td>Inspection Date</td>
+					<td></td>
+					<td class = "bold permitEditHeader">Permit</td>
+					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection</td>
+					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td>Sprinkler:</td>
+					<td class = "bold">Sprinkler:</td>
 					<td>
 						<select class="permitStatus" id="sprinklerPermitStatus">
 							<option value="default">TBD</option>
@@ -706,7 +639,7 @@
 				</tr>
 				
 				<tr>
-					<td>Fire Alarm:</td>
+					<td class = "bold">Fire Alarm:</td>
 					<td>
 						<select class="permitStatus" id="fireAlarmPermitStatus">
 							<option value="default">TBD</option>
@@ -726,7 +659,7 @@
 				</tr>
 				
 				<tr>
-					<td>Low-Voltage:</td>
+					<td class = "bold">Low-Voltage:</td>
 					<td>
 						<select class="permitStatus" id="voltagePermitStatus">
 							<option value="default">TBD</option>
@@ -751,10 +684,14 @@
 			<div class="info-tab " id="otherPermits">
 			       <table class="manager table table-hover">
 		        <tr>
-					<td></td><td>Permit</td><td>Permit Date</td><td>Inspection</td><td>Inspection Date</td>
+					<td></td>
+					<td class = "bold permitEditHeader">Permit</td>
+					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection</td>
+					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td>Other Permit (A):</td>
+					<td class = "bold">Other Permit (A):</td>
 					<td>
 						<select class="permitStatus" id="otherAPermitStatus">
 							<option value="default">TBD</option>
@@ -774,7 +711,7 @@
 				</tr>
 				
 				<tr>
-					<td>Other Permit (B):</td>
+					<td class = "bold">Other Permit (B):</td>
 					<td>
 						<select class="permitStatus" id="otherBPermitStatus">
 							<option value="default">TBD</option>
@@ -796,18 +733,18 @@
 				
 				<table class='table table-hover'>
 					<tr>
-						<td>Permit Notes:</td>
+						<td class = "bold" width = 20%>Permit Notes:</td>
 						<td><textarea id='permitNotes' rows="5" cols="30"></textarea></td>
 					</tr>
 					<tr>
-						<td>Inspection Notes:</td>
+						<td class = "bold">Inspection Notes:</td>
 						<td><textarea id='inspectionNotes' rows='5' cols='30'></textarea></td>
 					</tr>
 				</table>
 			</div>
 			<div class='info-tab' id='saveButton'>
-				<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
-				<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+				<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
 				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
 				<select style='margin: 4px' id='taskSelector' class='form-control'>
 					<option value='incomplete'>Incomplete</option>
@@ -838,61 +775,29 @@
 		
 	</div>  <!-- THIS ENDS THE DIV FOR PERMIT DATA-->
 	<div id = 'closeoutData' class ='editProject'>
-		    <nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="homepage.html">Home</a></li>
-		      <li class="active dropdown">
-		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
-		        <span class="caret"></span></a>
-		        <ul class="dropdown-menu">
-		          <li><a href="projectData.html">Add Project</a></li>
-		          <li><a href="findProject.html">Find Projects</a></li>
-		        </ul>
-		      </li>
-		      <li><a href="#">Triggers</a></li>
-		      <li class='dropdown'>
-		      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
-		      		<span class='caret'></span>
-		      	</a>
-		      	<ul class='dropdown-menu'>
-		      		<li><a href='taskBrowser.html'>Your Tasks</a></li>
-		      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'">Create Task</a></li>
-		      	</ul>
-		      </li>
-		      <li><a href="query.html">Reports</a></li>
-		      <li><a href="additions.html">Tools</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-		    </ul>
-		  </div>
-		</nav>
 	
 	<div class="container">
-	
+	<p id='pageLocation'> </p>
+	<br>
 	<p id='projectHeader' class="projectIdentifier">---</p>
-	
+	<button onclick="document.getElementById('closeoutData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
 	
 		<ul class="nav nav-tabs">
-			<li role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
+			<li id = "closeout" role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
 			<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
 			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>Other Items</a></li>
-	        <li onClick="saveProject()" data-tab="saveButton">
+	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
-		<div id="closeoutDocuments" class="info-tab active">
+		<div id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
 	        <table class='table table-hover'>
 	        
 	            <tr>
-	                <td>Equipment Submittal:</td>
+	                <td class='bold'>Equipment Submittal:</td>
 	                <td>  
 	                    <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
 	                        <option value="default">--Status--</option>
@@ -903,7 +808,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td>Operations and Maintenance Manuals:</td>
+	                <td class='bold'>Operations and Maintenance Manuals:</td>
 	                <td>  
 	                    <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
 	                    <option value="default">--Status--</option>
@@ -914,7 +819,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Punch List:</td>
+	                <td class='bold'>Punch List:</td>
 	                <td>  
 	                    <select data-associated-date='punchList' class="closeout-input" id="punchListStatus">
 	                    <option value="default">--Status--</option>
@@ -925,7 +830,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>As-Built Drawings:</td>
+	                <td class='bold'>As-Built Drawings:</td>
 	                <td>  
 	                    <select data-associated-date='asBuilts' class="closeout-input" id="asBuiltDrawingsStatus">
 	                    <option value="default">--Status--</option>
@@ -936,7 +841,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Close Out Photos:</td>
+	                <td class='bold'>Close Out Photos:</td>
 	                <td>  
 	                    <select data-associated-date='closeoutPhotosCL' class="closeout-input" id="closeOutPhotosStatus">
 	                        <option value="default">--Status--</option>
@@ -947,7 +852,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>HVAC Startup Form:</td>
+	                <td class='bold'>HVAC Startup Form:</td>
 	                <td>  
 	                    <select data-associated-date='HVACstartupFormDate' class="closeout-input" id="HVACstartupFormStatus">
 	                        <option value="default">--Status--</option>
@@ -958,7 +863,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Alarm Form:</td>
+	                <td class='bold'>Alarm Form:</td>
 	                <td>  
 	                <select data-associated-date='alarmHvac' class="closeout-input" id="alarmFormStatus">
 	                    <option value="default">--Status--</option>
@@ -969,7 +874,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Verisae Report:</td>
+	                <td class='bold'>Verisae Report:</td>
 	                <td>  
 	                    <select data-associated-date='verisae' class="closeout-input" id="verisaeReportStatus">
 	                    <option value="default">--Status--</option>
@@ -980,7 +885,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Closeout Documents Notes:</td>
+	                <td class='bold'>Closeout Documents Notes:</td>
 	                <td>  
 	                <textarea id="closeoutDocumentsNotes"> </textarea>
 	                </td> 
@@ -991,11 +896,11 @@
 	    <!-- End Closeout Documents Tab--> 
 	
 	    <!-- Final Inspections Tab -->
-		<div id="finalInspections" class="info-tab">
+		<div id="finalInspections" class="info-tab info-tab-closeoutDocuments">
 	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td>Temp Certificate of Occupancy:</td>
+	                <td class='bold'>Temp Certificate of Occupancy:</td>
 	                <td>  
 	                    <select data-associated-date='tmpCertificateDate' class="closeout-input" id="tmpCertificateStatus">
 	                        <option value="default">--Status--</option>
@@ -1006,7 +911,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Mechanical Final Inspection:</td>
+	                <td class='bold'>Mechanical Final Inspection:</td>
 	                <td>  
 	                    <select data-associated-date='mechFinalDate' class="closeout-input" id="mechFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -1017,7 +922,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Electrical Final Inspection:</td>
+	                <td class='bold'>Electrical Final Inspection:</td>
 	                <td>  
 	                    <select data-associated-date='elecFinalDate' class="closeout-input" id="elecFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -1028,7 +933,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Plumbing Final Inspection:</td>
+	                <td class='bold'>Plumbing Final Inspection:</td>
 	                <td>  
 	                    <select data-associated-date='plumbingFinalDate' class="closeout-input" id="plumbingFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -1039,7 +944,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Sprinkler Final Inspection:</td>
+	                <td class='bold'>Sprinkler Final Inspection:</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleFinalDate' class="closeout-input" id="sprinkleFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -1050,7 +955,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Certificate of Occupancy:</td>
+	                <td class='bold'>Certificate of Occupancy:</td>
 	                <td>  
 	                    <select data-associated-date='certificateDate' class="closeout-input" id="certificateStatus">
 	                        <option value="default">--Status--</option>
@@ -1061,7 +966,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Building Final Inspection:</td>
+	                <td class='bold'>Building Final Inspection:</td>
 	                <td>  
 	                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -1072,7 +977,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Final Inspection Notes:</td>
+	                <td class='bold'>Final Inspection Notes:</td>
 	                <td>  
 	                    <textarea id="finalInspectionNotes"> </textarea>
 	                </td>
@@ -1084,11 +989,11 @@
 	    <!-- End Final Inspections Tab --> 
 	    
 	    <!-- Warranty Letters Tab -->
-		<div id="warrantyLetters" class="info-tab">
+		<div id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
 	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td>MCS Warranty:</td>
+	                <td class='bold'>MCS Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='MCSWarranty' class="closeout-input" id="MCSWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1099,7 +1004,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>GC Warranty:</td>
+	                <td class='bold'>GC Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='GCWarrantyDate' class="closeout-input" id="GCWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1110,7 +1015,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Mechanical Warranty:</td>
+	                <td class='bold'>Mechanical Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='mechanicalWarrantyDate' class="closeout-input" id="mechanicalWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1121,7 +1026,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Electrical Warranty:</td>
+	                <td class='bold'>Electrical Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='electricalWarrantyDate' class="closeout-input" id="electricalWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1132,7 +1037,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Plumbing Warranty:</td>
+	                <td class='bold'>Plumbing Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='plumbingWarrantyDate' class="closeout-input" id="plumbingWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1143,7 +1048,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Sprinkler Warranty:</td>
+	                <td class='bold'>Sprinkler Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input" id="sprinkleWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1154,7 +1059,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Roofing Warranty:</td>
+	                <td class='bold'>Roofing Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='roofingWarrantyDate' class="closeout-input" id="roofingWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1165,7 +1070,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>HTI Warranty:</td>
+	                <td class='bold'>HTI Warranty:</td>
 	                <td>  
 	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input" id="HTIWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1176,7 +1081,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Other Warranty (A):</td>
+	                <td class='bold'>Other Warranty (A):</td>
 	                <td>  
 	                    <select data-associated-date='otherWarrantyDateA' class="closeout-input" id="otherWarrantyStatusA">
 	                        <option value="default">--Status--</option>
@@ -1187,7 +1092,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Other Warranty (B):</td>
+	                <td class='bold'>Other Warranty (B):</td>
 	                <td>  
 	                    <select data-associated-date='otherWarrantyDateB' class="closeout-input" id="otherWarrantyStatusB">
 	                        <option value="default">--Status--</option>
@@ -1198,7 +1103,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Warranty Notes:</td>
+	                <td class='bold'>Warranty Notes:</td>
 	                <td>  
 	                    <textarea id="warrantyNotes"> </textarea>
 	                </td>
@@ -1209,11 +1114,11 @@
 	    <!-- End Warranty Letters Tab -->
 	
 	    <!-- Final Liens Tab -->
-		<div id="finalLiens" class="info-tab">
+		<div id="finalLiens" class="info-tab info-tab-closeoutDocuments">
 			<table class='table table-hover'>
 			<tr style="height: 0px;"></tr>
 	            <tr>
-	                <td>MCS Liens:</td>
+	                <td class='bold'>MCS Liens:</td>
 	                <td>  
 	                    <select data-associated-date='MCSDate' class="closeout-input" id="MCSStatus">
 	                        <option value="default">--Status--</option>
@@ -1224,7 +1129,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>GC Liens:</td>
+	                <td class='bold'>GC Liens:</td>
 	                <td>  
 	                    <select data-associated-date='GCDate' class="closeout-input" id="GCStatus">
 	                        <option value="default">--Status--</option>
@@ -1235,7 +1140,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Mechanical Liens:</td>
+	                <td class='bold'>Mechanical Liens:</td>
 	                <td>  
 	                    <select data-associated-date='mechanicalDate' class="closeout-input" id="mechanicalStatus">
 	                        <option value="default">--Status--</option>
@@ -1246,7 +1151,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Eletrical Liens:</td>
+	                <td class='bold'>Eletrical Liens:</td>
 	                <td>  
 	                    <select data-associated-date='electricalDate' class="closeout-input" id="electricalStatus">
 	                        <option value="default">--Status--</option>
@@ -1257,7 +1162,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Plumbing Liens:</td>
+	                <td class='bold'>Plumbing Liens:</td>
 	                <td>  
 	                    <select data-associated-date='plumbingDate' class="closeout-input" id="plumbingStatus">
 	                        <option value="default">--Status--</option>
@@ -1268,7 +1173,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Sprinkler Liens:</td>
+	                <td class='bold'>Sprinkler Liens:</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleDate' class="closeout-input" id="sprinkleStatus">
 	                        <option value="default">--Status--</option>
@@ -1279,7 +1184,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td>Roofing Liens:</td>
+	                <td class='bold'>Roofing Liens:</td>
 	                <td>  
 	                    <select data-associated-date='roofingDate' class="closeout-input" id="roofingStatus">
 	                        <option value="default">--Status--</option>
@@ -1290,7 +1195,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>HTI Liens:</td>
+	                <td class='bold'>HTI Liens:</td>
 	                <td>  
 	                    <select data-associated-date='HTIDate' class="closeout-input" id="HTIStatus">
 	                        <option value="default">--Status--</option>
@@ -1301,7 +1206,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Other Liens:</td>
+	                <td class='bold'>Other Liens:</td>
 	                <td>  
 	                    <select data-associated-date='otherFinalLiensDate' class="closeout-input" id="otherFinalLiensStatus">
 	                        <option value="default">--Status--</option>
@@ -1312,7 +1217,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td>Final Liens Notes:</td>
+	                <td class='bold'>Final Liens Notes:</td>
 	                <td>  
 	                    <textarea id="finalLiensNotes"> </textarea>
 	                </td>   
@@ -1323,25 +1228,25 @@
 	    <!-- End Final Liens Tab -->
 	
 	    <!-- Other Items Tab -->
-	    <div id="otherItems" class="info-tab">
+	    <div id="otherItems" class="info-tab info-tab-closeoutDocuments">
 	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td>Number of Change Orders:</td>
+	                <td class='bold'>Number of Change Orders:</td>
 	                <td>  
 	                 <input type="text" id="numOfChangeOrders" />   
 	                </td>  
 	                <td></td>
 	            </tr>
 	            <tr>
-	                <td>Number of Change Orders Completed:</td>
+	                <td class='bold'>Number of Change Orders Completed:</td>
 	                <td>  
 	            <input type="text" id="numOfChangeOrdersCompleted" />
 	                </td> 
 	                <td></td>
 	            </tr>
 	            <tr>
-	                <td>MG2 Completion:</td>
+	                <td class='bold'>MG2 Completion:</td>
 	                <td>  
 	                    <select data-associated-date='mg2CompletionDate' class="closeout-input" id="mg2CompletionStatus">
 	                        <option value="default">--Status--</option>
@@ -1352,7 +1257,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td>Certificate of Substantial Completion:</td>
+	                <td class='bold'>Certificate of Substantial Completion:</td>
 	                <td>  
 	                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
 	                        <option value="default">--Status--</option>
@@ -1363,7 +1268,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td>Payment of Debts and Claims G706:</td>
+	                <td class='bold'>Payment of Debts and Claims G706:</td>
 	                <td>  
 	                    <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
 	                        <option value="default">--Status--</option>
@@ -1374,7 +1279,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td>Release Of Liens G706A:</td>
+	                <td class='bold'>Release Of Liens G706A:</td>
 	                <td>  
 	                    <select data-associated-date='releaseOfLiensDate' class="closeout-input" id="releaseOfLiensStatus">
 	                        <option value="default">--Status--</option>
@@ -1385,7 +1290,7 @@
 	                </td>
 	            </tr>    
 	            <tr>
-	                <td>MulvannyG2 Sign Off:</td>
+	                <td class='bold'>MulvannyG2 Sign Off:</td>
 	                <td>  
 	                    <select data-associated-date='mulvannySignOffDate' class="closeout-input" id="mulvannySignOffStatus">
 	                        <option value="default">--Status--</option>
@@ -1399,10 +1304,10 @@
 	        
 	        <table class='table table-hover'>
 	        	<tr>
-	        	<td></td><td>Amount:</td><td>Date:</td>
+	        	<td></td><td class='bold'>Amount:</td><td class='bold'>Date:</td>
 	        	</tr>
 	        	<tr>
-	        	<td>Salvage Value:</td>
+	        	<td class='bold'>Salvage Value:</td>
 	        	<td>
 					<input type="text" id="salvageAmount"/>
 	        	</td>
@@ -1415,8 +1320,8 @@
 	    </div>
 	    <!-- end other Items Tab -->
 		<div class='info-tab' id='saveButton'>
-			<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
-			<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+			<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+			<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
 			<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
 			<select style='margin: 4px' id='taskSelector' class='form-control'>
 				<option value='incomplete'>Incomplete</option>

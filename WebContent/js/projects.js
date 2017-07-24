@@ -14,86 +14,91 @@ var PAGETYPE_CLOSEOUT = 'closeout';
 var PROJECT_DATA;
 var projectID;
 
-var location = 'findProject';
+
+var currentDivLocation = 'findProject';
+let tasks;
+let RETRIEVED_PROJECTS;
+let DISPLAYABLE_PROJECTS;
+
 
 
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
-	$('.nav-tabs > li').click(function () {
-		$('.info-tab').removeClass('active');
-		$('#' + $(this).attr('data-tab')).addClass('active');
+	$('#closeoutData').find('.nav-tabs > li').click(function () {
+		$('#closeoutData').find('.info-tab').removeClass('active');
+		$('#closeoutData').find('#' + $(this).attr('data-tab')).addClass('active');
 		
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
 		
-		$('#saveButton > button').prop('disabled', true);
+		$('#closeoutData').find('#saveButton > button').prop('disabled', true);
 	});
 	
-	 	$("#MCSDate").datepicker();   
-	    $("#GCDate").datepicker();
-	    $("#mechanicalDate").datepicker();
-	    $("#electricalDate").datepicker();
-	    $("#plumbingDate").datepicker();
-	    $("#sprinkleDate").datepicker();
-	    $("#roofingDate").datepicker();
-	    $("#HTIDate").datepicker();
-	    $("#otherFinalLiensDate").datepicker();
+	 	$('#closeoutData').find("#MCSDate").datepicker();   
+	    $('#closeoutData').find("#GCDate").datepicker();
+	    $('#closeoutData').find("#mechanicalDate").datepicker();
+	    $('#closeoutData').find("#electricalDate").datepicker();
+	    $('#closeoutData').find("#plumbingDate").datepicker();
+	    $('#closeoutData').find("#sprinkleDate").datepicker();
+	    $('#closeoutData').find("#roofingDate").datepicker();
+	    $('#closeoutData').find("#HTIDate").datepicker();
+	    $('#closeoutData').find("#otherFinalLiensDate").datepicker();
 	    
 	    	// Final Inspections //Move other fields here from above
-	    $("#tmpCertificateDate").datepicker();
-	    $("#mechFinalDate").datepicker();
-	    $("#elecFinalDate").datepicker();
-	    $("#plumbingFinalDate").datepicker();
-	    $("#sprinkleFinalDate").datepicker();
-	    $("#certificateDate").datepicker();
-	    $("#buildingPermitCL").datepicker();
+	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
+	    $('#closeoutData').find("#mechFinalDate").datepicker();
+	    $('#closeoutData').find("#elecFinalDate").datepicker();
+	    $('#closeoutData').find("#plumbingFinalDate").datepicker();
+	    $('#closeoutData').find("#sprinkleFinalDate").datepicker();
+	    $('#closeoutData').find("#certificateDate").datepicker();
+	    $('#closeoutData').find("#buildingPermitCL").datepicker();
 	    
 	    
 	        // Warranty Letters
-	    $("#GCWarrantyDate").datepicker();
-	    $("#mechanicalWarrantyDate").datepicker();
-	    $("#electricalWarrantyDate").datepicker();
-	    $("#plumbingWarrantyDate").datepicker();
-	    $("#sprinkleWarrantyDate").datepicker();
-	    $("#roofingWarrantyDate").datepicker();
-	    $("#HTIWarrantyDate").datepicker();
-	    $("#otherWarrantyDateA").datepicker();
-	    $("#otherWarrantyDateB").datepicker();
+	    $('#closeoutData').find("#GCWarrantyDate").datepicker();
+	    $('#closeoutData').find("#mechanicalWarrantyDate").datepicker();
+	    $('#closeoutData').find("#electricalWarrantyDate").datepicker();
+	    $('#closeoutData').find("#plumbingWarrantyDate").datepicker();
+	    $('#closeoutData').find("#sprinkleWarrantyDate").datepicker();
+	    $('#closeoutData').find("#roofingWarrantyDate").datepicker();
+	    $('#closeoutData').find("#HTIWarrantyDate").datepicker();
+	    $('#closeoutData').find("#otherWarrantyDateA").datepicker();
+	    $('#closeoutData').find("#otherWarrantyDateB").datepicker();
 	    
 	        // Closeout documents
-	    $("#manualDate").datepicker();
-	    $("#HVACstartupFormDate").datepicker();
+	    $('#closeoutData').find("#manualDate").datepicker();
+	    $('#closeoutData').find("#HVACstartupFormDate").datepicker();
 	    
-		$("#mg2CompletionDate").datepicker();
-		$("#MCSWarranty").datepicker();
-		$("#equipmentSubCL").datepicker();
-		$("#punchList").datepicker();
-		$("#asBuilts").datepicker();
-		$("#closeoutPhotosCL").datepicker();
-		$("#alarmHvac").datepicker();
-		$("#verisae").datepicker();
-		$('#substantialCompletionDate').datepicker();
-		$('#paymentOfDebtsAndClaimsDate').datepicker();
-		$('#releaseOfLiensDate').datepicker();
-		$('#mulvannySignOffDate').datepicker();
+		$('#closeoutData').find("#mg2CompletionDate").datepicker();
+		$('#closeoutData').find("#MCSWarranty").datepicker();
+		$('#closeoutData').find("#equipmentSubCL").datepicker();
+		$('#closeoutData').find("#punchList").datepicker();
+		$('#closeoutData').find("#asBuilts").datepicker();
+		$('#closeoutData').find("#closeoutPhotosCL").datepicker();
+		$('#closeoutData').find("#alarmHvac").datepicker();
+		$('#closeoutData').find("#verisae").datepicker();
+		$('#closeoutData').find('#substantialCompletionDate').datepicker();
+		$('#closeoutData').find('#paymentOfDebtsAndClaimsDate').datepicker();
+		$('#closeoutData').find('#releaseOfLiensDate').datepicker();
+		$('#closeoutData').find('#mulvannySignOffDate').datepicker();
 		
-		$("#salvageDate").datepicker();
+		$('#closeoutData').find("#salvageDate").datepicker();
 		
-	$('.closeout-input').change(function () {
+	$('#closeoutData').find('.closeout-input').change(function () {
 		console.log($(this).attr('data-associated-date'));
-		$('#' + $(this).attr('data-associated-date')).val(getToday());
+		$('#closeoutData').find('#' + $(this).attr('data-associated-date')).val(getToday());
 	});
 });
 
 
 
-function getProjectEnums_CLOSEOUT()
+function getProjectEnums_CLOSEOUT(edit)
 {
-	console.log(getParameterByName("id"));
+	//console.log(getParameterByName("id"));
 	if (PAGETYPE_CLOSEOUT == 'closeout')
 	{
-		projectID_CLOSEOUT = getParameterByName("id");
+		//projectID_CLOSEOUT = getParameterByName("id");
 		
 		$.ajax({
 			type: 'POST',
@@ -107,11 +112,15 @@ function getProjectEnums_CLOSEOUT()
 			},
 			success: function(data)
 			{
-				PROJECT_DATA = (data);
-				setProjectHeader(data);
+				PROJECT_DATA = data;
+				setProjectHeader(data, currentDivLocation);
 
+				
 				fillTabs_CLOSEOUT(data);
-				getTasks();
+				getDropdownItems_CLOSEOUT();
+				
+				
+				//getTasks();
 			}
 		});
 	}
@@ -137,7 +146,7 @@ function getDropdownItems_CLOSEOUT()
 		success: function(data)
 		{
 			fillDropdowns_CLOSEOUT(data);
-			getProjectEnums_CLOSEOUT();
+			
 		}
 	});
 }
@@ -148,144 +157,146 @@ function fillTabs_CLOSEOUT(data)
 	console.log(json);
 	if (json.closeoutDetails != null)
 	{	
-		$("#airGas").val(json.closeoutDetails.airGas);
-		$("#permits").val(json.closeoutDetails.permitsClosed);
-		$("#asBuilts").val(json.closeoutDetails.asBuilts);
-		$("#punchList").val(json.closeoutDetails.punchList);
-		$("#alarmHvac").val(json.closeoutDetails.alarmHvacForm);
-		$("#verisae").val(json.closeoutDetails.verisaeShutdownReport);
-		$("#closeoutBook").val(json.closeoutDetails.closeoutBook);
-		$("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		
-		$("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
-		$("#closeoutPhotosCL").val(json.closeoutDetails.closeoutPhotosCL);
-		$("#MCSWarranty").val(json.closeoutDetails.mCSWarranty);
-		$("#equipmentSubCL").val(json.closeoutDetails.equipmentSubCL);
-		$("#traneCL").val(json.closeoutDetails.traneCL);
+		$('#closeoutData').find("#airGas").val(json.closeoutDetails.airGas);
+		$('#closeoutData').find("#permits").val(json.closeoutDetails.permitsClosed);
+		$('#closeoutData').find("#asBuilts").val(json.closeoutDetails.asBuilts);
+		$('#closeoutData').find("#punchList").val(json.closeoutDetails.punchList);
+		$('#closeoutData').find("#alarmHvac").val(json.closeoutDetails.alarmHvacForm);
+		$('#closeoutData').find("#verisae").val(json.closeoutDetails.verisaeShutdownReport);
+		$('#closeoutData').find("#closeoutBook").val(json.closeoutDetails.closeoutBook);
+		$('#closeoutData').find("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
+		
+		$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
+		$('#closeoutData').find("#closeoutPhotosCL").val(json.closeoutDetails.closeoutPhotosCL);
+		$('#closeoutData').find("#MCSWarranty").val(json.closeoutDetails.mCSWarranty);
+		$('#closeoutData').find("#equipmentSubCL").val(json.closeoutDetails.equipmentSubCL);
+		$('#closeoutData').find("#traneCL").val(json.closeoutDetails.traneCL);
 
-		$("#numOfChangeOrders").val(json.closeoutDetails.numOfChangeOrders);
-		$("#numOfChangeOrdersCompleted").val(json.closeoutDetails.numOfChangeOrdersCompleted);
+		$('#closeoutData').find("#numOfChangeOrders").val(json.closeoutDetails.numOfChangeOrders);
+		$('#closeoutData').find("#numOfChangeOrdersCompleted").val(json.closeoutDetails.numOfChangeOrdersCompleted);
 		
-		$("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
-		$("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
+		$('#closeoutData').find("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
+		$('#closeoutData').find("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
 		
-		$("#mechFinalStatus").val(json.closeoutDetails.mechFinalStatus);
-		$("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
+		$('#closeoutData').find("#mechFinalStatus").val(json.closeoutDetails.mechFinalStatus);
+		$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
 		
-		$("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
-		$("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
-		$("#elecFinalStatus").val(json.closeoutDetails.elecFinalStatus);
+		$('#closeoutData').find("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
+		$('#closeoutData').find("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
+		$('#closeoutData').find("#elecFinalStatus").val(json.closeoutDetails.elecFinalStatus);
 		
-		$("#plumbingFinalStatus").val(json.closeoutDetails.plumbingFinalStatus);
-		$("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
+		$('#closeoutData').find("#plumbingFinalStatus").val(json.closeoutDetails.plumbingFinalStatus);
+		$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
 		
-		$("#sprinkleFinalStatus").val(json.closeoutDetails.sprinkleFinalStatus);
-		$("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
+		$('#closeoutData').find("#sprinkleFinalStatus").val(json.closeoutDetails.sprinkleFinalStatus);
+		$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
 		
-		$("#certificateStatus").val(json.closeoutDetails.certificateStatus);
-		$("#certificateDate").val(json.closeoutDetails.certificateDate);
+		$('#closeoutData').find("#certificateStatus").val(json.closeoutDetails.certificateStatus);
+		$('#closeoutData').find("#certificateDate").val(json.closeoutDetails.certificateDate);
 		
-		$("#buildFinalStatus").val(json.closeoutDetails.buildingFinalStatus);
+		$('#closeoutData').find("#buildFinalStatus").val(json.closeoutDetails.buildingFinalStatus);
 		
-		$("#equipmentSubmittalStatus").val(json.closeoutDetails.equipmentSubmittalStatus);
+		$('#closeoutData').find("#equipmentSubmittalStatus").val(json.closeoutDetails.equipmentSubmittalStatus);
 		
-		$("#manualStatus").val(json.closeoutDetails.manualStatus);
-		$("#manualDate").val(json.closeoutDetails.manualDate);
+		$('#closeoutData').find("#manualStatus").val(json.closeoutDetails.manualStatus);
+		$('#closeoutData').find("#manualDate").val(json.closeoutDetails.manualDate);
 		
-		$("#punchListStatus").val(json.closeoutDetails.punchListStatus);
+		$('#closeoutData').find("#punchListStatus").val(json.closeoutDetails.punchListStatus);
 		
-		$("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
+		$('#closeoutData').find("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
 		
-		$("#closeOutPhotosStatus").val(json.closeoutDetails.closeOutPhotosStatus);
+		$('#closeoutData').find("#closeOutPhotosStatus").val(json.closeoutDetails.closeOutPhotosStatus);
 		
-		$("#HVACstartupFormStatus").val(json.closeoutDetails.HVACstartupFormStatus);
-		$("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
+		$('#closeoutData').find("#HVACstartupFormStatus").val(json.closeoutDetails.HVACstartupFormStatus);
+		$('#closeoutData').find("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
 		
-		$("#alarmFormStatus").val(json.closeoutDetails.alarmFormStatus);
+		$('#closeoutData').find("#alarmFormStatus").val(json.closeoutDetails.alarmFormStatus);
 		
-		$("#verisaeReportStatus").val(json.closeoutDetails.verisaeReportStatus);
+		$('#closeoutData').find("#verisaeReportStatus").val(json.closeoutDetails.verisaeReportStatus);
 		
-		$("#MCSWarrantyStatus").val(json.closeoutDetails.MCSWarrantyStatus);
+		$('#closeoutData').find("#MCSWarrantyStatus").val(json.closeoutDetails.MCSWarrantyStatus);
 		
-		$("#GCWarrantyStatus").val(json.closeoutDetails.GCWarrantyStatus);
-		$("#GCWarrantyDate").val(json.closeoutDetails.GCWarrantyDate);
+		$('#closeoutData').find("#GCWarrantyStatus").val(json.closeoutDetails.GCWarrantyStatus);
+		$('#closeoutData').find("#GCWarrantyDate").val(json.closeoutDetails.GCWarrantyDate);
 		
-		$("#mechanicalWarrantyStatus").val(json.closeoutDetails.mechanicalWarrantyStatus);
-		$("#mechanicalWarrantyDate").val(json.closeoutDetails.mechanicalWarrantyDate);
+		$('#closeoutData').find("#mechanicalWarrantyStatus").val(json.closeoutDetails.mechanicalWarrantyStatus);
+		$('#closeoutData').find("#mechanicalWarrantyDate").val(json.closeoutDetails.mechanicalWarrantyDate);
 		
-		$("#electricalWarrantyStatus").val(json.closeoutDetails.electricalWarrantyStatus);
-		$("#electricalWarrantyDate").val(json.closeoutDetails.electricalWarrantyDate);
+		$('#closeoutData').find("#electricalWarrantyStatus").val(json.closeoutDetails.electricalWarrantyStatus);
+		$('#closeoutData').find("#electricalWarrantyDate").val(json.closeoutDetails.electricalWarrantyDate);
 		
-		$("#plumbingWarrantyStatus").val(json.closeoutDetails.plumbingWarrantyStatus);
-		$("#plumbingWarrantyDate").val(json.closeoutDetails.plumbingWarrantyDate);
+		$('#closeoutData').find("#plumbingWarrantyStatus").val(json.closeoutDetails.plumbingWarrantyStatus);
+		$('#closeoutData').find("#plumbingWarrantyDate").val(json.closeoutDetails.plumbingWarrantyDate);
 		
-		$("#sprinkleWarrantyStatus").val(json.closeoutDetails.sprinkleWarrantyStatus);
-		$("#sprinkleWarrantyDate").val(json.closeoutDetails.sprinkleWarrantyDate);
+		$('#closeoutData').find("#sprinkleWarrantyStatus").val(json.closeoutDetails.sprinkleWarrantyStatus);
+		$('#closeoutData').find("#sprinkleWarrantyDate").val(json.closeoutDetails.sprinkleWarrantyDate);
 		
-		$("#roofingWarrantyStatus").val(json.closeoutDetails.roofingWarrantyStatus);
-		$("#roofingWarrantyDate").val(json.closeoutDetails.roofingWarrantyDate);
+		$('#closeoutData').find("#roofingWarrantyStatus").val(json.closeoutDetails.roofingWarrantyStatus);
+		$('#closeoutData').find("#roofingWarrantyDate").val(json.closeoutDetails.roofingWarrantyDate);
 		
-		$("#HTIWarrantyStatus").val(json.closeoutDetails.HTIWarrantyStatus);
-		$("#HTIWarrantyDate").val(json.closeoutDetails.HTIWarrantyDate);
+		$('#closeoutData').find("#HTIWarrantyStatus").val(json.closeoutDetails.HTIWarrantyStatus);
+		$('#closeoutData').find("#HTIWarrantyDate").val(json.closeoutDetails.HTIWarrantyDate);
 		
-		$("#otherWarrantyStatusA").val(json.closeoutDetails.otherWarrantyStatusA);
-		$("#otherWarrantyDateA").val(json.closeoutDetails.otherWarrantyDateA);
+		$('#closeoutData').find("#otherWarrantyStatusA").val(json.closeoutDetails.otherWarrantyStatusA);
+		$('#closeoutData').find("#otherWarrantyDateA").val(json.closeoutDetails.otherWarrantyDateA);
 		
-		$("#otherWarrantyStatusB").val(json.closeoutDetails.otherWarrantyStatusB);
-		$("#otherWarrantyDateB").val(json.closeoutDetails.otherWarrantyDateB);
+		$('#closeoutData').find("#otherWarrantyStatusB").val(json.closeoutDetails.otherWarrantyStatusB);
+		$('#closeoutData').find("#otherWarrantyDateB").val(json.closeoutDetails.otherWarrantyDateB);
 		
-		$("#MCSStatus").val(json.closeoutDetails.MCSStatus);
-		$("#MCSDate").val(json.closeoutDetails.MCSDate);
+		$('#closeoutData').find("#MCSStatus").val(json.closeoutDetails.MCSStatus);
+		$('#closeoutData').find("#MCSDate").val(json.closeoutDetails.MCSDate);
 		
-		$("#GCStatus").val(json.closeoutDetails.GCStatus);
-		$("#GCDate").val(json.closeoutDetails.GCDate);
+		$('#closeoutData').find("#GCStatus").val(json.closeoutDetails.GCStatus);
+		$('#closeoutData').find("#GCDate").val(json.closeoutDetails.GCDate);
 		
-		$("#mechanicalStatus").val(json.closeoutDetails.mechanicalStatus);
-		$("#mechanicalDate").val(json.closeoutDetails.mechanicalDate);
+		$('#closeoutData').find("#mechanicalStatus").val(json.closeoutDetails.mechanicalStatus);
+		$('#closeoutData').find("#mechanicalDate").val(json.closeoutDetails.mechanicalDate);
 		
-		$("#electricalStatus").val(json.closeoutDetails.electricalStatus);
-		$("#electricalDate").val(json.closeoutDetails.electricalDate);
+		$('#closeoutData').find("#electricalStatus").val(json.closeoutDetails.electricalStatus);
+		$('#closeoutData').find("#electricalDate").val(json.closeoutDetails.electricalDate);
 		
-		$("#plumbingStatus").val(json.closeoutDetails.plumbingStatus);
-		$("#plumbingDate").val(json.closeoutDetails.plumbingDate);
+		$('#closeoutData').find("#plumbingStatus").val(json.closeoutDetails.plumbingStatus);
+		$('#closeoutData').find("#plumbingDate").val(json.closeoutDetails.plumbingDate);
 		
-		$("#sprinkleStatus").val(json.closeoutDetails.sprinkleStatus);
-		$("#sprinkleDate").val(json.closeoutDetails.sprinkleDate);
+		$('#closeoutData').find("#sprinkleStatus").val(json.closeoutDetails.sprinkleStatus);
+		$('#closeoutData').find("#sprinkleDate").val(json.closeoutDetails.sprinkleDate);
 		
-		$("#roofingStatus").val(json.closeoutDetails.roofingStatus);
-		$("#roofingDate").val(json.closeoutDetails.roofingDate);
+		$('#closeoutData').find("#roofingStatus").val(json.closeoutDetails.roofingStatus);
+		$('#closeoutData').find("#roofingDate").val(json.closeoutDetails.roofingDate);
 		
-		$("#HTIStatus").val(json.closeoutDetails.HTIStatus);
-		$("#HTIDate").val(json.closeoutDetails.HTIDate);
+		$('#closeoutData').find("#HTIStatus").val(json.closeoutDetails.HTIStatus);
+		$('#closeoutData').find("#HTIDate").val(json.closeoutDetails.HTIDate);
 		
-		$("#otherFinalLiensStatus").val(json.closeoutDetails.otherFinalLeinsStatus);
-		$("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
+		$('#closeoutData').find("#otherFinalLiensStatus").val(json.closeoutDetails.otherFinalLeinsStatus);
+		$('#closeoutData').find("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
 		
-		$("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
-		$("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
+		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
+		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
-		$("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
-		$("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
-		$("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
-		$("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
+		$('#closeoutData').find("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+		$('#closeoutData').find("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
+		$('#closeoutData').find("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
+		$('#closeoutData').find("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
 		
-		$('#substantialCompletionStatus').val(json.closeoutDetails.substantialCompletionStatus);
-		$('#substantialCompletionDate').val(json.closeoutDetails.substantialCompletionDate);
+		$('#closeoutData').find('#substantialCompletionStatus').val(json.closeoutDetails.substantialCompletionStatus);
+		$('#closeoutData').find('#substantialCompletionDate').val(json.closeoutDetails.substantialCompletionDate);
 		
-		$('#paymentOfDebtsAndClaimsStatus').val(json.closeoutDetails.paymentOfDebtsAndClaimsStatus);
-		$('#paymentOfDebtsAndClaimsDate').val(json.closeoutDetails.paymentOfDebtsAndClaimsDate);
+		$('#closeoutData').find('#paymentOfDebtsAndClaimsStatus').val(json.closeoutDetails.paymentOfDebtsAndClaimsStatus);
+		$('#closeoutData').find('#paymentOfDebtsAndClaimsDate').val(json.closeoutDetails.paymentOfDebtsAndClaimsDate);
 		
-		$('#releaseOfLiensStatus').val(json.closeoutDetails.releaseOfLiensStatus);
-		$('#releaseOfLiensDate').val(json.closeoutDetails.releaseOfLiensDate);
+		$('#closeoutData').find('#releaseOfLiensStatus').val(json.closeoutDetails.releaseOfLiensStatus);
+		$('#closeoutData').find('#releaseOfLiensDate').val(json.closeoutDetails.releaseOfLiensDate);
 		
-		$('#mulvannySignOffStatus').val(json.closeoutDetails.mulvannySignOffStatus);
-		$('#mulvannySignOffDate').val(json.closeoutDetails.mulvannySignOffDate);
+		$('#closeoutData').find('#mulvannySignOffStatus').val(json.closeoutDetails.mulvannySignOffStatus);
+		$('#closeoutData').find('#mulvannySignOffDate').val(json.closeoutDetails.mulvannySignOffDate);
 		
 		if(json.closeoutDetails.salvageValue != null)
 		{
-			$("#salvageDate").val(json.closeoutDetails.salvageValue.date);
-			$("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
+			$('#closeoutData').find("#salvageDate").val(json.closeoutDetails.salvageValue.date);
+			$('#closeoutData').find("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
 		}
+	
 		
 	}
 	
@@ -295,7 +306,7 @@ function fillDropdowns_CLOSEOUT(data)
 {
 	var json = JSON.parse(data["closeoutstatus"]);
 	var d = document.createDocumentFragment();
-
+    console.log("CLOSEOUT DATA = ", data);
 	for (var i = 0; i < json.length; i++)
 	{	
 		var option = document.createElement("option");
@@ -307,7 +318,8 @@ function fillDropdowns_CLOSEOUT(data)
 	for(var i = 0; i < CLOSEOUTSTATUS_DROPDOWNS.length; i++)
 	{
 		var copy = d.cloneNode(true);
-		$("#" +CLOSEOUTSTATUS_DROPDOWNS[i]).append(copy);	
+		$('#closeoutData').find("#" +CLOSEOUTSTATUS_DROPDOWNS[i]).find().remove();	
+		$('#closeoutData').find("#" +CLOSEOUTSTATUS_DROPDOWNS[i]).append(copy);	
 	}
 
 }
@@ -316,155 +328,155 @@ function fillDropdowns_CLOSEOUT(data)
 function saveProject_CLOSEOUT()
 {
     console.log("Saving Closeout Information");
-    var punchList = $("#punchList").val();
-	var alarmHvac = $("#alarmHvac").val();
-	var verisae = $("#verisae").val();
-	var asBuilts = $("#asBuilts").val();
+    var punchList = $('#closeoutData').find("#punchList").val();
+	var alarmHvac = $('#closeoutData').find("#alarmHvac").val();
+	var verisae = $('#closeoutData').find("#verisae").val();
+	var asBuilts = $('#closeoutData').find("#asBuilts").val();
 	
-	var buildingPermitCL = $("#buildingPermitCL").val();
-	var closeoutPhotosCL = $("#closeoutPhotosCL").val();
-	var MCSWarranty = $("#MCSWarranty").val();
-	var equipmentSubCL = $("#equipmentSubCL").val();
+	var buildingPermitCL = $('#closeoutData').find("#buildingPermitCL").val();
+	var closeoutPhotosCL = $('#closeoutData').find("#closeoutPhotosCL").val();
+	var MCSWarranty = $('#closeoutData').find("#MCSWarranty").val();
+	var equipmentSubCL = $('#closeoutData').find("#equipmentSubCL").val();
     
     
     // NEW Closeout CONTENT
 	
-	var mg2CompletionStatus = $("#mg2CompletionStatus").val();
-	var mg2CompletionDate = $("#mg2CompletionDate").val();
+	var mg2CompletionStatus = $('#closeoutData').find("#mg2CompletionStatus").val();
+	var mg2CompletionDate = $('#closeoutData').find("#mg2CompletionDate").val();
 	
-	var numOfChangeOrders = $("#numOfChangeOrders").val();
-	var numOfChangeOrdersCompleted = $("#numOfChangeOrdersCompleted").val();
+	var numOfChangeOrders = $('#closeoutData').find("#numOfChangeOrders").val();
+	var numOfChangeOrdersCompleted = $('#closeoutData').find("#numOfChangeOrdersCompleted").val();
     
         // LIENS
-    var MCSStatus = $("#MCSStatus").val(); 
-    var MCSDate = $("#MCSDate").val(); 
+    var MCSStatus = $('#closeoutData').find("#MCSStatus").val(); 
+    var MCSDate = $('#closeoutData').find("#MCSDate").val(); 
     
-    var GCStatus = $("#GCStatus").val();
-    var GCDate = $("#GCDate").val();
+    var GCStatus = $('#closeoutData').find("#GCStatus").val();
+    var GCDate = $('#closeoutData').find("#GCDate").val();
     
     var mechanicalStatus = $("#mechanicalStatus").val();
     var mechanicalDate = $("#mechanicalDate").val();
     
-    var electricalStatus = $("#electricalStatus").val();
-    var electricalDate = $("#electricalDate").val();
+    var electricalStatus = $('#closeoutData').find("#electricalStatus").val();
+    var electricalDate = $('#closeoutData').find("#electricalDate").val();
     
-    var plumbingStatus = $("#plumbingStatus").val();
-    var plumbingDate = $("#plumbingDate").val();
+    var plumbingStatus = $('#closeoutData').find("#plumbingStatus").val();
+    var plumbingDate = $('#closeoutData').find("#plumbingDate").val();
     
-    var sprinkleStatus = $("#sprinkleStatus").val();
-    var sprinkleDate = $("#sprinkleDate").val();
+    var sprinkleStatus = $('#closeoutData').find("#sprinkleStatus").val();
+    var sprinkleDate = $('#closeoutData').find("#sprinkleDate").val();
     
-    var roofingStatus = $("#roofingStatus").val();
-    var roofingDate = $("#roofingDate").val();
+    var roofingStatus = $('#closeoutData').find("#roofingStatus").val();
+    var roofingDate = $('#closeoutData').find("#roofingDate").val();
     
-    var HTIStatus = $("#HTIStatus").val();
-    var HTIDate = $("#HTIDate").val();
+    var HTIStatus = $('#closeoutData').find("#HTIStatus").val();
+    var HTIDate = $('#closeoutData').find("#HTIDate").val();
     
-    var otherFinalLeinsStatus = $("#otherFinalLiensStatus").val();
-    var otherFinalLeinsDate = $("#otherFinalLiensDate").val();
+    var otherFinalLeinsStatus = $('#closeoutData').find("#otherFinalLiensStatus").val();
+    var otherFinalLeinsDate = $('#closeoutData').find("#otherFinalLiensDate").val();
     
-    var finalLiensNotes = $("#finalLiensNotes").val();
+    var finalLiensNotes = $('#closeoutData').find("#finalLiensNotes").val();
         
     	// INSPECTIONS
     
-    var tmpCertificateStatus = $("#tmpCertificateStatus").val();
-    var tmpCertificateDate = $("#tmpCertificateDate").val();
+    var tmpCertificateStatus = $('#closeoutData').find("#tmpCertificateStatus").val();
+    var tmpCertificateDate = $('#closeoutData').find("#tmpCertificateDate").val();
     
-    var mechFinalStatus = $("#mechFinalStatus").val();
-    var mechFinalDate = $("#mechFinalDate").val();
+    var mechFinalStatus = $('#closeoutData').find("#mechFinalStatus").val();
+    var mechFinalDate = $('#closeoutData').find("#mechFinalDate").val();
     
-    var elecFinalDate = $("#elecFinalDate").val();
-    var elecFinalStatus = $("#elecFinalStatus").val();
+    var elecFinalDate = $('#closeoutData').find("#elecFinalDate").val();
+    var elecFinalStatus = $('#closeoutData').find("#elecFinalStatus").val();
     
-    var plumbingFinalDate = $("#plumbingFinalDate").val();
-    var plumbingFinalStatus = $("#plumbingFinalStatus").val();
+    var plumbingFinalDate = $('#closeoutData').find("#plumbingFinalDate").val();
+    var plumbingFinalStatus = $('#closeoutData').find("#plumbingFinalStatus").val();
     
-    var sprinkleFinalStatus = $("#sprinkleFinalStatus").val();
-    var sprinkleFinalDate = $("#sprinkleFinalDate").val();
+    var sprinkleFinalStatus = $('#closeoutData').find("#sprinkleFinalStatus").val();
+    var sprinkleFinalDate = $('#closeoutData').find("#sprinkleFinalDate").val();
     
-    var certificateStatus = $("#certificateStatus").val();
-    var certificateDate = $("#certificateDate").val();
+    var certificateStatus = $('#closeoutData').find("#certificateStatus").val();
+    var certificateDate = $('#closeoutData').find("#certificateDate").val();
     
     // buildingPermitCL = buildingFinalDate;
-    var buildingFinalStatus = $("#buildFinalStatus").val();
+    var buildingFinalStatus = $('#closeoutData').find("#buildFinalStatus").val();
     
-    var finalInspectionNotes = $("#finalInspectionNotes").val();
+    var finalInspectionNotes = $('#closeoutData').find("#finalInspectionNotes").val();
        
     	// WARRANTIES
     
-    var MCSWarrantyStatus = $("#MCSWarrantyStatus").val();
+    var MCSWarrantyStatus = $('#closeoutData').find("#MCSWarrantyStatus").val();
     // MCSWarranty = MCSWarrantyDate
     
-    var GCWarrantyStatus = $("#GCWarrantyStatus").val();
-    var GCWarrantyDate = $("#GCWarrantyDate").val();
+    var GCWarrantyStatus = $('#closeoutData').find("#GCWarrantyStatus").val();
+    var GCWarrantyDate = $('#closeoutData').find("#GCWarrantyDate").val();
     
-    var mechanicalWarrantyStatus = $("#mechanicalWarrantyStatus").val();
-    var mechanicalWarrantyDate = $("#mechanicalWarrantyDate").val();
+    var mechanicalWarrantyStatus = $('#closeoutData').find("#mechanicalWarrantyStatus").val();
+    var mechanicalWarrantyDate = $('#closeoutData').find("#mechanicalWarrantyDate").val();
     
-    var electricalWarrantyStatus = $("#electricalWarrantyStatus").val();
-    var electricalWarrantyDate = $("#electricalWarrantyDate").val();
+    var electricalWarrantyStatus = $('#closeoutData').find("#electricalWarrantyStatus").val();
+    var electricalWarrantyDate = $('#closeoutData').find("#electricalWarrantyDate").val();
     
-    var plumbingWarrantyStatus = $("#plumbingWarrantyStatus").val();
-    var plumbingWarrantyDate = $("#plumbingWarrantyDate").val();
+    var plumbingWarrantyStatus = $('#closeoutData').find("#plumbingWarrantyStatus").val();
+    var plumbingWarrantyDate = $('#closeoutData').find("#plumbingWarrantyDate").val();
     
-    var sprinkleWarrantyStatus = $("#sprinkleWarrantyStatus").val();
-    var sprinkleWarrantyDate = $("#sprinkleWarrantyDate").val();
+    var sprinkleWarrantyStatus = $('#closeoutData').find("#sprinkleWarrantyStatus").val();
+    var sprinkleWarrantyDate = $('#closeoutData').find("#sprinkleWarrantyDate").val();
     
-    var roofingWarrantyStatus = $("#roofingWarrantyStatus").val();
-    var roofingWarrantyDate = $("#roofingWarrantyDate").val();
+    var roofingWarrantyStatus = $('#closeoutData').find("#roofingWarrantyStatus").val();
+    var roofingWarrantyDate = $('#closeoutData').find("#roofingWarrantyDate").val();
     
-    var HTIWarrantyStatus = $("#HTIWarrantyStatus").val();
-    var HTIWarrantyDate = $("#HTIWarrantyDate").val();
+    var HTIWarrantyStatus = $('#closeoutData').find("#HTIWarrantyStatus").val();
+    var HTIWarrantyDate = $('#closeoutData').find("#HTIWarrantyDate").val();
     
-    var otherWarrantyStatusA = $("#otherWarrantyStatusA").val();
-    var otherWarrantyDateA = $("#otherWarrantyDateA").val();
+    var otherWarrantyStatusA = $('#closeoutData').find("#otherWarrantyStatusA").val();
+    var otherWarrantyDateA = $('#closeoutData').find("#otherWarrantyDateA").val();
     
-    var otherWarrantyStatusB = $("#otherWarrantyStatusB").val();
-    var otherWarrantyDateB = $("#otherWarrantyDateB").val();
+    var otherWarrantyStatusB = $('#closeoutData').find("#otherWarrantyStatusB").val();
+    var otherWarrantyDateB = $('#closeoutData').find("#otherWarrantyDateB").val();
     
-    var warrantyNotes = $("#warrantyNotes").val();
+    var warrantyNotes = $('#closeoutData').find("#warrantyNotes").val();
     
         // CLOSEOUT DOCUMENTS
-    var equipmentSubmittalStatus = $("#equipmentSubmittalStatus").val();
+    var equipmentSubmittalStatus = $('#closeoutData').find("#equipmentSubmittalStatus").val();
     // equipmentSubCL = equipmentSubmittalDate
     
-    var manualStatus = $("#manualStatus").val();
-    var manualDate = $("#manualDate").val();
+    var manualStatus = $('#closeoutData').find("#manualStatus").val();
+    var manualDate = $('#closeoutData').find("#manualDate").val();
     
-    var punchListStatus = $("#punchListStatus").val();
+    var punchListStatus = $('#closeoutData').find("#punchListStatus").val();
     //punchList = punchListDate
     
-    var asBuiltDrawingsStatus = $("#asBuiltDrawingsStatus").val();
+    var asBuiltDrawingsStatus = $('#closeoutData').find("#asBuiltDrawingsStatus").val();
     // asBuilts = asBuiltDrawingsDate
     
-    var closeOutPhotosStatus = $("#closeOutPhotosStatus").val();
+    var closeOutPhotosStatus = $('#closeoutData').find("#closeOutPhotosStatus").val();
     //closeoutPhotosCL = closeOutPhotosDate
     
-    var HVACstartupFormStatus = $("#HVACstartupFormStatus").val();
-    var HVACstartupFormDate = $("#HVACstartupFormDate").val();
+    var HVACstartupFormStatus = $('#closeoutData').find("#HVACstartupFormStatus").val();
+    var HVACstartupFormDate = $('#closeoutData').find("#HVACstartupFormDate").val();
     
-    var alarmFormStatus = $("#alarmFormStatus").val();
+    var alarmFormStatus = $('#closeoutData').find("#alarmFormStatus").val();
     // alarmHVAC = alarmFormDate
     
-    var verisaeReportStatus = $("#verisaeReportStatus").val();
+    var verisaeReportStatus = $('#closeoutData').find("#verisaeReportStatus").val();
     // verisae = verisaeReportDate
 
-    var closeoutDocumentsNotes = $("#closeoutDocumentsNotes").val();
+    var closeoutDocumentsNotes = $('#closeoutData').find("#closeoutDocumentsNotes").val();
     
-    var salvageDate = $("#salvageDate").val();
-    var salvageAmount = $("#salvageAmount").val();
+    var salvageDate = $('#closeoutData').find("#salvageDate").val();
+    var salvageAmount = $('#closeoutData').find("#salvageAmount").val();
     
-    var substantialCompletionStatus = $('#substantialCompletionStatus').val();
-    var substantialCompletionDate = $('#substantialCompletionDate').val();
+    var substantialCompletionStatus = $('#closeoutData').find('#substantialCompletionStatus').val();
+    var substantialCompletionDate = $('#closeoutData').find('#substantialCompletionDate').val();
     
-    var paymentOfDebtsAndClaimsStatus = $('#paymentOfDebtsAndClaimsStatus').val();
-    var paymentOfDebtsAndClaimsDate = $('#paymentOfDebtsAndClaimsDate').val();
+    var paymentOfDebtsAndClaimsStatus = $('#closeoutData').find('#paymentOfDebtsAndClaimsStatus').val();
+    var paymentOfDebtsAndClaimsDate = $('#closeoutData').find('#paymentOfDebtsAndClaimsDate').val();
     
-    var releaseOfLiensStatus = $('#releaseOfLiensStatus').val();
-    var releaseOfLiensDate = $('#releaseOfLiensDate').val();
+    var releaseOfLiensStatus = $('#closeoutData').find('#releaseOfLiensStatus').val();
+    var releaseOfLiensDate = $('#closeoutData').find('#releaseOfLiensDate').val();
     
-    var mulvannySignOffStatus = $('#mulvannySignOffStatus').val();
-    var mulvannySignOffDate = $('#mulvannySignOffDate').val();
+    var mulvannySignOffStatus = $('#closeoutData').find('#mulvannySignOffStatus').val();
+    var mulvannySignOffDate = $('#closeoutData').find('#mulvannySignOffDate').val();
     ////////////// END NEW CONTENT
     
     var dates_CLOSEOUT =[
@@ -646,10 +658,10 @@ function saveProject_CLOSEOUT()
 				'mulvannySignOffStatus': mulvannySignOffStatus,
 			},
 			success:function(data){
-				
+				updateFrontEnd();
 				alert('Project Saved');
 				console.log(data);
-				$('#saveButton > button').prop('disabled', false);
+				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -660,7 +672,7 @@ function saveProject_CLOSEOUT()
 			error: function()
 			{
 				alert('Project Saved');
-				$('#saveButton > button').prop('disabled', false);
+				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
@@ -678,9 +690,9 @@ function saveProject_CLOSEOUT()
 function isValidInput_CLOSEOUT(dates_CLOSEOUT)
 {	
 	//Check if all of the dates are in the correct format
-	for (var i = 0; i < dates.length; i++)
+	for (var i = 0; i < dates_CLOSEOUT.length; i++)
 	{
-		var date = dates[i];
+		var date = dates_CLOSEOUT[i];
 		if (date != "" && !isDate(date))
 		{
 			console.log("----------");
@@ -699,6 +711,43 @@ function isValidInput_CLOSEOUT(dates_CLOSEOUT)
 function returnToProjectManager () {
 	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
+
+function goToFindProject() {
+	$(".editProject").hide();
+	$("#findProject").show();
+}
+
+function goToProjectManager() {
+	
+	$(".editProject").hide();
+	$("#projectManager").show();
+	
+	switch(currentDivLocation){
+		case "projectData":
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			break;
+		case "permitData":
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
+			$('#permitData').find('#buildingPermit').addClass('active');
+			$('#permitData').find('#permits').addClass('active');
+			break;
+		case "closeoutData":
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			break;
+			
+	}
+}
+
+
+
+
 
 var CLOSEOUTSTATUS_DROPDOWNS = [
                                 "mg2CompletionStatus",                
@@ -734,36 +783,37 @@ var PAGETYPE_PERMIT = 'permit';
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
-	$('.nav-tabs > li').click(function () {
-		$('.info-tab').removeClass('active');
-		$('#' + $(this).attr('data-tab')).addClass('active');
+	
+	$('#permitData').find('.nav-tabs > li').click(function () {
+		$('#permitData').find('.info-tab').removeClass('active');
+		$('#permitData').find('#' + $(this).attr('data-tab')).addClass('active');
 		
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
-		$('#saveButton > button').prop('disabled', true);
+		$('#permitData').find('#saveButton > button').prop('disabled', true);
 
 	});
 	
-	$("#buildingPermitLastUpdated").datepicker();
-	$("#buildingInspectionLastUpdated").datepicker();
-	$("#roofingPermitLastUpdated").datepicker();
-	$("#roofingInspectionLastUpdated").datepicker();
-	$("#mechanicalPermitLastUpdated").datepicker();
-	$("#mechanicalInspectionLastUpdated").datepicker();
-	$("#electricalPermitLastUpdated").datepicker();
-	$("#electricalInspectionLastUpdated").datepicker();
-	$("#plumbingPermitLastUpdated").datepicker();
-	$("#plumbingInspectionLastUpdated").datepicker();
-	$("#sprinklerPermitLastUpdated").datepicker();
-	$("#sprinklerInspectionLastUpdated").datepicker();
-	$("#fireAlarmInspectionLastUpdated").datepicker();
-	$("#fireAlarmPermitLastUpdated").datepicker();
-	$("#voltagePermitLastUpdated").datepicker();
-	$("#voltageInspectionLastUpdated").datepicker();
-	$("#otherAPermitLastUpdated").datepicker();
-	$("#otherBPermitLastUpdated").datepicker();
-	$("#otherAInspectionLastUpdated").datepicker();
-	$("#otherBInspectionLastUpdated").datepicker();
+	$('#permitData').find("#buildingPermitLastUpdated").datepicker();
+	$('#permitData').find("#buildingInspectionLastUpdated").datepicker();
+	$('#permitData').find("#roofingPermitLastUpdated").datepicker();
+	$('#permitData').find("#roofingInspectionLastUpdated").datepicker();
+	$('#permitData').find("#mechanicalPermitLastUpdated").datepicker();
+	$('#permitData').find("#mechanicalInspectionLastUpdated").datepicker();
+	$('#permitData').find("#electricalPermitLastUpdated").datepicker();
+	$('#permitData').find("#electricalInspectionLastUpdated").datepicker();
+	$('#permitData').find("#plumbingPermitLastUpdated").datepicker();
+	$('#permitData').find("#plumbingInspectionLastUpdated").datepicker();
+	$('#permitData').find("#sprinklerPermitLastUpdated").datepicker();
+	$('#permitData').find("#sprinklerInspectionLastUpdated").datepicker();
+	$('#permitData').find("#fireAlarmInspectionLastUpdated").datepicker();
+	$('#permitData').find("#fireAlarmPermitLastUpdated").datepicker();
+	$('#permitData').find("#voltagePermitLastUpdated").datepicker();
+	$('#permitData').find("#voltageInspectionLastUpdated").datepicker();
+	$('#permitData').find("#otherAPermitLastUpdated").datepicker();
+	$('#permitData').find("#otherBPermitLastUpdated").datepicker();
+	$('#permitData').find("#otherAInspectionLastUpdated").datepicker();
+	$('#permitData').find("#otherBInspectionLastUpdated").datepicker();
 	
 	/*
 	$('.permitStatus, .inspectionStatus').change(function () {
@@ -776,8 +826,7 @@ $(document).ready(function(){
 
 function getProject_PERMIT()
 {
-	console.log(getParameterByName("id"));
-		projectID = getParameterByName("id");
+	
 	if(projectID !== null) {
 		$.ajax({
 			type: 'POST',
@@ -792,9 +841,9 @@ function getProject_PERMIT()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
-				setProjectHeader(data);
+				setProjectHeader(data, currentDivLocation);
 
-				fillTabs(PROJECT_DATA);
+				fillTabs_PERMIT(PROJECT_DATA);
 				getTasks();
 			}
 		});
@@ -817,7 +866,7 @@ function getProjectEnums_PERMIT()
 		success: function(data)
 		{
 			fillDropdowns_PERMIT(data);
-			//if(PAGETYPE == 'edit')
+			if(edit == true)
 			getProject_PERMIT();
 		}
 	});
@@ -837,7 +886,9 @@ function fillDropdowns_PERMIT(json)
 		option.setAttribute("value", permitStage[i].name);
 		d.appendChild(option);
 	}
-	$(".permitStatus").append(d);
+	
+	$('#permitData').find(".permitStatus").find('option').remove();
+	$('#permitData').find(".permitStatus").append(d);
 	
 	var dd = document.createDocumentFragment();
 	for (var i = 0; i < inspectionStage.length; i++) {
@@ -846,7 +897,9 @@ function fillDropdowns_PERMIT(json)
 		option.setAttribute("value", inspectionStage[i].name);
 		dd.appendChild(option);
 	}
-	$('.inspectionStatus').append(dd);
+	
+	$('#permitData').find('.inspectionStatus').find('option').remove();
+	$('#permitData').find('.inspectionStatus').append(dd);
 	
 }
 
@@ -854,64 +907,64 @@ function fillTabs_PERMIT(data)
 {
 	var json = data;
 	
-	$(".projectIdentifier").html(json.warehouse.city.name 
+	$('#permitData').find(".projectIdentifier").html(json.warehouse.city.name 
 			+ ", " + json.warehouse.state + " --- " +  json.projectItem.name);
 	
 	console.log(json);
 	if (json.permits != null)
 	{	
-		$("#buildingPermitLastUpdated").val(json.permits.building);
-		$("#buildingPermitStatus").val(json.permits.buildingPermitStatus);
-		$("#buildingInspectionStatus").val(json.permits.buildingInspectionStatus);
-		$("#buildingInspectionLastUpdated").val(json.permits.buildingInspectionLastUpdated);
+		$('#permitData').find("#buildingPermitLastUpdated").val(json.permits.building);
+		$('#permitData').find("#buildingPermitStatus").val(json.permits.buildingPermitStatus);
+		$('#permitData').find("#buildingInspectionStatus").val(json.permits.buildingInspectionStatus);
+		$('#permitData').find("#buildingInspectionLastUpdated").val(json.permits.buildingInspectionLastUpdated);
 		
-		$("#roofingPermitLastUpdated").val(json.permits.roofing);
-		$("#roofingPermitStatus").val(json.permits.roofingPermitStatus);
-		$("#roofingInspectionStatus").val(json.permits.roofingInspectionStatus);
-		$("#roofingInspectionLastUpdated").val(json.permits.roofingInspectionLastUpdated);
+		$('#permitData').find("#roofingPermitLastUpdated").val(json.permits.roofing);
+		$('#permitData').find("#roofingPermitStatus").val(json.permits.roofingPermitStatus);
+		$('#permitData').find("#roofingInspectionStatus").val(json.permits.roofingInspectionStatus);
+		$('#permitData').find("#roofingInspectionLastUpdated").val(json.permits.roofingInspectionLastUpdated);
 		
-		$("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
-		$("#mechanicalPermitStatus").val(json.permits.mechanicalPermitStatus);
-		$("#mechanicalInspectionStatus").val(json.permits.mechanicalInspectionStatus);
-		$("#mechanicalInspectionLastUpdated").val(json.permits.mechanicalInspectionLastUpdated);
+		$('#permitData').find("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
+		$('#permitData').find("#mechanicalPermitStatus").val(json.permits.mechanicalPermitStatus);
+		$('#permitData').find("#mechanicalInspectionStatus").val(json.permits.mechanicalInspectionStatus);
+		$('#permitData').find("#mechanicalInspectionLastUpdated").val(json.permits.mechanicalInspectionLastUpdated);
 		
-		$("#electricalPermitLastUpdated").val(json.permits.electrical);
-		$("#electricalPermitStatus").val(json.permits.electricalPermitStatus);
-		$("#electricalInspectionStatus").val(json.permits.electricalInspectionStatus);
-		$("#electricalInspectionLastUpdated").val(json.permits.electricalInspectionLastUpdated);
+		$('#permitData').find("#electricalPermitLastUpdated").val(json.permits.electrical);
+		$('#permitData').find("#electricalPermitStatus").val(json.permits.electricalPermitStatus);
+		$('#permitData').find("#electricalInspectionStatus").val(json.permits.electricalInspectionStatus);
+		$('#permitData').find("#electricalInspectionLastUpdated").val(json.permits.electricalInspectionLastUpdated);
 		
-		$("#plumbingPermitLastUpdated").val(json.permits.plumbing);
-		$("#plumbingPermitStatus").val(json.permits.plumbingPermitStatus);
-		$("#plumbingInspectionStatus").val(json.permits.plumbingInspectionStatus);
-		$("#plumbingInspectionLastUpdated").val(json.permits.plumbingInspectionLastUpdated);
+		$('#permitData').find("#plumbingPermitLastUpdated").val(json.permits.plumbing);
+		$('#permitData').find("#plumbingPermitStatus").val(json.permits.plumbingPermitStatus);
+		$('#permitData').find("#plumbingInspectionStatus").val(json.permits.plumbingInspectionStatus);
+		$('#permitData').find("#plumbingInspectionLastUpdated").val(json.permits.plumbingInspectionLastUpdated);
 		
-		$("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
-		$("#sprinklerPermitStatus").val(json.permits.sprinklerPermitStatus);
-		$("#sprinklerInspectionStatus").val(json.permits.sprinklerInspectionStatus);
-		$("#sprinklerInspectionLastUpdated").val(json.permits.sprinklerInspectionLastUpdated);
+		$('#permitData').find("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
+		$('#permitData').find("#sprinklerPermitStatus").val(json.permits.sprinklerPermitStatus);
+		$('#permitData').find("#sprinklerInspectionStatus").val(json.permits.sprinklerInspectionStatus);
+		$('#permitData').find("#sprinklerInspectionLastUpdated").val(json.permits.sprinklerInspectionLastUpdated);
 		
-		$("#fireAlarmPermitLastUpdated").val(json.permits.fire_alarm);
-		$("#fireAlarmPermitStatus").val(json.permits.fireAlarmPermitStatus);
-		$("#fireAlarmInspectionStatus").val(json.permits.fireAlarmInspectionStatus);
-		$("#fireAlarmInspectionLastUpdated").val(json.permits.fireAlarmInspectionLastUpdated);
+		$('#permitData').find("#fireAlarmPermitLastUpdated").val(json.permits.fire_alarm);
+		$('#permitData').find("#fireAlarmPermitStatus").val(json.permits.fireAlarmPermitStatus);
+		$('#permitData').find("#fireAlarmInspectionStatus").val(json.permits.fireAlarmInspectionStatus);
+		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(json.permits.fireAlarmInspectionLastUpdated);
 		
-		$("#voltagePermitLastUpdated").val(json.permits.low_voltage);
-		$("#voltagePermitStatus").val(json.permits.voltagePermitStatus);
-		$("#voltageInspectionStatus").val(json.permits.voltageInspectionStatus);
-		$("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
+		$('#permitData').find("#voltagePermitLastUpdated").val(json.permits.low_voltage);
+		$('#permitData').find("#voltagePermitStatus").val(json.permits.voltagePermitStatus);
+		$('#permitData').find("#voltageInspectionStatus").val(json.permits.voltageInspectionStatus);
+		$('#permitData').find("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
 		
-	    $("#otherAPermitStatus").val(json.permits.otherAPermitStatus);
-	    $("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
-	    $("#otherAInspectionStatus").val(json.permits.otherAInspectionStatus);
-	    $("#otherAInspectionLastUpdated").val(json.permits.otherAInspectionLastUpdated);
+	    $('#permitData').find("#otherAPermitStatus").val(json.permits.otherAPermitStatus);
+	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
+	    $('#permitData').find("#otherAInspectionStatus").val(json.permits.otherAInspectionStatus);
+	    $('#permitData').find("#otherAInspectionLastUpdated").val(json.permits.otherAInspectionLastUpdated);
 	    
-	    $("#otherBPermitStatus").val(json.permits.otherBPermitStatus);
-	    $("#otherBPermitLastUpdated").val(json.permits.otherBPermit);
-	    $("#otherBInspectionStatus").val(json.permits.otherBInspectionStatus);
-	    $("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
+	    $('#permitData').find("#otherBPermitStatus").val(json.permits.otherBPermitStatus);
+	    $('#permitData').find("#otherBPermitLastUpdated").val(json.permits.otherBPermit);
+	    $('#permitData').find("#otherBInspectionStatus").val(json.permits.otherBInspectionStatus);
+	    $('#permitData').find("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
 	    
-	    $('#permitNotes').text(json.permits.permitNotes);
-	    $('#inspectionNotes').text(json.permits.inspectionNotes);
+	    $('#permitData').find('#permitNotes').text(json.permits.permitNotes);
+	    $('#permitData').find('#inspectionNotes').text(json.permits.inspectionNotes);
 	}
 	    
 }
@@ -925,58 +978,58 @@ function saveProject_PERMIT()
 {
     console.log("Saving Permit Information");
 	
-    var buildingPermitStatus = $("#buildingPermitStatus").val();
-    var buildingPermitLastUpdated = $("#buildingPermitLastUpdated").val();
-    var buildingInspectionStatus = $("#buildingInspectionStatus").val();
-    var buildingInspectionLastUpdated = $("#buildingInspectionLastUpdated").val();
+    var buildingPermitStatus = $('#permitData').find("#buildingPermitStatus").val();
+    var buildingPermitLastUpdated = $('#permitData').find("#buildingPermitLastUpdated").val();
+    var buildingInspectionStatus = $('#permitData').find("#buildingInspectionStatus").val();
+    var buildingInspectionLastUpdated = $('#permitData').find("#buildingInspectionLastUpdated").val();
     
-    var roofingPermitStatus = $("#roofingPermitStatus").val();
-    var roofingPermitLastUpdated = $("#roofingPermitLastUpdated").val();
-    var roofingInspectionStatus = $("#roofingInspectionStatus").val();
-    var roofingInspectionLastUpdated = $("#roofingInspectionLastUpdated").val();
+    var roofingPermitStatus = $('#permitData').find("#roofingPermitStatus").val();
+    var roofingPermitLastUpdated = $('#permitData').find("#roofingPermitLastUpdated").val();
+    var roofingInspectionStatus = $('#permitData').find("#roofingInspectionStatus").val();
+    var roofingInspectionLastUpdated = $('#permitData').find("#roofingInspectionLastUpdated").val();
     
-    var mechanicalPermitStatus = $("#mechanicalPermitStatus").val();
-    var mechanicalPermitLastUpdated = $("#mechanicalPermitLastUpdated").val();
-    var mechanicalInspectionStatus = $("#mechanicalInspectionStatus").val();
-    var mechanicalInspectionLastUpdated = $("#mechanicalInspectionLastUpdated").val();
+    var mechanicalPermitStatus = $('#permitData').find("#mechanicalPermitStatus").val();
+    var mechanicalPermitLastUpdated = $('#permitData').find("#mechanicalPermitLastUpdated").val();
+    var mechanicalInspectionStatus = $('#permitData').find("#mechanicalInspectionStatus").val();
+    var mechanicalInspectionLastUpdated = $('#permitData').find("#mechanicalInspectionLastUpdated").val();
     
-    var electricalPermitStatus = $("#electricalPermitStatus").val();
-    var electricalPermitLastUpdated = $("#electricalPermitLastUpdated").val();
-    var electricalInspectionStatus = $("#electricalInspectionStatus").val();
-    var electricalInspectionLastUpdated = $("#electricalInspectionLastUpdated").val();
+    var electricalPermitStatus = $('#permitData').find("#electricalPermitStatus").val();
+    var electricalPermitLastUpdated = $('#permitData').find("#electricalPermitLastUpdated").val();
+    var electricalInspectionStatus = $('#permitData').find("#electricalInspectionStatus").val();
+    var electricalInspectionLastUpdated = $('#permitData').find("#electricalInspectionLastUpdated").val();
     
-    var plumbingPermitStatus = $("#plumbingPermitStatus").val();
-    var plumbingPermitLastUpdated = $("#plumbingPermitLastUpdated").val();
-    var plumbingInspectionStatus = $("#plumbingInspectionStatus").val();
-    var plumbingInspectionLastUpdated = $("#plumbingInspectionLastUpdated").val();
+    var plumbingPermitStatus = $('#permitData').find("#plumbingPermitStatus").val();
+    var plumbingPermitLastUpdated = $('#permitData').find("#plumbingPermitLastUpdated").val();
+    var plumbingInspectionStatus = $('#permitData').find("#plumbingInspectionStatus").val();
+    var plumbingInspectionLastUpdated = $('#permitData').find("#plumbingInspectionLastUpdated").val();
     
-    var sprinklerPermitStatus = $("#sprinklerPermitStatus").val();
-    var sprinklerPermitLastUpdated = $("#sprinklerPermitLastUpdated").val();
-    var sprinklerInspectionStatus = $("#sprinklerInspectionStatus").val();
-    var sprinklerInspectionLastUpdated = $("#sprinklerInspectionLastUpdated").val();
+    var sprinklerPermitStatus = $('#permitData').find("#sprinklerPermitStatus").val();
+    var sprinklerPermitLastUpdated = $('#permitData').find("#sprinklerPermitLastUpdated").val();
+    var sprinklerInspectionStatus = $('#permitData').find("#sprinklerInspectionStatus").val();
+    var sprinklerInspectionLastUpdated = $('#permitData').find("#sprinklerInspectionLastUpdated").val();
     
-    var fireAlarmPermitStatus = $("#fireAlarmPermitStatus").val();
-    var fireAlarmPermitLastUpdated = $("#fireAlarmPermitLastUpdated").val();
-    var fireAlarmInspectionStatus = $("#fireAlarmInspectionStatus").val();
-    var fireAlarmInspectionLastUpdated = $("#fireAlarmInspectionLastUpdated").val();
+    var fireAlarmPermitStatus = $('#permitData').find("#fireAlarmPermitStatus").val();
+    var fireAlarmPermitLastUpdated = $('#permitData').find("#fireAlarmPermitLastUpdated").val();
+    var fireAlarmInspectionStatus = $('#permitData').find("#fireAlarmInspectionStatus").val();
+    var fireAlarmInspectionLastUpdated = $('#permitData').find("#fireAlarmInspectionLastUpdated").val();
     
-    var voltagePermitStatus = $("#voltagePermitStatus").val();
-    var voltagePermitLastUpdated = $("#voltagePermitLastUpdated").val();
-    var voltageInspectionStatus = $("#voltageInspectionStatus").val();
-    var voltageInspectionLastUpdated = $("#voltageInspectionLastUpdated").val();
+    var voltagePermitStatus = $('#permitData').find("#voltagePermitStatus").val();
+    var voltagePermitLastUpdated = $('#permitData').find("#voltagePermitLastUpdated").val();
+    var voltageInspectionStatus = $('#permitData').find("#voltageInspectionStatus").val();
+    var voltageInspectionLastUpdated = $('#permitData').find("#voltageInspectionLastUpdated").val();
     
-    var otherAPermitStatus = $("#otherAPermitStatus").val();
-    var otherAPermitLastUpdated = $("#otherAPermitLastUpdated").val();
-    var otherAInspectionStatus = $("#otherAInspectionStatus").val();
-    var otherAInspectionLastUpdated = $("#otherAInspectionLastUpdated").val();
+    var otherAPermitStatus = $('#permitData').find("#otherAPermitStatus").val();
+    var otherAPermitLastUpdated = $('#permitData').find("#otherAPermitLastUpdated").val();
+    var otherAInspectionStatus = $('#permitData').find("#otherAInspectionStatus").val();
+    var otherAInspectionLastUpdated = $('#permitData').find("#otherAInspectionLastUpdated").val();
     
-    var otherBPermitStatus = $("#otherBPermitStatus").val();
-    var otherBPermitLastUpdated = $("#otherBPermitLastUpdated").val();
-    var otherBInspectionStatus = $("#otherBInspectionStatus").val();
-    var otherBInspectionLastUpdated = $("#otherBInspectionLastUpdated").val();
+    var otherBPermitStatus = $('#permitData').find("#otherBPermitStatus").val();
+    var otherBPermitLastUpdated = $('#permitData').find("#otherBPermitLastUpdated").val();
+    var otherBInspectionStatus = $('#permitData').find("#otherBInspectionStatus").val();
+    var otherBInspectionLastUpdated = $('#permitData').find("#otherBInspectionLastUpdated").val();
 
-    var permitNotes = $('#permitNotes').val();
-    var inspectionNotes = $('#inspectionNotes').val();
+    var permitNotes = $('#permitData').find('#permitNotes').val();
+    var inspectionNotes = $('#permitData').find('#inspectionNotes').val();
     
     console.log(permitNotes);
     console.log(inspectionNotes);
@@ -995,7 +1048,7 @@ function saveProject_PERMIT()
                 ];
     
     
-    if(isValidInput(dates_PERMIT))
+    if(isValidInput_PERMIT(dates_PERMIT))
     {
     	console.log("we got valid data now");
     	
@@ -1074,9 +1127,9 @@ function saveProject_PERMIT()
 			success:function(data){
 				
 				console.log(data);
-
+				updateFrontEnd();
 				alert('Save Complete!');
-				$('#saveButton > button').prop('disabled', false);
+				$('#permitData').find('#saveButton > button').prop('disabled', false);
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -1088,7 +1141,7 @@ function saveProject_PERMIT()
 			{
 				console.log(data);
 				alert('Save Complete!');
-				$('#saveButton > button').prop('disabled', false);
+				$('#permitData').find('#saveButton > button').prop('disabled', false);
 
 			}
 		});
@@ -1104,9 +1157,9 @@ function returnToProjectManager () {
 function isValidInput_PERMIT(dates_PERMIT)
 {	
 	//Check if all of the dates are in the correct format
-	for (var i = 0; i < dates.length; i++)
+	for (var i = 0; i < dates_PERMIT.length; i++)
 	{
-		var date = dates[i];
+		var date = dates_PERMIT[i];
 		if (date != "" && !isDate(date))
 		{
 			console.log("----------");
@@ -1133,6 +1186,7 @@ function isValidInput_PERMIT(dates_PERMIT)
 var numChangeOrders = 0;
 var PAGETYPE_PROJECT_DATA = "add";
 var changeOrders = [];
+var edit;
 
 
 var stages=["Active", "Proposal", "Budgetary", "Closed", "Inactive"];
@@ -1151,11 +1205,11 @@ var eqpid_array = [];
 //functions starting at runtime
 $(document).ready(function()
 {
-	$('.nav-tabs > li').click(function () {
+	$('#projectData').find('.nav-tabs > li').click(function () {
 		if($(this).attr('id') !== 'saveProjectLink') {
 
-			$('.info-tab').removeClass('active');
-			$('#' + $(this).attr('data-tab')).addClass('active');
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('#' + $(this).attr('data-tab')).addClass('active');
 			
 			$(this).siblings().removeClass('active');
 			$(this).addClass('active');
@@ -1177,7 +1231,7 @@ $(document).ready(function()
 //This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
 //Input: none
 //Output: none (calls functions to fill in all of the dropdown functions)
-function getProjectEnums_PROJECT_DATA()
+function getProjectEnums_PROJECT_DATA(edit)
 {
 
 	$.ajax({
@@ -1202,12 +1256,12 @@ function getProjectEnums_PROJECT_DATA()
 			console.log("about ot fill dropdowns");
 			fillDropdowns_PROJECT_DATA(data);
 			
-			PAGETYPE_PROJECT_DATA = getParameterByName("type");	
-			if(PAGETYPE_PROJECT_DATA == 'edit') {
+			//PAGETYPE_PROJECT_DATA = getParameterByName("type");	
+			if(edit == true) {
 				getProject_PROJECT_DATA();
 			}
 			else {
-				$("#projectHeader").text("New Project");
+				$('#projectData').find("#projectHeader").text("New Project");
 			}
 		}
 	});
@@ -1284,58 +1338,62 @@ function generateDropdowns(str, className)
 		for(var i = 0; i < closeoutstatus_dropdowns.length; i++)
 		{
 			var copy = d.cloneNode(true);
-			$("#" +closeoutstatus_dropdowns[i]).append(copy);	
+			$('#projectData').find("#" +closeoutstatus_dropdowns[i]).find('option').remove();
+			$('#projectData').find("#" +closeoutstatus_dropdowns[i]).append(copy);	
 		}
 	}
 	else
-		$("#"+className).append(d);
+		{
+		$('#projectData').find("#" +className).find('option').remove();
+		$('#projectData').find("#"+className).append(d);
+		}
 }
 
 function saveProject_PROJECT_DATA() {
-	var mcsNumber = $('#mcsNumber').val();
+	var mcsNumber = $('#projectData').find('#mcsNumber').val();
 	
 	// Required Information
-	var warehouse = $('#warehouse').val();
-	var projectClass = $('#class').val();
-	var item = $('#project').val();
-	var manager = $('#manager').val();
-	var supervisor = $('#supervisor').val();
-	var status = $('#status').val();
-	var stage = $("#stage").val();
-	var pType = $('#pType').val();
-	var scope = $("#scope").val();
+	var warehouse = $('#projectData').find('#warehouse').val();
+	var projectClass = $('#projectData').find('#class').val();
+	var item = $('#projectData').find('#project').val();
+	var manager = $('#projectData').find('#manager').val();
+	var supervisor = $('#projectData').find('#supervisor').val();
+	var status = $('#projectData').find('#status').val();
+	var stage = $('#projectData').find("#stage").val();
+	var pType = $('#projectData').find('#pType').val();
+	var scope = $('#projectData').find("#scope").val();
 	
 
 	// scheduling
-	var initiated = $("#initiatedDate").val();
-	var survey = $("#surveyDate").val();
-	var costco = $("#costcoDate").val();
-	var proposalDate = $("#proposalDate").val();
-	var startDate = $("#startDate").val();
-	var scheduledTurnover = $("#scheduledTurnover").val();
-	var actualTurnover = $("#actualTurnover").val();
-	var permitApp = $("#permitApp").val();
+	var initiated = $('#projectData').find("#initiatedDate").val();
+	var survey = $('#projectData').find("#surveyDate").val();
+	var costco = $('#projectData').find("#costcoDate").val();
+	var proposalDate = $('#projectData').find("#proposalDate").val();
+	var startDate = $('#projectData').find("#startDate").val();
+	var scheduledTurnover = $('#projectData').find("#scheduledTurnover").val();
+	var actualTurnover = $('#projectData').find("#actualTurnover").val();
+	var permitApp = $('#projectData').find("#permitApp").val();
 
 	// financial
-	var shouldInvoice = $("#shouldInvoice").val();
-	var actualInvoice = $("#actualInvoice").val();
-	var notes = $("#notes").val();
-	var refrigNotes = $("#zUpdates").val();
-	var cost = $("#projectCost").val();
-	var customerNumber = $("#custNum").val();
+	var shouldInvoice = $('#projectData').find("#shouldInvoice").val();
+	var actualInvoice = $('#projectData').find("#actualInvoice").val();
+	var notes = $('#projectData').find("#notes").val();
+	var refrigNotes = $('#projectData').find("#zUpdates").val();
+	var cost = $('#projectData').find("#projectCost").val();
+	var customerNumber = $('#projectData').find("#custNum").val();
 	
 	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
 	var dates_PROJECT_DATA = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
 	
 	if(isValidInput_PROJECT_DATA(required, dates_PROJECT_DATA)) {
-		$('.info-tab').removeClass('active');
-		$('#saveButton').addClass('active');
+		$('#projectData').find('.info-tab').removeClass('active');
+		$('#projectData').find('#saveButton').addClass('active');
 		
-		$('.nav-tabs > li.active').removeClass('active');
-		$('#saveProjectLink').addClass('active');
+		$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+		$('#projectData').find('#saveProjectLink').addClass('active');
 		
 		var action = 'addNewProject';
-		if (PAGETYPE_PROJECT_DATA === 'edit') {
+		if (edit == true) {
 			action = 'editExistingProject';
 		}
 		
@@ -1376,6 +1434,8 @@ function saveProject_PROJECT_DATA() {
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
+				updateFrontEnd();
+				//updateProjectManager();
 				alert('Save Complete!');
 				$('#saveButton > button').prop('disabled', false);
 
@@ -1434,7 +1494,7 @@ function isValidInput_PROJECT_DATA(requiredFields, dates)
 //Output: none
 function getProject_PROJECT_DATA()
 {
-	projectID = getParameterByName("id");
+	console.log("IN PROJ DATA");
 	
 	if (projectID)
 	{
@@ -1450,8 +1510,8 @@ function getProject_PROJECT_DATA()
 			success: function(data)
 			{
 				PROJECT_DATA = (data);
-				setProjectHeader(data);
-				fillForm(data);
+				setProjectHeader(data, currentDivLocation);
+				fillForm_PROJECT_DATA(data);
 				getTasks();
 			}
 		});
@@ -1465,34 +1525,34 @@ function fillForm_PROJECT_DATA(data)
 {
 	console.log(data);
 	var json = (data);	
-	$("#mcsNumber").val(json.McsNumber);
+	$('#projectData').find("#mcsNumber").val(json.McsNumber);
 
-  $("#warehouse").val(json.warehouse.id);
-	$("#class").val(json.projectClass.id);
-	$("#project").val(json.projectItem.id);
-	$("#manager").val(json.projectManagers.id);
-	$("#supervisor").val(json.supervisors[0].id);
-	$("#stage").val(json.stage.id);
-	$("#status").val(json.status.id);
-	$("#pType").val(json.projectType.id);
-	$("#scope").val(json.scope);
+  $('#projectData').find("#warehouse").val(json.warehouse.id);
+	$('#projectData').find("#class").val(json.projectClass.id);
+	$('#projectData').find("#project").val(json.projectItem.id);
+	$('#projectData').find("#manager").val(json.projectManagers.id);
+	$('#projectData').find("#supervisor").val(json.supervisors[0].id);
+	$('#projectData').find("#stage").val(json.stage.id);
+	$('#projectData').find("#status").val(json.status.id);
+	$('#projectData').find("#pType").val(json.projectType.id);
+	$('#projectData').find("#scope").val(json.scope);
 
 	
-	$("#initiatedDate").val(json.projectInitiatedDate);;
-	$("#surveyDate").val(json.siteSurvey);
-	$("#costcoDate").val(json.costcoDueDate);
-	$("#proposalDate").val(json.proposalSubmitted);
-	$("#startDate").val(json.scheduledStartDate);
-	$("#scheduledTurnover").val(json.scheduledTurnover);
-	$("#actualTurnover").val(json.actualTurnover);
-	$("#permitApp").val(json.permitApp);
+	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);;
+	$('#projectData').find("#surveyDate").val(json.siteSurvey);
+	$('#projectData').find("#costcoDate").val(json.costcoDueDate);
+	$('#projectData').find("#proposalDate").val(json.proposalSubmitted);
+	$('#projectData').find("#startDate").val(json.scheduledStartDate);
+	$('#projectData').find("#scheduledTurnover").val(json.scheduledTurnover);
+	$('#projectData').find("#actualTurnover").val(json.actualTurnover);
+	$('#projectData').find("#permitApp").val(json.permitApp);
 
-	$("#shouldInvoice").val(json.shouldInvoice);
-	$("#actualInvoice").val(json.invoiced);
-	$("#notes").val(json.projectNotes);
-	$("#zUpdates").val(json.zachUpdates);
-	$("#projectCost").val(json.cost);
-	$("#custNum").val(json.customerNumber);
+	$('#projectData').find("#shouldInvoice").val(json.shouldInvoice);
+	$('#projectData').find("#actualInvoice").val(json.invoiced);
+	$('#projectData').find("#notes").val(json.projectNotes);
+	$('#projectData').find("#zUpdates").val(json.zachUpdates);
+	$('#projectData').find("#projectCost").val(json.cost);
+	$('#projectData').find("#custNum").val(json.customerNumber);
 }
 
 
@@ -1533,9 +1593,9 @@ let selectedChangeOrder = null;
 let selectedEquipment = null;
 
 $(document).ready(function () {
-	$('.nav-tabs > li').click(function () {
-		$('.info-tab').removeClass('active');
-		$('#' + $(this).attr('data-tab')).addClass('active');
+	$('#projectManager').find('.nav-tabs > li').click(function () {
+		$('#projectManager').find('.info-tab').removeClass('active');
+		$('#projectManager').find('#' + $(this).attr('data-tab')).addClass('active');
 		
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
@@ -1544,9 +1604,9 @@ $(document).ready(function () {
 	
 });
 
-function getProject_PROJECT_MANAGER() {
-	//console.log(getParameterByName('id'));
-	projectID = getParameterByName('id');
+function getProject_PROJECT_MANAGER(project_id) {
+	console.log("ID = ", project_id);
+    projectID = project_id;
 	if (projectID !== null) {
 		$.ajax({
 			type: 'POST',
@@ -1558,9 +1618,9 @@ function getProject_PROJECT_MANAGER() {
 			}, success: function (data) {
 				
 				console.log("the data eqausl == " ,data);
-				setProjectHeader(data);
+				setProjectHeader(data, currentDivLocation);
 
-				fillTabs_PROJECT_MANAGER(data);
+				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
 				
 				getTasks();
 			}, error: function (data) {
@@ -1584,15 +1644,30 @@ function fillTabs_PROJECT_MANAGER (data) {
 }
 
 function editProjectInfo () {
-	window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
+	document.getElementById("projectManager").style.display = 'none';
+	getProjectEnums_PROJECT_DATA(true);
+	currentDivLocation = "projectData";
+	document.getElementById("projectData").style.display = 'inline';
+	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
 }
 
 function editPermitsAndInspections () {
-	window.location.href = PROJECT_PERMITS_AND_INSPECTIONS + '?id=' + projectID;
+	document.getElementById("projectManager").style.display = 'none';
+	edit = true;
+	getProjectEnums_PERMIT(true);
+	currentDivLocation = "permitData";
+	document.getElementById("permitData").style.display = 'inline';
+	
+	//window.location.href = PROJECT_PERMITS_AND_INSPECTIONS + '?id=' + projectID;
 }
 
 function editCloseout () {
-	window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
+	document.getElementById("projectManager").style.display = 'none';
+	edit = true;
+	getProjectEnums_CLOSEOUT(true);
+	currentDivLocation = "closeoutData";
+	document.getElementById("closeoutData").style.display = 'inline';
+	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
 
 function addChangeOrder () {
@@ -1604,13 +1679,15 @@ function addEquipment () {
 }
 
 function fillProjectInformation (data) {
-	$('#mcsNumber').text(data.McsNumber);
-	$('#projectItem').text(data.projectItem.name);
-	$('#projectStatus').text(data.status.name);
-	$('#projectType').text(data.projectType.name);
-	$('#projectStage').text(data.stage.name);
-	$('#projectManager').text(data.projectManagers.name);
-	$('#projectSupervisor').text(data.supervisors[0].name);
+	
+	$('#projectManager').find('#mcsNumber').text(data.McsNumber);
+	$('#projectManager').find('#projectItem').text(data.projectItem.name);
+	$('#projectManager').find('#projectStatus').text(data.status.name);
+	$('#projectManager').find('#projectType').text(data.projectType.name);
+	$('#projectManager').find('#projectStage').text(data.stage.name);
+	$('#projectManager').find('#projectManager').text(data.projectManagers.name);
+	$('#projectManager').find('#projectSupervisor').text(data.supervisors[0].name);
+	
 } // fillProjectInformation
 
 function fillChangeOrders (data) {
@@ -1654,40 +1731,40 @@ function fillPermitsAndInspecionts (data) {
 	let tabData = data.permits;
 	
 	// permits 
-	$('#buildingPermitDate').text(tabData.building);
-	$('#buildingPermit').text(tabData.buildingPermitStatus);
-	$('#roofingPermitDate').text(tabData.roofing);
-	$('#roofingPermit').text(tabData.roofingPermitStatus);
-	$('#mechanicalPermitDate').text(tabData.mechanical);
-	$('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
-	$('#electricalPermitDate').text(tabData.electrical);
-	$('#electricalPermit').text(tabData.electricalPermitStatus);
-	$('#plumbingPermitDate').text(tabData.plumbing);
-	$('#plumbingPermit').text(tabData.plumbingPermitStatus);
-	$('#sprinklerPermitDate').text(tabData.fire_sprinkler);
-	$('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
-	$('#fireAlarmPermitDate').text(tabData.fire_alarm);
-	$('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
-	$('#lowVoltagePermitDate').text(tabData.low_voltage);
-	$('#lowVoltagePermit').text(tabData.voltagePermitStatus);
+	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
+	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
+	$('#projectManager').find('#roofingPermitDate').text(tabData.roofing);
+	$('#projectManager').find('#roofingPermit').text(tabData.roofingPermitStatus);
+	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
+	$('#projectManager').find('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
+	$('#projectManager').find('#electricalPermitDate').text(tabData.electrical);
+	$('#projectManager').find('#electricalPermit').text(tabData.electricalPermitStatus);
+	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
+	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
+	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
+	$('#projectManager').find('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
+	$('#projectManager').find('#fireAlarmPermitDate').text(tabData.fire_alarm);
+	$('#projectManager').find('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
+	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
+	$('#projectManager').find('#lowVoltagePermit').text(tabData.voltagePermitStatus);
 	
 	// inspections
-	$('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
-	$('#buildingInspection').text(tabData.buildingInspectionStatus);
-	$('#roofingInspectionDate').text(tabData.roofingInspectionLastUpdated);
-	$('#roofingInspection').text(tabData.roofingInspectionStatus);
-	$('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
-	$('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
-	$('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
-	$('#electricalInspection').text(tabData.electricalInspectionStatus);
-	$('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
-	$('#plumbingInspection').text(tabData.plumbingInspectionStatus);
-	$('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
-	$('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
-	$('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
-	$('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
-	$('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
-	$('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
+	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
+	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
+	$('#projectManager').find('#roofingInspectionDate').text(tabData.roofingInspectionLastUpdated);
+	$('#projectManager').find('#roofingInspection').text(tabData.roofingInspectionStatus);
+	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
+	$('#projectManager').find('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
+	$('#projectManager').find('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
+	$('#projectManager').find('#electricalInspection').text(tabData.electricalInspectionStatus);
+	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
+	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
+	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
+	$('#projectManager').find('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
+	$('#projectManager').find('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
+	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
+	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
+	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
 }
 
 function fillEquipment (data) {
@@ -1783,7 +1860,7 @@ function fillCloseout (data) {
 			required++;
 			break;
 	}
-	$('#finalInspectionsRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalInspectionsRequired').text(completed + ' / ' + required);
 	required = 0;
 	completed = 0;
 	switch (closeoutData.GCWarrantyStatus) {
@@ -1876,7 +1953,7 @@ function fillCloseout (data) {
 		required++;
 		break;
 	}
-	$('#finalWarrantiesRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalWarrantiesRequired').text(completed + ' / ' + required);
 	completed = 0;
 	required = 0;
 	
@@ -1962,7 +2039,7 @@ function fillCloseout (data) {
 		break;
 	}
 	
-	$('#finalLiensRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalLiensRequired').text(completed + ' / ' + required);
 }
 
 function closeoutStatusConverter(param)
@@ -2105,6 +2182,34 @@ let taskFinder;
 let t0;
 let t1;
 
+$(document).on('click', '#AllStages', function(){
+	if(document.getElementById("AllStages").checked == true){
+		$('.commonStage').each(function(i, obj) {
+			obj.checked = true;
+		});
+		document.getElementById("NoStages").checked = false;
+	}
+});
+
+$(document).on('click', '#NoStages', function(){
+	if(document.getElementById("NoStages").checked == true){
+		$('.commonStage').each(function(i, obj) {
+			obj.checked = false;
+		});
+		document.getElementById("AllStages").checked = false;
+	}
+});
+
+$(document).on('click', '.commonStage', function(){
+    if(document.getElementById("AllStages").checked == true){
+		this.checked = true;
+	}
+    document.getElementById('NoStages').checked = false;
+    	
+    
+	
+});
+
 function getAllProjects() {
 	
 	clearAndAddSingleRow("Retrieving Projects...");
@@ -2122,11 +2227,48 @@ function getAllProjects() {
 			'action': 'getAllProjects'
 		}, success: function (data) {
 			projects = data;
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED", RETRIEVED_PROJECTS);
 			t1 = new Date().getTime();
 			console.log('took: ' + (t1 - t0) + 'ms');
 			getSearchCriteria();
+			filterProjects();
 		}
 	});
+}
+
+function updateFrontEnd() {
+	
+	clearAndAddSingleRow("Retrieving Projects...");
+	if (getParameterByName('type') === 'findTaskProject') {
+		$('#param-field').before('<h3>Select a Project to Create Task for:</h3>');
+		taskFinder = true;
+	} else taskFinder = false;
+	
+	filterProjects();
+	
+	
+}
+
+function updateDisplayableProjects(){
+	if(!RETRIEVED_PROJECTS) {console.log("Should have projects by now!"); return;}
+	console.log("RETRIEVED = ", RETRIEVED_PROJECTS);
+	DISPLAYABLE_PROJECTS = new Array();
+	
+	var stagesOfInterest = new Array();
+			$('.stage').each(function(i, obj) {
+				if(obj.checked == true) stagesOfInterest.push(obj);
+			});
+	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
+		for(var q = 0; q < stagesOfInterest.length; q++){
+			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id) {
+				DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
+			}
+		}
+	}	
+	
+	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS", DISPLAYABLE_PROJECTS);
+	
 }
 
 function getSearchCriteria() {
@@ -2186,57 +2328,7 @@ function clearAndAddSingleRow(msg) {
 }
 
 function checkInitFilter () {
-	if(getParameterByName('id') === 'user') {
-		$.ajax({
-			type: 'POST',
-			url: 'Project',
-			data: {
-				'domain': 'project',
-				'action': 'getManager'
-			}, success: function (data) {
-				if(data !== '') {
-					$('#paramID1').val('Manager');
-					$('#paramVal1').empty();
-					$('#paramVal1').append(managerOptions.cloneNode(true));
-					
-					switch(data) {
-						case 'Bart': 
-							document.getElementById('paramVal1').value = '14';
-							break;
-						case "Alex":
-							document.getElementById('paramVal1').value = '3';
-							break;
-						case "Andy":
-							document.getElementById('paramVal1').value = '2';
-							break;
-						case "Craig":
-							document.getElementById('paramVal1').value = '12';
-							break;
-						case "Daves":
-							document.getElementById('paramVal1').value = '7';
-							break;
-						case "David":
-							document.getElementById('paramVal1').value = '1';
-							break;
-						case "Jim": 
-							document.getElementById('paramVal1').value = '8';
-							break;
-						case "Joe":
-							document.getElementById('paramVal1').value = '5';
-							break;
-						case "Sai":
-							document.getElementById('paramVal1').value = '10';
-							break;
-						case "Tony":
-							document.getElementById('paramVal1').value = '4';
-							break;
-					}
-				filterProjects();
-				}
-			}
-		});
-		filterProjects();
-	} else if (getParameterByName('id') == 'activePermit') {
+	if (getParameterByName('id') == 'activePermit') {
 		$('#paramID1').val('Status');
 		$("#paramVal1").empty();
 		$("#paramVal1").append(statusOptions.cloneNode(true));
@@ -2244,9 +2336,64 @@ function checkInitFilter () {
 		document.getElementById('paramVal1').value = '30';
 		filterProjects();
 	} else {
-		filterProjects();
+		$('#paramID1').val('Warehouse');
+		let user;
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getUserInfo'
+			}, success: function (data) {
+				user = data;
+				$('#paramID2').val('Manager');
+				$('#paramVal2').empty();
+				$('#paramVal2').append(managerOptions.cloneNode(true));
+				matchUsernameToPersonID(user.firstName);
+				filterProjects();
+			}
+		});		
 	}
 }
+
+function matchUsernameToPersonID(userFirstName){
+	switch(userFirstName) {
+	case 'Bart': 
+		document.getElementById('paramVal2').value = '14';
+		break;
+	case "Alex":
+		document.getElementById('paramVal2').value = '3';
+		break;
+	case "Andy":
+		document.getElementById('paramVal2').value = '2';
+		break;
+	case "Craig":
+		document.getElementById('paramVal2').value = '12';
+		break;
+	case "Dave":
+		document.getElementById('paramVal2').value = '7';
+		break;
+	case "David":
+		document.getElementById('paramVal2').value = '1';
+		break;
+	case "Jim": 
+		document.getElementById('paramVal2').value = '8';
+		break;
+	case "Joe":
+		document.getElementById('paramVal2').value = '5';
+		break;
+	case "Adrienne":
+		document.getElementById('paramVal2').value = '17';
+		break;
+	case "Tony":
+		document.getElementById('paramVal2').value = '4';
+		break;
+	default:
+		removeParam(document.getElementById('paramID2'));
+}
+}
+
+
 
 function fillDropdowns_FIND_PROJECT(data) {
 	let d = document.createDocumentFragment();
@@ -2271,21 +2418,69 @@ function fillDropdowns_FIND_PROJECT(data) {
 }
 
 function generateDropdowns_FIND_PROJECTS(jsonData, field) {
+	
 	let json = JSON.parse(jsonData);
 	let d = document.createDocumentFragment();
-	
+	let sorted = false;
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
 		if (field == 'Warehouse') {
 			option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+		} else if(field == 'Stage') {
+			if(sorted == false){
+				let sortedStages = new Array(9);
+				
+				sortedStages[5] = {name:"----------------------"};
+				for(var q = 0; q < json.length; q++){
+					
+					if(json[q].id == 8) {sortedStages[0] = json[q];}
+					else if(json[q].id == 1) {sortedStages[1] = json[q];}
+					else if(json[q].id == 2) {sortedStages[2] = json[q];}
+					else if(json[q].id == 17){ sortedStages[3] = json[q]; }
+					else if(json[q].id == 16) {sortedStages[4] = json[q];}
+					else if(json[q].id == 4) {sortedStages[6] = json[q];}
+					else if(json[q].id == 9) {sortedStages[7] = json[q];}
+					else if(json[q].id == 15) {sortedStages[8] = json[q];}
+				}
+
+				
+				for(var q = 0; q < sortedStages.length; q++){
+					var optionStage = document.createElement('option');
+					optionStage.innerHTML = sortedStages[q].name;
+					if(sortedStages[q].name == "----------------------"){
+						optionStage.setAttribute('disabled', 'disabled');
+						d.appendChild(optionStage);
+						continue;
+					}
+					optionStage.setAttribute('value', sortedStages[q].id);
+					d.appendChild(optionStage);
+				}
+				sorted = true;
+				
+			}	
 		} else {
 			option.innerHTML = json[i].name;
 		}
 		
+		if(field == 'Stage') continue;
 		option.setAttribute('value', json[i].id);
 		d.appendChild(option);
 	}
 	return d;
+}
+
+function projectStageSort(json) {
+	var sortedStages = new Array();
+	for(var i = 0; i < json.length; i++){
+		if(json.name = "Budgetary") sortedStages[0] = json[i];
+		if(json.name = "Proposal") sortedStages[1] = json[i];
+		if(json.name = "Active") sortedStages[2] = json[i];
+		if(json.name = "Closeout") sortedStages[3] = json[i];
+		if(json.name = "Billing Closeout") sortedStages[4] = json[i];
+		if(json.name = "Closed") sortedStages[5] = json[i];
+		if(json.name = "On Hold") sortedStages[6] = json[i];
+		if(json.name = "Canceled") sortedStages[7] = json[i];
+	}
 }
 
 $(document).on('change', 'select.parameterValue', function () {
@@ -2392,11 +2587,16 @@ function removeParam(param) {
 }
 
 function filterProjects () {
-	let json = JSON.parse(projects['projects']);
+
+	updateDisplayableProjects();
+	//let json = JSON.parse(projects['projects']);
+	let json = DISPLAYABLE_PROJECTS;
 	
 	let parameters = $('.paramHolder').children('select');
 	
+	
 	let remaining = json.length;
+	if(paramNum != 0){
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
 		let val = $(parameters[i + 1]).val();
@@ -2480,17 +2680,210 @@ function filterProjects () {
 			}
 		}		
 	}
+	}
+	else {
+		$('#results > tbody').children('tr:not(.head)').remove();
+		if (remaining == 0) {
+			clearAndAddSingleRow('No Results Found!');
+		} else if (remaining > 50) {
+			clearAndAddSingleRow('Too many results. Refine your search.');
+		} else {
+			for (var k = 0; k < json.length; k++) {
+				if(json[k] != null) {
+					let projectListing = document.createElement('tr');
+					let listDetails0 = document.createElement('td');
+					let listDetails1 = document.createElement('td');
+					let listDetails2 = document.createElement('td');
+					let listDetails3 = document.createElement('td');
+					
+					projectListing.id = 'project' + json[k].id;
+					projectListing.onclick = function() {
+						navigateTo(projectListing);
+					}
+
+					listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
+											json[k].warehouse.warehouseID;
+					listDetails1.innerHTML = json[k].McsNumber;
+					listDetails2.innerHTML = json[k].projectItem.name;
+					listDetails3.innerHTML = json[k].projectManagers.name;
+					
+					$(projectListing).append(listDetails0);
+					$(projectListing).append(listDetails1);
+					$(projectListing).append(listDetails2);
+					$(projectListing).append(listDetails3);
+					
+					$('#results > tbody').append(projectListing);
+				}
+	}
+		}
+	}
 }
 
 function navigateTo(source) {
+	edit = true;
 	console.log($(source).attr('id'));
 	if(taskFinder) {
 		window.location.href = TASK_CREATOR + '?id=' + 
 			$(source).attr('id').replace('project', '');
 	} else {
-		window.location.href = PROJECTMANAGER + '?id=' + 
-			$(source).attr('id').replace('project', '');
+		document.getElementById("findProject").style.display = 'none';
+		$(source).attr('id').replace('project', '');
+		var proj_id = $(source).attr('id');
+		proj_id = proj_id.replace('project','');
+		getProject_PROJECT_MANAGER(proj_id);
+		currentDivLocation = "projectManager";
+		document.getElementById("projectManager").style.display = 'inline';
+		//window.location.href = PROJECTMANAGER + '?id=' + 
+			
 	}
 
 }
+
+$(document).on('change', '#taskSelector2', function () {
+	clearTaskTable();
+	fillTasksTable(tasks);
+	console.log("Right here \n");
+});
+
+
+function getTasks() {
+	console.log(projectID);
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjectTasks',
+			'id': projectID
+		}, success: function (data) {
+			console.log(data);
+			tasks = data;
+			if (data) {
+				fillTasksTable(data);
+			}
+		}, error: function (data) {
+			alert('Server Error!');
+		}
+	});
+}
+
+function fillTasksTable(tasks) {
+	let selector = $('#taskSelector2').val();
+	console.log(selector);
+	
+	let count = 0;
+	for (var i = 0; i < tasks.length; i++) {
+		if((selector === 'open' && tasks[i].status.id != 1) || 
+				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'open_complete' && tasks[i].status.id == 3) ||
+				(selector === 'closed' && tasks[i].status.id != 3)) 
+				continue; // do nothing
+
+		count++;
+		let taskListing = document.createElement('tr');
+		taskListing.value = tasks[i].id;
+		
+		let taskTitle = document.createElement('td');
+		let taskDesc = document.createElement('td');
+		let assignedTo = document.createElement('td');
+		let dueDate = document.createElement('td');
+		let severity = document.createElement('td');
+		let status = document.createElement('td');
+		let notes = document.createElement('td');
+
+		
+		
+		
+		taskTitle.innerHTML = tasks[i].title;
+		taskDesc.innerHTML = tasks[i].description;
+		assignedTo.innerHTML = tasks[i].assignee.firstName;
+		dueDate.innerHTML = tasks[i].dueDate;
+		severity.innerHTML = tasks[i].severity;
+		severity.align = 'center';
+		status.innerHTML = tasks[i].status.status;
+		notes.innerHTML = tasks[i].notes;
+		
+		
+		$(taskListing).append(taskTitle);
+		$(taskListing).append(taskDesc);
+		$(taskListing).append(assignedTo);
+		$(taskListing).append(dueDate);
+		$(taskListing).append(severity);
+		$(taskListing).append(status);
+		$(taskListing).append(notes);
+		
+		
+		$('#taskTable > tbody').append(taskListing);
+	}
+
+	if (count === 0) {
+		clearAndAddSingleRowTask("No Tasks to Show");
+	}
+}
+
+function clearAndAddSingleRowTask(msg) {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
+	
+	let placeHolder = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');	
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+
+	
+	listDetails0.innerHTML = msg;
+	
+	$(placeHolder).append(listDetails0);
+	$(placeHolder).append(listDetails1);
+	$(placeHolder).append(listDetails2);
+	$(placeHolder).append(listDetails3);
+	$(placeHolder).append(listDetails4);
+	$(placeHolder).append(listDetails5);
+	
+	$('#taskTable > tbody').append(placeHolder);
+}
+
+function clearTaskTable () {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
+}
+
+
+function setCurrentDivLocation(location) {
+	currentDivLocation = location;
+	console.log("LOCATION = ", location);
+}
+
+function convertCurrentDivLocation (currentDivLocation){
+	switch(currentDivLocation) {
+		case "projectManager":
+			$('#'+currentDivLocation).find("#pageLocation").text("Project Manager");
+			break;
+		case "projectData":
+			$('#'+currentDivLocation).find("#pageLocation").text("Project Editor");
+			break;
+		case "permitData":
+			$('#'+currentDivLocation).find("#pageLocation").text("Permit & Inspection Editor");
+			break;
+		case "closeoutData":
+			$('#'+currentDivLocation).find("#pageLocation").text("Closeout Editor");
+			break;
+	}
+}
+
+function updateProjectManager() {
+	if(currentDivLocation == 'projectData'){
+		
+		
+	}else if(currentDivLocation == 'permitData'){
+		
+	}else if(currentDivLocation == 'closeoutData'){
+		
+	} else {
+		console.log("Not Prepared for this div location!");
+	}
+}
+
+
 

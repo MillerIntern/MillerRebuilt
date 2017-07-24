@@ -76,7 +76,7 @@ function returnToLogin()
 		window.location.href = "index.html";
 }
 
-function setProjectHeader (projectData) {
+function setProjectHeader (projectData, currentDivLocation, previousDivLocation) {
 	let city = projectData.warehouse.city.name;
 	let state = projectData.warehouse.state;
 	
@@ -84,8 +84,16 @@ function setProjectHeader (projectData) {
 	state = toTitleCase(state);
 	
 	let item = projectData.projectItem.name;
-	$("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
+	
+	if(!currentDivLocation) $(document).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
+	else {
+		convertCurrentDivLocation(currentDivLocation)
+		$('#'+currentDivLocation).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
+	}
+
 }
+
+
 
 function toTitleCase(str)
 {
@@ -143,3 +151,5 @@ function closeTaskById (source) {
 		}
 	});
 }
+
+
