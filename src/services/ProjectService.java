@@ -218,6 +218,21 @@ public class ProjectService extends ProjectObjectService
 	}
 	
 	/**
+	 * This method gets all of the projects
+	 * @return A string representing a JSON array containing this information
+	 */
+	public static String getAllProjectsWithStageAsJson(String stages)
+	{
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("projects", ProjectObjectService.getProjectsAsJSON(stages));
+
+
+		return g.toJson(map);
+	}
+	
+	/**
 	 * This method gets all of the tasks
 	 * @return A string representing a JSON array containing this information
 	 */

@@ -1,8 +1,7 @@
 package services;
 
 import java.lang.reflect.Field;
-
-
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -161,19 +160,101 @@ public class ProjectObjectService
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
 			} else if (domain.equals("Project")) {
+				
+				//Criterion onHoldProjects = Restrictions.sqlRestriction("stage_id != 9");
+				//criteria.add(onHoldProjects); //Prevents On Hold projects from being pulled in
 				//Criterion closedProjects = Restrictions.sqlRestriction("stage_id != 4");
-				//criteria.add(closedProjects);
-				Criterion deletedProjects = Restrictions.sqlRestriction("stage_id != 6"); //deleted projects
-				criteria.add(deletedProjects);
-				Criterion lostProjects = Restrictions.sqlRestriction("stage_id != 7"); //lost projects
-				criteria.add(lostProjects);
-				Criterion inactiveProjects = Restrictions.sqlRestriction("stage_id != 10"); //inactive projects
-				criteria.add(inactiveProjects);
+				//criteria.add(closedProjects); //Prevents Closed projects from being pulled in
+				//Criterion canceledProjects = Restrictions.sqlRestriction("stage_id != 15");
+				//criteria.add(canceledProjects); //Prevents Canceled projects from being pulled in
+				
 			} else if(domain.equals("Task")) {
 				System.out.println("Task id = " + Order.asc("id"));
 			}
-		
+	        List<?> list = criteria.list();
+	       
+	        tx.commit();
 
+	        return gson.toJson(list);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * This method returns all objects of a certain type from the database,
+	 * and formats them as a JSON array. This method is to be used to send information
+	 * to the front-end of this application.
+	 * 
+	 * @param domain the type of object to be returned.
+	 * @return A JSON array string representing all of the objects.
+	 */
+	public static String getProjectsAsJSON(String stages) throws NonUniqueObjectException
+	{
+        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+        
+        List<String> projStages = Arrays.asList(stages.split(","));
+       
+        
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+		
+			tx.commit();
+			return "ERROR";
+		}
+		Class<?> c;
+		
+		try 
+		{
+			c = Class.forName("projectObjects.Project");
+			
+			Criteria criteria = session.createCriteria(c);
+			char[] stage = stages.toCharArray();
+			boolean closed=false, onHold=false, canceled=false, cancelled=false, budgetary=false, proposal=false, active=false, 
+					closeout=false, billingCloseout =false;
+	
+			for(String current: projStages) {
+				if(current.equals("1")) proposal = true;
+				if(current.equals("2")) active = true;
+				if(current.equals("4")) closed = true;
+				if(current.equals("8")) budgetary = true;
+				if(current.equals("9")) onHold = true;
+				if(current.equals("15")) canceled = true;
+				if(current.equals("16")) billingCloseout = true;
+				if(current.equals("17")) closeout = true;
+				
+				
+			}
+			
+			Criterion sample;
+			if(!closed) {sample = Restrictions.sqlRestriction("stage_id != 4");
+			criteria.add(sample);}
+			if(!onHold) {sample = Restrictions.sqlRestriction("stage_id != 9");
+			criteria.add(sample);}
+			if(!billingCloseout) {sample = Restrictions.sqlRestriction("stage_id != 16");
+			criteria.add(sample);}
+			if(!cancelled) {sample = Restrictions.sqlRestriction("stage_id != 15");
+			criteria.add(sample);}
+			if(!budgetary) {sample = Restrictions.sqlRestriction("stage_id != 8");
+			criteria.add(sample);}
+			if(!proposal) {sample = Restrictions.sqlRestriction("stage_id != 1");
+			criteria.add(sample);}
+			if(!active) {sample = Restrictions.sqlRestriction("stage_id != 2");
+			criteria.add(sample);}
+			if(!closeout) {sample = Restrictions.sqlRestriction("stage_id != 17");
+			criteria.add(sample);}
+			
+			
+		
 	        List<?> list = criteria.list();
 	        
 	        

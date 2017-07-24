@@ -334,6 +334,11 @@ public class Project extends HttpServlet
 			System.out.println("getting the projects!");
 			response = ProjectService.getAllProjectsAsJson();
 		}
+		else if(action.equals("getProjectsWithStage")){
+			System.out.println("getting projects of certain stages!");
+			String stages = parameters.get("stages");
+			response = ProjectService.getAllProjectsWithStageAsJson(parameters.get("stages"));
+		}
 		else if(action.equals("getManager"))
 		{
 			response = getManager(req);
