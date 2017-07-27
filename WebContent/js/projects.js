@@ -93,6 +93,12 @@ $(document).ready(function(){
 
 
 
+/**
+ * This function retrieves data for a specific project from the server
+ * INNER FUNCTION CALLS: setProjectHeader(), fillTabs_CLOSEOUT(), getDropdownItems_CLOSEOUT()
+ * @param project to edit
+ * @returns
+ */
 function getProjectEnums_CLOSEOUT(edit)
 {
 	//console.log(getParameterByName("id"));
@@ -130,6 +136,12 @@ function getProjectEnums_CLOSEOUT(edit)
 	}
 }
 
+/**
+ * This function retrieves the potential drop down items
+ * INNER FUNCTION CALLS: fillDropdowns_CLOSEOUT()
+ * @param
+ * @returns
+ */
 function getDropdownItems_CLOSEOUT()
 {
 
@@ -151,6 +163,12 @@ function getDropdownItems_CLOSEOUT()
 	});
 }
 
+/**
+ * This function fills the closeout information for the project
+ * INNER FUNCTION CALLS: none
+ * @param
+ * @returns
+ */
 function fillTabs_CLOSEOUT(data)
 {
 	var json = data;
@@ -302,6 +320,12 @@ function fillTabs_CLOSEOUT(data)
 	
 }
 
+/**
+ * This function fills the dropdowns in the closeoutData div
+ * @param the closeout data options
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
 function fillDropdowns_CLOSEOUT(data)
 {
 	var json = JSON.parse(data["closeoutstatus"]);
@@ -324,7 +348,11 @@ function fillDropdowns_CLOSEOUT(data)
 
 }
 
-
+/**
+ * This function saves the current project to the server based off of the values that the user entered
+ * INNER FUNCTION CALLS: isValidInput_CLOSEOUT()
+ * @returns
+ */
 function saveProject_CLOSEOUT()
 {
     console.log("Saving Closeout Information");
@@ -658,7 +686,8 @@ function saveProject_CLOSEOUT()
 				'mulvannySignOffStatus': mulvannySignOffStatus,
 			},
 			success:function(data){
-				updateFrontEnd();
+				updateFrontEnd();			
+				getProject_PROJECT_MANAGER(projectID);
 				alert('Project Saved');
 				console.log(data);
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
@@ -686,7 +715,12 @@ function saveProject_CLOSEOUT()
     }
     
 }
-
+/**
+ * This function checks the closeout data to make sure it is all valid
+ * INNER FUNCTION CALLS: none
+ * @param data that the user entered
+ * @returns
+ */
 function isValidInput_CLOSEOUT(dates_CLOSEOUT)
 {	
 	//Check if all of the dates are in the correct format
@@ -708,26 +742,28 @@ function isValidInput_CLOSEOUT(dates_CLOSEOUT)
 	return true;
 }
 
+/**
+ * This function returns to the the ProjectManager.html page with a give projectID.
+ * -------- NOT USED -------------
+ * @returns
+ */
 function returnToProjectManager () {
 	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
 
+/**
+ * This function makes the findProject div visible and hides all other divs
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
 function goToFindProject() {
-	$(".editProject").hide();
-	$("#findProject").show();
-}
-
-function goToProjectManager() {
-	
-	$(".editProject").hide();
-	$("#projectManager").show();
-	
+	updateFrontEnd();
 	switch(currentDivLocation){
 		case "projectData":
 			$('#projectData').find('.info-tab').removeClass('active');
 			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
 			$('#projectData').find('#generalInformation').addClass('active');
-			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');			
 			break;
 		case "permitData":
 			$('#permitData').find('.info-tab').removeClass('active');
@@ -741,8 +777,68 @@ function goToProjectManager() {
 			$('#closeoutData').find('#closeout').addClass('active');
 			$('#closeoutData').find('#closeoutDocuments').addClass('active');
 			break;
+		case "projectManager":
+			$('#projectManager').find('.info-tab').removeClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#projectInformation').addClass('active');
+			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			break;
+		
+	}
+	$(".editProject").hide();
+	$("#findProject").show();
+	
+}
+
+/**
+ * This function makes the projectManager div visible while hiding the remaining divs
+ * It also manages the activeness of the info-tabs
+ * INNER FUNCTION CALLS: setCurrentDivLocation()
+ * @returns
+ */
+function goToProjectManager() {
+	
+	$(".editProject").hide();
+	$("#projectManager").show();
+	
+	switch(currentDivLocation){
+		case "projectData":
+			getProject_PROJECT_MANAGER(projectID);
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			break;
+		case "permitData":
+			getProject_PROJECT_MANAGER(projectID);
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
+			$('#permitData').find('#buildingPermit').addClass('active');
+			$('#permitData').find('#permits').addClass('active');
+			$('#projectManager').find('#permitsTabLink').addClass('active');
+			break;
+		case "closeoutData":
+			getProject_PROJECT_MANAGER(projectID);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectManager').find('#closeoutTabLink').addClass('active');
+			break;
+		case "changeOrder":
+			getProject_PROJECT_MANAGER(projectID);
+			$('#changeOrder').find('.info-tab').removeClass('active');
+			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
+			$('#changeOrder').find('#changeOrderTab').addClass('active');
+			$('#changeOrder').find('#changeOrderInfo').addClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
+			break;
 			
 	}
+	$('#projectManager').find('#changeOrderTable').find('tr').remove();
+	setCurrentDivLocation('projectManager');
 }
 
 
@@ -824,6 +920,11 @@ $(document).ready(function(){
 	
 });
 
+/**
+ * This function retrieves a specific project from the database
+ * INNER FUNCTION CALLS: setProjectHeader(), fillTabs_PERMIT(), getTasks()
+ * @returns
+ */
 function getProject_PERMIT()
 {
 	
@@ -852,6 +953,11 @@ function getProject_PERMIT()
 	}
 }
 
+/**
+ * This function retrieves all permit stages from database
+ * INNER FUNCTION CALLS: fillDropdowns_PERMIT(), fillTabs_PERMIT(), getProject_PERMIT()
+ * @returns
+ */
 function getProjectEnums_PERMIT()
 {
 	$.ajax({
@@ -872,9 +978,15 @@ function getProjectEnums_PERMIT()
 	});
 }
 
+/**
+ * This function retrieves a specific project from the database
+ * INNER FUNCTION CALLS: none
+ * @returns
+ * @params a json object
+ */
 function fillDropdowns_PERMIT(json)
 {
-	console.log(json);
+	console.log("PERMIT JSON = ", json);
 	var permitStage = [{"name": "Preparing"}, {"name": "Submitted"}, {"name": "Approved"}, {"name": 'Issued'}, {'name': 'Closed'}, {'name': 'N/A'}];
 	var inspectionStage = [{'name': 'Scheduled'}, {'name': 'Passed'}, {'name': 'Failed'}, {'name': 'N/A'}];
 	var d = document.createDocumentFragment();
@@ -903,6 +1015,13 @@ function fillDropdowns_PERMIT(json)
 	
 }
 
+
+/**
+ * This function fills all of the tabs in the permitData div
+ * INNER FUNCTION CALLS: none
+ * @returns
+ * @params a json object with all necessary permit info
+ */
 function fillTabs_PERMIT(data)
 {
 	var json = data;
@@ -974,6 +1093,11 @@ function convert(param)
 	
 }
 
+/**
+ * This function saves a certain project's permit info to the database
+ * INNER FUNCTION CALLS: isValidInput_PERMIT(), updateFrontEnd()
+ * @returns
+ */
 function saveProject_PERMIT()
 {
     console.log("Saving Permit Information");
@@ -1125,10 +1249,10 @@ function saveProject_PERMIT()
 				'inspectionNotes': inspectionNotes
 			},
 			success:function(data){
-				
 				console.log(data);
 				updateFrontEnd();
 				alert('Save Complete!');
+				getProject_PROJECT_MANAGER(projectID);
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 
 			},
@@ -1140,6 +1264,7 @@ function saveProject_PERMIT()
 			error: function(data)
 			{
 				console.log(data);
+				getProject_PROJECT_MANAGER(projectID);
 				alert('Save Complete!');
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 
@@ -1154,6 +1279,12 @@ function returnToProjectManager () {
 }
 */
 
+/**
+ * This function checks to see that all permit dates are in "MM/DD/YYYY" format
+ * INNER FUNCTION CALLS: none
+ * @returns
+ * @params permit dates
+ */
 function isValidInput_PERMIT(dates_PERMIT)
 {	
 	//Check if all of the dates are in the correct format
@@ -1228,9 +1359,12 @@ $(document).ready(function()
 	$("#permitApp").datepicker();
 });
 
-//This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
-//Input: none
-//Output: none (calls functions to fill in all of the dropdown functions)
+/**
+*This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
+*Input: none
+*Output: none
+*INNER FUNCTION CALLS: fillDropdowns_PROJECT_DATA, getProject_PROJECT_DATA
+*/
 function getProjectEnums_PROJECT_DATA(edit)
 {
 
@@ -1284,9 +1418,12 @@ function fillDropdowns_PROJECT_DATA(data)
 	generateDropdowns(data["type"], "pType");	
 }
 
-//This function puts data into a specific dropdown menu
-//Input: string representation of JSON array
-//Output: none (fills specific dropdown menu with data)
+/**
+*This function puts data into a specific dropdown menu
+*INNER FUNCTION CALLS: hasStage()
+*@params string representation of JSON array
+*Output: none (fills specific dropdown menu with data)
+*/
 function generateDropdowns(str, className)
 {
 	var json = JSON.parse(str);
@@ -1349,6 +1486,11 @@ function generateDropdowns(str, className)
 		}
 }
 
+/**
+ * This function saves a project to the database
+ * INNER FUNCTION CALLS: updateFrontEnd()
+ * @returns
+ */
 function saveProject_PROJECT_DATA() {
 	var mcsNumber = $('#projectData').find('#mcsNumber').val();
 	
@@ -1391,6 +1533,12 @@ function saveProject_PROJECT_DATA() {
 		
 		$('#projectData').find('.nav-tabs > li.active').removeClass('active');
 		$('#projectData').find('#saveProjectLink').addClass('active');
+		let updateData = {
+				mcsNum : mcsNumber,
+				warehouse_id : warehouse,
+				item_id : item,
+				manager : $('#projectData').find('#manager').find(":selected").text()
+		};
 		
 		var action = 'addNewProject';
 		if (edit == true) {
@@ -1434,9 +1582,11 @@ function saveProject_PROJECT_DATA() {
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
+				updateProjectDisplay(updateData);
 				updateFrontEnd();
 				//updateProjectManager();
-				alert('Save Complete!');
+				
+				alert('Save Complete!');				
 				$('#saveButton > button').prop('disabled', false);
 
 			}
@@ -1445,16 +1595,141 @@ function saveProject_PROJECT_DATA() {
 	}
 }
 
+let updatedProjectWarehouse;
+let updatedProjectItem;
+let updatedManager;
+let updatedMCSnumber;
+/**
+ * This function updates the front end project display
+ * @param data containing either warehouse, mcsNumber, item, and manager fields
+ * INNER FUNCTION CALLS: filterProjects()
+ * @returns
+ */
+function updateProjectDisplay(data) {
+	console.log("THE UPDATE DATA = ", data);
+	convertItem(data);
+	
+	updatedManager = {
+			name : data.manager,
+			id : matchUsernameToPerson(data.manager)
+	};
+	
+	updatedMCSnumber = data.mcsNum;
+	
+}
+
+/**
+ * This function matches the user's first name to the appropriate person ID
+ * INNER FUNCTION CALLS: removeParam()
+ */
+function matchUsernameToPerson(userFirstName){
+	switch(userFirstName) {
+	case 'Bart': 
+		return '14';
+		break;
+	case "Alex":
+		return '3';
+		break;
+	case "Andy":
+		return '2';
+		break;
+	case "Craig":
+		return '12';
+		break;
+	case "Dave":
+		return '7';
+		break;
+	case "David":
+		return '1';
+		break;
+	case "Jim": 
+		return '8';
+		break;
+	case "Joe":
+		return '5';
+		break;
+	case "Adrienne":
+		return '17';
+		break;
+	case "Tony":
+		return '4';
+		break;
+	}
+
+}
+
+function convertItem(data){
+	let warehouse_data = data;
+	console.log("ITEMMMM ID = ", data.item_id);
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		dataType: 'json',
+		data: 
+		{
+			'domain': 'project',
+			'action': 'getItem',
+			'id': data.item_id
+		},
+		success:function(data){
+			console.log("ITEM DATA = ", data);
+			updatedProjectItem = data;
+			convertWarehouse(warehouse_data.warehouse_id);
+
+		},
+		error: function(data) {
+			console.log("AN ERROR!",  data);
+		}
+	});
+}
+
+function convertWarehouse(id){
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		dataType: 'json',
+		data: 
+		{
+			'domain': 'project',
+			'action': 'getWarehouse',
+			'id': id,
+		},
+		success:function(data){
+			console.log("WAREHOUSE DATA = ", data);
+			updatedProjectWarehouse = data;
+			for(var i = 0; i < DISPLAYABLE_PROJECTS.length; i++){
+				if(!DISPLAYABLE_PROJECTS[i]) continue;
+				if(projectID == DISPLAYABLE_PROJECTS[i].id){
+					DISPLAYABLE_PROJECTS[i].warehouse = updatedProjectWarehouse;
+					DISPLAYABLE_PROJECTS[i].projectItem = updatedProjectItem;
+					DISPLAYABLE_PROJECTS[i].McsNumber = updatedMCSnumber;
+					DISPLAYABLE_PROJECTS[i].projectManagers.id = updatedManager.id;
+					DISPLAYABLE_PROJECTS[i].projectManagers.name = updatedManager.name;
+					console.log("THE UPDATE = ", DISPLAYABLE_PROJECTS[i]);
+				}
+			}
+			getProject_PROJECT_MANAGER(projectID);
+		}
+	});
+}
+
+
+
+
+
 /*
 function returnToProjectManager () {
 	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
 */
 
-//This function validates the nunmerous fields of this page, separated by categories
-//Input: array of str, array of str, array of ints, str, str, int
-//output: true if all of the fields are valid. False otherwise
-//TODO: Numbers, notes, 
+/**
+* This function validates the nunmerous fields of this page, separated by categories
+* Input: array of str, array of str, array of ints, str, str, int
+* output: true if all of the fields are valid. False otherwise
+* TODO: Numbers, notes, 
+*/
 function isValidInput_PROJECT_DATA(requiredFields, dates)
 {
 	//Check required Fields 
@@ -1489,9 +1764,12 @@ function isValidInput_PROJECT_DATA(requiredFields, dates)
 	return true;
 }
 
-//This function retrieves project information from a project, and prepares it to be edited.
-//Input: none
-//Output: none
+/**
+* This function retrieves project information from a project, and prepares it to be edited.
+* INNER FUNCTION CALLS: setProjectHeader(), fillForm_PROJECT_DATA(), getTasks()
+* Input: none
+* Output: none
+*/
 function getProject_PROJECT_DATA()
 {
 	console.log("IN PROJ DATA");
@@ -1518,9 +1796,11 @@ function getProject_PROJECT_DATA()
 	}
 }
 
-//This function fills out the page with project data. This is so the user can edit the project information
-//Input: JSON object representing a project
-//Output: none (fills out data on the page)
+/**
+* This function fills out the page with project data. This is so the user can edit the project information
+* Input: JSON object representing a project
+* Output: none (fills out data on the page)
+*/
 function fillForm_PROJECT_DATA(data)
 {
 	console.log(data);
@@ -1556,6 +1836,11 @@ function fillForm_PROJECT_DATA(data)
 }
 
 
+/**
+ * This function sorts cities or other objects my name alphabetically
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
 function sortByName(object, className)
 {
 	object.sort(
@@ -1570,6 +1855,12 @@ function sortByName(object, className)
 	return object;
 }
 
+
+/**
+ * This function checks to see if a project has a certain stage
+ * INNER FUNCTION CALLS: none
+ * @returns true if it has stage / false otherwise
+ */
 function hasStage(stageList, stage)
 {
 	for(var i=0; i<stageList.length; i++)
@@ -1592,6 +1883,8 @@ function hasStage(stageList, stage)
 let selectedChangeOrder = null;
 let selectedEquipment = null;
 
+
+//Does the tab work to set the proper active one
 $(document).ready(function () {
 	$('#projectManager').find('.nav-tabs > li').click(function () {
 		$('#projectManager').find('.info-tab').removeClass('active');
@@ -1604,6 +1897,12 @@ $(document).ready(function () {
 	
 });
 
+/**
+ * This function retrieves a specific project from the database
+ * INNER FUNCTION CALLS: setProjectHeader(), fillTabs_PROJECT_MANAGER(), getTasks()
+ * @params project_id
+ * @returns
+ */
 function getProject_PROJECT_MANAGER(project_id) {
 	console.log("ID = ", project_id);
     projectID = project_id;
@@ -1635,14 +1934,25 @@ function getProject_PROJECT_MANAGER(project_id) {
 	}
 }
 
+/**
+ * This function calls all the other functions that help fill out projectInfo
+ * INNER FUNCTION CALLS: fillProjectInformation(), fillChangeOrders(), fillPermitsAndInspections(),
+ * 						 fillEquipment(), fillCloseout()
+ * @returns
+ */
 function fillTabs_PROJECT_MANAGER (data) {
 	fillProjectInformation(data);
 	fillChangeOrders(data);
-	fillPermitsAndInspecionts(data);
+	fillPermitsAndInspections(data);
 	fillEquipment(data);
 	fillCloseout(data);
 }
 
+/**
+ * This function makes the projectData div visible and the projectManager div invisible
+ * INNER FUNCTION CALLS: getProjectEnums_PROJECT_DATA()
+ * @returns
+ */
 function editProjectInfo () {
 	document.getElementById("projectManager").style.display = 'none';
 	getProjectEnums_PROJECT_DATA(true);
@@ -1651,6 +1961,11 @@ function editProjectInfo () {
 	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
 }
 
+/**
+ * This function makes the permitData div visible and projectManager div invisible
+ * INNER FUNCTION CALLS: getProjectEnums_PERMIT()
+ * @returns
+ */
 function editPermitsAndInspections () {
 	document.getElementById("projectManager").style.display = 'none';
 	edit = true;
@@ -1661,6 +1976,12 @@ function editPermitsAndInspections () {
 	//window.location.href = PROJECT_PERMITS_AND_INSPECTIONS + '?id=' + projectID;
 }
 
+
+/**
+ * This function makes the closeoutData div visible and projectManager div invisible
+ * INNER FUNCTION CALLS: getProjectEnums_CLOSEOUT()
+ * @returns
+ */
 function editCloseout () {
 	document.getElementById("projectManager").style.display = 'none';
 	edit = true;
@@ -1678,6 +1999,12 @@ function addEquipment () {
 	window.location.href = PROJECT_EQUIPMENT + '?type=add&id=' + projectID;
 }
 
+/**
+ * This function fills out all of the project information
+ * INNER FUNCTION CALLS: none
+ * @returns
+ * @params a JSON with all necessary project data
+ */
 function fillProjectInformation (data) {
 	
 	$('#projectManager').find('#mcsNumber').text(data.McsNumber);
@@ -1690,6 +2017,11 @@ function fillProjectInformation (data) {
 	
 } // fillProjectInformation
 
+/**
+ * This function fills out the changeOrder table
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
 function fillChangeOrders (data) {
 	let changeOrders = data.changeOrders;
 	for (var i = 0; i < changeOrders.length; i++) {
@@ -1726,8 +2058,13 @@ function fillChangeOrders (data) {
 	}
 }
 
-// sorry for the weird readability of the code.. though it reads strangely it works
-function fillPermitsAndInspecionts (data) {
+
+/**
+ * This function fills out the information on the page for the permits and inspections
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
+function fillPermitsAndInspections (data) {
 	let tabData = data.permits;
 	
 	// permits 
@@ -1767,6 +2104,13 @@ function fillPermitsAndInspecionts (data) {
 	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
 }
 
+
+/**
+ * This function fills out the equipment info
+ * WARNING: Unsure if the function really works, never knew how to properly test its functionality
+ * @param data with equipment info
+ * @returns
+ */
 function fillEquipment (data) {
 	let equipmentList = data.projEquipment;
 	for (var i = 0; i < equipmentList.length; i++) {
@@ -1806,6 +2150,11 @@ function fillEquipment (data) {
 	}
 }
 
+/**
+ * This function fills out the closeout info
+ * @param data with closeout info
+ * @returns
+ */
 function fillCloseout (data) {
 	let closeoutData = data.closeoutDetails;
 	$('#mg2Completion').html(closeoutStatusConverter(closeoutData.mg2CompletionStatus));
@@ -2042,6 +2391,11 @@ function fillCloseout (data) {
 	$('#projectManager').find('#finalLiensRequired').text(completed + ' / ' + required);
 }
 
+/**
+ * This function converts the closeoutStatus from a number to a string
+ * @param param value
+ * @returns the string value
+ */
 function closeoutStatusConverter(param)
 {
 	if (param == 1)
@@ -2054,6 +2408,11 @@ function closeoutStatusConverter(param)
 		return "---";
 }
 
+/**
+ * This function converts the permit from a number to a string
+ * @param param value
+ * @returns the string value
+ */
 function convertPermit(param)
 {
 	if (param == '1')
@@ -2068,6 +2427,11 @@ function convertPermit(param)
 		return "---";
 }
 
+/**
+ * This function converts the changeOrder type from a number to a string
+ * @param param value
+ * @returns the string value
+ */
 function parseChangeOrderType (param) {
 	switch (param) {
 		case "1":
@@ -2086,6 +2450,11 @@ function parseChangeOrderType (param) {
 	}
 }
 
+/**
+ * This function converts the changeOrder status from a number to a string
+ * @param param value
+ * @returns the string value
+ */
 function parseChangeOrderStatus (param) {
 	switch (param) {
 		case "1":
@@ -2096,6 +2465,7 @@ function parseChangeOrderStatus (param) {
 			return "Undefined";
 	}
 }
+
 
 function toggleChangeOrder (source) {
 	$(source).siblings().css('background-color', 'white');
@@ -2127,6 +2497,10 @@ function equipmentReport () {
 	window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
 }
 
+/**
+ * This function warns the user that they are about to permanently delete a project and then deletes
+ * it after receiving confirmation
+ */
 function deleteConfirm () {
 	if (confirm("Are you sure you want to delete this project permanently?")) {
 		$.ajax({
@@ -2148,6 +2522,10 @@ function deleteConfirm () {
 	}
 }
 
+/**
+ * This function takes the user to the task form to create a task
+ * @returns
+ */
 function goToTaskForm () {
 	window.location.href = TASK_CREATOR + '?id=' + projectID;
 }
@@ -2182,6 +2560,7 @@ let taskFinder;
 let t0;
 let t1;
 
+//Keeps track of stage selections
 $(document).on('click', '#AllStages', function(){
 	if(document.getElementById("AllStages").checked == true){
 		$('.commonStage').each(function(i, obj) {
@@ -2191,6 +2570,7 @@ $(document).on('click', '#AllStages', function(){
 	}
 });
 
+//Keeps track of stage selections
 $(document).on('click', '#NoStages', function(){
 	if(document.getElementById("NoStages").checked == true){
 		$('.commonStage').each(function(i, obj) {
@@ -2200,16 +2580,20 @@ $(document).on('click', '#NoStages', function(){
 	}
 });
 
+//Keeps track of stage selections
 $(document).on('click', '.commonStage', function(){
-    if(document.getElementById("AllStages").checked == true){
-		this.checked = true;
-	}
+	if(this.checked == false) document.getElementById('AllStages').checked = false;
+
     document.getElementById('NoStages').checked = false;
     	
     
 	
 });
 
+/**
+ * This function retrieves all of the projects from the database as well as sets initial display
+ * INNER FUNCTION CALLS: clearAndAddSingleRow(), getSearchCriteria(), filterProjects()
+ */
 function getAllProjects() {
 	
 	clearAndAddSingleRow("Retrieving Projects...");
@@ -2237,6 +2621,10 @@ function getAllProjects() {
 	});
 }
 
+/**
+ * This function updates the front end project display
+ * INNER FUNCTION CALLS: clearAndAddSingleRow(), filterProjects()
+ */
 function updateFrontEnd() {
 	
 	clearAndAddSingleRow("Retrieving Projects...");
@@ -2245,14 +2633,19 @@ function updateFrontEnd() {
 		taskFinder = true;
 	} else taskFinder = false;
 	
+	
 	filterProjects();
 	
 	
 }
 
+/**
+ * This function updates all of the displayable projects based off the selected stages
+ * INNER FUNCTION CALLS: none
+ */
 function updateDisplayableProjects(){
 	if(!RETRIEVED_PROJECTS) {console.log("Should have projects by now!"); return;}
-	console.log("RETRIEVED = ", RETRIEVED_PROJECTS);
+
 	DISPLAYABLE_PROJECTS = new Array();
 	
 	var stagesOfInterest = new Array();
@@ -2267,10 +2660,15 @@ function updateDisplayableProjects(){
 		}
 	}	
 	
-	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS", DISPLAYABLE_PROJECTS);
+	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
 	
 }
 
+/**
+ * This function retrieves all of the search criteria from the database
+ *  that the user can filter projects with
+ * INNER FUNCTION CALLS: clearAndAddSingleRow(), fillDropdowns_FIND_PROJECT(), checkInitFilter()
+ */
 function getSearchCriteria() {
 	
 	clearAndAddSingleRow("Retrieving Search Criteria...");
@@ -2309,6 +2707,11 @@ function getSearchCriteria() {
 	});
 }
 
+/**
+ * This function clears the project display table and adds a single row with a message
+ * INNER FUNCTION CALLS: none
+ * @params message to be displayed
+ */
 function clearAndAddSingleRow(msg) {
 	
 	$('#results > tbody').children('tr:not(.head)').remove();
@@ -2327,6 +2730,10 @@ function clearAndAddSingleRow(msg) {
 	$('#results > tbody').append(placeHolder);
 }
 
+/**
+ * This function sets the initial filter when finding projects
+ * INNER FUNCTION CALLS: matchUsernameToPersonID, filterProjects()
+ */
 function checkInitFilter () {
 	if (getParameterByName('id') == 'activePermit') {
 		$('#paramID1').val('Status');
@@ -2356,37 +2763,51 @@ function checkInitFilter () {
 	}
 }
 
+/**
+ * This function matches the user's first name to the appropriate person ID
+ * INNER FUNCTION CALLS: removeParam()
+ */
 function matchUsernameToPersonID(userFirstName){
 	switch(userFirstName) {
 	case 'Bart': 
 		document.getElementById('paramVal2').value = '14';
+		return '14';
 		break;
 	case "Alex":
 		document.getElementById('paramVal2').value = '3';
+		return '3';
 		break;
 	case "Andy":
 		document.getElementById('paramVal2').value = '2';
+		return '2';
 		break;
 	case "Craig":
 		document.getElementById('paramVal2').value = '12';
+		return '12';
 		break;
 	case "Dave":
 		document.getElementById('paramVal2').value = '7';
+		return '7';
 		break;
 	case "David":
 		document.getElementById('paramVal2').value = '1';
+		return '1';
 		break;
 	case "Jim": 
 		document.getElementById('paramVal2').value = '8';
+		return '8';
 		break;
 	case "Joe":
 		document.getElementById('paramVal2').value = '5';
+		return '5';
 		break;
 	case "Adrienne":
 		document.getElementById('paramVal2').value = '17';
+		return '17';
 		break;
 	case "Tony":
 		document.getElementById('paramVal2').value = '4';
+		return '4';
 		break;
 	default:
 		removeParam(document.getElementById('paramID2'));
@@ -2417,6 +2838,10 @@ function fillDropdowns_FIND_PROJECT(data) {
 	stageOptions = generateDropdowns_FIND_PROJECTS(data['stage'], parameterFields[7]);
 }
 
+/**
+ * This function generates the dropdowns for the findProject search criteria
+ * INNER FUNCTION CALLS: none
+ */
 function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 	
 	let json = JSON.parse(jsonData);
@@ -2436,7 +2861,7 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 					if(json[q].id == 8) {sortedStages[0] = json[q];}
 					else if(json[q].id == 1) {sortedStages[1] = json[q];}
 					else if(json[q].id == 2) {sortedStages[2] = json[q];}
-					else if(json[q].id == 17){ sortedStages[3] = json[q]; }
+					else if(json[q].id == 17){sortedStages[3] = json[q]; }
 					else if(json[q].id == 16) {sortedStages[4] = json[q];}
 					else if(json[q].id == 4) {sortedStages[6] = json[q];}
 					else if(json[q].id == 9) {sortedStages[7] = json[q];}
@@ -2469,6 +2894,10 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 	return d;
 }
 
+/**
+ * This function sets the order for the project stages to be displayed
+ * INNER FUNCTION CALLS: none
+ */
 function projectStageSort(json) {
 	var sortedStages = new Array();
 	for(var i = 0; i < json.length; i++){
@@ -2492,6 +2921,10 @@ $(document).on('change', 'select.parameterID', function () {
 	filterProjects();
 });
 
+/**
+ * This function sets the value for the parameter
+ * INNER FUNCTION CALLS: none
+ */
 function setVals (param) {
 	let modParam = $(param).siblings('select');
 	let valOptions = $(param).val();
@@ -2534,6 +2967,10 @@ function setVals (param) {
 	}
 }
 
+/**
+ * This function adds a parameter to the search criteria
+ * INNER FUNCTION CALLS: none
+ */
 function addParameter() {
 	paramNum++;
 	
@@ -2580,12 +3017,21 @@ function addParameter() {
 	$('#param-field').append(parameterHolder);
 }
 
+/**
+ * This function removes a param from the search criteria
+ * INNER FUNCTION CALLS: filterProjects()
+ */
 function removeParam(param) {
 	param.parentNode.remove();
 	paramNum--;
 	filterProjects();
 }
 
+/**
+ * This function filters through the projects based off of the given
+ * search criteria and then displays the appropriate projects
+ * INNER FUNCTION CALLS: updateDisplayableProjects(), clearAndAddSingleRow()
+ */
 function filterProjects () {
 
 	updateDisplayableProjects();
@@ -2719,6 +3165,10 @@ function filterProjects () {
 	}
 }
 
+/**
+ * This function displays the proper div
+ * INNER FUNCTION CALLS: none
+ */
 function navigateTo(source) {
 	edit = true;
 	console.log($(source).attr('id'));
@@ -2738,14 +3188,17 @@ function navigateTo(source) {
 	}
 
 }
-
+//This enables the user to filter tasks based off status
 $(document).on('change', '#taskSelector2', function () {
 	clearTaskTable();
 	fillTasksTable(tasks);
 	console.log("Right here \n");
 });
 
-
+/**
+ * This function retrieves all of the taks from the server
+ * INNER FUNCTION CALLS: fillTasksTable()
+ */
 function getTasks() {
 	console.log(projectID);
 	$.ajax({
@@ -2767,6 +3220,10 @@ function getTasks() {
 	});
 }
 
+/**
+ * This function fills the task table with the given tasks
+ * INNER FUNCTION CALLS: none
+ */
 function fillTasksTable(tasks) {
 	let selector = $('#taskSelector2').val();
 	console.log(selector);
@@ -2821,6 +3278,11 @@ function fillTasksTable(tasks) {
 	}
 }
 
+/**
+ * This function clears and adds a single row to the task table
+ * Displays a message after cleaning the table
+ * INNER FUNCTION CALLS: none
+ */
 function clearAndAddSingleRowTask(msg) {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
 	
@@ -2845,33 +3307,360 @@ function clearAndAddSingleRowTask(msg) {
 	$('#taskTable > tbody').append(placeHolder);
 }
 
+/**
+ * This function clears the task table
+ * INNER FUNCTION CALLS: none
+ */
 function clearTaskTable () {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////       This begins the javascript that applies to the change order div 
+///////////////////////////////////////////////////////////////////////////////////////////
 
+var PAGETYPE = "add";
+
+var CHANGE_ORDER_ID;
+
+var PROJECT_DATA;
+var edit_CHANGE_ORDER;
+
+
+$(document).ready(function()
+{
+	$('#changeOrder').find('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
+		
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$('#changeOrder').find('#saveButton > button').prop('disabled', true);
+
+	});
+	
+ 	$('#changeOrder').find("#proposalDate").datepicker();   
+ 	$('#changeOrder').find("#submittedDate").datepicker();   
+ 	$('#changeOrder').find("#approvedDate").datepicker();  
+});
+
+function getProject_CHANGE_ORDER()
+{
+	console.log("P ID = ", projectID);
+	if(projectID !== null) {	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID,
+				
+			},
+			success: function(data)
+			{
+				PROJECT_DATA = (data);
+				setProjectHeader(data, currentDivLocation);
+				
+				if(edit_CHANGE_ORDER == 'true') {
+					//CHANGE_ORDER_ID = getParameterByName("changeOrderID");
+					PROJECT_DATA = data;
+					fillTabs_CHANGE_ORDER(PROJECT_DATA);
+					console.log("IT WAS truuuuu");
+				}
+				getTasks();
+
+	
+			}
+		});
+	} else {
+		alert('Something went wrong');
+	}
+}
+
+function getDropdownInfo_CHANGE_ORDER()
+{
+	//PAGETYPE = getParameterByName("type");	
+	//projectID = getParameterByName("id");
+	if(projectID === null) {
+		alert('Invalid URL. Try returning to this page again.');
+		return;
+	}
+	
+	//if(projectID !== null) {}
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		data: 
+		{
+			'domain': 'project',
+			'action': 'getSpecificObjects',		
+			'changeordertype': true,
+			'changeorderstatus': true
+		},
+		success: function(data)
+		{
+			fillDropdowns_CHANGE_ORDER(data);
+			getProject_CHANGE_ORDER();
+		}
+	});
+}
+
+function fillTabs_CHANGE_ORDER(json)
+{
+	
+	var changeOrderToEdit;
+	for(var i = 0; i < json.changeOrders.length; i++)
+	{
+		if(json.changeOrders[i].id == selectedChangeOrder)
+			changeOrderToEdit = json.changeOrders[i];
+	}
+	console.log(changeOrderToEdit);
+	if(changeOrderToEdit){
+	$('#changeOrder').find("#customerCO").val(changeOrderToEdit.type);
+	$('#changeOrder').find("#mcsCO").val(changeOrderToEdit.mcsCO);
+	$('#changeOrder').find("#subCO").val(changeOrderToEdit.subCO);
+	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
+	$('#changeOrder').find("#briefDescription").val(changeOrderToEdit.briefDescription);
+	$('#changeOrder').find("#subNames").val(changeOrderToEdit.subNames);
+	$('#changeOrder').find("#cost").val(changeOrderToEdit.cost);
+	$('#changeOrder').find("#sell").val(changeOrderToEdit.sell);
+	$('#changeOrder').find("#status").val(changeOrderToEdit.status);
+	$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
+	$('#changeOrder').find("#submittedDate").val(changeOrderToEdit.submittedDate);
+	$('#changeOrder').find("#approvedDate").val(changeOrderToEdit.approvedDate);
+	$('#changeOrder').find("#notes").val(changeOrderToEdit.notes);
+	}
+}
+
+function clearTabs_CHANGE_ORDER(){
+	
+	$('#changeOrder').find("#customerCO").val("");
+	$('#changeOrder').find("#mcsCO").val("");
+	$('#changeOrder').find("#subCO").val("");
+	$('#changeOrder').find("#proposalDate").val("");
+	$('#changeOrder').find("#briefDescription").val("");
+	$('#changeOrder').find("#subNames").val("");
+	$('#changeOrder').find("#cost").val("");
+	$('#changeOrder').find("#sell").val("");
+	$('#changeOrder').find("#status").val("");
+	$('#changeOrder').find("#submittedTo").val("");
+	$('#changeOrder').find("#submittedDate").val("");
+	$('#changeOrder').find("#approvedDate").val("");
+	$('#changeOrder').find("#notes").val("");
+}
+
+function convert_CHANGE_ORDER(param)
+{
+	switch(param)
+	{
+		case "1":
+			return "COP";
+		case "2":
+			return "REF";
+		case "3":
+			return "WHS";
+		case "4": 
+			return "FAC";
+		case "5":
+			return "VEN";
+		case "6":
+		default:
+			return "UDF";
+	}	
+}
+
+function fillDropdowns_CHANGE_ORDER(json)
+{
+	console.log(json);
+	var changeorderStatus = JSON.parse(json["changeorderstatus"]);
+	var d = document.createDocumentFragment();
+	
+	for(var i = 0; i < changeorderStatus.length; i++)
+	{
+		var option = document.createElement("option");
+		option.innerHTML = changeorderStatus[i].name;
+		option.setAttribute("value", changeorderStatus[i].id);
+		d.appendChild(option);
+	}
+	$('#changeOrder').find("#status").append(d);
+	
+	var changeorderType = JSON.parse(json["changeordertype"]);
+	d = document.createDocumentFragment();
+	for(var i = 0; i < changeorderType.length; i++)
+	{
+		var option = document.createElement("option");
+		option.innerHTML = changeorderType[i].name;
+		option.setAttribute("value", changeorderType[i].id);
+		d.appendChild(option);
+	}
+	$('#changeOrder').find("#customerCO").append(d);
+}
+
+function saveProject_CHANGE_ORDER()
+{
+	console.log("saving project");
+	
+	var proposalDate = $('#changeOrder').find("#proposalDate").val();
+	var submittedDate = $('#changeOrder').find("#submittedDate").val();
+	var approvedDate = $('#changeOrder').find("#approvedDate").val();
+	
+	var customerCO = $('#changeOrder').find("#customerCO").val();
+	var mcsCO = $('#changeOrder').find("#mcsCO").val();
+	var subCO = $('#changeOrder').find("#subCO").val();
+	var subNames = $('#changeOrder').find("#subNames").val();
+	var status = $('#changeOrder').find("#status").val();
+	var submittedTo = $('#changeOrder').find("#submittedTo").val();
+	
+	var briefDescription = $('#changeOrder').find("#briefDescription").val();
+	var notes = $('#changeOrder').find("#notes").val();
+	
+	var cost = $('#changeOrder').find("#cost").val();
+	var sell = $('#changeOrder').find("#sell").val();
+	
+	var dates = [proposalDate, submittedDate, approvedDate];
+	
+	var action = "addChangeOrder";
+	if(edit_CHANGE_ORDER == 'true')
+		action = "editChangeOrder";
+	
+	if(isValidInput_CHANGE_ORDER(dates))
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			dataType: 'json',
+			data: 
+			{
+				'domain': 'project',
+				'action': action,
+				
+				'projectID': projectID,
+				'changeOrderID': CHANGE_ORDER_ID,
+				'proposalDate': proposalDate,
+				'submittedDate': submittedDate,
+				'approvedDate': approvedDate,
+				'customerCO': customerCO,
+				'mcsCO': mcsCO,
+				'subCO': subCO,
+				'subNames': subNames,
+				'status': status,
+				'submittedTo': submittedTo,
+				'briefDescription': briefDescription,
+				'notes': notes,
+				'cost': cost,
+				'sell': sell,
+			},
+			success:function(data){
+				
+				alert('Saved Change Order');
+				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+
+				console.log(data);
+			},
+			error: function(data)
+			{
+				alert('Saved Change Order');
+				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+			}
+		});
+}
+
+function isValidInput_CHANGE_ORDER(dates)
+{	
+	//Check if all of the dates are in the correct format
+	for (var i = 0; i < dates.length; i++)
+	{
+		var date = dates[i];
+		if (date != "" && !isDate(date))
+		{
+			console.log("----------");
+
+			console.log(date);
+			console.log("----------");
+			console.log(i);
+
+			alert("Dates must be in this format: mm/dd/yyyy");
+			return false
+		}
+	}
+	return true;
+}
+
+function goToChangeOrder(edit){
+	$('.editProject').hide();
+	$('#changeOrder').show();
+	setCurrentDivLocation('changeOrder');
+	console.log("EDIT = ", edit);
+	if(edit == 0) {
+		edit_CHANGE_ORDER = 'false';
+		clearTabs_CHANGE_ORDER();
+	}
+	else edit_CHANGE_ORDER = 'true';
+	
+	getDropdownInfo_CHANGE_ORDER();
+}
+/*
+function returnToProjectManager () {
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
+}
+*/
+
+function toggleChangeOrder (source) {
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editChangeOrder').prop('disabled', false);
+	selectedChangeOrder = $(source).attr('value');
+}
+
+function changeOrderReport () {
+	window.location.href = CHANGE_ORDER_PRINT + 'id=' + projectID;
+}
+
+//
+//
+/// THIS ENDS THE JAVASCRIPT FOR changeOrderData.html
+//
+//
+
+/**
+ * This function sets the current div location so we know what to display
+ * INNER FUNCTION CALLS: none
+ */
 function setCurrentDivLocation(location) {
 	currentDivLocation = location;
 	console.log("LOCATION = ", location);
 }
 
+/**
+ * This function converts the current Div Location in order to display a proper header
+ * INNER FUNCTION CALLS: none
+ */
 function convertCurrentDivLocation (currentDivLocation){
 	switch(currentDivLocation) {
 		case "projectManager":
-			$('#'+currentDivLocation).find("#pageLocation").text("Project Manager");
+			$('#'+currentDivLocation).find("#pageLocation").html("<h2>Project Manager</h2>");
 			break;
 		case "projectData":
-			$('#'+currentDivLocation).find("#pageLocation").text("Project Editor");
+			$('#'+currentDivLocation).find("#pageLocation").html("<h2>Project Editor</h2>");
 			break;
 		case "permitData":
-			$('#'+currentDivLocation).find("#pageLocation").text("Permit & Inspection Editor");
+			$('#'+currentDivLocation).find("#pageLocation").html("<h2>Permit & Inspection Editor</h2>");
 			break;
 		case "closeoutData":
-			$('#'+currentDivLocation).find("#pageLocation").text("Closeout Editor");
+			$('#'+currentDivLocation).find("#pageLocation").html("<h2>Closeout Editor</h2>");
+			break;
+		case "changeOrder":
+			$('#'+currentDivLocation).find("#pageLocation").html("<h2>Change Order</h2>");
 			break;
 	}
 }
 
+/**
+ * This function updates all of the data on the front end
+ * ----------CURRENTLY THIS FUNCTION DOES NOTHING ---------
+ * INNER FUNCTION CALLS: none
+ */
 function updateProjectManager() {
 	if(currentDivLocation == 'projectData'){
 		

@@ -320,7 +320,31 @@ public class Project extends HttpServlet
 			catch (NumberFormatException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
+		} 
+		else if(action.equals("getWarehouse")) 
+		{
+			System.out.println("GET WAREHOUSE");
+			try 
+			{
+				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "Warehouse");
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} 
+		else if(action.equals("getItem")) 
+		{
+			System.out.println("GET ITEM");
+			try 
+			{
+				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "ProjectItem");
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} 
 		else if (action.equals("getQueryEnums"))
 		{
 			response = ProjectService.getQueryEnumsAsJSON();

@@ -87,7 +87,7 @@ function setProjectHeader (projectData, currentDivLocation, previousDivLocation)
 	
 	if(!currentDivLocation) $(document).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
 	else {
-		convertCurrentDivLocation(currentDivLocation)
+		convertCurrentDivLocation(currentDivLocation);
 		$('#'+currentDivLocation).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
 	}
 

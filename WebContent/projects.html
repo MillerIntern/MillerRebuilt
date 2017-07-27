@@ -13,6 +13,7 @@
 	<script src="js/global.js"></script>
 	<script src="js/projects.js"></script>
 	
+	
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +41,7 @@
 		        <ul class="dropdown-menu">
 		          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 		      		onmouseout="style='background-color: none;'">Add Project</a></li>
-		          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		          <li><a onclick="goToFindProject();" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 		        </ul>
 		      </li>
@@ -94,7 +95,7 @@
 				<input class ="stage" type ="checkbox" value="15">Canceled
 				</div>
 				<br>
-				<button onclick = "updateFrontEnd()">Reload Projects </button>
+				<button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button>
 				<br>
 	   			
 			    <div class="paramHolder">
@@ -132,21 +133,23 @@
 	<div id = 'projectManager' class ='editProject'>
 		
 	    <div class="container">
-	    	<p id='pageLocation'> </p>
-	    	<br>
+	    	
+	    	<h2 id='pageLocation'> </h2>
+
 	    	<p id='projectHeader'>---</p>
-	    	<button onclick="document.getElementById('projectManager').style.display = 'none';document.getElementById('findProject').style.display = 'inline'; setCurrentDivLocation('findProject');">Return to Find Project</button>
+	    	<br>
+	    	<button class="btn-info btn-block btn-lg" onclick="goToFindProject();">Return to Find Project</button>
 	    	               
 			<ul class='nav nav-tabs'>
-				<li role='presentation' class='active' data-tab='projectInformation'><a>Project Information</a></li>
-				<li role='presentation' data-tab='equipment'><a>Equipment</a></li>
-				<li role='presentation' data-tab='changeOrders'><a>Change Orders</a></li>
-				<li role='presentation' data-tab='permits'><a>Permits</a></li>
-				<li role='presentation' data-tab='inspections'><a>Inspections</a></li>
-				<li role='presentation' data-tab='closeout'><a>Closeout</a></li>
-				<li role='presentation' data-tab='triggers'><a>Triggers</a></li>
-				<li role='presentation' data-tab='tasks'><a>Tasks</a></li>
-				<li role='presentation' data-tab='settings'><a>Settings</a></li>
+				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Information</a></li>
+				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
+				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
+				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits</a></li>
+				<li role='presentation' data-tab='inspections' id="inspectionsTabLink"><a>Inspections</a></li>
+				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
+				<li role='presentation' data-tab='triggers' id="triggerTabLink"><a>Triggers</a></li>
+				<li role='presentation' data-tab='tasks' id="tasksTabLink"><a>Tasks</a></li>
+				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
 				<table class='table table-hover table-striped infoTable'>
@@ -164,8 +167,8 @@
 				<table id='changeOrderTable' class='table'>
 					<tr><th>Type</th><th>Brief Description</th><th>Status</th><th>Submitted Date</th><th>Approved Date</th></tr>
 				</table>	
-				<button onclick='addChangeOrder()' type='button' class='project-edit btn'>Add Change Order</button>
-				<button id='editChangeOrder' onclick='editSelectedChangeOrder()' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
+				<button onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
+				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
@@ -271,7 +274,8 @@
 		<p id='pageLocation'> </p>
 	    <br>
 		<p id='projectHeader' class="projectIdentifier">---</p>
-		<button onclick="document.getElementById('projectData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
+		<br>
+		<button class="btn-info btn-block btn-lg" onclick="goToProjectManager();">Return to Project Manager</button>
 		<ul class="nav nav-tabs">
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
@@ -474,7 +478,8 @@
 			<p id='pageLocation'> </p>
 	    	<br>
 			<p id="projectHeader">---</p>
-		    <button onclick="document.getElementById('permitData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
+			<br>
+		    <button class="btn-info btn-block btn-lg" onclick="goToProjectManager();">Return to Project Manager</button>
 		
 			<ul class="nav nav-tabs">
 				<li id="buildingPermit" role='presentation' class='active' data-tab="permits"><a>Building Permits</a></li>
@@ -777,10 +782,15 @@
 	<div id = 'closeoutData' class ='editProject'>
 	
 	<div class="container">
-	<p id='pageLocation'> </p>
-	<br>
-	<p id='projectHeader' class="projectIdentifier">---</p>
-	<button onclick="document.getElementById('closeoutData').style.display = 'none';document.getElementById('projectManager').style.display = 'inline'; setCurrentDivLocation('projectManager');">Return to Project Manager</button>
+	
+	    
+		<h1 id='pageLocation'> </h1>
+		<br>
+		<p id='projectHeader' class="projectIdentifier">---</p>
+		<br>
+		<button class="btn-info btn-block btn-lg" onclick="goToProjectManager();">Return to Project Manager</button>
+	
+	
 	
 		<ul class="nav nav-tabs">
 			<li id = "closeout" role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
@@ -1347,6 +1357,142 @@
 	<div id="footer"> </div>  
 
 </div> <!-- THIS ENDS THE DIV FOR CLOSEOUT DATA-->
+
+	<div id="changeOrder" class="editProject">
+		<h1 id='pageLocation'> </h1>
+		<br>
+		<p id='projectHeader' class="projectIdentifier">---</p>
+		<br>
+		<button class="btn-info btn-block btn-lg" onclick="goToProjectManager();">Return to Project Manager</button>
+		
+		<div class="container">
+		
+			<ul class="nav nav-tabs">
+				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
+		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
+		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+			</ul>
+		
+		    <!-- Closeout Documents Tab--> 
+			<div id="changeOrderInfo" class="info-tab active">
+		        <table class="table table-hover">
+		        	<tr style="height: 0px;"></tr>
+		            <tr>
+		                <td>Customer CO#:</td>
+		                <td>
+		                    <select class="closeout-input" id="customerCO">
+		                        <option value="default">--Customer--</option>
+		                    </select>               
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>MCS CO #:</td>
+		                <td>
+		                    <input type="text" id="mcsCO" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Sub CO #:</td>
+		                <td>
+		                    <input type="text" id="subCO" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Sub Name(s):</td>
+		                <td>
+		                    <input type="text" id="subNames" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Proposal Date:</td>
+		                <td>
+		                	<input type="text" id="proposalDate" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Brief Description:</td>
+		                <td>
+		                    <textarea id="briefDescription"> </textarea>
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Cost ($):</td>
+		                <td>
+		                    <input type="text" id="cost" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Sell ($):</td>
+		 
+		                <td>
+		                	<input type="text" id="sell" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Status:</td>
+		 
+		                <td>
+		                    <select class="closeout-input" id="status">
+		                        <option value="default">--Status--</option>
+		                    </select>                  
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Submitted To</td>
+		 
+		                <td>
+		                	<input type="text" id="submittedTo" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Submitted Date:</td>
+		 
+		                <td>
+		                	<input type="text" id="submittedDate" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Approved Date:</td>
+		 
+		                <td>
+		                	<input type="text" id="approvedDate" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td>Notes:</td>
+		                <td>
+		                    <textarea id="notes"> </textarea>
+		                </td>   
+		            </tr>
+		        </table>
+			</div>
+			<div class='info-tab' id='saveButton'>
+				<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+				<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+				<select style='margin: 4px' id='taskSelector' class='form-control'>
+					<option value='incomplete'>Incomplete</option>
+					<option value='complete'>Complete</option>
+					<option value='all'>All</option>
+				</select>
+				<table class='table table-hover' id='taskTable'>
+		   			<tr class='head'>
+		   				<th>Task</th>
+		   				<th>Description</th>
+		   				<th>Assigned</th>
+		   				<th>Due</th>
+		   				<th>Priority</th>
+		   				<th style='width: 200px;'>Notes</th>
+		   				<th></th>
+		   			</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="footer">
+		</div>
+
+</div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
 	
 	
 	
