@@ -9,11 +9,14 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
-	    <link href='css/projectManager.css' rel='stylesheet'>
-	
-	
-    <script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/contentControl.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
+	    
+    <link href='css/projectManager.css' rel='stylesheet'>
+	
+	
+    
 	
 	<script>
 	'use strict';
@@ -76,6 +79,7 @@
 				if(data.responseJSON) {
 				  console.log("data for user = ", data.responseJSON);
 				  user = data.responseJSON;
+				  if(user.permission.id != 1) hideAdminContent();	 
 				  console.log("data for USER = ", user);
 			      getUsers();		  
 
@@ -234,7 +238,7 @@
 	
 	function navigateToProjManager() {
 		if (confirm('Are you sure you want to leave this form?')) {
-			window.location.href = "projectManager.html?id=" + projectID;
+			window.location.href = "projects.html?id=" + projectID + "&from=taskForm";
 		}
 	}
 	
@@ -250,7 +254,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li><a href="homepage.html">Home</a></li>
@@ -273,13 +277,13 @@
 	      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'"
 	      		 >Your Tasks</a></li>
-	      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		<li><a href='projects.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'"
 	      		 >Create Task</a></li>
 	      	</ul>
 	      </li>
 	      <li><a href="OGqueryCode.html">Reports</a></li>
-	      <li><a href="additions.html">Tools</a></li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

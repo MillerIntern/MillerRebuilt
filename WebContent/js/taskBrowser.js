@@ -15,8 +15,8 @@ let selectedProjID;
 
 $(document).ready(function () {
     if(window.location.href.indexOf("taskReport.html") != -1) return;
-	$('#taskWell > span > .dueDate').datepicker();
-    getUserData();
+	$('#taskWell > span > .dueDate').datepicker({defaultDate: getToday()});
+	getUserData();
 });
 
 $(document).on('change', '#projectSearch', function(){
@@ -55,6 +55,7 @@ $(document).on('change', '#descriptionSearch', function(){
 
 
 
+
 function getUserData () {
 	
 	$.ajax({
@@ -67,6 +68,7 @@ function getUserData () {
 			if(data.responseJSON) {
 			  user = data.responseJSON;
 			  console.log("USER = ", user);
+			  if(user.permission.id != 1) hideAdminContent();	 
 		      getUsers();		  
 
 				
@@ -95,6 +97,14 @@ function getTasks() {
 				tasks = data.responseJSON;
 				projectsOfInterest = tasks;
 				console.log("TASK ARE = ", tasks);
+				let taskID = getParameterByName('id');
+				if(taskID){
+					console.log("TASK ID = ", taskID);
+					for(var i = 0; i < tasks.length; i++) {
+						tasks[i].value = tasks[i].id;
+						if(tasks[i].id == taskID) expandTaskInfo(tasks[i]);
+					}
+				}
 				preparePageForUserStatus();
 			}
 			else { 
@@ -410,15 +420,17 @@ function collapseWell() {
 
 function expandTaskInfo(param) {
 	console.log("this == ", param);
-	let taskID = $(param).val();
-	console.log(taskID);
-	
-	for(var i = 0; i < tasks.length; i++) {
-		if(tasks[i].id === taskID) {
-			task = tasks[i];
-			break;
+	if(!getParameterByName('id')) {
+		let taskID = $(param).val();
+		console.log(taskID);
+		
+		for(var i = 0; i < tasks.length; i++) {
+			if(tasks[i].id === taskID) {
+				task = tasks[i];
+				break;
+			}
 		}
-	}
+	} else task = param;
 	console.log("expandTaskInfo() TASK === " , task);
 	selectedProjID = task.project.id;
 	
@@ -429,7 +441,13 @@ function expandTaskInfo(param) {
 	$('#taskWell > div > .description').val(task.description);
 	$('#taskWell > span > .severity').val(task.severity);
 	$('#taskWell > .assignedDate').html('<b>Assigned Date:</b> ' + task.assignedDate);
-	$('#taskWell > span > .dueDate').val(task.dueDate);						
+	var date = task.dueDate.split("/");
+	var year = date[2];
+	var yearString = year.toString();
+	if(yearString[0] != '2') date[2] = yearString[2] + yearString[3];
+	console.log("YEAR = ", date[2]);
+	var dueDate = date[0] +"/"+date[1]+"/"+date[2];
+	$('#taskWell > span > .dueDate').val(dueDate);							
 	$('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
 	$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
 	$('#taskWell > span > .taskStatus').val(task.status.status);
@@ -440,7 +458,7 @@ function expandTaskInfo(param) {
 }
 
 function navigateToSelectedProject () {
-	window.location.href = PROJECTMANAGER + '?id=' + selectedProjID;
+	window.location.href = 'projects.html?id=' + selectedProjID;
 }
 
 function saveTaskChanges () {
@@ -457,6 +475,14 @@ function saveTaskChanges () {
 	let severity = $('#taskWell > span > .severity').val();
 	let assignedDate =task.assignedDate;
 	let dueDate = $('#taskWell > span > .dueDate').val();
+	
+	console.log("DUE DATE == " , dueDate);
+	let date = dueDate.split("/");
+	let yearString = date[2].toString();
+	if(yearString.length == 2) date[2] = "20"+date[2];
+	let dateString = date[0]+"/"+date[1]+"/"+date[2];
+	dueDate = dateString;
+	
 	let assignedBy = user.id;	// changes to whoever made the update
 	let assignedTo = $('#taskWell > span > .assignedTo').val();
 	let taskStatus = $('#taskWell > span > .taskStatus').val();
@@ -473,7 +499,7 @@ function saveTaskChanges () {
 		if(users[i].firstName == assignedTo){ assignedTo = users[i]; break;}
 	}
 	
-	$('#taskWell > span > .assignedTo').val(assignedTo);
+	//$('#taskWell > span > .assignedTo').val(assignedTo);
 	var i = 0;
 	for(; i < tasks.length; i++){
 		if(tasks[i].id == task.id)
@@ -549,9 +575,7 @@ function saveTaskChanges () {
 				}
 			}
 		});
-	} else {
-		alert("Date Formatter Incorrectly!");
-	}
+	} 
 
 }
 
@@ -570,7 +594,7 @@ function isValidInput(dates)
 			console.log("----------");
 			console.log(i);
 
-			alert("Dates must be in this format: mm/dd/yyyy");
+			alert("DATE ERROR:\n\nDates must be in the following format: mm/dd/yyyy");
 			return false
 		}
 	}

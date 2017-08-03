@@ -127,6 +127,8 @@ function sortByDateAscending()
 	console.log("sortByDateAscending() TASKS == " , tasks); 
 	projectsOfInterest.sort(function(a,b){
       var dateA, dateB;
+      if(!a.dueDate) return 1;
+      if(!b.dueDate) return -1;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
       if(dateA[2] < dateB[2]) return -1;
@@ -144,7 +146,10 @@ function sortByDateAscending()
 function sortByDateDescending() {
 	console.log(tasks); 
 	projectsOfInterest.sort(function(a,b){
+	
       var dateA, dateB;
+      if(!a.dueDate) return -1;
+      if(!b.dueDate) return 1;
       dateA = a.dueDate.split("/");
       dateB = b.dueDate.split("/");
       if(dateA[2] < dateB[2]) return 1;

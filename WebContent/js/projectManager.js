@@ -104,6 +104,7 @@ function fillProjectInformation (data) {
 } // fillProjectInformation
 
 function fillChangeOrders (data) {
+	$('#changeOrderTable').find('tr').remove();
 	let changeOrders = data.changeOrders;
 	for (var i = 0; i < changeOrders.length; i++) {
 		let changeOrder = changeOrders[i];

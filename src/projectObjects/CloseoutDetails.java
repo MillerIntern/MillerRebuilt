@@ -90,6 +90,9 @@ public class CloseoutDetails extends ProjectObject
 	private int numOfChangeOrders;
 	private int numOfChangeOrdersCompleted;
 	
+	private int numOfMCSChangeOrders;
+	private int numOfMCSChangeOrdersCompleted;
+	
 	// Final Liens 
 	private String MCSStatus;
 	private Date MCSDate;
@@ -766,6 +769,23 @@ public class CloseoutDetails extends ProjectObject
 	public void setNumOfChangeOrdersCompleted(int numOfChangeOrdersCompleted) {
 		this.numOfChangeOrdersCompleted = numOfChangeOrdersCompleted;
 	}
+	
+	public int getNumOfMCSChangeOrders() {
+		return numOfMCSChangeOrders;
+	}
+	
+	public void setNumOfMCSChangeOrders(int numOfMCSChangeOrders) {
+		this.numOfMCSChangeOrders = numOfMCSChangeOrders;
+	}
+	
+	public int getNumOfMCSChangeOrdersCompleted() {
+		return numOfMCSChangeOrdersCompleted;
+	}
+	
+	public void setNumOfMCSChangeOrdersCompleted(int numOfMCSChangeOrdersCompleted) {
+		this.numOfMCSChangeOrdersCompleted = numOfMCSChangeOrdersCompleted;
+	}
+	
 
 	public String getMCSStatus() {
 		return MCSStatus;

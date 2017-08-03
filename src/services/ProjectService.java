@@ -20,6 +20,7 @@ import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Project;
+import projectObjects.ProjectObject;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Task;
@@ -77,6 +78,42 @@ public class ProjectService extends ProjectObjectService
 
 		return projID;
 	}
+	
+	/**
+	 * @param projID
+	 * @param parameters
+	 */
+	public static void removeChangeOrder(Long projID, Long changeOrderID)  throws ClassNotFoundException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	
+        Iterator<projectObjects.ChangeOrder> iter = currentProject.getChangeOrders().iterator();
+        while(iter.hasNext()) {
+        	long id = iter.next().getId();
+        	if(id == changeOrderID) {
+        		System.out.println("REMOVED THE CHANGE ORDER FROM PROJECT: " + changeOrderID);
+        		iter.remove();
+        	}
+        }
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+	}
+	
+	
+	
+
 
 	/**
 	 * This method gets all of the enumerated data that is needed by the dropdowns for the
@@ -300,6 +337,9 @@ public class ProjectService extends ProjectObjectService
 		String salvageIDString = params.get("salvageID");
 		Long closeoutID = (long)-1;
 		Long salvageID = (long)-1;
+		
+		String numOfMCSChangeOrders = params.get("numOfMCSChangeOrders");
+		System.out.println("BOOOO" + numOfMCSChangeOrders);
 
 		try
 		{
@@ -658,6 +698,22 @@ public class ProjectService extends ProjectObjectService
 		{
 			iter.next().setId(null);
 		}
+	}
+	
+	public static Set<ChangeOrder> removeChangeOrder(Project project, long changeOrderID){
+		Set<ChangeOrder> changeOrders = project.getChangeOrders();
+		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
+		while(iterCO.hasNext())
+		{
+			if(iterCO.next().getId() == changeOrderID) {
+				iterCO.remove();
+				System.out.println("FOUND CHANGE ORDER");
+				break;
+			}
+		}
+		
+		return changeOrders;
+		
 	}
 
 	/**

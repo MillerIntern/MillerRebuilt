@@ -15,6 +15,30 @@ $(document).ready(function()
 			});			
 });
 
+function preparePage() {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, complete: function (data) {
+			if(data.responseJSON) {
+			  console.log("USER = ", data.responseJSON);
+		      if(data.responseJSON.permission.id != 1) {
+		    	  alert("Sorry but it looks like you don't have access to this page!");
+		    	  document.location.href = "homepage.html";
+		      }
+		      getStates();
+			} else {
+				console.log("GetUserData() RESPONSE = ",data);
+				alert('Server Failure!');
+				
+			}
+		}
+	});
+}
+
 function getStates()
 {
 	$.ajax({
@@ -151,6 +175,25 @@ function addPerson()
 			}
 		});
 	}
+}
+
+function deleteProjectObject() {
+	if(!confirm("Are you sure you want to permanently delete this data from the database?")) return;
+	let id = document.getElementById("objectId").value;
+	let domain = document.getElementById("objectDomain").value;
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': domain,
+			'action': 'deleteProjectObject',
+			'id': id
+		}, complete: function (data) {
+			console.log("REPONSE DATA FROM deleteItem() = ",data);
+
+		}
+		
+	});
 }
 
 

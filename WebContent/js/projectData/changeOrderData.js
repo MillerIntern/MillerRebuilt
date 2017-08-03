@@ -179,8 +179,11 @@ function saveProject()
 	var dates = [proposalDate, submittedDate, approvedDate];
 	
 	var action = "addChangeOrder";
+	
 	if(PAGETYPE == 'edit')
 		action = "editChangeOrder";
+	
+
 	
 	if(isValidInput(dates))
 		$.ajax({

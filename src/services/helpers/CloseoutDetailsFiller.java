@@ -30,13 +30,30 @@ public class CloseoutDetailsFiller
 			 numOfChangeOrdersCompleted = Integer.parseInt(params.get("numOfChangeOrdersCompleted"));
 		}catch(NumberFormatException ex) { numOfChangeOrdersCompleted = 0; }
 		cd.setNumOfChangeOrdersCompleted(numOfChangeOrdersCompleted);
+		/////////////
+		int numOfMCSChangeOrders;
+		try
+		{
+			 numOfMCSChangeOrders = Integer.parseInt(params.get("numOfMCSChangeOrders"));
+		}catch(NumberFormatException ex) { numOfMCSChangeOrders = 0; }
 
-		Date mg2CompletionDate = null;
-		if(!params.get("mg2CompletionDate").isEmpty())
-			mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
+		cd.setNumOfMCSChangeOrders(numOfMCSChangeOrders);
 
-		cd.setMg2CompletionDate(mg2CompletionDate);
-		cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
+		int numOfMCSChangeOrdersCompleted;
+		try
+		{
+			 numOfMCSChangeOrdersCompleted = Integer.parseInt(params.get("numOfMCSChangeOrdersCompleted"));
+		}catch(NumberFormatException ex) { numOfMCSChangeOrdersCompleted = 0; }
+		cd.setNumOfMCSChangeOrdersCompleted(numOfMCSChangeOrdersCompleted);
+
+		
+		/////////////////
+		//Date mg2CompletionDate = null;
+		//if(!params.get("mg2CompletionDate").isEmpty())
+		//	mg2CompletionDate = formatter.parse(params.get("mg2CompletionDate"));
+
+		//cd.setMg2CompletionDate(mg2CompletionDate);
+		//cd.setMg2CompletionStatus(params.get("mg2CompletionStatus"));
 
 		Date MCSDate = null;
 		if(!params.get("MCSDate").isEmpty())

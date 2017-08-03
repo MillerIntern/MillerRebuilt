@@ -28,13 +28,14 @@ function generatePermitReport()
 
 function findActivePermits()
 {
-	document.location.href=FINDPROJECT + '?type=search&id=activePermit';
+	document.location.href= "projects.html?from=findAwaitingPermits";
 }
 
 function findUserProjects()
 {
-	document.location.href= FINDPROJECT + '?type=search&id=user';
+	document.location.href= "projects.html?from=findUserProjects";
 }
+
 
 /*
  * Gets all active projects
@@ -62,6 +63,30 @@ function getBudgetaryProjects()
 	window.open('/MillerRebuilt/Report?domain=project&action=query&warehouse.id=%5B%5D&stage.id=%5B8%5D&projectClass.id=%5B%5D&projectItem.id=%5B%5D&projectType.id=%5B%5D&region.region=%5B%5D&status.id=%5B%5D&projectInitiatedDate=%5B%5D&projectInitiatedDateRelation=%5B%5D&costcoDueDate=%5B%5D&costcoDueDateRelation=%5B%5D&proposalSubmitted=%5B%5D&proposalSubmittedRelation=%5B%5D&scheduledStartDate=%5B%5D&scheduledStartDateRelation=%5B%5D&scheduledTurnover=%5B%5D&scheduledTurnoverRelation=%5B%5D&actualTurnover=%5B%5D&actualTurnoverRelation=%5B%5D&onGoing=%5B%5D&onGoingRelation=%5B%5D&projectManagers.id=%5B%5D&title=All+Budgetary+Projects&shownFields=%5B%22stage%22%2C%22warehouse%22%2C%22item%22%2C%22scope%22%2C%22manager%22%2C%22supervisor%22%2C%22region%22%2C%22status%22%2C%22initiated%22%2C%22siteSurvey%22%2C%22costcoDueDate%22%2C%22proposalSubmitted%22%2C%22type%22%2C%22projectNotes%22%5D');
 }
 
+
+
+
+function getUser() {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, complete: function (data) {
+			if(data.responseJSON) {
+			  console.log("USER = ", data.responseJSON);
+		      if(data.responseJSON.permission.id != 1) hideAdminContent();	  
+
+				
+			} else {
+				console.log("GetUserData() RESPONSE = ",data);
+				alert('Server Failure!');
+				
+			}
+		}
+	});
+}
 
 
 

@@ -5,7 +5,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,6 +28,7 @@ import projectObjects.ChangeOrder;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
+import projectObjects.Project;
 import projectObjects.ProjectObject;
 import projectObjects.Task;
 
@@ -327,12 +333,13 @@ public class ProjectObjectService
 		
 		//Get the Class from parsing the "domain" string.
 		Class<?> c = Class.forName("projectObjects."+domain);
-		
 		//Get object from database that matches the id
 		Object o = session.get(c, id);
 		tx.commit();
 		return o;
 	}
+	
+
 	
 	/**
 	 * This method gets a particular object of a certain type from the database,
@@ -360,6 +367,32 @@ public class ProjectObjectService
 	
 		return gson.toJson(o);
 	}
+	/**
+	public static Project getProjectByID(long projectID){
+		Session s = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    try {
+
+	        tx = s.beginTransaction();        
+
+	        // here get object
+	        List<projectObjects.Project> list = s.createCriteria(projectObjects.Project.class).list();
+
+	        tx.commit();
+
+	    } catch (HibernateException ex) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }            
+	       // Logger.getLogger("con").info("Exception: " + ex.getMessage());
+	        ex.printStackTrace(System.err);
+	    } finally {
+	        s.close(); 
+	    }
+		
+		
+	}
+	*/
 	
 	/**
 	 * this method is vital for any new fields that are added to the database
@@ -395,31 +428,38 @@ public class ProjectObjectService
 	 */
 	public static String delete(Long id, String domain) throws ClassNotFoundException
 	{
-		String success = "NOT_DELETED";
+		String success = "DELETED";
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		Class<?> c = Class.forName("projectObjects."+domain);
+		//session.createQuery("delete from "+domain+" where id ="+id);
+		//System.out.println("ATTEMPTING TO DELETE " + id);
 		
 		//Attempt to delete the object
 		try
 		{
 			ProjectObject oldObject2 = (ProjectObject) session.get(c, id);
+			System.out.println("ID = " + oldObject2.getId());
 
 		   // Object o = session.get(c, id); 
 		    session.delete(oldObject2); 
 		    System.out.println("hi");
 		    tx.commit();
 		    System.out.println("hello");
-		    success = "PROJECT_DELETED";
+		    success = "PROJECT_OBJECT_DELETED";
 		}
 		catch (Exception e) 
 		{
+			System.out.println(e.getMessage());
 			if (tx!=null) tx.rollback();
 			System.out.println("NOTHING WENT WRONG - kind of");
 		}
 		
+		
 		return success;
 	}
+	
+	
 	
 	/**
 	 * This method adds an object to the database.

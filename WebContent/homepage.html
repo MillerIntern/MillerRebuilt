@@ -11,6 +11,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/homepage.js"></script>
     <script src="js/global.js"></script>
+    <script src="js/contentControl.js"></script>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -19,12 +20,12 @@
     
     <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
   </head>
-  <body>
+  <body onload="getUser()">
   
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li class="active"><a href="#">Home</a></li>
@@ -54,12 +55,12 @@
 	      	<ul class='dropdown-menu'>
 	      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
-	      		<li><a href= 'findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		<li><a href= 'projects.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Create Task</a></li>
 	      	</ul>
 	      </li>
 	      <li><a href="OGqueryCode.html">Reports</a></li>
-	      <li><a href="additions.html">Tools</a></li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

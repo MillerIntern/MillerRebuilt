@@ -59,5 +59,6 @@ public class ChangeOrderFiller
 		co.setType(params.get("customerCO"));
 		co.setSubCO(params.get("subCO"));
 		co.setSubmittedTo(params.get("submittedTo"));
+		co.setTitle(params.get("title"));
 	}
 }

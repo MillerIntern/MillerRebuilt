@@ -17,6 +17,7 @@ public class ChangeOrder extends ProjectObject
 	/**
 	 * The status of the change order
 	 */
+	private String title;
 	private String status;
 	private String type;
 	
@@ -50,7 +51,7 @@ public class ChangeOrder extends ProjectObject
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
 					   String briefDescription, String notes, double cost, double sell, String type,
-					   String submittedTo, String subCO)
+					   String submittedTo, String subCO, String title)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -65,6 +66,7 @@ public class ChangeOrder extends ProjectObject
 		this.subCO = subCO;
 		this.sell = sell;
 		this.setType(type);
+		this.title = title;
 	}
 	
 	public ChangeOrder()
@@ -82,6 +84,7 @@ public class ChangeOrder extends ProjectObject
 		this.sell = 0;
 		this.subCO = null;
 		this.submittedTo = null;
+		this.title = null;
 	}
 
 
@@ -201,4 +204,12 @@ public class ChangeOrder extends ProjectObject
 	public void setSubmittedTo(String submittedTo) {
 		this.submittedTo = submittedTo;
 	}	
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

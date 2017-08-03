@@ -1,6 +1,7 @@
 'use strict';
 const HOMEPAGE = "homepage.html";
 const FINDPROJECT = "findProject.html";
+const PROJECTS = "projects.html";
 const PROJECTINFO = 'projectData.html';
 const PROJECTMANAGER = 'projectManager.html';
 const PROJECT_PERMITS_AND_INSPECTIONS = 'permitData.html';
@@ -45,15 +46,58 @@ function getParameterByName(name)
 //Output: true if the string is formatted as a valid
 function isDate(str)
 {
-	var t = String(str).match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-	if(t===null)
+	var date = String(str).split("/");
+	if (date.length != 3)
 		return false;
-	var m=+t[1], d=+t[2], y=+t[3];
-	//below should be more accurate algorithm
-	if(m>=1 && m<=12 && d>=1 && d<=31)
-		return true; 
-	else
-		return false;
+
+	var month = date[0], day = date[1], year = date[2];
+	var monthString = month.toString();
+	var dayString = day.toString();
+	var yearString = year.toString();
+	
+	if(monthString.length != 1 && monthString.length != 2) return false;
+	if(dayString.length != 1 && dayString.length != 2) return false;
+	if(yearString.length != 4 && yearString.length != 2) return false;
+	
+	for(var i = 0; i < monthString.length; i++){
+		if(isNaN(monthString[i])) return false;
+	}
+	for(var i = 0; i < dayString.length; i++){
+		if(isNaN(dayString[i])) return false;
+	}
+	for(var i = 0; i < yearString.length; i++){
+		if(isNaN(yearString[i])) return false;
+	}
+	
+	if(month < 1 || month > 12) return false;
+	if(day < 1 || day > 31) return false;
+	var currentYear = getYear();
+	var currentYearString = currentYear.toString();
+	var twoDigitYear = currentYearString[2] + currentYearString[3];
+	/**
+	if(yearString.length == 2){
+		if(year < twoDigitYear) return false;
+	}
+	else {
+		if(year < currentYear) return false;
+	}
+	*/
+	
+	
+	return true;
+}
+
+function dateCleaner(date_arg) {
+	console.log("DATE ARG = " , date_arg);
+	var date = date_arg.toString().split("/");
+	var day = date[0].toString(), month = date[1].toString(), year = date[2].toString();
+	if(day.length == 1) day = "0"+day;
+	if(month.length == 1) month = "0"+month;
+	console.log("YEAR LENGTH = ", year.length);
+	if(year.length == 2) year = "20"+year;
+	date_arg = day+"/"+month+"/"+year;
+	console.log("UPDATED ARG = ", date_arg);
+	return date_arg;
 }
 
 function goHome (){
@@ -115,6 +159,12 @@ function getToday() {
 	
 	today = month + '/' + day + '/' + year;
 	return today;
+}
+
+function getYear() {
+	var today = new Date();
+	var year = today.getFullYear();
+	return year;
 }
 
 function comingSoon(source) {

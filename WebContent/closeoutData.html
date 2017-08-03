@@ -27,7 +27,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">Miller Construction &amp; Refrigeration</a>
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li><a href="homepage.html">Home</a></li>
@@ -36,7 +36,7 @@
 	        <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
 	          <li><a href="projectData.html">Add Project</a></li>
-	          <li><a href="findProject.html">Find Projects</a></li>
+	          <li><a href="projects.html">Find Projects</a></li>
 	        </ul>
 	      </li>
 	      <li><a href="#">Triggers</a></li>
@@ -68,7 +68,7 @@
 		<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
         <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
 		<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
-		<li role='presentation' data-tab="otherItems"><a>Other Items</a></li>
+		<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
         <li onClick="saveProject()" data-tab="saveButton">
         				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
@@ -76,29 +76,6 @@
     <!-- Closeout Documents Tab--> 
 	<div id="closeoutDocuments" class="info-tab active">
         <table class='table table-hover'>
-        
-            <tr>
-                <td>Equipment Submittal:</td>
-                <td>  
-                    <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
-                        <option value="default">--Status--</option>
-                    </select>
-                </td>
-                <td>
-                    <input id="equipmentSubCL" type="text"></input>  
-                </td>
-            </tr>
-            <tr>
-                <td>Operations and Maintenance Manuals:</td>
-                <td>  
-                    <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
-                    <option value="default">--Status--</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" id="manualDate" />
-                </td>   
-            </tr>
             <tr>
                 <td>Punch List:</td>
                 <td>  
@@ -164,6 +141,20 @@
                 <td>
                 <input type="text" id="verisae" />	
                 </td>   
+            </tr>
+            <tr>
+                <td>Number of MCS Change Orders:</td>
+                <td>  
+                 <input type="text" id="numOfMCSChangeOrders" />   
+                </td>  
+                <td></td>
+            </tr>
+            <tr>
+                <td>Number of MCS Change Orders Completed:</td>
+                <td>  
+            <input type="text" id="numOfMCSChangeOrdersCompleted" />
+                </td> 
+                <td></td>
             </tr>
             <tr>
                 <td>Closeout Documents Notes:</td>
@@ -432,7 +423,7 @@
                 </td>   
             </tr> 
             <tr>
-                <td>Eletrical Liens:</td>
+                <td>Electrical Liens:</td>
                 <td>  
                     <select data-associated-date='electricalDate' class="closeout-input" id="electricalStatus">
                         <option value="default">--Status--</option>
@@ -512,44 +503,19 @@
     <div id="otherItems" class="info-tab">
         <table class='table table-hover'>
         <tr style="height: 0px;"></tr>
-            <tr>
-                <td>Number of Change Orders:</td>
-                <td>  
-                 <input type="text" id="numOfChangeOrders" />   
-                </td>  
-                <td></td>
-            </tr>
-            <tr>
-                <td>Number of Change Orders Completed:</td>
-                <td>  
-            <input type="text" id="numOfChangeOrdersCompleted" />
-                </td> 
-                <td></td>
-            </tr>
-            <tr>
-                <td>MG2 Completion:</td>
-                <td>  
-                    <select data-associated-date='mg2CompletionDate' class="closeout-input" id="mg2CompletionStatus">
-                        <option value="default">--Status--</option>
-                    </select>
-                </td> 
-                <td>
-                    <input type="text" id="mg2CompletionDate"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Certificate of Substantial Completion:</td>
-                <td>  
-                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
-                        <option value="default">--Status--</option>
-                    </select>
-                </td> 
-                <td>
-                    <input type="text" id="substantialCompletionDate"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Payment of Debts and Claims G706:</td>
+	        <tr>
+	                <td>G704 - Certificate of Substantial Completion:</td>
+	                <td>  
+	                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td> 
+	                <td>
+	                    <input type="text" id="substantialCompletionDate"/>
+	                </td>
+	        </tr>
+	        <tr>
+                <td>G706 - Affidavit of Payment of Debts and Claims:</td>
                 <td>  
                     <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
                         <option value="default">--Status--</option>
@@ -560,7 +526,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Release Of Liens G706A:</td>
+                <td>G706A - Contractor's Lien Releases:</td>
                 <td>  
                     <select data-associated-date='releaseOfLiensDate' class="closeout-input" id="releaseOfLiensStatus">
                         <option value="default">--Status--</option>
@@ -569,9 +535,9 @@
                 <td>
                     <input type="text" id="releaseOfLiensDate"/>
                 </td>
-            </tr>    
+            </tr>
             <tr>
-                <td>MulvannyG2 Sign Off:</td>
+                <td>MG2 Project Sign-off:</td>
                 <td>  
                     <select data-associated-date='mulvannySignOffDate' class="closeout-input" id="mulvannySignOffStatus">
                         <option value="default">--Status--</option>
@@ -580,7 +546,43 @@
                 <td>
                     <input type="text" id="mulvannySignOffDate"/>
                 </td>
-            </tr> 
+            </tr>     
+	        <tr>
+                <td>Equipment Submittal:</td>
+                <td>  
+                    <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="equipmentSubCL" type="text"></input>  
+                </td>
+            </tr>
+            <tr>
+                <td>Operations and Maintenance Manuals:</td>
+                <td>  
+                    <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
+                    <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="manualDate" />
+                </td>   
+            </tr>
+            <tr>
+                <td>Number of MG2 Change Orders:</td>
+                <td>  
+                 <input type="text" id="numOfChangeOrders" />   
+                </td>  
+                <td></td>
+            </tr>
+            <tr>
+                <td>Number of MG2 Change Orders Completed:</td>
+                <td>  
+            <input type="text" id="numOfChangeOrdersCompleted" />
+                </td> 
+                <td></td>
+            </tr>
         </table><br>
         
         <table class='table table-hover'>

@@ -6,6 +6,7 @@
 		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/global.js"></script>
 		<script type="text/javascript" src="js/additions.js"></script>
+		<script type="text/javascript" src="js/contentControl.js"></script>
 
 
         <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
@@ -14,7 +15,7 @@
 		<meta charset="UTF-8">
 	</head>
 	
-<body onload='getStates()'>
+<body onload='preparePage()'>
     <div class="header">
         <p class="title">Database Additions</p>
     </div>
@@ -44,6 +45,7 @@
 		<li class="tab-link" data-tab="item">Project Item</li>
 		<li class="tab-link" data-tab="equipmentVendor">Equipment Vendor</li>
 		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
+		<li class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
 	<div id="warehouse" class="tab-content current">
@@ -114,6 +116,11 @@
 			</tr>
 		</table>
 		<button onclick="addPerson()">Add New Person</button>
+	</div>
+	<div id="deleteTab" class="tab-content">
+		<input id = "objectDomain">Project Domain <br>
+		<input id = "objectId">ID <br> 
+		<button onclick="deleteProjectObject()">Delete Project Object</button>
 	</div>
 </div>
 

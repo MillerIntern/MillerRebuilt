@@ -379,7 +379,34 @@ public class Project extends HttpServlet
 			} catch (NumberFormatException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		} 
+		}
+		else if(action.equals("deleteProjectObject")) 
+		{
+			try {
+				Gson gson = new Gson();
+				response = ProjectService.delete(Long.parseLong(parameters.get("id")), parameters.get("domain"));
+				response = gson.toJson(response);
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("deleteChangeOrder"))
+		{
+			System.out.println("deleting a change order");
+			try {
+				ProjectService.removeChangeOrder(Long.parseLong(parameters.get("projectID")), Long.parseLong(parameters.get("changeOrderID")));
+				ProjectService.delete(Long.parseLong(parameters.get("changeOrderID")), "ChangeOrder");
+				response = "DELETED";
+				//PUT BACK CLASS NOT FOUND EXCEPTION
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		else if(action.equals("getProjectManagers"))
 		{
 			System.out.println("Gettng Names of All Project Managers");

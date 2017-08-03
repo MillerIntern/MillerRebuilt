@@ -1,0 +1,5 @@
+
+
+function hideAdminContent() {
+	$('.adminContent').hide();
+}

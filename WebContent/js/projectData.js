@@ -162,6 +162,7 @@ function generateDropdowns(str, className)
 }
 
 function saveProject() {
+	document.getElementById("saveProjectLink").onclick = "";
 	var mcsNumber = $('#mcsNumber').val();
 	
 	// Required Information
@@ -256,7 +257,7 @@ function saveProject() {
 }
 
 function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + projectID;
+	window.location.href = 'projects.html?id=' + projectID +'&from=projectData';
 }
 
 //This function validates the nunmerous fields of this page, separated by categories

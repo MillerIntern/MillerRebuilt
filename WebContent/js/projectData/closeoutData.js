@@ -152,6 +152,9 @@ function fillTabs(data)
 		$("#numOfChangeOrders").val(json.closeoutDetails.numOfChangeOrders);
 		$("#numOfChangeOrdersCompleted").val(json.closeoutDetails.numOfChangeOrdersCompleted);
 		
+		$("#numOfMCSChangeOrders").val(json.closeoutDetails.numOfMCSChangeOrders);
+		$("#numOfMCSChangeOrdersCompleted").val(json.closeoutDetails.numOfMCSChangeOrdersCompleted);
+		
 		$("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
 		$("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
 		
@@ -315,11 +318,14 @@ function saveProject()
     
     // NEW Closeout CONTENT
 	
-	var mg2CompletionStatus = $("#mg2CompletionStatus").val();
-	var mg2CompletionDate = $("#mg2CompletionDate").val();
+	//var mg2CompletionStatus = $("#mg2CompletionStatus").val();
+	//var mg2CompletionDate = $("#mg2CompletionDate").val();
 	
 	var numOfChangeOrders = $("#numOfChangeOrders").val();
 	var numOfChangeOrdersCompleted = $("#numOfChangeOrdersCompleted").val();
+	
+	var numOfMCSChangeOrders = $('#numOfMCSChangeOrders').val();
+	var numOfMCSChangeOrdersCompleted = $('#numOfMCSChangeOrdersCompleted').val();
     
         // LIENS
     var MCSStatus = $("#MCSStatus").val(); 
@@ -461,7 +467,7 @@ function saveProject()
 				
 				
 				// new closeout info
-				mg2CompletionDate,
+				//mg2CompletionDate,
 				
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, 
 				sprinkleDate, roofingDate, HTIDate, otherFinalLeinsDate,
@@ -508,11 +514,14 @@ function saveProject()
 				'equipmentSubCL': equipmentSubCL, 
 				
 				// new closeout info
-				'mg2CompletionStatus': mg2CompletionStatus,
-				'mg2CompletionDate': mg2CompletionDate,
+				//'mg2CompletionStatus': mg2CompletionStatus,
+				//'mg2CompletionDate': mg2CompletionDate,
 				
 				'numOfChangeOrders': numOfChangeOrders,
 				'numOfChangeOrdersCompleted': numOfChangeOrdersCompleted,
+				
+				'numOfMCSChangeOrders': numOfMCSChangeOrders,
+				'numOfMCSChangeOrdersCompleted' : numOfMCSChangeOrdersCompleted,
 				
 				'MCSStatus': MCSStatus,
 				'MCSDate': MCSDate,
