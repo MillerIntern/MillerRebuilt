@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -69,18 +70,20 @@ public class Project extends HttpServlet
      * the caller. 
      * 
 	*/
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		resp.setContentType("application/json");
 		out = resp.getWriter();
 		String response = "";
 		Map<String, String> parameters = RequestHandler.getParameters((req.getParameterMap()));
-		System.out.println("IN: doPost()\n");
 		
 		//Get the domain and desired action
 		//String domain = parameters.get("domain");
 		String action = parameters.get("action");
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Project.java\nIN: doPost()\nTime of transaction: " + timeStamp);
+		
 		
 		if(action == null) {
 			resp.setContentType("plain/text"); 
@@ -216,9 +219,8 @@ public class Project extends HttpServlet
 			System.out.println("editExistingProject");
 			
 			try {
-				Long projID = Long.parseLong(parameters.get("projectID"));
-				ProjectService.editExistingProject(projID, parameters);
-				
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.editExistingProject(projID, parameters);		
 				response = Long.toString(projID);
 			} catch (NumberFormatException e) {
 				System.out.println("ID retrieval failed");
@@ -544,7 +546,7 @@ public class Project extends HttpServlet
 	 * @param req
 	 * @return
 	 */
-	private String getManager(HttpServletRequest req) 
+	private synchronized String getManager(HttpServletRequest req) 
 	{
 		String username = (String) req.getSession().getAttribute("user");
 		/* UNDEFINED USERS: Alex, Tony, Jim, Craig*/

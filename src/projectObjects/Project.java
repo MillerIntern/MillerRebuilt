@@ -169,75 +169,75 @@ public class Project extends ProjectObject
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public ProjectStage getStage() {
+	public synchronized ProjectStage getStage() {
 		return stage;
 	}
 
-	public void setStage(ProjectStage stage) {
+	public synchronized void setStage(ProjectStage stage) {
 		this.stage = stage;
 	}
 
-	public Date getScheduledStartDate() {
+	public synchronized Date getScheduledStartDate() {
 		return scheduledStartDate;
 	}
 
-	public void setScheduledStartDate(Date scheduledStartDate) {
+	public synchronized void setScheduledStartDate(Date scheduledStartDate) {
 		this.scheduledStartDate = scheduledStartDate;
 	}
 
-	public Date getScheduledTurnover() {
+	public synchronized Date getScheduledTurnover() {
 		return scheduledTurnover;
 	}
 
-	public void setScheduledTurnover(Date scheduledTurnover) {
+	public synchronized void setScheduledTurnover(Date scheduledTurnover) {
 		this.scheduledTurnover = scheduledTurnover;
 	}
 
-	public Date getActualTurnover() {
+	public synchronized Date getActualTurnover() {
 		return actualTurnover;
 	}
 
-	public void setActualTurnover(Date actualTurnover) {
+	public synchronized void setActualTurnover(Date actualTurnover) {
 		this.actualTurnover = actualTurnover;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public ProjectClass getProjectClass() {
+	public synchronized ProjectClass getProjectClass() {
 		return projectClass;
 	}
 
-	public void setProjectClass(ProjectClass projectClass) {
+	public synchronized void setProjectClass(ProjectClass projectClass) {
 		this.projectClass = projectClass;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public Warehouse getWarehouse() {
+	public synchronized Warehouse getWarehouse() {
 		return warehouse;
 	}
 
-	public void setWarehouse(Warehouse warehouse) {
+	public synchronized void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
 	}
 
 	@Column(length = 1000)
-	public String getScope() {
+	public synchronized String getScope() {
 		return scope;
 	}
 	
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getMcsNumber()
+	public synchronized int getMcsNumber()
 	{
 		return McsNumber;
 	}
 	
-	public void setMcsNumber(int num)
+	public synchronized void setMcsNumber(int num)
 	{
 		McsNumber = num;
 	}
 
-	public void setScope(String scope) {
+	public synchronized void setScope(String scope) {
 		this.scope = scope;
 	}
 
@@ -246,11 +246,11 @@ public class Project extends ProjectObject
 	@JoinTable(name = "project_managers",
 	      joinColumns = {@JoinColumn(name = "project_id")},
 	      inverseJoinColumns = @JoinColumn(name = "id"))
-	public Person getProjectManagers() {
+	public synchronized Person getProjectManagers() {
 		return projectManagers;
 	}
 
-	public void setProjectManagers(Person projectManagers) {
+	public synchronized void setProjectManagers(Person projectManagers) {
 		this.projectManagers = projectManagers;
 	}
 
@@ -259,53 +259,53 @@ public class Project extends ProjectObject
 	@JoinTable(name = "project_supervisors",
 	      joinColumns = {@JoinColumn(name = "project_id")},
 	      inverseJoinColumns = @JoinColumn(name = "id"))
-	public Set<Person> getSupervisors() {
+	public synchronized Set<Person> getSupervisors() {
 		return supervisors;
 	}
 
-	public void setSupervisors(Set<Person> supervisors) {
+	public synchronized void setSupervisors(Set<Person> supervisors) {
 		this.supervisors = supervisors;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public ProjectStatus getStatus() {
+	public synchronized ProjectStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(ProjectStatus status) {
+	public synchronized void setStatus(ProjectStatus status) {
 		this.status = status;
 	}
 
-	public Date getProjectInitiatedDate() {
+	public synchronized Date getProjectInitiatedDate() {
 		return projectInitiatedDate;
 	}
 
-	public void setProjectInitiatedDate(Date projectInitiatedDate) {
+	public synchronized void setProjectInitiatedDate(Date projectInitiatedDate) {
 		this.projectInitiatedDate = projectInitiatedDate;
 	}
 
-	public Date getSiteSurvey() {
+	public synchronized Date getSiteSurvey() {
 		return siteSurvey;
 	}
 
-	public void setSiteSurvey(Date siteSurvey) {
+	public synchronized void setSiteSurvey(Date siteSurvey) {
 		this.siteSurvey = siteSurvey;
 	}
 
-	public Date getCostcoDueDate() {
+	public synchronized Date getCostcoDueDate() {
 		return costcoDueDate;
 	}
 
-	public void setCostcoDueDate(Date costcoDueDate) {
+	public synchronized void setCostcoDueDate(Date costcoDueDate) {
 		this.costcoDueDate = costcoDueDate;
 	}
 
-	public Date getProposalSubmitted() {
+	public synchronized Date getProposalSubmitted() {
 		return proposalSubmitted;
 	}
 
-	public void setProposalSubmitted(Date proposalSubmitted) {
+	public synchronized void setProposalSubmitted(Date proposalSubmitted) {
 		this.proposalSubmitted = proposalSubmitted;
 	}
 
@@ -313,41 +313,41 @@ public class Project extends ProjectObject
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Set<ChangeOrder> getChangeOrders() {
+	public synchronized Set<ChangeOrder> getChangeOrders() {
 		return changeOrders;
 	}
 
-	public void setChangeOrders(Set<ChangeOrder> changeOrders) {
+	public synchronized void setChangeOrders(Set<ChangeOrder> changeOrders) {
 		this.changeOrders = changeOrders;
 	}
 
-	public int getShouldInvoice() {
+	public synchronized int getShouldInvoice() {
 		return shouldInvoice;
 	}
 
-	public void setShouldInvoice(int shouldInvoice) {
+	public synchronized void setShouldInvoice(int shouldInvoice) {
 		this.shouldInvoice = shouldInvoice;
 	}
 
-	public int getInvoiced() {
+	public synchronized int getInvoiced() {
 		return invoiced;
 	}
 
-	public void setInvoiced(int invoiced) {
+	public synchronized void setInvoiced(int invoiced) {
 		this.invoiced = invoiced;
 	}
 
 	@Column(length = 1000)
-	public String getProjectNotes() {
+	public synchronized String getProjectNotes() {
 		return projectNotes;
 	}
 
-	public void setProjectNotes(String projectNotes) {
+	public synchronized void setProjectNotes(String projectNotes) {
 		this.projectNotes = projectNotes;
 	}
 	
 	//TODO: A project should have multiple supervisors, but the GUI does not support this right now.
-	public void addSupervisor(Person p)
+	public synchronized void addSupervisor(Person p)
 	{
 		if (supervisors.size() == 0)
 			supervisors.add(p);
@@ -359,7 +359,7 @@ public class Project extends ProjectObject
 	}
 	
 	//TODO: A project should have multiple managers, but the GUI does not support this right now.
-	public void addProjectManager(Person p)
+	public synchronized void addProjectManager(Person p)
 	{
 		/*if (projectManagers.size() == 0)
 			projectManagers.add(p);
@@ -372,75 +372,75 @@ public class Project extends ProjectObject
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public ProjectItem getProjectItem() {
+	public synchronized ProjectItem getProjectItem() {
 		return projectItem;
 	}
 
-	public void setProjectItem(ProjectItem projectItem) {
+	public synchronized void setProjectItem(ProjectItem projectItem) {
 		this.projectItem = projectItem;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public ProjectType getProjectType() {
+	public synchronized ProjectType getProjectType() {
 		return projectType;
 	}
 
-	public void setProjectType(ProjectType pType) {
+	public synchronized void setProjectType(ProjectType pType) {
 		projectType = pType;
 	}
 	
 	@Column(length = 1000)
-	public String getZachUpdates() {
+	public synchronized String getZachUpdates() {
 		return zachUpdates;
 	}
 	
-	public void setZachUpdates(String zUpdates) {
+	public synchronized void setZachUpdates(String zUpdates) {
 		this.zachUpdates = zUpdates;
 	}
 	
-	public String getCost() {
+	public synchronized String getCost() {
 		return cost;
 	}
 
-	public void setCost(String cst) {
+	public synchronized void setCost(String cst) {
 		this.cost = cst;
 	}
 	
-	public String getCustomerNumber() {
+	public synchronized String getCustomerNumber() {
 		return customerNumber;
 	}
 
-	public void setCustomerNumber(String custNum) {
+	public synchronized void setCustomerNumber(String custNum) {
 		this.customerNumber = custNum;
 	}
 	
-	public Date getPermitApplication() {
+	public synchronized Date getPermitApplication() {
 		return permitApp;
 	}
 
-	public void setPermitApplication(Date permitApp) {
+	public synchronized void setPermitApplication(Date permitApp) {
 		this.permitApp = permitApp;
 	}
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public CloseoutDetails getCloseoutDetails()
+	public synchronized CloseoutDetails getCloseoutDetails()
 	{
 		return this.closeoutDetails;
 	}
 	
-	public void setCloseoutDetails(CloseoutDetails closeoutDetails)
+	public synchronized void setCloseoutDetails(CloseoutDetails closeoutDetails)
 	{
 		this.closeoutDetails = closeoutDetails;
 	}
 
-	public void setDrawingsDue(String DrawingsDue)
+	public synchronized void setDrawingsDue(String DrawingsDue)
 	{
 		this.DrawingsDue=DrawingsDue;
 	}
-	public String getDrawingsDue()
+	public synchronized String getDrawingsDue()
 	{
 		return this.DrawingsDue;
 	}
@@ -448,10 +448,10 @@ public class Project extends ProjectObject
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Inspections getInspections(){
+	public synchronized Inspections getInspections(){
 		return this.inspections;
 	}
-	public void setInspections(Inspections inspections){
+	public synchronized void setInspections(Inspections inspections){
 		this.inspections=inspections;
 	}
 	
@@ -459,11 +459,11 @@ public class Project extends ProjectObject
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Permits getPermits(){
+	public synchronized Permits getPermits(){
 		return this.permits;
 	}
 	
-	public void setPermits(Permits permits){
+	public synchronized void setPermits(Permits permits){
 		this.permits=permits;
 	}
 	
@@ -471,15 +471,15 @@ public class Project extends ProjectObject
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Set<Equipment> getEquipment() {
+	public synchronized Set<Equipment> getEquipment() {
 		return equipment;
 	}
 
-	public void setEquipment(Set<Equipment> equipment) {
+	public synchronized void setEquipment(Set<Equipment> equipment) {
 		this.equipment = equipment;
 	}
 
-	public String toString()
+	public synchronized String toString()
 	{
 		return "Project ID: "  + id.toString();
 	}
@@ -488,19 +488,19 @@ public class Project extends ProjectObject
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Set<NewEquipment> getProjEquipment() {
+	public synchronized Set<NewEquipment> getProjEquipment() {
 		return projEquipment;
 	}
 
-	public void setProjEquipment(Set<NewEquipment> projEquipment) {
+	public synchronized void setProjEquipment(Set<NewEquipment> projEquipment) {
 		this.projEquipment = projEquipment;
 	}
 	
-	public String getManagerNotes() {
+	public synchronized String getManagerNotes() {
 		return managerNotes;
 	}
 	
-	public void setManagerNotes(String managerNotes) {
+	public synchronized void setManagerNotes(String managerNotes) {
 		this.managerNotes = managerNotes;
 	}
 }

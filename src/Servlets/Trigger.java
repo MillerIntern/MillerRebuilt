@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -36,8 +37,10 @@ public class Trigger extends HttpServlet
     }
 
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Trigger.java\nIN: doPost()\nTime of transaction: " + timeStamp);
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		resp.setContentType("application/json");
 		out = resp.getWriter();

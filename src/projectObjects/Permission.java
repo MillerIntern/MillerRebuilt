@@ -29,49 +29,49 @@ public class Permission extends ProjectObject
 		this.canListProjects = false;
 	}
 	
-	public String getName()
+	public synchronized String getName()
 	{
 		return name;
 	}
 	
-	public void setName(String name)
+	public synchronized void setName(String name)
 	{
 		this.name = name;
 	}
 
-	public void setCanQueryProjects(boolean canQueryProjects) {
+	public synchronized void setCanQueryProjects(boolean canQueryProjects) {
 		this.canQueryProjects = canQueryProjects;
 	}
 
-	public boolean isCanAccessAdminPage() {
+	public synchronized boolean isCanAccessAdminPage() {
 		return canAccessAdminPage;
 	}
 
-	public void setCanAccessAdminPage(boolean canAccessAdminPage) {
+	public synchronized void setCanAccessAdminPage(boolean canAccessAdminPage) {
 		this.canAccessAdminPage = canAccessAdminPage;
 	}
 
-	public boolean isCanQueryProjects() {
+	public synchronized boolean isCanQueryProjects() {
 		return canQueryProjects;
 	}
 
-	public boolean isCanListProjects() {
+	public synchronized boolean isCanListProjects() {
 		return canListProjects;
 	}
 
-	public boolean isCanAddProjects() {
+	public synchronized boolean isCanAddProjects() {
 		return canAddProjects;
 	}
 
-	public void setCanListProjects(boolean canListProjects) {
+	public synchronized void setCanListProjects(boolean canListProjects) {
 		this.canListProjects = canListProjects;
 	}
 
-	public boolean canAddProjects() {
+	public synchronized boolean canAddProjects() {
 		return canAddProjects;
 	}
 
-	public void setCanAddProjects(boolean canAddProjects) {
+	public synchronized void setCanAddProjects(boolean canAddProjects) {
 		this.canAddProjects = canAddProjects;
 	}
 	

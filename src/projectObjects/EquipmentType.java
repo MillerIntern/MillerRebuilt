@@ -31,7 +31,7 @@ public class EquipmentType extends ProjectObject {
 	 * This method gets the name of the equipment
 	 * @return the equipment name
 	 */
-	public String getEquipmentName()
+	public synchronized String getEquipmentName()
 	{
 		return equipName;
 	}
@@ -40,7 +40,7 @@ public class EquipmentType extends ProjectObject {
 	 * This method sets the equipments name to the specified string
 	 * @param name the string to be set as the name
 	 */
-	public void setEquipmentName(String name)
+	public synchronized void setEquipmentName(String name)
 	{
 		this.equipName = name;
 	}

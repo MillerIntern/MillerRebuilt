@@ -12,7 +12,7 @@ import projectObjects.CloseoutDetails;
  */
 public class CloseoutDetailsFiller
 {
-	public static void fillCloseoutDetails(CloseoutDetails cd,  Map<String, String>params) throws ParseException
+	public synchronized static void fillCloseoutDetails(CloseoutDetails cd,  Map<String, String>params) throws ParseException
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 

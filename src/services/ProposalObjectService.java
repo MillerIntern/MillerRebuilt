@@ -33,7 +33,7 @@ public class ProposalObjectService
 	 * @param domain the type of object to be returned.
 	 * @return a list of all objects of a specific type in the database.
 	 */
-	public static List<Object> getAll(String domain)
+	public synchronized static List<Object> getAll(String domain)
 	{
 		//Begin transaction
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -56,7 +56,7 @@ public class ProposalObjectService
 	 * @param domain the type of object to be returned.
 	 * @return A JSON array string representing all of the objects.
 	 */
-	public static String getAllAsJsonString(String domain) throws NonUniqueObjectException
+	public synchronized static String getAllAsJsonString(String domain) throws NonUniqueObjectException
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
@@ -108,7 +108,7 @@ public class ProposalObjectService
 		return "";
 	}
 	
-	public static String getID(String domain) throws NonUniqueObjectException
+	public synchronized static String getID(String domain) throws NonUniqueObjectException
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
@@ -159,7 +159,7 @@ public class ProposalObjectService
 	 * @return an object in the database
 	 * @throws ClassNotFoundException
 	 */
-	public static Object get(Long id, String domain) throws ClassNotFoundException
+	public synchronized static Object get(Long id, String domain) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
@@ -185,7 +185,7 @@ public class ProposalObjectService
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public static String getAsJSON(Long id, String domain) throws ClassNotFoundException
+	public synchronized static String getAsJSON(Long id, String domain) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -222,7 +222,7 @@ public class ProposalObjectService
 	 * @return a confirmation that the object has been deleted.
 	 * @throws ClassNotFoundException
 	 */
-	public static int delete(Long id, String domain) throws ClassNotFoundException
+	public synchronized static int delete(Long id, String domain) throws ClassNotFoundException
 	{
 		int success = IS_OWNED_BY_OTHER_OBJECT;
 		Session session = HibernateUtil.getSession();
@@ -255,7 +255,7 @@ public class ProposalObjectService
 	 * @param o the object to be added
 	 * @return the id of the transaction
 	 */
-	public static String addObject(String domain, Object o)
+	public synchronized static String addObject(String domain, Object o)
 	{
 		System.out.println("add Project");
 		Session session = HibernateUtil.getSession();
@@ -280,7 +280,7 @@ public class ProposalObjectService
 	 */
 /*
 	
-	public static void editObjects(long[] iDs,String[] domains,ProjectObject objects[]) throws ClassNotFoundException
+	public synchronized static void editObjects(long[] iDs,String[] domains,ProjectObject objects[]) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
@@ -315,7 +315,7 @@ public class ProposalObjectService
 	}
 	*/
 	
-	public static void editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
+	public synchronized static void editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
 		//Get session and start transaction
@@ -345,7 +345,7 @@ public class ProposalObjectService
 	/**
 	 * This method copies the fields of the src object into the fields of the dest object,
 	 * no matter what kind of objects they are (They must be the same kind of object, though).
-	 * This method is a wrapper method so that the public does not need to make the
+	 * This method is a wrapper method so that the public synchronized does not need to make the
 	 * src.getClass call to give the ACTUAL copyFields a third argument
 	 * 
 	 * Source: http://vyazelenko.com/2013/10/29/copy-object-in-java-performance-comparison/
@@ -353,7 +353,7 @@ public class ProposalObjectService
 	 * @param src The object we are copying fields from
 	 * @param dest The object we are copying fields to.
 	 */
-	public static void copyFieldByField(Object src, Object dest, int i2) 
+	public synchronized static void copyFieldByField(Object src, Object dest, int i2) 
 	{
 		copyFields(src, dest, src.getClass(), i2);
 	}

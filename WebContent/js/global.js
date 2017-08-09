@@ -88,15 +88,15 @@ function isDate(str)
 }
 
 function dateCleaner(date_arg) {
-	console.log("DATE ARG = " , date_arg);
+
 	var date = date_arg.toString().split("/");
 	var day = date[0].toString(), month = date[1].toString(), year = date[2].toString();
 	if(day.length == 1) day = "0"+day;
 	if(month.length == 1) month = "0"+month;
-	console.log("YEAR LENGTH = ", year.length);
+
 	if(year.length == 2) year = "20"+year;
 	date_arg = day+"/"+month+"/"+year;
-	console.log("UPDATED ARG = ", date_arg);
+
 	return date_arg;
 }
 

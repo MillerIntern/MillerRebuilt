@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class Admin extends HttpServlet
 		
 	}
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verifyAdmin(req)) {resp.setContentType("plain/text"); out = resp.getWriter(); out.println("ADMINS_ONLY"); return;}
 		out = resp.getWriter();
@@ -56,6 +57,8 @@ public class Admin extends HttpServlet
 		String response = "";
 		
 		
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Admin.java\nIN: doPost()\nTime of transaction: " + timeStamp);
 		if(action.equals("getStates"))
 		{
 			Gson gson = new Gson();

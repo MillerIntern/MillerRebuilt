@@ -42,19 +42,19 @@ public class User extends ProjectObject
 		this.email = null;
 	}
 
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 
-	public String getPassword() {
+	public synchronized String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public synchronized void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -62,42 +62,42 @@ public class User extends ProjectObject
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Status getStatus() {
+	public synchronized Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public synchronized void setStatus(Status status) {
 		this.status = status;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public Permission getPermission() {
+	public synchronized Permission getPermission() {
 		return permission;
 	}
 
-	public void setPermission(Permission permission) {
+	public synchronized void setPermission(Permission permission) {
 		this.permission = permission;
 	}
 
-	public String getFirstName() {
+	public synchronized String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public synchronized void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	
-	public String getEmail() {
+	public synchronized String getEmail() {
 		return email;
 	}
 	
-	public void setEmail(String email) {
+	public synchronized void setEmail(String email) {
 		this.email = email;
 	}
 	
-	public String toString(){
+	public synchronized String toString(){
 		return "name = " + this.name + " firstName = " + this.firstName;
         
 	}
@@ -106,7 +106,7 @@ public class User extends ProjectObject
 	// the firstnames in the database. Also compares the session stored username against 
 	// users' usernames in the database. 
 	// TODO: This method makes patchwork of first names which should be in the database
-	public static User mapNameToUser(String name) {
+	public synchronized static User mapNameToUser(String name) {
 		
 		if (name == null) return null;
 		name = name.replaceAll("\\s+","");	

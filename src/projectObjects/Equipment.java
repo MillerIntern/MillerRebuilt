@@ -80,7 +80,7 @@ public class Equipment extends ProjectObject {
 	 * This method gets the IDs of the equipment (this is NOT the database id)
 	 * @return the equipment id
 	 */
-	public long getEquipmentIDs(){
+	public synchronized long getEquipmentIDs(){
 		return this.equipmentTypeIDs ;
 	}
 	
@@ -89,7 +89,7 @@ public class Equipment extends ProjectObject {
 	 * This method sets the IDs of the set of equipment for a project (not the database id)
 	 * @param equipID ID of the piece of equipment
 	 */
-	public void setEquipmentIDs(long equipIDs){
+	public synchronized void setEquipmentIDs(long equipIDs){
 		this.equipmentTypeIDs = equipIDs;
 	}
 	
@@ -102,7 +102,7 @@ public class Equipment extends ProjectObject {
 	/**
 	 * Sets the super ID, required for usage
 	 */
-	public void setId(Long id) {
+	public synchronized void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -110,7 +110,7 @@ public class Equipment extends ProjectObject {
 	 * This method sets the PO number for the equipment 
 	 * @param Current PO for given project
 	 */
-	public void setPO(long num)
+	public synchronized void setPO(long num)
 	{
 		this.PO = num;
 	}
@@ -119,7 +119,7 @@ public class Equipment extends ProjectObject {
 	 * returns the current PO number
 	 * @return PO number
 	 */
-	public long getPO()
+	public synchronized long getPO()
 	{
 		return this.PO;
 	}
@@ -128,7 +128,7 @@ public class Equipment extends ProjectObject {
 	 * used for nothing so far. ID is not of the given project
 	 * @param null
 	 */
-	public void setProjectID(long num)
+	public synchronized void setProjectID(long num)
 	{
 		this.projectID = num;
 	}
@@ -136,7 +136,7 @@ public class Equipment extends ProjectObject {
 	 * used for nothing so far. ID is not of the given project
 	 * @return null
 	 */
-	public long getProjectID()
+	public synchronized long getProjectID()
 	{
 		return this.projectID;
 	}
@@ -145,7 +145,7 @@ public class Equipment extends ProjectObject {
 	 * set the equipment vendor of the 
 	 * @param  equipment vendor object
 	 */
-	public void setEquipmentVendor(EquipmentVendor ven)
+	public synchronized void setEquipmentVendor(EquipmentVendor ven)
 	{
 		this.equipmentVendor = ven;
 		System.out.println(equipmentVendor);
@@ -157,7 +157,7 @@ public class Equipment extends ProjectObject {
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public EquipmentVendor getEquipmentVendor()
+	public synchronized EquipmentVendor getEquipmentVendor()
 	{
 		return this.equipmentVendor;
 	}
@@ -166,7 +166,7 @@ public class Equipment extends ProjectObject {
 	 * Sets the Date for the estimated delivery date
 	 * @param set date for estimated delivery
 	 */
-	public void setEstimatedDelivery(Date date)
+	public synchronized void setEstimatedDelivery(Date date)
 	{
 		this.estimatedDelivery = date;
 	}
@@ -174,7 +174,7 @@ public class Equipment extends ProjectObject {
 	 * Retrieve estimated delivery Date
 	 * @return estimated deliverDate
 	 */
-	public Date getEstimatedDelivery()
+	public synchronized Date getEstimatedDelivery()
 	{
 		return this.estimatedDelivery;
 	}
@@ -182,7 +182,7 @@ public class Equipment extends ProjectObject {
 	 * used for putting notes down for the project
 	 * @param string note
 	 */
-	public void setNotes(String note)
+	public synchronized void setNotes(String note)
 	{
 		this.notes = note;
 	}
@@ -191,7 +191,7 @@ public class Equipment extends ProjectObject {
 	 *retrieving Notes in regard to the equipment
 	 * @return Notes 
 	 */
-	public String getNotes()
+	public synchronized String getNotes()
 	{
 		return this.notes;
 	}
@@ -200,7 +200,7 @@ public class Equipment extends ProjectObject {
 	 * set the equipment name
 	 * @param string equipment name
 	 */
-	public void setEquipName(String name)
+	public synchronized void setEquipName(String name)
 	{
 		this.equipName = name;
 	}
@@ -209,7 +209,7 @@ public class Equipment extends ProjectObject {
 	 * returns the equipment name
 	 * @return equipmentName 
 	 */
-	public String getEquipName()
+	public synchronized String getEquipName()
 	{
 		return this.equipName;
 	}
@@ -232,11 +232,11 @@ public class Equipment extends ProjectObject {
 		return this.eqpd;
 	}*/
 
-	public Date getDeliveryDate() {
+	public synchronized Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
+	public synchronized void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 	

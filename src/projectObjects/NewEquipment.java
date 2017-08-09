@@ -50,51 +50,51 @@ public class NewEquipment extends ProjectObject
 		this.notes = null;
 	}
 
-	public String getPoNum() {
+	public synchronized String getPoNum() {
 		return poNum;
 	}
 
-	public void setPoNum(String poNum) {
+	public synchronized void setPoNum(String poNum) {
 		this.poNum = poNum;
 	}
 
-	public String getEquipmentName() {
+	public synchronized String getEquipmentName() {
 		return equipmentName;
 	}
 
-	public void setEquipmentName(String equipmentName) {
+	public synchronized void setEquipmentName(String equipmentName) {
 		this.equipmentName = equipmentName;
 	}
 
-	public String getVendor() {
+	public synchronized String getVendor() {
 		return vendor;
 	}
 
-	public void setVendor(String vendor) {
+	public synchronized void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
 
-	public Date getDeliveryDate() {
+	public synchronized Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
+	public synchronized void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
-	public Date getEstDeliveryDate() {
+	public synchronized Date getEstDeliveryDate() {
 		return estDeliveryDate;
 	}
 
-	public void setEstDeliveryDate(Date estDeliveryDate) {
+	public synchronized void setEstDeliveryDate(Date estDeliveryDate) {
 		this.estDeliveryDate = estDeliveryDate;
 	}
 
-	public String getNotes() {
+	public synchronized String getNotes() {
 		return notes;
 	}
 
-	public void setNotes(String notes) {
+	public synchronized void setNotes(String notes) {
 		this.notes = notes;
 	}
 }

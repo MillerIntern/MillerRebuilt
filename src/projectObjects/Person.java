@@ -29,7 +29,7 @@ public class Person extends ProjectObject
 	 * This method gets the name of the person
 	 * @return the person's name
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -37,11 +37,11 @@ public class Person extends ProjectObject
 	 * This method sets the name of the person.
 	 * @param name the new name of the person
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 	
-	public String toString()
+	public synchronized String toString()
 	{
 		return "Person Object";
 	}

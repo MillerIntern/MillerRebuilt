@@ -33,7 +33,7 @@ public abstract class ProjectObject
 	//@GeneratedValue(strategy=GenerationType.AUTO, generator="my_entity_seq_gen")
 	//@SequenceGenerator(name="my_entity_seq_gen", sequenceName="MY_ENTITY_SEQ")
 	@Id
-	public Long getId()throws NonUniqueObjectException {
+	public synchronized Long getId()throws NonUniqueObjectException {
 		return id;
 	}
 	
@@ -41,7 +41,7 @@ public abstract class ProjectObject
 	 * This method sets the id of the object.
 	 * @param id
 	 */
-	public void setId(Long id)
+	public synchronized void setId(Long id)
 	{
 		this.id = id;
 	}
@@ -50,7 +50,7 @@ public abstract class ProjectObject
 	 * This method returns an array of the ProjectObject's field names
 	 * @return an array of the object's field names
 	 */
-	public static String [] getFieldNames()
+	public synchronized static String [] getFieldNames()
 	{
 		Field [] fields = Project.class.getFields();
 		String [] names = new String[fields.length];

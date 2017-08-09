@@ -441,12 +441,17 @@ function expandTaskInfo(param) {
 	$('#taskWell > div > .description').val(task.description);
 	$('#taskWell > span > .severity').val(task.severity);
 	$('#taskWell > .assignedDate').html('<b>Assigned Date:</b> ' + task.assignedDate);
-	var date = task.dueDate.split("/");
+	
+	var date;
+	if(task.dueDate){
+	 date = task.dueDate.split("/");
+	
 	var year = date[2];
 	var yearString = year.toString();
 	if(yearString[0] != '2') date[2] = yearString[2] + yearString[3];
 	console.log("YEAR = ", date[2]);
 	var dueDate = date[0] +"/"+date[1]+"/"+date[2];
+	} else dueDate = task.dueDate;
 	$('#taskWell > span > .dueDate').val(dueDate);							
 	$('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
 	$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
@@ -458,7 +463,7 @@ function expandTaskInfo(param) {
 }
 
 function navigateToSelectedProject () {
-	window.location.href = 'projects.html?id=' + selectedProjID;
+	window.location.href = 'projects.html?id=' + selectedProjID + "&from=taskBrowser";
 }
 
 function saveTaskChanges () {

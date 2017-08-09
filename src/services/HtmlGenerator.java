@@ -13,7 +13,7 @@ public class HtmlGenerator
 	 * scripts and css imports, the navigation menu, and the structure of the document's body.
 	 * @return HTML code.
 	 */
-	public static String generateHtmlHeader(String pageTitle)
+	public synchronized static String generateHtmlHeader(String pageTitle)
 	{
 		String html = "<!DOCTYPE html><html id='hmtl'><head>"
 			+ "<script type='text/javascript' src='DataTables-1.10.0/media/js/jquery.js' ></script>"
@@ -35,7 +35,7 @@ public class HtmlGenerator
 	}
 	
 	//This method returns a string that closes the body and html tag of an html document.
-	public static String generateHtmlCloser()
+	public synchronized static String generateHtmlCloser()
 	{
 		String html = "</body></html>";
 		return html;

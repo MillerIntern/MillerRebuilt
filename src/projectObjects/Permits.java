@@ -79,411 +79,411 @@ public class Permits extends ProjectObject
 		
 	  }
 
-	public void setBuildingPermitDate( Date a)
+	public synchronized void setBuildingPermitDate( Date a)
 	{
 		this.building = a;
 	}
 	
-	public Date getBuildingPermitDate()
+	public synchronized Date getBuildingPermitDate()
 	{
 		return this.building;
 	}
 	
-	public void setMechanicalPermitDate(Date a)
+	public synchronized void setMechanicalPermitDate(Date a)
 	{
 		this.mechanical = a;
 	}
 	
-	public Date getMechanicalPermitDate()
+	public synchronized Date getMechanicalPermitDate()
 	{
 		return this.mechanical;
 	}
 	
-	public void setElectricalPermitDate(Date a)
+	public synchronized void setElectricalPermitDate(Date a)
 	{
 		this.electrical = a;
 	}
 	
-	public Date getElectricalPermitDate()
+	public synchronized Date getElectricalPermitDate()
 	{
 		return this.electrical;
 	}
 	
-	public void setPlumbingPermitDate(Date a)
+	public synchronized void setPlumbingPermitDate(Date a)
 	{
 		this.plumbing= a;
 	}
 	
 
 	
-	public Date getPlumbingPermitDate()
+	public synchronized Date getPlumbingPermitDate()
 	{
 		return this.plumbing;
 	}
 	
-	public void setFireSprinklerDate(Date a)
+	public synchronized void setFireSprinklerDate(Date a)
 	{
 		this.fire_sprinkler = a;
 	}
 	
-	public Date getFireSprinklerDate()
+	public synchronized Date getFireSprinklerDate()
 	{
 		return this.fire_sprinkler;
 	}
 
-	public void setFireAlarmPermitDate(Date a)
+	public synchronized void setFireAlarmPermitDate(Date a)
 	{
 		this.fire_alarm = a;
 	}
 	
-	public Date getFireAlarmPermitDate()
+	public synchronized Date getFireAlarmPermitDate()
 	{
 		return this.fire_alarm;
 	}
 
-	public void setLowVoltagePermitDate(Date a)
+	public synchronized void setLowVoltagePermitDate(Date a)
 	{
 		this.low_voltage = a;
 	}
 	
-	public Date getLowVoltagePermitDate()
+	public synchronized Date getLowVoltagePermitDate()
 	{
 		return this.low_voltage;
 	}
 
-	public Date getBuilding() {
+	public synchronized Date getBuilding() {
 		return building;
 	}
 
-	public void setBuilding(Date building) {
+	public synchronized void setBuilding(Date building) {
 		this.building = building;
 	}
 
-	public String getBuildingPermitStatus() {
+	public synchronized String getBuildingPermitStatus() {
 		return buildingPermitStatus;
 	}
 
-	public void setBuildingPermitStatus(String buildingPermitStatus) {
+	public synchronized void setBuildingPermitStatus(String buildingPermitStatus) {
 		this.buildingPermitStatus = buildingPermitStatus;
 	}
 
-	public String getBuildingInspectionStatus() {
+	public synchronized String getBuildingInspectionStatus() {
 		return buildingInspectionStatus;
 	}
 
-	public void setBuildingInspectionStatus(String buildingInspectionStatus) {
+	public synchronized void setBuildingInspectionStatus(String buildingInspectionStatus) {
 		this.buildingInspectionStatus = buildingInspectionStatus;
 	}
 
-	public Date getBuildingInspectionLastUpdated() {
+	public synchronized Date getBuildingInspectionLastUpdated() {
 		return buildingInspectionLastUpdated;
 	}
 
-	public void setBuildingInspectionLastUpdated(Date buildingInspectionLastUpdated) {
+	public synchronized void setBuildingInspectionLastUpdated(Date buildingInspectionLastUpdated) {
 		this.buildingInspectionLastUpdated = buildingInspectionLastUpdated;
 	}
 
-	public Date getMechanical() {
+	public synchronized Date getMechanical() {
 		return mechanical;
 	}
 
-	public void setMechanical(Date mechanical) {
+	public synchronized void setMechanical(Date mechanical) {
 		this.mechanical = mechanical;
 	}
 
-	public String getMechanicalPermitStatus() {
+	public synchronized String getMechanicalPermitStatus() {
 		return mechanicalPermitStatus;
 	}
 
-	public void setMechanicalPermitStatus(String mechanicalPermitStatus) {
+	public synchronized void setMechanicalPermitStatus(String mechanicalPermitStatus) {
 		this.mechanicalPermitStatus = mechanicalPermitStatus;
 	}
 
-	public String getMechanicalInspectionStatus() {
+	public synchronized String getMechanicalInspectionStatus() {
 		return mechanicalInspectionStatus;
 	}
 
-	public void setMechanicalInspectionStatus(String mechanicalInspectionStatus) {
+	public synchronized void setMechanicalInspectionStatus(String mechanicalInspectionStatus) {
 		this.mechanicalInspectionStatus = mechanicalInspectionStatus;
 	}
 
-	public Date getMechanicalInspectionLastUpdated() {
+	public synchronized Date getMechanicalInspectionLastUpdated() {
 		return mechanicalInspectionLastUpdated;
 	}
 
-	public void setMechanicalInspectionLastUpdated(Date mechanicalInspectionLastUpdated) {
+	public synchronized void setMechanicalInspectionLastUpdated(Date mechanicalInspectionLastUpdated) {
 		this.mechanicalInspectionLastUpdated = mechanicalInspectionLastUpdated;
 	}
 
-	public Date getElectrical() {
+	public synchronized Date getElectrical() {
 		return electrical;
 	}
 
-	public void setElectrical(Date electrical) {
+	public synchronized void setElectrical(Date electrical) {
 		this.electrical = electrical;
 	}
 
-	public String getElectricalPermitStatus() {
+	public synchronized String getElectricalPermitStatus() {
 		return electricalPermitStatus;
 	}
 
-	public void setElectricalPermitStatus(String electricalPermitStatus) {
+	public synchronized void setElectricalPermitStatus(String electricalPermitStatus) {
 		this.electricalPermitStatus = electricalPermitStatus;
 	}
 
-	public String getElectricalInspectionStatus() {
+	public synchronized String getElectricalInspectionStatus() {
 		return electricalInspectionStatus;
 	}
 
-	public void setElectricalInspectionStatus(String electricalInspectionStatus) {
+	public synchronized void setElectricalInspectionStatus(String electricalInspectionStatus) {
 		this.electricalInspectionStatus = electricalInspectionStatus;
 	}
 
-	public Date getElectricalInspectionLastUpdated() {
+	public synchronized Date getElectricalInspectionLastUpdated() {
 		return electricalInspectionLastUpdated;
 	}
 
-	public void setElectricalInspectionLastUpdated(Date electricalInspectionLastUpdated) {
+	public synchronized void setElectricalInspectionLastUpdated(Date electricalInspectionLastUpdated) {
 		this.electricalInspectionLastUpdated = electricalInspectionLastUpdated;
 	}
 
-	public Date getPlumbing() {
+	public synchronized Date getPlumbing() {
 		return plumbing;
 	}
 
-	public void setPlumbing(Date plumbing) {
+	public synchronized void setPlumbing(Date plumbing) {
 		this.plumbing = plumbing;
 	}
 
-	public String getPlumbingPermitStatus() {
+	public synchronized String getPlumbingPermitStatus() {
 		return plumbingPermitStatus;
 	}
 
-	public void setPlumbingPermitStatus(String plumbingPermitStatus) {
+	public synchronized void setPlumbingPermitStatus(String plumbingPermitStatus) {
 		this.plumbingPermitStatus = plumbingPermitStatus;
 	}
 
-	public String getPlumbingInspectionStatus() {
+	public synchronized String getPlumbingInspectionStatus() {
 		return plumbingInspectionStatus;
 	}
 
-	public void setPlumbingInspectionStatus(String plumbingInspectionStatus) {
+	public synchronized void setPlumbingInspectionStatus(String plumbingInspectionStatus) {
 		this.plumbingInspectionStatus = plumbingInspectionStatus;
 	}
 
-	public Date getPlumbingInspectionLastUpdated() {
+	public synchronized Date getPlumbingInspectionLastUpdated() {
 		return plumbingInspectionLastUpdated;
 	}
 
-	public void setPlumbingInspectionLastUpdated(Date plumbingInspectionLastUpdated) {
+	public synchronized void setPlumbingInspectionLastUpdated(Date plumbingInspectionLastUpdated) {
 		this.plumbingInspectionLastUpdated = plumbingInspectionLastUpdated;
 	}
 
-	public Date getFire_sprinkler() {
+	public synchronized Date getFire_sprinkler() {
 		return fire_sprinkler;
 	}
 
-	public void setFire_sprinkler(Date fire_sprinkler) {
+	public synchronized void setFire_sprinkler(Date fire_sprinkler) {
 		this.fire_sprinkler = fire_sprinkler;
 	}
 
-	public String getSprinklerPermitStatus() {
+	public synchronized String getSprinklerPermitStatus() {
 		return sprinklerPermitStatus;
 	}
 
-	public void setSprinklerPermitStatus(String sprinklerPermitStatus) {
+	public synchronized void setSprinklerPermitStatus(String sprinklerPermitStatus) {
 		this.sprinklerPermitStatus = sprinklerPermitStatus;
 	}
 
-	public String getSprinklerInspectionStatus() {
+	public synchronized String getSprinklerInspectionStatus() {
 		return sprinklerInspectionStatus;
 	}
 
-	public void setSprinklerInspectionStatus(String sprinklerInspectionStatus) {
+	public synchronized void setSprinklerInspectionStatus(String sprinklerInspectionStatus) {
 		this.sprinklerInspectionStatus = sprinklerInspectionStatus;
 	}
 
-	public Date getSprinklerInspectionLastUpdated() {
+	public synchronized Date getSprinklerInspectionLastUpdated() {
 		return sprinklerInspectionLastUpdated;
 	}
 
-	public void setSprinklerInspectionLastUpdated(Date sprinklerInspectionLastUpdated) {
+	public synchronized void setSprinklerInspectionLastUpdated(Date sprinklerInspectionLastUpdated) {
 		this.sprinklerInspectionLastUpdated = sprinklerInspectionLastUpdated;
 	}
 
-	public Date getFire_alarm() {
+	public synchronized Date getFire_alarm() {
 		return fire_alarm;
 	}
 
-	public void setFire_alarm(Date fire_alarm) {
+	public synchronized void setFire_alarm(Date fire_alarm) {
 		this.fire_alarm = fire_alarm;
 	}
 
-	public String getFireAlarmPermitStatus() {
+	public synchronized String getFireAlarmPermitStatus() {
 		return fireAlarmPermitStatus;
 	}
 
-	public void setFireAlarmPermitStatus(String fireAlarmPermitStatus) {
+	public synchronized void setFireAlarmPermitStatus(String fireAlarmPermitStatus) {
 		this.fireAlarmPermitStatus = fireAlarmPermitStatus;
 	}
 
-	public String getFireAlarmInspectionStatus() {
+	public synchronized String getFireAlarmInspectionStatus() {
 		return fireAlarmInspectionStatus;
 	}
 
-	public void setFireAlarmInspectionStatus(String fireAlarmInspectionStatus) {
+	public synchronized void setFireAlarmInspectionStatus(String fireAlarmInspectionStatus) {
 		this.fireAlarmInspectionStatus = fireAlarmInspectionStatus;
 	}
 
-	public Date getFireAlarmInspectionLastUpdated() {
+	public synchronized Date getFireAlarmInspectionLastUpdated() {
 		return fireAlarmInspectionLastUpdated;
 	}
 
-	public void setFireAlarmInspectionLastUpdated(Date fireAlarmInspectionLastUpdated) {
+	public synchronized void setFireAlarmInspectionLastUpdated(Date fireAlarmInspectionLastUpdated) {
 		this.fireAlarmInspectionLastUpdated = fireAlarmInspectionLastUpdated;
 	}
 
-	public Date getLow_voltage() {
+	public synchronized Date getLow_voltage() {
 		return low_voltage;
 	}
 
-	public void setLow_voltage(Date low_voltage) {
+	public synchronized void setLow_voltage(Date low_voltage) {
 		this.low_voltage = low_voltage;
 	}
 
-	public String getVoltagePermitStatus() {
+	public synchronized String getVoltagePermitStatus() {
 		return voltagePermitStatus;
 	}
 
-	public void setVoltagePermitStatus(String voltagePermitStatus) {
+	public synchronized void setVoltagePermitStatus(String voltagePermitStatus) {
 		this.voltagePermitStatus = voltagePermitStatus;
 	}
 
-	public String getVoltageInspectionStatus() {
+	public synchronized String getVoltageInspectionStatus() {
 		return voltageInspectionStatus;
 	}
 
-	public void setVoltageInspectionStatus(String voltageInspectionStatus) {
+	public synchronized void setVoltageInspectionStatus(String voltageInspectionStatus) {
 		this.voltageInspectionStatus = voltageInspectionStatus;
 	}
 
-	public Date getVoltageInspectionLastUpdated() {
+	public synchronized Date getVoltageInspectionLastUpdated() {
 		return voltageInspectionLastUpdated;
 	}
 
-	public void setVoltageInspectionLastUpdated(Date voltageInspectionLastUpdated) {
+	public synchronized void setVoltageInspectionLastUpdated(Date voltageInspectionLastUpdated) {
 		this.voltageInspectionLastUpdated = voltageInspectionLastUpdated;
 	}
 
-	public Date getRoofing() {
+	public synchronized Date getRoofing() {
 		return roofing;
 	}
 
-	public void setRoofing(Date roofing) {
+	public synchronized void setRoofing(Date roofing) {
 		this.roofing = roofing;
 	}
 
-	public String getRoofingPermitStatus() {
+	public synchronized String getRoofingPermitStatus() {
 		return roofingPermitStatus;
 	}
 
-	public void setRoofingPermitStatus(String roofingPermitStatus) {
+	public synchronized void setRoofingPermitStatus(String roofingPermitStatus) {
 		this.roofingPermitStatus = roofingPermitStatus;
 	}
 
-	public String getRoofingInspectionStatus() {
+	public synchronized String getRoofingInspectionStatus() {
 		return roofingInspectionStatus;
 	}
 
-	public void setRoofingInspectionStatus(String roofingInspectionStatus) {
+	public synchronized void setRoofingInspectionStatus(String roofingInspectionStatus) {
 		this.roofingInspectionStatus = roofingInspectionStatus;
 	}
 
-	public Date getRoofingInspectionLastUpdated() {
+	public synchronized Date getRoofingInspectionLastUpdated() {
 		return roofingInspectionLastUpdated;
 	}
 
-	public void setRoofingInspectionLastUpdated(Date roofingInspectionLastUpdated) {
+	public synchronized void setRoofingInspectionLastUpdated(Date roofingInspectionLastUpdated) {
 		this.roofingInspectionLastUpdated = roofingInspectionLastUpdated;
 	}
 
-	public Date getOtherAPermit() {
+	public synchronized Date getOtherAPermit() {
 		return otherAPermit;
 	}
 
-	public void setOtherAPermit(Date otherAPermit) {
+	public synchronized void setOtherAPermit(Date otherAPermit) {
 		this.otherAPermit = otherAPermit;
 	}
 
-	public String getOtherAPermitStatus() {
+	public synchronized String getOtherAPermitStatus() {
 		return otherAPermitStatus;
 	}
 
-	public void setOtherAPermitStatus(String otherAPermitStatus) {
+	public synchronized void setOtherAPermitStatus(String otherAPermitStatus) {
 		this.otherAPermitStatus = otherAPermitStatus;
 	}
 
-	public String getOtherAInspectionStatus() {
+	public synchronized String getOtherAInspectionStatus() {
 		return otherAInspectionStatus;
 	}
 
-	public void setOtherAInspectionStatus(String otherAInspectionStatus) {
+	public synchronized void setOtherAInspectionStatus(String otherAInspectionStatus) {
 		this.otherAInspectionStatus = otherAInspectionStatus;
 	}
 
-	public Date getOtherAInspectionLastUpdated() {
+	public synchronized Date getOtherAInspectionLastUpdated() {
 		return otherAInspectionLastUpdated;
 	}
 
-	public void setOtherAInspectionLastUpdated(Date otherAInspectionLastUpdated) {
+	public synchronized void setOtherAInspectionLastUpdated(Date otherAInspectionLastUpdated) {
 		this.otherAInspectionLastUpdated = otherAInspectionLastUpdated;
 	}
 
-	public Date getOtherBPermit() {
+	public synchronized Date getOtherBPermit() {
 		return otherBPermit;
 	}
 
-	public void setOtherBPermit(Date otherBPermit) {
+	public synchronized void setOtherBPermit(Date otherBPermit) {
 		this.otherBPermit = otherBPermit;
 	}
 
-	public String getOtherBPermitStatus() {
+	public synchronized String getOtherBPermitStatus() {
 		return otherBPermitStatus;
 	}
 
-	public void setOtherBPermitStatus(String otherBPermitStatus) {
+	public synchronized void setOtherBPermitStatus(String otherBPermitStatus) {
 		this.otherBPermitStatus = otherBPermitStatus;
 	}
 
-	public String getOtherBInspectionStatus() {
+	public synchronized String getOtherBInspectionStatus() {
 		return otherBInspectionStatus;
 	}
 
-	public void setOtherBInspectionStatus(String otherBInspectionStatus) {
+	public synchronized void setOtherBInspectionStatus(String otherBInspectionStatus) {
 		this.otherBInspectionStatus = otherBInspectionStatus;
 	}
 
-	public Date getOtherBInspectionLastUpdated() {
+	public synchronized Date getOtherBInspectionLastUpdated() {
 		return otherBInspectionLastUpdated;
 	}
 
-	public void setOtherBInspectionLastUpdated(Date otherBInspectionLastUpdated) {
+	public synchronized void setOtherBInspectionLastUpdated(Date otherBInspectionLastUpdated) {
 		this.otherBInspectionLastUpdated = otherBInspectionLastUpdated;
 	}
 
-	public String getPermitNotes() {
+	public synchronized String getPermitNotes() {
 		return permitNotes;
 	}
 
-	public void setPermitNotes(String permitNotes) {
+	public synchronized void setPermitNotes(String permitNotes) {
 		this.permitNotes = permitNotes;
 	}
 
-	public String getInspectionNotes() {
+	public synchronized String getInspectionNotes() {
 		return inspectionNotes;
 	}
 
-	public void setInspectionNotes(String inspectionNotes) {
+	public synchronized void setInspectionNotes(String inspectionNotes) {
 		this.inspectionNotes = inspectionNotes;
 	}
 }

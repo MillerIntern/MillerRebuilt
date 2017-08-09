@@ -45,7 +45,7 @@ public class EquipmentStorage extends ProjectObject {
 	 * @return json string
 	 */
 	
-	public String getJsonEquipment() {
+	public synchronized String getJsonEquipment() {
 		return jsonEquipment;
 	}
 	
@@ -53,7 +53,7 @@ public class EquipmentStorage extends ProjectObject {
 	 * This method gets the project id number
 	 * @return the project id
 	 */
-	public long getProjectid(){
+	public synchronized long getProjectid(){
 		return projectid;
 	}
 	
@@ -65,7 +65,7 @@ public class EquipmentStorage extends ProjectObject {
 	 * Sets all the equipment to a json String
 	 * @param equipID ID of the piece of equipment
 	 */
-	public void setJsonEquipment(String equipIDs){
+	public synchronized void setJsonEquipment(String equipIDs){
 		this.jsonEquipment = equipIDs;
 	}
 		
@@ -73,14 +73,14 @@ public class EquipmentStorage extends ProjectObject {
 	 * Sets the id for the equipment set
 	 * @param pid the number for the equipment set to relate to the project
 	 */
-	public void setProjectid(long pid){
+	public synchronized void setProjectid(long pid){
 		this.projectid = pid;
 	}
 	
 	/**
 	 * Sets the super ID, required for usage
 	 */
-	public void setId(Long id) {
+	public synchronized void setId(Long id) {
 		this.id = id;
 	}
 

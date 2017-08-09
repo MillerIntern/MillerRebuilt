@@ -13,7 +13,7 @@ import projectObjects.Inspections;
  */
 public class InspectionsFiller
 {
-	public static void fillInspections(Inspections inspection,  Map<String, String>params) throws ParseException
+	public synchronized static void fillInspections(Inspections inspection,  Map<String, String>params) throws ParseException
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 

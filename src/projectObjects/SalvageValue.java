@@ -38,7 +38,7 @@ public class SalvageValue extends ProjectObject
 	 * This method gets the date of the salvage value object
 	 * @return the date
 	 */
-	public Date getDate() {
+	public synchronized Date getDate() {
 		return date;
 	}
 
@@ -46,7 +46,7 @@ public class SalvageValue extends ProjectObject
 	 * Thid method sets the date of the salvage value
 	 * @param date the new date
 	 */
-	public void setDate(Date date) {
+	public synchronized void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -54,7 +54,7 @@ public class SalvageValue extends ProjectObject
 	 * This method gets the value (in dollars) of the salvage value
 	 * @return the value
 	 */
-	public double getValue() {
+	public synchronized double getValue() {
 		return value;
 	}
 
@@ -62,11 +62,11 @@ public class SalvageValue extends ProjectObject
 	 * This method sets the value of the salvage value
 	 * @param salvage the new value
 	 */
-	public void setValue(Double salvage) {
+	public synchronized void setValue(Double salvage) {
 		this.value = salvage;
 	}
 	
-	public String toString()
+	public synchronized String toString()
 	{
 		 System.out.println("Salvage Date: " + date + " SalvageValue: " + value);
 		 return null;

@@ -40,7 +40,7 @@ public class TaskStatus extends ProjectObject
 	 * @return
 	 */
 	@Column(name = "status")
-	public String getStatus() {
+	public synchronized String getStatus() {
 		return status;
 	}
 	
@@ -48,7 +48,7 @@ public class TaskStatus extends ProjectObject
 	 * This method sets the status of a task
 	 * @param status
 	 */
-	public void setStatus(String status) {
+	public synchronized void setStatus(String status) {
 		this.status = status;
 	}
 }

@@ -1,6 +1,7 @@
 package Servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,8 +29,10 @@ public class Logout extends HttpServlet
 		
 	}
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Logout.java\nIN: doPost()\nTime of Log Out: " + timeStamp);
 		HttpSession session = req.getSession(false);
 		session.invalidate();
 	}

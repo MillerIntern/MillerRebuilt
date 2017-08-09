@@ -37,7 +37,7 @@ public class VendorStorage extends ProjectObject {
 	 * This method gets the name of the vendor
 	 * @return the vendor's name
 	 */
-	public String getJsonVendor() {
+	public synchronized String getJsonVendor() {
 		return jsonVendor;
 	}
 	
@@ -45,7 +45,7 @@ public class VendorStorage extends ProjectObject {
 	 * This method gets the project id number
 	 * @return id of the project
 	 */
-	public long getProjectid(){
+	public synchronized long getProjectid(){
 		return projectid;
 	}
 	
@@ -53,7 +53,7 @@ public class VendorStorage extends ProjectObject {
 	 * This method sets the project id number
 	 * @param pid the new project id number
 	 */
-	public void setProjectid(long pid)
+	public synchronized void setProjectid(long pid)
 	{
 		this.projectid = pid;
 	}
@@ -62,7 +62,7 @@ public class VendorStorage extends ProjectObject {
 	 * This method sets the name of the vendor.
 	 * @param name the new name of the vendor
 	 */
-	public void setJsonVendor(String vendorString) {
+	public synchronized void setJsonVendor(String vendorString) {
 		this.jsonVendor = vendorString;
 	}
 }

@@ -22,7 +22,7 @@ public class TaskFiller {
 	 * @param t
 	 * @param parameters
 	 */
-	public static void fillTaskInformation(Task t, Map<String, String> params, String sessionName) throws ParseException, ClassNotFoundException {
+	public synchronized static void fillTaskInformation(Task t, Map<String, String> params, String sessionName) throws ParseException, ClassNotFoundException {
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		
 		Date dueDate = null;

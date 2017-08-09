@@ -18,7 +18,7 @@ public class ChangeOrderFiller
 	 * @param co
 	 * @param params
 	 */
-	public static void fillChangeOrder(ChangeOrder co, Map<String, String> params) throws ParseException
+	public synchronized static void fillChangeOrder(ChangeOrder co, Map<String, String> params) throws ParseException
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		

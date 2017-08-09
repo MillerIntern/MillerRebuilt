@@ -31,7 +31,7 @@ public class ChangeOrderType extends ProjectObject
 	 * This method gets the name of the ChangeOrderCustomerType 
 	 * @return the name
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -39,15 +39,15 @@ public class ChangeOrderType extends ProjectObject
 	 * This method sets the name of the ChangeOrderCustomerType 
 	 * @param name the new name of the project.
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 
-	public String getCode() {
+	public synchronized String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public synchronized void setCode(String code) {
 		this.code = code;
 	}
 }

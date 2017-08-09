@@ -38,7 +38,7 @@ public class QueryService
 	 * @throws ParseException
 	 */
 	
-	public static List<String> convertStringToList(String str)
+	public synchronized static List<String> convertStringToList(String str)
 	{
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<String>>() {}.getType();
@@ -46,7 +46,7 @@ public class QueryService
 	}
 	
 	//REMODEL OF THE NON-DATE PARAMETERS COMPLETE
-	public static List<Project> queryProjects(Map<String, String[]> pars) throws ParseException
+	public synchronized static List<Project> queryProjects(Map<String, String[]> pars) throws ParseException
 	{	
 		//Put parameter names in an array
 		Set<String> paramNames = pars.keySet();
@@ -202,7 +202,7 @@ public class QueryService
 	 * @return an expression that can be added to a query
 	 * @throws ParseException
 	 */
-	public static Disjunction addDateRestriction(String propertyName, Map<String, String[]> map) throws ParseException
+	public synchronized static Disjunction addDateRestriction(String propertyName, Map<String, String[]> map) throws ParseException
 	{
 
 		Disjunction or = Restrictions.disjunction();
@@ -252,7 +252,7 @@ public class QueryService
 	 * @return an expression that can be added to a query
 	 * @throws ParseException
 	 */
-	public static Criterion addOnGoingDateRestriction(String propertyName, Map<String, String[]> map) throws ParseException
+	public synchronized static Criterion addOnGoingDateRestriction(String propertyName, Map<String, String[]> map) throws ParseException
 	{
 
 		Conjunction and = Restrictions.conjunction();
@@ -317,7 +317,7 @@ public class QueryService
 	 * @param project a string representing the project id.
 	 * @return
 	 */
-	public static String getProjectToEdit(String warehouse, String stage, String classs, String item, String project)
+	public synchronized static String getProjectToEdit(String warehouse, String stage, String classs, String item, String project)
 	{	
 		
 		//Put parameter names in an array
@@ -372,7 +372,7 @@ public class QueryService
 	 * @return an object if an object is found, null if not
 	 * @throws ClassNotFoundException
 	 */
-	public static Object getObjectByValues(Object [] values, String [] columns, String domain) throws ClassNotFoundException
+	public synchronized static Object getObjectByValues(Object [] values, String [] columns, String domain) throws ClassNotFoundException
 	{
 		@SuppressWarnings("rawtypes")
 		Class c = Class.forName("projectObjects."+domain);

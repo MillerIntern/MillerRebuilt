@@ -88,6 +88,15 @@ function getUser() {
 	});
 }
 
+function download() {
+	$('#download').attr({target: "_blank", href : 'http://localhost/MillerRebuilt/EmployeeFiles/excelDummy.xlsx'})
+}
+
+
+
+
+
+
 
 
 

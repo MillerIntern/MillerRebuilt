@@ -66,8 +66,11 @@
 		    </ul>
 		  </div>
 		</nav>
+		
 	
-	
+<!--  
+		LINES 73 THRU 137 CORRESPOND TO THE FIND PROJECT DIV
+ -->	
 	<div id = 'findProject' >
 	    <div class="container">
 	   		<div id="param-field" class="param-field">
@@ -132,7 +135,9 @@
 	
 	
 	</div>  <!-- THIS ENDS THE DIV FOR FIND PROJECT -->
-	
+<!--  
+		LINES 140 THRU 282 CORRESPOND TO THE PROJECT MANAGER DIV	
+ -->
 	<div id = 'projectManager' class ='editProject'>
 		
 	    <div class="container">
@@ -154,6 +159,7 @@
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
+				<!-- <table class='table table-hover table-striped infoTable' ondblclick="editProjectInfo()"> -->
 				<table class='table table-hover table-striped infoTable'>
 					<tr><td width=30% class = "bold">MCS Number:</td><td id='mcsNumber' class ="italics"></td></tr>
 					<tr><td class = "bold">Item:</td><td id='projectItem' class ="italics"></td></tr>
@@ -174,6 +180,7 @@
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
+				<!--  <table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()"> -->
 				<table class='table table-hover table-striped'>
 					<tr><th></th><th>Permit Stage</th><th>Permit Last Updated</th></tr>
 					<tr><td width = 25% class = "bold">Building Permit:</td><td id='buildingPermit' class ="italics" width = 20%></td><td id='buildingPermitDate' class ="italics" width = 20%></td></tr>
@@ -188,6 +195,7 @@
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
+				<!--  <table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()"> -->
 				<table class='table table-hover table-striped'>
 					<tr><th></th><th>Inspection Stage</th><th>Inspection Last Updated</th></tr>
 					<tr><td class = "bold">Building Inspection:</td><td id='buildingInspection' class ="italics"></td><td id='buildingInspectionDate' class ="italics"></td></tr>
@@ -211,12 +219,14 @@
 			</div> <!-- Equipment -->
 			<div class='info-tab info-tab-closeout' id='closeout'>
 				<table class='table table-hover table-striped'>
+				<!-- <table class='table table-hover table-striped' ondblclick="editCloseout()"> -->
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
 					<tr><td width = 35% class="bold">MG2 Completion (G704 Form):</td><td id='mg2Completion'></td></tr>
 					<tr><td class="bold">Punch List:</td><td id='punchList'></td></tr>
 					<tr><td class="bold">Verisae Report:</td><td id='verisaeReport'></td></tr>
 				</table>	
 				<table class='table table-hover table-striped'>
+				<!--  <table class='table table-hover table-striped' ondblclick="editCloseout()"> -->
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
 					<tr><td width = 35% class="bold">Final Inspections:</td><td id='finalInspectionsRequired'></td></tr>
 					<tr><td class="bold">Final Warranties:</td><td id='finalWarrantiesRequired'></td></tr>
@@ -271,6 +281,9 @@
 		
 		
 	</div>  <!-- THIS ENDS THE DIV FOR PROJECT MANAGER-->
+<!--  
+		LINES 286 THRU 489 CORRESPOND TO THE PROJECT DATA DIV	
+ -->
     <div id = 'projectData' class ='editProject'>
 	   
 	<div class='container'> 
@@ -474,6 +487,9 @@
 		
 		
 	</div>  <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	
+<!--  
+		LINES 492 THRU 795 CORRESPOND TO THE PERMIT DATA DIV	
+ -->
 	<div id = 'permitData' class ='editProject'>
 	   <div class="container">
 			<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
@@ -778,6 +794,9 @@
 			
 		
 	</div>  <!-- THIS ENDS THE DIV FOR PERMIT DATA-->
+<!--  
+		LINES 799 THRU 1377 CORRESPOND TO THE CLOSEOUT DATA DIV	
+ -->
 	<div id = 'closeoutData' class ='editProject'>
 	
 	<div class="container">
@@ -1356,6 +1375,9 @@
 	<div id="footer"> </div>  
 
 </div> <!-- THIS ENDS THE DIV FOR CLOSEOUT DATA-->
+<!--  
+		LINES 1381 THRU 1528 CORRESPOND TO THE CHANGE ORDER DIV	
+ -->
 
 	<div id="changeOrder" class="editProject">
 		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>

@@ -45,95 +45,95 @@ public class Inspections extends ProjectObject{
 		this.building_final=building_final;
 	}
 	
-	public void setTicketNumber(long ticketNumber){
+	public synchronized void setTicketNumber(long ticketNumber){
 		this.ticketNumber = ticketNumber ;
 	}
-	public long getTicketNumber()
+	public synchronized long getTicketNumber()
 	{
 		return this.ticketNumber;
 	}
 
-	public Date getFraming(){
+	public synchronized Date getFraming(){
 		return this.framing;
 	}
-	public void setFraming(Date framing){
+	public synchronized void setFraming(Date framing){
 		this.framing=framing;
 	}
 
-	public Date getCeiling(){
+	public synchronized Date getCeiling(){
 		return this.ceiling;
 	}
-	public void setCeiling(Date ceiling){
+	public synchronized void setCeiling(Date ceiling){
 		this.ceiling=ceiling;
 	}
 
-	public Date getRoughin_Mechanical(){
+	public synchronized Date getRoughin_Mechanical(){
 		return this.roughin_mechanical;
 	}
-	public void setRoughin_Mechanical(Date roughin_mechanical){
+	public synchronized void setRoughin_Mechanical(Date roughin_mechanical){
 		this.roughin_mechanical=roughin_mechanical;
 	}
 
-	public Date getRoughin_Electric(){
+	public synchronized Date getRoughin_Electric(){
 		return this.roughin_electric;
 	}
-	public void setRoughin_Electric(Date roughin_electric){
+	public synchronized void setRoughin_Electric(Date roughin_electric){
 		this.roughin_electric=roughin_electric;
 	}
 
-	public Date getRoughin_Plumbing(){
+	public synchronized Date getRoughin_Plumbing(){
 		return this.roughin_plumbing;
 	}
-	public void setRoughin_Plumbing(Date roughin_plumbing){
+	public synchronized void setRoughin_Plumbing(Date roughin_plumbing){
 		this.roughin_plumbing=roughin_plumbing;
 	}
 
-	public Date getMechanicalLightSmoke(){
+	public synchronized Date getMechanicalLightSmoke(){
 		return this.mechanicalLightSmoke;
 	}
-	public void setMechanicalLightSmoke(Date mechanicallightsmoke){
+	public synchronized void setMechanicalLightSmoke(Date mechanicallightsmoke){
 		this.mechanicalLightSmoke=mechanicallightsmoke;
 	}
 
-	public Date getMechanical_Final(){
+	public synchronized Date getMechanical_Final(){
 		return this.mechanical_final;
 	}
-	public void setMechanical_Final(Date mechanical_final){
+	public synchronized void setMechanical_Final(Date mechanical_final){
 		this.mechanical_final=mechanical_final;
 	}
 
-	public Date getElectrical_Final(){
+	public synchronized Date getElectrical_Final(){
 		return this.electrical_final;
 	}
-	public void setElectrical_Final(Date electrical_final){
+	public synchronized void setElectrical_Final(Date electrical_final){
 		this.electrical_final=electrical_final;
 	}
 
-	public Date getPlumbing_Final(){
+	public synchronized Date getPlumbing_Final(){
 		return this.plumbing_final;
 	}
-	public void setPlumbing_Final(Date plumbing_final){
+	public synchronized void setPlumbing_Final(Date plumbing_final){
 		this.plumbing_final=plumbing_final;
 	}
 
-	public Date getFire_Marshal(){
+	public synchronized Date getFire_Marshal(){
 		return this.fire_marshal;
 	}
-	public void setFire_Marshal(Date fire_marshal){
+	public synchronized void setFire_Marshal(Date fire_marshal){
 		this.fire_marshal=fire_marshal;
 	}
 
-	public Date getHealth(){
+	public synchronized Date getHealth(){
 		return this.health;
 	}
-	public void setHealth(Date health){
+	public synchronized void setHealth(Date health){
 		this.health=health;
 	}
 
-	public Date getBuilding_Final(){
+	public synchronized Date getBuilding_Final(){
 		return this.building_final;
 	}
-	public void setBuilding_Final(Date building_final){
+	public synchronized void setBuilding_Final(Date building_final){
 		this.building_final=building_final;
 	}
 }

@@ -46,7 +46,7 @@ public class ProjectObjectService
 	 * @param domain the type of object to be returned.
 	 * @return a list of all objects of a specific type in the database.
 	 */
-	public static List<Object> getAll(String domain)
+	public synchronized static List<Object> getAll(String domain)
 	{
 		//Begin transaction
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -65,7 +65,7 @@ public class ProjectObjectService
 	 * This function returns all Tasks from the database.
 	 * @return a list of all Tasks of a specific type in the database.
 	 */
-	public static List<projectObjects.Task> getAllTasks()
+	public synchronized static List<projectObjects.Task> getAllTasks()
 	{
 		//Begin transaction
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -85,7 +85,7 @@ public class ProjectObjectService
 	 * @param task assignee_id
 	 * @return a list of all Tasks of a specific assignee in the database.
 	 */
-	public static List<projectObjects.Task> getAllTasksForAssignee(String assignee_id, String status_id)
+	public synchronized static List<projectObjects.Task> getAllTasksForAssignee(String assignee_id, String status_id)
 	{
 		//Begin transaction
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -121,7 +121,7 @@ public class ProjectObjectService
 	 * @param domain the type of object to be returned.
 	 * @return A JSON array string representing all of the objects.
 	 */
-	public static String getAllAsJsonString(String domain) throws NonUniqueObjectException
+	public synchronized static String getAllAsJsonString(String domain) throws NonUniqueObjectException
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
@@ -198,7 +198,7 @@ public class ProjectObjectService
 	 * @param domain the type of object to be returned.
 	 * @return A JSON array string representing all of the objects.
 	 */
-	public static String getProjectsAsJSON(String stages) throws NonUniqueObjectException
+	public synchronized static String getProjectsAsJSON(String stages) throws NonUniqueObjectException
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
         
@@ -276,7 +276,7 @@ public class ProjectObjectService
 		return "";
 	}
 	
-	public static String getID(String domain) throws NonUniqueObjectException
+	public synchronized static String getID(String domain) throws NonUniqueObjectException
 	{
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
@@ -325,7 +325,7 @@ public class ProjectObjectService
 	 * @return an object in the database
 	 * @throws ClassNotFoundException
 	 */
-	public static Object get(Long id, String domain) throws ClassNotFoundException
+	public synchronized static Object get(Long id, String domain) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
@@ -349,7 +349,7 @@ public class ProjectObjectService
 	 * @return A JSON string representing the object.
 	 * @throws ClassNotFoundException
 	 */
-	public static String getAsJSON(Long id, String domain) throws ClassNotFoundException
+	public synchronized static String getAsJSON(Long id, String domain) throws ClassNotFoundException
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -368,7 +368,7 @@ public class ProjectObjectService
 		return gson.toJson(o);
 	}
 	/**
-	public static Project getProjectByID(long projectID){
+	public synchronized static Project getProjectByID(long projectID){
 		Session s = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    try {
@@ -426,7 +426,7 @@ public class ProjectObjectService
 	 * @return a confirmation that the object has been deleted.
 	 * @throws ClassNotFoundException
 	 */
-	public static String delete(Long id, String domain) throws ClassNotFoundException
+	public synchronized static String delete(Long id, String domain) throws ClassNotFoundException
 	{
 		String success = "DELETED";
 		Session session = HibernateUtil.getSession();
@@ -467,7 +467,7 @@ public class ProjectObjectService
 	 * @param o the object to be added
 	 * @return the id of the transaction
 	 */
-	public static long addObject(String domain, Object o)
+	public synchronized static long addObject(String domain, Object o)
 	{
 		System.out.println("add Object");
 		Session session = HibernateUtil.getSession();
@@ -493,7 +493,7 @@ public class ProjectObjectService
 	 * @param newObject the object that is to replace the object in the database.
 	 * @throws ClassNotFoundException
 	 */	
-	public static long editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
+	public synchronized static long editObject(String domain, Long id, ProjectObject newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
 		//Get session and start transaction
@@ -520,7 +520,7 @@ public class ProjectObjectService
 	 * TODO: This is a really hacky way to fix a problem with sets in projects
 	 * @param session
 	 */
-	public static void deleteNullSetObjects() 
+	public synchronized static void deleteNullSetObjects() 
 	{
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
@@ -534,7 +534,7 @@ public class ProjectObjectService
 		
 	}
 
-	/*public static void editSetFromProject(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
+	/*public synchronized static void editSetFromProject(String domain, Long id, ProjectObject o) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
 		System.out.println("add to set");
@@ -551,7 +551,7 @@ public class ProjectObjectService
 	/**
 	 * This method copies the fields of the src object into the fields of the dest object,
 	 * no matter what kind of objects they are (They must be the same kind of object, though).
-	 * This method is a wrapper method so that the public does not need to make the
+	 * This method is a wrapper method so that the public synchronized does not need to make the
 	 * src.getClass call to give the ACTUAL copyFields a third argument
 	 * 
 	 * Source: http://vyazelenko.com/2013/10/29/copy-object-in-java-performance-comparison/
@@ -559,7 +559,7 @@ public class ProjectObjectService
 	 * @param src The object we are copying fields from
 	 * @param dest The object we are copying fields to.
 	 */
-	public static void copyFieldByField(Object src, Object dest, int i2) 
+	public synchronized static void copyFieldByField(Object src, Object dest, int i2) 
 	{
 		copyFields(src, dest, src.getClass(), i2);
 	}
@@ -635,7 +635,7 @@ public class ProjectObjectService
 	 * @param parseLong
 	 * @return
 	 */
-	public static String getProjectTasksAsJSON(long projectID) {
+	public synchronized static String getProjectTasksAsJSON(long projectID) {
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;

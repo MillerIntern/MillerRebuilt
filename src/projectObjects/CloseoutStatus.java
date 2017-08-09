@@ -29,7 +29,7 @@ public class CloseoutStatus extends ProjectObject
 	 * This method gets the name of the closeoutstatus 
 	 * @return the name
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -37,7 +37,7 @@ public class CloseoutStatus extends ProjectObject
 	 * This method sets the name of the closeoutstatus 
 	 * @param name the new name of the project.
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 }

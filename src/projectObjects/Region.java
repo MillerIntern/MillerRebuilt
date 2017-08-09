@@ -30,7 +30,7 @@ public enum Region
 	 * This method returns the full name of a region enumeration
 	 * @return the region's full name
 	 */
-	public String getRegionName()
+	public synchronized String getRegionName()
 	{
 		return name;
 	}
@@ -39,7 +39,7 @@ public enum Region
 	 * This method returns all of the regions in a list
 	 * @return a list of all the regions.
 	 */
-	public static List<Region> returnAllAsList()
+	public synchronized static List<Region> returnAllAsList()
 	{
 		Region [] rs = Region.values();
 		ArrayList<Region> list = new ArrayList<Region>(Arrays.asList(rs));

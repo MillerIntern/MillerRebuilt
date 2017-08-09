@@ -59,94 +59,94 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		status = null;
 	}
 	
-	public String getTitle() {
+	public synchronized String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
+	public synchronized void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDescription() {
+	public synchronized String getDescription() {
 		return description;
 	}
-	public void setDescription(String description) {
+	public synchronized void setDescription(String description) {
 		this.description = description;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public Project getProject() {
+	public synchronized Project getProject() {
 		return project;
 	}
-	public void setProject(Project project) {
+	public synchronized void setProject(Project project) {
 		this.project = project;
 	}
-	public int getSeverity() {
+	public synchronized int getSeverity() {
 		return severity;
 	}
-	public void setSeverity(int severity) {
+	public synchronized void setSeverity(int severity) {
 		this.severity = severity;
 	}
-	public Date getDueDate() {
+	public synchronized Date getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Date dueDate) {
+	public synchronized void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
-	public Date getAssignedDate() {
+	public synchronized Date getAssignedDate() {
 		return assignedDate;
 	}
-	public void setAssignedDate(Date assignedDate) {
+	public synchronized void setAssignedDate(Date assignedDate) {
 		this.assignedDate = assignedDate;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public User getAssigner() {
+	public synchronized User getAssigner() {
 		return assigner;
 	}
-	public void setAssigner(User assigner) {
+	public synchronized void setAssigner(User assigner) {
 		this.assigner = assigner;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public User getAssignee() {
+	public synchronized User getAssignee() {
 		return assignee;
 	}
-	public void setAssignee(User assignee) {
+	public synchronized void setAssignee(User assignee) {
 		if(assignee == null) System.out.println("IT WAS NULLLLL");
 		this.assignee = assignee;
 	}
-	public boolean isCompleted() {
+	public synchronized boolean isCompleted() {
 		return completed;
 	}
-	public void setCompleted(boolean completed) {
+	public synchronized void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 	
-	public String getNotes() {
+	public synchronized String getNotes() {
 		return notes;
 	}
 
-	public void setNotes(String notes) {
+	public synchronized void setNotes(String notes) {
 		this.notes = notes;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public TaskStatus getTaskStatus() {
+	public synchronized TaskStatus getTaskStatus() {
 		return status;
 	}
 	
-	public void setTaskStatus(TaskStatus status) {
+	public synchronized void setTaskStatus(TaskStatus status) {
 		this.status = status;
 	}
 	
-	public int compareTo(Task compareTask) {
+	public synchronized int compareTo(Task compareTask) {
 		return compareStrings(this.getAssignee().getFirstName(), compareTask.getAssignee().getFirstName());
 	}
 	
-	public int compareStrings(String str1, String str2) {
+	public synchronized int compareStrings(String str1, String str2) {
 		str1 = str1.toLowerCase();
 		str2 = str2.toLowerCase();
 		char[] arr1 = str1.toCharArray();
@@ -160,7 +160,7 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		return 0;
 	}
 
-	public String toString() {
+	public synchronized String toString() {
 		return this.title + ": " + this.description;
 	}
 }

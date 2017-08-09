@@ -29,7 +29,7 @@ public class City extends ProjectObject
 	 * This method gets the name of the city
 	 * @return
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 	
@@ -37,7 +37,7 @@ public class City extends ProjectObject
 	 * This method returns the name of a city
 	 * @param name
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 }

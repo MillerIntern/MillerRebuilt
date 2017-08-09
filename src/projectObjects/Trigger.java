@@ -40,7 +40,7 @@ public class Trigger extends ProjectObject {
 		}
 	}
 	
-	public void runTrigger() {
+	public synchronized void runTrigger() {
 
 		ArrayList<Criterion> criterion = new ArrayList<Criterion>();
 		Iterator<String> it = criteria.iterator();
@@ -77,41 +77,41 @@ public class Trigger extends ProjectObject {
 		}
 	}
 	
-	public String getDescription() {
+	public synchronized String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public synchronized void setDescription(String description) {
 		this.description = description;
 	}
 
-	public int getSeverity() {
+	public synchronized int getSeverity() {
 		return severity;
 	}
 
-	public void setSeverity(int severity) {
+	public synchronized void setSeverity(int severity) {
 		this.severity = severity;
 	}
 
 	@ElementCollection(targetClass=String.class)
     @JoinColumn
-	public Set<String> getCriteria() {
+	public synchronized Set<String> getCriteria() {
 		return criteria;
 	}
 
-	public void setCriteria(Set<String> criteria) {
+	public synchronized void setCriteria(Set<String> criteria) {
 		this.criteria = criteria;
 	}
 
-	public Class getObjectClass() {
+	public synchronized Class getObjectClass() {
 		return objectClass;
 	}
 
-	public void setObjectClass(Class objectClass) {
+	public synchronized void setObjectClass(Class objectClass) {
 		this.objectClass = objectClass;
 	}
 
-	public String toString() {
+	public synchronized String toString() {
 		return this.description + " - Severity: " + this.severity; 
 	}
 }

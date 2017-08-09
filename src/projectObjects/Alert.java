@@ -20,19 +20,19 @@ public class Alert extends ProjectObject {
 		this.setSetTrigger(trigger);
 	}
 
-	public Project getReferencedProject() {
+	public synchronized Project getReferencedProject() {
 		return referencedProject;
 	}
 
-	public void setReferencedProject(Project referencedProject) {
+	public synchronized void setReferencedProject(Project referencedProject) {
 		this.referencedProject = referencedProject;
 	}
 
-	public Trigger getSetTrigger() {
+	public synchronized Trigger getSetTrigger() {
 		return setTrigger;
 	}
 
-	public void setSetTrigger(Trigger setTrigger) {
+	public synchronized void setSetTrigger(Trigger setTrigger) {
 		this.setTrigger = setTrigger;
 	}
 

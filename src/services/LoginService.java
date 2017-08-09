@@ -14,7 +14,7 @@ import projectObjects.User;
 
 public class LoginService 
 {
-	public static boolean Login(String username, String password) {
+	public synchronized static boolean Login(String username, String password) {
 		HashGen hG = new HashGen();
 		
 		String hashedPass = null;
@@ -40,7 +40,7 @@ public class LoginService
 		return loggedIn;
 	}
 	
-	public static boolean verify(HttpServletRequest request)
+	public synchronized static boolean verify(HttpServletRequest request)
 	{
 		if(request.getSession().getAttribute("verified") == null) return false;
 		if(!request.getSession().getAttribute("verified").equals("true")) return false;
@@ -53,7 +53,7 @@ public class LoginService
 	 * @param req
 	 * @return
 	 */
-	public static boolean verifyAdmin(HttpServletRequest req) 
+	public synchronized static boolean verifyAdmin(HttpServletRequest req) 
 	{
 		if(req.getSession().getAttribute("isAdmin") == null) return false;
 		if(req.getSession().getAttribute("isAdmin").equals("true")) return true;
@@ -64,7 +64,7 @@ public class LoginService
 	 * @param username
 	 * @return
 	 */
-	public static String isAdmin(String username) 
+	public synchronized static String isAdmin(String username) 
 	{
 		Criteria criteria = HibernateUtil.getSession().createCriteria(User.class);
 		criteria.add(Restrictions.eqOrIsNull("name", username));

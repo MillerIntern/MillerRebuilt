@@ -89,7 +89,7 @@ public class ChangeOrder extends ProjectObject
 
 
 
-	public String getStatus() {
+	public synchronized String getStatus() {
 		return status;
 	}
 
@@ -97,15 +97,15 @@ public class ChangeOrder extends ProjectObject
 	 * This methdo sets the status of a change order
 	 * @param status the status of the change order
 	 */
-	public void setStatus(String status) {
+	public synchronized void setStatus(String status) {
 		this.status = status;
 	}
 
-	public String getType() {
+	public synchronized String getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public synchronized void setType(String type) {
 		this.type = type;
 	}
 	
@@ -113,7 +113,7 @@ public class ChangeOrder extends ProjectObject
 	 * This method gets the approved date of a change order
 	 * @return the approved date of the change order
 	 */
-	public Date getApprovedDate() {
+	public synchronized Date getApprovedDate() {
 		return approvedDate;
 	}
 	
@@ -121,95 +121,95 @@ public class ChangeOrder extends ProjectObject
 	 * This method sets the approved date of the change order
 	 * @param approvedDate
 	 */
-	public void setApprovedDate(Date approvedDate) {
+	public synchronized void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
 	}
 
-	public String getMcsCO() {
+	public synchronized String getMcsCO() {
 		return mcsCO;
 	}
 
-	public void setMcsCO(String mcsCO) {
+	public synchronized void setMcsCO(String mcsCO) {
 		this.mcsCO = mcsCO;
 	}
 
-	public String getSubNames() {
+	public synchronized String getSubNames() {
 		return subNames;
 	}
 
-	public void setSubNames(String subNames) {
+	public synchronized void setSubNames(String subNames) {
 		this.subNames = subNames;
 	}
 
-	public Date getProposalDate() {
+	public synchronized Date getProposalDate() {
 		return proposalDate;
 	}
 
-	public void setProposalDate(Date proposalDate) {
+	public synchronized void setProposalDate(Date proposalDate) {
 		this.proposalDate = proposalDate;
 	}
 
-	public Date getSubmittedDate() {
+	public synchronized Date getSubmittedDate() {
 		return submittedDate;
 	}
 
-	public void setSubmittedDate(Date submittedDate) {
+	public synchronized void setSubmittedDate(Date submittedDate) {
 		this.submittedDate = submittedDate;
 	}
 
-	public String getBriefDescription() {
+	public synchronized String getBriefDescription() {
 		return briefDescription;
 	}
 
-	public void setBriefDescription(String briefDescription) {
+	public synchronized void setBriefDescription(String briefDescription) {
 		this.briefDescription = briefDescription;
 	}
 
-	public String getNotes() {
+	public synchronized String getNotes() {
 		return notes;
 	}
 
-	public void setNotes(String notes) {
+	public synchronized void setNotes(String notes) {
 		this.notes = notes;
 	}
 
-	public double getCost() {
+	public synchronized double getCost() {
 		return cost;
 	}
 
-	public void setCost(double cost) {
+	public synchronized void setCost(double cost) {
 		this.cost = cost;
 	}
 
-	public double getSell() {
+	public synchronized double getSell() {
 		return sell;
 	}
 
-	public void setSell(double sell) {
+	public synchronized void setSell(double sell) {
 		this.sell = sell;
 	}
 
-	public String getSubCO() {
+	public synchronized String getSubCO() {
 		return subCO;
 	}
 
-	public void setSubCO(String subCO) {
+	public synchronized void setSubCO(String subCO) {
 		this.subCO = subCO;
 	}
 
-	public String getSubmittedTo() {
+	public synchronized String getSubmittedTo() {
 		return submittedTo;
 	}
 
-	public void setSubmittedTo(String submittedTo) {
+	public synchronized void setSubmittedTo(String submittedTo) {
 		this.submittedTo = submittedTo;
 	}	
 	
-	public String getTitle() {
+	public synchronized String getTitle() {
 		return title;
 	}
 	
-	public void setTitle(String title) {
+	public synchronized void setTitle(String title) {
 		this.title = title;
 	}
 }

@@ -26,7 +26,7 @@ public class AdminService
 	 * @param admin indicates if the user can use administrative features
 	 * @param projects indicates if the user can add/edit projects
 	 */
-	public static void addPermission(String name, boolean query, boolean list, boolean admin, boolean projects)
+	public synchronized static void addPermission(String name, boolean query, boolean list, boolean admin, boolean projects)
 	{
 		Permission perm = new Permission(name, query, list, admin, projects);
         ProjectObjectService.addObject("Permission", perm);
@@ -36,7 +36,7 @@ public class AdminService
 	 * This method gets all of the permissions in the database as a json string
 	 * @return a string representing a JSON array
 	 */
-	public static String getAllPermissionsAsJson()
+	public synchronized static String getAllPermissionsAsJson()
 	{
 		List<Object> list = ProjectObjectService.getAll("Permission");
 
@@ -52,7 +52,7 @@ public class AdminService
 	 * @param admin indicates if the user can use administrative features
 	 * @param projects indicates if the user can add/edit projects
 	 */
-	public static void editPermission(Long id, String name, boolean query, boolean list, boolean admin, boolean projects)
+	public synchronized static void editPermission(Long id, String name, boolean query, boolean list, boolean admin, boolean projects)
 	{
 		Permission p = new Permission(name, query, list, admin, projects);
 		try 
@@ -68,7 +68,7 @@ public class AdminService
 	 * THis method deleted a permission from the database
 	 * @param id the id of the permission to be deleted
 	 */
-	public static String deletePermission(Long id)
+	public synchronized static String deletePermission(Long id)
 	{
 		String s = "0";
 		try {
@@ -89,7 +89,7 @@ public class AdminService
 	 * @param permissionID the id of the permission
 	 * @return -1 if the operation failed
 	 */
-	public static int addUser(String name, String password, Long statusID, Long permissionID)
+	public synchronized static int addUser(String name, String password, Long statusID, Long permissionID)
 	{
 		HashGen hG = new HashGen();
 		System.out.println(name);
@@ -141,7 +141,7 @@ public class AdminService
 	 * an array of JSON objects
 	 * @return string representing an array of JSON objects
 	 */
-	public static String getAllUsers()
+	public synchronized static String getAllUsers()
 	{
 		return ProjectObjectService.getAllAsJsonString("User");
 	}
@@ -154,7 +154,7 @@ public class AdminService
 	 * @param statusID the status of the user
 	 * @param permissionID the id of the permission of the user
 	 */
-	public static void editUser(Long userID, String name, String password, Long statusID, Long permissionID)
+	public synchronized static void editUser(Long userID, String name, String password, Long statusID, Long permissionID)
 	{
 		Status s;
 		try 
@@ -173,7 +173,7 @@ public class AdminService
 	 * This method deletes a user from the database
 	 * @param id the id of the user
 	 */
-	public static String deleteUser(Long id)
+	public synchronized static String deleteUser(Long id)
 	{
 		String s = "0";
 		try 
@@ -191,7 +191,7 @@ public class AdminService
 	 * This method adds a status to the database
 	 * @param name the name of the status
 	 */
-	public static void addStatus(String name)
+	public synchronized static void addStatus(String name)
 	{
 		Status s = new Status(name);
 		ProjectObjectService.addObject("Status", s);
@@ -202,7 +202,7 @@ public class AdminService
 	 * This method gets all of the statuses in the database
 	 * @return a string representing a JSON array
 	 */
-	public static String getAllStatuses()
+	public synchronized static String getAllStatuses()
 	{
 		return ProjectObjectService.getAllAsJsonString("Status");
 	}
@@ -212,7 +212,7 @@ public class AdminService
 	 * @param id the id of the status
 	 * @param name the new name of the status
 	 */
-	public static void editStatus(Long id, String name)
+	public synchronized static void editStatus(Long id, String name)
 	{
 		Status s = new Status(name);
 		try 
@@ -228,7 +228,7 @@ public class AdminService
 	 * This method deletes a status from the database
 	 * @param id the id of the status to be deleted
 	 */
-	public static String deleteStatus(Long id)
+	public synchronized static String deleteStatus(Long id)
 	{
 		String s = "0";
 		try 
@@ -249,7 +249,7 @@ public class AdminService
 	 * @param name the name of the item
 	 * @return -1 if the operation failed
 	 */
-	public static int addItem(String name)
+	public synchronized static int addItem(String name)
 	{
 		//Check if the item already exists
 		int status = -1;
@@ -282,7 +282,7 @@ public class AdminService
 	 * HTTP responses are combined into one response. Therefore, all of this needs to be combined into one call.
 	 * @return a string representing a JSON array of the data
 	 */
-	public static String getAllAdminObjects()
+	public synchronized static String getAllAdminObjects()
 	{
 		Gson g = new Gson();
 		

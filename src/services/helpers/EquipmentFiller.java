@@ -18,7 +18,7 @@ public class EquipmentFiller
 	 * @param eq
 	 * @param params
 	 */
-	public static void fillNewEquipment(NewEquipment eq, Map<String, String> params) throws ParseException
+	public synchronized static void fillNewEquipment(NewEquipment eq, Map<String, String> params) throws ParseException
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		

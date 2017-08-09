@@ -37,7 +37,7 @@ public class ReportHelper
 	 * @param sb - the string builder that contains the html page to be written out to
 	 * @param value - the value of the current header
 	 */
-	public static void appendReportProjectHeader(StringBuilder sb, String value)
+	public synchronized static void appendReportProjectHeader(StringBuilder sb, String value)
 	{
 		if(value.equals("mcsNum"))
 		{
@@ -559,7 +559,7 @@ public class ReportHelper
 	 * @param p - the project containing the values
 	 * @return - a string containing the value
 	 */
-	public static String getReportVal(String value, Project p)
+	public synchronized static String getReportVal(String value, Project p)
 	{
 		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
 		
@@ -1522,7 +1522,7 @@ public class ReportHelper
 	 * @param t - the task containing the values
 	 * @return - a string containing the value
 	 */
-	public static String getReportVal(String value, Task t){
+	public synchronized static String getReportVal(String value, Task t){
 		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
 		String returnVal;
 		if(value.equals("warehouse")){

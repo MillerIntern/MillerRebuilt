@@ -528,7 +528,7 @@ public class CloseoutDetails extends ProjectObject
 	/**
 	 * This method sets the id of this closeoutdetail
 	 */
-	public void setId(Long id) {
+	public synchronized void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -536,7 +536,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This methdod gets the as-builts date of a project
 	 * @return the date
 	 */
-	public Date getAsBuilts() {
+	public synchronized Date getAsBuilts() {
 		return asBuilts;
 	}
 	
@@ -544,7 +544,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the asbuilts date of a project
 	 * @param asBuilts the new date of the as-builts
 	 */
-	public void setAsBuilts(Date asBuilts) {
+	public synchronized void setAsBuilts(Date asBuilts) {
 		this.asBuilts = asBuilts;
 	}
 	
@@ -555,7 +555,7 @@ public class CloseoutDetails extends ProjectObject
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public SalvageValue getSalvageValue() {
+	public synchronized SalvageValue getSalvageValue() {
 		return salvageValue;
 	}
 	
@@ -563,7 +563,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the salvage value of a project
 	 * @param salvageValue the new salvage value of a project
 	 */
-	public void setSalvageValue(SalvageValue salvageValue) {
+	public synchronized void setSalvageValue(SalvageValue salvageValue) {
 		this.salvageValue = salvageValue;
 	}
 	
@@ -571,7 +571,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method returns the submission date of a project's punchlist
 	 * @return the date of the punchlist
 	 */
-	public Date getPunchList() {
+	public synchronized Date getPunchList() {
 		return punchList;
 	}
 	
@@ -579,7 +579,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of a project's punchlist
 	 * @param punchList the new date of the punchlist
 	 */
-	public void setPunchList(Date punchList) {
+	public synchronized void setPunchList(Date punchList) {
 		this.punchList = punchList;
 	}
 	
@@ -587,7 +587,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method gets the submission date of the alarm/hvac report of a project
 	 * @return the date of the form
 	 */
-	public Date getAlarmHvacForm() {
+	public synchronized Date getAlarmHvacForm() {
 		return alarmHvacForm;
 	}
 	
@@ -595,7 +595,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of an alarm/hvac report of a project
 	 * @param alarmHvacForm the new submission date of the form
 	 */
-	public void setAlarmHvacForm(Date alarmHvacForm) {
+	public synchronized void setAlarmHvacForm(Date alarmHvacForm) {
 		this.alarmHvacForm = alarmHvacForm;
 	}
 	
@@ -603,7 +603,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method returns the submission date of the air/gas form
 	 * @return the date of the air/gas form
 	 */
-	public Date getAirGas() {
+	public synchronized Date getAirGas() {
 		return airGas;
 	}
 	
@@ -611,7 +611,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of the air/gas form
 	 * @param the new submission date for the air/gas form
 	 */
-	public void setAirGas(Date airGas) {
+	public synchronized void setAirGas(Date airGas) {
 		this.airGas = airGas;
 	}
 	
@@ -619,7 +619,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method gets the submission date of the close-permits form
 	 * @return the submission date
 	 */
-	public Date getPermitsClosed() {
+	public synchronized Date getPermitsClosed() {
 		return permitsClosed;
 	}
 	
@@ -627,7 +627,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of the permits-closed form
 	 * @param permitsClosed the new submission date
 	 */
-	public void setPermitsClosed(Date permitsClosed) {
+	public synchronized void setPermitsClosed(Date permitsClosed) {
 		this.permitsClosed = permitsClosed;
 	}
 	
@@ -635,7 +635,7 @@ public class CloseoutDetails extends ProjectObject
 	 * THis method gets the submission date of a verisae/shutdown report
 	 * @return the date
 	 */
-	public Date getVerisaeShutdownReport() {
+	public synchronized Date getVerisaeShutdownReport() {
 		return verisaeShutdownReport;
 	}
 	
@@ -643,7 +643,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of a verisae/shutdown report
 	 * @param verisaeShutdownReport
 	 */
-	public void setVerisaeShutdownReport(Date verisaeShutdownReport) {
+	public synchronized void setVerisaeShutdownReport(Date verisaeShutdownReport) {
 		this.verisaeShutdownReport = verisaeShutdownReport;
 	}
 	
@@ -651,7 +651,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method gets the submission date of a closeout book
 	 * @return the date
 	 */
-	public Date getCloseoutBook() {
+	public synchronized Date getCloseoutBook() {
 		return closeoutBook;
 	}
 	
@@ -659,7 +659,7 @@ public class CloseoutDetails extends ProjectObject
 	 * THis method sets the submission date of the closeout book
 	 * @param closeoutBook the date
 	 */
-	public void setCloseoutBook(Date closeoutBook) {
+	public synchronized void setCloseoutBook(Date closeoutBook) {
 		this.closeoutBook = closeoutBook;
 	}
 	
@@ -667,7 +667,7 @@ public class CloseoutDetails extends ProjectObject
 	 * This method gets the submission date of closeout notes
 	 * @return the date
 	 */
-	public Date getCloseoutNotes() {
+	public synchronized Date getCloseoutNotes() {
 		return closeoutNotes;
 	}
 	
@@ -675,711 +675,711 @@ public class CloseoutDetails extends ProjectObject
 	 * This method sets the submission date of closeout notes
 	 * @param closeoutNotes the date
 	 */
-	public void setCloseoutNotes(Date closeoutNotes) {
+	public synchronized void setCloseoutNotes(Date closeoutNotes) {
 		this.closeoutNotes = closeoutNotes;
 	}
 	
 	
-	public Date getBuildingPermitCL() {
+	public synchronized Date getBuildingPermitCL() {
 		return buildingPermitCL;
 	}
 	
-	public void setBuildingPermitCL(Date buildingPermitCL) {
+	public synchronized void setBuildingPermitCL(Date buildingPermitCL) {
 		this.buildingPermitCL = buildingPermitCL;
 	}
 	
-	public Date getInspectionSOCL() {
+	public synchronized Date getInspectionSOCL() {
 		return inspectionSOCL;
 	}
 
-	public void setInspectionSOCL(Date inspectionSOCL) {
+	public synchronized void setInspectionSOCL(Date inspectionSOCL) {
 		this.inspectionSOCL = inspectionSOCL;
 	}
 	
-	public Date getCertCompletionCL() {
+	public synchronized Date getCertCompletionCL() {
 		return  certCompletionCL;
 	}
 	
-	public void setCertCompletionCL(Date certCompletionCL) {
+	public synchronized void setCertCompletionCL(Date certCompletionCL) {
 		this.certCompletionCL= certCompletionCL;
 	}
 	
-	public void setMPunchListCL(Date  mPunchListCL) {
+	public synchronized void setMPunchListCL(Date  mPunchListCL) {
 		this. mPunchListCL =  mPunchListCL;
 	}
 	
-	public Date getMPunchListCL() {
+	public synchronized Date getMPunchListCL() {
 		return  mPunchListCL;
 	}
 	
-	public void setCloseoutPhotosCL(Date  closeoutPhotosCL  ) {
+	public synchronized void setCloseoutPhotosCL(Date  closeoutPhotosCL  ) {
 		this.closeoutPhotosCL  =  closeoutPhotosCL ;
 	}
 	
-	public Date getCloseoutPhotosCL() {
+	public synchronized Date getCloseoutPhotosCL() {
 		return  closeoutPhotosCL ;
 	}
 	
-	public void setSubConWarrantiesCL(Date subConWarrantiesCL ) {
+	public synchronized void setSubConWarrantiesCL(Date subConWarrantiesCL ) {
 		this.subConWarrantiesCL  = subConWarrantiesCL ;
 	}
 	
-	public Date getSubConWarrantiesCL() {
+	public synchronized Date getSubConWarrantiesCL() {
 		return subConWarrantiesCL  ;
 	}
 	
 	
-	public void setMCSWarranty(Date mCSWarranty  ) {
+	public synchronized void setMCSWarranty(Date mCSWarranty  ) {
 		this.mCSWarranty  = mCSWarranty ;
 	}
 	
-	public Date getMCSWarranty() {
+	public synchronized Date getMCSWarranty() {
 		return mCSWarranty ;
 	}
 	
 	
-	public void setEquipmentSubCL(Date  equipmentSubCL ) {
+	public synchronized void setEquipmentSubCL(Date  equipmentSubCL ) {
 		this.equipmentSubCL  =   equipmentSubCL;
 	}
 	
-	public Date getEquipmentSubCL() {
+	public synchronized Date getEquipmentSubCL() {
 		return  equipmentSubCL ;
 	}
 	
-	public void setTraneCL(Date traneCL  ) {
+	public synchronized void setTraneCL(Date traneCL  ) {
 		this.traneCL  = traneCL ;
 	}
 	
-	public Date getTraneCL() {
+	public synchronized Date getTraneCL() {
 		return traneCL ;
 	}
 
-	public int getNumOfChangeOrders() {
+	public synchronized int getNumOfChangeOrders() {
 		return numOfChangeOrders;
 	}
 
-	public void setNumOfChangeOrders(int numOfChangeOrders) {
+	public synchronized void setNumOfChangeOrders(int numOfChangeOrders) {
 		this.numOfChangeOrders = numOfChangeOrders;
 	}
 
-	public int getNumOfChangeOrdersCompleted() {
+	public synchronized int getNumOfChangeOrdersCompleted() {
 		return numOfChangeOrdersCompleted;
 	}
 
-	public void setNumOfChangeOrdersCompleted(int numOfChangeOrdersCompleted) {
+	public synchronized void setNumOfChangeOrdersCompleted(int numOfChangeOrdersCompleted) {
 		this.numOfChangeOrdersCompleted = numOfChangeOrdersCompleted;
 	}
 	
-	public int getNumOfMCSChangeOrders() {
+	public synchronized int getNumOfMCSChangeOrders() {
 		return numOfMCSChangeOrders;
 	}
 	
-	public void setNumOfMCSChangeOrders(int numOfMCSChangeOrders) {
+	public synchronized void setNumOfMCSChangeOrders(int numOfMCSChangeOrders) {
 		this.numOfMCSChangeOrders = numOfMCSChangeOrders;
 	}
 	
-	public int getNumOfMCSChangeOrdersCompleted() {
+	public synchronized int getNumOfMCSChangeOrdersCompleted() {
 		return numOfMCSChangeOrdersCompleted;
 	}
 	
-	public void setNumOfMCSChangeOrdersCompleted(int numOfMCSChangeOrdersCompleted) {
+	public synchronized void setNumOfMCSChangeOrdersCompleted(int numOfMCSChangeOrdersCompleted) {
 		this.numOfMCSChangeOrdersCompleted = numOfMCSChangeOrdersCompleted;
 	}
 	
 
-	public String getMCSStatus() {
+	public synchronized String getMCSStatus() {
 		return MCSStatus;
 	}
 
-	public void setMCSStatus(String mCSStatus) {
+	public synchronized void setMCSStatus(String mCSStatus) {
 		MCSStatus = mCSStatus;
 	}
 
-	public Date getMCSDate() {
+	public synchronized Date getMCSDate() {
 		return MCSDate;
 	}
 
-	public void setMCSDate(Date mCSDate) {
+	public synchronized void setMCSDate(Date mCSDate) {
 		MCSDate = mCSDate;
 	}
 
-	public String getGCStatus() {
+	public synchronized String getGCStatus() {
 		return GCStatus;
 	}
 
-	public void setGCStatus(String gCStatus) {
+	public synchronized void setGCStatus(String gCStatus) {
 		GCStatus = gCStatus;
 	}
 
-	public Date getGCDate() {
+	public synchronized Date getGCDate() {
 		return GCDate;
 	}
 
-	public void setGCDate(Date gCDate) {
+	public synchronized void setGCDate(Date gCDate) {
 		GCDate = gCDate;
 	}
 
-	public String getMechanicalStatus() {
+	public synchronized String getMechanicalStatus() {
 		return mechanicalStatus;
 	}
 
-	public void setMechanicalStatus(String mechanicalStatus) {
+	public synchronized void setMechanicalStatus(String mechanicalStatus) {
 		this.mechanicalStatus = mechanicalStatus;
 	}
 
-	public Date getMechanicalDate() {
+	public synchronized Date getMechanicalDate() {
 		return mechanicalDate;
 	}
 
-	public void setMechanicalDate(Date mechanicalDate) {
+	public synchronized void setMechanicalDate(Date mechanicalDate) {
 		this.mechanicalDate = mechanicalDate;
 	}
 
-	public String getElectricalStatus() {
+	public synchronized String getElectricalStatus() {
 		return electricalStatus;
 	}
 
-	public void setElectricalStatus(String electricalStatus) {
+	public synchronized void setElectricalStatus(String electricalStatus) {
 		this.electricalStatus = electricalStatus;
 	}
 
-	public Date getElectricalDate() {
+	public synchronized Date getElectricalDate() {
 		return electricalDate;
 	}
 
-	public void setElectricalDate(Date electricalDate) {
+	public synchronized void setElectricalDate(Date electricalDate) {
 		this.electricalDate = electricalDate;
 	}
 
 
-	public String getPlumbingStatus() {
+	public synchronized String getPlumbingStatus() {
 		return plumbingStatus;
 	}
 
-	public void setPlumbingStatus(String plumbingStatus) {
+	public synchronized void setPlumbingStatus(String plumbingStatus) {
 		this.plumbingStatus = plumbingStatus;
 	}
 
-	public Date getPlumbingDate() {
+	public synchronized Date getPlumbingDate() {
 		return plumbingDate;
 	}
 
-	public void setPlumbingDate(Date plumbingDate) {
+	public synchronized void setPlumbingDate(Date plumbingDate) {
 		this.plumbingDate = plumbingDate;
 	}
 
 
-	public String getSprinkleStatus() {
+	public synchronized String getSprinkleStatus() {
 		return sprinkleStatus;
 	}
 
-	public void setSprinkleStatus(String sprinkleStatus) {
+	public synchronized void setSprinkleStatus(String sprinkleStatus) {
 		this.sprinkleStatus = sprinkleStatus;
 	}
 
-	public Date getSprinkleDate() {
+	public synchronized Date getSprinkleDate() {
 		return sprinkleDate;
 	}
 
-	public void setSprinkleDate(Date sprinkleDate) {
+	public synchronized void setSprinkleDate(Date sprinkleDate) {
 		this.sprinkleDate = sprinkleDate;
 	}
 
 
-	public String getRoofingStatus() {
+	public synchronized String getRoofingStatus() {
 		return roofingStatus;
 	}
 
-	public void setRoofingStatus(String roofingStatus) {
+	public synchronized void setRoofingStatus(String roofingStatus) {
 		this.roofingStatus = roofingStatus;
 	}
 
-	public Date getRoofingDate() {
+	public synchronized Date getRoofingDate() {
 		return roofingDate;
 	}
 
-	public void setRoofingDate(Date roofingDate) {
+	public synchronized void setRoofingDate(Date roofingDate) {
 		this.roofingDate = roofingDate;
 	}
 
 
-	public String getHTIStatus() {
+	public synchronized String getHTIStatus() {
 		return HTIStatus;
 	}
 
-	public void setHTIStatus(String hTIStatus) {
+	public synchronized void setHTIStatus(String hTIStatus) {
 		HTIStatus = hTIStatus;
 	}
 
-	public Date getHTIDate() {
+	public synchronized Date getHTIDate() {
 		return HTIDate;
 	}
 
-	public void setHTIDate(Date hTIDate) {
+	public synchronized void setHTIDate(Date hTIDate) {
 		HTIDate = hTIDate;
 	}
 
-	public String getOtherFinalLeinsStatus() {
+	public synchronized String getOtherFinalLeinsStatus() {
 		return otherFinalLeinsStatus;
 	}
 
-	public void setOtherFinalLeinsStatus(String otherFinalLeinsStatus) {
+	public synchronized void setOtherFinalLeinsStatus(String otherFinalLeinsStatus) {
 		this.otherFinalLeinsStatus = otherFinalLeinsStatus;
 	}
 
-	public Date getOtherFinalLeinsDate() {
+	public synchronized Date getOtherFinalLeinsDate() {
 		return otherFinalLeinsDate;
 	}
 
-	public void setOtherFinalLeinsDate(Date otherFinalLeinsDate) {
+	public synchronized void setOtherFinalLeinsDate(Date otherFinalLeinsDate) {
 		this.otherFinalLeinsDate = otherFinalLeinsDate;
 	}
 	
-	public String getMechFinalStatus() {
+	public synchronized String getMechFinalStatus() {
 		return mechFinalStatus;
 	}
 
-	public void setMechFinalStatus(String mechFinalStatus) {
+	public synchronized void setMechFinalStatus(String mechFinalStatus) {
 		this.mechFinalStatus = mechFinalStatus;
 	}
 
-	public Date getMechFinalDate() {
+	public synchronized Date getMechFinalDate() {
 		return mechFinalDate;
 	}
 
-	public void setMechFinalDate(Date mechFinalDate) {
+	public synchronized void setMechFinalDate(Date mechFinalDate) {
 		this.mechFinalDate = mechFinalDate;
 	}
 
-	public String getElecFinalStatus() {
+	public synchronized String getElecFinalStatus() {
 		return elecFinalStatus;
 	}
 
-	public void setElecFinalStatus(String elecFinalStatus) {
+	public synchronized void setElecFinalStatus(String elecFinalStatus) {
 		this.elecFinalStatus = elecFinalStatus;
 	}
 
-	public Date getElecFinalDate() {
+	public synchronized Date getElecFinalDate() {
 		return elecFinalDate;
 	}
 
-	public void setElecFinalDate(Date elecFinalDate) {
+	public synchronized void setElecFinalDate(Date elecFinalDate) {
 		this.elecFinalDate = elecFinalDate;
 	}
 
-	public String getPlumbingFinalStatus() {
+	public synchronized String getPlumbingFinalStatus() {
 		return plumbingFinalStatus;
 	}
 
-	public void setPlumbingFinalStatus(String plumbingFinalStatus) {
+	public synchronized void setPlumbingFinalStatus(String plumbingFinalStatus) {
 		this.plumbingFinalStatus = plumbingFinalStatus;
 	}
 
-	public Date getPlumbingFinalDate() {
+	public synchronized Date getPlumbingFinalDate() {
 		return plumbingFinalDate;
 	}
 
-	public void setPlumbingFinalDate(Date plumbingFinalDate) {
+	public synchronized void setPlumbingFinalDate(Date plumbingFinalDate) {
 		this.plumbingFinalDate = plumbingFinalDate;
 	}
 
-	public String getSprinkleFinalStatus() {
+	public synchronized String getSprinkleFinalStatus() {
 		return sprinkleFinalStatus;
 	}
 
-	public void setSprinkleFinalStatus(String sprinkleFinalStatus) {
+	public synchronized void setSprinkleFinalStatus(String sprinkleFinalStatus) {
 		this.sprinkleFinalStatus = sprinkleFinalStatus;
 	}
 
-	public Date getSprinkleFinalDate() {
+	public synchronized Date getSprinkleFinalDate() {
 		return sprinkleFinalDate;
 	}
 
-	public void setSprinkleFinalDate(Date sprinkleFinalDate) {
+	public synchronized void setSprinkleFinalDate(Date sprinkleFinalDate) {
 		this.sprinkleFinalDate = sprinkleFinalDate;
 	}
 
-	public String getBuildingFinalStatus() {
+	public synchronized String getBuildingFinalStatus() {
 		return buildingFinalStatus;
 	}
 
-	public void setBuildingFinalStatus(String buildingFinalStatus) {
+	public synchronized void setBuildingFinalStatus(String buildingFinalStatus) {
 		this.buildingFinalStatus = buildingFinalStatus;
 	}
 
-	public String getTmpCertificateStatus() {
+	public synchronized String getTmpCertificateStatus() {
 		return tmpCertificateStatus;
 	}
 
-	public void setTmpCertificateStatus(String tmpCertificateStatus) {
+	public synchronized void setTmpCertificateStatus(String tmpCertificateStatus) {
 		this.tmpCertificateStatus = tmpCertificateStatus;
 	}
 
-	public Date getTmpCertificateDate() {
+	public synchronized Date getTmpCertificateDate() {
 		return tmpCertificateDate;
 	}
 
-	public void setTmpCertificateDate(Date tmpCertificateDate) {
+	public synchronized void setTmpCertificateDate(Date tmpCertificateDate) {
 		this.tmpCertificateDate = tmpCertificateDate;
 	}
 
-	public String getCertificateStatus() {
+	public synchronized String getCertificateStatus() {
 		return certificateStatus;
 	}
 
-	public void setCertificateStatus(String certificateStatus) {
+	public synchronized void setCertificateStatus(String certificateStatus) {
 		this.certificateStatus = certificateStatus;
 	}
 
-	public Date getCertificateDate() {
+	public synchronized Date getCertificateDate() {
 		return certificateDate;
 	}
 
-	public void setCertificateDate(Date certificateDate) {
+	public synchronized void setCertificateDate(Date certificateDate) {
 		this.certificateDate = certificateDate;
 	}
 
-	public String getMCSWarrantyStatus() {
+	public synchronized String getMCSWarrantyStatus() {
 		return MCSWarrantyStatus;
 	}
 
-	public void setMCSWarrantyStatus(String mCSWarrantyStatus) {
+	public synchronized void setMCSWarrantyStatus(String mCSWarrantyStatus) {
 		MCSWarrantyStatus = mCSWarrantyStatus;
 	}
 
-	public String getGCWarrantyStatus() {
+	public synchronized String getGCWarrantyStatus() {
 		return GCWarrantyStatus;
 	}
 
-	public void setGCWarrantyStatus(String gCWarrantyStatus) {
+	public synchronized void setGCWarrantyStatus(String gCWarrantyStatus) {
 		GCWarrantyStatus = gCWarrantyStatus;
 	}
 
-	public Date getGCWarrantyDate() {
+	public synchronized Date getGCWarrantyDate() {
 		return GCWarrantyDate;
 	}
 
-	public void setGCWarrantyDate(Date gCWarrantyDate) {
+	public synchronized void setGCWarrantyDate(Date gCWarrantyDate) {
 		GCWarrantyDate = gCWarrantyDate;
 	}
 
-	public String getMechanicalWarrantyStatus() {
+	public synchronized String getMechanicalWarrantyStatus() {
 		return mechanicalWarrantyStatus;
 	}
 
-	public void setMechanicalWarrantyStatus(String mechanicalWarrantyStatus) {
+	public synchronized void setMechanicalWarrantyStatus(String mechanicalWarrantyStatus) {
 		this.mechanicalWarrantyStatus = mechanicalWarrantyStatus;
 	}
 
-	public Date getMechanicalWarrantyDate() {
+	public synchronized Date getMechanicalWarrantyDate() {
 		return mechanicalWarrantyDate;
 	}
 
-	public void setMechanicalWarrantyDate(Date mechanicalWarrantyDate) {
+	public synchronized void setMechanicalWarrantyDate(Date mechanicalWarrantyDate) {
 		this.mechanicalWarrantyDate = mechanicalWarrantyDate;
 	}
 
-	public String getElectricalWarrantyStatus() {
+	public synchronized String getElectricalWarrantyStatus() {
 		return electricalWarrantyStatus;
 	}
 
-	public void setElectricalWarrantyStatus(String electricalWarrantyStatus) {
+	public synchronized void setElectricalWarrantyStatus(String electricalWarrantyStatus) {
 		this.electricalWarrantyStatus = electricalWarrantyStatus;
 	}
 
-	public Date getElectricalWarrantyDate() {
+	public synchronized Date getElectricalWarrantyDate() {
 		return electricalWarrantyDate;
 	}
 
-	public void setElectricalWarrantyDate(Date electricalWarrantyDate) {
+	public synchronized void setElectricalWarrantyDate(Date electricalWarrantyDate) {
 		this.electricalWarrantyDate = electricalWarrantyDate;
 	}
 
-	public String getPlumbingWarrantyStatus() {
+	public synchronized String getPlumbingWarrantyStatus() {
 		return plumbingWarrantyStatus;
 	}
 
-	public void setPlumbingWarrantyStatus(String plumbingWarrantyStatus) {
+	public synchronized void setPlumbingWarrantyStatus(String plumbingWarrantyStatus) {
 		this.plumbingWarrantyStatus = plumbingWarrantyStatus;
 	}
 
-	public Date getPlumbingWarrantyDate() {
+	public synchronized Date getPlumbingWarrantyDate() {
 		return plumbingWarrantyDate;
 	}
 
-	public void setPlumbingWarrantyDate(Date plumbingWarrantyDate) {
+	public synchronized void setPlumbingWarrantyDate(Date plumbingWarrantyDate) {
 		this.plumbingWarrantyDate = plumbingWarrantyDate;
 	}
 
-	public String getSprinkleWarrantyStatus() {
+	public synchronized String getSprinkleWarrantyStatus() {
 		return sprinkleWarrantyStatus;
 	}
 
-	public void setSprinkleWarrantyStatus(String sprinkleWarrantyStatus) {
+	public synchronized void setSprinkleWarrantyStatus(String sprinkleWarrantyStatus) {
 		this.sprinkleWarrantyStatus = sprinkleWarrantyStatus;
 	}
 
-	public Date getSprinkleWarrantyDate() {
+	public synchronized Date getSprinkleWarrantyDate() {
 		return sprinkleWarrantyDate;
 	}
 
-	public void setSprinkleWarrantyDate(Date sprinkleWarrantyDate) {
+	public synchronized void setSprinkleWarrantyDate(Date sprinkleWarrantyDate) {
 		this.sprinkleWarrantyDate = sprinkleWarrantyDate;
 	}
 
-	public String getRoofingWarrantyStatus() {
+	public synchronized String getRoofingWarrantyStatus() {
 		return roofingWarrantyStatus;
 	}
 
-	public void setRoofingWarrantyStatus(String roofingWarrantyStatus) {
+	public synchronized void setRoofingWarrantyStatus(String roofingWarrantyStatus) {
 		this.roofingWarrantyStatus = roofingWarrantyStatus;
 	}
 
-	public Date getRoofingWarrantyDate() {
+	public synchronized Date getRoofingWarrantyDate() {
 		return roofingWarrantyDate;
 	}
 
-	public void setRoofingWarrantyDate(Date roofingWarrantyDate) {
+	public synchronized void setRoofingWarrantyDate(Date roofingWarrantyDate) {
 		this.roofingWarrantyDate = roofingWarrantyDate;
 	}
 
-	public String getHTIWarrantyStatus() {
+	public synchronized String getHTIWarrantyStatus() {
 		return HTIWarrantyStatus;
 	}
 
-	public void setHTIWarrantyStatus(String hTIWarrantyStatus) {
+	public synchronized void setHTIWarrantyStatus(String hTIWarrantyStatus) {
 		HTIWarrantyStatus = hTIWarrantyStatus;
 	}
 
-	public Date getHTIWarrantyDate() {
+	public synchronized Date getHTIWarrantyDate() {
 		return HTIWarrantyDate;
 	}
 
-	public void setHTIWarrantyDate(Date hTIWarrantyDate) {
+	public synchronized void setHTIWarrantyDate(Date hTIWarrantyDate) {
 		HTIWarrantyDate = hTIWarrantyDate;
 	}
 
-	public String getOtherWarrantyStatusA() {
+	public synchronized String getOtherWarrantyStatusA() {
 		return otherWarrantyStatusA;
 	}
 
-	public void setOtherWarrantyStatusA(String otherWarrantyStatusA) {
+	public synchronized void setOtherWarrantyStatusA(String otherWarrantyStatusA) {
 		this.otherWarrantyStatusA = otherWarrantyStatusA;
 	}
 
-	public Date getOtherWarrantyDateA() {
+	public synchronized Date getOtherWarrantyDateA() {
 		return otherWarrantyDateA;
 	}
 
-	public void setOtherWarrantyDateA(Date otherWarrantyDateA) {
+	public synchronized void setOtherWarrantyDateA(Date otherWarrantyDateA) {
 		this.otherWarrantyDateA = otherWarrantyDateA;
 	}
 
-	public String getOtherWarrantyStatusB() {
+	public synchronized String getOtherWarrantyStatusB() {
 		return otherWarrantyStatusB;
 	}
 
-	public void setOtherWarrantyStatusB(String otherWarrantyStatusB) {
+	public synchronized void setOtherWarrantyStatusB(String otherWarrantyStatusB) {
 		this.otherWarrantyStatusB = otherWarrantyStatusB;
 	}
 
-	public Date getOtherWarrantyDateB() {
+	public synchronized Date getOtherWarrantyDateB() {
 		return otherWarrantyDateB;
 	}
 
-	public void setOtherWarrantyDateB(Date otherWarrantyDateB) {
+	public synchronized void setOtherWarrantyDateB(Date otherWarrantyDateB) {
 		this.otherWarrantyDateB = otherWarrantyDateB;
 	}
 
-	public String getEquipmentSubmittalStatus() {
+	public synchronized String getEquipmentSubmittalStatus() {
 		return equipmentSubmittalStatus;
 	}
 
-	public void setEquipmentSubmittalStatus(String equipmentSubmittalStatus) {
+	public synchronized void setEquipmentSubmittalStatus(String equipmentSubmittalStatus) {
 		this.equipmentSubmittalStatus = equipmentSubmittalStatus;
 	}
 
-	public String getManualStatus() {
+	public synchronized String getManualStatus() {
 		return manualStatus;
 	}
 
-	public void setManualStatus(String manualStatus) {
+	public synchronized void setManualStatus(String manualStatus) {
 		this.manualStatus = manualStatus;
 	}
 
-	public Date getManualDate() {
+	public synchronized Date getManualDate() {
 		return manualDate;
 	}
 
-	public void setManualDate(Date manualDate) {
+	public synchronized void setManualDate(Date manualDate) {
 		this.manualDate = manualDate;
 	}
 
-	public String getPunchListStatus() {
+	public synchronized String getPunchListStatus() {
 		return punchListStatus;
 	}
 
-	public void setPunchListStatus(String punchListStatus) {
+	public synchronized void setPunchListStatus(String punchListStatus) {
 		this.punchListStatus = punchListStatus;
 	}
 
-	public String getAsBuiltDrawingsStatus() {
+	public synchronized String getAsBuiltDrawingsStatus() {
 		return asBuiltDrawingsStatus;
 	}
 
-	public void setAsBuiltDrawingsStatus(String asBuiltDrawingsStatus) {
+	public synchronized void setAsBuiltDrawingsStatus(String asBuiltDrawingsStatus) {
 		this.asBuiltDrawingsStatus = asBuiltDrawingsStatus;
 	}
 
-	public String getCloseOutPhotosStatus() {
+	public synchronized String getCloseOutPhotosStatus() {
 		return closeOutPhotosStatus;
 	}
 
-	public void setCloseOutPhotosStatus(String closeOutPhotosStatus) {
+	public synchronized void setCloseOutPhotosStatus(String closeOutPhotosStatus) {
 		this.closeOutPhotosStatus = closeOutPhotosStatus;
 	}
 
-	public String getHVACstartupFormStatus() {
+	public synchronized String getHVACstartupFormStatus() {
 		return HVACstartupFormStatus;
 	}
 
-	public void setHVACstartupFormStatus(String hVACstartupFormStatus) {
+	public synchronized void setHVACstartupFormStatus(String hVACstartupFormStatus) {
 		HVACstartupFormStatus = hVACstartupFormStatus;
 	}
 
-	public Date getHVACstartupFormDate() {
+	public synchronized Date getHVACstartupFormDate() {
 		return HVACstartupFormDate;
 	}
 
-	public void setHVACstartupFormDate(Date hVACstartupFormDate) {
+	public synchronized void setHVACstartupFormDate(Date hVACstartupFormDate) {
 		HVACstartupFormDate = hVACstartupFormDate;
 	}
 
-	public String getAlarmFormStatus() {
+	public synchronized String getAlarmFormStatus() {
 		return alarmFormStatus;
 	}
 
-	public void setAlarmFormStatus(String alarmFormStatus) {
+	public synchronized void setAlarmFormStatus(String alarmFormStatus) {
 		this.alarmFormStatus = alarmFormStatus;
 	}
 	
-	public String getVerisaeReportStatus() {
+	public synchronized String getVerisaeReportStatus() {
 		return verisaeReportStatus;
 	}
 
-	public void setVerisaeReportStatus(String verisaeReportStatus) {
+	public synchronized void setVerisaeReportStatus(String verisaeReportStatus) {
 		this.verisaeReportStatus = verisaeReportStatus;
 	}
 
-	public Date getMg2CompletionDate() {
+	public synchronized Date getMg2CompletionDate() {
 		return mg2CompletionDate;
 	}
 
-	public void setMg2CompletionDate(Date mg2CompletionDate) {
+	public synchronized void setMg2CompletionDate(Date mg2CompletionDate) {
 		this.mg2CompletionDate = mg2CompletionDate;
 	}
 
-	public String getMg2CompletionStatus() {
+	public synchronized String getMg2CompletionStatus() {
 		return mg2CompletionStatus;
 	}
 
-	public void setMg2CompletionStatus(String mg2CompletionStatus) {
+	public synchronized void setMg2CompletionStatus(String mg2CompletionStatus) {
 		this.mg2CompletionStatus = mg2CompletionStatus;
 	}
 
-	public String getFinalInspectionNotes() {
+	public synchronized String getFinalInspectionNotes() {
 		return finalInspectionNotes;
 	}
 
-	public void setFinalInspectionNotes(String finalInspectionNotes) {
+	public synchronized void setFinalInspectionNotes(String finalInspectionNotes) {
 		this.finalInspectionNotes = finalInspectionNotes;
 	}
 
-	public String getFinalLiensNotes() {
+	public synchronized String getFinalLiensNotes() {
 		return finalLiensNotes;
 	}
 
-	public void setFinalLiensNotes(String finalLiensNotes) {
+	public synchronized void setFinalLiensNotes(String finalLiensNotes) {
 		this.finalLiensNotes = finalLiensNotes;
 	}
 
-	public String getCloseoutDocumentsNotes() {
+	public synchronized String getCloseoutDocumentsNotes() {
 		return closeoutDocumentsNotes;
 	}
 
-	public void setCloseoutDocumentsNotes(String closeoutDocumentsNotes) {
+	public synchronized void setCloseoutDocumentsNotes(String closeoutDocumentsNotes) {
 		this.closeoutDocumentsNotes = closeoutDocumentsNotes;
 	}
 
-	public String getWarrantyNotes() {
+	public synchronized String getWarrantyNotes() {
 		return warrantyNotes;
 	}
 
-	public void setWarrantyNotes(String warrantyNotes) {
+	public synchronized void setWarrantyNotes(String warrantyNotes) {
 		this.warrantyNotes = warrantyNotes;
 	}
 
-	public String getSubstantialCompletionStatus() {
+	public synchronized String getSubstantialCompletionStatus() {
 		return substantialCompletionStatus;
 	}
 
-	public void setSubstantialCompletionStatus(String substantialCompletionStatus) {
+	public synchronized void setSubstantialCompletionStatus(String substantialCompletionStatus) {
 		this.substantialCompletionStatus = substantialCompletionStatus;
 	}
 
-	public String getPaymentOfDebtsAndClaimsStatus() {
+	public synchronized String getPaymentOfDebtsAndClaimsStatus() {
 		return paymentOfDebtsAndClaimsStatus;
 	}
 
-	public void setPaymentOfDebtsAndClaimsStatus(String paymentOfDebtsAndClaimsStatus) {
+	public synchronized void setPaymentOfDebtsAndClaimsStatus(String paymentOfDebtsAndClaimsStatus) {
 		this.paymentOfDebtsAndClaimsStatus = paymentOfDebtsAndClaimsStatus;
 	}
 
-	public String getReleaseOfLiensStatus() {
+	public synchronized String getReleaseOfLiensStatus() {
 		return releaseOfLiensStatus;
 	}
 
-	public void setReleaseOfLiensStatus(String releaseOfLiensStatus) {
+	public synchronized void setReleaseOfLiensStatus(String releaseOfLiensStatus) {
 		this.releaseOfLiensStatus = releaseOfLiensStatus;
 	}
 
-	public String getMulvannySignOffStatus() {
+	public synchronized String getMulvannySignOffStatus() {
 		return mulvannySignOffStatus;
 	}
 
-	public void setMulvannySignOffStatus(String mulvannySignOffStatus) {
+	public synchronized void setMulvannySignOffStatus(String mulvannySignOffStatus) {
 		this.mulvannySignOffStatus = mulvannySignOffStatus;
 	}
 
-	public Date getSubstantialCompletionDate() {
+	public synchronized Date getSubstantialCompletionDate() {
 		return substantialCompletionDate;
 	}
 
-	public void setSubstantialCompletionDate(Date substantialCompletionDate) {
+	public synchronized void setSubstantialCompletionDate(Date substantialCompletionDate) {
 		this.substantialCompletionDate = substantialCompletionDate;
 	}
 
-	public Date getPaymentOfDebtsAndClaimsDate() {
+	public synchronized Date getPaymentOfDebtsAndClaimsDate() {
 		return paymentOfDebtsAndClaimsDate;
 	}
 
-	public void setPaymentOfDebtsAndClaimsDate(Date paymentOfDebtsAndClaimsDate) {
+	public synchronized void setPaymentOfDebtsAndClaimsDate(Date paymentOfDebtsAndClaimsDate) {
 		this.paymentOfDebtsAndClaimsDate = paymentOfDebtsAndClaimsDate;
 	}
 
-	public Date getReleaseOfLiensDate() {
+	public synchronized Date getReleaseOfLiensDate() {
 		return releaseOfLiensDate;
 	}
 
-	public void setReleaseOfLiensDate(Date releaseOfLiensDate) {
+	public synchronized void setReleaseOfLiensDate(Date releaseOfLiensDate) {
 		this.releaseOfLiensDate = releaseOfLiensDate;
 	}
 
-	public Date getMulvannySignOffDate() {
+	public synchronized Date getMulvannySignOffDate() {
 		return mulvannySignOffDate;
 	}
 
-	public void setMulvannySignOffDate(Date mulvannySignOffDate) {
+	public synchronized void setMulvannySignOffDate(Date mulvannySignOffDate) {
 		this.mulvannySignOffDate = mulvannySignOffDate;
 	}	
 }

@@ -1,9 +1,23 @@
+'use strict';
 /*
  * There were several html/javascript files that are associated with the project.
  * This file will concatenate them into one file to save on load time
+ * 
+ * 							TABLE OF CONTENTS FOR projects.js
+ * 
+ * Corresponding Javascript File				Lines pertaining to file
+ * ______________________________				____________________________
+ * 
+ * projectData/closeoutData.js 					23      THRU     957
+ * projectData/permitData.js					961     THRU     1419
+ * projectData.js								1420    THRU     2000
+ * projectManager.js							2001    THRU     2679
+ * findProject.js 								2683	THRU     3800
+ * projectData/changeOrderData.js				3801	TRHU	 4019
  */
 
-'use strict';
+
+
 
 /**
 * THE FOLLOWING JAVASCRIPT CORRESPONDS TO THE CLOSEOUTDATA.JS FILE
@@ -1650,6 +1664,7 @@ function saveProject_PROJECT_DATA() {
 				manager : $('#projectData').find('#manager').find(":selected").text()
 		};
 		
+
 		var action = 'addNewProject';
 		if (edit == true) {
 			action = 'editExistingProject';
@@ -1692,6 +1707,8 @@ function saveProject_PROJECT_DATA() {
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
+				
+				
 				if(!PAGE_ENTRY){
 				updateProjectDisplay(updateData);
 				updateFrontEnd();
@@ -1700,6 +1717,8 @@ function saveProject_PROJECT_DATA() {
 				
 				alert('Save Complete!');				
 				$('#saveButton > button').prop('disabled', false);
+				
+				
 
 			}
 			
@@ -1818,7 +1837,7 @@ function convertWarehouse(id){
 					DISPLAYABLE_PROJECTS[i].McsNumber = updatedMCSnumber;
 					DISPLAYABLE_PROJECTS[i].projectManagers.id = updatedManager.id;
 					DISPLAYABLE_PROJECTS[i].projectManagers.name = updatedManager.name;
-					console.log("THE UPDATE = ", DISPLAYABLE_PROJECTS[i]);
+					//console.log("THE UPDATE = ", DISPLAYABLE_PROJECTS[i]);
 				}
 			}
 			getProject_PROJECT_MANAGER(projectID);
@@ -2028,7 +2047,6 @@ function getProject_PROJECT_MANAGER(project_id) {
 				'id': projectID
 			}, success: function (data) {
 				
-				console.log("the data eqausl == " ,data);
 				setProjectHeader(data, currentDivLocation);
 
 				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
@@ -2779,7 +2797,7 @@ $(document).on('click', '.stageLabel', function(){
  */
 function getAllProjects() {
 	
-	
+	if(getParameterByName("from")) $('.projectNavigator-projectFinder').hide();
 	clearAndAddSingleRow("Retrieving Projects...");
 	if (getParameterByName('type') === 'findTaskProject') {
 		$('#param-field').before('<h3>Select a Project to Create Task for:</h3>');
@@ -2797,6 +2815,7 @@ function getAllProjects() {
 			projects = data;
 			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
 			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
+			$('.projectNavigator-projectFinder').show();
 			t1 = new Date().getTime();
 			console.log('took: ' + (t1 - t0) + 'ms');
 			getSearchCriteria();
@@ -3461,7 +3480,6 @@ function getTasks() {
 			if(type && type == "taskForm") getAllProjects();
 			tasks = data;
 			if (data) {
-
 				fillTasksTable(data);
 			}
 		}, error: function (data) {
@@ -3616,6 +3634,10 @@ $(document).ready(function()
  	$('#changeOrder').find("#approvedDate").datepicker();  
 });
 
+/**
+ * This function gets the specific project from the database
+ * INNER FUNCTION CALLS : fillsTabs_CHANGE_ORDER(), fillTabs_CHANGE_ORDER(), getTasks()
+ */
 function getProject_CHANGE_ORDER()
 {
 	console.log("P ID = ", projectID);
@@ -3653,6 +3675,10 @@ function getProject_CHANGE_ORDER()
 	}
 }
 
+/**
+ * This function retrives the change order drop down info from the server
+ * INNER FUNCTION CALLS : fillDropdowns_CHANGE_ORDER(), getProject_CHANGE_ORDER()
+ */
 function getDropdownInfo_CHANGE_ORDER()
 {
 	//PAGETYPE = getParameterByName("type");	
@@ -3681,6 +3707,11 @@ function getDropdownInfo_CHANGE_ORDER()
 	});
 }
 
+/**
+ * This function fills the change order tabs with the appropriate
+ * data for a specific change order
+ * @param the specific change order data
+ */
 function fillTabs_CHANGE_ORDER(json)
 {
 	
@@ -3709,6 +3740,9 @@ function fillTabs_CHANGE_ORDER(json)
 	}
 }
 
+/**
+ * This function clears the change order tabs of their values
+ */
 function clearTabs_CHANGE_ORDER(){
 	
 	$('#changeOrder').find("#customerCO").val("");
@@ -3727,6 +3761,11 @@ function clearTabs_CHANGE_ORDER(){
 	$('#changeOrder').find("#title").val("");
 }
 
+/**
+ * This function converts a change order attribute id and returns the String value
+ * @param change order attribute
+ * @returns the change order type
+ */
 function convert_CHANGE_ORDER(param)
 {
 	switch(param)
@@ -3747,6 +3786,12 @@ function convert_CHANGE_ORDER(param)
 	}	
 }
 
+/**
+ * This function fills the drop down selectors for the change order interface
+ * @param a json containing all of the possible changeorder attributes along with each potential
+ * attribute value
+ * INNER FUNCTION CALLS: 
+ */
 function fillDropdowns_CHANGE_ORDER(json)
 {
 	console.log(json);
@@ -3776,6 +3821,10 @@ function fillDropdowns_CHANGE_ORDER(json)
 	$('#changeOrder').find("#customerCO").append(d);
 }
 
+/**
+ * This function saves a project with the current chnage order values
+ * INNER FUNCTION CALLS: goToProjectManager()
+ */
 function saveProject_CHANGE_ORDER()
 {
 	console.log("saving project");
@@ -3856,7 +3905,11 @@ function saveProject_CHANGE_ORDER()
 			}
 		});
 }
-
+/**
+ * This function checks to see if the entered date is in valid form
+ * @param an array of dates
+ * @returns true if the date is valid / false if not
+ */
 function isValidInput_CHANGE_ORDER(dates)
 {	
 	//Check if all of the dates are in the correct format
@@ -3878,6 +3931,12 @@ function isValidInput_CHANGE_ORDER(dates)
 	return true;
 }
 
+/**
+ * This function displays the change order div along with if the user
+ * is creating a new change order or if editing an old one
+ * INNER FUNCTION CALLS: clearTabs_CHANGE_ORDER(), getDropdownInfo_CHANGE_ORDER()
+ * @returns
+ */
 function goToChangeOrder(edit){
 	$('.editProject').hide();
 	$('#changeOrder').show();
@@ -3897,7 +3956,11 @@ function goToChangeOrder(edit){
 	getDropdownInfo_CHANGE_ORDER();
 }
 
-
+/**
+ * This function deletes the selected change order from the database
+ * INNER FUNCTION CALLS: goToProjectManager()
+ * @returns
+ */
 function deleteChangeOrder() {
 	if(!confirm("Are you sure you want to permanently delete the change order from the database?")) return;
 	
@@ -3941,6 +4004,10 @@ function returnToProjectManager () {
 }
 */
 
+/**
+ * This function alters how a change order is displayed in the changeOrderTable
+ * @param a td element
+ */
 function toggleChangeOrder (source) {
 	$(source).siblings().css('background-color', 'white');
 	$(source).css('background-color', '#dddddd');
@@ -3955,7 +4022,7 @@ function changeOrderReport () {
 
 //
 //
-/// THIS ENDS THE JAVASCRIPT FOR changeOrderData.html
+/// THIS ENDS THE JAVASCRIPT FOR changeOrderData.js
 //
 //
 
@@ -4010,6 +4077,11 @@ function updateProjectManager() {
 	}
 }
 
+/**
+ * This function is used in projects.html in order to properly prepare
+ * which div will be displayed along with which features to make available
+ * INNER FUNCTION CALLS: getParameterByName(), getProject_PROJECT_MANAGER(), getAllProjects()
+ */
 function preparePage() {
 	let id = getParameterByName("id");
 	let from = getParameterByName("from");
@@ -4019,6 +4091,7 @@ function preparePage() {
 	$('.editProject').hide();
 	if(id){ 
 		projectID = id;
+		edit = true;
 		console.log("PROJECT ID = ", id);
 		currentDivLocation = "projectManager";
 		getProject_PROJECT_MANAGER(id);
@@ -4027,16 +4100,23 @@ function preparePage() {
 		$('.projectNavigator-projectManager').show();
 		PAGE_ENTRY = "fromTask";
 		if(from) {
-			$('.projectNavigator-projectFinder').show();
 			PAGE_ENTRY = from;
-			//getAllProjects();
+			getAllProjects();
 		}
 	} else {
+		$('.projectNavigator').show();
+		$('.projectNavigator-projectFinder').hide();
 		getAllProjects();
 		$('#findProject').show();
-		$('.projectNavigator').show();
 	}
 }
+
+
+
+
+
+
+
 
 
 

@@ -38,7 +38,7 @@ public class TriggerService
 	/**
 	 * This method creates all of the triggers
 	 */
-	public void initializeTriggers()
+	public synchronized void initializeTriggers()
 	{
 		triggers.add(getInvoiceTrigger());
 		triggers.add(getUnassignedMCS());
@@ -58,7 +58,7 @@ public class TriggerService
 	 * than a project's "invoiced" field.
 	 * @return the Invoice Trigger
 	 */
-	public TriggerOld getInvoiceTrigger()
+	public synchronized TriggerOld getInvoiceTrigger()
 	{
 		String desc = "Should Invoice/Actual Invoice Mismatch";
 		TriggerOld s = new TriggerOld(1, desc);
@@ -70,7 +70,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects have an MCS number that is -1
 	 * @return the MCSNumber trigger
 	 */
-	public TriggerOld getUnassignedMCS()
+	public synchronized TriggerOld getUnassignedMCS()
 	{
 		String desc = "MCS Number not assigned";
 		TriggerOld s = new TriggerOld(1, desc);
@@ -82,7 +82,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 2 weeks
 	 * @return the timeElapsed
 	 */
-	public TriggerOld startDateInfo()
+	public synchronized TriggerOld startDateInfo()
 	{
 		String desc = "Project is starting soon!";
 		TriggerOld s = new TriggerOld(0, desc);
@@ -94,7 +94,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public TriggerOld startDateWarning()
+	public synchronized TriggerOld startDateWarning()
 	{
 		String desc = "Project is starting soon!";
 		TriggerOld s = new TriggerOld(1, desc);
@@ -106,7 +106,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 3 days
 	 * @return the timeElapsed
 	 */
-	public TriggerOld startDateSevere()
+	public synchronized TriggerOld startDateSevere()
 	{
 		String desc = "Project is starting soon!";
 		TriggerOld s = new TriggerOld(2, desc);
@@ -114,7 +114,7 @@ public class TriggerService
 		return s;
 	}
 
-	public TriggerOld costcoDueDateInfo()
+	public synchronized TriggerOld costcoDueDateInfo()
 	{
 		String desc = "Costco due date is soon!";
 		TriggerOld s = new TriggerOld(0, desc);
@@ -126,7 +126,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public TriggerOld costcoDueDateWarning()
+	public synchronized TriggerOld costcoDueDateWarning()
 	{
 		String desc = "Costco due date is soon!";
 		TriggerOld s = new TriggerOld(1, desc);
@@ -138,7 +138,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next day
 	 * @return the timeElapsed
 	 */
-	public TriggerOld costcoDueDateSevere()
+	public synchronized TriggerOld costcoDueDateSevere()
 	{
 		String desc = "Costco due date is soon!";
 		TriggerOld s = new TriggerOld(2, desc);
@@ -146,7 +146,7 @@ public class TriggerService
 		return s;
 	}
 	
-	public TriggerOld scheduledTurnOverInfo()
+	public synchronized TriggerOld scheduledTurnOverInfo()
 	{
 		String desc = "Turn over is soon!";
 		TriggerOld s = new TriggerOld(0, desc);
@@ -158,7 +158,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next 1 week
 	 * @return the timeElapsed
 	 */
-	public TriggerOld scheduledTurnOverWarning()
+	public synchronized TriggerOld scheduledTurnOverWarning()
 	{
 		String desc = "Turn over is soon!";
 		TriggerOld s = new TriggerOld(1, desc);
@@ -170,7 +170,7 @@ public class TriggerService
 	 * This method creates a trigger that is fired when any projects are starting in the next day
 	 * @return the timeElapsed
 	 */
-	public TriggerOld scheduledTurnOverSevere()
+	public synchronized TriggerOld scheduledTurnOverSevere()
 	{
 		String desc = "Turn over is soon!";
 		TriggerOld s = new TriggerOld(2, desc);
@@ -182,7 +182,7 @@ public class TriggerService
 	 * This method returns all of the project triggers as JSON variables
 	 * @return A string representing the triggers as Json objects
 	 */
-	public String getAllTriggersAsJson()
+	public synchronized String getAllTriggersAsJson()
 	{
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 
@@ -198,7 +198,7 @@ public class TriggerService
 	 * This method returns all of the project triggers as JSON variables
 	 * @return A string representing the triggers as Json objects
 	 */
-	public String getAllSpecificTriggersAsJson()
+	public synchronized String getAllSpecificTriggersAsJson()
 	{
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		for (int i = 0; i < triggers.size(); i++)

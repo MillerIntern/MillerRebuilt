@@ -60,7 +60,7 @@ public class Warehouse extends ProjectObject
 	 * This method gets the ID of the warehouse (this is NOT the database id)
 	 * @return the warehouse id
 	 */
-	public int getWarehouseID() {
+	public synchronized int getWarehouseID() {
 		return warehouseID;
 	}
 
@@ -68,7 +68,7 @@ public class Warehouse extends ProjectObject
 	 * This method sets the warehouse id
 	 * @param warehouseID the new id
 	 */
-	public void setWarehouseID(int warehouseID) {
+	public synchronized void setWarehouseID(int warehouseID) {
 		this.warehouseID = warehouseID;
 	}
 
@@ -77,7 +77,7 @@ public class Warehouse extends ProjectObject
 	 * @return the state
 	 */
 	@Enumerated(EnumType.STRING)
-	public State getState() {
+	public synchronized State getState() {
 		return state;
 	}
 
@@ -86,7 +86,7 @@ public class Warehouse extends ProjectObject
 	 * @return the region
 	 */
 	@Enumerated(EnumType.STRING)
-	public Region getRegion() {
+	public synchronized Region getRegion() {
 		return region;
 	}
 
@@ -94,7 +94,7 @@ public class Warehouse extends ProjectObject
 	 * This method sets the region that the warehouse is in.
 	 * @param region the new region
 	 */
-	public void setRegion(Region region) {
+	public synchronized void setRegion(Region region) {
 		this.region = region;
 	}
 
@@ -102,7 +102,7 @@ public class Warehouse extends ProjectObject
 	 * This method sets the state that the warehouse is in.
 	 * @param state the new state
 	 */
-	public void setState(State state) {
+	public synchronized void setState(State state) {
 		this.state = state;
 	}
 
@@ -113,7 +113,7 @@ public class Warehouse extends ProjectObject
 	@OneToOne(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
-	public City getCity() {
+	public synchronized City getCity() {
 		return city;
 	}
 
@@ -121,7 +121,7 @@ public class Warehouse extends ProjectObject
 	 * This method sets the city that the warehouse is in
 	 * @param city the new city
 	 */
-	public void setCity(City city) {
+	public synchronized void setCity(City city) {
 		this.city = city;
 	}
 	
@@ -129,7 +129,7 @@ public class Warehouse extends ProjectObject
 	 * This method returns a string representation of the warehouse
 	 * @return a string containing relevant information about the warehouse.
 	 */
-	public String toString()
+	public synchronized String toString()
 	{
 		return this.getCity().getName()+", "+this.getState();
 	}

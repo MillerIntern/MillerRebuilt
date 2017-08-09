@@ -29,7 +29,7 @@ public class ProjectStatus extends ProjectObject
 	 * This method gets the name of the project status
 	 * @return the name
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -37,11 +37,11 @@ public class ProjectStatus extends ProjectObject
 	 * This method sets the name of the project status
 	 * @param name the new name
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 	
-	public String toString()
+	public synchronized String toString()
 	{
 		
 		System.out.println("Project Status: " + name);

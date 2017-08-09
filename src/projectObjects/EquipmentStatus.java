@@ -34,7 +34,7 @@ public class EquipmentStatus extends ProjectObject {
 	 * This method gets the name of the vendor
 	 * @return the vendor's name
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -42,7 +42,7 @@ public class EquipmentStatus extends ProjectObject {
 	 * This method sets the name of the vendor.
 	 * @param name the new name of the vendor
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 

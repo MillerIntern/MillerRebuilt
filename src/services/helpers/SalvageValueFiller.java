@@ -14,7 +14,7 @@ import projectObjects.SalvageValue;
  */
 public class SalvageValueFiller
 {
-	public static SalvageValue fillSalvageValue(CloseoutDetails cd, Map<String, String>params) throws ParseException
+	public synchronized static SalvageValue fillSalvageValue(CloseoutDetails cd, Map<String, String>params) throws ParseException
 	{
 		SalvageValue sv = null;
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class EquipService {
 	
-	public String generateEquipTableHeader(List<String> strings)
+	public synchronized String generateEquipTableHeader(List<String> strings)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table class='dataTable cell-border row-border'><thead><tr>");

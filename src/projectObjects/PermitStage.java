@@ -29,7 +29,7 @@ public class PermitStage extends ProjectObject
 	 * This method returns the name of the change order status
 	 * @return
 	 */
-	public String getName(){
+	public synchronized String getName(){
 		return name;
 	}
 
@@ -37,7 +37,7 @@ public class PermitStage extends ProjectObject
 	 * This method returns the name of the change order status
 	 * @param name
 	 */
-	public void setName(String name){
+	public synchronized void setName(String name){
 		this.name = name;
 	}
 }

@@ -32,7 +32,7 @@ public class ProjectClass extends ProjectObject
 	 * This method gets the name of the project class
 	 * @return the name of the project class
 	 */
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
@@ -40,7 +40,7 @@ public class ProjectClass extends ProjectObject
 	 * This method sets the name of the project class
 	 * @param name the new name
 	 */
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 	

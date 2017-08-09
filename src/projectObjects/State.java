@@ -62,7 +62,7 @@ public enum State {
      *
      * @return the state's abbreviation.
      */
-    public String getAbbreviation() {
+    public synchronized String getAbbreviation() {
         return abbreviation;
     }
 
@@ -75,7 +75,7 @@ public enum State {
      * @throws SunlightException
      *             if the abbreviation is invalid.
      */
-    public static State valueOfAbbreviation(String abbr) {
+    public synchronized static State valueOfAbbreviation(String abbr) {
         State state = STATES_BY_ABBR.get(abbr);
         if (state != null) {
             return state;
@@ -85,7 +85,7 @@ public enum State {
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         return name;
     }
 

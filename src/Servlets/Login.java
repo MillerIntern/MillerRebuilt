@@ -3,6 +3,7 @@ package Servlets;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,14 +29,17 @@ public class Login extends HttpServlet
         super();
     }
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		out = resp.getWriter();
 		out.println("Hello!");;
 	}
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
+		
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Login.java\nIN: doPost()\nTime of Log In: " + timeStamp);
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		

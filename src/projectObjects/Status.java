@@ -17,12 +17,12 @@ public class Status extends ProjectObject
 		this.name = name;
 	}
 	
-	public void setName(String s)
+	public synchronized void setName(String s)
 	{
 		this.name = s;
 	}
 	
-	public String getName()
+	public synchronized String getName()
 	{
 		return name;
 	}

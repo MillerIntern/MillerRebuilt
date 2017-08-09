@@ -44,7 +44,7 @@ public class ProjectService extends ProjectObjectService
 	/**
 	 * @param parameters
 	 */
-	public static long addNewProject(Map<String, String> parameters) throws ClassNotFoundException, ParseException, NumberFormatException {
+	public synchronized static long addNewProject(Map<String, String> parameters) throws ClassNotFoundException, ParseException, NumberFormatException {
 		Project project = new Project();
 		ProjectInformationFiller.fillProjectInformation(project, parameters);
 
@@ -57,7 +57,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param projID
 	 * @param parameters
 	 */
-	public static long editExistingProject(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+	public synchronized static long editExistingProject(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
@@ -83,7 +83,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param projID
 	 * @param parameters
 	 */
-	public static void removeChangeOrder(Long projID, Long changeOrderID)  throws ClassNotFoundException{
+	public synchronized static void removeChangeOrder(Long projID, Long changeOrderID)  throws ClassNotFoundException{
 		Project currentProject = null;
 		try {
 			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
@@ -120,7 +120,7 @@ public class ProjectService extends ProjectObjectService
 	 * editSelect.html page
 	 * @return a string representing a JSON array of data containing this data
 	 */
-	public static String getEditEnumsAsJSON()
+	public synchronized static String getEditEnumsAsJSON()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -140,7 +140,7 @@ public class ProjectService extends ProjectObjectService
 	 * This method returns the data needed for the dropdowns on the query.html page
 	 * @return a string repsenting a JSON array containing the data
 	 */
-	public static String getQueryEnumsAsJSON()
+	public synchronized static String getQueryEnumsAsJSON()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -166,7 +166,7 @@ public class ProjectService extends ProjectObjectService
 	 * This method gets all of the information in the database.
 	 * @return A string representing a JSON array containing this information
 	 */
-	public static String getAllEnumsAsJson()
+	public synchronized static String getAllEnumsAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -197,7 +197,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param parameters
 	 * @return
 	 */
-	public static String getSpecificAsJson(Map<String, String> parameters) {
+	public synchronized static String getSpecificAsJson(Map<String, String> parameters) {
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 		if(parameters.get("warehouse") != null && !parameters.get("warehouse").isEmpty())
@@ -243,7 +243,7 @@ public class ProjectService extends ProjectObjectService
 	 * This method gets all of the projects
 	 * @return A string representing a JSON array containing this information
 	 */
-	public static String getAllProjectsAsJson()
+	public synchronized static String getAllProjectsAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -258,7 +258,7 @@ public class ProjectService extends ProjectObjectService
 	 * This method gets all of the projects
 	 * @return A string representing a JSON array containing this information
 	 */
-	public static String getAllProjectsWithStageAsJson(String stages)
+	public synchronized static String getAllProjectsWithStageAsJson(String stages)
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -273,7 +273,7 @@ public class ProjectService extends ProjectObjectService
 	 * This method gets all of the tasks
 	 * @return A string representing a JSON array containing this information
 	 */
-	public static String getAllTasksAsJson()
+	public synchronized static String getAllTasksAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -284,7 +284,7 @@ public class ProjectService extends ProjectObjectService
 		return g.toJson(map);
 	}
 
-	public static String getAllEnumsEquipAsJson()
+	public synchronized static String getAllEnumsEquipAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -299,7 +299,7 @@ public class ProjectService extends ProjectObjectService
 		return g.toJson(map);
 	}
 
-	public static String getAllEquipmentAsJson()
+	public synchronized static String getAllEquipmentAsJson()
 	{
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -308,7 +308,7 @@ public class ProjectService extends ProjectObjectService
 		return g.toJson(map);
 	}
 
-	public static String[][] getGSON2DArray(HttpServletRequest req, String var)
+	public synchronized static String[][] getGSON2DArray(HttpServletRequest req, String var)
 	{
 		Gson gson = new Gson();
 		String[][] dummy = new String[0][0];  // The same type as your "newMap"
@@ -318,7 +318,7 @@ public class ProjectService extends ProjectObjectService
 		return array;
 	}
 
-	public static String[] getGSONArray(HttpServletRequest req, String var)
+	public synchronized static String[] getGSONArray(HttpServletRequest req, String var)
 	{
 		Gson gson = new Gson();
 		String[] dummy = new String[0];  // The same type as your "newMap"
@@ -329,7 +329,7 @@ public class ProjectService extends ProjectObjectService
 		return array;
 	}
 
-	public static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
+	public synchronized static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Closeout:");
 
@@ -397,7 +397,7 @@ public class ProjectService extends ProjectObjectService
 
 	}
 
-	public static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Permits:");
 
@@ -438,7 +438,7 @@ public class ProjectService extends ProjectObjectService
 
 	}
 
-	public static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Inspections:");
 
@@ -481,7 +481,7 @@ public class ProjectService extends ProjectObjectService
 	}
 
 	/*We could just delete this
-	public static void editProjectInformation(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void editProjectInformation(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		Project currentProject = null;
 		try {
@@ -502,7 +502,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param projectID
 	 * @param parameters
 	 */
-	public static void addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Add Change Order:");
 
@@ -544,7 +544,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param projectID
 	 * @param parameters
 	 */
-	public static void editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Change Order:");
 		Long changeOrderID = Long.parseLong(params.get("changeOrderID"));
@@ -595,7 +595,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param projectID
 	 * @param parameters
 	 */
-	public static void addEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void addEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Add Equipment:");
 
@@ -636,7 +636,7 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.deleteNullSetObjects();
 	}
 
-	public static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Equipment:");
 		Long equipmentID = Long.parseLong(params.get("equipmentID"));
@@ -700,7 +700,7 @@ public class ProjectService extends ProjectObjectService
 		}
 	}
 	
-	public static Set<ChangeOrder> removeChangeOrder(Project project, long changeOrderID){
+	public synchronized static Set<ChangeOrder> removeChangeOrder(Project project, long changeOrderID){
 		Set<ChangeOrder> changeOrders = project.getChangeOrders();
 		Iterator<ChangeOrder> iterCO = changeOrders.iterator();
 		while(iterCO.hasNext())
@@ -720,7 +720,7 @@ public class ProjectService extends ProjectObjectService
 	 * @author Josh Mackin
 	 * @return
 	 */
-	public static String getAllAlertsAsJson() {
+	public synchronized static String getAllAlertsAsJson() {
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 
@@ -734,7 +734,7 @@ public class ProjectService extends ProjectObjectService
 	 * @author Josh Mackin
 	 * @return
 	 */
-	public static String getAllTriggersAsJson() {
+	public synchronized static String getAllTriggersAsJson() {
 		Gson g = new Gson();
 		HashMap<String, String> map = new HashMap<String, String>();
 
@@ -748,7 +748,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param parameters
 	 * @return
 	 */
-	public static String createTask(Map<String, String> parameters, String username) throws ClassNotFoundException, ParseException {
+	public synchronized static String createTask(Map<String, String> parameters, String username) throws ClassNotFoundException, ParseException {
 		Task t = new Task();
 
 		TaskFiller.fillTaskInformation(t, parameters, username);

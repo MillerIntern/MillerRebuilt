@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +51,11 @@ public class Report extends HttpServlet
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected synchronized void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
+		
+		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
+		System.out.println("SERVLET: Report.java\nIN: doPost()\nTime of transaction: " + timeStamp);
 		resp.setContentType("text/html");
 		out = resp.getWriter();
 
@@ -114,7 +118,7 @@ public class Report extends HttpServlet
 	 * @param The request containing the query info
 	 * @return List of tasks
 	 */
-	public List<projectObjects.Task> acquireProperTasks(HttpServletRequest req){
+	public synchronized List<projectObjects.Task> acquireProperTasks(HttpServletRequest req){
 		String assignee_id = req.getParameter("task_assignee");
 		String status = req.getParameter("task_status");
 		List<projectObjects.Task> tasks = null;
@@ -132,7 +136,7 @@ public class Report extends HttpServlet
 	 * @param reportName the name of the report
 	 * @return a String representing the HTML the report page.
 	 */
-	public String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
+	public synchronized String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
 		System.out.println("PROJECTS OF INTEREST");
 
@@ -196,7 +200,7 @@ public class Report extends HttpServlet
 	 * @param reportName the name of the report
 	 * @return a String representing the HTML the report page.
 	 */
-	public String generateTaskReport(List<projectObjects.Task> tasks, String reportName, List<String> shownFields)
+	public synchronized String generateTaskReport(List<projectObjects.Task> tasks, String reportName, List<String> shownFields)
 	{
 		System.out.println("TASKS OF INTEREST");
 
@@ -247,7 +251,7 @@ public class Report extends HttpServlet
 		
 	}
 	
-	public String generateTableHeader(List<String> strings)
+	public synchronized String generateTableHeader(List<String> strings)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table class='dataTable cell-border row-border'><thead><tr>");
@@ -268,33 +272,33 @@ public class Report extends HttpServlet
 		return sb.toString();
 	}
 	
-	public List<String> convertStringToList(String str)
+	public synchronized List<String> convertStringToList(String str)
 	{
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<String>>() {}.getType();
 		return gson.fromJson(str, type);
 	}
 	
-	public String getValueFromProject(String value, Project p)
+	public synchronized String getValueFromProject(String value, Project p)
 	{
 		// Call to report helper to get data from project based on a value
 		return ReportHelper.getReportVal(value, p);
 	}
 	
-	public String getValueFromTask(String value, Task t)
+	public synchronized String getValueFromTask(String value, Task t)
 	{
 		// Call to report helper to get data from project based on a value
 		return ReportHelper.getReportVal(value, t);
 	}
 
-	public void sortProjects(List<projectObjects.Project> projects)
+	public synchronized void sortProjects(List<projectObjects.Project> projects)
 	{
 		Collections.sort(projects, new WarehouseComparator());
 		Collections.sort(projects, new ProjectItemComparator());
 		Collections.sort(projects, new ProjectRegionComparator());		
 	}
 	
-	public void sortProjectsStage(List<projectObjects.Project> projects)
+	public synchronized void sortProjectsStage(List<projectObjects.Project> projects)
 	{
 		Collections.sort(projects, new WarehouseComparator());
 		Collections.sort(projects, new ProjectItemComparator());
@@ -302,18 +306,18 @@ public class Report extends HttpServlet
 		Collections.sort(projects, new ProjectStageComparator());
 	}
 	
-	public void sortTasks(List<projectObjects.Task> tasks)
+	public synchronized void sortTasks(List<projectObjects.Task> tasks)
 	{
 		Collections.sort(tasks, new TaskComparator());
 		
 	}
 	
-	public static String makePrintButton()
+	public synchronized static String makePrintButton()
 	{
 		return "<input type='button' id='printButton' onclick='printPage()' value='Print Page' />";
 	}
 	
-	public static String makeBackLink()
+	public synchronized static String makeBackLink()
 	{
 		//double timestamp = System.currentTimeMillis();
 		return "<input type='button' id='backButton' onclick='backPage()' value='Go Back' />";

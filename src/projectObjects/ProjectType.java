@@ -17,12 +17,12 @@ public class ProjectType extends ProjectObject {
 			name = null;
 		}
 		
-		public String getName()
+		public synchronized String getName()
 		{
 			return this.name;
 		}
 		
-		public void setName(String name)
+		public synchronized void setName(String name)
 		{
 			this.name = name;
 		}

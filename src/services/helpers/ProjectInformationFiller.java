@@ -22,7 +22,7 @@ import services.ProjectObjectService;
  */
 public class ProjectInformationFiller
 {
-	public static void fillProjectInformation(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
+	public synchronized static void fillProjectInformation(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
 	{
 		// required
 		currentProject.setWarehouse((Warehouse) ProjectObjectService.get(Long.parseLong(params.get("warehouse")), "Warehouse"));

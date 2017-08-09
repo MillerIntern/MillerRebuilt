@@ -13,7 +13,7 @@ import projectObjects.Permits;
  */
 public class PermitsFiller
 {
-	public static void fillPermits(Permits permits,  Map<String, String>params) throws ParseException
+	public synchronized static void fillPermits(Permits permits,  Map<String, String>params) throws ParseException
 	{
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 

@@ -28,7 +28,7 @@ public class ChangeOrderService extends ProjectObjectService
 	 * @throws NumberFormatException
 	 * @throws ClassNotFoundException
 	 */
-	public static HashSet<ChangeOrder> getChangeOrdersFromString(String json) throws ParseException, NumberFormatException, ClassNotFoundException
+	public synchronized static HashSet<ChangeOrder> getChangeOrdersFromString(String json) throws ParseException, NumberFormatException, ClassNotFoundException
 	{	
 		//Initialize variables
 		//DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
@@ -41,7 +41,7 @@ public class ChangeOrderService extends ProjectObjectService
 		return cos;
 	}
 	
-	public static HashSet<ChangeOrder> editChangeOrders(HashSet<ChangeOrder> newOrders, HashSet<ChangeOrder>oldOrders)
+	public synchronized static HashSet<ChangeOrder> editChangeOrders(HashSet<ChangeOrder> newOrders, HashSet<ChangeOrder>oldOrders)
 	{
 		//Iterator<ChangeOrder> newChangeOrders = newOrders.iterator();
 		Iterator<ChangeOrder> oldChangeOrders = oldOrders.iterator();
@@ -59,7 +59,7 @@ public class ChangeOrderService extends ProjectObjectService
 		return oldOrders;
 	}
 	
-	public static void removeChangeOrders(Set<ChangeOrder> cos)
+	public synchronized static void removeChangeOrders(Set<ChangeOrder> cos)
 	{
 		Iterator<ChangeOrder> oldChangeOrders = cos.iterator();
 		while (oldChangeOrders.hasNext())
