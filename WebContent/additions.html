@@ -45,6 +45,7 @@
 		<li class="tab-link" data-tab="item">Project Item</li>
 		<li class="tab-link" data-tab="equipmentVendor">Equipment Vendor</li>
 		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
+		<li class="tab-link" data-tab="userTab">New User</li>
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
@@ -116,6 +117,45 @@
 			</tr>
 		</table>
 		<button onclick="addPerson()">Add New Person</button>
+	</div>
+	<div id="userTab" class="tab-content">
+		<table>
+			<tr>
+			<td>Log-In Name:</td>
+			<td><input id="logInName" type="text" class="userInput"></td>
+			</tr>
+			<tr>
+			<td>First Name:</td>
+			<td><input id="firstName" type="text" class="userInput"></td>
+			</tr>
+			<tr>
+			<td>Miller Email:</td>
+			<td><input id="email" type="text" class="userInput"></td>
+			</tr>
+			<tr>
+			<td>Password:</td>
+			<td><input id="password" type="text" class="userInput"></td>
+			</tr>
+			<tr>
+			<td>Permission:</td>
+			<td>
+				<select id = "permission">
+					<option value = "1"> Admin </option>
+					<option value = "2"> Non-Admin </option>
+				</select>
+			</td>
+			</tr>
+			<tr>
+			<td>Status:</td>
+			<td>
+				<select id = "status">
+					<option value = "1">Admin</option>
+					<option value = "2">Non-Admin</option>
+				</select>
+			</td>
+			</tr>
+		</table>
+		<button onclick="addUser()">Add New User</button>
 	</div>
 	<div id="deleteTab" class="tab-content">
 		<input id = "objectDomain">Project Domain <br>

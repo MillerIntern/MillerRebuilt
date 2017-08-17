@@ -8,9 +8,6 @@
 let managersOfInterest;
 
 
-
-
-
 $(document).on('click', '#AllTasks', function(){
 	if(document.getElementById("AllTasks").checked == true){
 		$('.taskManager > input').each(function(i, obj) {
@@ -30,19 +27,16 @@ $(document).on('click', '#NoTasks', function(){
 });
 
 $(document).on('click', '.taskManager', function(){
-    if(document.getElementById("AllTasks").checked == true){
-		this.checked = true;
-	}
-	
+    if(this.id != "NoTasks"){
+    	if(this.checked == true) document.getElementById('NoTasks').checked = false;
+    }
+    if(this.id != "AllTasks"){
+    	if(this.checked == false && document.getElementById('AllTasks').checked == true) {
+    		document.getElementById('AllTasks').checked = false;
+    	}
+    }
 });
 
-/*
-$(document).on('change', '#taskSelector', function () {
-	console.log(user);
-	clearTaskTable();
-	createProperTaskTable();
-});
-*/
 
 function displayTasks() {
 	createProperTaskTable();
@@ -96,6 +90,7 @@ function createTaskTableByManager (tasks) {
 			tasksOfInterest.push(tasks[i]);
 			count++;
 			let taskListing = document.createElement('tr');
+			taskListing.id = tasks[i].id;
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
 				expandTaskInfo(this); 
@@ -158,6 +153,7 @@ function createTaskTableByManager (tasks) {
 			count++;
 			tasksOfInterest.push(tasks[i]);
 			let taskListing = document.createElement('tr');
+			taskListing.id = tasks[i].id;
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
 				expandTaskInfo(this); 
@@ -270,7 +266,7 @@ function createManagerQueue(json)
 
 	
 	
-	$('.container > #projectManagerSelection').append(d);
+	$('#projectManagerSelection').append(d);
 	document.getElementById("assigneeSort").style.display = 'inline';
 }
 

@@ -97,53 +97,13 @@
 	</nav>
 	
     <div class="container">
+		
+	
    		<h4 id='formFor'>  </h4>
    		<table class = 'table table-responsive taskManager' id = 'projectManagerSelection' style='display: none'>
    		
         </table>
-        
-   		<div id='taskWell' class='well' style='display: none'>
-   			<h4 class='title'></h4>
-   			<p><b>Title of Task: </b></p>
-   			<input maxlength ="254" type='text' id='title' placeholder='Task Title'/>
-   			<div>
-   			<p><b>Description of Task:</b></p>
-   			<textarea  maxlength="254" class='description'></textarea>
-   			</div>
-   			<span><b>Priority:</b>
-   			<select class='severity'>
-   				<option>1</option>
-   				<option>2</option>
-   				<option>3</option>
-   			</select></span>
-   			<p class='assignedDate'></p>
-   			<span><span style='margin-right: 4px;'><b>Due Date:</b></span><input type='text' class='dueDate taskUpdate'/></span>
-   			<p class='assignedBy'></p>
-   			<span>
-   				<span><b>Assigned To:</b></span>
-   				<select class='assignedTo'>
-   					
-   				</select>
-   			</span>
-   			<span>
-   			   <span><b>Status:</b></span>
-   			   <select class='taskStatus'>
-   			       <option value="Open"> Open </option>
-   			       <option value="Completed"> Completed </option>
-   			       <option value="Closed"> Closed </option>
-   			   </select>
-   			</span>
-   			<div>
-   			<p><b>Notes:</b></p>
-   			<textarea  maxlength="999" class='notes'></textarea>
-   			</div>
-   			<span>
-   			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
-   			<button class='btn' onclick='navigateToSelectedProject()'>Navigate to Project</button>
-   			<button class='btn' onclick='saveTaskChanges()'>Update Task</button>
-   			</span>
-   		</div>
-   		
+
    		<br>
    		
    		<table>
@@ -159,19 +119,12 @@
 		</select>
 		</td>
 		<td>
-		<button class="btn-success" onclick="createProperTaskTable()">Filter Tasks</button>
+		<button class="btn btn-success" onclick="createProperTaskTable()">Filter Tasks</button>
 		</td></tr>
 		</table>
-		<br>
+		<br> <br>
 		
-  
-  
-  
-  <br>
-		
-		
-		
-		  <button id='advancedSort' class='btn-primary advancedSortingOptions' value='off'> Advanced Sorting </button>
+		  <button id='advancedSort' class='btn btn-primary advancedSortingOptions' value='off'> Advanced Sorting </button>
 		  
 		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='primaryKey' style='display:none'>
    				     <option value='none' disabled selected hidden=true>Primary Key..</option>
@@ -192,10 +145,52 @@
    				     <option value='assignee'> Assignee </option>
    		  </select>
    		  <button id='advancedSortButton' class='btn advancedSortingOptions advancedSortingSelector' style='display:none' onclick='advancedSortValidation()'> Sort </button>
-   		  
+   		 
+          
+          <br><br>
+   		  <div id='taskWell' class='well' style='display: none'>
+	   			<h4 class='title'></h4>
+	   			<p><b>Title of Task: </b></p>
+	   			<input maxlength ="254" type='text' id='title' placeholder='Task Title'/>
+	   			<div>
+	   			<p><b>Description of Task:</b></p>
+	   			<textarea  maxlength="254" class='description'></textarea>
+	   			</div>
+	   			<span><b>Priority:</b>
+	   			<select class='severity'>
+	   				<option>1</option>
+	   				<option>2</option>
+	   				<option>3</option>
+	   			</select></span>
+	   			<p class='assignedDate'></p>
+	   			<span><span style='margin-right: 4px;'><b>Due Date:</b></span><input type='text' class='dueDate taskUpdate'/></span>
+	   			<p class='assignedBy'></p>
+	   			<span>
+	   				<span><b>Assigned To:</b></span>
+	   				<select class='assignedTo'>
+	   					
+	   				</select>
+	   			</span>
+	   			<span>
+	   			   <span><b>Status:</b></span>
+	   			   <select class='taskStatus'>
+	   			       <option value="Open"> Open </option>
+	   			       <option value="Completed"> Completed </option>
+	   			       <option value="Closed"> Closed </option>
+	   			   </select>
+	   			</span>
+	   			<div>
+	   			<p><b>Notes:</b></p>
+	   			<textarea  maxlength="999" class='notes'></textarea>
+	   			</div>
+	   			<span>
+	   			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
+	   			<button class='btn' onclick='navigateToSelectedProject()'>Navigate to Project</button>
+	   			<button class='btn' onclick='saveTaskChanges()'>Update Task</button>
+	   			</span>
+   		</div>
    		
-		
-		
+	
 		<table id="taskTable" class="table table-hover table-responsive" >
 		      
 		   <col style="width: 15%">
@@ -212,9 +207,9 @@
 		   
 		   
    			<tr class='head'>
-   				<td><input id="projectSearch" type='text' placeholder='Search For Project'/></td>
+   				<td><input class="taskSearcher" id="projectSearch" type='text' placeholder='Search For Project'/></td>
    				<th></th>
-   				<td><input id="descriptionSearch" type='text' placeholder='Filter Descriptions'/></td>
+   				<td><input class="taskSearcher"  id="descriptionSearch" type='text' placeholder='Filter Descriptions'/></td>
    				<th></th>
    				<td>
    				  <select class = 'sortSelection form-control' id = 'sortSelector'>
@@ -249,6 +244,7 @@
    				
    			</tr>
    		</table>
+  
    
    		
   	

@@ -21,6 +21,8 @@ jQuery.fn.center = function () {
     return this;
 }
 
+
+
 //This function assigns an array of attributes to an element
 //Input: the HTML element, array (a mapping of strings and values)
 //Output: none (the element's attributes are assigned)

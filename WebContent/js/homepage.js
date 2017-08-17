@@ -88,9 +88,133 @@ function getUser() {
 	});
 }
 
-function download() {
-	$('#download').attr({target: "_blank", href : 'http://localhost/MillerRebuilt/EmployeeFiles/excelDummy.xlsx'})
+
+
+
+
+
+////////CONTENT BELOW APPLIES TO UPLOADING AND DOWNLOADING
+function downloadFile() {
+	$('#download').attr({target: "_blank", href : 'http://localhost:8080/EmployeeFiles/excelDummy.xlsx'});
 }
+
+/*
+function uploadFile() {
+	var file = $('#fileUpload')[0].files[0]
+	var fd = new FormData();
+	fd.append('theFile', file);
+	$.ajax({
+	    url: 'FileSystem',
+	    type: 'POST',
+	    processData: false,
+	    contentType: false,
+	    data: fd,
+	    success: function (data, status, jqxhr) {
+	        console.log("success!");
+	    },
+	    error: function (jqxhr, status, msg) {
+	    	 console.log("error!");
+	    }
+	});
+}
+*/
+
+function uploadFile() {
+	$(function() {
+        $('#upload-form').ajaxForm({
+            success: function(msg) {
+                alert("File has been uploaded successfully");
+            },
+            error: function(msg) {
+                $("#upload-error").text("Couldn't upload file");
+            }
+        });
+    });
+}
+
+function upload() {
+
+    var formData = new FormData();
+
+    formData.append("file", document.getElementById('uploadFile').files[0], 'SamplePDF.pdf');
+ 
+
+    $.ajax({
+    	type : 'POST',
+    	url : 'FileSystem',
+    	data : formData,
+    	processData: false,
+    	contentType: false
+		, complete: function (data) {
+			 //console.log("DONE WITH REQ");
+			 console.log("DATA = ", data);
+             
+		}
+	});
+    
+}
+
+function s2ab(s) {
+	  var buf = new ArrayBuffer(s.length);
+	  var view = new Uint8Array(buf);
+	  for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+	  return buf;
+	}
+
+
+
+function onDownload() {
+	console.log("IN IT");
+	
+	var oReq = new XMLHttpRequest();
+	oReq.open("GET", "FileSystem", true);
+	oReq.responseType = "arraybuffer";
+
+	oReq.onload = function(oEvent) {
+	  var blob = new Blob([oReq.response], {type: "application/vnd.ms-excel"}); //application/vnd.ms-excel
+	  console.log("BLOB = ", blob);
+	  var url = window.URL.createObjectURL(blob);
+	  console.log("URL = ", url);
+	  let a = document.getElementById('download');
+	
+		
+	  a.href = url;
+	  a.download = "ItWorked.xlsx";
+	  a.click();
+	  window.URL.revokeObjectURL(url);
+	};
+
+	oReq.send();
+}
+
+function setHREF() {
+	let a = document.getElementById('download');
+	let file = document.getElementById('fileUpload').files[0];
+	
+	a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(file);
+	a.download = "TestingTextFile.txt";
+	
+}
+
+/**
+ * 
+ * <a id = "download">New Download</a>
+    <form method="post" action="FileSystem" enctype="multipart/form-data">
+            Select file to upload: <input type="file" name="file" id="uploadFile" />
+            <input type="submit"/>
+            <br/><br/>
+     </form>
+     <button onclick = "upload()">UPLOAD ME</button>
+    <br><br>
+    
+    <button onclick="onDownload()"> DOWNLOAD </button>
+ * 
+ * 
+ */
+    
+ 
+
+
 
 
 

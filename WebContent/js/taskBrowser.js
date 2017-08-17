@@ -13,49 +13,49 @@ let tasksOfInterest = new Array();
 let projectsOfInterest = new Array();
 let selectedProjID;
 
+
+
 $(document).ready(function () {
     if(window.location.href.indexOf("taskReport.html") != -1) return;
 	$('#taskWell > span > .dueDate').datepicker({defaultDate: getToday()});
-	getUserData();
+	getUserData(); //Gets the User from the database on page load
 });
 
-$(document).on('change', '#projectSearch', function(){
+/*
+ * This event handler is triggered when someone enters a search into
+ * either the project or description search bar and then 
+ */
+$(document).on('keydown', '.taskSearcher', function(){
+	console.log('THIS DESC= ', this);
 	if(tasks == 'undefined') {
 		alert("No tasks to search through");
 		return;
 	} else{
-		let search = document.getElementById('projectSearch').value;
+		let searchQuery;
 		console.log("TASKS OF INTEREST = ", tasksOfInterest);
 		projectsOfInterest = new Array();
-		searchProjects(search);		
-		clearTaskTable();
-		createTaskTableFromFilter(projectsOfInterest);
-	}
-	
-});
-
-$(document).on('change', '#descriptionSearch', function(){
-	if(tasks == 'undefined') {
-		alert("No tasks to search through");
-		return;
-	} else{
-		let search = document.getElementById('descriptionSearch').value;
-		console.log("TASKS OF INTEREST = ", tasksOfInterest);
-		projectsOfInterest = new Array();
-		searchDescriptions(search);
-		clearTaskTable();
-		createTaskTableFromFilter(projectsOfInterest);
 		
+		if(this.id == "projectSearch")
+		{
+			searchQuery = $('#projectSearch').val();
+			searchProjects(searchQuery);	
+		} 
+		else  //If it doesnt equal projectSearch it equals descriptionSearch
+		{
+			searchQuery = $('#descriptionSearch').val();
+			searchDescriptions(searchQuery);
+		}		
+		clearTaskTable();
+		createTaskTableFromFilter(projectsOfInterest);		
 	}
 	
 });
 
 
-
-
-
-
-
+/**
+ * This function gets the current user from the database
+ * INNER FUNCTION CALLS: getUsers()
+ */
 function getUserData () {
 	
 	$.ajax({
@@ -69,8 +69,7 @@ function getUserData () {
 			  user = data.responseJSON;
 			  console.log("USER = ", user);
 			  if(user.permission.id != 1) hideAdminContent();	 
-		      getUsers();		  
-
+		      getUsers();		 
 				
 			} else {
 				console.log("GetUserData() RESPONSE = ",data);
@@ -81,9 +80,38 @@ function getUserData () {
 	});
 }
 
+/**
+ * This function gets all Miller users from the database
+ * INNER FUNCTION CALLS: createDropdown(), getTasks()
+ */
+function getUsers () {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUsers',
+		}, complete: function (data) {
+			console.log("RESPONSE JSON FOR getUsers() = ",data.responseJSON);
+			if (data.responseJSON) {
+				users = data.responseJSON;
+				console.log("USERS = ",users);
+				createDropdown(data.responseJSON);
+				getTasks();
+			}
+		}
+		
+	});	
+}
 
-
-
+/**
+ * This function gets all tasks from the database
+ * It also handles if the user navigated to the page from
+ * a certain project in projects.html
+ * 
+ * INNER FUNCTION CALLS: getParameterByName(), expandTaskInfo(), 
+ * 						preparePageForUserStatus()
+ */
 function getTasks() {
 	$.ajax({
 		type: 'POST',
@@ -118,27 +146,12 @@ function getTasks() {
 }
 
 
-function getUsers () {
-	$.ajax({
-		type: 'POST',
-		url: 'Project',
-		data: {
-			'domain': 'project',
-			'action': 'getUsers',
-		}, complete: function (data) {
-			console.log("RESPONSE JSON FOR getUsers() = ",data.responseJSON);
-			if (data.responseJSON) {
-				users = data.responseJSON;
-				console.log("USERS = ",users);
-				createDropdown(data.responseJSON);
-				getTasks();
-			}
-		}
-		
-	});
-	
-}
 
+/**
+ * This function gets all projectManagers from the database
+ * 
+ * INNER FUNCTION CALLS: createManagerQueue() 
+ */
 function getProjectManagers () {
 	$.ajax({
 		type: 'POST',
@@ -159,33 +172,48 @@ function getProjectManagers () {
 	});
 }
 
-function tasksByManager()
-{
-	$('#formFor').html('Tasks for: ');
-	console.log("tasksByManager() INVOKED");
-	getProjectManagers();
-	
-    
-}
 
+/**
+ * This function prepares the page for if the user
+ * has admin privileges or if they have the usual privileges
+ * 
+ * INNER FUNCTION CALLS: createTaskTable(), tasksByManager() 
+ */
 function preparePageForUserStatus(){
-	if (user.permission.id === 1) {
+	if (user.permission.id === 1) 
+	{
 		 document.getElementById("projectManagerSelection").style.display = 'inline';
 		 console.log("preparePageForUserStatus() INVOKED");
 		 createTaskTable();
 		 tasksByManager();
-		 //createTaskTableByManager(tasks);
-		 
-
-	 } else { 
+	 } 
+	else 
+	{ 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
 	 	$(".advancedSortingOptions").hide();
 	 	createTaskTable();
 	 }	
 }
 
+/**
+ * This function probably really isn't needed but I like it
+ * because it points you in the direction that the page is going
+ * All it does is set the header of the page
+ * 
+ * INNER FUNCTION CALLS: getProjectManagers()
+ */
+function tasksByManager()
+{
+	$('#formFor').html('Tasks for: ');
+	console.log("tasksByManager() INVOKED");
+	getProjectManagers();   
+}
 
-
+/**
+ * This fills the task feature drop downs
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function createDropdown (json) {
 	let d = document.createDocumentFragment();
 
@@ -207,6 +235,14 @@ function createDropdown (json) {
 	
 }
 
+
+/**
+ * This function creates the task table.  It initially sorts
+ * the tasks as well.  It then displays all of the applicable tasks
+ * in the table
+ * 
+ * INNER FUNCTION CALLS: clearAndAddSingleRow()
+ */
 function createTaskTable () {
 	tasksOfInterest = new Array();
 	let selector = $('#taskSelector').val();
@@ -244,7 +280,7 @@ function createTaskTable () {
 		}  
 	});
 	var count = 0;
-	for (var i = 0; i < tasks.length; i++) {
+	for (var i = 0; i < tasks.length; i++) { 
 		if((selector === 'open' && tasks[i].status.id != 1) || 
 				(selector === 'complete' && tasks[i].status.id != 2) ||
 				(selector === 'open_complete' && tasks[i].status.id == 3) ||
@@ -256,6 +292,7 @@ function createTaskTable () {
 			count++;
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			let taskListing = document.createElement('tr');
+		
 			taskListing.id = tasks[i].id;
 			taskListing.value = tasks[i].id;
 			taskListing.onclick = function () { 
@@ -310,12 +347,20 @@ function createTaskTable () {
 	}
 }
 
+/**
+ * This function creates the task table with from a
+ * certain filter
+ * 
+ * INNER FUNCTION CALLS: clearAndAddSingleRow()
+ */
 function createTaskTableFromFilter(){
 	console.log("PROJECTS OF INTEREST == ", projectsOfInterest);
 	var count = 0;
 	for (var i = 0; i < projectsOfInterest.length; i++) {
 			count++;
 			let taskListing = document.createElement('tr');
+			console.log("PROJ IDDDDDD = ", projectsOfInterest[i].id);
+			taskListing.id = projectsOfInterest[i].id;
 			taskListing.value = projectsOfInterest[i].id;
 			taskListing.onclick = function () { 
 				expandTaskInfo(this); 
@@ -368,8 +413,18 @@ function createTaskTableFromFilter(){
 	
 }
 
+
+/**
+ * This function decides if the task table should be
+ * created with regards to the manager queue or not
+ * 
+ * INNER FUNCTION CALLS: clearTaskTable() 
+ *                createTaskTable() OR [ establishManagersOfInterest() and createTaskTableByManager() ]
+ */
 function createProperTaskTable()
 {
+	$('#projectSearch').val("");
+	$('#descriptionSearch').val("");
 	clearTaskTable();
 	if(user.permission.id != 1){
 		createTaskTable();
@@ -380,7 +435,12 @@ function createProperTaskTable()
 }
 
 
-
+/**
+ * This function clears the task table and 
+ * adds one row with a message
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function clearAndAddSingleRow(msg) {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
 	
@@ -405,6 +465,12 @@ function clearAndAddSingleRow(msg) {
 	$('#taskTable > tbody').append(placeHolder);
 }
 
+/**
+ * This function collapse the well that
+ * displays the task info
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function collapseWell() {
 	if(task.notes !== $('#taskWell > div > .notes').val() || 
 		task.description !== $('#taskWell > div > .description').val() || 
@@ -415,12 +481,35 @@ function collapseWell() {
 			return;
 		}
 	}
+	
 	$('#taskWell').slideUp();
+	
+	window.scroll(0,findPos(document.getElementById(task.id))); //This scrolls back to the task
+																//that was being displayed in the
+																//task well
+	
 }
 
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return [curtop];
+    }
+}
+
+/**
+ * This function expands the task info to display
+ * in the task well
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function expandTaskInfo(param) {
 	console.log("this == ", param);
-	if(!getParameterByName('id')) {
+	if(!getParameterByName('id')) 
+	{
 		let taskID = $(param).val();
 		console.log(taskID);
 		
@@ -430,7 +519,14 @@ function expandTaskInfo(param) {
 				break;
 			}
 		}
-	} else task = param;
+		
+	} 
+	else 
+	{
+		task = param;
+	}
+	
+	$("<h4> TEST </h4>").after("#row"+task.id);
 	console.log("expandTaskInfo() TASK === " , task);
 	selectedProjID = task.project.id;
 	
@@ -460,12 +556,31 @@ function expandTaskInfo(param) {
 	
 	$('#taskWell').slideDown();
 	
+	 $('html, body').animate({
+         scrollTop: $('#taskWell').offset().top + 'px'
+     }, 'fast');
+	
 }
 
+/**
+ * This function takes the user to projects.html
+ * where the project that was attached to the task 
+ * will be displayed
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function navigateToSelectedProject () {
 	window.location.href = 'projects.html?id=' + selectedProjID + "&from=taskBrowser";
 }
 
+
+/**
+ * This function saves the task changes to the database as well as updating 
+ * all of the front end task info
+ * 
+ * INNER FUNCTION CALLS: isValidInput(), clearTaskTable(), createProperTaskTable()
+ *                
+ */
 function saveTaskChanges () {
 	if(!$('#taskWell > #title').val() || $('#taskWell > #title').val() == ""){ alert("Tasks much have a title"); return;}
 	if(!$('#taskWell > div > .description').val() || $('#taskWell > div > .description').val() == "") { alert("Tasks much have a description"); return;}
@@ -606,7 +721,11 @@ function isValidInput(dates)
 	return true;
 }
 
-
+/**
+ * This function searches through the tasks based off of the project info
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function searchProjects(searchQuery){
 	for(var i=0; i<tasksOfInterest.length; i++){
 		let contentToSearchThrough = tasksOfInterest[i].project.warehouse.city.name + 
@@ -617,6 +736,12 @@ function searchProjects(searchQuery){
 
 }
 
+/**
+ * This function searches through the tasks based off of the
+ * task description info
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function searchDescriptions(searchQuery){
 	for(var i=0; i<tasksOfInterest.length; i++){
 		let contentToSearchThrough = tasksOfInterest[i].description;
@@ -625,14 +750,23 @@ function searchDescriptions(searchQuery){
 }
 
 
-
+/**
+ * This function clears the task table
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function clearTaskTable () {
 	$('#taskTable > tbody').children('tr:not(.head)').remove();
 }
 
 
-
-
+/**
+ * This function is invoked when the user wants to print
+ * the tasks on the screen and checks if there are any tasks
+ * to display
+ * 
+ * INNER FUNCTION CALLS: printTasks()
+ */
 function printButton(){
 	
 	if(!projectsOfInterest) {
@@ -644,6 +778,12 @@ function printButton(){
  
 }
 
+/**
+ * This function displays a printable table on the screen
+ * that includes all of the tasks currently displayed
+ * 
+ * INNER FUNCTION CALLS: window.print()
+ */
 function printTasks(projectsOfInterest) {
 	console.log("PROJECTS OF INTEREST  ==== ", projectsOfInterest);
 	document.body.innerHTML="";
@@ -719,6 +859,7 @@ function printTasks(projectsOfInterest) {
 	notesHead.innerHTML = "Notes";
 	notesHead.align = 'center';
 	document.body.appendChild(div);
+
 	document.getElementById("insertTable").appendChild(title);
 	document.getElementById("insertTable").appendChild(table);
 	document.getElementById("table").setAttribute("border-spacing", "8px");
@@ -787,7 +928,12 @@ function printTasks(projectsOfInterest) {
 }
 
 
-
+/**
+ * This function makes the call to the server to send an
+ * email to the user that was just assigned a task
+ * 
+ * INNER FUNCTION CALLS: NONE
+ */
 function sendTaskAlert(data)
 {
    	console.log("IN: new sendMail()");

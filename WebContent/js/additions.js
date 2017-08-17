@@ -177,6 +177,60 @@ function addPerson()
 	}
 }
 
+function addUser()
+{
+	let logInName = $('#userTab').find('#logInName').val();
+	let firstName = $('#userTab').find('#firstName').val();
+	let email = $('#userTab').find('#email').val();
+	let password = $('#userTab').find('#password').val();
+	let permission = $('#userTab').find('#permission').val();
+	let status = $('#userTab').find('#status').val();
+	
+	
+	let validData = true;
+	
+	if(!logInName) validData = false;
+	if(!firstName) validData = false;
+	if(!email) validData = false;
+	if(!password) validData = false;
+	if(!permission) validData = false;
+	if(!status) validData = false;
+	
+	if(validData == false)
+	{
+		alert("Each input field needs a value!")
+	}
+	else
+	{
+		{
+			$.ajax({
+				type: 'POST',
+				url: 'Admin', 
+				data: 
+				{
+					'action': 'addUser', 
+					'logInName': logInName,
+					'firstName': firstName,
+					'email' : email,
+					'password' : password,
+					'permission' : permission,
+					'status' : status
+				},
+				success: function(data)
+				{
+					console.log(data);
+					$('#userInput').val('');
+					alert("User Added Successfully!");
+				}
+			});
+		}
+	}
+	
+	
+	
+	
+}
+
 function deleteProjectObject() {
 	if(!confirm("Are you sure you want to permanently delete this data from the database?")) return;
 	let id = document.getElementById("objectId").value;
