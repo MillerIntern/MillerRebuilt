@@ -4,6 +4,20 @@
 	display: none;
 }
 
+.projectDisplayWell {
+	background: white;
+}
+
+#changeOrderInfo > table {
+	width: 70%;
+}
+
+#changeOrderInfo {
+	width: 55%;
+}
+
+
+
 .info-tab-schedulingInformation{
 	margin-left: 30px;
 	margin-right: auto;
@@ -41,9 +55,11 @@
 	background-color: #ECF0FC;
 }
 
-.stageLabel{
+.stageLabel, .coLabel{
 	font-weight: bold;
 }
+
+
 
 #changeOrderTable { 
 	table-layout: fixed;

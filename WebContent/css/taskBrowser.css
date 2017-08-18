@@ -9,10 +9,11 @@
 	border-bottom: 2px solid #555;
 }
 
-.table > tbody > tr:hover td {
+.table > tbody > tr:not(.head):hover  {
 	background-color: #d7e1f7;
 	transition-duration: .5s;
 }
+
 
 #taskTable > tbody > tr > td {
 	font-size: 14.75px;
@@ -20,6 +21,34 @@
 
 #taskTable {
 	margin-top: 16px;
+}
+
+#taskWell > * {
+	display:block;
+	margin: 6px;
+}
+		
+#taskWell > div > p {
+	margin-bottom: 0px;
+}
+		
+#taskWell textarea {
+	width: 50%;
+}
+		
+		
+#taskTable {
+   table-layout: fixed;
+}
+
+.param-field {
+	width: 100%;
+	background-color: white;
+	padding: 4px 4px 4px 4px;
+	border: 3px solid #223f82;
+	border-style:solid;
+	border-color: #4d78dc #1d346c #1d346c #2e54ad;
+	border-radius: 4px;
 }
 
 /* datepicker customization */

@@ -1,10 +1,17 @@
 package projectObjects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
+
 public class Permission extends ProjectObject
 {
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	String name;
 	boolean canAccessAdminPage;
 	boolean canQueryProjects;

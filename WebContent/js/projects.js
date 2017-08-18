@@ -1428,7 +1428,7 @@ function isValidInput_PERMIT(dates_PERMIT)
 //globals
 var numChangeOrders = 0;
 var PAGETYPE_PROJECT_DATA = "add";
-var changeOrders = [];
+let CHANGE_ORDERS = new Array();
 var edit;
 
 
@@ -2154,20 +2154,19 @@ function fillProjectInformation (data) {
  * @returns
  */
 function fillChangeOrders (data) {
-	$('#projectManager').find('#changeOrderTable').find('tr').remove();
-	let header = document.getElementById('changeOrderTable').createTHead();
-	let row = header.insertRow(0);
-	let titleCell = row.insertCell(0);
-	titleCell.innerHTML = "<b>Title</b>";
-	let descriptionCell = row.insertCell(1);
-	descriptionCell.innerHTML = "<b>Description</b>";
-	let statusCell = row.insertCell(2);
-	statusCell.innerHTML = "<b>Status</b>";
-	let notesCell = row.insertCell(3);
-	notesCell.innerHTML = "<b>CO Notes</b>";
-	let changeOrders = data.changeOrders;
+	clearChangeOrderTable();
+	
+	if(data) CHANGE_ORDERS = data.changeOrders;
+	let changeOrders = CHANGE_ORDERS;
+	
 	for (var i = 0; i < changeOrders.length; i++) {
 		let changeOrder = changeOrders[i];
+		
+		if($('#changeOrderSelector').val() == "preparing" && changeOrders[i].status != "1") continue;
+		else if($('#changeOrderSelector').val() == "submitted" && changeOrders[i].status != "2") continue;
+		else if($('#changeOrderSelector').val() == "approved" && changeOrders[i].status != "3") continue;
+		else if($('#changeOrderSelector').val() == "rejected" && changeOrders[i].status != "4") continue;
+		else if($('#changeOrderSelector').val() == "complete" && changeOrders[i].status != "5") continue;
 		
 		var tableRow = document.createElement('tr');
 		tableRow.setAttribute("value", changeOrder.id);
@@ -2175,6 +2174,9 @@ function fillChangeOrders (data) {
 
 		//var changeType = document.createElement('td');
 		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
+		
+		var coNumber = document.createElement('td');
+		coNumber.appendChild(document.createTextNode(changeOrder.id));
 		
 		var title = document.createElement('td');
 		title.appendChild(document.createTextNode(changeOrder.title));
@@ -2197,6 +2199,7 @@ function fillChangeOrders (data) {
 		//else
 		//	approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
 		
+		tableRow.appendChild(coNumber);
 		tableRow.appendChild(title);
 		tableRow.appendChild(briefDescription);
 		tableRow.appendChild(status);
@@ -2608,11 +2611,17 @@ function parseChangeOrderType (param) {
 function parseChangeOrderStatus (param) {
 	switch (param) {
 		case "1":
-			return "Submitted";
+			return "Preparing";
 		case "2":
-			return "MCS Reviewing";
+			return "Submitted";
+		case "3":
+			return "Approved";
+		case "4":
+			return "Rejected";
+		case "5":
+			return "Complete";
 		default:
-			return "Undefined";
+			return "---";
 	}
 }
 
@@ -2680,6 +2689,132 @@ function deleteConfirm () {
  */
 function goToTaskForm () {
 	window.location.href = TASK_CREATOR + '?id=' + projectID;
+}
+
+/**
+ * This function fills the task table with the given tasks
+ * INNER FUNCTION CALLS: none
+ */
+function fillTasksTable(tasks) {
+	let selector = $('#taskSelector2').val();
+	console.log(selector);
+	clearTaskTable();
+	let count = 0;
+	for (var i = 0; i < tasks.length; i++) {
+		if((selector === 'open' && tasks[i].status.id != 1) || 
+				(selector === 'complete' && tasks[i].status.id != 2) ||
+				(selector === 'open_complete' && tasks[i].status.id == 3) ||
+				(selector === 'closed' && tasks[i].status.id != 3)) 
+				continue; // do nothing
+
+		count++;
+		let taskListing = document.createElement('tr');
+		
+	
+		taskListing.value = tasks[i].id;
+		taskListing.id = "task_" + tasks[i].id;
+		
+		let taskTitle = document.createElement('td');
+		let taskDesc = document.createElement('td');
+		let assignedTo = document.createElement('td');
+		let dueDate = document.createElement('td');
+		let severity = document.createElement('td');
+		let status = document.createElement('td');
+		let notes = document.createElement('td');
+
+		taskTitle.innerHTML = tasks[i].title;
+		taskDesc.innerHTML = tasks[i].description;
+		assignedTo.innerHTML = tasks[i].assignee.firstName;
+		dueDate.innerHTML = tasks[i].dueDate;
+		severity.innerHTML = tasks[i].severity;
+		severity.align = 'center';
+		status.innerHTML = tasks[i].status.status;
+		notes.innerHTML = tasks[i].notes;
+		
+		
+		taskListing.appendChild(taskTitle);
+		taskListing.appendChild(taskDesc);
+		taskListing.appendChild(assignedTo);
+		taskListing.appendChild(dueDate);
+		taskListing.appendChild(severity);
+		taskListing.appendChild(status);
+		taskListing.appendChild(notes);
+		
+
+
+		
+		$('#taskTable > tbody').append(taskListing);
+		
+	}
+
+	if (count === 0) {
+		clearAndAddSingleRowTask("No Tasks to Show");
+	}
+	
+	$('#taskTable tr:not(.head)').click(function() {		
+		toggleTask(this);
+	});
+	
+	$('#taskTable tr:not(.head)').dblclick(function() {		
+		let tmp = this.id.replace("task_","");
+		console.log(tmp);
+		location.href = "taskBrowser.html?id="+tmp;
+	});
+	
+}
+
+function toggleTask (source) {
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	//$('#editChangeOrder').prop('disabled', false);
+	//selectedChangeOrder = $(source).attr('value');
+	//CHANGE_ORDER_ID = selectedChangeOrder;
+}
+
+/**
+ * This function clears and adds a single row to the task table
+ * Displays a message after cleaning the table
+ * INNER FUNCTION CALLS: none
+ */
+function clearAndAddSingleRowTask(msg) {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
+	
+	let placeHolder = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');	
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+
+	
+	listDetails0.innerHTML = msg;
+	
+	$(placeHolder).append(listDetails0);
+	$(placeHolder).append(listDetails1);
+	$(placeHolder).append(listDetails2);
+	$(placeHolder).append(listDetails3);
+	$(placeHolder).append(listDetails4);
+	$(placeHolder).append(listDetails5);
+	
+	$('#taskTable > tbody').append(placeHolder);
+}
+
+/**
+ * This function clears the task table
+ * INNER FUNCTION CALLS: none
+ */
+function clearTaskTable () {
+	$('#taskTable > tbody').children('tr:not(.head)').remove();
+}
+
+
+/**
+ * This function clears the change order table
+ * INNER FUNCTION CALLS: none
+ */
+function clearChangeOrderTable(){
+	$('#changeOrderTable > tbody').find('tr').remove();
 }
 
 //THIS ENDS THE JAVASCRIPT FOR PROJECTMANAGER.js
@@ -2966,7 +3101,6 @@ function checkInitFilter () {
 						$('#paramVal1').append(warehouseOptions.cloneNode(true));
 						removeParam(document.getElementById('paramID2'));
 						$('.stage').each(function(i, obj) {
-							console.log("ONJ = ", obj);
 							if(obj.value == '2') obj.checked = true;
 							else if(obj.value == '1') obj.checked = true;
 							else obj.checked = false;
@@ -3477,7 +3611,7 @@ function getTasks() {
 		}, success: function (data) {
 			console.log(data);
 			let type = getParameterByName("from");
-			if(type && type == "taskForm") getAllProjects();
+			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getAllProjects();
 			tasks = data;
 			if (data) {
 				fillTasksTable(data);
@@ -3488,122 +3622,7 @@ function getTasks() {
 	});
 }
 
-/**
- * This function fills the task table with the given tasks
- * INNER FUNCTION CALLS: none
- */
-function fillTasksTable(tasks) {
-	let selector = $('#taskSelector2').val();
-	console.log(selector);
-	clearTaskTable();
-	let count = 0;
-	for (var i = 0; i < tasks.length; i++) {
-		if((selector === 'open' && tasks[i].status.id != 1) || 
-				(selector === 'complete' && tasks[i].status.id != 2) ||
-				(selector === 'open_complete' && tasks[i].status.id == 3) ||
-				(selector === 'closed' && tasks[i].status.id != 3)) 
-				continue; // do nothing
 
-		count++;
-		let taskListing = document.createElement('tr');
-		
-	
-		taskListing.value = tasks[i].id;
-		taskListing.id = "task_" + tasks[i].id;
-		
-		let taskTitle = document.createElement('td');
-		let taskDesc = document.createElement('td');
-		let assignedTo = document.createElement('td');
-		let dueDate = document.createElement('td');
-		let severity = document.createElement('td');
-		let status = document.createElement('td');
-		let notes = document.createElement('td');
-
-		taskTitle.innerHTML = tasks[i].title;
-		taskDesc.innerHTML = tasks[i].description;
-		assignedTo.innerHTML = tasks[i].assignee.firstName;
-		dueDate.innerHTML = tasks[i].dueDate;
-		severity.innerHTML = tasks[i].severity;
-		severity.align = 'center';
-		status.innerHTML = tasks[i].status.status;
-		notes.innerHTML = tasks[i].notes;
-		
-		
-		taskListing.appendChild(taskTitle);
-		taskListing.appendChild(taskDesc);
-		taskListing.appendChild(assignedTo);
-		taskListing.appendChild(dueDate);
-		taskListing.appendChild(severity);
-		taskListing.appendChild(status);
-		taskListing.appendChild(notes);
-		
-
-
-		
-		$('#taskTable > tbody').append(taskListing);
-		
-	}
-
-	if (count === 0) {
-		clearAndAddSingleRowTask("No Tasks to Show");
-	}
-	
-	$('#taskTable tr:not(.head)').click(function() {		
-		toggleTask(this);
-	});
-	
-	$('#taskTable tr:not(.head)').dblclick(function() {		
-		let tmp = this.id.replace("task_","");
-		console.log(tmp);
-		location.href = "taskBrowser.html?id="+tmp;
-	});
-	
-}
-
-function toggleTask (source) {
-	$(source).siblings().css('background-color', 'white');
-	$(source).css('background-color', '#dddddd');
-	//$('#editChangeOrder').prop('disabled', false);
-	//selectedChangeOrder = $(source).attr('value');
-	//CHANGE_ORDER_ID = selectedChangeOrder;
-}
-
-/**
- * This function clears and adds a single row to the task table
- * Displays a message after cleaning the table
- * INNER FUNCTION CALLS: none
- */
-function clearAndAddSingleRowTask(msg) {
-	$('#taskTable > tbody').children('tr:not(.head)').remove();
-	
-	let placeHolder = document.createElement('tr');
-	let listDetails0 = document.createElement('td');
-	let listDetails1 = document.createElement('td');
-	let listDetails2 = document.createElement('td');	
-	let listDetails3 = document.createElement('td');
-	let listDetails4 = document.createElement('td');
-	let listDetails5 = document.createElement('td');
-
-	
-	listDetails0.innerHTML = msg;
-	
-	$(placeHolder).append(listDetails0);
-	$(placeHolder).append(listDetails1);
-	$(placeHolder).append(listDetails2);
-	$(placeHolder).append(listDetails3);
-	$(placeHolder).append(listDetails4);
-	$(placeHolder).append(listDetails5);
-	
-	$('#taskTable > tbody').append(placeHolder);
-}
-
-/**
- * This function clears the task table
- * INNER FUNCTION CALLS: none
- */
-function clearTaskTable () {
-	$('#taskTable > tbody').children('tr:not(.head)').remove();
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /////////////       This begins the javascript that applies to the change order div 
@@ -3724,7 +3743,7 @@ function fillTabs_CHANGE_ORDER(json)
 	console.log(changeOrderToEdit);
 	if(changeOrderToEdit){
 	$('#changeOrder').find("#customerCO").val(changeOrderToEdit.type);
-	$('#changeOrder').find("#mcsCO").val(changeOrderToEdit.mcsCO);
+	$('#changeOrder').find("#mcsCO").html(changeOrderToEdit.id);
 	$('#changeOrder').find("#subCO").val(changeOrderToEdit.subCO);
 	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
 	$('#changeOrder').find("#briefDescription").val(changeOrderToEdit.briefDescription);
@@ -3796,6 +3815,7 @@ function fillDropdowns_CHANGE_ORDER(json)
 {
 	console.log(json);
 	var changeorderStatus = JSON.parse(json["changeorderstatus"]);
+	changeorderStatus = sortChangeOrderStatus(changeorderStatus);
 	var d = document.createDocumentFragment();
 	$('#changeOrder').find('#status').empty();
 	$('#changeOrder').find('#customerCO').empty();
@@ -3819,6 +3839,26 @@ function fillDropdowns_CHANGE_ORDER(json)
 		d.appendChild(option);
 	}
 	$('#changeOrder').find("#customerCO").append(d);
+}
+
+/**
+  * This function sorts the change order status drop down into the logical Miller order
+ * @param a json containing all of the possible changeorder statuses along with each potential
+ * attribute value
+ * INNER FUNCTION CALLS: NONE
+ */
+function sortChangeOrderStatus(json)
+{
+	let tmp = json.slice(0);
+		
+	tmp[0] = json[2];
+	tmp[1] = json[4];
+	tmp[2] = json[0];
+	tmp[3] = json[3];
+	tmp[4] = json[1];
+   
+	return tmp;
+	
 }
 
 /**
@@ -4089,6 +4129,7 @@ function preparePage() {
 
 	$('#findProject').hide();
 	$('.editProject').hide();
+
 	if(id){ 
 		projectID = id;
 		edit = true;

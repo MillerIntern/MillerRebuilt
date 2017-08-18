@@ -1,27 +1,16 @@
 package Servlets;
 
-import java.io.BufferedOutputStream;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.*;
-import static java.nio.file.StandardOpenOption.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,25 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import com.google.gson.Gson;
 
-import objects.RequestHandler;
-import projectObjects.City;
-import projectObjects.EquipmentVendor;
-import projectObjects.Person;
-import projectObjects.ProjectItem;
-import projectObjects.Region;
-import projectObjects.State;
-import projectObjects.Warehouse;
-import services.LoginService;
-import services.ProjectObjectService;
+
+
 
 
 @WebServlet(description = "Servlet for handling filing requests", urlPatterns = { "/FileSystem" })

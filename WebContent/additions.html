@@ -10,17 +10,15 @@
 
 
         <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
                 
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
 	</head>
 	
 <body onload='preparePage()'>
-    <div class="header">
-        <p class="title">Database Additions</p>
-    </div>
-<br>
-		
+
+<!-- 	
 <ul>
     <li><a class='active' href="homepage.html">Home</a></li>
     <li class="dropdown">
@@ -37,7 +35,53 @@
    			<a href="additions.html">Add To Database</a>
    		</div></li>
     <li style="float:right"><a href="logout.html">Logout</a></li>
-</ul><br>
+</ul>
+-->
+<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Add Project</a></li>
+	          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a href='projects.html?type=findTaskProject'
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      <li><a href="OGqueryCode.html">Reports</a></li>
+	      <li class="adminContent active"><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	
+
+<br>
 
 <div class="container">
 	<ul class="tabs">
@@ -120,6 +164,9 @@
 	</div>
 	<div id="userTab" class="tab-content">
 		<table>
+		    <tr>
+			<td>User</td><td></td>
+			</tr>
 			<tr>
 			<td>Log-In Name:</td>
 			<td><input id="logInName" type="text" class="userInput"></td>
@@ -134,7 +181,11 @@
 			</tr>
 			<tr>
 			<td>Password:</td>
-			<td><input id="password" type="text" class="userInput"></td>
+			<td><input id="password" type="password" class="userInput"></td>
+			</tr>
+			<tr>
+			<td>Confirm Password:</td>
+			<td><input id="passwordConfirmation" type="password" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>Permission:</td>

@@ -122,13 +122,18 @@
 			        </select>
 			        <span onClick="removeParam(this)">&times;</span>
 			   </div>
-	   		</div>
+			   </div>
+	   		<br>
 	   		
-	   		<table id="results" class="table table-hover">
+	   		<div class = "well param-field">
+	   		<table id="results" class="table table-striped">
 	   			<tr class='head'><th>Warehouse</th><th>MCS Number</th><th>Item</th><th>Manager</th></tr>
 	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
 	   		
 	   		</table>
+	   		
+	   		</div>
+	   		
 	  	
 	    </div>
 		
@@ -159,53 +164,60 @@
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
-				<!-- <table class='table table-hover table-striped infoTable' ondblclick="editProjectInfo()"> -->
-				<table class='table table-hover table-striped infoTable'>
-					<tr><td width=30% class = "bold">MCS Number:</td><td id='mcsNumber' class ="italics"></td></tr>
-					<tr><td class = "bold">Item:</td><td id='projectItem' class ="italics"></td></tr>
-					<tr><td class = "bold">Status:</td><td id='projectStatus' class ="italics"></td></tr>
-					<tr><td class = "bold">Type:</td><td id='projectType' class ="italics"></td></tr>
-					<tr><td class = "bold">Stage:</td><td id='projectStage' class ="italics"></td></tr>
-					<tr><td class = "bold">Manager:</td><td id='projectManager' class ="italics"></td></tr>
-					<tr><td class = "bold">Supervisor:</td><td id='projectSupervisor' class ="italics"></td></tr>
+				<table class='table table-hover table-striped infoTable' ondblclick="editProjectInfo()">
+					<tr><td width=30% class = "bold">MCS Number</td><td id='mcsNumber' class ="italics"></td></tr>
+					<tr><td class = "bold">Item</td><td id='projectItem' class ="italics"></td></tr>
+					<tr><td class = "bold">Status</td><td id='projectStatus' class ="italics"></td></tr>
+					<tr><td class = "bold">Type</td><td id='projectType' class ="italics"></td></tr>
+					<tr><td class = "bold">Stage</td><td id='projectStage' class ="italics"></td></tr>
+					<tr><td class = "bold">Manager</td><td id='projectManager' class ="italics"></td></tr>
+					<tr><td class = "bold">Supervisor</td><td id='projectSupervisor' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editProjectInfo()' type="button" class="project-edit btn btn-primary">Edit Project Information</button>
 			</div> <!-- Project Information -->
 			<div class='info-tab' id='changeOrders'>
-				<table id='changeOrderTable' class='table'>
-					<tr><th>Type</th><th>Brief Description</th><th>Status</th><th>Submitted Date</th><th>Approved Date</th></tr>
+				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
+					<option value='all' selected="selected">All</option>
+					<option value='preparing'>Preparing</option>
+					<option value='submitted'>Submitted</option>
+					<option value='approved'>Approved</option>
+					<option value='rejected'>Rejected</option>
+					<option value='complete'>Complete</option>
+				</select>
+				<table id='changeOrderTable' class='table'>				
+					<thead class="changeOrderTableHead"><tr><th>CO #</th><th>Title</th><th>Description</th><th>Status</th><th>CO Notes</th></tr></thead>
+					<tbody>
+					</tbody>
 				</table>	
 				<button onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
 				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
-				<!--  <table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()"> -->
-				<table class='table table-hover table-striped'>
+				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr><th></th><th>Permit Stage</th><th>Permit Last Updated</th></tr>
-					<tr><td width = 25% class = "bold">Building Permit:</td><td id='buildingPermit' class ="italics" width = 20%></td><td id='buildingPermitDate' class ="italics" width = 20%></td></tr>
-					<tr><td class = "bold">Roofing Permit:</td><td id='roofingPermit' class ="italics"></td><td id='roofingPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Mechanical Permit:</td><td id='mechanicalPermit' class ="italics"></td><td id='mechanicalPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Electrical Permit:</td><td id='electricalPermit' class ="italics"></td><td id='electricalPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Plumbing Permit:</td><td id='plumbingPermit' class ="italics"></td><td id='plumbingPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler Permit:</td><td id='sprinklerPermit' class ="italics"></td><td id='sprinklerPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Alarm Permit:</td><td id='fireAlarmPermit' class ="italics"></td><td id='fireAlarmPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Low Voltage Permit:</td><td id='lowVoltagePermit' class ="italics"></td><td id='lowVoltagePermitDate' class ="italics"></td></tr>
+					<tr><td width = 25% class = "bold">Building Permit</td><td id='buildingPermit' class ="italics" width = 20%></td><td id='buildingPermitDate' class ="italics" width = 20%></td></tr>
+					<tr><td class = "bold">Roofing Permit</td><td id='roofingPermit' class ="italics"></td><td id='roofingPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Mechanical Permit</td><td id='mechanicalPermit' class ="italics"></td><td id='mechanicalPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Electrical Permit</td><td id='electricalPermit' class ="italics"></td><td id='electricalPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Plumbing Permit</td><td id='plumbingPermit' class ="italics"></td><td id='plumbingPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Permit</td><td id='sprinklerPermit' class ="italics"></td><td id='sprinklerPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Alarm Permit</td><td id='fireAlarmPermit' class ="italics"></td><td id='fireAlarmPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Low Voltage Permit</td><td id='lowVoltagePermit' class ="italics"></td><td id='lowVoltagePermitDate' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
-				<!--  <table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()"> -->
-				<table class='table table-hover table-striped'>
+				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr><th></th><th>Inspection Stage</th><th>Inspection Last Updated</th></tr>
-					<tr><td class = "bold">Building Inspection:</td><td id='buildingInspection' class ="italics"></td><td id='buildingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Roofing Inspection:</td><td id='roofingInspection' class ="italics"></td><td id='roofingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Mechanical Inspection:</td><td id='mechanicalInspection' class ="italics"></td><td id='mechanicalInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Electrical Inspection:</td><td id='electricalInspection' class ="italics"></td><td id='electricalInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Plumbing Inspection:</td><td id='plumbingInspection' class ="italics"></td><td id='plumbingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler Inspection:</td><td id='sprinklerInspection' class ="italics"></td><td id='sprinklerInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Alarm Inspection:</td><td id='fireAlarmInspection' class ="italics"></td><td id='fireAlarmInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Low Voltage Inspection:</td><td id='lowVoltageInspection' class ="italics"></td><td id='lowVoltageInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Building Inspection</td><td id='buildingInspection' class ="italics"></td><td id='buildingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Roofing Inspection</td><td id='roofingInspection' class ="italics"></td><td id='roofingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Mechanical Inspection</td><td id='mechanicalInspection' class ="italics"></td><td id='mechanicalInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Electrical Inspection</td><td id='electricalInspection' class ="italics"></td><td id='electricalInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Plumbing Inspection</td><td id='plumbingInspection' class ="italics"></td><td id='plumbingInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Inspection</td><td id='sprinklerInspection' class ="italics"></td><td id='sprinklerInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Fire Alarm Inspection</td><td id='fireAlarmInspection' class ="italics"></td><td id='fireAlarmInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Low Voltage Inspection</td><td id='lowVoltageInspection' class ="italics"></td><td id='lowVoltageInspectionDate' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -218,19 +230,17 @@
 				<button type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
 			<div class='info-tab info-tab-closeout' id='closeout'>
-				<table class='table table-hover table-striped'>
-				<!-- <table class='table table-hover table-striped' ondblclick="editCloseout()"> -->
+				<table class='table table-hover table-striped' ondblclick="editCloseout()">
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">MG2 Completion (G704 Form):</td><td id='mg2Completion'></td></tr>
-					<tr><td class="bold">Punch List:</td><td id='punchList'></td></tr>
-					<tr><td class="bold">Verisae Report:</td><td id='verisaeReport'></td></tr>
+					<tr><td width = 35% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
+					<tr><td class="bold">Punch List</td><td id='punchList'></td></tr>
+					<tr><td class="bold">Verisae Report</td><td id='verisaeReport'></td></tr>
 				</table>	
-				<table class='table table-hover table-striped'>
-				<!--  <table class='table table-hover table-striped' ondblclick="editCloseout()"> -->
+				<table class='table table-hover table-striped' ondblclick="editCloseout()">
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">Final Inspections:</td><td id='finalInspectionsRequired'></td></tr>
-					<tr><td class="bold">Final Warranties:</td><td id='finalWarrantiesRequired'></td></tr>
-					<tr><td class="bold">Final Liens:</td><td id='finalLiensRequired'></td></tr>
+					<tr><td width = 35% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
+					<tr><td class="bold">Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
+					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>
 				<button onclick='editCloseout()' type="button" class="project-edit btn btn-primary">Edit Closeout</button>
 			</div> <!-- Closeout -->
@@ -302,78 +312,78 @@
 			<table class='table table-hover'>
 		
 			<tr>
-	        <td>MCS Project#:</td>
+	        <td>MCS Project#</td>
 	        <td><input id="mcsNumber" type="text"></td>
 	        </tr>
 	
 			<tr>
-	        <td><b>Warehouse:</b></td>
+	        <td><b>Warehouse</b></td>
 	        <td>
 	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
 	        </td>
 	        </tr>
 	
 	        <tr>
-	        <td><b>Classification:</b></td>
+	        <td><b>Classification</b></td>
 	       	<td>
 	        <select id="class"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 	
 	        <tr>
-	        <td><b>Item:</b></td>
+	        <td><b>Item</b></td>
 	        <td>
 	        <select id="project"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 	
 	        <tr>
-	        <td><b>Manager:</b></td>
+	        <td><b>Manager</b></td>
 	        <td>
 	        <select id="manager"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 	
 	        <tr>
-	        <td><b>Supervisor:</b></td>
+	        <td><b>Supervisor</b></td>
 	        <td>
 	        <select id="supervisor"><option value="default">--Please select an option--</option></select>
 	        </td>
 	        </tr>
 	
 	        <tr>
-	        <td><b>Stage:</b></td>
+	        <td><b>Stage</b></td>
 	        <td>
 	        <select id="stage"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 		
 	        <tr>	
-	        <td><b>Status:</b></td>
+	        <td><b>Status</b></td>
 	        <td>
 	        <select id="status"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 	
 	        <tr>
-	        <td><b>Type:</b></td>
+	        <td><b>Type</b></td>
 	        <td>
 	        <select id="pType"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
 	
 	        <tr>
-	        <td>Scope:</td>
+	        <td>Scope</td>
 	        <td><textarea  maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
 	        </tr>
 	        
 	        <tr>
-	        <td>MCS Notes:</td>
+	        <td>MCS Notes</td>
 	        <td><textarea  maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
 	        </tr>
 	
 	        <tr>
-	        <td>Customer Notes:</td>
+	        <td>Customer Notes</td>
 	        <td><textarea  maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
 	        </tr>	        
 	        
@@ -386,42 +396,42 @@
 		
 		
 		        <tr>
-		        <td width = 50% class = "bold">Initiation Date:</td>
+		        <td width = 50% class = "bold">Initiation Date</td>
 		            <td><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Site Survey Date:</td>
+		        <td class = "bold">Site Survey Date</td>
 		        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Costco Due Date:</td>
+		        <td class = "bold">Costco Due Date</td>
 		        <td><input type="text" id="costcoDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Proposal Submitted Date:</td>
+		        <td class = "bold">Proposal Submitted Date</td>
 		        <td><input type="text" id="proposalDate" placeholder="Select a Date"/></td>
 		        </tr>	
 		
 		        <tr>
-		        <td class = "bold">Scheduled Start Date:</td>
+		        <td class = "bold">Scheduled Start Date</td>
 		        <td><input type="text" id="startDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Scheduled Turnover:</td>
+		        <td class = "bold">Scheduled Turnover</td>
 		        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
 		        </tr>		
 		
 		        <tr>
-		        <td class = "bold">Actual Turnover:</td>
+		        <td class = "bold">Actual Turnover</td>
 		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Permit Application:</td>
+		        <td class = "bold">Permit Application</td>
 		        <td><input type="text" id="permitApp" placeholder="Select a Date"/></td>
 		        </tr>
 		
@@ -432,22 +442,22 @@
 			<table class='table table-hover'>
 	
 	            <tr>
-	            <td class = "bold">Should Invoice %:</td>
+	            <td class = "bold">Should Invoice %</td>
 	            <td><input type="text" id="shouldInvoice" value="0"/>%</td>
 	            </tr>		
 	
 	            <tr>
-	            <td class = "bold">Actual Invoice %:</td>
+	            <td class = "bold">Actual Invoice %</td>
 	            <td><input type="text" id="actualInvoice" value="0" />%</td>
 	            </tr>		
 	
 	            <tr>
-	            <td class = "bold">Project Cost:</td>
+	            <td class = "bold">Project Cost</td>
 	            <td><input type="text" id="projectCost" value="" /></td>
 	            </tr>		
 	
 	            <tr>
-	            <td class = "bold">Customer Number:</td>
+	            <td class = "bold">Customer Number</td>
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
@@ -515,7 +525,7 @@
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td class = "bold">Building:</td>
+					<td class = "bold">Building</td>
 					<td>
 					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='buildingPermitLastUpdated' TO SELECT -->
 						<select class="permitStatus" id="buildingPermitStatus">
@@ -536,7 +546,7 @@
 				</tr>
 				
 						<tr>
-					<td class = "bold">Roofing:</td>
+					<td class = "bold">Roofing</td>
 					<td>
 						<select class="permitStatus" id="roofingPermitStatus">
 							<option value="default"> TBD </option>
@@ -567,7 +577,7 @@
 					<td  class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td class = "bold">Mechanical:</td>
+					<td class = "bold">Mechanical</td>
 					<td>
 						<select class="permitStatus" id="mechanicalPermitStatus">
 							<option value="default">TBD</option>
@@ -587,7 +597,7 @@
 				</tr>
 				
 				<tr>
-					<td class = "bold">Electrical:</td>
+					<td class = "bold">Electrical</td>
 					<td>
 						<select class="permitStatus" id="electricalPermitStatus">
 							<option value="default">TBD</option>
@@ -607,7 +617,7 @@
 				</tr>
 				
 				<tr>
-					<td class = "bold">Plumbing:</td>
+					<td class = "bold">Plumbing</td>
 					<td>
 						<select class="permitStatus" id="plumbingPermitStatus">
 							<option value="default">TBD</option>
@@ -639,7 +649,7 @@
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td class = "bold">Sprinkler:</td>
+					<td class = "bold">Sprinkler</td>
 					<td>
 						<select class="permitStatus" id="sprinklerPermitStatus">
 							<option value="default">TBD</option>
@@ -659,7 +669,7 @@
 				</tr>
 				
 				<tr>
-					<td class = "bold">Fire Alarm:</td>
+					<td class = "bold">Fire Alarm</td>
 					<td>
 						<select class="permitStatus" id="fireAlarmPermitStatus">
 							<option value="default">TBD</option>
@@ -679,7 +689,7 @@
 				</tr>
 				
 				<tr>
-					<td class = "bold">Low-Voltage:</td>
+					<td class = "bold">Low-Voltage</td>
 					<td>
 						<select class="permitStatus" id="voltagePermitStatus">
 							<option value="default">TBD</option>
@@ -711,7 +721,7 @@
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
-					<td class = "bold">Other Permit (A):</td>
+					<td class = "bold">Other Permit (A)</td>
 					<td>
 						<select class="permitStatus" id="otherAPermitStatus">
 							<option value="default">TBD</option>
@@ -731,7 +741,7 @@
 				</tr>
 				
 				<tr>
-					<td class = "bold">Other Permit (B):</td>
+					<td class = "bold">Other Permit (B)</td>
 					<td>
 						<select class="permitStatus" id="otherBPermitStatus">
 							<option value="default">TBD</option>
@@ -753,11 +763,11 @@
 				
 				<table class='table table-hover'>
 					<tr>
-						<td class = "bold" width = 20%>Permit Notes:</td>
+						<td class = "bold" width = 20%>Permit Notes</td>
 						<td><textarea id='permitNotes' rows="5" cols="30"></textarea></td>
 					</tr>
 					<tr>
-						<td class = "bold">Inspection Notes:</td>
+						<td class = "bold">Inspection Notes</td>
 						<td><textarea id='inspectionNotes' rows='5' cols='30'></textarea></td>
 					</tr>
 				</table>
@@ -823,7 +833,7 @@
 	        <table class='table table-hover'>
 	        
 	            <tr>
-                <td>Punch List:</td>
+                <td>Punch List</td>
                 <td>  
                     <select data-associated-date='punchList' class="closeout-input" id="punchListStatus">
                     <option value="default">--Status--</option>
@@ -834,7 +844,7 @@
                 </td>   
             </tr>
             <tr>
-                <td>As-Built Drawings:</td>
+                <td>As-Built Drawings</td>
                 <td>  
                     <select data-associated-date='asBuilts' class="closeout-input" id="asBuiltDrawingsStatus">
                     <option value="default">--Status--</option>
@@ -845,7 +855,7 @@
                 </td>   
             </tr>
             <tr>
-                <td>Close Out Photos:</td>
+                <td>Close Out Photos</td>
                 <td>  
                     <select data-associated-date='closeoutPhotosCL' class="closeout-input" id="closeOutPhotosStatus">
                         <option value="default">--Status--</option>
@@ -856,7 +866,7 @@
                 </td>   
             </tr>
             <tr>
-                <td>HVAC Startup Form:</td>
+                <td>HVAC Startup Form</td>
                 <td>  
                     <select data-associated-date='HVACstartupFormDate' class="closeout-input" id="HVACstartupFormStatus">
                         <option value="default">--Status--</option>
@@ -867,7 +877,7 @@
                 </td>   
             </tr>
             <tr>
-                <td>Alarm Form:</td>
+                <td>Alarm Form</td>
                 <td>  
                 <select data-associated-date='alarmHvac' class="closeout-input" id="alarmFormStatus">
                     <option value="default">--Status--</option>
@@ -878,7 +888,7 @@
                 </td>   
             </tr>
             <tr>
-                <td>Verisae Report:</td>
+                <td>Verisae Report</td>
                 <td>  
                     <select data-associated-date='verisae' class="closeout-input" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
@@ -889,21 +899,21 @@
                 </td>   
             </tr>
             <tr>
-                <td>Number of MCS Change Orders:</td>
+                <td>Number of MCS Change Orders</td>
                 <td>  
                  <input type="text" id="numOfMCSChangeOrders" />   
                 </td>  
                 <td></td>
             </tr>
             <tr>
-                <td>Number of MCS Change Orders Completed:</td>
+                <td>Number of MCS Change Orders Completed</td>
                 <td>  
             <input type="text" id="numOfMCSChangeOrdersCompleted" />
                 </td> 
                 <td></td>
             </tr>
             <tr>
-                <td>Closeout Documents Notes:</td>
+                <td>Closeout Documents Notes</td>
                 <td>  
                 <textarea id="closeoutDocumentsNotes"> </textarea>
                 </td> 
@@ -918,7 +928,7 @@
 	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td class='bold'>Temp Certificate of Occupancy:</td>
+	                <td class='bold'>Temp Certificate of Occupancy</td>
 	                <td>  
 	                    <select data-associated-date='tmpCertificateDate' class="closeout-input" id="tmpCertificateStatus">
 	                        <option value="default">--Status--</option>
@@ -929,7 +939,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Mechanical Final Inspection:</td>
+	                <td class='bold'>Mechanical Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='mechFinalDate' class="closeout-input" id="mechFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -940,7 +950,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Electrical Final Inspection:</td>
+	                <td class='bold'>Electrical Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='elecFinalDate' class="closeout-input" id="elecFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -951,7 +961,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Plumbing Final Inspection:</td>
+	                <td class='bold'>Plumbing Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='plumbingFinalDate' class="closeout-input" id="plumbingFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -962,7 +972,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Sprinkler Final Inspection:</td>
+	                <td class='bold'>Sprinkler Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleFinalDate' class="closeout-input" id="sprinkleFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -973,7 +983,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Certificate of Occupancy:</td>
+	                <td class='bold'>Certificate of Occupancy</td>
 	                <td>  
 	                    <select data-associated-date='certificateDate' class="closeout-input" id="certificateStatus">
 	                        <option value="default">--Status--</option>
@@ -984,7 +994,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Building Final Inspection:</td>
+	                <td class='bold'>Building Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
 	                        <option value="default">--Status--</option>
@@ -995,7 +1005,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Final Inspection Notes:</td>
+	                <td class='bold'>Final Inspection Notes</td>
 	                <td>  
 	                    <textarea id="finalInspectionNotes"> </textarea>
 	                </td>
@@ -1011,7 +1021,7 @@
 	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td class='bold'>MCS Warranty:</td>
+	                <td class='bold'>MCS Warranty</td>
 	                <td>  
 	                    <select data-associated-date='MCSWarranty' class="closeout-input" id="MCSWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1022,7 +1032,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>GC Warranty:</td>
+	                <td class='bold'>GC Warranty</td>
 	                <td>  
 	                    <select data-associated-date='GCWarrantyDate' class="closeout-input" id="GCWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1033,7 +1043,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Mechanical Warranty:</td>
+	                <td class='bold'>Mechanical Warranty</td>
 	                <td>  
 	                    <select data-associated-date='mechanicalWarrantyDate' class="closeout-input" id="mechanicalWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1044,7 +1054,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Electrical Warranty:</td>
+	                <td class='bold'>Electrical Warranty</td>
 	                <td>  
 	                    <select data-associated-date='electricalWarrantyDate' class="closeout-input" id="electricalWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1055,7 +1065,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Plumbing Warranty:</td>
+	                <td class='bold'>Plumbing Warranty</td>
 	                <td>  
 	                    <select data-associated-date='plumbingWarrantyDate' class="closeout-input" id="plumbingWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1066,7 +1076,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Sprinkler Warranty:</td>
+	                <td class='bold'>Sprinkler Warranty</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input" id="sprinkleWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1077,7 +1087,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Roofing Warranty:</td>
+	                <td class='bold'>Roofing Warranty</td>
 	                <td>  
 	                    <select data-associated-date='roofingWarrantyDate' class="closeout-input" id="roofingWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1088,7 +1098,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>HTI Warranty:</td>
+	                <td class='bold'>HTI Warranty</td>
 	                <td>  
 	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input" id="HTIWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1099,7 +1109,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Other Warranty (A):</td>
+	                <td class='bold'>Other Warranty (A)</td>
 	                <td>  
 	                    <select data-associated-date='otherWarrantyDateA' class="closeout-input" id="otherWarrantyStatusA">
 	                        <option value="default">--Status--</option>
@@ -1110,7 +1120,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Other Warranty (B):</td>
+	                <td class='bold'>Other Warranty (B)</td>
 	                <td>  
 	                    <select data-associated-date='otherWarrantyDateB' class="closeout-input" id="otherWarrantyStatusB">
 	                        <option value="default">--Status--</option>
@@ -1121,7 +1131,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Warranty Notes:</td>
+	                <td class='bold'>Warranty Notes</td>
 	                <td>  
 	                    <textarea id="warrantyNotes"> </textarea>
 	                </td>
@@ -1136,7 +1146,7 @@
 			<table class='table table-hover'>
 			<tr style="height: 0px;"></tr>
 	            <tr>
-	                <td class='bold'>MCS Liens:</td>
+	                <td class='bold'>MCS Liens</td>
 	                <td>  
 	                    <select data-associated-date='MCSDate' class="closeout-input" id="MCSStatus">
 	                        <option value="default">--Status--</option>
@@ -1147,7 +1157,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>GC Liens:</td>
+	                <td class='bold'>GC Liens</td>
 	                <td>  
 	                    <select data-associated-date='GCDate' class="closeout-input" id="GCStatus">
 	                        <option value="default">--Status--</option>
@@ -1158,7 +1168,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Mechanical Liens:</td>
+	                <td class='bold'>Mechanical Liens</td>
 	                <td>  
 	                    <select data-associated-date='mechanicalDate' class="closeout-input" id="mechanicalStatus">
 	                        <option value="default">--Status--</option>
@@ -1169,7 +1179,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Electrical Liens:</td>
+	                <td class='bold'>Electrical Liens</td>
 	                <td>  
 	                    <select data-associated-date='electricalDate' class="closeout-input" id="electricalStatus">
 	                        <option value="default">--Status--</option>
@@ -1180,7 +1190,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Plumbing Liens:</td>
+	                <td class='bold'>Plumbing Liens</td>
 	                <td>  
 	                    <select data-associated-date='plumbingDate' class="closeout-input" id="plumbingStatus">
 	                        <option value="default">--Status--</option>
@@ -1191,7 +1201,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Sprinkler Liens:</td>
+	                <td class='bold'>Sprinkler Liens</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleDate' class="closeout-input" id="sprinkleStatus">
 	                        <option value="default">--Status--</option>
@@ -1202,7 +1212,7 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Roofing Liens:</td>
+	                <td class='bold'>Roofing Liens</td>
 	                <td>  
 	                    <select data-associated-date='roofingDate' class="closeout-input" id="roofingStatus">
 	                        <option value="default">--Status--</option>
@@ -1213,7 +1223,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>HTI Liens:</td>
+	                <td class='bold'>HTI Liens</td>
 	                <td>  
 	                    <select data-associated-date='HTIDate' class="closeout-input" id="HTIStatus">
 	                        <option value="default">--Status--</option>
@@ -1224,7 +1234,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Other Liens:</td>
+	                <td class='bold'>Other Liens</td>
 	                <td>  
 	                    <select data-associated-date='otherFinalLiensDate' class="closeout-input" id="otherFinalLiensStatus">
 	                        <option value="default">--Status--</option>
@@ -1235,7 +1245,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Final Liens Notes:</td>
+	                <td class='bold'>Final Liens Notes</td>
 	                <td>  
 	                    <textarea id="finalLiensNotes"> </textarea>
 	                </td>   
@@ -1249,7 +1259,7 @@
 	    <div id="otherItems" class="info-tab info-tab-closeoutDocuments">
 	        <table class='table table-hover'>
 	        <tr>
-	                <td>G704 - Certificate of Substantial Completion:</td>
+	                <td>G704 - Certificate of Substantial Completion</td>
 	                <td>  
 	                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
 	                        <option value="default">--Status--</option>
@@ -1260,7 +1270,7 @@
 	                </td>
 	        </tr>
 	        <tr>
-                <td>G706 - Affidavit of Payment of Debts and Claims:</td>
+                <td>G706 - Affidavit of Payment of Debts and Claims</td>
                 <td>  
                     <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
                         <option value="default">--Status--</option>
@@ -1271,7 +1281,7 @@
                 </td>
             </tr>
             <tr>
-                <td>G706A - Contractor's Lien Releases:</td>
+                <td>G706A - Contractor's Lien Releases</td>
                 <td>  
                     <select data-associated-date='releaseOfLiensDate' class="closeout-input" id="releaseOfLiensStatus">
                         <option value="default">--Status--</option>
@@ -1282,7 +1292,7 @@
                 </td>
             </tr>
             <tr>
-                <td>MG2 Project Sign-off:</td>
+                <td>MG2 Project Sign-off</td>
                 <td>  
                     <select data-associated-date='mulvannySignOffDate' class="closeout-input" id="mulvannySignOffStatus">
                         <option value="default">--Status--</option>
@@ -1293,7 +1303,7 @@
                 </td>
             </tr>     
 	        <tr>
-                <td>Equipment Submittal:</td>
+                <td>Equipment Submittal</td>
                 <td>  
                     <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
                         <option value="default">--Status--</option>
@@ -1304,7 +1314,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Operations and Maintenance Manuals:</td>
+                <td>Operations and Maintenance Manuals</td>
                 <td>  
                     <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
                     <option value="default">--Status--</option>
@@ -1315,14 +1325,14 @@
                 </td>   
             </tr>
             <tr>
-                <td>Number of MG2 Change Orders:</td>
+                <td>Number of MG2 Change Orders</td>
                 <td>  
                  <input type="text" id="numOfChangeOrders" />   
                 </td>  
                 <td></td>
             </tr>
             <tr>
-                <td>Number of MG2 Change Orders Completed:</td>
+                <td>Number of MG2 Change Orders Completed</td>
                 <td>  
             <input type="text" id="numOfChangeOrdersCompleted" />
                 </td> 
@@ -1332,10 +1342,10 @@
 	        
 	        <table class='table table-hover'>
 	        	<tr>
-	        	<td></td><td class='bold'>Amount:</td><td class='bold'>Date:</td>
+	        	<td></td><td class='bold'>Amount</td><td class='bold'>Date</td>
 	        	</tr>
 	        	<tr>
-	        	<td class='bold'>Salvage Value:</td>
+	        	<td class='bold'>Salvage Value</td>
 	        	<td>
 					<input type="text" id="salvageAmount"/>
 	        	</td>
@@ -1390,8 +1400,9 @@
 				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
 		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
 		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-		        <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
+		       <!--   <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
 		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li>
+		       -->
 			</ul>
 		
 		    <!-- Closeout Documents Tab--> 
@@ -1399,25 +1410,25 @@
 		        <table class="table table-hover">
 		        	<tr style="height: 0px;"></tr>
 		            <tr>
-		                <td>MCS CO #</td>
+		                <td class="coLabel">MCS CO #</td>
 		                <td>
-		                    <input type="text" id="mcsCO" />
+		                    <p><strong id="mcsCO"></strong> </p>
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Title</td>
+		                <td class="coLabel">Title</td>
 		                <td>
 		                    <input type="text" id="title" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Description</td>
+		                <td class="coLabel">Description</td>
 		                <td>
-		                    <textarea id="briefDescription" maxlength="998"> </textarea>
+		                    <textarea id="briefDescription" maxlength="998" rows="4" cols="40"> </textarea>
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Status</td>
+		                <td class="coLabel">Status</td>
 		 
 		                <td>
 		                    <select class="closeout-input" id="status">
@@ -1426,53 +1437,53 @@
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Sell ($)</td>
+		                <td class="coLabel">Sell ($)</td>
 		 
 		                <td>
 		                	<input type="text" id="sell" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Cost ($)</td>
+		                <td class="coLabel">Cost ($)</td>
 		                <td>
 		                    <input type="text" id="cost" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Submitted To</td>
+		                <td class="coLabel">Submitted To</td>
 		 
 		                <td>
 		                	<input type="text" id="submittedTo" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Submitted Date</td>
+		                <td class="coLabel">Submitted Date</td>
 		 
 		                <td>
 		                	<input type="text" id="submittedDate" />
 		                </td>   
 		            </tr>	
 		                 <tr>
-		                <td>Proposal Date</td>
+		                <td class="coLabel">Proposal Date</td>
 		                <td>
 		                	<input type="text" id="proposalDate" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Approved Date</td>
+		                <td class="coLabel">Approved Date</td>
 		 
 		                <td>
 		                	<input type="text" id="approvedDate" />
 		                </td>   
 		            </tr>
 		             <tr>
-		                <td>CO Notes</td>
+		                <td class="coLabel">CO Notes</td>
 		                <td>
-		                    <textarea id="notes" maxlength="998"> </textarea>
+		                    <textarea id="notes" maxlength="998" rows="4" cols="40"> </textarea>
 		                </td>   
 		            </tr>
 		             <tr>
-		                <td>Customer CO#</td>
+		                <td  class="coLabel">Customer CO#</td>
 		                <td>
 		                    <select class="closeout-input" id="customerCO">
 		                        <option value="default">--Customer--</option>
@@ -1480,13 +1491,13 @@
 		                </td>
 		            </tr>	            
 		            <tr>
-		                <td>Sub CO #</td>
+		                <td class="coLabel">Sub CO #</td>
 		                <td>
 		                    <input type="text" id="subCO" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td>Sub Name(s)</td>
+		                <td class="coLabel">Sub Name(s)</td>
 		                <td>
 		                    <input type="text" id="subNames" />
 		                </td>   

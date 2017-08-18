@@ -23,32 +23,6 @@
     <link href="css/taskBrowser.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     
-	<style>
-		#taskWell > * {
-			display:block;
-			margin: 6px;
-		}
-		
-		#taskWell > div > p {
-			margin-bottom: 0px;
-		}
-		
-		#taskWell textarea {
-			width: 50%;
-		}
-		
-		
-		#taskTable {
-		   table-layout: fixed;
-		
-		}
-		
-		.head {
-		 background-color:  #ECF0FC;
-		}
-		
-		
-	</style>
   </head>
   <body>
  
@@ -98,7 +72,7 @@
 	
     <div class="container">
 		
-	
+		<div class="param-field">
    		<h4 id='formFor'>  </h4>
    		<table class = 'table table-responsive taskManager' id = 'projectManagerSelection' style='display: none'>
    		
@@ -145,7 +119,7 @@
    				     <option value='assignee'> Assignee </option>
    		  </select>
    		  <button id='advancedSortButton' class='btn advancedSortingOptions advancedSortingSelector' style='display:none' onclick='advancedSortValidation()'> Sort </button>
-   		 
+   		 </div>
           
           <br><br>
    		  <div id='taskWell' class='well' style='display: none'>
@@ -190,8 +164,8 @@
 	   			</span>
    		</div>
    		
-	
-		<table id="taskTable" class="table table-hover table-responsive" >
+		<div class = "param-field">
+		<table id="taskTable" class="table table-responsive" >
 		      
 		   <col style="width: 15%">
 		   <col style="width: 11%">
@@ -244,6 +218,7 @@
    				
    			</tr>
    		</table>
+   		</div>
   
    
    		

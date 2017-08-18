@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 
 import org.hibernate.Criteria;
@@ -27,9 +29,11 @@ import objects.HibernateUtil;
 import projectObjects.ChangeOrder;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
+import projectObjects.Permission;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectObject;
+import projectObjects.Status;
 import projectObjects.Task;
 
 
@@ -477,6 +481,30 @@ public class ProjectObjectService
 		Long txID = (Long)session.save(o);
         System.out.println("ID OF TRANSACTION: " + txID);
         tx.commit();
+        HibernateUtil.closeDownSession();
+        //return (long) txID;
+	    return txID ;
+	}
+	
+	/**
+	 * This method adds an object to the database.
+	 * @param domain the type of object that is to be added
+	 * @param o the object to be added
+	 * @return the id of the transaction
+	 */
+	public synchronized static long addUser(Object o, Permission permission, Status status)
+	{
+		System.out.println("add Object");
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		//session.save(o);
+		
+		session.save(permission);
+		session.save(status);
+		Long txID = (Long)session.save(o);
+        System.out.println("ID OF TRANSACTION: " + txID);
+        tx.commit();
+       // HibernateUtil.closeDownSession();
         //return (long) txID;
 	    return txID ;
 	}

@@ -1,3 +1,6 @@
+let users;
+
+
 $(document).ready(function()
 {
 	$('ul.tabs li').click(function()
@@ -29,7 +32,7 @@ function preparePage() {
 		    	  alert("Sorry but it looks like you don't have access to this page!");
 		    	  document.location.href = "homepage.html";
 		      }
-		      getStates();
+		      getUsers();
 			} else {
 				console.log("GetUserData() RESPONSE = ",data);
 				alert('Server Failure!');
@@ -183,9 +186,15 @@ function addUser()
 	let firstName = $('#userTab').find('#firstName').val();
 	let email = $('#userTab').find('#email').val();
 	let password = $('#userTab').find('#password').val();
+	let confirmPassword = $('#userTab').find("#passwordConfirmation").val();
 	let permission = $('#userTab').find('#permission').val();
 	let status = $('#userTab').find('#status').val();
 	
+	if(password != confirmPassword)
+	{
+		alert("Password does not match!");
+		return;
+	}
 	
 	let validData = true;
 	
@@ -195,13 +204,21 @@ function addUser()
 	if(!password) validData = false;
 	if(!permission) validData = false;
 	if(!status) validData = false;
-	
+
 	if(validData == false)
 	{
-		alert("Each input field needs a value!")
+	     alert("Each input field needs a value!");
+	     return;
 	}
-	else
-	{
+	
+	for(var i = 0; i < users.length; i++){
+		if(users[i].name == logInName)
+		{
+			alert("All user's must have a unique log in name!");
+			return;
+		}
+	}
+
 		{
 			$.ajax({
 				type: 'POST',
@@ -219,16 +236,39 @@ function addUser()
 				success: function(data)
 				{
 					console.log(data);
-					$('#userInput').val('');
+					$('.userInput').val('');
 					alert("User Added Successfully!");
 				}
 			});
 		}
-	}
 	
 	
 	
 	
+	
+}
+
+/**
+ * This function gets all Miller users from the database
+ * INNER FUNCTION CALLS: createDropdown(), getTasks()
+ */
+function getUsers () {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUsers',
+		}, complete: function (data) {
+			console.log("RESPONSE JSON FOR getUsers() = ",data.responseJSON);
+			if (data.responseJSON) {
+				users = data.responseJSON;
+				console.log("USERS = ",users);
+			}
+			getStates();
+		}
+		
+	});	
 }
 
 function deleteProjectObject() {
