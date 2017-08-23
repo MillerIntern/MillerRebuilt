@@ -491,6 +491,7 @@ function collapseWell() {
 }
 
 function findPos(obj) {
+	if(!obj) return 0;
     var curtop = 0;
     if (obj.offsetParent) {
         do {
@@ -523,10 +524,22 @@ function expandTaskInfo(param) {
 	} 
 	else 
 	{
-		task = param;
+		if(!task) task = param;
+		else
+		{
+			let taskID = $(param).val();
+			console.log(taskID);
+			
+			for(var i = 0; i < tasks.length; i++) {
+				if(tasks[i].id === taskID) {
+					task = tasks[i];
+					break;
+				}
+			}
+		}
 	}
 	
-	$("<h4> TEST </h4>").after("#row"+task.id);
+
 	console.log("expandTaskInfo() TASK === " , task);
 	selectedProjID = task.project.id;
 	

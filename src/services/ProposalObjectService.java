@@ -11,11 +11,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import objects.HibernateUtil;
+import projectObjects.Project;
 import projectObjects.ProjectObject;
 
 
@@ -62,10 +65,12 @@ public class ProposalObjectService
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		
+		
 		@SuppressWarnings("rawtypes")
 		Class c;
 		try 
 		{
+			
 			c = Class.forName("projectObjects."+domain);
 			
 			Criteria criteria = session.createCriteria(c);
@@ -95,6 +100,7 @@ public class ProposalObjectService
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
 			}
+
 	
 	        List<?> list = criteria.list();
 	        tx.commit();

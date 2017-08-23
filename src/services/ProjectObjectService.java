@@ -20,7 +20,10 @@ import org.hibernate.Transaction;
 import org.hibernate.TransactionException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -130,6 +133,7 @@ public class ProjectObjectService
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
+		Query q = null;
 		try
 		{
 		tx = session.beginTransaction();
@@ -171,17 +175,29 @@ public class ProjectObjectService
 				criteria.addOrder(Order.asc("c.name"));
 			} else if (domain.equals("Project")) {
 				
-				//Criterion onHoldProjects = Restrictions.sqlRestriction("stage_id != 9");
-				//criteria.add(onHoldProjects); //Prevents On Hold projects from being pulled in
-				//Criterion closedProjects = Restrictions.sqlRestriction("stage_id != 4");
-				//criteria.add(closedProjects); //Prevents Closed projects from being pulled in
-				//Criterion canceledProjects = Restrictions.sqlRestriction("stage_id != 15");
-				//criteria.add(canceledProjects); //Prevents Canceled projects from being pulled in
+				System.out.println("\nDOING CRITERIA STUFF\n\n");
 				
+				
+				
+				ProjectionList projectionList = Projections.projectionList();
+				projectionList.add(Projections.property("id").as("id"));
+				projectionList.add(Projections.property("mcsNumber").as("McsNumber"));
+				projectionList.add(Projections.property("projectItem").as("projectItem"));
+				projectionList.add(Projections.property("projectType").as("projectType"));
+				projectionList.add(Projections.property("stage").as("stage"));
+				projectionList.add(Projections.property("status").as("status"));
+				projectionList.add(Projections.property("warehouse").as("warehouse"));
+				projectionList.add(Projections.property("projectManagers").as("projectManagers"));
+
+				criteria.setProjection(projectionList);
+				
+				
+				
+	
 			} else if(domain.equals("Task")) {
 				System.out.println("Task id = " + Order.asc("id"));
 			}
-	        List<?> list = criteria.list();
+			List<?> list = criteria.list();
 	       
 	        tx.commit();
 

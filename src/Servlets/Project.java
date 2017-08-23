@@ -358,7 +358,7 @@ public class Project extends HttpServlet
 		// Very aggressive request TODO: Would be great to somehow minify this request
 		else if(action.equals("getAllProjects"))
 		{
-			System.out.println("getting the projects!");
+			System.out.println("getting the projectsssss!");
 			response = ProjectService.getAllProjectsAsJson();
 		}
 		else if(action.equals("getProjectsWithStage")){

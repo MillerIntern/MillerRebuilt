@@ -2155,9 +2155,19 @@ function fillProjectInformation (data) {
  */
 function fillChangeOrders (data) {
 	clearChangeOrderTable();
-	
+	console.log("CALLED FILL CO");
 	if(data) CHANGE_ORDERS = data.changeOrders;
 	let changeOrders = CHANGE_ORDERS;
+	
+	changeOrders.sort(function(a, b){
+		if(!a.id) return -1;
+		if(!b.id) return 1;
+		
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id) return 1;
+		else return 0;
+		
+	});
 	
 	for (var i = 0; i < changeOrders.length; i++) {
 		let changeOrder = changeOrders[i];
@@ -2949,16 +2959,37 @@ function getAllProjects() {
 		}, success: function (data) {
 			projects = data;
 			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			establishRetrievedProjects();
 			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
 			$('.projectNavigator-projectFinder').show();
 			t1 = new Date().getTime();
 			console.log('took: ' + (t1 - t0) + 'ms');
+			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
 			getSearchCriteria();
 			filterProjects();
 		}
 	});
 }
 
+function establishRetrievedProjects()
+{
+	console.log()
+	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
+		RETRIEVED_PROJECTS[i].id = RETRIEVED_PROJECTS[i][0];
+		RETRIEVED_PROJECTS[i].McsNumber = RETRIEVED_PROJECTS[i][1];
+		RETRIEVED_PROJECTS[i].projectItem = RETRIEVED_PROJECTS[i][2];
+		RETRIEVED_PROJECTS[i].projectType = RETRIEVED_PROJECTS[i][3];
+		RETRIEVED_PROJECTS[i].stage = RETRIEVED_PROJECTS[i][4];
+		RETRIEVED_PROJECTS[i].status = RETRIEVED_PROJECTS[i][5];
+		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
+		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
+		
+		for(var q = 0; q < 8; q++){
+			var num = 7 - q;
+			RETRIEVED_PROJECTS[i].splice(num, 1);
+		}
+	}
+}
 /**
  * This function updates the front end project display
  * INNER FUNCTION CALLS: clearAndAddSingleRow(), filterProjects()
