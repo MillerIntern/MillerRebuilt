@@ -35,6 +35,11 @@
 #taskWell textarea {
 	width: 50%;
 }
+
+.taskWellButton:hover {
+	background-color: black;
+	color: white;
+}
 		
 		
 #taskTable {

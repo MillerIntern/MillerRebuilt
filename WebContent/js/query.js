@@ -1749,7 +1749,6 @@ function generateReport(reportType)
 			stage.push(ACTIVE_STAGE);
 			stage.push(PROPOSAL_STAGE);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_SCHEDULING);

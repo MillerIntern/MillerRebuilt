@@ -2168,6 +2168,13 @@ function fillChangeOrders (data) {
 		else return 0;
 		
 	});
+	console.log("CO's = ", changeOrders);
+	
+	for(var i = 0; i < changeOrders.length; i++)
+	{
+		changeOrders[i].mcsCO = i + 1;
+	}
+	
 	
 	for (var i = 0; i < changeOrders.length; i++) {
 		let changeOrder = changeOrders[i];
@@ -2186,10 +2193,12 @@ function fillChangeOrders (data) {
 		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
 		
 		var coNumber = document.createElement('td');
-		coNumber.appendChild(document.createTextNode(changeOrder.id));
+		coNumber.appendChild(document.createTextNode(i + 1));
 		
 		var title = document.createElement('td');
-		title.appendChild(document.createTextNode(changeOrder.title));
+		console.log("TITLe = ", changeOrder.title);
+		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
+		else  title.appendChild(document.createTextNode("---"));
 		
 		var briefDescription = document.createElement('td');
 		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
@@ -3704,16 +3713,28 @@ function getProject_CHANGE_ORDER()
 			},
 			success: function(data)
 			{
-				PROJECT_DATA = (data);
+				PROJECT_DATA = data;
 				setProjectHeader(data, currentDivLocation);
 				console.log("PROJ DATA = ", data);
 				
 				if(edit_CHANGE_ORDER == 'true') {
-					//CHANGE_ORDER_ID = getParameterByName("changeOrderID");
-					PROJECT_DATA = data;
 					
 					fillTabs_CHANGE_ORDER(PROJECT_DATA);
 					console.log("IT WAS truuuuu");
+				} 
+				else {
+					let mcsCO;
+					if(PROJECT_DATA.changeOrders)
+					{
+						if(PROJECT_DATA.changeOrders.length != 0) {mcsCO = PROJECT_DATA.changeOrders.length + 1;}
+						else mcsCO = 1;
+					}
+					else 
+				    {
+						mcsCO = 1;
+				    }
+					console.log("MCS CO = ", mcsCO);
+					$('#changeOrder').find('#mcsCO').html(mcsCO);
 				}
 				getTasks();
 
@@ -3752,7 +3773,13 @@ function getDropdownInfo_CHANGE_ORDER()
 		success: function(data)
 		{
 			fillDropdowns_CHANGE_ORDER(data);
-			getProject_CHANGE_ORDER();
+			if(edit_CHANGE_ORDER == "true") getProject_CHANGE_ORDER();
+			else 
+			{
+				clearTabs_CHANGE_ORDER();
+				getProject_CHANGE_ORDER();
+				
+			}
 		}
 	});
 }
@@ -3765,16 +3792,25 @@ function getDropdownInfo_CHANGE_ORDER()
 function fillTabs_CHANGE_ORDER(json)
 {
 	
+	console.log("EDIT == ", edit_CHANGE_ORDER);
+	console.log("CHANGE ORDERS = ", PROJECT_DATA.changeOrders);
+	
+	var nextCOnum;
+	
+	if(PROJECT_DATA.changeOrders.length) nextCOnum = PROJECT_DATA.changeOrders.length;
+	else nextCOnum = 1;
+	
+	
 	var changeOrderToEdit;
 	for(var i = 0; i < json.changeOrders.length; i++)
 	{
 		if(json.changeOrders[i].id == selectedChangeOrder)
 			changeOrderToEdit = json.changeOrders[i];
 	}
-	console.log(changeOrderToEdit);
+	console.log("CO TO EDIT = ", changeOrderToEdit);
 	if(changeOrderToEdit){
 	$('#changeOrder').find("#customerCO").val(changeOrderToEdit.type);
-	$('#changeOrder').find("#mcsCO").html(changeOrderToEdit.id);
+	$('#changeOrder').find("#mcsCO").html(changeOrderToEdit.mcsCO);
 	$('#changeOrder').find("#subCO").val(changeOrderToEdit.subCO);
 	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
 	$('#changeOrder').find("#briefDescription").val(changeOrderToEdit.briefDescription);
@@ -3796,7 +3832,7 @@ function fillTabs_CHANGE_ORDER(json)
 function clearTabs_CHANGE_ORDER(){
 	
 	$('#changeOrder').find("#customerCO").val("");
-	$('#changeOrder').find("#mcsCO").val("");
+	$('#changeOrder').find("#mcsCO").html("");
 	$('#changeOrder').find("#subCO").val("");
 	$('#changeOrder').find("#proposalDate").val("");
 	$('#changeOrder').find("#briefDescription").val("");
@@ -3905,7 +3941,8 @@ function saveProject_CHANGE_ORDER()
 	var approvedDate = $('#changeOrder').find("#approvedDate").val();
 	
 	var customerCO = $('#changeOrder').find("#customerCO").val();
-	var mcsCO = $('#changeOrder').find("#mcsCO").val();
+	var mcsCO = $('#changeOrder').find("#mcsCO").html();
+
 	var subCO = $('#changeOrder').find("#subCO").val();
 	var subNames = $('#changeOrder').find("#subNames").val();
 	var status = $('#changeOrder').find("#status").val();

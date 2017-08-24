@@ -211,7 +211,30 @@ function setHREF() {
  * 
  * 
  */
-    
+ 
+function sendText() {
+	console.log("IN IT");
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'sendText',
+		}, complete: function (response) {
+			console.log("RESPONSE FROM sendText() = ",response);			
+			if (response.responseJSON) {
+				console.log(response);
+			}
+			else { 
+				console.log("ERROR RESPONE FROM sendText() = ", response);
+			}
+			
+		}
+	});
+	
+
+}
  
 
 

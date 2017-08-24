@@ -113,8 +113,14 @@ public class Admin extends HttpServlet
 			String firstName = parameters.get("firstName");
 			String email = parameters.get("email");
 			String password = parameters.get("password");
+			
 			String permission = parameters.get("permission");
+			if(permission.equals("1")) permission = "admin";
+			else permission = "basic";
+			
 			String status = parameters.get("status");
+			if(status.equals("1")) status = "admin";
+			else status = "basic";
 			
 			String hashedPassword = null;
 			HashGen generator = new HashGen();

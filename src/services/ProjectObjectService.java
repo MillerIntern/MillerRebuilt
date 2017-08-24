@@ -82,6 +82,7 @@ public class ProjectObjectService
         Query q = session.createQuery("from Task");
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
+   
         tx.commit();
         
         return list;
