@@ -1461,14 +1461,14 @@ $(document).ready(function()
 		
 	});
 	
-	$("#initiatedDate").datepicker();
-	$("#surveyDate").datepicker();
-	$("#costcoDate").datepicker();
-	$("#proposalDate").datepicker();
-	$("#startDate").datepicker();
-	$("#scheduledTurnover").datepicker();
-	$("#actualTurnover").datepicker();
-	$("#permitApp").datepicker();
+	$('#projectData').find("#initiatedDate").datepicker();
+	$('#projectData').find("#surveyDate").datepicker();
+	$('#projectData').find("#costcoDate").datepicker();
+	$('#projectData').find("#proposalDate_pd").datepicker();
+	$('#projectData').find("#startDate").datepicker();
+	$('#projectData').find("#scheduledTurnover").datepicker();
+	$('#projectData').find("#actualTurnover").datepicker();
+	$('#projectData').find("#permitApp").datepicker();
 });
 
 /**
@@ -1622,7 +1622,7 @@ function saveProject_PROJECT_DATA() {
 	var initiated = $('#projectData').find("#initiatedDate").val();
 	var survey = $('#projectData').find("#surveyDate").val();
 	var costco = $('#projectData').find("#costcoDate").val();
-	var proposalDate = $('#projectData').find("#proposalDate").val();
+	var proposalDate = $('#projectData').find("#proposalDate_pd").val();
 	var startDate = $('#projectData').find("#startDate").val();
 	var scheduledTurnover = $('#projectData').find("#scheduledTurnover").val();
 	var actualTurnover = $('#projectData').find("#actualTurnover").val();
@@ -1952,7 +1952,7 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);;
 	$('#projectData').find("#surveyDate").val(json.siteSurvey);
 	$('#projectData').find("#costcoDate").val(json.costcoDueDate);
-	$('#projectData').find("#proposalDate").val(json.proposalSubmitted);
+	$('#projectData').find("#proposalDate_pd").val(json.proposalSubmitted);
 	$('#projectData').find("#startDate").val(json.scheduledStartDate);
 	$('#projectData').find("#scheduledTurnover").val(json.scheduledTurnover);
 	$('#projectData').find("#actualTurnover").val(json.actualTurnover);
@@ -2658,9 +2658,6 @@ function editSelectedChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=edit&id=' + projectID + '&changeOrderID=' + selectedChangeOrder;
 }
 
-function changeOrderReport () {
-	window.location.href = CHANGE_ORDER_PRINT + 'id=' + projectID;
-}
 
 function toggleEquipment (source) {
 	$(source).siblings().css('background-color', 'white');
@@ -4046,13 +4043,13 @@ function isValidInput_CHANGE_ORDER(dates)
  * @returns
  */
 function goToChangeOrder(edit){
+	clearTabs_CHANGE_ORDER();
 	$('.editProject').hide();
 	$('#changeOrder').show();
 	setCurrentDivLocation('changeOrder');
 	console.log("EDIT = ", edit);
 	if(edit == 0) {
-		edit_CHANGE_ORDER = 'false';
-		clearTabs_CHANGE_ORDER();
+		edit_CHANGE_ORDER = 'false';		
 		$('#deleteChangeOrderButton').hide();
 	}
 	else {
@@ -4125,7 +4122,7 @@ function toggleChangeOrder (source) {
 }
 
 function changeOrderReport () {
-	window.location.href = CHANGE_ORDER_PRINT + 'id=' + projectID;
+	window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
 }
 
 //

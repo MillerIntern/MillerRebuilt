@@ -10,9 +10,14 @@ $(document).ready( function () {
         "fnDrawCallback": function ( oSettings ) {
 			if ( oSettings.bSorted || oSettings.bFiltered )
 			{
+				console.log("O SETTINGS = ", oSettings);
+				
 				for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
 				{
 					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+				}
+				if(oSettings.aoHeader[0][1]){
+					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") $('.tableIndex').remove();
 				}
 			}
 		},

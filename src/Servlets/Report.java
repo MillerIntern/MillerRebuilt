@@ -2,10 +2,12 @@ package Servlets;
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class Report extends HttpServlet
 	{
 		
 		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
-		System.out.println("SERVLET: Report.java\nIN: doPost()\nTime of transaction: " + timeStamp);
+		System.out.println("SERVLET: Report.java\nIN: doGet()\nTime of transaction: " + timeStamp);
 		resp.setContentType("text/html");
 		out = resp.getWriter();
 
@@ -63,8 +65,10 @@ public class Report extends HttpServlet
 		//Get the list of projects
 		Map<String, String[]> map = req.getParameterMap();
 		String title = req.getParameter("title");
+		String type = req.getParameter("type");
 		
-		if(title != null) {
+		if(title != null) 
+		{
 		
 		List<projectObjects.Project> projects = null;
 		try 
@@ -89,7 +93,32 @@ public class Report extends HttpServlet
 		//Send HTML table of projects to front end
 	
 		out.println(generateProjectReport(projects, title, shownFields ));
-		} else {
+		} 
+		else if(type != null)
+		{
+			Long id = Long.parseLong(req.getParameter("id"));
+			
+			List<String> shownFields = new ArrayList<String>();
+			String shownField = "changeOrderSolo";
+			shownFields.add(shownField);
+			shownFields.toString();
+			
+			List<projectObjects.Project> projects = new ArrayList<projectObjects.Project>();
+			
+			projectObjects.Project project = null;
+			try {
+				project = (Project) ProjectObjectService.get(id, "Project");
+				projects.add(project);
+				System.out.println("\nTYPE == " + type);
+				out.println(generateProjectReport(projects, type, shownFields ));
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else 
+		{
 			List<projectObjects.Task> tasks = null;
             title = req.getParameter("task_title");
             
@@ -144,6 +173,7 @@ public class Report extends HttpServlet
 		//Generate the html header
 		sb.append(HtmlGenerator.generateHtmlHeader(reportName));
 		sb.append(makeBackLink());
+	
 		sb.append(generateTableHeader(shownFields));
 
 		//Contents
@@ -156,21 +186,26 @@ public class Report extends HttpServlet
 		}
 
 		if(reportName.equals("Adrienne's Report")) sortProjectsStage(projects);
+		else if(reportName.contains("Change Orders")) sortProjectsChangeOrder(projects);
 		else sortProjects(projects);
+		
 		sb.append("<tbody>");
 		//Generate table contents
 		for (int i = 0; i < projects.size(); i++)
 		{
 			projectObjects.Project p = projects.get(i);
 
-			if(shownFields.get(0).equals("equipmentName") || shownFields.get(0).equals("changeOrder"))
+			if(shownFields.get(0).equals("equipmentName") || shownFields.get(0).equals("changeOrder")
+					|| shownFields.get(0).equals("changeOrderSolo"))
 			{
+				
 				String value = getValueFromProject(shownFields.get(0), p);
 				sb.append(value);
 			}
 			else
 			{
 				// if(shownFields.contains("permitReport""))
+
 				sb.append("<tr>");
 				sb.append("<td>"+(i+1)+"</td>");
 				for (int j = 0; j < shownFields.size(); j++)
@@ -256,7 +291,7 @@ public class Report extends HttpServlet
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table class='dataTable cell-border row-border'><thead><tr>");
 		//This table header simply allows a column for the indices
-		sb.append("<th>Index</th>");
+		sb.append("<th class='tableIndex'>Index</th>");
 		for (int i = 0; i < strings.size(); i++)
 		{
 			
@@ -271,6 +306,7 @@ public class Report extends HttpServlet
 		
 		return sb.toString();
 	}
+
 	
 	public synchronized List<String> convertStringToList(String str)
 	{
@@ -305,6 +341,14 @@ public class Report extends HttpServlet
 		Collections.sort(projects, new ProjectRegionComparator());	
 		Collections.sort(projects, new ProjectStageComparator());
 	}
+	
+	public synchronized void sortProjectsChangeOrder(List<projectObjects.Project> projects)
+	{
+		Collections.sort(projects, new ProjectItemComparator());	
+		Collections.sort(projects, new WarehouseComparator());	
+	}
+	
+    
 	
 	public synchronized void sortTasks(List<projectObjects.Task> tasks)
 	{

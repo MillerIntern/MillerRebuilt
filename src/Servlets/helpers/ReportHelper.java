@@ -2,10 +2,17 @@ package Servlets.helpers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import comparators.ChangeOrderNumberComparator;
+import comparators.ProjectItemComparator;
+import comparators.ProjectRegionComparator;
+import comparators.WarehouseComparator;
 import projectObjects.ChangeOrder;
 import projectObjects.NewEquipment;
 import projectObjects.Person;
@@ -514,10 +521,15 @@ public class ReportHelper
 					  "<th>Vendor</th><th>Estimated Delivery Date</th>" +
 					  "<th>Actual Delivery Date</th><th class='longText'>Notes");
 		} else if (value.equals("changeOrder")) {
-			sb.append("<th>Warehouse</th><th>Item</><th>Manager</th><th>Customer CO#</th><th>MCS CO#</th>" + 
-					  "<th>Sub Names(s)</th><th>Proposal Date</th><th class='longText'>Brief Description</th><th>Cost</th>" + 
-					  "<th>Sell</th><th>Status</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
-					  "<th class='longText'>Notes");
+			sb.append("<th>Warehouse</th><th>Project</><th>Manager</th><th>MCS CO#</th><th>Customer CO#</th><th>Title</th>" + 
+					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
+					  "<th>Subs Submitted Date</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
+					  "<th>Cost</th><th>Sell</th><th class='longText'>Notes");
+		} else if (value.equals("changeOrderSolo")) {
+			sb.append("<th>MCS CO#</th><th>Warehouse</th><th>Project</><th>Manager</th><th>Customer CO#</th><th>Title</th>" + 
+					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
+					  "<th>Subs Submitted Date</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
+					  "<th>Cost</th><th>Sell</th><th class='longText'>Notes");
 		} else if(value.equals("permitNotes")) {
 			sb.append("<th>");
 			sb.append("Permit Notes");
@@ -1486,28 +1498,73 @@ public class ReportHelper
 			if (amountOfChangeOrders == 0) return "";
 			
 			StringBuilder changeOrders = new StringBuilder();
-			Iterator<ChangeOrder> iter = p.getChangeOrders().iterator();
+			
+			Iterator<ChangeOrder> iter2 = p.getChangeOrders().iterator();
+			List<ChangeOrder> list = new ArrayList<ChangeOrder>();
+			while (iter2.hasNext()) {
+			    list.add(iter2.next());
+			}
+			sortChangeOrders(list);
+
+			Iterator<ChangeOrder> iter = list.iterator();
 			
 			while(iter.hasNext()) {
 				ChangeOrder tmp = iter.next();
-				changeOrders.append("<tr><td></th><td>" + p.getWarehouse().getCity().getName() + 
+				changeOrders.append("<tr><td class='tableIndex'></th><td>" + p.getWarehouse().getCity().getName() + 
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
 				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");
-				changeOrders.append("<td>" + p.getProjectManagers().getName() + "</td>");
+				changeOrders.append("<td align = 'center'>" + p.getProjectManagers().getName() + "</td>");
+				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
 				changeOrders.append("<td>" + convertChangeOrderType(tmp.getType()) + "</td>");
-				changeOrders.append("<td>" + nullOrFull(tmp.getMcsCO()) + "</td>");
-				changeOrders.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");
-				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getProposalDate()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getTitle()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");
-				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
-				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
 				changeOrders.append("<td>" + convertChangeOrderStatus(tmp.getStatus()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");			
+				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getProposalDate()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
+				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
+				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
+			return changeOrders.toString();
+		}
+		else if (value.equals("changeOrderSolo") && p.getChangeOrders() != null) {
+			int amountOfChangeOrders = p.getChangeOrders().size();
+			if (amountOfChangeOrders == 0) return "";
 			
+			StringBuilder changeOrders = new StringBuilder();
+			
+			Iterator<ChangeOrder> iter2 = p.getChangeOrders().iterator();
+			List<ChangeOrder> list = new ArrayList<ChangeOrder>();
+			while (iter2.hasNext()) {
+			    list.add(iter2.next());
+			}
+			sortChangeOrders(list);
+
+			Iterator<ChangeOrder> iter = list.iterator();
+			
+			while(iter.hasNext()) {
+				ChangeOrder tmp = iter.next();
+				changeOrders.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
+				changeOrders.append("<td>" + p.getWarehouse().getCity().getName() + 
+									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
+				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");
+				changeOrders.append("<td align = 'center'>" + p.getProjectManagers().getName() + "</td>");
+				changeOrders.append("<td>" + convertChangeOrderType(tmp.getType()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getTitle()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");
+				changeOrders.append("<td>" + convertChangeOrderStatus(tmp.getStatus()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");			
+				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getProposalDate()) + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
+				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
+				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
+				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
+				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
+				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
+			}
 			return changeOrders.toString();
 		}
 		else
@@ -1640,10 +1697,23 @@ public class ReportHelper
 		if (i == null) return "---";
 		
 		if(i.equals("1"))
-			return "Submitted";
+			return "Preparing";
 		else if(i.equals("2"))
-			return "MCS Reviewing";
+			return "Submitted";
+		else if(i.equals("3"))
+			return "Approved";
+		else if(i.equals("4"))
+			return "Rejected";
+		else if(i.equals("5"))
+			return "Complete";
+		
+		
 		
 		return "---";
+	}
+	
+	public synchronized static void sortChangeOrders(List<ChangeOrder> changeOrders)
+	{
+		Collections.sort(changeOrders, new ChangeOrderNumberComparator());
 	}
 }

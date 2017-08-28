@@ -1,0 +1,66 @@
+/* The animation code */
+@-webkit-keyframes example {
+    0%   {background-color:red;}
+    25%  {background-color:yellow;}
+    50%  {background-color:blue;}
+    75%  {background-color:green;}
+    100% {background-color:red;}
+}
+
+@-webkit-keyframes myOrbit {
+    from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+   
+}
+
+
+/* The element to apply the animation to */
+#animationContent {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background-color: red;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#animationContent2 {
+	position: absolute;
+    right: 140px;
+    top: 200px;
+    
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+
+    /*
+     * Sets up the animation duration, timing-function (or easing)
+     * and iteration-count. Ensure you use the appropriate vendor-specific 
+     * prefixes as well as the official syntax for now. Remember, tools like 
+     * CSS Please are your friends!
+     */
+    -webkit-animation: myOrbit 4s linear infinite; /* Chrome, Safari 5 */
+}
+
+
+#animationContent3 {
+	position: absolute;
+    left: 315px;
+    top: 143px;
+    
+    animation-name: example;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+
+    /*
+     * Sets up the animation duration, timing-function (or easing)
+     * and iteration-count. Ensure you use the appropriate vendor-specific 
+     * prefixes as well as the official syntax for now. Remember, tools like 
+     * CSS Please are your friends!
+     */
+    -webkit-animation: myOrbit 8s linear infinite; /* Chrome, Safari 5 */
+}
+
+

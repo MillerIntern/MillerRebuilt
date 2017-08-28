@@ -12,6 +12,7 @@ const PROJECT_EQUIPMENT = 'equipmentData.html';
 const EQUIPMENT_PRINT = 'projectDataPrint.html?type=equipment&';
 const TASK_CREATOR = 'taskForm.html';
 
+
 jQuery.fn.center = function () {
     this.css("position","absolute");
     this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
