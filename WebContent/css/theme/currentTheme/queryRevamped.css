@@ -1,0 +1,58 @@
+.param-field {
+	width: 80%;
+	background-color: white;
+	padding: 4px 4px 4px 4px;
+	border: 3px solid #223f82;
+	border-style:solid;
+	border-color: #4d78dc #1d346c #1d346c #2e54ad;
+	border-radius: 4px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.param-field > span {
+	display: inline-block;
+	padding: 2px 2px;
+	border-bottom: 2px solid black;
+	color: black;
+	//border-radius: 4px;
+	font-size: 20px;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.stageGroup, .changeOrderStatusGroup, .changeOrderButton {
+	padding-left: 150px;
+	
+}
+
+.paramCell {
+	padding: 5px;
+    margin-bottom: 1%;
+	width: 70%;
+	min-width: 150px;
+	right:0px;
+	background: white;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.paramDateCell {
+	padding: 5px;
+	width: 70%;
+	min-width: 150px;
+	right:0px;
+	background: white;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.tab {
+	margin-left: 300px;
+}
+
+.queryButton:hover {
+	background-color: white;
+	color: blue;
+	border-color: blue;
+}

@@ -1,7 +1,28 @@
 
-.table > tbody > tr > th {
+
+#printButton {
+	width: 75%;
+	margin-left: 13%;
+
+}
+
+#printButton:hover {
+  background-color: white;
+  color: #0d47a1;
+  border-color: #0d47a1;
+}
+
+#taskTableDiv {
+	width:100%;
+    height:100%;
+    overflow-y: scroll;
+    max-width:100%;
+    max-height:500px;
+}
+
+.headBorder {
 	font-size: 20px;
-	border-bottom: 2px solid #333;
+	border-bottom: 3px solid #555;
 }
 
 .table > tbody > tr > td {
@@ -9,7 +30,7 @@
 	border-bottom: 2px solid #555;
 }
 
-.table > tbody > tr:not(.head):hover  {
+.table > tbody > tr:hover {
 	background-color: #d7e1f7;
 	transition-duration: .5s;
 }

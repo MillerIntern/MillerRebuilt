@@ -58,7 +58,7 @@
 		      		onmouseout="style='background-color: none;'">Create Task</a></li>
 		      	</ul>
 		      </li>
-		      <li><a href="OGqueryCode.html">Reports</a></li>
+		      <li><a href="query.html">Reports</a></li>
 		      <li class="adminContent"><a href="additions.html">Tools</a></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
@@ -125,7 +125,7 @@
 			   </div>
 	   		<br>
 	   		
-	   		<div class = "well param-field">
+	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
 	   			<tr class='head'><th>Warehouse</th><th>MCS Number</th><th>Item</th><th>Manager</th></tr>
 	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
@@ -178,17 +178,22 @@
 			<div class='info-tab' id='changeOrders'>
 				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
 					<option value='all' selected="selected">All</option>
+					<option value='review'>Review</option>
 					<option value='preparing'>Preparing</option>
 					<option value='submitted'>Submitted</option>
 					<option value='approved'>Approved</option>
 					<option value='rejected'>Rejected</option>
 					<option value='complete'>Complete</option>
 				</select>
+				
+				<div id = "changeOrderTableDiv">
 				<table id='changeOrderTable' class='table'>				
 					<thead class="changeOrderTableHead"><tr><th>CO #</th><th>Title</th><th>Description</th><th>Status</th><th>CO Notes</th></tr></thead>
 					<tbody>
 					</tbody>
-				</table>	
+				</table>
+				</div>
+				
 				<button onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
 				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
@@ -389,6 +394,7 @@
 	        
 	        
 	        </table>
+	        <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
@@ -1416,6 +1422,14 @@
 		                </td>   
 		            </tr>
 		            <tr>
+		                <td  class="coLabel">Customer CO#</td>
+		                <td>
+		                    <select class="closeout-input" id="customerCO">
+		                        <option value="default">--Customer--</option>
+		                    </select>               
+		                </td>
+		            </tr>
+		            <tr>
 		                <td class="coLabel">Title</td>
 		                <td>
 		                    <input type="text" id="title" />
@@ -1437,16 +1451,15 @@
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td class="coLabel">Sell ($)</td>
-		 
+		                <td class="coLabel">Sub Name(s)</td>
 		                <td>
-		                	<input type="text" id="sell" />
+		                    <input type="text" id="subNames" />
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td class="coLabel">Cost ($)</td>
+		                <td class="coLabel">Subs Submitted Date</td>
 		                <td>
-		                    <input type="text" id="cost" />
+		                	<input type="text" id="proposalDate" />
 		                </td>   
 		            </tr>
 		            <tr>
@@ -1457,16 +1470,16 @@
 		                </td>   
 		            </tr>
 		            <tr>
+		                <td class="coLabel">Sub CO #</td>
+		                <td>
+		                    <input type="text" id="subCO" />
+		                </td>   
+		            </tr>
+		            <tr>
 		                <td class="coLabel">Submitted Date</td>
 		 
 		                <td>
 		                	<input type="text" id="submittedDate" />
-		                </td>   
-		            </tr>	
-		                 <tr>
-		                <td class="coLabel">Subs Submitted Date</td>
-		                <td>
-		                	<input type="text" id="proposalDate" />
 		                </td>   
 		            </tr>
 		            <tr>
@@ -1476,34 +1489,27 @@
 		                	<input type="text" id="approvedDate" />
 		                </td>   
 		            </tr>
+		            <tr>
+		                <td class="coLabel">Cost ($)</td>
+		                <td>
+		                    <input type="text" id="cost" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Sell ($)</td>
+		 
+		                <td>
+		                	<input type="text" id="sell" />
+		                </td>   
+		            </tr>
 		             <tr>
 		                <td class="coLabel">CO Notes</td>
 		                <td>
 		                    <textarea id="notes" maxlength="998" rows="4" cols="40"> </textarea>
 		                </td>   
 		            </tr>
-		             <tr>
-		                <td  class="coLabel">Customer CO#</td>
-		                <td>
-		                    <select class="closeout-input" id="customerCO">
-		                        <option value="default">--Customer--</option>
-		                    </select>               
-		                </td>
-		            </tr>	            
-		            <tr>
-		                <td class="coLabel">Sub CO #</td>
-		                <td>
-		                    <input type="text" id="subCO" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Sub Name(s)</td>
-		                <td>
-		                    <input type="text" id="subNames" />
-		                </td>   
-		            </tr>	       
-
-		        </table>
+				 </table>
+				 <button id = "saveChangeOrders" class="btn btn-success btn-block" onClick = "saveProject_CHANGE_ORDER()">Save Changes!</button>
 			</div>
 			<div class='info-tab' id='saveButton'>
 				<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>

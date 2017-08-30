@@ -89,6 +89,46 @@ public class ProjectObjectService
 	}
 	
 	/**
+	 * This function returns all Projects from the database.
+	 * @return a list of all Projects in the database.
+	 */
+	public synchronized static List<projectObjects.Project> getAllProjects()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Project");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Project> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
+	 * This function returns all Change Orders from the database.
+	 * @return a list of all Change Orders with a specific status in the database.
+	 */
+	public synchronized static List<projectObjects.ChangeOrder> getAllChangeOrders()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ChangeOrder");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.ChangeOrder> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
 	 * This function returns all Tasks from the database.
 	 * @param task assignee_id
 	 * @return a list of all Tasks of a specific assignee in the database.
@@ -711,4 +751,6 @@ public class ProjectObjectService
 		
 		return "";
 	}
+
+	
 }

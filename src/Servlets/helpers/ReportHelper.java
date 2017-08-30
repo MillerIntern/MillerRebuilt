@@ -3,6 +3,7 @@ package Servlets.helpers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -520,7 +521,7 @@ public class ReportHelper
 			sb.append("<th>Warehouse</th><th>Item</th><th>Status</th><th>Equipment Name</th>" +
 					  "<th>Vendor</th><th>Estimated Delivery Date</th>" +
 					  "<th>Actual Delivery Date</th><th class='longText'>Notes");
-		} else if (value.equals("changeOrder")) {
+		} else if (value.equals("changeOrder") || value.contains("changeOrder_")) {
 			sb.append("<th>Warehouse</th><th>Project</><th>Manager</th><th>MCS CO#</th><th>Customer CO#</th><th>Title</th>" + 
 					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
 					  "<th>Subs Submitted Date</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
@@ -1493,9 +1494,19 @@ public class ReportHelper
 			}
 
 			return equipmentBuilder.toString();
-		} else if (value.equals("changeOrder") && p.getChangeOrders() != null) {
+		} else if ((value.equals("changeOrder") && p.getChangeOrders() != null) ||
+				(value.contains("changeOrder_") && p.getChangeOrders() != null)) {
 			int amountOfChangeOrders = p.getChangeOrders().size();
 			if (amountOfChangeOrders == 0) return "";
+			
+			List<String> statuses = null;
+			if(value.contains("changeOrder_")) {
+				value = value.replace("changeOrder_", "");
+				statuses = new ArrayList<String>(Arrays.asList(value.split(",")));
+			}
+			
+			
+		
 			
 			StringBuilder changeOrders = new StringBuilder();
 			
@@ -1510,6 +1521,17 @@ public class ReportHelper
 			
 			while(iter.hasNext()) {
 				ChangeOrder tmp = iter.next();
+				if(statuses != null) {
+					boolean found = false;
+					for(String str: statuses) {
+						if(str.equals(nullOrFull(tmp.getStatus()))) 
+						{
+							found = true;
+							break;
+						}
+					}
+					if(found == false) continue;
+				}
 				changeOrders.append("<tr><td class='tableIndex'></th><td>" + p.getWarehouse().getCity().getName() + 
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
 				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");
@@ -1524,8 +1546,8 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
-				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
 				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
+				changeOrders.append("<td>$" + tmp.getSell() + "</td>");				
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
@@ -1561,8 +1583,8 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
-				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
 				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
+				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
@@ -1706,6 +1728,8 @@ public class ReportHelper
 			return "Rejected";
 		else if(i.equals("5"))
 			return "Complete";
+		else if(i.equals("6"))
+			return "Review";
 		
 		
 		

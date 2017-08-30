@@ -782,13 +782,28 @@ function clearTaskTable () {
  */
 function printButton(){
 	
-	if(!projectsOfInterest) {
+	if(!projectsOfInterest || projectsOfInterest.length == 0) {
 		alert("No tasks to print!");
 		return;
 		}
-	printTasks(projectsOfInterest);
+	//printTasks(projectsOfInterest);
+
+	console.log("PROJ OF INTTT = ", projectsOfInterest);
 	
- 
+	let taskIDs = new Array();
+	let reportURL =  "Report?type=TaskReport&id1=";
+	for(var i = 0; i < projectsOfInterest.length; i++) {
+		//taskIDs.push(projectsOfInterest[i].id);
+		if(i != projectsOfInterest.length - 1) reportURL += projectsOfInterest[i].id + "&id" + (i+2) + "=";
+		else reportURL += projectsOfInterest[i].id;
+	}
+	
+	console.log("REPORT URL = ", reportURL);
+	
+	
+	window.location.href = reportURL;
+	
+
 }
 
 /**

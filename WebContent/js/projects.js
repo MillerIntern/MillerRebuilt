@@ -923,6 +923,12 @@ function goToProjectManager() {
 			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
 			$('#projectManager').find('#changeOrders').addClass('active');
 			$('#projectManager').find('#editChangeOrder').prop('disabled', true);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#saveButton').removeClass('active');
 			break;
 			
 	}
@@ -1634,6 +1640,7 @@ function saveProject_PROJECT_DATA() {
 	var notes = $('#projectData').find("#notes").val();
 	var refrigNotes = $('#projectData').find("#zUpdates").val();
 	var cost = $('#projectData').find("#projectCost").val();
+	if(cost) {cost = cleanNumericValueForSaving($('#projectData').find("#projectCost")[0].value); cost = parseFloat(cost);}
 	var customerNumber = $('#projectData').find("#custNum").val();
 	
 	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
@@ -1962,6 +1969,7 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#actualInvoice").val(json.invoiced);
 	$('#projectData').find("#notes").val(json.projectNotes);
 	$('#projectData').find("#zUpdates").val(json.zachUpdates);
+	if(json.cost) json.cost = cleanNumericValueForDisplaying(json.cost);
 	$('#projectData').find("#projectCost").val(json.cost);
 	$('#projectData').find("#custNum").val(json.customerNumber);
 }
@@ -2184,6 +2192,7 @@ function fillChangeOrders (data) {
 		else if($('#changeOrderSelector').val() == "approved" && changeOrders[i].status != "3") continue;
 		else if($('#changeOrderSelector').val() == "rejected" && changeOrders[i].status != "4") continue;
 		else if($('#changeOrderSelector').val() == "complete" && changeOrders[i].status != "5") continue;
+		else if($('#changeOrderSelector').val() == "review" && changeOrders[i].status != "6") continue;
 		
 		var tableRow = document.createElement('tr');
 		tableRow.setAttribute("value", changeOrder.id);
@@ -2639,6 +2648,8 @@ function parseChangeOrderStatus (param) {
 			return "Rejected";
 		case "5":
 			return "Complete";
+		case "6":
+			return "Review";
 		default:
 			return "---";
 	}
@@ -3812,8 +3823,13 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
 	$('#changeOrder').find("#briefDescription").val(changeOrderToEdit.briefDescription);
 	$('#changeOrder').find("#subNames").val(changeOrderToEdit.subNames);
+	
+	if(changeOrderToEdit.cost) changeOrderToEdit.cost = cleanNumericValueForDisplaying(changeOrderToEdit.cost);
 	$('#changeOrder').find("#cost").val(changeOrderToEdit.cost);
+	
+	if(changeOrderToEdit.sell) changeOrderToEdit.sell = cleanNumericValueForDisplaying(changeOrderToEdit.sell);
 	$('#changeOrder').find("#sell").val(changeOrderToEdit.sell);
+	
 	$('#changeOrder').find("#status").val(changeOrderToEdit.status);
 	$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
 	$('#changeOrder').find("#submittedDate").val(changeOrderToEdit.submittedDate);
@@ -3821,6 +3837,106 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#notes").val(changeOrderToEdit.notes);
 	$('#changeOrder').find('#title').val(changeOrderToEdit.title);
 	}
+}
+
+/**
+ * This function makes a number more computer friendly by removing commas
+ *
+ * @param a number
+ * @returns computer friendly number
+ */
+function cleanNumericValueForSaving(num)
+{
+	while(num.indexOf(",") != -1) {
+		num = num.replace(",","");
+	}
+	return num;
+}
+
+/**
+ * This function makes a number more human friendly by adding commas and by adding a 0 to the decimal
+ * Example : instead of 123456.7 being displayed, this method turns it into 123,456.70
+ * @param a number
+ * @returns human friendly number
+ */
+function cleanNumericValueForDisplaying(num)
+{
+	console.log("BEFORE: ", num);
+	var str = num.toString();
+	
+	var price, cleanPrice;
+	var dollars, cleanDollars;
+	var dollarArray = new Array();
+	var correctOrder = "";
+	var cents, cleanCents;
+    
+	if(str.indexOf(".") != -1) 
+	{
+		price = str.split(".");
+		console.log("PRICE = ", price);
+		dollars = price[0];
+		cents = price[1];
+		if(cents.length == 1) cleanCents = cents + "0";
+		else cleanCents = cents;
+		var commaCount = 0;
+		for(var i = dollars.length - 1; i > -1; i--)
+		{
+			commaCount++;
+			dollarArray.push(dollars[i]);
+			if(commaCount % 3 == 0 && i != 0) dollarArray.push("-");
+		}
+		
+		cleanDollars = dollarArray.toString();
+		while(cleanDollars.indexOf(",") != -1) {
+			cleanDollars = cleanDollars.replace(",","");
+		}
+		
+		while(cleanDollars.indexOf("-") != -1) {
+			cleanDollars = cleanDollars.replace("-",",");
+		}
+		
+		for(var i = cleanDollars.length -1; i > -1; i--) {
+			correctOrder += cleanDollars[i];
+		}
+		
+		cleanPrice = correctOrder + "." + cleanCents;
+		console.log("AFTER: ", cleanPrice);
+		return cleanPrice;
+	} 
+	else
+	{
+
+		var commaCount = 0;
+		for(var i = str.length - 1; i > -1; i--)
+		{
+			commaCount++;
+			dollarArray.push(str[i]);
+			if(commaCount % 3 == 0 && i != 0) dollarArray.push("-");
+		}
+		console.log("D ARRAY = ", dollarArray);
+		cleanDollars = dollarArray.toString();
+
+		while(cleanDollars.indexOf(",") != -1) {
+			cleanDollars = cleanDollars.replace(",","");
+		}
+		
+		console.log("CLEAN DOLLARS = ", cleanDollars);
+		
+		while(cleanDollars.indexOf("-") != -1) {
+		cleanDollars = cleanDollars.replace("-",",");
+		}
+		
+		
+		for(var i = cleanDollars.length -1; i > -1; i--) {
+			correctOrder += cleanDollars[i];
+		}
+		
+		cleanPrice = correctOrder;
+		console.log("AFTER: ", cleanPrice);
+		return cleanPrice;
+		
+	}
+	
 }
 
 /**
@@ -3913,13 +4029,15 @@ function fillDropdowns_CHANGE_ORDER(json)
  */
 function sortChangeOrderStatus(json)
 {
+	console.log("JSONNNN == ", json);
 	let tmp = json.slice(0);
 		
-	tmp[0] = json[2];
-	tmp[1] = json[4];
-	tmp[2] = json[0];
-	tmp[3] = json[3];
-	tmp[4] = json[1];
+	tmp[0] = json[4];
+	tmp[1] = json[2];
+	tmp[2] = json[5];
+	tmp[3] = json[0];
+	tmp[4] = json[3];
+	tmp[5] = json[1];
    
 	return tmp;
 	
@@ -3950,7 +4068,10 @@ function saveProject_CHANGE_ORDER()
 	var title = $('#changeOrder').find('#title').val();
 	
 	var cost = $('#changeOrder').find("#cost").val();
+	if(cost) {cost = cleanNumericValueForSaving($('#changeOrder').find("#cost")[0].value); cost = parseFloat(cost);}
+	
 	var sell = $('#changeOrder').find("#sell").val();
+	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
 	
 	var dates = [proposalDate, submittedDate, approvedDate];
 	
@@ -4009,6 +4130,8 @@ function saveProject_CHANGE_ORDER()
 				
 			}
 		});
+		
+		
 }
 /**
  * This function checks to see if the entered date is in valid form

@@ -61,7 +61,7 @@
 	      		
 	      	</ul>
 	      </li>
-	      <li><a href="OGqueryCode.html">Reports</a></li>
+	      <li><a href="query.html">Reports</a></li>
 	      <li class="adminContent"><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
@@ -121,7 +121,7 @@
    		  <button id='advancedSortButton' class='btn advancedSortingOptions advancedSortingSelector' style='display:none' onclick='advancedSortValidation()'> Sort </button>
    		 </div>
           
-          <br><br>
+          <br>
    		  <div id='taskWell' class='well' style='display: none'>
 	   			<h4 class='title'></h4>
 	   			<p><b>Title of Task: </b></p>
@@ -164,7 +164,11 @@
 	   			</span>
    		</div>
    		
-		<div class = "param-field">
+   	
+   		<button onclick='printButton()' class='btn btn-primary' id="printButton">Print Tasks</button>
+		
+		
+		<div class = "param-field" id="taskTableDiv">
 		<table id="taskTable" class="table table-responsive" >
 		      
 		   <col style="width: 15%">
@@ -179,12 +183,12 @@
 		   
 		   
 		   
-		   
+		   <thead>
    			<tr class='head'>
    				<td><input class="taskSearcher" id="projectSearch" type='text' placeholder='Search For Project'/></td>
-   				<th></th>
+   				<td></td>
    				<td><input class="taskSearcher"  id="descriptionSearch" type='text' placeholder='Filter Descriptions'/></td>
-   				<th></th>
+   				<td></td>
    				<td>
    				  <select class = 'sortSelection form-control' id = 'sortSelector'>
    				     <option value='none' disabled selected hidden=true>Sort By...</option>
@@ -194,18 +198,18 @@
    				     <option value='assignee' style='display:none' id='assigneeSort'> Assignee </option>
    				  </select>
    				</td>
-   				<th></th>
+   				<td></td>
    				<td>
    				   <select class = 'sortSelection form-control' id = 'sortOrder'>
    				     <option value='ascending'>Ascending</option>
    				     <option value='descending'>Descending</option>
    				  </select>
    			    </td>
-   				<th></th>
+   				<td></td>
    			
    			</tr>
    		
-   			<tr class='head'>
+   			<tr class='head headBorder'>
    				<th>Project</th>
    				<th>Task</th>
    				<th>Assignee</th>
@@ -217,6 +221,11 @@
    				<th>Notes</th>
    				
    			</tr>
+   			</thead>
+   			
+   			<tbody>
+   			</tbody>
+   			
    		</table>
    		</div>
   
@@ -224,7 +233,7 @@
    		
   	
     </div>
-    <button onclick='printButton()' class='btn btn-default'>Print Tasks</button>
+    
 
   </body>
 </html>

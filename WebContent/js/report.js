@@ -17,7 +17,7 @@ $(document).ready( function () {
 					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
 				}
 				if(oSettings.aoHeader[0][1]){
-					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") $('.tableIndex').remove();
+					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") {$('.tableIndex').remove(); console.log("REMOVED IT")}
 				}
 			}
 		},
@@ -65,7 +65,7 @@ function printPage()
 
 function backPage()
 {
-	document.location.href = "OGqueryCode.html";
+	document.location.href = "query.html";
 }
 
 $(document).ready(function() {

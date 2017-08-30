@@ -85,6 +85,13 @@ const PROJECT_STATUS_LOST = 34;
 const PROJECT_STATUS_CLOSEOUT = 35;
 const PROJECT_STATUS_CLOSED = 36;
 
+const CO_STATUS_PREPARING = 1;
+const CO_STATUS_SUBMITTED = 2;
+const CO_STATUS_APPROVED = 3;
+const CO_STATUS_REJECTED = 4;
+const CO_STATUS_COMPLETE = 5;
+const CO_STATUS_REVIEW = 6;
+
 //Project Classification
 const PROJECT_CLASS_HVAC = 4;
 
@@ -210,6 +217,16 @@ const CO_ACTIVE = 'CO_REPORT_A';
 const CO_PROPOSAL = 'CO_REPORT_P';
 const CO_BUDGETARY = 'CO_REPORT_B';
 const CO_CLOSED = 'CO_REPORT_C';
+
+const CO_REVIEW = 'CO_REPORT_REVIEW';
+const CO_PREPARING = 'CO_REPORT_PREPARING';
+const CO_SUBMITTED = 'CO_REPORT_SUBMITTED';
+const CO_APPROVED = 'CO_REPORT_APPROVED';
+const CO_REJECTED = 'CO_REPORT_REJECTED';
+const CO_COMPLETE = 'CO_REPORT_COMPLETE';
+
+const CO_STATUSES = 'CO_STATUSES';
+
 
 const TASK = 'TASK';
 
@@ -378,6 +395,15 @@ var closeoutOptions;
 
 //Keeps track of what values go with which parameter
 var paramNum = 0;
+let changeOrderStatuses = {
+		"6" : false,
+		"1" : false,
+		"2" : false,
+		"3" : false,
+		"4" : false,
+		"5" : false,
+		"All" : false
+};
 
 $(document).on('change', 'select.params',function(){
 	setVals($(this));
@@ -396,8 +422,32 @@ $(document).ready(function()
 $(document).on('change', '.reportTypePicker',function(){
 	console.log("value  == ", this.value);
 	if(this.value == ADRIENNE) generateReport(ADRIENNE);
+	else if(this.value == TASK) generateTaskReport(TASK);
+	else if(this.value == "CO_REPORT") {$('.changeOrderStatusGroup').show(); $('#changeOrderButton').show();}
+	else {$('.changeOrderStatusGroup').hide(); $('#changeOrderButton').hide();}
 });
 
+function toggleChangeOrderStatus(status)
+{
+	
+	if(status == "All")
+	{
+		let allStatus = $('.changeOrderStatusGroup').find('[value="All"]')[0].checked;
+		console.log("ALL STATUS == ", allStatus);
+		$('.changeOrderStatusGroup > input').each(function(i, obj) {
+			if(allStatus == true) {obj.checked = true; changeOrderStatuses[obj.value] = true}
+			else {obj.checked = false; changeOrderStatuses[obj.value] = false}
+		});
+	}
+	else
+	{
+		let inputElement = $('.changeOrderStatusGroup').find('[value='+status+']')[0];
+		if(inputElement.checked == true) changeOrderStatuses[inputElement.value] = true;
+		else changeOrderStatuses[inputElement.value] = false;	
+	}
+	
+	
+}
 //Sets the values of a drop down whenever the parameter type is changed
 function setVals(thisParam)
 {
@@ -596,11 +646,14 @@ function addParamCell()
 	optObj.value = 'none';
 	optObj.innerHTML = 'Select Parameter';
 	
+	var spaceTag = document.createElement("span");
+	spaceTag.className = "tab";
+	
 	//create the remove tag for the param cell
-	var removeTag = document.createElement("div");
-	removeTag.className = 'remove';
+	var removeTag = document.createElement("span");
+	removeTag.className = 'glyphicon glyphicon-remove';
 	removeTag.onclick = function() {removeParam(this)};
-	removeTag.innerHTML = 'X';
+	//removeTag.innerHTML = '&nbsp;&nbsp;&nbsp;X';
 	
 	//create a break tag
 	var br = document.createElement("br");
@@ -617,12 +670,14 @@ function addParamCell()
 	selObj.appendChild(optObj);
 	selObj2.appendChild(optObj2);
 	paraCell.appendChild(selObj);
+	paraCell.appendChild(spaceTag);
 	paraCell.appendChild(removeTag);
 	paraCell.appendChild(br);
 	paraCell.appendChild(selObj2);
 	$(".paramTable").append(paraCell);
 	populateParameters();
 }
+
 
 //populate the parameters of the most recently created paramCell
 function populateParameters()
@@ -655,13 +710,14 @@ function removeParam(elem)
 function addDateParamCell()
 {
 	$(".paramTable").append("<div class=paramDateCell>" +
-			"<select class='drop params' id ='param" + paramNum + "'><option value='none'>Select Date Type</option></select><div class='remove' onclick='removeParam(this)'>X</div></br>" +	    	
+			"<select class='drop params' id ='param" + paramNum + "'><option value='none'>Select Date Type</option></select><span class='tab'></span><span class='remove glyphicon glyphicon-remove' onclick='removeParam(this)'></span></br>" +	    	
 			"<select class='drop values' id ='val" + paramNum +"'><option value='none'>Select Comparison</option></select></br>" +
 			"<input type='text' id='dateBox"+ paramNum + "'/>");
 			"<select class='drop boolVal' id='bool" + paramNum +"'></select></div>" +
 	$('#dateBox'+paramNum).datepicker();
 	populateDateParameters();
 }
+
 
 function populateDateParameters()
 {
@@ -961,11 +1017,9 @@ function reportCreator(elem)
 		case 'Inactive':
 			generateReport($('.reportTypePicker :selected').val()+'_I');
 			break;
-
 		case 'Budgetary':
 			generateReport($('.reportTypePicker :selected').val()+'_B');
 			break;
-
 		case 'Closed':
 			generateReport($('.reportTypePicker :selected').val()+'_C');
 			break;
@@ -1055,6 +1109,7 @@ function generateReport(reportType)
 	var stage = new Array();
     var manager = new Array();
 	var title = undefined;
+	var type = undefined;
 	
     console.log(paramNum);
 	 for(var i = 0; i < paramNum;i++)
@@ -1723,6 +1778,16 @@ function generateReport(reportType)
 			stage.push(CLOSED_STAGE);
 			title = 'Change Orders for Closed Projects';
 			break;
+		case CO_STATUSES:
+			status = new Array();
+			
+			$(".changeOrderStatusGroup > input").each(function(i, obj){
+				if(obj.checked == true && obj.value != "All") status.push(obj.value);
+			});
+
+			title = 'Change Orders';
+			type = 'ChangeOrderStatuses';
+			break;
 		case TASK:
 			title = 'Tasks for All Projects';
 			//stage.push(ACTIVE_STAGE);
@@ -1792,6 +1857,7 @@ function generateReport(reportType)
     			'onGoingRelation':JSON.stringify(onGoingRelation),
                 'projectManagers.id':JSON.stringify(manager),
     			'title':title,
+    			'type': type,
         };
         
         console.log(data);

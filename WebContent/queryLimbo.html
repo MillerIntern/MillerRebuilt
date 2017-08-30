@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/queryNew.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+     <script type="text/javascript" src="js/contentControl.js"></script>
+    
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+    <link href="css/theme/currentTheme/queryNew.css" type="text/css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/findProject.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href='css/projectManager.css' rel='stylesheet'>
+
+
+    <meta charset="UTF-8">
+    <title>Report generator</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html">Add Project</a></li>
+	          <li class='active'><a href="findProject.html">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a onclick="window.location.href='findProject.html?type=findTaskProject'"
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      <li class='active'><a href="query.html">Reports</a></li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+
+    
+
+    <div id=content>
+        
+       <!--<input type='text' class="reportTitle" id='reportTitle' placeholder='Title(Optional)'></input>-->
+
+        <!--<br>  -->
+        <div class='paramTableWrapper param-field' id="reportGenerator">
+            <span> Report Generator </span>
+            <!--</br>  -->
+
+            <div class=reportGenTable>
+                <Select id="broadReportType" class="form-control">
+                    <option value='none' disabled selected hidden=true>Select General Report Type...</option>
+                	<option value='GeneralProjects'>General Projects</option>
+                	<option value='ProjectManagement'>Project Management</option>
+                	<option value='ProjectTypes'>Project Types</option>        
+                </Select>
+                <br>
+                <Select class="reportTypePicker form-control" style='display: none' id='specificReports'>
+                    <option>Select A Report</option>
+                </Select>
+
+                
+               
+                <br>
+                <br>
+               
+                <div id ='ProjectStages' style='display:none;'>
+                <Select id='ProjectStagesDropDown' class="form-control">
+                <option value='none' disabled selected hidden=true>Select Project Phase...</option>
+                <option  value="Active" >Active </option>
+                <option  value="Proposals" >Proposals</option>
+                <option value="Budgetary" >Budgetary</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Closed">Closed</option>          
+                </Select>
+                </div>
+                
+                <div id ='TaskOptions' style='display:none;'>
+                <Select id='ProjectManagersDropDown' class="form-control">
+                   <option value='all' disabled selected hidden=true>Select Project Manager...</option>
+                </Select>
+                
+                <br>
+                
+                <Select id='TaskStatusDropDown' class="form-control">
+                   <option value='12' disabled selected hidden=true>Select Task Status...</option>
+                   <option value='all'>All</option>
+                   <option value='12'>Open &amp; Completed </option>
+                   <option value='1'>Open</option>
+                   <option value='2'>Completed</option>
+                   <option value='3'>Closed</option>
+                </Select>
+                </div>
+                
+                
+               
+
+				<br><br>
+				<div id='RemainingCriteria' style='display:none'>
+                    <button class ="btn-lg btn-success" id='generateReport'> Generate Report </button>
+                    
+                    <br><br>
+                </div>
+               
+                <button class ="btn-warning" id='advancedReport' value='off'> Additional Report Criteria </button>
+				<!--
+                <button class="btn-primary" id="meetingProposals">Meeting Proposals</button>
+                <button class="btn-primary" id="meetingActive">Meeting Active Projects</button>
+                <button class="btn-primary" id="meetingBudgetary">Meeting Budgetary Projects</button>
+                -->
+                
+            </div>
+         
+           </div>
+   
+                   
+           
+           <div class='paramTableWrapper param-field' id="customReport" style='display:none'>
+            <span> Custom Report Generator </span>
+            <!--</br>  -->
+
+            <div class=reportGenTable>
+
+				<div id='RemainingCriteria'>
+                 
+                <div id='AdditionalParameters'> 
+                <table style = "border: none">
+                <tr>
+                    <td> <div id="addParam">
+                        <button class="btn-primary" value="Add Parameter" onclick="addParamCell()">Add Parameter</button>
+                    </div> </td>
+                    <td> <div id="addDateParam">
+                        <button class="btn-primary" value="Add Date Parameter" onclick="addDateParamCell()">Add Date Parameter</button>
+                    </div> </td>
+                    <td> <div id="submit">
+                        <button class="btn-success btn-md" value="Search" onclick="createModalFieldSelector()"> Generate Report</button>
+                    </div> </td>
+                </tr>
+                </table>
+				</div>
+                </div>
+                
+                
+
+                <div class=paramTable> </div>
+                
+                <br><br>
+                    <button class ="btn-warning" id='advancedReportCloser' value='off'> Pre-Made Report </button>
+                
+           </div>  
+          
+   </div>
+   
+   				    <div id = "paramDisplay">
+   					<br><br>
+   					    <div id="displayParamsDiv" style='display:none'>
+                        <table id='displayParams'> <tbody id=paramBody></tbody></table> 
+                         </div>
+                         <div id="displayDateParamsDiv" style='display:none'>
+                         <table id='displayDateParams'><tbody id=paramDatesBody></tbody> </table>
+                         </div>
+                    </div>
+   
+   					
+   
+
+
+</body>
+
+</html>

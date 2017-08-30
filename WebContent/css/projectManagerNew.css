@@ -74,16 +74,16 @@
 
 
 
-.info-tab > .table {
+.info-tab > .table, #changeOrderTable {
 	border-bottom: 1px solid #dddddd;
 }
 
-.info-tab > .table > tbody > tr > td {
+.info-tab > .table > tbody > tr > td, #changeOrderTable > tbody > tr > td {
 	font-size: 16px;
 	
 }
 
-.info-tab > .table > tbody > tr > td:not(:last-child) {
+.info-tab > .table > tbody > tr > td:not(:last-child), #changeOrderTable > tbody > tr > td:not(:last-child) {
 	border-right: 1px solid #cccccc;
 }
 
