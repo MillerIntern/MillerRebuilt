@@ -956,33 +956,7 @@ function printTasks(projectsOfInterest) {
 }
 
 
-/**
- * This function makes the call to the server to send an
- * email to the user that was just assigned a task
- * 
- * INNER FUNCTION CALLS: NONE
- */
-function sendTaskAlert(data)
-{
-   	console.log("IN: new sendMail()");
-   	$.ajax({
-		type: 'POST',
-		url: 'Project',
-		data: {
-			'domain': 'project',
-			'action': 'sendTaskAlert',
-		}, complete: function (response) {
-			console.log("RESPONSE FROM sendMail() = ",response);			
-			if (response.responseJSON) {
-				console.log(response);
-			}
-			else { 
-				console.log("ERROR RESPONE FROM sendTaskAlert() = ", response);
-			}
-			
-		}
-	});
-}
+
 
 
 

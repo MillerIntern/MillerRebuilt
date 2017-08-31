@@ -21,7 +21,26 @@
 	margin-bottom: 8px;
 }
 
-.stageGroup, .changeOrderStatusGroup, .changeOrderButton {
+.inner-param-field {
+	width: 60%;
+	background-color: white;
+	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.inner-param-field > span {
+	display: inline-block;
+	padding: 2px 2px;
+	border-bottom: 2px solid black;
+	color: black;
+	//border-radius: 4px;
+	font-size: 20px;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+ .changeOrderButton {
 	padding-left: 150px;
 	
 }

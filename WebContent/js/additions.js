@@ -27,6 +27,7 @@ function preparePage() {
 			'action': 'getUserInfo'
 		}, complete: function (data) {
 			if(data.responseJSON) {
+			 if(data.responseJSON.id == 20) $('#myContent').show();
 			  console.log("USER = ", data.responseJSON);
 		      if(data.responseJSON.permission.id != 1) {
 		    	  alert("Sorry but it looks like you don't have access to this page!");
@@ -287,6 +288,30 @@ function deleteProjectObject() {
 
 		}
 		
+	});
+}
+
+
+function sendText()
+{
+	let phoneNumber = $('#phoneNumber').val();
+	let message = $('#message').val();
+	let phoneCarrier = $('#phoneCarrier').val();
+	console.log("Num: ", phoneNumber, "\nMessage: ", message, "\nCarrier: ", phoneCarrier);
+   	console.log("IN: sendTaskAlert()");
+   	if(!confirm("HOLD UP")) return;
+   	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'sendText',
+			'phoneNumber' : phoneNumber,
+			'message' : message,
+			'phoneCarrier' : phoneCarrier
+		}, complete: function (response) {
+			console.log("RESPONSE FROM sendText() = ", response);			
+		}
 	});
 }
 

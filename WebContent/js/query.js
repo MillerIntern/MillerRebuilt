@@ -2,7 +2,8 @@ var ITEM_TYPES = ["warehouse", "stage", "item", "class", "type", "region", "stat
 var DATE_TYPES = ["initiated", "costcoDueDate", "proposalSubmitted", "scheduledStartDate", "scheduledTurnover", "actualTurnover", "onGoing"];
 var DATE_RELATIONS = ["<", "=", ">"];
 var BOOL_RELATIONS = ["and", "or"];
-var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
+//var stages=["Active", "Budgetary", "Closed", "Proposal", "Inactive"];
+var stages=["Active", "Budgetary", "Closed", "Proposal", "Canceled", "Billing Closeout", "Closeout"];
 var CLOSEOUT_PARAMS = ["Inspection", "Warranties", "Liens"];
 
 const REPORT_TYPES = ["All","Steve Meyer","South East Refrigeration","North East Refrigeration",
@@ -40,6 +41,10 @@ const ACTIVE_STAGE = 2;
 const INACTIVE_STAGE=10;
 const BUDGETARY_STAGE=8;
 const CLOSED_STAGE=4;
+const ON_HOLD_STAGE = 9;
+const CANCELED_STAGE = 15;
+const BILLING_CLOSEOUT_STAGE = 16;
+const CLOSEOUT_STAGE = 17;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //DATABASE CONSTANTS: These are used to access values by database ID, if they are changed in the DB, they must also be changed here
@@ -115,6 +120,8 @@ const ACTIVE_WEEKLY = "WEEKLY_A";
 const INACTIVE_WEEKLY = "WEEKLY_I";
 const CLOSED_WEEKLY = "WEEKLY_C";
 const BUDGETARY_WEEKLY = "WEEKLY_B";
+const BILLING_CLOSEOUT_WEEKLY = "WEEKLY_BC";
+const CLOSEOUT_WEEKLY = "WEEKLY_CO";
 
 const ACTIVE_MEETING = "MEETING_A";
 const OTHER_ACTIVE = "OTHER_A";
@@ -125,98 +132,132 @@ const BUDGETARY_OTHER = "OTHER_B";
 const ACTIVE_ON_HOLD = "ON-HOLD_A";
 const PROPOSAL_ON_HOLD = 'ON-HOLD_P';
 const BUDGETARY_ON_HOLD = 'ON-HOLD_B';
+const BILLING_CLOSEOUT_MEETING = "MEETING_BC";
+const CLOSEOUT_MEETING = "MEETING_CO";
 
 const PROPOSAL_STEVE_MEYER = "STEVE_MEYER_P";
 const ACTIVE_STEVE_MEYER = "STEVE_MEYER_A";
 const INACTIVE_STEVE_MEYER = "STEVE_MEYER_I";
 const CLOSED_STEVE_MEYER = "STEVE_MEYER_C";
 const BUDGETARY_STEVE_MEYER = "STEVE_MEYER_B";
+const BILLING_CLOSEOUT_STEVE_MEYER = "STEVE_MEYER_BC";
+const CLOSEOUT_STEVE_MEYER = "STEVE_MEYER_CO";
 
 const PROPOSAL_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_P";
 const ACTIVE_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_A";
 const INACTIVE_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_I";
 const CLOSED_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_C";
 const BUDGETARY_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_B";
+const BILLING_CLOSEOUT_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_BC";
+const CLOSEOUT_NE_GC_REFRIGERATION = "NE_GC_REFRIGERATION_CO";
 
 const PROPOSAL_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_P";
 const ACTIVE_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_A";
 const INACTIVE_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_I";
 const CLOSED_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_C";
 const BUDGETARY_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_B";
+const BILLING_CLOSEOUT_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_BC";
+const CLOSEOUT_SE_GC_REFRIGERATION = "SE_GC_REFRIGERATION_CO";
 
 const PROPOSAL_SE = "SE_P";
 const ACTIVE_SE = "SE_A";
 const INACTIVE_SE = "SE_I";
 const CLOSED_SE = "SE_C";
 const BUDGETARY_SE = "SE_B";
+const BILLING_CLOSEOUT_SE = "SE_BC";
+const CLOSEOUT_SE = "SE_CO";
 
 const PROPOSAL_NE = "NE_P";
 const ACTIVE_NE = "NE_A";
 const INACTIVE_NE = "NE_I";
 const CLOSED_NE = "NE_C";
 const BUDGETARY_NE = "NE_B";
+const BILLING_CLOSEOUT_NE = "NE_BC";
+const CLOSEOUT_NE = "NE_CO";
 
 const PROPOSAL_J_DEMPSEY = "J_DEMPSEY_P";
 const ACTIVE_J_DEMPSEY = "J_DEMPSEY_A";
 const INACTIVE_J_DEMPSEY = "J_DEMPSEY_I";
 const CLOSED_J_DEMPSEY = "J_DEMPSEY_C";
 const BUDGETARY_J_DEMPSEY = "J_DEMPSEY_B";
+const BILLING_CLOSEOUT_J_DEMPSEY = "J_DEMPSEY_BC";
+const CLOSEOUT_J_DEMPSEY = "J_DEMPSEY_CO";
 
 const PROPOSAL_INVOICE_REPORT ="INVOICED_P";
 const ACTIVE_INVOICE_REPORT ="INVOICED_A";
 const INACTIVE_INVOICE_REPORT ="INVOICED_I";
 const CLOSED_INVOICE_REPORT ="INVOICED_C";
 const BUDGETARY_INVOICE_REPORT ="INVOICED_B";
+const BILLING_CLOSEOUT_INVOICE_REPORT = "INVOICE_REPORT_BC";
+const CLOSEOUT_INVOICE_REPORT = "INVOICE_REPORT_CO";
 
 const PROPOSAL_CONSTRUCTION ="CONSTRUCTION_P";
 const ACTIVE_CONSTRUCTION ="CONSTRUCTION_A";
 const INACTIVE_CONSTRUCTION ="CONSTRUCTION_I";
 const CLOSED_CONSTRUCTION ="CONSTRUCTION_C";
 const BUDGETARY_CONSTRUCTION ="CONSTRUCTION_B";
+const BILLING_CLOSEOUT_CONSTRUCTION = "CONSTRUCTION_BC";
+const CLOSEOUT_CONSTRUCTION = "CONSTRUCTION_CO";
 
 const PROPOSAL_REPAIR ="REPAIR_P";
 const ACTIVE_REPAIR ="REPAIR_A";
 const INACTIVE_REPAIR ="REPAIR_I";
 const CLOSED_REPAIR ="REPAIR_C";
 const BUDGETARY_REPAIR ="REPAIR_B";
+const BILLING_CLOSEOUT_REPAIR = "REPAIR_BC";
+const CLOSEOUT_REPAIR = "REPAIR_CO";
 
 const PROPOSAL_HVAC ="HVAC_P";
 const ACTIVE_HVAC ="HVAC_A";
 const INACTIVE_HVAC ="HVAC_I";
 const CLOSED_HVAC ="HVAC_C";
 const BUDGETARY_HVAC ="HVAC_B";
+const BILLING_CLOSEOUT_HVAC = "HVAC_BC";
+const CLOSEOUT_HVAC = "HVAC_CO";
 
 const PROPOSAL_RX ="RX_P";
 const ACTIVE_RX ="RX_A";
 const INACTIVE_RX ="RX_I";
 const CLOSED_RX ="RX_C";
 const BUDGETARY_RX ="RX_B";
+const BILLING_CLOSEOUT_RX = "RX_BC";
+const CLOSEOUT_RX = "RX_CO";
 
 const ACTIVE_COMPLETE_REPORT ="COMPLETED_A";
 
 const ACTIVE_CLOSEOUT = "CLOSEOUT_A";
 const BUDGETARY_CLOSEOUT = "CLOSEOUT_B";
 const CLOSED_CLOSEOUT = "CLOSEOUT_C";
+const BILLING_CLOSEOUT_CLOSEOUT = "CLOSEOUT_BC";
+const CLOSEOUT_CLOSEOUT = "CLOSEOUT_CO";
 
 const PERMIT_ACTIVE = 'PERMIT_A';
 const PERMIT_PROPOSAL = 'PERMIT_P';
 const PERMIT_BUDGETARY = 'PERMIT_B';
 const PERMIT_CLOSED = 'PERMIT_C';
+const PERMIT_BILLING_CLOSEOUT = "PERMIT_BC";
+const PERMIT_CLOSEOUT = "PERMIT_CO";
 
 const INSPECTION_ACTIVE = 'INSPECTIONS_A';
 const INSPECTION_PROPOSAL = 'INSPECTIONS_P';
 const INSPECTION_BUDGETARY = 'INSPECTIONS_B';
 const INSPECTION_CLOSED = 'INSPECTIONS_C';
+const INSPECTION_BILLING_CLOSEOUT = "INSPECTION_BC";
+const INSPECTION_CLOSEOUT = "INSPECTION_CO";
 
 const EQUIPMENT_ACTIVE = 'EQUIPMENT_A';
 const EQUIPMENT_PROPOSAL = 'EQUIPMENT_P';
 const EQUIPMENT_BUDGETARY = 'EQUIPMENT_B';
 const EQUIPMENT_CLOSED = 'EQUIPMENT_C';
+const EQUIPMENT_BILLING_CLOSEOUT = "EQUIPMENT_BC";
+const EQUIPMENT_CLOSEOUT = "EQUIPMENT_CO";
 
 const CO_ACTIVE = 'CO_REPORT_A';
 const CO_PROPOSAL = 'CO_REPORT_P';
 const CO_BUDGETARY = 'CO_REPORT_B';
 const CO_CLOSED = 'CO_REPORT_C';
+const CO_BILLING_CLOSEOUT = "CO_REPORT_BC";
+const CO_CLOSEOUT = "CO_REPORT_CO";
 
 const CO_REVIEW = 'CO_REPORT_REVIEW';
 const CO_PREPARING = 'CO_REPORT_PREPARING';
@@ -260,11 +301,21 @@ const CLOSED_WEEKLY_KEYS = new Array("mcsNum", "stage", "warehouse", "item","sco
 									"scheduledStartDate", "scheduledTurnover", "asBuilts", "punchList", "alarmHvacForm",
 									"permitsClosed","shouldInvoice","invoiced","projectNotes");
 
+const BILLING_CLOSEOUT_WEEKLY_KEYS = new Array("stage", "item","scope","status");
+
+const CLOSEOUT_WEEKLY_KEYS = new Array("stage", "item","scope","status");
+
 //Fields to show with Steve Meyer and J Dempsey reports
 const PROPOSAL_J_DEMPSEY_KEYS = new Array("warehouse", "item","scope","class","manager", "supervisor", 
 												"region", "status", "initiated","proposalSubmitted");
 const ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
 				"manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
+
+const BILLING_CLOSEOUT_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
+		"manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
+
+const CLOSEOUT_STEVE_MEYER_AND_J_DEMPSEY_KEYS = new Array("mcsNum","warehouse", "item","scope","class",
+		"manager", "supervisor", "region", "status", "scheduledStartDate","scheduledTurnover");
 
 //Fields to show with Steve Meyer and J Dempsey reports
 const GC_AND_REFRIGERATION_PROPOSAL_KEYS = new Array("warehouse", "item","scope","class",
@@ -423,8 +474,18 @@ $(document).on('change', '.reportTypePicker',function(){
 	console.log("value  == ", this.value);
 	if(this.value == ADRIENNE) generateReport(ADRIENNE);
 	else if(this.value == TASK) generateTaskReport(TASK);
-	else if(this.value == "CO_REPORT") {$('.changeOrderStatusGroup').show(); $('#changeOrderButton').show();}
-	else {$('.changeOrderStatusGroup').hide(); $('#changeOrderButton').hide();}
+	else if(this.value == "CO_REPORT") 
+	{
+		$('.changeOrderStatusGroup').show(); 
+		$('#changeOrderButton').show();
+		$('.notCO').hide(); 
+	}
+	else 
+	{
+		$('.changeOrderStatusGroup').hide(); 
+		$('#changeOrderButton').hide();
+		$('.notCO').show(); 
+	}
 });
 
 function toggleChangeOrderStatus(status)
@@ -1023,6 +1084,12 @@ function reportCreator(elem)
 		case 'Closed':
 			generateReport($('.reportTypePicker :selected').val()+'_C');
 			break;
+		case 'Closeout':
+			generateReport($('.reportTypePicker :selected').val()+'_CO');
+			break;
+		case 'Billing Closeout':
+			generateReport($('.reportTypePicker :selected').val()+'_BC');
+			break;
 		case 'Tasks':
 			generateTaskReport($('.reportTypePicker :selected').val());
 			break;
@@ -1381,6 +1448,8 @@ function generateReport(reportType)
 			title="Weekly Closed Projects";
 			break;
 	
+		case BILLING_CLOSEOUT_STEVE_MEYER:
+		case CLOSEOUT_STEVE_MEYER:
 		case PROPOSAL_STEVE_MEYER:
 			stage.push(PROPOSAL_STAGE);
 	 		title = "NE, SE, and PR Proposals";
@@ -1778,6 +1847,14 @@ function generateReport(reportType)
 			stage.push(CLOSED_STAGE);
 			title = 'Change Orders for Closed Projects';
 			break;
+		case CO_BILLING_CLOSEOUT:
+			stage.push(BILLING_CLOSEOUT_STAGE);
+			title = 'Change Orders for Billing Closeout Projects';
+			break;
+		case CO_CLOSEOUT:
+			stage.push(CLOSEOUT_STAGE);
+			title = 'Change Orders for Closeout Projects';
+			break;
 		case CO_STATUSES:
 			status = new Array();
 			
@@ -1819,6 +1896,14 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_SCHEDULING);
 			
 			manager.push(17);
+			break;
+		case BILLING_CLOSEOUT_WEEKLY:
+			title = "Billing Closeout";
+			stage.push(BILLING_CLOSEOUT_STAGE);
+		    break;
+		case CLOSEOUT_WEEKLY:
+			title = "Closeout";
+			stage.push(CLOSEOUT_STAGE);
 			break;
 		default:
 			alert("Invalid report type");
@@ -1925,6 +2010,12 @@ function getAllSpecifiedFields(reportType)
 		case CLOSED_WEEKLY:
 			genType=CLOSED_WEEKLY_KEYS;
 			break;
+		case BILLING_CLOSEOUT_WEEKLY:
+			genType = BILLING_CLOSEOUT_WEEKLY_KEYS;
+			break;
+		case CLOSEOUT_WEEKLY:
+			genType = CLOSEOUT_WEEKLY_KEYS;
+			break;
 		case PROPOSAL_J_DEMPSEY:
 			genType=PROPOSAL_J_DEMPSEY_KEYS;
 			break;
@@ -2000,30 +2091,40 @@ function getAllSpecifiedFields(reportType)
 		case ACTIVE_CLOSEOUT:
 		case BUDGETARY_CLOSEOUT:
 		case CLOSED_CLOSEOUT:
+		case BILLING_CLOSEOUT_CLOSEOUT:
+		case CLOSEOUT_CLOSEOUT:
 			genType=CLOSEOUT_KEYS_SIMPLE;
 			break;
 		case PERMIT_ACTIVE:
 		case PERMIT_PROPOSAL:
 		case PERMIT_BUDGETARY:
 		case PERMIT_CLOSED:
+		case PERMIT_BILLING_CLOSEOUT:
+		case PERMIT_CLOSEOUT:
 			genType = PERMIT_KEYS;
 			break;
 		case INSPECTION_ACTIVE:
 		case INSPECTION_PROPOSAL:
 		case INSPECTION_BUDGETARY:
 		case INSPECTION_CLOSED:
+		case INSPECTION_CLOSEOUT:
+		case INSPECTION_BILLING_CLOSEOUT:
 			genType = INSPECTION_KEYS;
 			break;
 		case EQUIPMENT_ACTIVE:
 		case EQUIPMENT_PROPOSAL:
 		case EQUIPMENT_BUDGETARY:
 		case EQUIPMENT_CLOSED:
+		case EQUIPMENT_CLOSEOUT:
+		case EQUIPMENT_BILLING_CLOSEOUT:
 			genType = EQUIPMENT_KEYS;
 			break;
 		case CO_ACTIVE:
 		case CO_PROPOSAL:
 		case CO_BUDGETARY:
 		case CO_CLOSED:
+		case CO_CLOSEOUT:
+		case CO_BILLING_CLOSEOUT:
 			genType = CO_KEYS;
 			break;
 		case TASK:
@@ -2034,6 +2135,9 @@ function getAllSpecifiedFields(reportType)
 			break;
 		case ADRIENNE:
 			genType = ADRIENNE_KEYS;
+			break;
+		case BILLING_CLOSEOUT_STEVE_MEYER:
+			genType = ACTIVE_STEVE_MEYER_AND_J_DEMPSEY_KEYS;
 			break;
 	
 	}

@@ -109,15 +109,18 @@
                     <option>Select A Report</option>
                 </select>
                 <br>
-                <div class="stageGroup">
+                <div class="stageGroup inner-param-field">
+                	<span>Project Stages</span>
 	                <button class="btn btn-primary queryButton" value="Active" onclick="reportCreator(this)">Active</button>
-	                <button class="btn btn-primary queryButton" value="Proposals" onclick="reportCreator(this)">Proposals</button>
-	                <button class="btn btn-primary queryButton" value="Budgetary" onclick="reportCreator(this)">Budgetary</button>
-	                <button class="btn btn-primary queryButton" value="Inactive" onclick="reportCreator(this)">Canceled</button>
-	                <button class="btn btn-primary queryButton" value="Closed" onclick="reportCreator(this)">Closed</button>
+	                <button class="btn btn-primary queryButton notCO" value="Proposals" onclick="reportCreator(this)">Proposals</button>
+	                <button class="btn btn-primary queryButton notCO" value="Budgetary" onclick="reportCreator(this)">Budgetary</button>
+	                <button class="btn btn-primary queryButton" value="Billing Closeout" onclick="reportCreator(this)">Billing Closeout</button>
+	                <button class="btn btn-primary queryButton" value="Closeout" onclick="reportCreator(this)">Closeout</button>
+	                <button class="btn btn-primary queryButton notCO" value="Closed" onclick="reportCreator(this)">Closed</button>
                 </div>  
                 <br>
-                <div style="display: none" class="changeOrderStatusGroup">
+                <div style="display: none" class="changeOrderStatusGroup inner-param-field">
+                	<span>Change Order Statuses</span>
                 	 <input type = "checkbox" value="All" onclick="toggleChangeOrderStatus('All')"> All: &nbsp;&nbsp;</input>
 	                 <input type = "checkbox" value="6" onclick="toggleChangeOrderStatus('6')"> Review &nbsp;&nbsp;</input>
 	                 <input type = "checkbox" value="1" onclick="toggleChangeOrderStatus('1')"> Preparing &nbsp;&nbsp;</input>
@@ -125,14 +128,14 @@
 	                 <input type = "checkbox" value="3" onclick="toggleChangeOrderStatus('3')"> Approved &nbsp;&nbsp;</input>
 	                 <input type = "checkbox" value="4" onclick="toggleChangeOrderStatus('4')"> Rejected &nbsp;&nbsp;</input>
 	                 <input type = "checkbox" value="5" onclick="toggleChangeOrderStatus('5')"> Complete &nbsp;&nbsp;</input>
+	                 <br><br>
+	                 <button id="changeOrderButton" class = "btn btn-success" onclick="generateReport('CO_STATUSES')">Generate Change Order Report </button>	
 	                                 
                 </div> 
                 
                 <br><br>
 	            
-	            <div class = "changeOrderButton">
-	            <button style="display : none" id="changeOrderButton" class = "btn btn-success" onclick="generateReport('CO_STATUSES')">Generate Change Order Report </button>	
-                </div>
+	  
                 <!--  <input type="button" value="Proposals" onclick="reportCreator(this)"></input>
                 <input type="button" value="Inactive" onclick="reportCreator(this)"></input>
                 <input type="button" value="Closed" onclick="reportCreator(this)"></input>-->

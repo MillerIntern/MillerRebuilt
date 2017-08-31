@@ -11,6 +11,7 @@
 
         <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
         <link href="css/bootstrap.min.css" rel="stylesheet">
+         <link href="css/additions.css" rel="stylesheet">
                 
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
@@ -213,6 +214,34 @@
 		<input id = "objectId">ID <br> 
 		<button onclick="deleteProjectObject()">Delete Project Object</button>
 	</div>
+</div>
+
+<br>
+<br>
+<div style="display:none" id = "myContent">
+	<table id="textTable" class = "table table-bordered">
+	<tr>
+		<td>Enter Phone Number </td>
+		<td><input type="text" id ="phoneNumber"></td>
+	</tr>
+	<tr>
+		<td>Enter Message</td>
+		<td><textarea rows="10" cols="50" id="message" maxlength=1000></textarea></td>		
+	</tr>
+	<tr>
+		<td>Enter Phone Carrier</td>
+		<td>
+			<select id="phoneCarrier">
+				<option value = "1">ATT</option>
+				<option value = "2">Verizon</option>
+				<option value = "3">Sprint</option>
+			</select>
+		</td>		
+	</tr>
+	</table>
+	<button id = "sendButton" onclick = "sendText()" class="btn btn-block"> Send It! </button>
+	
+
 </div>
 
 <div id="footer">

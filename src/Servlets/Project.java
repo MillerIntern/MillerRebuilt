@@ -175,11 +175,32 @@ public class Project extends HttpServlet
 		} else if(action.equals("sendText")) {
 			System.out.println("SENDING TEXT");
 
+			 String phoneNumber = parameters.get("phoneNumber");
+	         String textMessage = parameters.get("message");
+	         String phoneCarrier = parameters.get("phoneCarrier");
+	         System.out.println("Phone Number: " + phoneNumber);
+	         System.out.println("Message: " + textMessage);
+	         System.out.println("Phone Carrier: " + phoneCarrier);
+			
+	         String ATT = "txt.att.net";
+	         String VERIZON = "vtext.com";
+	         String SPRINT = "messaging.sprintpcs.com";
+	         
+	         switch("phoneCarrier") {
+	         	case "1":
+	         		phoneCarrier = ATT;
+	         		break;
+	         	case "2":
+	         		phoneCarrier = VERIZON;
+	         		break;
+	         	case "3":
+	         		phoneCarrier = SPRINT;
+	         }
 			// Recipient's email ID needs to be mentioned.
-		      String to = "6106576953@txt.att.net";
-
+		      String to = phoneNumber+"@"+phoneCarrier ;
+		      //to = "6106576953@txt.att.net";
 		      // Sender's email ID needs to be mentioned
-		      String from = "mcstaskalert@millerconstructionservices.com";
+		      String from = "AJS";
 
 		      // Assuming you are sending email from localhost
 		      String host = "localhost";
@@ -207,14 +228,11 @@ public class Project extends HttpServlet
 		         // Set Subject: header field
 		         String subject, body;
 		        
-		         subject = "Text Test";		        
+		        // subject = "Text Test";		        
 		         
-		         body = "Let's see if it works!";
+		         body = textMessage;
 
-
-		         
-
-		         message.setSubject(subject);
+		        // message.setSubject(subject);
 
 		         // Now set the actual message
 		         message.setText(body);

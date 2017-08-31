@@ -2202,6 +2202,7 @@ function fillChangeOrders (data) {
 		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
 		
 		var coNumber = document.createElement('td');
+		coNumber.width = "5%";
 		coNumber.appendChild(document.createTextNode(i + 1));
 		
 		var title = document.createElement('td');
@@ -2213,6 +2214,7 @@ function fillChangeOrders (data) {
 		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
 		
 		var status = document.createElement('td');
+		status.width = "10%";
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
 		//var submittedDate = document.createElement('td');

@@ -1546,8 +1546,8 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
-				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
-				changeOrders.append("<td>$" + tmp.getSell() + "</td>");				
+				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getCost()) + "</td>");
+				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getSell()) + "</td>");				
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
@@ -1583,8 +1583,8 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getSubmittedDate()) + "</td>");
 				changeOrders.append("<td>" + tryDateFormat(dForm,tmp.getApprovedDate()) + "</td>");
-				changeOrders.append("<td>$" + tmp.getCost() + "</td>");
-				changeOrders.append("<td>$" + tmp.getSell() + "</td>");
+				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getCost()) + "</td>");
+				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getSell()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
@@ -1739,5 +1739,71 @@ public class ReportHelper
 	public synchronized static void sortChangeOrders(List<ChangeOrder> changeOrders)
 	{
 		Collections.sort(changeOrders, new ChangeOrderNumberComparator());
+	}
+	
+	
+	public synchronized static String doubleToDisplayableString(double cost)
+	{
+		String str = Double.toString(cost);
+		char[] number = str.toCharArray();
+		char[] newNumber;
+		ArrayList<Character> numberWithCommas = new ArrayList<Character>();
+		
+		
+		String cleanNumber = null;
+		
+		for(int i = 0; i < number.length; i++){
+			if(i == 0 && number[i] !='0') break;
+			else if(i == 1 && number[i] != '.') break;
+			else if(i == 2 && number[i] != '0') break;
+			
+			if(i == 2 && number.length == 3) return "0";
+		}
+		
+		int decimalCount = 0;
+		int decimalIndex = 0;
+		
+		for(int i = 0; i < number.length; i++) {
+			if(decimalCount != 0) {
+				decimalCount++;
+			}
+			if(number[i] == '.') {
+				decimalCount = 1;
+				decimalIndex = i;
+			}
+		}
+		
+		if(decimalCount == 2) 
+		{
+		  newNumber = new char[number.length + 1];
+		  for(int i = 0; i < newNumber.length; i++) {
+			  if(i == newNumber.length - 1) newNumber[i] = '0';
+			  else newNumber[i] = number[i];
+		  }
+		  
+		}
+		else newNumber = number;
+		
+		for(int i = newNumber.length - 1; i >= decimalIndex; i--) { //CHECK IT
+			numberWithCommas.add(newNumber[i]);
+		}
+		
+		int commaCount = 0;
+		for(int i = decimalIndex - 1; i > -1; i--) {
+			commaCount++;
+			numberWithCommas.add(newNumber[i]);
+			if(commaCount % 3 == 0 && i != 0) numberWithCommas.add(',');
+		}
+		
+		char[] cleanArray = new char[numberWithCommas.size()];		
+		int q = cleanArray.length - 1;
+		for(Character ch: numberWithCommas){
+			cleanArray[q] = ch;
+			q--;
+		}
+		cleanNumber = new String(cleanArray);
+		
+		return cleanNumber;
+		
 	}
 }
