@@ -75,3 +75,10 @@
 	color: blue;
 	border-color: blue;
 }
+
+#changeOrderButton:hover {
+	background-color: white;
+	color: #0f9400;
+	border-color: #0f9400;
+}
+

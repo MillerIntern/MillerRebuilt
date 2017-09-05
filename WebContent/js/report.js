@@ -1,6 +1,13 @@
 
 const DELETE = 46;
+let tableIndex = true;
 
+/*
+$('#DataTables_Table_0_length').click(function() {
+		console.log("CLICKED ME");
+		if(tableIndex == false) $('.tableIndex').remove();
+});
+*/
 
 $(document).ready( function () {
 	
@@ -17,7 +24,7 @@ $(document).ready( function () {
 					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
 				}
 				if(oSettings.aoHeader[0][1]){
-					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") {$('.tableIndex').remove(); console.log("REMOVED IT")}
+					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") {$('.tableIndex').remove(); tableIndex = false; console.log("REMOVED IT")}
 				}
 			}
 		},
@@ -31,6 +38,12 @@ $(document).ready( function () {
            	
         }
     });
+    document.getElementById('DataTables_Table_0_length').onchange = function() {
+		console.log("CLICKED ME");
+		if(tableIndex == false) $('.tableIndex').remove();
+		if(confirm("Print?")) window.print();
+    }
+ 
 } );
 
 
@@ -50,6 +63,7 @@ function deleteRow()
 
 function printPage()
 {
+	console.log("PRINTING PAGE");
 	//remove extraneous objects from screen
 	var menu = document.getElementById("menu");
 	menu.style.display = "none";

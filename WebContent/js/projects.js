@@ -1668,7 +1668,8 @@ function saveProject_PROJECT_DATA() {
 				mcsNum : mcsNumber,
 				warehouse_id : warehouse,
 				item_id : item,
-				manager : $('#projectData').find('#manager').find(":selected").text()
+				manager : $('#projectData').find('#manager').find(":selected").text(),
+				stage_id : stage
 		};
 		
 
@@ -1737,6 +1738,8 @@ let updatedProjectWarehouse;
 let updatedProjectItem;
 let updatedManager;
 let updatedMCSnumber;
+let updatedStage = {id: "", name: ""};
+
 /**
  * This function updates the front end project display
  * @param data containing either warehouse, mcsNumber, item, and manager fields
@@ -1745,7 +1748,8 @@ let updatedMCSnumber;
  */
 function updateProjectDisplay(data) {
 	console.log("THE UPDATE DATA = ", data);
-	convertItem(data);
+	
+	convertStage(data);
 	
 	updatedManager = {
 			name : data.manager,
@@ -1754,6 +1758,43 @@ function updateProjectDisplay(data) {
 	
 	updatedMCSnumber = data.mcsNum;
 	
+	convertItem(data);
+	
+}
+
+function convertStage(data) {
+	if(!data) return;
+	
+	let stageId = data.stage_id;
+	updatedStage.id = stageId;
+	
+	switch(stageId) {
+		case "1":
+			updatedStage.name = "Proposal";
+			break;
+		case "2":
+			updatedStage.name = "Active";
+			break;
+		case "4":
+			updatedStage.name = "Closed";
+			break;
+		case "8":
+			updatedStage.name = "Budgetary";
+			break;
+		case "9":
+			updatedStage.name = "On Hold";
+			break;
+		case "15":
+			updatedStage.name = "Canceled";
+			break;
+		case "16":
+			updatedStage.name = "Billing Closeout";
+			break;
+		case "17":
+			updatedStage.name = "Closeout";
+			break;
+
+	}
 }
 
 /**
@@ -1844,10 +1885,23 @@ function convertWarehouse(id){
 					DISPLAYABLE_PROJECTS[i].McsNumber = updatedMCSnumber;
 					DISPLAYABLE_PROJECTS[i].projectManagers.id = updatedManager.id;
 					DISPLAYABLE_PROJECTS[i].projectManagers.name = updatedManager.name;
+					DISPLAYABLE_PROJECTS[i].stage.id = updatedStage.id;
+					DISPLAYABLE_PROJECTS[i].stage.name = updatedStage.name;
 					//console.log("THE UPDATE = ", DISPLAYABLE_PROJECTS[i]);
 				}
 			}
+			
+			for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
+				if(!RETRIEVED_PROJECTS[i]) continue;
+				if(projectID == RETRIEVED_PROJECTS[i].id){
+					RETRIEVED_PROJECTS[i].stage.id = updatedStage.id;
+					RETRIEVED_PROJECTS[i].stage.name = updatedStage.name;
+					//console.log("THE UPDATE = ", DISPLAYABLE_PROJECTS[i]);
+				}
+			}
+			
 			getProject_PROJECT_MANAGER(projectID);
+			filterProjects();
 		}
 	});
 }
@@ -2206,7 +2260,7 @@ function fillChangeOrders (data) {
 		coNumber.appendChild(document.createTextNode(i + 1));
 		
 		var title = document.createElement('td');
-		console.log("TITLe = ", changeOrder.title);
+		title.width = "13%";
 		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
 		else  title.appendChild(document.createTextNode("---"));
 		
@@ -2217,8 +2271,9 @@ function fillChangeOrders (data) {
 		status.width = "10%";
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
-		//var submittedDate = document.createElement('td');
-		//submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
+		var subNames = document.createElement('td');
+		subNames.width = "15%";
+		subNames.appendChild(document.createTextNode(changeOrder.subNames));
 		
 		var notes = document.createElement('td');
 		notes.appendChild(document.createTextNode(changeOrder.notes));
@@ -2233,6 +2288,7 @@ function fillChangeOrders (data) {
 		tableRow.appendChild(title);
 		tableRow.appendChild(briefDescription);
 		tableRow.appendChild(status);
+		tableRow.appendChild(subNames);
 		tableRow.appendChild(notes);
 		tableRow.ondblclick = function() {
 			goToChangeOrder(1);

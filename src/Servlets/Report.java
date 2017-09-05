@@ -50,6 +50,7 @@ public class Report extends HttpServlet
 	
 	private static final long serialVersionUID = 1L;
 	private static PrintWriter out;
+	private static boolean tableIndex = true;
        
     public Report() 
     {
@@ -167,6 +168,7 @@ public class Report extends HttpServlet
 			
 			List<String> shownFields = new ArrayList<String>();
 			String shownField = "changeOrderSolo";
+			tableIndex = false;
 			shownFields.add(shownField);
 			shownFields.toString();
 			
