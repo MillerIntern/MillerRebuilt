@@ -216,9 +216,6 @@ public class ProjectObjectService
 				criteria.addOrder(Order.asc("c.name"));
 			} else if (domain.equals("Project")) {
 				
-				System.out.println("\nDOING CRITERIA STUFF\n\n");
-				
-				
 				
 				ProjectionList projectionList = Projections.projectionList();
 				projectionList.add(Projections.property("id").as("id"));

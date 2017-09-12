@@ -24,6 +24,7 @@ $(document).ready( function () {
 					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
 				}
 				if(oSettings.aoHeader[0][1]){
+					console.log("IN THIS");
 					if(oSettings.aoHeader[0][1].cell.innerText == "MCS CO#") {$('.tableIndex').remove(); tableIndex = false; console.log("REMOVED IT")}
 				}
 			}
@@ -41,9 +42,12 @@ $(document).ready( function () {
     document.getElementById('DataTables_Table_0_length').onchange = function() {
 		console.log("CLICKED ME");
 		if(tableIndex == false) $('.tableIndex').remove();
-		if(confirm("Print?")) window.print();
     }
- 
+    
+    document.getElementById("ToolTables_DataTables_Table_0_0").onclick = function() {
+    	console.log("CLICKEDDDDDDD ME");
+		if(tableIndex == false) $('.tableIndex').remove();
+    } 
 } );
 
 

@@ -3894,6 +3894,8 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#approvedDate").val(changeOrderToEdit.approvedDate);
 	$('#changeOrder').find("#notes").val(changeOrderToEdit.notes);
 	$('#changeOrder').find('#title').val(changeOrderToEdit.title);
+	$('#changeOrder').find('#invoiceNumber').val(changeOrderToEdit.invoiceNumber);
+	
 	}
 }
 
@@ -4016,6 +4018,7 @@ function clearTabs_CHANGE_ORDER(){
 	$('#changeOrder').find("#approvedDate").val("");
 	$('#changeOrder').find("#notes").val("");
 	$('#changeOrder').find("#title").val("");
+	$('#changeOrder').find("#invoiceNumber").val("");
 }
 
 /**
@@ -4131,6 +4134,8 @@ function saveProject_CHANGE_ORDER()
 	var sell = $('#changeOrder').find("#sell").val();
 	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
 	
+	var invoiceNumber = $('#changeOrder').find("#invoiceNumber").val();
+	
 	var dates = [proposalDate, submittedDate, approvedDate];
 	
 	var action = "addChangeOrder";
@@ -4168,7 +4173,8 @@ function saveProject_CHANGE_ORDER()
 				'notes': notes,
 				'cost': cost,
 				'sell': sell,
-				'title':title
+				'title':title,
+				'invoiceNumber' : invoiceNumber
 			},
 			success:function(data){
 				

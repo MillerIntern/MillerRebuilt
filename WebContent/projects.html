@@ -1414,20 +1414,18 @@
 		    <!-- Closeout Documents Tab--> 
 			<div id="changeOrderInfo" class="info-tab active">
 		        <table class="table table-hover">
+		        
+		        	<colgroup>
+		        		<col style="width: 35%">
+		        		<col style="width: 65%">
+		        	</colgroup>
+		     
 		        	<tr style="height: 0px;"></tr>
 		            <tr>
 		                <td class="coLabel">MCS CO #</td>
 		                <td>
 		                    <p><strong id="mcsCO"></strong> </p>
 		                </td>   
-		            </tr>
-		            <tr>
-		                <td  class="coLabel">Customer CO#</td>
-		                <td>
-		                    <select class="closeout-input" id="customerCO">
-		                        <option value="default">--Customer--</option>
-		                    </select>               
-		                </td>
 		            </tr>
 		            <tr>
 		                <td class="coLabel">Title</td>
@@ -1464,17 +1462,13 @@
 		            </tr>
 		            <tr>
 		                <td class="coLabel">Submitted To</td>
-		 
+		 				
 		                <td>
-		                	<input type="text" id="submittedTo" />
+		                	<select class="closeout-input" id="customerCO">
+		                        <option value="default">--Customer--</option>
+		                    </select>		                	
 		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Sub CO #</td>
-		                <td>
-		                    <input type="text" id="subCO" />
-		                </td>   
-		            </tr>
+		            </tr>		           
 		            <tr>
 		                <td class="coLabel">Submitted Date</td>
 		 
@@ -1500,6 +1494,24 @@
 		 
 		                <td>
 		                	<input type="text" id="sell" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td  class="coLabel">Invoice #</td>
+		                <td>
+		                    <input type="text" id="invoiceNumber" />               
+		                </td>
+		            </tr>
+		            <tr>
+		                <td  class="coLabel">Customer COP #</td>
+		                <td>
+		                    <input type="text" id="submittedTo" />               
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Sub CO #</td>
+		                <td>
+		                    <input type="text" id="subCO" />
 		                </td>   
 		            </tr>
 		             <tr>

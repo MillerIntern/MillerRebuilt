@@ -70,7 +70,7 @@ public class Project extends HttpServlet
      * the caller. 
      * 
 	*/
-	protected synchronized void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		resp.setContentType("application/json");
@@ -200,7 +200,7 @@ public class Project extends HttpServlet
 		      String to = phoneNumber+"@"+phoneCarrier ;
 		      //to = "6106576953@txt.att.net";
 		      // Sender's email ID needs to be mentioned
-		      String from = "AJS";
+		      String from = "Bennett Wisner";
 
 		      // Assuming you are sending email from localhost
 		      String host = "localhost";
@@ -617,7 +617,7 @@ public class Project extends HttpServlet
 	 * @param req
 	 * @return
 	 */
-	private synchronized String getManager(HttpServletRequest req) 
+	private String getManager(HttpServletRequest req) 
 	{
 		String username = (String) req.getSession().getAttribute("user");
 		/* UNDEFINED USERS: Alex, Tony, Jim, Craig*/

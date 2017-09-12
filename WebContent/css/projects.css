@@ -25,12 +25,14 @@
 }
 
 #changeOrderInfo > table {
-	width: 70%;
+	width: 95%;
+	table-layout : fixed;
 }
 
 #changeOrderInfo {
-	width: 55%;
+	width: 50%;
 }
+
 
 
 

@@ -38,6 +38,8 @@ public class ChangeOrder extends ProjectObject
 	private double cost;
 	private double sell;
 	
+	private String invoiceNumber;
+	
 	
 	
 	/**
@@ -51,7 +53,7 @@ public class ChangeOrder extends ProjectObject
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
 					   String briefDescription, String notes, double cost, double sell, String type,
-					   String submittedTo, String subCO, String title)
+					   String submittedTo, String subCO, String title, String invoiceNumber)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -67,6 +69,7 @@ public class ChangeOrder extends ProjectObject
 		this.sell = sell;
 		this.setType(type);
 		this.title = title;
+		this.invoiceNumber = invoiceNumber;
 	}
 	
 	public ChangeOrder()
@@ -85,6 +88,7 @@ public class ChangeOrder extends ProjectObject
 		this.subCO = null;
 		this.submittedTo = null;
 		this.title = null;
+		this.invoiceNumber = null;
 	}
 
 
@@ -211,5 +215,13 @@ public class ChangeOrder extends ProjectObject
 	
 	public synchronized void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public synchronized String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	
+	public synchronized void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
 	}
 }
