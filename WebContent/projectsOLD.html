@@ -164,7 +164,6 @@
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
-			   <!--
 				<table class='table table-hover table-striped infoTable' ondblclick="editProjectInfo()">
 					<tr><td width=30% class = "bold">MCS Number</td><td id='mcsNumber' class ="italics"></td></tr>
 					<tr><td class = "bold">Item</td><td id='projectItem' class ="italics"></td></tr>
@@ -174,14 +173,7 @@
 					<tr><td class = "bold">Manager</td><td id='projectManager' class ="italics"></td></tr>
 					<tr><td class = "bold">Supervisor</td><td id='projectSupervisor' class ="italics"></td></tr>
 				</table>	
-				
 				<button onclick='editProjectInfo()' type="button" class="project-edit btn btn-primary">Edit Project Information</button>
-				-->
-				<ul class="project-information list-group">
-					<li class="list-group-item project-info-list-item" id="general-info-item">General Info</li>
-					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
-					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>	
-				</ul>
 			</div> <!-- Project Information -->
 			<div class='info-tab' id='changeOrders'>
 				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
@@ -243,7 +235,6 @@
 				<button type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
 			<div class='info-tab info-tab-closeout' id='closeout'>
-			   <!-- 
 				<table class='table table-hover table-striped' ondblclick="editCloseout()">
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
 					<tr><td width = 35% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
@@ -257,15 +248,6 @@
 					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>
 				<button onclick='editCloseout()' type="button" class="project-edit btn btn-primary">Edit Closeout</button>
-				-->
-				<ul class="closeout-information list-group">
-					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
-					<li class="list-group-item closeout-info-list-item" id="final-inspection-item">Final Inspections</li>
-					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters</li>	
-					<li class="list-group-item closeout-info-list-item" id="final-liens-item">Final Liens</li>
-					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA/MG2</li>
-					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
-				</ul>
 			</div> <!-- Closeout -->
 			<div class='info-tab' id='triggers'>
 				<p>No triggers in this project!</p>
@@ -332,10 +314,10 @@
 		</ul>
 		
 		<div id="generalInformation" class="info-tab active">
-			<table id="generalInformationTable" class='table table-hover'>
+			<table class='table table-hover'>
 		
 			<tr>
-	        <td class="bold">MCS Project#</td>
+	        <td>MCS Project#</td>
 	        <td><input id="mcsNumber" type="text"></td>
 	        </tr>
 	
@@ -396,17 +378,17 @@
 			</tr>
 	
 	        <tr>
-	        <td class="bold">Scope</td>
+	        <td>Scope</td>
 	        <td><textarea  maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
 	        </tr>
 	        
 	        <tr>
-	        <td class="bold">MCS Notes</td>
+	        <td>MCS Notes</td>
 	        <td><textarea  maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
 	        </tr>
 	
 	        <tr>
-	        <td class="bold">Customer Notes</td>
+	        <td>Customer Notes</td>
 	        <td><textarea  maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
 	        </tr>	        
 	        
@@ -416,7 +398,7 @@
 		</div> <!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
-		    <table id="schedulingInformationTable" class='table table-hover'>
+		    <table class='table table-hover'>
 		
 		
 		        <tr>
@@ -463,7 +445,7 @@
 		</div> <!-- End Scheduling Information -->
 		
 		<div id='financialInformation' class='info-tab info-tab-financialInformation'>
-			<table id="financialInformationTable" class='table table-hover'>
+			<table class='table table-hover'>
 	
 	            <tr>
 	            <td class = "bold">Should Invoice %</td>
@@ -848,17 +830,16 @@
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
 			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
-			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
 	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
 		<div id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
-	        <table id='closeoutDocumentsTable' class='table table-hover'>
+	        <table class='table table-hover'>
 	        
 	            <tr>
-                <td class='closeoutLabel'>Punch List</td>
+                <td>Punch List</td>
                 <td>  
                     <select data-associated-date='punchList' class="closeout-input" id="punchListStatus">
                     <option value="default">--Status--</option>
@@ -869,7 +850,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>As-Built Drawings</td>
+                <td>As-Built Drawings</td>
                 <td>  
                     <select data-associated-date='asBuilts' class="closeout-input" id="asBuiltDrawingsStatus">
                     <option value="default">--Status--</option>
@@ -880,7 +861,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Close Out Photos</td>
+                <td>Close Out Photos</td>
                 <td>  
                     <select data-associated-date='closeoutPhotosCL' class="closeout-input" id="closeOutPhotosStatus">
                         <option value="default">--Status--</option>
@@ -891,7 +872,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>HVAC Startup Form</td>
+                <td>HVAC Startup Form</td>
                 <td>  
                     <select data-associated-date='HVACstartupFormDate' class="closeout-input" id="HVACstartupFormStatus">
                         <option value="default">--Status--</option>
@@ -902,7 +883,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Alarm Form</td>
+                <td>Alarm Form</td>
                 <td>  
                 <select data-associated-date='alarmHvac' class="closeout-input" id="alarmFormStatus">
                     <option value="default">--Status--</option>
@@ -913,7 +894,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Verisae Report</td>
+                <td>Verisae Report</td>
                 <td>  
                     <select data-associated-date='verisae' class="closeout-input" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
@@ -924,21 +905,21 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Number of MCS Change Orders</td>
+                <td>Number of MCS Change Orders</td>
                 <td>  
                  <input type="text" id="numOfMCSChangeOrders" />   
                 </td>  
                 <td></td>
             </tr>
             <tr>
-                <td class='closeoutLabel'>Number of MCS Change Orders Completed</td>
+                <td>Number of MCS Change Orders Completed</td>
                 <td>  
             <input type="text" id="numOfMCSChangeOrdersCompleted" />
                 </td> 
                 <td></td>
             </tr>
             <tr>
-                <td class='closeoutLabel'>Closeout Documents Notes</td>
+                <td>Closeout Documents Notes</td>
                 <td>  
                 <textarea id="closeoutDocumentsNotes"> </textarea>
                 </td> 
@@ -950,7 +931,7 @@
 	
 	    <!-- Final Inspections Tab -->
 		<div id="finalInspections" class="info-tab info-tab-closeoutDocuments">
-	        <table id='finalInspectionsTable' class='table table-hover'>
+	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
 	                <td class='bold'>Temp Certificate of Occupancy</td>
@@ -1043,7 +1024,7 @@
 	    
 	    <!-- Warranty Letters Tab -->
 		<div id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
-	        <table id='warrantyLettersTable' class='table table-hover'>
+	        <table class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
 	                <td class='bold'>MCS Warranty</td>
@@ -1168,7 +1149,7 @@
 	
 	    <!-- Final Liens Tab -->
 		<div id="finalLiens" class="info-tab info-tab-closeoutDocuments">
-			<table id='finalLiensTable' class='table table-hover'>
+			<table class='table table-hover'>
 			<tr style="height: 0px;"></tr>
 	            <tr>
 	                <td class='bold'>MCS Liens</td>
@@ -1282,9 +1263,9 @@
 	
 	    <!-- Other Items Tab -->
 	    <div id="otherItems" class="info-tab info-tab-closeoutDocuments">
-	        <table id='otherItemsTable' class='table table-hover'>
+	        <table class='table table-hover'>
 	        <tr>
-	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
+	                <td>G704 - Certificate of Substantial Completion</td>
 	                <td>  
 	                    <select data-associated-date='substantialCompletionDate' class="closeout-input" id="substantialCompletionStatus">
 	                        <option value="default">--Status--</option>
@@ -1295,7 +1276,7 @@
 	                </td>
 	        </tr>
 	        <tr>
-                <td class='bold'>G706 - Affidavit of Payment of Debts and Claims</td>
+                <td>G706 - Affidavit of Payment of Debts and Claims</td>
                 <td>  
                     <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input" id="paymentOfDebtsAndClaimsStatus">
                         <option value="default">--Status--</option>
@@ -1306,7 +1287,7 @@
                 </td>
             </tr>
             <tr>
-                <td class='bold'>G706A - Contractor's Lien Releases</td>
+                <td>G706A - Contractor's Lien Releases</td>
                 <td>  
                     <select data-associated-date='releaseOfLiensDate' class="closeout-input" id="releaseOfLiensStatus">
                         <option value="default">--Status--</option>
@@ -1317,7 +1298,7 @@
                 </td>
             </tr>
             <tr>
-                <td class='bold'>MG2 Project Sign-off</td>
+                <td>MG2 Project Sign-off</td>
                 <td>  
                     <select data-associated-date='mulvannySignOffDate' class="closeout-input" id="mulvannySignOffStatus">
                         <option value="default">--Status--</option>
@@ -1328,7 +1309,7 @@
                 </td>
             </tr>     
 	        <tr>
-                <td class='bold'>Equipment Submittal</td>
+                <td>Equipment Submittal</td>
                 <td>  
                     <select data-associated-date='equipmentSubCL' class="closeout-input" id="equipmentSubmittalStatus">
                         <option value="default">--Status--</option>
@@ -1339,7 +1320,7 @@
                 </td>
             </tr>
             <tr>
-                <td class='bold'>Operations and Maintenance Manuals</td>
+                <td>Operations and Maintenance Manuals</td>
                 <td>  
                     <select data-associated-date='manualDate' class="closeout-input" id="manualStatus">
                     <option value="default">--Status--</option>
@@ -1350,14 +1331,14 @@
                 </td>   
             </tr>
             <tr>
-                <td class='bold'>Number of MG2 Change Orders</td>
+                <td>Number of MG2 Change Orders</td>
                 <td>  
                  <input type="text" id="numOfChangeOrders" />   
                 </td>  
                 <td></td>
             </tr>
             <tr>
-                <td class='bold'>Number of MG2 Change Orders Completed</td>
+                <td>Number of MG2 Change Orders Completed</td>
                 <td>  
             <input type="text" id="numOfChangeOrdersCompleted" />
                 </td> 
@@ -1365,7 +1346,7 @@
             </tr>
 	        </table><br>
 	        
-	        <table id='otherItemsSalvageTable' class='table table-hover'>
+	        <table class='table table-hover'>
 	        	<tr>
 	        	<td></td><td class='bold'>Amount</td><td class='bold'>Date</td>
 	        	</tr>
@@ -1380,20 +1361,6 @@
 	        	<td>
 	        	</tr>
 	        </table>
-	    </div>
-	    <div id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
-				<table id='closeoutSummaryDocumentsTable' class='table table-hover table-striped'>
-					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
-					<tr><td class="bold">Punch List</td><td id='punchList'></td></tr>
-					<tr><td class="bold">Verisae Report</td><td id='verisaeReport'></td></tr>
-				</table>	
-				<table id='closeoutSummaryCompletionTable' class='table table-hover table-striped'>
-					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
-					<tr><td class="bold">Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
-					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
-				</table>
 	    </div>
 	    <!-- end other Items Tab -->
 		<div class='info-tab' id='saveButton'>
@@ -1439,7 +1406,7 @@
 				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
 		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
 		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-		     <!--    <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
+		       <!--   <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
 		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li>
 		       -->
 			</ul>

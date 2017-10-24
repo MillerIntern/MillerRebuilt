@@ -27,10 +27,19 @@
 #changeOrderInfo > table {
 	width: 95%;
 	table-layout : fixed;
+	border-spacing: 0;	
+}
+
+#changeOrderInfo > table td {
+	font-size: 87%;
 }
 
 #changeOrderInfo {
 	width: 50%;
+}
+
+#changeOrderInfo > table td {
+	padding: 2px;
 }
 
 
@@ -73,9 +82,10 @@
 	background-color: #ECF0FC;
 }
 
-.stageLabel, .coLabel{
+.stageLabel, .coLabel, .closeoutLabel{
 	font-weight: bold;
 }
+
 
 
 
@@ -87,4 +97,75 @@
 	word-wrap:break-word;
 }
 
+#closeoutDocuments  {
+	width: 55%;
+}
+
+#closeoutDocumentsTable td  {
+	font-size: 87%;
+}
+
+#finalInspections  {
+	width: 55%;
+}
+
+#finalInspectionsTable td  {
+	font-size: 87%;
+}
+
+#warrantyLetters  {
+	width: 55%;
+}
+
+#warrantyLettersTable td  {
+	font-size: 87%;
+}
+
+#finalLiens  {
+	width: 55%;
+}
+
+#finalLiensTable td  {
+	font-size: 87%;
+}
+
+#otherItems  {
+	width: 55%;
+}
+
+#otherItemsTable td, #otherItemsSalvageTable td  {
+	font-size: 87%;
+}
+
+#closeoutSummary  {
+	width: 68%;
+}
+
+#closeoutSummaryDocumentsTable td, #closeoutSummaryCompletionTable td  {
+	font-size: 87%;
+}
+
+#generalInformation  {
+	width: 55%;
+}
+
+#generalInformationTable td  {
+	font-size: 87%;
+}
+
+#schedulingInformation  {
+	width: 55%;
+}
+
+#schedulingInformationTable td  {
+	font-size: 87%;
+}
+
+#financialInformation  {
+	width: 55%;
+}
+
+#financialInformationTable td  {
+	font-size: 87%;
+}
 

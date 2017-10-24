@@ -248,6 +248,7 @@ function createManagerQueue(json)
     
 	for (var i = 0; i < json.length; i++) {
 		// when users store both username and name, access the user's name and username fields
+		if(json[i].name == "Bart" || json[i].name == "bart") continue;
 		let name = document.createElement('td');
 		let checkBox = document.createElement('td');
 		let managerInput = document.createElement('input');

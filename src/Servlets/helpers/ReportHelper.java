@@ -1536,7 +1536,7 @@ public class ReportHelper
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
 				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");
 				changeOrders.append("<td align = 'center'>" + p.getProjectManagers().getName() + "</td>");				
-				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
+				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getTitle()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");
 				changeOrders.append("<td>" + convertChangeOrderStatus(tmp.getStatus()) + "</td>");
@@ -1548,7 +1548,7 @@ public class ReportHelper
 				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getCost()) + "</td>");
 				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getSell()) + "</td>");	
 				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getInvoiceNumber()) + "</td>");
-				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
+				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
@@ -1713,6 +1713,13 @@ public class ReportHelper
 			return "Vendor";
 		else if(i.equals("6"))
 			return "Undefined";
+		else if(i.equals("7")) 
+			return "Reserve";
+		else if(i.equals("8"))
+			return "No Cost";
+		else if(i.equals("9"))
+			return "Non-Billable";
+		
 					
 		return "---";
 	}

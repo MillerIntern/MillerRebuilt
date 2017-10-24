@@ -639,6 +639,8 @@ public class Project extends HttpServlet
 			username = "Craig";
 		else if(username.equals("tony"))
 			username = "Tony";
+		else if(username.equals("Marvin"))
+			username = "Marvin";
 		else username = "";
 		Gson gson = new Gson();
 		

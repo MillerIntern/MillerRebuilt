@@ -223,6 +223,7 @@ function createDropdown (json) {
 		return 0;
 	})
 	for (var i = 0; i < json.length; i++) {
+		if(json[i].firstName == "Bart") continue;
 		let option = document.createElement('option');
 		// when users store both username and name, access the user's name and username fields
 		option.innerHTML = json[i].firstName;

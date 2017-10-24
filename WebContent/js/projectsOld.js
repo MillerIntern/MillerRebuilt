@@ -1833,9 +1833,6 @@ function matchUsernameToPerson(userFirstName){
 	case "Tony":
 		return '4';
 		break;
-	case "Marvin":
-		return '18';
-		break;
 	}
 
 }
@@ -2000,7 +1997,6 @@ function fillForm_PROJECT_DATA(data)
 {
 	console.log(data);
 	var json = (data);	
-	
 	$('#projectData').find("#mcsNumber").val(json.McsNumber);
 
     $('#projectData').find("#warehouse").val(json.warehouse.id);
@@ -2091,12 +2087,10 @@ $(document).ready(function () {
 		$(this).addClass('active');
 	});	
 	
-	$('.project-info-list-item').click(function() {
-		editProjectInfo(this.id);
-	});
-	
-	$('.closeout-info-list-item').click(function() {
-		editCloseout(this.id);
+	$('#general-info-item').click(function() {
+		console.log("IN YITS");
+		if(document.getElementById('general-info-item-content').style.display == 'none') $('#general-info-item-content').show();
+		else $('#general-info-item-content').hide();
 	});
 
 });
@@ -2158,83 +2152,12 @@ function fillTabs_PROJECT_MANAGER (data) {
  * INNER FUNCTION CALLS: getProjectEnums_PROJECT_DATA()
  * @returns
  */
-function editProjectInfo (source_id) {
-	if(source_id) prepareProjectData(source_id);
+function editProjectInfo () {
 	document.getElementById("projectManager").style.display = 'none';
 	getProjectEnums_PROJECT_DATA(true);
 	currentDivLocation = "projectData";
 	document.getElementById("projectData").style.display = 'inline';
 	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
-}
-
-function prepareProjectData(source_id){
-	$('#projectData').find(".nav-tabs").find("[class~=active]").removeClass("active");
-	$('#projectData').find("[class~=active]").removeClass("active");
-
-	if(source_id == "general-info-item")
-	{
-		$('#projectData').find(".nav-tabs").find("[data-tab=generalInformation]").addClass("active");
-		$('#projectData').find("#generalInformation").addClass("active");
-
-	}
-	else if(source_id == "scheduling-item")
-	{
-		$('#projectData').find(".nav-tabs").find("[data-tab=schedulingInformation]").addClass("active");
-		$('#projectData').find("#schedulingInformation").addClass("active");
-
-	}
-	else if(source_id == "financial-item")
-	{
-		$('#projectData').find(".nav-tabs").find("[data-tab=financialInformation]").addClass("active");
-		$('#projectData').find("#financialInformation").addClass("active");
-
-	}
-	else console.log("Bad ID in prepareProjectData");
-}
-
-function prepareCloseout(source_id){
-	$('#closeoutData').find(".nav-tabs").find("[class~=active]").removeClass("active");
-	$('#closeoutData').find("[class~=active]").removeClass("active");
-
-	if(source_id == "closeout-documents-item")
-	{
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
-		$('#closeoutData').find("#closeoutDocuments").addClass("active");
-
-	}
-	else if(source_id == "final-inspection-item")
-	{
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
-		$('#closeoutData').find("#finalInspections").addClass("active");
-
-	}
-	else if(source_id == "warranty-letters-item")
-	{
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
-		$('#closeoutData').find("#warrantyLetters").addClass("active");
-
-	}
-	else if(source_id == "final-liens-item")
-	{
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalLiens]").addClass("active");
-		$('#closeoutData').find("#finalLiens").addClass("active");
-
-	}
-	else if(source_id == "aia-mg2-item")
-	{
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=otherItems]").addClass("active");
-		$('#closeoutData').find("#otherItems").addClass("active");
-
-	}
-	else if(source_id == "closeout-summary-item")
-	{
-		
-		$('#closeoutData').find(".nav-tabs").find("[data-tab=closeoutSummary]").addClass("active");
-		$('#closeoutData').find("#closeoutSummary").addClass("active");
-		
-
-	}	
-	else console.log("Bad ID in prepareProjectData");
 }
 
 /**
@@ -2259,14 +2182,12 @@ function editPermitsAndInspections () {
  * INNER FUNCTION CALLS: getProjectEnums_CLOSEOUT()
  * @returns
  */
-function editCloseout (source_id) {
-	if(source_id) prepareCloseout(source_id);
+function editCloseout () {
 	document.getElementById("projectManager").style.display = 'none';
 	edit = true;
 	getProjectEnums_CLOSEOUT(true);
 	currentDivLocation = "closeoutData";
 	document.getElementById("closeoutData").style.display = 'inline';
-
 	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
 
@@ -2482,9 +2403,9 @@ function fillEquipment (data) {
  */
 function fillCloseout (data) {
 	let closeoutData = data.closeoutDetails;
-	$('#closeoutSummary').find('#mg2Completion').html(closeoutStatusConverter(closeoutData.mg2CompletionStatus));
-	$('#closeoutSummary').find('#punchList').html(closeoutStatusConverter(closeoutData.punchListStatus));
-	$('#closeoutSummary').find('#verisaeReport').html(closeoutStatusConverter(closeoutData.verisaeReportStatus));
+	$('#mg2Completion').html(closeoutStatusConverter(closeoutData.mg2CompletionStatus));
+	$('#punchList').html(closeoutStatusConverter(closeoutData.punchListStatus));
+	$('#verisaeReport').html(closeoutStatusConverter(closeoutData.verisaeReportStatus));
 	
 	let required = 0;
 	let completed = 0;
@@ -2534,7 +2455,7 @@ function fillCloseout (data) {
 			required++;
 			break;
 	}
-	$('#closeoutSummary').find('#finalInspectionsRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalInspectionsRequired').text(completed + ' / ' + required);
 	required = 0;
 	completed = 0;
 	switch (closeoutData.GCWarrantyStatus) {
@@ -2627,7 +2548,7 @@ function fillCloseout (data) {
 		required++;
 		break;
 	}
-	$('#closeoutSummary').find('#finalWarrantiesRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalWarrantiesRequired').text(completed + ' / ' + required);
 	completed = 0;
 	required = 0;
 	
@@ -2713,7 +2634,7 @@ function fillCloseout (data) {
 		break;
 	}
 	
-	$('#closeoutSummary').find('#finalLiensRequired').text(completed + ' / ' + required);
+	$('#projectManager').find('#finalLiensRequired').text(completed + ' / ' + required);
 }
 
 /**
@@ -3416,11 +3337,6 @@ function matchUsernameToPersonID(userFirstName, paramNum){
 		removeParam(document.getElementById('paramID2'));
 		return '4';
 		break;
-	case 'Marvin': 
-		document.getElementById('paramVal'+paramNum).value = '18';
-		removeParam(document.getElementById('paramID2'));
-		return '18';
-		break;
 	default:
 		removeParam(document.getElementById('paramID2'));
 }
@@ -3440,7 +3356,6 @@ function fillDropdowns_FIND_PROJECT(data) {
 	
 	$('.parameterID').append(d);
 	
-	console.log("DATA PERSON = ", data['person']);
 	warehouseOptions = generateDropdowns_FIND_PROJECTS(data['warehouse'], parameterFields[0]);
 	classOptions = generateDropdowns_FIND_PROJECTS(data['class'], parameterFields[1]);
 	itemOptions = generateDropdowns_FIND_PROJECTS(data['item'], parameterFields[2]);
@@ -3458,14 +3373,9 @@ function fillDropdowns_FIND_PROJECT(data) {
 function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 	
 	let json = JSON.parse(jsonData);
-	
 	let d = document.createDocumentFragment();
 	let sorted = false;
 	for (var i = 0; i < json.length; i++) {
-		
-		if(field == "Manager" || field == "Supervisor") {
-			if(json[i].name == "Bart") continue;
-		}
 		let option = document.createElement('option');
 		if (field == 'Warehouse') {
 			option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
@@ -3671,7 +3581,7 @@ function filterProjects () {
 					remaining = remaining -1;
 				}
 			} else if (id == 'Supervisor') {
-				if (json[j] != null && json[j].supervisors != null && json[j].supervisors[0].id != val) {
+				if (json[j] != null && json[j].supervisors[0].id != val) {
 					json[j] = null
 					remaining = remaining - 1;
 				}
