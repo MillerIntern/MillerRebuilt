@@ -3,7 +3,10 @@
 package projectObjects;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,6 +68,15 @@ public enum State {
     public synchronized String getAbbreviation() {
         return abbreviation;
     }
+    
+    /**
+     * Returns the state's name.
+     *
+     * @return the state's name.
+     */
+    public synchronized String getName() {
+        return name;
+    }
 
     /**
      * Gets the enum constant with the specified abbreviation.
@@ -84,6 +96,18 @@ public enum State {
         }
     }
 
+	/**
+	 * This method returns all of the states in a list
+	 * @return a list of all the states.
+	 */
+	public synchronized static List<State> returnAllAsList()
+	{
+		State [] rs = State.values();
+		ArrayList<State> list = new ArrayList<State>(Arrays.asList(rs));
+		
+		return list;
+	}
+    
     @Override
     public synchronized String toString() {
         return name;

@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Projects</title>
+    <title>Contractors</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
-	<script src="js/projects.js"></script>
+	<script src="js/findContractor.js"></script>
 	<script type="text/javascript" src="js/contentControl.js"></script>
 	
 	
@@ -36,7 +36,7 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 		      <li><a href="homepage.html">Home</a></li>
-		      <li class="active dropdown">
+		      <li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
@@ -45,6 +45,15 @@
 		          <li><a onclick="goToFindProject();" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 		        </ul>
+		      </li>
+		      <li class='active dropdown'>
+		      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Contractors
+		      		<span class='caret'></span>
+		      	</a>
+		      	<ul class='dropdown-menu'>
+		      		<li><a href='contractors.html'>Find Sub-Contractor</a></li>
+		      		<li><a href='contractors.html'>Find Sub-Contractor</a></li>
+		      	</ul>
 		      </li>
 		      <li><a href="#">Triggers</a></li>
 		      <li class='dropdown'>
@@ -69,9 +78,9 @@
 		
 	
 <!--  
-		LINES 73 THRU 137 CORRESPOND TO THE FIND PROJECT DIV
+		LINES 73 THRU 137 CORRESPOND TO THE FIND CONTRACTOR DIV
  -->	
-	<div id = 'findProject' >
+	<div id = 'findContractor' >
 	    <div class="container">
 	   		<div id="param-field" class="param-field">
 	   			<span>
@@ -134,12 +143,33 @@
 	   		
 	   		</div>
 	   		
+	   		<div class = "new-subcontractor-form">
+	   			<input id = "region" type = "text"> Region
+	   			<input id = "trades" type = "text"> Trades
+	   		    <input id = "name" type = "text"> Name
+	   			<input id = "contacts" type = "text"> Contacts
+	   			<input id = "phone" type = "text"> Phone
+	   			<input id = "mobile" type = "text"> Mobile
+	   		    <input id = "email" type = "text"> Email
+	   			<input id = "workRegion" type = "text"> Work Region 
+	   			<input id = "address" type = "text"> Address
+	   			<input id = "state" type = "text"> State
+	   		    <input id = "zip" type = "text"> Zip
+	   			<input id = "notes" type = "text"> Notes
+	   			<input id = "rank" type = "text"> Rank
+	   		    <input id = "cityID" type = "text"> City ID	   			
+	   		</div>
+	   		
+	   		<button onclick = "createNewSubcontractor()"> Create New Subcontractor</button>
+	   		
 	  	
 	    </div>
 		
 	
 	
 	</div>  <!-- THIS ENDS THE DIV FOR FIND PROJECT -->
+
+	
 <!--  
 		LINES 140 THRU 282 CORRESPOND TO THE PROJECT MANAGER DIV	
  -->
@@ -327,9 +357,8 @@
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        <!--  <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-			-->
 		</ul>
 		
 		<div id="generalInformation" class="info-tab active">
@@ -461,7 +490,6 @@
 		        </tr>
 		
 		    </table>
-		    <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End Scheduling Information -->
 		
 		<div id='financialInformation' class='info-tab info-tab-financialInformation'>
@@ -487,7 +515,6 @@
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
-	        <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End Financial Information -->
 		
 		
@@ -538,10 +565,8 @@
 				<li role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
 				<li role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
 				<li role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
-				<!-- 
 		        <li role='presentation' onClick="saveProject_PERMIT()" data-tab="saveButton">
 		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-				-->
 			</ul>
 		
 		
@@ -801,9 +826,6 @@
 					</tr>
 				</table>
 			</div>
-			
-			<button id = "savePermits" class="btn btn-success btn-block" onclick = "saveProject_PERMIT()"> Save Changes! </button>
-			
 			<div class='info-tab' id='saveButton'>
 				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
 				<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
@@ -857,10 +879,8 @@
 			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
-			<!--
 	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-			-->
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
@@ -955,8 +975,6 @@
                 <td></td>
             </tr>
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
-
 		</div>
 	    <!-- End Closeout Documents Tab--> 
 	
@@ -1050,8 +1068,6 @@
 	            </tr> 
 	        
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
-
 	    </div>
 	    <!-- End Final Inspections Tab --> 
 	    
@@ -1177,8 +1193,6 @@
 	                <td></td>
 	            </tr> 
 	        </table>
-		    <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
-	
 	    </div>
 	    <!-- End Warranty Letters Tab -->
 	
@@ -1293,8 +1307,6 @@
 	                <td></td>
 	            </tr>
 			</table>
-            <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
-			
 		</div>
 	    <!-- End Final Liens Tab -->
 	
@@ -1398,8 +1410,6 @@
 	        	<td>
 	        	</tr>
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
-	        
 	    </div>
 	    <div id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
 				<table id='closeoutSummaryDocumentsTable' class='table table-hover table-striped'>
@@ -1415,8 +1425,6 @@
 					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>
 	    </div>
-	    
-	    
 	    <!-- end other Items Tab -->
 		<div class='info-tab' id='saveButton'>
 			<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
@@ -1459,9 +1467,8 @@
 		
 			<ul class="nav nav-tabs">
 				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
-		     <!--    <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
+		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
 		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-		      -->
 		     <!--    <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
 		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li>
 		       -->
@@ -1612,7 +1619,6 @@
 		</div>
 
 </div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
-	
 	
 	
 	

@@ -26,8 +26,12 @@ import com.google.gson.Gson;
 
 import objects.HibernateUtil;
 import objects.RequestHandler;
+import projectObjects.City;
+import projectObjects.Region;
+import projectObjects.State;
 import projectObjects.Task;
 import projectObjects.User;
+import projectObjects.Warehouse;
 import services.LoginService;
 import services.ProjectObjectService;
 import services.ProjectService;
@@ -426,6 +430,18 @@ public class Project extends HttpServlet
 		{
 			response = ProjectService.getAllEnumsEquipAsJson();
 		}
+		else if (action.equals("getAllCities"))
+		{
+			response = ProjectObjectService.getAllAsJsonString("City");
+		}
+		else if (action.equals("getAllTrades"))
+		{
+			response = ProjectObjectService.getAllAsJsonString("Trade");
+		}
+		else if (action.equals("getAllSubcontractors"))
+		{
+			response = ProjectObjectService.getAllAsJsonString("Subcontractor");
+		}
 		// Very aggressive request TODO: Would be great to somehow minify this request
 		else if(action.equals("getAllProjects"))
 		{
@@ -605,6 +621,18 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else if(action.equals("createSubcontractor"))
+		{
+			
+			System.out.println("Creating Subcontractor");
+			
+			try {
+			response = ProjectService.createSubcontractor(parameters);
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+			response = "subcontractor created";
 		}
 		
 		if(!(action.equals("getAllProjects") || action.equals("getTasks") ||

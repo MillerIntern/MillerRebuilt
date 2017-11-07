@@ -1,6 +1,7 @@
 package services;
 
 import java.text.ParseException;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,6 +25,7 @@ import projectObjects.ProjectObject;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Task;
+import projectObjects.Subcontractor;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.EquipmentFiller;
@@ -32,6 +34,8 @@ import services.helpers.PermitsFiller;
 import services.helpers.ProjectInformationFiller;
 import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
+import services.helpers.SubcontractorFiller;
+
 
 
 /**
@@ -756,5 +760,19 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.addObject("Task", t);
 		
 		return "TASK_ADDED";
+	}
+	
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public synchronized static String createSubcontractor(Map<String, String> parameters) throws ClassNotFoundException, ParseException {
+		Subcontractor s = new Subcontractor();
+
+		SubcontractorFiller.fillSubcontractorInformation(s, parameters);
+
+		ProjectObjectService.addObject("Subcontractor", s);
+		
+		return "SUBCONTRACTOR_ADDED";
 	}
 }

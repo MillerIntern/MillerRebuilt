@@ -17,6 +17,11 @@
  */
 
 
+$(document).ready(function(){$('textarea').keydown(function(){
+	autoSizeTextAreas(this);
+})});
+
+
 
 
 /**
@@ -200,6 +205,7 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#alarmHvac").val(json.closeoutDetails.alarmHvacForm);
 		$('#closeoutData').find("#verisae").val(json.closeoutDetails.verisaeShutdownReport);
 		$('#closeoutData').find("#closeoutBook").val(json.closeoutDetails.closeoutBook);
+	    formatRelativeTextAreas(json.closeoutDetails.closeoutNotes, "closeoutNotes", "closeoutData");
 		$('#closeoutData').find("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		
 		$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
@@ -312,9 +318,13 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
+	    formatRelativeTextAreas(json.closeoutDetails.finalInspectionNotes, "finalInspectionNotes", "closeoutData");
 		$('#closeoutData').find("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+	    formatRelativeTextAreas(json.closeoutDetails.finalLiensNotes, "finalLiensNotes", "closeoutData");
 		$('#closeoutData').find("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
+	    formatRelativeTextAreas(json.closeoutDetails.closeoutDocumentNotes, "closeoutDocumentNotes", "closeoutData");
 		$('#closeoutData').find("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
+	    formatRelativeTextAreas(json.closeoutDetails.warrantyNotes, "warrantyNotes", "closeoutData");
 		$('#closeoutData').find("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
 		
 		$('#closeoutData').find('#substantialCompletionStatus').val(json.closeoutDetails.substantialCompletionStatus);
@@ -1177,7 +1187,9 @@ function fillTabs_PERMIT(data)
 	    $('#permitData').find("#otherBInspectionStatus").val(json.permits.otherBInspectionStatus);
 	    $('#permitData').find("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
 	    
+	    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData");
 	    $('#permitData').find('#permitNotes').text(json.permits.permitNotes);
+	    formatRelativeTextAreas(json.permits.permitNotes , "inspectionNotes", "permitData");
 	    $('#permitData').find('#inspectionNotes').text(json.permits.inspectionNotes);
 	}
 	    
@@ -1659,11 +1671,11 @@ function saveProject_PROJECT_DATA() {
 			if(i == 6) actualTurnover = dates_PROJECT_DATA[i];
 			if(i == 7) permitApp = dates_PROJECT_DATA[i];
 		}
-		$('#projectData').find('.info-tab').removeClass('active');
-		$('#projectData').find('#saveButton').addClass('active');
+	//	$('#projectData').find('.info-tab').removeClass('active');
+	//	$('#projectData').find('#saveButton').addClass('active');
 		
-		$('#projectData').find('.nav-tabs > li.active').removeClass('active');
-		$('#projectData').find('#saveProjectLink').addClass('active');
+	//	$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+	//	$('#projectData').find('#saveProjectLink').addClass('active');
 		let updateData = {
 				mcsNum : mcsNumber,
 				warehouse_id : warehouse,
@@ -2011,6 +2023,7 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#stage").val(json.stage.id);
 	$('#projectData').find("#status").val(json.status.id);
 	$('#projectData').find("#pType").val(json.projectType.id);
+    formatRelativeTextAreas(json.scope , "scope", "projectData");
 	$('#projectData').find("#scope").val(json.scope);
 
 	
@@ -2025,12 +2038,16 @@ function fillForm_PROJECT_DATA(data)
 
 	$('#projectData').find("#shouldInvoice").val(json.shouldInvoice);
 	$('#projectData').find("#actualInvoice").val(json.invoiced);
+    formatRelativeTextAreas(json.projectNotes , "notes", "projectData");
 	$('#projectData').find("#notes").val(json.projectNotes);
+    formatRelativeTextAreas(json.zachUpdates , "zUpdates", "projectData");
 	$('#projectData').find("#zUpdates").val(json.zachUpdates);
 	if(json.cost) json.cost = cleanNumericValueForDisplaying(json.cost);
 	$('#projectData').find("#projectCost").val(json.cost);
 	$('#projectData').find("#custNum").val(json.customerNumber);
 }
+
+
 
 
 /**
@@ -3976,6 +3993,7 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#mcsCO").html(changeOrderToEdit.mcsCO);
 	$('#changeOrder').find("#subCO").val(changeOrderToEdit.subCO);
 	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
+    formatRelativeTextAreas(changeOrderToEdit.briefDescription , "briefDescription", "changeOrder");
 	$('#changeOrder').find("#briefDescription").val(changeOrderToEdit.briefDescription);
 	$('#changeOrder').find("#subNames").val(changeOrderToEdit.subNames);
 	
@@ -3989,6 +4007,7 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
 	$('#changeOrder').find("#submittedDate").val(changeOrderToEdit.submittedDate);
 	$('#changeOrder').find("#approvedDate").val(changeOrderToEdit.approvedDate);
+    formatRelativeTextAreas(changeOrderToEdit.notes , "notes", "changeOrder");
 	$('#changeOrder').find("#notes").val(changeOrderToEdit.notes);
 	$('#changeOrder').find('#title').val(changeOrderToEdit.title);
 	$('#changeOrder').find('#invoiceNumber').val(changeOrderToEdit.invoiceNumber);

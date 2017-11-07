@@ -36,6 +36,15 @@ public enum Region
 	}
 	
 	/**
+	 * This method returns the "id" of a region enumeration
+	 * @return the region's "id"
+	 */
+	public synchronized int getRegionNum()
+	{
+		return num;
+	}
+	
+	/**
 	 * This method returns all of the regions in a list
 	 * @return a list of all the regions.
 	 */

@@ -204,5 +204,89 @@ function closeTaskById (source) {
 		}
 	});
 }
+/**
+ * Function that formats the text area to the proper number columns
+ * and rows based off of the size of the content.
+ * IN: a String of text data, id of a text area
+ * OUT: Nothing
+ */
+function formatRelativeTextAreas(data, textAreaId, sectionId)
+{	
+	if(!data)
+	{
+		if(!textAreaId) return;
+		else if(!sectionId) 	
+		{
+			document.getElementById(textAreaId).rows = 1;
+			document.getElementById(textAreaId).cols = 50;
+		}
+		else
+		{
+			$('#'+sectionId).find('#'+textAreaId).attr('rows' , 1);
+			$('#'+sectionId).find('#'+textAreaId).attr('cols' , 50);
+		}
+		
+		return;
+	}	
+	else if(!sectionId)
+	{
+		if(data.length == 0)
+		{
+			document.getElementById(textAreaId).rows = 1;
+			document.getElementById(textAreaId).cols = 50;
+		}
+		else
+		{
+			let numCols = 50;
+			let numRows = Math.ceil(data.length / numCols);
+			console.log("NUM ROWS = ", numRows);
+
+			
+			if(numRows == 0 || numRows < 1) numRows = 1;
+	
+			document.getElementById(textAreaId).rows = numRows;
+			document.getElementById(textAreaId).cols = numCols
+		}
+	}
+	else
+	{
+		if(data.length == 0)
+		{
+			$('#'+sectionId).find('#'+textAreaId).attr('rows' , 1);
+			$('#'+sectionId).find('#'+textAreaId).attr('cols' , 50);
+		}
+		else
+		{
+			let numCols = 50;
+			let numRows = Math.ceil(data.length / numCols);
+			console.log("NUM ROWS = ", numRows);
+			
+			if(numRows == 0 || numRows < 1) numRows = 1;
+			
+			$('#'+sectionId).find('#'+textAreaId).attr('rows' , numRows);
+			$('#'+sectionId).find('#'+textAreaId).attr('cols' , numCols);
+		}
+	}
+}
+
+function autoSizeTextAreas(textAreaElement)
+{
+	if(!textAreaElement) return;
+	if(!textAreaElement.value) return;
+	
+	let numCols = 50;
+	if(textAreaElement.cols != numCols) numCols = textAreaElement.cols;
+	
+	if(textAreaElement.value.length < numCols) return;
+	
+	let numRows = Math.ceil(textAreaElement.value.length / numCols);
+
+	if(numRows > textAreaElement.rows)
+	{
+		textAreaElement.rows = numRows;
+	}
+	
+	
+}
 
 

@@ -199,7 +199,9 @@ public class ProjectObjectService
 				!domain.equals("Equipment")&& 
 				!domain.equals("EquipmentStatus") && 
 				!domain.equals("Proposal") && 
-				!domain.equals("Task"))
+				!domain.equals("Task") &&
+				!domain.equals("Subcontractor") &&
+				!domain.equals("Trade"))
 				criteria.addOrder(Order.asc("name"));
 			else if(domain.equals("Inspections")) {
 				criteria.addOrder(Order.asc("id"));
