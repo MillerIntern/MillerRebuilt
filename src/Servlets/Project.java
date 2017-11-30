@@ -87,6 +87,7 @@ public class Project extends HttpServlet
 		String action = parameters.get("action");
 		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
 		System.out.println("SERVLET: Project.java\nIN: doPost()\nTime of transaction: " + timeStamp);
+		if(action != null) System.out.println("ACTION: " + action);
 		
 		
 		if(action == null) {
@@ -175,7 +176,10 @@ public class Project extends HttpServlet
 		         System.out.println("Sent message successfully....");
 		      }catch (MessagingException mex) {
 		         mex.printStackTrace();
+		      } catch(Exception e) {
+		    	  e.printStackTrace();
 		      }
+		      
 		} else if(action.equals("sendText")) {
 			System.out.println("SENDING TEXT");
 
@@ -340,27 +344,39 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("addChangeOrder"))
 		{
+			boolean successfulAddition = true;
+
 			Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
 			{
-				ProjectService.addChangeOrder(projectID, parameters);
+				successfulAddition = ProjectService.addChangeOrder(projectID, parameters);
 			}
 			catch(ClassNotFoundException | ParseException e)
 			{
+				successfulAddition = false;
 				e.printStackTrace();
 			}
+			
+			if(successfulAddition) 	response = " SUCCESSFULLY ADDED CHANGE ORDER\n";
+			else response = " ERROR ADDING CHANGE ORDER\n";
 		}
 		else if(action.equals("editChangeOrder"))
 		{
+			boolean successfulEdit = true;
+			
 			Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
 			{
-				ProjectService.editChangeOrder(projectID, parameters);
+				successfulEdit = ProjectService.editChangeOrder(projectID, parameters);
 			}
 			catch(ClassNotFoundException | ParseException e)
 			{
+				successfulEdit = false;
 				e.printStackTrace();
 			}
+			
+			if(successfulEdit) response = " SUCCESSFULLY EDITED CHANGE ORDER\n";
+			else response = " ERROR EDITING CHANGE ORDER\n";
 		}
 		else if(action.equals("addEquipment"))
 		{

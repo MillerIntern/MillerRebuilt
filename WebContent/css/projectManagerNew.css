@@ -74,7 +74,7 @@
 
 
 
-.info-tab > .table, #changeOrderTable {
+.info-tab > .table, #changeOrderTable, #taskTable {
 	border-bottom: 1px solid #dddddd;
 }
 
@@ -83,7 +83,8 @@
 	
 }
 
-.info-tab > .table > tbody > tr > td:not(:last-child), #changeOrderTable > tbody > tr > td:not(:last-child) {
+.info-tab > .table > tbody > tr > td:not(:last-child), #changeOrderTable > tbody > tr > td:not(:last-child),
+	 #taskTable > tbody > tr > td:not(:last-child){
 	border-right: 1px solid #cccccc;
 }
 

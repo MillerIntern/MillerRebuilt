@@ -506,16 +506,19 @@ public class ProjectService extends ProjectObjectService
 	 * @param projectID
 	 * @param parameters
 	 */
-	public synchronized static void addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static boolean addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Add Change Order:");
 
+		if(projectID == null) return false;
+		
 		Project currentProject = null;
 		try
 		{
 			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			return false;
 		}
 		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
 		Iterator<NewEquipment> eqiter = newEquipment.iterator();
@@ -542,17 +545,29 @@ public class ProjectService extends ProjectObjectService
 		k = 1;
 		ProjectObjectService.editObject("Project",projectID,currentProject,k);
 		ProjectObjectService.deleteNullSetObjects();
+		return true;
 	}
 
 	/**
 	 * @param projectID
 	 * @param parameters
 	 */
-	public synchronized static void editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static boolean editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Change Order:");
-		Long changeOrderID = Long.parseLong(params.get("changeOrderID"));
-
+		Long changeOrderID;
+		
+		try 
+		{
+			changeOrderID = Long.parseLong(params.get("changeOrderID"));
+		} 
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 		Project currentProject = null;
 		try
 		{
@@ -593,6 +608,7 @@ public class ProjectService extends ProjectObjectService
 		k = 1;
 		ProjectObjectService.editObject("ChangeOrder",changeOrderID,oldOrder,k);
 		ProjectObjectService.deleteNullSetObjects();
+		return true;
 	}
 
 	/**

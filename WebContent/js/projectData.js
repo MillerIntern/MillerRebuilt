@@ -133,7 +133,15 @@ function generateDropdowns(str, className)
 		}
 		else if(className=="warehouse" || className=="projecteq")
 		{
-			option.innerHTML = json[i].city.name+", "+json[i].state;
+			console.log(json[i]);
+			if(json[i].state && (json[i].state == "UNKNOWN" || json[i].state == "Unknown")) 
+			{
+				option.innerHTML = json[i].city.name + ", " + json[i].region;
+			}
+			else
+			{
+				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+			}
 		}
 		else
 		{

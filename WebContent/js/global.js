@@ -124,6 +124,8 @@ function returnToLogin()
 }
 
 function setProjectHeader (projectData, currentDivLocation, previousDivLocation) {
+	
+	console.log("SET HEADER: ", projectData, currentDivLocation, previousDivLocation);
 	let city = projectData.warehouse.city.name;
 	let state = projectData.warehouse.state;
 	
@@ -135,6 +137,7 @@ function setProjectHeader (projectData, currentDivLocation, previousDivLocation)
 	if(!currentDivLocation) $(document).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
 	else {
 		convertCurrentDivLocation(currentDivLocation);
+		console.log("SET HEADERRRRR: ", projectData, currentDivLocation);
 		$('#'+currentDivLocation).find("#projectHeader").text(city + " #" + projectData.warehouse.warehouseID  + " - " +  item);
 	}
 

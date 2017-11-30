@@ -12,6 +12,7 @@
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/global.js"></script>
 	<script src="js/projects.js"></script>
+	<script src="js/taskForm.js"></script>
 	<script type="text/javascript" src="js/contentControl.js"></script>
 	
 	
@@ -160,7 +161,6 @@
 				<li role='presentation' data-tab='inspections' id="inspectionsTabLink"><a>Inspections</a></li>
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
 				<li role='presentation' data-tab='triggers' id="triggerTabLink"><a>Triggers</a></li>
-				<li role='presentation' data-tab='tasks' id="tasksTabLink"><a>Tasks</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
@@ -180,6 +180,7 @@
 				<ul class="project-information list-group">
 					<li class="list-group-item project-info-list-item" id="general-info-item">General Info</li>
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
+					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
 					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>	
 				</ul>
 			</div> <!-- Project Information -->
@@ -271,25 +272,7 @@
 				<p>No triggers in this project!</p>
 			</div>
 			<div class='info-tab' id='tasks'>
-				<select id ='taskSelector2' class='form-control'>
-					<option value='all'>All</option>
-					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
-					<option value='open'>Open</option>
-					<option value='complete'>Complete</option>
-					<option value='closed'>Closed</option>
-				</select>
-				<table class='table' id='taskTable'>
-		   			<tr class='head'>
-		   				<th>Task</th>
-		   				<th>Description</th>
-		   				<th>Assigned</th>
-		   				<th>Due</th>
-		   				<th>Priority</th>
-		   				<th>Status</th>
-		   				<th style='width: 200px;'>Notes</th>
-		   			</tr>
-				</table>
-				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
+				
 			</div>
 			<div class='info-tab' id='settings'>
 				<h3>Project Tools</h3>
@@ -326,10 +309,11 @@
 		<ul class="nav nav-tabs">
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
+			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        <!--  <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-			-->
+			
 		</ul>
 		
 		<div id="generalInformation" class="info-tab active">
@@ -413,7 +397,6 @@
 	        
 	        
 	        </table>
-	        <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
@@ -461,8 +444,86 @@
 		        </tr>
 		
 		    </table>
-		    <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End Scheduling Information -->
+		
+		<div id='tasksInformation' class='info-tab info-tab-tasks'>
+				
+			<div id = 'taskDisplay'>
+		    <select id ='taskSelector2' class='form-control'>
+					<option value='all'>All</option>
+					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
+					<option value='open'>Open</option>
+					<option value='complete'>Complete</option>
+					<option value='closed'>Closed</option>
+				</select>
+				<table class='table' id='taskTable'>
+		   			<tr class='head'>
+		   				<th>Task</th>
+		   				<th>Description</th>
+		   				<th>Assigned</th>
+		   				<th>Due</th>
+		   				<th>Priority</th>
+		   				<th>Status</th>
+		   				<th style='width: 200px;'>Notes</th>
+		   			</tr>
+				</table>
+				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
+			</div>
+			<div id = 'taskCreationZone' class = 'well'>
+				<div class='base-field'>
+					<table class='table taskCreationTable'>
+						<tr>
+							<td><label for='titleEntry'>Task:</label>
+							<td><input type='text' id='titleEntry' placeholder='Task Title'/>
+						</tr>
+						<tr>
+							<td><label for='descriptionEntry'>Description:</label>
+							<td><input  maxlength="254" type='text' id='descriptionEntry' placeholder='Task Description'/>
+						</tr>
+						<tr>
+							<td><label>Assignee:</label></td>
+							<td class='userEntry'>
+								<select id='assigneeEntry'>
+								
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><label for='initDate'>Initiated Date:</label></td>
+							<td><input type='text' id='initDate' placeholder='Task Initiated'/>
+						</tr>
+						<tr>
+							<td><label for='dueDate'>Due Date:</label></td>
+							<td><input type='text' id='dueDate' placeholder='Task Due'/>
+						</tr>
+				        <tr>
+				        	<td><label>Priority:</label></td>
+				        	<td class='severityEntry'>
+				        		<select id='severity'>
+				        			<option value='1'>1 </option>
+				        			<option value='2'>2</option>
+				        			<option value='3'>3</option>
+				        		</select>
+				        	</td>
+				        </tr>
+				        <tr>
+				        	<td><label>Notes:</label></td>
+				        	<td>
+				        	<textarea maxlength="999" id='notes'></textarea>
+				        	</td>
+				        </tr>
+					</table>
+					<button onclick='submitTask()' class='btn btn-success'>Submit Task</button>
+					<button onclick='viewTasks()' class='btn btn-primary'>Back to Task View</button>
+			</div>
+		
+			</div>
+
+	</div>
+		
+		
+		
+		</div>
 		
 		<div id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table id="financialInformationTable" class='table table-hover'>
@@ -487,7 +548,6 @@
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
-	        <button id = "saveGeneralInformation" class="btn btn-success btn-block" onClick = "saveProject_PROJECT_DATA()">Save Changes!</button>
 		</div> <!-- End Financial Information -->
 		
 		
@@ -495,27 +555,6 @@
 			<button onclick='goToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
 			<button onclick='goToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
 			<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
-			
-	        
-			<select style='margin: 4px' id ='taskSelector' class='form-control'>
-				<option value='all'>All</option>
-				<option value='complete'>Complete</option>
-				<option value='incomplete'>Incomplete</option>
-				
-			</select>
-			
-	      
-			<table class='table table-hover' id='taskTable'>
-				<tr class='head'>
-					<th>Task</th>
-					<th>Description</th>
-					<th>Assigned</th>
-					<th>Due</th>
-					<th>Priority</th>
-					<th style='width: 200px;'>Notes</th>
-					<th></th>
-				</tr>
-			</table>
 			
 		</div>
 	
@@ -538,10 +577,9 @@
 				<li role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
 				<li role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
 				<li role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
-				<!-- 
-		        <li role='presentation' onClick="saveProject_PERMIT()" data-tab="saveButton">
+		        <li role='presentation' onClick="saveProject_PERMIT()" id='save-permits' class='save-tab'>
 		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-				-->
+				
 			</ul>
 		
 		
@@ -802,28 +840,12 @@
 				</table>
 			</div>
 			
-			<button id = "savePermits" class="btn btn-success btn-block" onclick = "saveProject_PERMIT()"> Save Changes! </button>
 			
 			<div class='info-tab' id='saveButton'>
 				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
 				<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
 				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
-				<select style='margin: 4px' id='taskSelector' class='form-control'>
-					<option value='incomplete'>Incomplete</option>
-					<option value='complete'>Complete</option>
-					<option value='all'>All</option>
-				</select>
-				<table class='table table-hover' id='taskTable'>
-		   			<tr class='head'>
-		   				<th>Task</th>
-		   				<th>Description</th>
-		   				<th>Assigned</th>
-		   				<th>Due</th>
-		   				<th>Priority</th>
-		   				<th style='width: 200px;'>Notes</th>
-		   				<th></th>
-		   			</tr>
-				</table>
+
 			</div>
 		
 		</div>
@@ -857,10 +879,9 @@
 			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
-			<!--
 	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-			-->
+			
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
@@ -955,7 +976,6 @@
                 <td></td>
             </tr>
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
 
 		</div>
 	    <!-- End Closeout Documents Tab--> 
@@ -1050,7 +1070,6 @@
 	            </tr> 
 	        
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
 
 	    </div>
 	    <!-- End Final Inspections Tab --> 
@@ -1177,7 +1196,6 @@
 	                <td></td>
 	            </tr> 
 	        </table>
-		    <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
 	
 	    </div>
 	    <!-- End Warranty Letters Tab -->
@@ -1293,7 +1311,6 @@
 	                <td></td>
 	            </tr>
 			</table>
-            <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
 			
 		</div>
 	    <!-- End Final Liens Tab -->
@@ -1398,7 +1415,6 @@
 	        	<td>
 	        	</tr>
 	        </table>
-	        <button id = "saveCloseout" class="btn btn-success btn-block" onclick = "saveProject_CLOSEOUT()"> Save Changes! </button>
 	        
 	    </div>
 	    <div id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
@@ -1422,22 +1438,6 @@
 			<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
 			<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
 			<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
-			<select style='margin: 4px' id='taskSelector' class='form-control'>
-				<option value='incomplete'>Incomplete</option>
-				<option value='complete'>Complete</option>
-				<option value='all'>All</option>
-			</select>
-				<table class='table table-hover' id='taskTable'>
-	   			<tr class='head'>
-	   				<th>Task</th>
-	   				<th>Description</th>
-	   				<th>Assigned</th>
-	   				<th>Due</th>
-	   				<th>Priority</th>
-	   				<th style='width: 200px;'>Notes</th>
-	   				<th></th>
-	   			</tr>
-			</table>
 		</div>
 	
 	
@@ -1459,9 +1459,9 @@
 		
 			<ul class="nav nav-tabs">
 				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
-		     <!--    <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton">
+		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order'>
 		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-		      -->
+		      
 		     <!--    <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
 		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li>
 		       -->
@@ -1577,28 +1577,9 @@
 		                </td>   
 		            </tr>
 				 </table>
-				 <button id = "saveChangeOrders" class="btn btn-success btn-block" onClick = "saveProject_CHANGE_ORDER()">Save Changes!</button>
 			</div>
 			<div class='info-tab' id='saveButton'>
-				<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
-				<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
-				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
-				<select style='margin: 4px' id='taskSelector' class='form-control'>
-					<option value='incomplete'>Incomplete</option>
-					<option value='complete'>Complete</option>
-					<option value='all'>All</option>
-				</select>
-				<table class='table table-hover' id='taskTable'>
-		   			<tr class='head'>
-		   				<th>Task</th>
-		   				<th>Description</th>
-		   				<th>Assigned</th>
-		   				<th>Due</th>
-		   				<th>Priority</th>
-		   				<th style='width: 200px;'>Notes</th>
-		   				<th></th>
-		   			</tr>
-				</table>
+
 			</div>
 			<div class='info-tab' id='deleteButton'>
 				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>

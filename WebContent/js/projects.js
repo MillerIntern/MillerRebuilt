@@ -617,6 +617,19 @@ function saveProject_CLOSEOUT()
 		var SALVAGE_ID = 0;
 		if(PROJECT_DATA.closeoutDetails.salvageValue != null)
 			SALVAGE_ID = PROJECT_DATA.closeoutDetails.salvageValue.id;
+		
+		if( (!PROJECT_DATA || !PROJECT_DATA.id))
+		{
+			alert("Server Error! (Project ID)");
+			return;
+		}
+		
+		if(!CLOSEOUT_ID)
+		{
+			alert("Server Error! (Closeout ID)");
+			return;
+		}
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -771,7 +784,10 @@ function saveProject_CLOSEOUT()
 				getProject_PROJECT_MANAGER(projectID);
 				alert('Project Saved');
 				console.log(data);
+				//UPDATE CLOSEOUT SUMMARY
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
+				$(".editProject").hide();
+				$("#projectManager").show();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -783,6 +799,9 @@ function saveProject_CLOSEOUT()
 			{
 				alert('Project Saved');
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
+				//UPDATE CLOSEOUT SUMMARY
+				$(".editProject").hide();
+				$("#projectManager").show();
 
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
@@ -833,7 +852,23 @@ function returnToProjectManager () {
 }
 
 function createTask() {
-	window.location.href = "taskForm.html?id=" + projectID;
+
+	clearTaskForm();
+	document.getElementById('tasksInformation').style.width = "55%";
+	$('#taskDisplay').hide();
+	$('#taskCreationZone').show();
+	
+}
+
+function viewTasks() {
+	
+	if(confirm("This task will not be added, are you sure you want to leave this screen?"))
+	{
+		document.getElementById('tasksInformation').style.width = "100%";
+		$('#taskCreationZone').hide();
+		$('#taskDisplay').show();
+	}
+
 }
 
 /**
@@ -1050,7 +1085,7 @@ function getProject_PERMIT()
 				setProjectHeader(data, currentDivLocation);
 
 				fillTabs_PERMIT(PROJECT_DATA);
-				getTasks();
+				//getTasks();
 			}
 		});
 	} else {
@@ -1312,6 +1347,18 @@ function saveProject_PERMIT()
 			PERMIT_ID = PROJECT_DATA.permits.id;
 		else
 			PERMIT_ID = 0;
+		
+		if(!PROJECT_DATA || !PROJECT_DATA.id)
+		{
+			alert("Server Error! (Project ID)");
+			return;
+		}
+		if(!PERMIT_ID)
+		{
+			alert("Server Error! (Permit ID)");
+			return;
+		}
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -1384,6 +1431,11 @@ function saveProject_PERMIT()
 				alert('Save Complete!');
 				getProject_PROJECT_MANAGER(projectID);
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
+				$('#permitData').find('.active').removeClass('active');
+				$('#permitData').find('#buildingPermit').addClass('active')
+
+				$(".editProject").hide();
+				$("#projectManager").show();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -1397,7 +1449,12 @@ function saveProject_PERMIT()
 				getProject_PROJECT_MANAGER(projectID);
 				alert('Save Complete!');
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
+				$('#permitData').find('.active').removeClass('active');
+				$('#permitData').find('#buildingPermit').addClass('active');
 
+				$(".editProject").hide();
+				$("#projectManager").show();
+				
 			}
 		});
     }  
@@ -1487,6 +1544,8 @@ $(document).ready(function()
 	$('#projectData').find("#scheduledTurnover").datepicker();
 	$('#projectData').find("#actualTurnover").datepicker();
 	$('#projectData').find("#permitApp").datepicker();
+	$('#projectData').find("#taskCreationZone").find('#initDate').datepicker();
+	$('#projectData').find("#taskCreationZone").find('#dueDate').datepicker();
 });
 
 /**
@@ -1584,7 +1643,14 @@ function generateDropdowns(str, className)
 		}
 		else if(className=="warehouse" || className=="projecteq")
 		{
-			option.innerHTML = json[i].city.name+", "+json[i].state;
+			if(json[i].state && (json[i].state == "UNKNOWN" || json[i].state == "Unknown")) 
+			{
+				option.innerHTML = json[i].city.name + ", " + json[i].region;
+			}
+			else
+			{
+				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+			}
 		}
 		else
 		{
@@ -1676,6 +1742,7 @@ function saveProject_PROJECT_DATA() {
 		
 	//	$('#projectData').find('.nav-tabs > li.active').removeClass('active');
 	//	$('#projectData').find('#saveProjectLink').addClass('active');
+		
 		let updateData = {
 				mcsNum : mcsNumber,
 				warehouse_id : warehouse,
@@ -1688,6 +1755,12 @@ function saveProject_PROJECT_DATA() {
 		var action = 'addNewProject';
 		if (edit == true) {
 			action = 'editExistingProject';
+		}
+		
+		if(!projectID)
+		{
+			alert("Server Error! (Project ID)");
+			return;
 		}
 		
 		$.ajax({
@@ -1738,8 +1811,9 @@ function saveProject_PROJECT_DATA() {
 				alert('Save Complete!');				
 				$('#saveButton > button').prop('disabled', false);
 				
+				$(".editProject").hide();
+				$("#projectManager").show();
 				
-
 			}
 			
 		});
@@ -1997,7 +2071,7 @@ function getProject_PROJECT_DATA()
 				PROJECT_DATA = (data);
 				setProjectHeader(data, currentDivLocation);
 				fillForm_PROJECT_DATA(data);
-				getTasks();
+				//getTasks();
 			}
 		});
 	}
@@ -2015,6 +2089,7 @@ function fillForm_PROJECT_DATA(data)
 	
 	$('#projectData').find("#mcsNumber").val(json.McsNumber);
 
+	console.log("WARE ID : " , json.warehouse.id);
     $('#projectData').find("#warehouse").val(json.warehouse.id);
 	$('#projectData').find("#class").val(json.projectClass.id);
 	$('#projectData').find("#project").val(json.projectItem.id);
@@ -2139,6 +2214,7 @@ function getProject_PROJECT_MANAGER(project_id) {
 				'id': projectID
 			}, success: function (data) {
 				
+				PROJECT_DATA = data;
 				setProjectHeader(data, currentDivLocation);
 
 				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
@@ -2185,9 +2261,18 @@ function editProjectInfo (source_id) {
 }
 
 function prepareProjectData(source_id){
+	
+	if(source_id && !(isNaN(source_id))) projectID = source_id;
+	setCurrentDivLocation('projectData');
+	setProjectHeader(PROJECT_DATA, currentDivLocation);
 	$('#projectData').find(".nav-tabs").find("[class~=active]").removeClass("active");
 	$('#projectData').find("[class~=active]").removeClass("active");
 
+	document.getElementById('tasksInformation').style.width = "100%";
+	$('#taskCreationZone').hide();
+	$('#taskDisplay').show();
+	
+	
 	if(source_id == "general-info-item")
 	{
 		$('#projectData').find(".nav-tabs").find("[data-tab=generalInformation]").addClass("active");
@@ -2200,6 +2285,17 @@ function prepareProjectData(source_id){
 		$('#projectData').find("#schedulingInformation").addClass("active");
 
 	}
+	else if(source_id == "tasks-item")
+	{
+		//getUserData();
+		document.getElementById('tasksInformation').style.width = "100%";
+		$('#taskDisplay').show();
+		$('#taskCreationZone').hide();
+		$('#projectData').find(".nav-tabs").find("[data-tab=tasksInformation]").addClass("active");
+		$('#projectData').find("#tasksInformation").addClass("active");
+		
+
+	}
 	else if(source_id == "financial-item")
 	{
 		$('#projectData').find(".nav-tabs").find("[data-tab=financialInformation]").addClass("active");
@@ -2210,6 +2306,12 @@ function prepareProjectData(source_id){
 }
 
 function prepareCloseout(source_id){
+	
+	if(source_id && !(isNaN(source_id))) projectID = source_id;
+	setCurrentDivLocation("closeoutData");
+	setProjectHeader(PROJECT_DATA, currentDivLocation);
+
+	
 	$('#closeoutData').find(".nav-tabs").find("[class~=active]").removeClass("active");
 	$('#closeoutData').find("[class~=active]").removeClass("active");
 
@@ -2335,10 +2437,12 @@ function fillChangeOrders (data) {
 	});
 	console.log("CO's = ", changeOrders);
 	
+	/*
 	for(var i = 0; i < changeOrders.length; i++)
 	{
 		changeOrders[i].mcsCO = i + 1;
 	}
+	*/
 	
 	
 	for (var i = 0; i < changeOrders.length; i++) {
@@ -2360,7 +2464,7 @@ function fillChangeOrders (data) {
 		
 		var coNumber = document.createElement('td');
 		coNumber.width = "5%";
-		coNumber.appendChild(document.createTextNode(i + 1));
+		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
 		
 		var title = document.createElement('td');
 		title.width = "13%";
@@ -3485,7 +3589,15 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 		}
 		let option = document.createElement('option');
 		if (field == 'Warehouse') {
-			option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+			if(json[i].state && (json[i].state == "UNKNOWN" || json[i].state == "Unknown")) 
+			{
+				option.innerHTML = json[i].city.name + ", " + json[i].region;
+			}
+			else
+			{
+				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+			}
+			
 		} else if(field == 'Stage') {
 			if(sorted == false){
 				let sortedStages = new Array(9);
@@ -3665,6 +3777,7 @@ function filterProjects () {
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
 		let val = $(parameters[i + 1]).val();
+		console.log("VAL = ", val);
 		
 		for (var j = 0; j < json.length; j++) {
 			if(id === 'Warehouse') { 
@@ -3687,7 +3800,8 @@ function filterProjects () {
 					json[j] = null;
 					remaining = remaining -1;
 				}
-			} else if (id == 'Supervisor') {
+			} else if (id === 'Supervisor') {
+				console.log("ID VAL: ", json[j].supervisors);
 				if (json[j] != null && json[j].supervisors != null && json[j].supervisors[0].id != val) {
 					json[j] = null
 					remaining = remaining - 1;
@@ -3713,9 +3827,8 @@ function filterProjects () {
 		$('#results > tbody').children('tr:not(.head)').remove();
 		if (remaining == 0) {
 			clearAndAddSingleRow('No Results Found!');
-		} else if (remaining > 50) {
-			clearAndAddSingleRow('Too many results. Refine your search.');
-		} else {
+		}  
+		else {
 			for (var k = 0; k < json.length; k++) {
 				if(json[k] != null) {
 					let projectListing = document.createElement('tr');
@@ -3800,7 +3913,15 @@ function navigateTo(source) {
 		$(source).attr('id').replace('project', '');
 		var proj_id = $(source).attr('id');
 		proj_id = proj_id.replace('project','');
+		console.log("PROJ MAN: ", proj_id, PROJECT_DATA);
+		projectID = proj_id;			
 		getProject_PROJECT_MANAGER(proj_id);
+		$('#projectInformationTabLink').addClass('active');
+		$('#projectInformation').addClass('active');
+		$('#projectInformation').addClass('active');
+		$('#closeout').removeClass('active');
+
+		
 		currentDivLocation = "projectManager";
 		document.getElementById("projectManager").style.display = 'inline';
 		//window.location.href = PROJECTMANAGER + '?id=' + 
@@ -3813,6 +3934,7 @@ $(document).on('change', '#taskSelector2', function () {
 	clearTaskTable();
 	fillTasksTable(tasks);
 	console.log("Right here \n");
+	console.log($('#taskSelector2').val());
 });
 
 /**
@@ -3834,8 +3956,11 @@ function getTasks() {
 			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getAllProjects();
 			tasks = data;
 			if (data) {
+				
 				fillTasksTable(data);
 			}
+			getUserData();
+		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
 		}, error: function (data) {
 			alert('Server Error!');
 		}
@@ -3916,7 +4041,7 @@ function getProject_CHANGE_ORDER()
 					console.log("MCS CO = ", mcsCO);
 					$('#changeOrder').find('#mcsCO').html(mcsCO);
 				}
-				getTasks();
+				//getTasks();
 
 	
 			}
@@ -4265,6 +4390,19 @@ function saveProject_CHANGE_ORDER()
 			if(i == 1) submittedDate = dates[i];
 			if(i == 2) approvedDate = dates[i];
 		}
+	
+	if(action == "editChangeOrder" && (!CHANGE_ORDER_ID || !projectID)) {
+		console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
+		alert("Server Error! (Edit Change Order)");
+		return;
+	}
+	
+	if(action == "addChangeOrder" && !projectID) {
+		console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
+		alert("Server Error! (Add Change Order)");
+		return;
+	}
+	
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -4354,6 +4492,7 @@ function goToChangeOrder(edit){
 	if(edit == 0) {
 		edit_CHANGE_ORDER = 'false';		
 		$('#deleteChangeOrderButton').hide();
+
 	}
 	else {
 		edit_CHANGE_ORDER = 'true';
@@ -4448,6 +4587,7 @@ function setCurrentDivLocation(location) {
  * INNER FUNCTION CALLS: none
  */
 function convertCurrentDivLocation (currentDivLocation){
+	console.log("CURRENT DIV: ", currentDivLocation);
 	switch(currentDivLocation) {
 		case "projectManager":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Project Manager <small id='projectHeader'>---</small></p>");
@@ -4505,12 +4645,12 @@ function preparePage() {
 		currentDivLocation = "projectManager";
 		getProject_PROJECT_MANAGER(id);
 		$('#projectManager').show();
-		$('.projectNavigator').hide();
+		//if(!RETRIEVED_PROJECTS) $('.projectNavigator').hide();
 		$('.projectNavigator-projectManager').show();
 		PAGE_ENTRY = "fromTask";
 		if(from) {
 			PAGE_ENTRY = from;
-			getAllProjects();
+			//getAllProjects();
 		}
 	} else {
 		$('.projectNavigator').show();
