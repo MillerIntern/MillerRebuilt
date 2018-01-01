@@ -561,7 +561,7 @@ public class ReportHelper
 		} else if(value.equals("task_status")) {
 			sb.append("<th>");
 			sb.append("Status");
-		} 
+		}
 	}
 	
 	/**
@@ -586,6 +586,11 @@ public class ReportHelper
 		}
 		else if (value.equals("warehouse") && p.getWarehouse() != null)
 		{
+			if(p.getWarehouse().getCity().getName().equals("APANA")) 
+			{
+				return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getRegion());
+			}
+			
 			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation());
 		}
 		else if(value.equals("warehouse_and_id") && p.getWarehouse() != null)

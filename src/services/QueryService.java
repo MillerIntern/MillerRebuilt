@@ -76,7 +76,8 @@ public class QueryService
 			String v = pars.get(paramName)[0];
 
 			if (!v.isEmpty() && v != null && !v.equals("none") && !paramName.equals("domain") && !paramName.equals("action") && !paramName.equals("title") && !paramName.equals("projectInitiatedDateRelation")
-					&& !paramName.equals("costcoDueDateRelation") && !paramName.equals("proposalSubmittedRelation") && !paramName.equals("scheduledStartRelation") && !paramName.equals("scheduledTurnoverRelation") && !paramName.equals("actualTurnoverRelation") && !paramName.equals("onGoingRelation"))
+					&& !paramName.equals("costcoDueDateRelation") && !paramName.equals("proposalSubmittedRelation") && !paramName.equals("scheduledStartRelation") && !paramName.equals("scheduledTurnoverRelation") && !paramName.equals("actualTurnoverRelation") && !paramName.equals("onGoingRelation")
+					&& !paramName.equals("type"))
 			{
 				List<String> dataList = convertStringToList(v);
 				for(int i = 0; i < dataList.size(); i++)

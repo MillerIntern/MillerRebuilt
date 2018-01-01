@@ -3,6 +3,7 @@ package Servlets;
 import java.io.IOException;
 
 
+
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -36,6 +37,7 @@ import objects.HibernateUtil;
 import projectObjects.Project;
 import projectObjects.Task;
 import services.HtmlGenerator;
+import services.LoginService;
 import services.ProjectObjectService;
 import services.QueryService;
 
@@ -63,7 +65,7 @@ public class Report extends HttpServlet
 	@SuppressWarnings("unchecked")
 	protected synchronized void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		
+		if(!LoginService.verify(req)) { resp.setContentType("plain/text"); out = resp.getWriter(); out.println("VERIFICATION_FAILURE"); return;}
 		String timeStamp = new SimpleDateFormat("[MM/dd/yyyy] @ HH.mm.ss").format(new java.util.Date());
 		System.out.println("SERVLET: Report.java\nIN: doGet()\nTime of transaction: " + timeStamp);
 		resp.setContentType("text/html");
@@ -114,9 +116,7 @@ public class Report extends HttpServlet
 	            
 	            type = "Task Report";
 	            tasks = acquireSpecificTasks(req);
-				
-	            System.out.println("Tasks sizeeeeee = " +tasks.size());
-				
+								
 	            String[] taskFields = {"warehouse","task_title","task_assignee","task_description","task_created_date",
                 "task_due_date", "task_status", "task_priority","task_notes"};
 				

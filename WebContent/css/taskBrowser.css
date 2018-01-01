@@ -1,3 +1,25 @@
+#formFor {
+	float: left;
+	padding-right: 20px;
+}
+
+#projectManagerDropdown {
+	float: center;
+	padding-right: 20px;
+}
+
+#taskSelector {
+	float: center;
+	padding-right: 20px;
+}
+
+#displayTasks {
+	float: center;
+}
+
+#projectSearch {
+	float: center;
+}
 
 
 #printButton {
@@ -21,7 +43,7 @@
 }
 
 .headBorder {
-	font-size: 20px;
+	font-size: 15px;
 	border-bottom: 3px solid #555;
 }
 
@@ -37,11 +59,11 @@
 
 
 #taskTable > tbody > tr > td {
-	font-size: 14.75px;
+	font-size: 12px;
 }
 
 #taskTable {
-	margin-top: 16px;
+	margin-top: 0px;
 }
 
 #taskWell > * {

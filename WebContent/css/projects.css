@@ -16,6 +16,12 @@
     max-height:500px;
 }
 
+#changeOrderTableDiv > #changeOrderTable > tbody td{
+	font-size: 87%;
+}
+
+
+
 .editProject {
 	display: none;
 }
@@ -82,7 +88,7 @@
 	background-color: #ECF0FC;
 }
 
-.stageLabel, .coLabel, .closeoutLabel{
+.stageLabel, .coLabel, .closeoutLabel, .coNumber{
 	font-weight: bold;
 }
 

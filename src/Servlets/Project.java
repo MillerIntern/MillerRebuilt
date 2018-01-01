@@ -61,6 +61,7 @@ public class Project extends HttpServlet
        
     public Project() 
     {
+    	
         super();
     }
 
@@ -652,9 +653,13 @@ public class Project extends HttpServlet
 		}
 		
 		if(!(action.equals("getAllProjects") || action.equals("getTasks") ||
-				action.equals("getSpecificObjects")))
+				action.equals("getSpecificObjects") || action.equals("getAllObjects") || action.equals("getQueryEnums")))
 			System.out.println("ACTION = " + action + "\nRESPONSE = " + response);
-		out.println(response);
+
+		
+			out = resp.getWriter();
+			out.println(response);
+		
 	}
 
 	/**
@@ -685,6 +690,8 @@ public class Project extends HttpServlet
 			username = "Tony";
 		else if(username.equals("Marvin"))
 			username = "Marvin";
+		else if(username.equalsIgnoreCase("scott"))
+			username = "Scott";
 		else username = "";
 		Gson gson = new Gson();
 		

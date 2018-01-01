@@ -184,6 +184,7 @@ function addPerson()
 function addUser()
 {
 	let logInName = $('#userTab').find('#logInName').val();
+	if(logInName) logInName = logInName.toLowerCase();
 	let firstName = $('#userTab').find('#firstName').val();
 	let email = $('#userTab').find('#email').val();
 	let password = $('#userTab').find('#password').val();

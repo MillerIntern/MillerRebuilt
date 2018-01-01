@@ -23,7 +23,6 @@ $(document).ready(function(){$('textarea').keydown(function(){
 
 
 
-
 /**
 * THE FOLLOWING JAVASCRIPT CORRESPONDS TO THE CLOSEOUTDATA.JS FILE
 */
@@ -2463,6 +2462,7 @@ function fillChangeOrders (data) {
 		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
 		
 		var coNumber = document.createElement('td');
+		coNumber.className = 'coNumber';
 		coNumber.width = "5%";
 		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
 		
@@ -4631,6 +4631,7 @@ function updateProjectManager() {
  * INNER FUNCTION CALLS: getParameterByName(), getProject_PROJECT_MANAGER(), getAllProjects()
  */
 function preparePage() {
+	
 	let id = getParameterByName("id");
 	let from = getParameterByName("from");
 	let type = getParameterByName("type");

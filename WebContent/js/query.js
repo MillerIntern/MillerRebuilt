@@ -26,8 +26,8 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
-			"task_title":"Title", "task_assignee":"Assignee", "task_description":"Description", "task_created_date":"Created", "task_due_date":"Due",
-			"task_priority":"Priority", "task_notes":"Notes" , "task_status":"Status", 'warehouse_and_id':'Warehouse ID', 'invoice_number':'Invoice Number'};
+			"task_title":"Task Title", "task_assignee":"Task Assignee", "task_description":"Task Description", "task_created_date":"Task Created Date", "task_due_date":"Task Due Date",
+			"task_priority":"Task Priority", "task_notes":"Task Notes" , "task_status":"Task Status", 'warehouse_and_id':'Warehouse ID', 'invoice_number':'Invoice Number'};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
@@ -613,7 +613,14 @@ function generateDropdown(str, className)
 		var option = document.createElement("option");
 		if (className == "warehouse")
 		{
-			option.innerHTML = json[i].city.name+", "+json[i].state+" -- #"+json[i].warehouseID;
+			if(json[i].state && (json[i].state == "UNKNOWN" || json[i].state == "Unknown")) 
+			{
+				option.innerHTML = json[i].city.name + ", " + json[i].region;
+			}
+			else
+			{
+				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
+			}
 			option.setAttribute("value", json[i].id);
 		}
 		else if (className == "region")
@@ -844,6 +851,13 @@ function createModalFieldSelector()
 	//generates the check boxes defaulted to checked
 	$.each(FIELDS_TO_SHOW, function(key, value)
 	{
+		if(value.indexOf("Task") !== -1) return;
+		if(value == "Project Manager" && key == "person") return;
+		if(value == "Closeout") return;
+		if(value == "Equipment Report") return;
+		if(value == "Change Order Report") return;
+		if(value == "Invoice Number") return;
+		
 		var span = document.createElement("p");
 		
 		var checkbox = document.createElement("input");
@@ -911,10 +925,17 @@ function submitQuery()
 	var onGoingRelation = new Array();
 	var manager = new Array();
 	var title = $('#reportTitle').val();
+	
+	console.log("Param  Num: ", paramNum);
+	
+		
+	
     
     for(var i = 0; i < paramNum;i++)
     {
+    	
     	var paramType = $('#param'+i).val();
+    	console.log("Param Num: ", i);
     	if($('#param'+i).parent().attr('class') == 'paramDateCell')
     	{
 		switch(paramType){
@@ -980,6 +1001,7 @@ function submitQuery()
 
     			case 'warehouse':
     				var valType = $('#val'+i).val();
+    				console.log("Warehouse Val: ", valType);
     				warehouseIDs.push(valType);
 				break;
 
@@ -990,6 +1012,7 @@ function submitQuery()
 
     			case 'item':
     				var valType = $('#val'+i).val();
+    				console.log("Item Val: ", valType);
     				item.push(valType);
     				break;
 
@@ -1005,6 +1028,7 @@ function submitQuery()
 
     			case 'stage':
     				var valType = $('#val'+i).val();
+    				console.log("Stage Val: ", valType);
     				stage.push(valType);
 				break;
 				
@@ -1014,6 +1038,8 @@ function submitQuery()
 		}
     	}
     }
+    
+    
 	//default title
 	if(title == null || title == '')
 		{
@@ -1023,6 +1049,7 @@ function submitQuery()
         var data = {
         		'domain': 'project',
     			'action': 'query',
+    			'type' : 'freeQuery',
     			'warehouse.id': JSON.stringify(warehouseIDs),
     			'stage.id':JSON.stringify(stage),
     			'projectClass.id':JSON.stringify(pClass),
@@ -1048,9 +1075,10 @@ function submitQuery()
    
     data['shownFields'] = selectedFields;	
     console.log("selected fields equals to....  ", selectedFields);
-    alert("WAITTT");
     var params = $.param(data);
-    document.location.href = REPORT_URL+"?"+params;
+    
+    if(confirm("WAIT"))
+    	document.location.href = REPORT_URL+"?"+params;
 }
 
 function checkAll()

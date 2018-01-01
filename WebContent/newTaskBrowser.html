@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Task Browser</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+	
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/global.js"></script>
+	<script src='js/newTaskBrowser.js'></script>
+	<script src='js/newTaskAdmin.js'></script>
+	<script src='js/taskBrowserSorting.js'></script>
+	<script type="text/javascript" src="js/contentControl.js"></script>
+	<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+	
+	
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/taskBrowser.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+    
+    
+  </head>
+  <body>
+ 
+  
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Add Project</a></li>
+	          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Triggers</a></li>
+	      <li class='dropdown active'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a href='projects.html?type=findTaskProject'
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      <li><a href="query.html">Reports</a></li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	
+    <div class="container">
+		
+		<div class="param-field">
+		
+   		<h4 id='formFor'>  </h4>
+   		<select data-placeholder = "Select Managers..." class = "chosenElement taskManager" id = 'projectManagerDropdown' multiple = "multiple">
+   		</select>
+   		
+   		<select id ='taskSelector'>
+			<option value='all'>All</option>
+			<option value='open_complete' selected = "selected"> Open &amp; Complete</option>		
+			<option value='open'>Open</option>         
+			<option value='complete'>Complete</option>
+			<option value='closed'>Closed</option>
+		</select>
+		<button class="btn btn-success" id = "displayTasks" onclick="createProperTaskTable()">Retrieve Tasks</button>
+		
+		
+		<br> <br>
+   				
+   		  <input class="taskSearcher" id="projectSearch" type='text' placeholder='Search For Project'/>
+   		  <input class="taskSearcher"  id="descriptionSearch" type='text' placeholder='Filter Descriptions'/>
+   		  <select class = 'sortSelection' id = 'sortSelector'>
+   				     <option value='none' disabled selected hidden=true>Sort By...</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='project'>Project</option>
+   				     <option value='assignee' style='display:none' id='assigneeSort'> Assignee </option>
+   		  </select>
+   		  <select class = 'sortSelection' id = 'sortOrder'>
+   				     <option value='ascending'>Ascending</option>
+   				     <option value='descending'>Descending</option>
+   		  </select>
+   		  
+   		  <br><br>
+   		  
+   		  <button id='advancedSort' class='btn btn-primary advancedSortingOptions' value='off'> Advanced Sorting </button>
+		  
+		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='primaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Primary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='secondaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Secondary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <select class = 'advancedSortingOptions advancedSortingSelector sortKey' id='tertiaryKey' style='display:none'>
+   				     <option value='none' disabled selected hidden=true>Tertiary Key..</option>
+   				     <option value='priority'>Priority</option>
+   				     <option value='date'>Due Date</option>
+   				     <option value='assignee'> Assignee </option>
+   		  </select>
+   		  <button id='advancedSortButton' class='btn advancedSortingOptions advancedSortingSelector' style='display:none' onclick='advancedSortValidation()'> Sort </button>
+   		 
+   			 
+   		
+   		 
+   		 </div>
+          
+          <br>
+   		  <div id='taskWell' class='well' style='display: none'>
+	   			<h4 class='title'></h4>
+	   			<p><b>Title of Task: </b></p>
+	   			<input maxlength ="254" type='text' id='title' placeholder='Task Title'/>
+	   			<div>
+	   			<p><b>Description of Task:</b></p>
+	   			<textarea  maxlength="254" class='description'></textarea>
+	   			</div>
+	   			<span><b>Priority:</b>
+	   			<select class='severity'>
+	   				<option>1</option>
+	   				<option>2</option>
+	   				<option>3</option>
+	   			</select></span>
+	   			<p class='assignedDate'></p>
+	   			<span><span style='margin-right: 4px;'><b>Due Date:</b></span><input type='text' class='dueDate taskUpdate'/></span>
+	   			<p class='assignedBy'></p>
+	   			<span>
+	   				<span><b>Assigned To:</b></span>
+	   				<select class='assignedTo'>
+	   					
+	   				</select>
+	   			</span>
+	   			<span>
+	   			   <span><b>Status:</b></span>
+	   			   <select class='taskStatus'>
+	   			       <option value="Open"> Open </option>
+	   			       <option value="Completed"> Completed </option>
+	   			       <option class = "adminContent" value="Closed"> Closed </option>
+	   			   </select>
+	   			</span>
+	   			<div>
+	   			<p><b>Notes:</b></p>
+	   			<textarea  maxlength="999" class='notes'></textarea>
+	   			</div>
+	   			<span>
+	   			<button class='btn btn-danger' onclick='collapseWell()'>X</button>
+	   			<button class='btn taskWellButton' onclick='navigateToSelectedProject()'>Navigate to Project</button>
+	   			<button class='btn taskWellButton' onclick='saveTaskChanges()'>Update Task</button>
+	   			</span>
+   		</div>
+   		
+   	
+   		<button onclick='printButton()' class='btn btn-primary' id="printButton">Print Tasks</button>
+		
+		
+		<div class = "param-field">
+		<table id="taskTable" class="table table-responsive" >
+		      
+		   <col style="width: 15%">
+		   <col style="width: 11%">
+		   <col style="width: 11%">
+		   <col style="width: 20%">
+		   <col style="width: 10%">
+		   <col style="width: 10%">
+		   <col style="width: 10%">
+		   <col style="width: 8%">
+		   <col style="width: 20%">
+		   <thead>
+  		
+   			<tr class='head headBorder'>
+   				<th>Project</th>
+   				<th>Task</th>
+   				<th>Assignee</th>
+   				<th>Description</th>
+   				<th>Created</th>
+   				<th>Due</th>
+   				<th>Priority</th>
+   				<th>Status</th>
+   				<th>Notes</th>
+   				
+   			</tr>
+   			</thead>  
+   		</table>
+   		<div id = "taskTableDiv">
+   		<table id="taskTable" class="table table-responsive" >
+		      
+		   <col style="width: 15%">
+		   <col style="width: 11%">
+		   <col style="width: 11%">
+		   <col style="width: 20%">
+		   <col style="width: 10%">
+		   <col style="width: 10%">
+		   <col style="width: 10%">
+		   <col style="width: 8%">
+		   <col style="width: 20%">
+   		
+   			<tbody>
+   			</tbody>
+   			
+   		</table>
+   		</div>
+   		</div>
+   		
+  
+   
+   		
+  	
+    </div>
+    
+
+  </body>
+</html>
