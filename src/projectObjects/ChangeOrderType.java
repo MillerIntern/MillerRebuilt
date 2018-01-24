@@ -2,6 +2,8 @@ package projectObjects;
 
 import javax.persistence.Entity;
 
+import projectObjects.ProjectObject;
+
 /**
  * @author jmackin
  *

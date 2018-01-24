@@ -2,6 +2,8 @@ package projectObjects;
 
 import javax.persistence.Entity;
 
+import projectObjects.ProjectObject;
+
 /**
  * This class represents the status of a change order. This has its own class because
  * even though the names of these statuses may change over time, the names must be standardized
