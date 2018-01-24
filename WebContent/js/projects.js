@@ -22,6 +22,60 @@ $(document).ready(function(){$('textarea').keydown(function(){
 })});
 
 
+//NEXT 3 FUNCTIONS CORRESPOND TO CHOSEN STUFF
+/*
+$(document).ready(function(){
+	$('.stageSelection').chosen({ width : "500px"});
+	$('.stageSelection').on('change' , function(evt , params) {
+    	
+    	if(params.selected) {
+    		if(params.selected == "All") 
+    			selectAllProjectStages();
+    		if(params.selected == "None")
+    			deselectAllProjectStages();
+    	}  
+    	
+    	updateFrontEnd();
+    });
+});
+
+function deselectAllProjectStages() {
+	let stageSelection = document.getElementById("stageSelector");
+	
+	for(var i = 0; i < stageSelection.options.length; i++) {
+		stageSelection.options[i].selected = false;
+	}
+	
+	$('#stageSelector').trigger('chosen:updated');
+
+	
+}
+
+function selectAllProjectStages() {
+	let stageSelection = document.getElementById("stageSelector");
+	
+	for(var i = 0; i < stageSelection.options.length; i++) {		
+		if(stageSelection.options[i].value == "None") {
+			continue;
+		}
+		else if(stageSelection.options[i].value == "All") {
+			stageSelection.options[i].selected = false;
+		}
+		else {
+			if(stageSelection.options[i].className == "commonStage")
+				stageSelection.options[i].selected = true;
+			else
+				stageSelection.options[i].selected = false;
+		}
+	}
+	
+	$('#stageSelector').trigger('chosen:updated');
+	
+}
+
+*/
+
+
 
 /**
 * THE FOLLOWING JAVASCRIPT CORRESPONDS TO THE CLOSEOUTDATA.JS FILE
@@ -38,6 +92,18 @@ let tasks;
 let PAGE_ENTRY;
 let RETRIEVED_PROJECTS;
 let DISPLAYABLE_PROJECTS;
+let taskAssigneeType = "EMPLOYEE";
+let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
+let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
+let TASK_ACTION = "createTask";
+
+
+
+var PAGETYPE_EQUIP = "add";
+var projectID_EQUIP;
+var EQUIPMENT_ID_EQUIP;
+
+var PROJECT_DATA_EQUIP;
 
 
 
@@ -108,6 +174,7 @@ $(document).ready(function(){
 		console.log($(this).attr('data-associated-date'));
 		$('#closeoutData').find('#' + $(this).attr('data-associated-date')).val(getToday());
 	});
+	
 });
 
 
@@ -785,8 +852,7 @@ function saveProject_CLOSEOUT()
 				console.log(data);
 				//UPDATE CLOSEOUT SUMMARY
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
-				$(".editProject").hide();
-				$("#projectManager").show();
+				goToProjectManager();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -799,8 +865,8 @@ function saveProject_CLOSEOUT()
 				alert('Project Saved');
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 				//UPDATE CLOSEOUT SUMMARY
-				$(".editProject").hide();
-				$("#projectManager").show();
+				getProject_PROJECT_MANAGER(projectID);
+				goToProjectManager();
 
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
@@ -852,7 +918,17 @@ function returnToProjectManager () {
 
 function createTask() {
 
+	TASK_ACTION = "createTask";
 	clearTaskForm();
+	let dateObj = new Date();
+	let month = dateObj.getUTCMonth() + 1;
+	let day = dateObj.getUTCDate();
+	let year = dateObj.getUTCFullYear();
+	
+	let todaysDate = month + "/" + day + "/" + year;
+	
+	$('#taskCreationZone').find('#initDate').val(todaysDate);
+	
 	document.getElementById('tasksInformation').style.width = "55%";
 	$('#taskDisplay').hide();
 	$('#taskCreationZone').show();
@@ -861,7 +937,16 @@ function createTask() {
 
 function viewTasks() {
 	
-	if(confirm("This task will not be added, are you sure you want to leave this screen?"))
+	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
+	let createMessage = "This task will not be added, are you sure you want to leave this screen?";
+	let displayedMessage;
+	
+	if(TASK_ACTION == "createTask")
+		displayedMessage = createMessage;
+	else 
+		displayedMessage = updateMessage;
+	
+	if(confirm(displayedMessage))
 	{
 		document.getElementById('tasksInformation').style.width = "100%";
 		$('#taskCreationZone').hide();
@@ -888,7 +973,7 @@ function goToFindProject() {
 			$('#permitData').find('.info-tab').removeClass('active');
 			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
 			$('#permitData').find('#buildingPermit').addClass('active');
-			$('#permitData').find('#permits').addClass('active');
+			$('#permitData').find('#buildingPermits').addClass('active');
 			break;
 		case "closeoutData":
 			$('#closeoutData').find('.info-tab').removeClass('active');
@@ -930,7 +1015,7 @@ function goToProjectManager() {
 	$(".editProject").hide();
 	$("#projectManager").show();
 	
-	console.log("CURRENT LOCATION = ", currentDivLocation);
+	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
 	switch(currentDivLocation){
 		case "projectData":
 			getProject_PROJECT_MANAGER(projectID);
@@ -939,6 +1024,7 @@ function goToProjectManager() {
 			$('#projectData').find('#generalInformation').addClass('active');
 			$('#projectData').find('#generalInformationTabLink').addClass('active');
 			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformation').addClass('active');
 			break;
 		case "permitData":
 			getProject_PROJECT_MANAGER(projectID);
@@ -946,7 +1032,8 @@ function goToProjectManager() {
 			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
 			let activeTab = $('#projectManager').find('.nav-tabs > li.active').id;
 			$('#permitData').find('#buildingPermit').addClass('active');
-			$('#permitData').find('#permits').addClass('active');
+			$('#permitData').find('#buildingPermits').addClass('active');
+			$('#projectManager').find('#permits').addClass('active');
 			$('#projectManager').find('#'+activeTab).addClass('active');
 			break;
 		case "closeoutData":
@@ -956,6 +1043,7 @@ function goToProjectManager() {
 			$('#closeoutData').find('#closeout').addClass('active');
 			$('#closeoutData').find('#closeoutDocuments').addClass('active');
 			$('#projectManager').find('#closeoutTabLink').addClass('active');
+			$('#projectManager').find('#closeout').addClass('active');
 			break;
 		case "changeOrder":
 			getProject_PROJECT_MANAGER(projectID);
@@ -973,6 +1061,10 @@ function goToProjectManager() {
 			$('#closeoutData').find('#closeoutDocuments').addClass('active');
 			$('#projectData').find('#generalInformation').addClass('active');
 			$('#saveButton').removeClass('active');
+			break;
+		case "equipmentDiv":
+			getProject_PROJECT_MANAGER(projectID);
+			$('#equipment').addClass('active');
 			break;
 			
 	}
@@ -1447,12 +1539,15 @@ function saveProject_PERMIT()
 				console.log(data);
 				getProject_PROJECT_MANAGER(projectID);
 				alert('Save Complete!');
+				/*
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 				$('#permitData').find('.active').removeClass('active');
 				$('#permitData').find('#buildingPermit').addClass('active');
 
 				$(".editProject").hide();
 				$("#projectManager").show();
+				*/
+				goToProjectManager();
 				
 			}
 		});
@@ -1503,7 +1598,7 @@ function isValidInput_PERMIT(dates_PERMIT)
 var numChangeOrders = 0;
 var PAGETYPE_PROJECT_DATA = "add";
 let CHANGE_ORDERS = new Array();
-var edit;
+let EDIT_INTENTION;
 
 
 var stages=["Active", "Proposal", "Budgetary", "Closed", "Canceled", "Billing Closeout", "On Hold", "Closeout"];
@@ -1570,7 +1665,8 @@ function getProjectEnums_PROJECT_DATA(edit)
 			'person': true,
 			'stage': true,
 			'status': true,
-			'type': true
+			'type': true,
+			'subcontractors' : true,
 		},
 		success: function(data)
 		{
@@ -1579,7 +1675,7 @@ function getProjectEnums_PROJECT_DATA(edit)
 			fillDropdowns_PROJECT_DATA(data);
 			
 			//PAGETYPE_PROJECT_DATA = getParameterByName("type");	
-			if(edit == true) {
+			if(EDIT_INTENTION == true) {
 				getProject_PROJECT_DATA();
 			}
 			else {
@@ -1604,6 +1700,7 @@ function fillDropdowns_PROJECT_DATA(data)
 	generateDropdowns(data["status"], "status");
 	generateDropdowns(data["stage"], "stage");
 	generateDropdowns(data["type"], "pType");	
+	generateDropdowns(data["subcontractors"], "subcontractors")
 }
 
 /**
@@ -1617,8 +1714,9 @@ function generateDropdowns(str, className)
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
 	var sent=true;
+	
 
-	if (className == "warehouse" || className=="projecteq")
+	if (className == "warehouse" || className=="projecteq" || className == "subcontractors")
 		{
 		json = sortByName(json, className);
 	
@@ -1651,6 +1749,10 @@ function generateDropdowns(str, className)
 				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
 			}
 		}
+		else if(className == "subcontractors") {
+			option.innerHTML = json[i].name;
+			option.value = json[i].name;
+		}
 		else
 		{
 			option.innerHTML=json[i].name;
@@ -1659,7 +1761,7 @@ function generateDropdowns(str, className)
 
 		if(sent)
 		{
-			option.setAttribute("value", json[i].id);	
+			if(className != "subcontractors") option.setAttribute("value", json[i].id);	
 			d.appendChild(option);
 		}
 
@@ -1673,6 +1775,11 @@ function generateDropdowns(str, className)
 			$('#projectData').find("#" +closeoutstatus_dropdowns[i]).find('option').remove();
 			$('#projectData').find("#" +closeoutstatus_dropdowns[i]).append(copy);	
 		}
+	}
+	else if(className == "subcontractors") 
+	{
+		$('#taskCreationZone').find("#subcontractorsDropdown").find('option').remove();
+		$('#taskCreationZone').find("#subcontractorsDropdown").append(d);
 	}
 	else
 		{
@@ -1752,7 +1859,7 @@ function saveProject_PROJECT_DATA() {
 		
 
 		var action = 'addNewProject';
-		if (edit == true) {
+		if (EDIT_INTENTION == true) {
 			action = 'editExistingProject';
 		}
 		
@@ -1810,8 +1917,17 @@ function saveProject_PROJECT_DATA() {
 				alert('Save Complete!');				
 				$('#saveButton > button').prop('disabled', false);
 				
+				$('#projectManager').find('.info-tab').removeClass('active');
+				$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+				$('#projectManager').find('#projectInformation').addClass('active');
+				$('#projectManager').find('#projectInformationTabLink').addClass('active');
+				$('#projectManager').find('#projectInformationTabLink').addClass('active');
+				
 				$(".editProject").hide();
 				$("#projectManager").show();
+				
+				
+				
 				
 			}
 			
@@ -2362,11 +2478,12 @@ function prepareCloseout(source_id){
  */
 function editPermitsAndInspections () {
 	document.getElementById("projectManager").style.display = 'none';
-	edit = true;
+	EDIT_INTENTION = true;
 	getProjectEnums_PERMIT(true);
 	currentDivLocation = "permitData";
 	document.getElementById("permitData").style.display = 'inline';
-	$('#permitData').find('#permits').addClass('active');
+	$('#permitData').find('#buildingPermit').addClass('active');
+	$('#permitData').find('#buildingPermits').addClass('active');
 	
 	//window.location.href = PROJECT_PERMITS_AND_INSPECTIONS + '?id=' + projectID;
 }
@@ -2380,7 +2497,7 @@ function editPermitsAndInspections () {
 function editCloseout (source_id) {
 	if(source_id) prepareCloseout(source_id);
 	document.getElementById("projectManager").style.display = 'none';
-	edit = true;
+	EDIT_INTENTION = true;
 	getProjectEnums_CLOSEOUT(true);
 	currentDivLocation = "closeoutData";
 	document.getElementById("closeoutData").style.display = 'inline';
@@ -2393,7 +2510,26 @@ function addChangeOrder () {
 }
 
 function addEquipment () {
-	window.location.href = PROJECT_EQUIPMENT + '?type=add&id=' + projectID;
+	//window.location.href = PROJECT_EQUIPMENT + '?type=add&id=' + projectID;
+	
+	PAGETYPE_EQUIP = "add";	
+	projectID_EQUIP = projectID;
+	setCurrentDivLocation("equipmentDiv");
+	
+	clearEquipmentFormValues();
+	
+	$('.editProject').hide();
+
+	$('#equipmentForm').addClass('active');
+	$('#equipmentDiv').find(".nav-tabs").find("[data-tab=saveButton]").removeClass("active");
+	$('#equipmentDiv').find(".nav-tabs").find("[data-tab=equipmentForm]").addClass("active");
+	$('.projectNavigator-projectManager').show();
+	$('.projectEdit').show();
+	$('.projectNavigator').show();
+	$('#equipmentDiv').show();
+	
+	getDropdownInfo_EQUIP();
+
 }
 
 /**
@@ -2558,40 +2694,95 @@ function fillPermitsAndInspections (data) {
  * @returns
  */
 function fillEquipment (data) {
+	$('#equipmentTable').find('tbody').find('tr').remove();
+	
 	let equipmentList = data.projEquipment;
+	console.log("FILLING EQUIPMENT ",equipmentList )
+
+	if(equipmentList) {
+		 equipmentList.sort(function(a,b){
+			 	if(a.equipmentName && b.equipmentName) {
+			 		if(a.equipmentName < b.equipmentName) return -1;
+			 		else if(a.equipmentName > b.equipmentName) return 1;
+			 		else return 0;
+			 	} else if(!a.equipmentName) {
+			 		return -1;
+			 	} else {
+			 		return 1;
+			 	}
+		    	return 0;
+		    });
+	}
 	for (var i = 0; i < equipmentList.length; i++) {
 		var equipment = equipmentList[i];
 		var tableRow = document.createElement('tr');
 		tableRow.setAttribute("value", equipment.id);
 		tableRow.onclick = function() {toggleEquipment(this)};
+		tableRow.ondblclick = function () {editSelectedEquipment(this.value)};
 
-		var poNum = document.createElement('td');
-		poNum.appendChild(document.createTextNode(equipment.poNum));
+		
 		
 		var equipmentName = document.createElement('td');
-		equipmentName.appendChild(document.createTextNode(equipment.equipmentName))
+		equipmentName.width = "120px";
+		equipmentName.appendChild(document.createTextNode(equipment.equipmentName));
 		
-		var vendor = document.createElement('td');
-		vendor.appendChild(document.createTextNode(equipment.vendor));
+		var equipmentDescription = document.createElement('td');
+		equipmentDescription.width = "175px";
+		var descriptionText = equipment.description;
+		
+		if(descriptionText == undefined || descriptionText == "undefined")
+			descriptionText = "";
+		
+		equipmentDescription.appendChild(document.createTextNode(descriptionText));
+		
+		var deliveryStatus = document.createElement('td');
+		deliveryStatus.width = "80px";
+		var deliveryStatusText = equipment.deliveryStatus;
+		
+		if(deliveryStatusText == undefined || deliveryStatusText == "undefined" || deliveryStatusText == "default")
+			deliveryStatusText = "";
+		deliveryStatus.appendChild(document.createTextNode(deliveryStatusText));
+		
+		var supplier = document.createElement('td');
+		supplier.width = "80px";
+		supplier.appendChild(document.createTextNode(equipment.vendor));
+		
+		
+		
+		var orderedDate = document.createElement('td');
+		orderedDate.width = "70px";
+		if (equipment.orderedDate === undefined)
+			orderedDate.appendChild(document.createTextNode("---"));
+		else
+			orderedDate.appendChild(document.createTextNode(equipment.orderedDate));
 		
 		var estDeliveryDate = document.createElement('td');
+		estDeliveryDate.width = "70px";
 		if (equipment.estDeliveryDate === undefined)
 			estDeliveryDate.appendChild(document.createTextNode("---"));
 		else
 			estDeliveryDate.appendChild(document.createTextNode(equipment.estDeliveryDate));
 		
 		var deliveryDate = document.createElement('td');
+		deliveryDate.width = "70px";
 		if (equipment.deliveryDate === undefined)
 			deliveryDate.appendChild(document.createTextNode('---'));
 		else 
 			deliveryDate.appendChild(document.createTextNode(equipment.deliveryDate));
 		
-		tableRow.appendChild(poNum);
+		var equipmentNotes = document.createElement('td');
+		equipmentNotes.width = "200px";
+		equipmentNotes.appendChild(document.createTextNode(equipment.notes));
+		
 		tableRow.appendChild(equipmentName);
-		tableRow.appendChild(vendor);
+		tableRow.appendChild(equipmentDescription);
+		tableRow.appendChild(supplier);
+		tableRow.appendChild(deliveryStatus);
+		tableRow.appendChild(orderedDate);
 		tableRow.appendChild(estDeliveryDate);
 		tableRow.appendChild(deliveryDate);
-		$("#equipmentTable").append(tableRow);
+		tableRow.appendChild(equipmentNotes);
+		$("#equipmentTable").find('tbody').append(tableRow);
 		
 	}
 }
@@ -2942,8 +3133,31 @@ function toggleEquipment (source) {
 	selectedEquipment = $(source).attr('value');
 }
 
-function editSelectedEquipment () {
-	window.location.href = PROJECT_EQUIPMENT + '?type=edit&id=' + projectID + '&equipmentID=' + selectedEquipment;
+function editSelectedEquipment (source) {
+	//window.location.href = PROJECT_EQUIPMENT + '?type=edit&id=' + projectID + '&equipmentID=' + selectedEquipment;
+	console.log(source);
+	
+	if(source) EQUIPMENT_ID_EQUIP = source;
+	else EQUIPMENT_ID_EQUIP = selectedEquipment;
+	
+	PAGETYPE_EQUIP = "edit";	
+	projectID_EQUIP = projectID;
+	clearEquipmentFormValues();
+	
+	setCurrentDivLocation("equipmentDiv");
+
+
+	
+	$('.editProject').hide();
+	$('#equipmentForm').addClass('active');
+	$('#equipmentDiv').find(".nav-tabs").find("[data-tab=saveButton]").removeClass("active");
+	$('#equipmentDiv').find(".nav-tabs").find("[data-tab=equipmentForm]").addClass("active");
+	$('.projectNavigator-projectManager').show();
+	$('.projectEdit').show();
+	$('.projectNavigator').show();
+	$('#equipmentDiv').show();
+	
+	getDropdownInfo_EQUIP();
 }
 
 function equipmentReport () {
@@ -3016,7 +3230,12 @@ function fillTasksTable(tasks) {
 
 		taskTitle.innerHTML = tasks[i].title;
 		taskDesc.innerHTML = tasks[i].description;
-		assignedTo.innerHTML = tasks[i].assignee.firstName;
+				
+		if(tasks[i].type == TASK_EMPLOYEE_ASSIGNEE)
+			assignedTo.innerHTML = tasks[i].assignee.firstName;
+		else
+			assignedTo.innerHTML = tasks[i].subAssignee.name;
+		
 		dueDate.innerHTML = tasks[i].dueDate;
 		severity.innerHTML = tasks[i].severity;
 		severity.align = 'center';
@@ -3048,11 +3267,76 @@ function fillTasksTable(tasks) {
 	});
 	
 	$('#taskTable tr:not(.head)').dblclick(function() {		
-		let tmp = this.id.replace("task_","");
-		console.log(tmp);
-		location.href = "taskBrowser.html?id="+tmp;
+		//let tmp_id = this.id;
+		//let task_id = tmp_id.replace("task_","");
+
+		//console.log(tmp_id);
+		TASK_ACTION = "updateTask";
+		displayTaskWell();
+		fillTaskWell(this);
+		//location.href = "taskBrowser.html?id="+tmp;
+		
 	});
 	
+}
+
+function displayTaskWell() {
+	console.log("TASK ACTION: ", TASK_ACTION);
+	
+	$('#tasksInformation').find('#taskDisplay').hide();
+	$('#tasksInformation').find('#taskCreationZone').show();
+	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').show();
+	document.getElementById('tasksInformation').style.width = "55%";
+}
+
+let SELECTED_TASK_ID;
+
+function fillTaskWell(source) {
+	let tmp_id = source.id;
+	let task_id = tmp_id.replace("task_","");
+	
+	let selected_task;
+	for(var i = 0; i < tasks.length; i++) {
+		if(tasks[i].id == task_id) {
+			selected_task = tasks[i];
+			SELECTED_TASK_ID = tasks[i].id;
+		}
+		
+	}
+	
+	if(!selected_task) {
+		console.log("IMPROPER TASK SELECTION");
+		return;
+	}
+	
+	$('#taskCreationZone').find('#titleEntry').val(selected_task.title);
+	$('#taskCreationZone').find('#descriptionEntry').val(selected_task.description);
+	
+	if(selected_task.type == TASK_SUB_ASSIGNEE) {
+		$('#taskCreationZone').find('#employeeAssigneeTableElement').hide();
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
+		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+		$('#taskCreationZone').find('#subcontractorsDropdown').val(selected_task.subAssignee.name);
+	}
+	else {
+		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').hide();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		$('#taskCreationZone').find('#assigneeEntry').val(selected_task.assignee.firstName);
+	}
+
+		
+	$('#taskCreationZone').find('#initDate').val(selected_task.assignedDate);
+	$('#taskCreationZone').find('#dueDate').val(selected_task.dueDate);
+	$('#taskCreationZone').find('#severity').val(selected_task.severity);
+	$('#taskCreationZone').find('#taskStatus').val(selected_task.status.status);
+	$('#taskCreationZone').find('#notes').val(selected_task.notes);
+
+		
 }
 
 function toggleTask (source) {
@@ -3097,7 +3381,7 @@ function clearAndAddSingleRowTask(msg) {
  * INNER FUNCTION CALLS: none
  */
 function clearTaskTable () {
-	$('#taskTable > tbody').children('tr:not(.head)').remove();
+	$('#taskDisplay').find('#taskTable').find('tr:not(.head)').remove();
 }
 
 
@@ -3140,6 +3424,8 @@ let t0;
 let t1;
 
 //Keeps track of stage selections
+//STAGE SELECTION FOR CHECKMARKS
+
 $(document).on('click', '#AllStages', function(){
 	if(document.getElementById("AllStages").checked == true){
 		$('.commonStage').each(function(i, obj) {
@@ -3150,7 +3436,9 @@ $(document).on('click', '#AllStages', function(){
 	updateFrontEnd();
 });
 
+
 //Keeps track of stage selections
+
 $(document).on('click', '#NoStages', function(){
 	if(document.getElementById("NoStages").checked == true){
 		$('.commonStage').each(function(i, obj) {
@@ -3161,6 +3449,8 @@ $(document).on('click', '#NoStages', function(){
 	updateFrontEnd();
 });
 
+
+
 //Keeps track of stage selections
 $(document).on('click', '.commonStage', function(){
 	if(this.checked == false) document.getElementById('AllStages').checked = false;
@@ -3168,9 +3458,14 @@ $(document).on('click', '.commonStage', function(){
     updateFrontEnd();
 });
 
-$(document).on('click', '.stage', function(){
+
+//UNCOMMENT FOR MULTIPLE CHOSEN SELECT
+/*
+$(document).on('click', '.stageSelection', function(){
 	updateFrontEnd();
 });
+*/
+
 
 $(document).on('click', '.stageLabel', function(){
 	console.log("THISS ID = ", this.id);
@@ -3248,7 +3543,6 @@ function getAllProjects() {
 			console.log('took: ' + (t1 - t0) + 'ms');
 			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
 			getSearchCriteria();
-			filterProjects();
 		}
 	});
 }
@@ -3265,9 +3559,11 @@ function establishRetrievedProjects()
 		RETRIEVED_PROJECTS[i].status = RETRIEVED_PROJECTS[i][5];
 		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
 		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
+		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
+
 		
-		for(var q = 0; q < 8; q++){
-			var num = 7 - q;
+		for(var q = 0; q < 9; q++){
+			var num = 8 - q;
 			RETRIEVED_PROJECTS[i].splice(num, 1);
 		}
 	}
@@ -3302,10 +3598,21 @@ function updateDisplayableProjects(){
 
 	DISPLAYABLE_PROJECTS = new Array();
 	
+	
 	var stagesOfInterest = new Array();
 			$('.stage').each(function(i, obj) {
 				if(obj.checked == true) stagesOfInterest.push(obj);
-			});
+			}); 
+		
+	/*	
+	UNCOMMENT FOR CHOSEN	
+	//var stagesOfInterest = new Array();
+	//var stageOptions = document.getElementById('stageSelector').options;
+	for(var i = 0; i < stageOptions.length; i++) {
+		if(stagesOptions[i].selected == true) stagesOfInterest.push(stageOptions[i]);
+	}
+	*/
+			
 	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
 		for(var q = 0; q < stagesOfInterest.length; q++){
 			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id) {
@@ -3317,6 +3624,7 @@ function updateDisplayableProjects(){
 	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
 	
 }
+
 
 /**
  * This function retrieves all of the search criteria from the database
@@ -3338,7 +3646,7 @@ function getSearchCriteria() {
 			'item': true,
 			'person': true,
 			'type': true,
-			'status': true
+			'status': true,
 		}, success: function(data) {
 			
 			fillDropdowns_FIND_PROJECT(data);
@@ -3352,6 +3660,7 @@ function getSearchCriteria() {
 			//$('#paramVal2').append(stageOptions.cloneNode(true));
 			
 			checkInitFilter();
+			filterProjects();
 			
 		}, error: function(data) {
 			console.log(data);
@@ -3413,13 +3722,16 @@ function checkInitFilter () {
 						$('#paramVal1').empty(); 
 						$('#paramVal1').append(warehouseOptions.cloneNode(true));
 						removeParam(document.getElementById('paramID2'));
-						$('.stage').each(function(i, obj) {
+						//CHANGE BACK TO CHECKED AND .stage if NEED BE
+						$('.stageSelection').each(function(i, obj) {   
 							if(obj.value == '2') obj.checked = true;
 							else if(obj.value == '1') obj.checked = true;
 							else obj.checked = false;
 						});
-						document.getElementById('AllStages').checked = false;
-						document.getElementById('NoStages').checked = false;
+						//$('#stageSelector').trigger('chosen:updated');
+
+						//document.getElementById('AllStages').checked = false;
+						//document.getElementById('NoStages').checked = false;
 						
 				 } else {
 					$('#paramID1').val('Manager');
@@ -3437,10 +3749,13 @@ function checkInitFilter () {
 		$('#paramVal1').append(statusOptions.cloneNode(true));
 		$('#paramVal1').val('30');
 		
-		$('.stage').each(function(i, obj) {
+		$('.stageSelection').each(function(i, obj) {
 			if(obj.value == '2') obj.checked = true;
 			else obj.checked = false;
 		});
+		
+		//$('#stageSelector').trigger('chosen:updated');
+
 		
 		removeParam(document.getElementById('paramID2'));
 		filterProjects();
@@ -3464,8 +3779,8 @@ function checkInitFilter () {
 							else if(obj.value == '1') obj.checked = true;
 							else obj.checked = false;
 						});
-						document.getElementById('AllStages').checked = false;
-						document.getElementById('NoStages').checked = false;
+						//document.getElementById('AllStages').checked = false;
+						//document.getElementById('NoStages').checked = false;
 				 }
 				 
 				 $('#paramID2').val('Manager');
@@ -3473,7 +3788,8 @@ function checkInitFilter () {
 				 $('#paramVal2').append(managerOptions.cloneNode(true));
 				 matchUsernameToPersonID(user.firstName, 2);
 				 
-				
+				 //$('#stageSelector').trigger('chosen:updated');
+
 				
 				filterProjects();
 			}
@@ -3768,7 +4084,7 @@ function filterProjects () {
 	updateDisplayableProjects();
 	//let json = JSON.parse(projects['projects']);
 	let json = DISPLAYABLE_PROJECTS;
-	
+	console.log("DISPLAYABLE " , DISPLAYABLE_PROJECTS);
 	let parameters = $('.paramHolder').children('select');
 	
 	
@@ -3903,7 +4219,7 @@ function filterProjects () {
  * INNER FUNCTION CALLS: none
  */
 function navigateTo(source) {
-	edit = true;
+	EDIT_INTENTION = true;
 	console.log($(source).attr('id'));
 	if(taskFinder) {
 		window.location.href = TASK_CREATOR + '?id=' + 
@@ -3941,7 +4257,7 @@ $(document).on('change', '#taskSelector2', function () {
  * This function retrieves all of the taks from the server
  * INNER FUNCTION CALLS: fillTasksTable()
  */
-function getTasks() {
+function getTasks(stopServerCalls) {
 	console.log(projectID);
 	$.ajax({
 		type: 'POST',
@@ -3956,10 +4272,10 @@ function getTasks() {
 			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getAllProjects();
 			tasks = data;
 			if (data) {
-				
+				clearTaskTable();
 				fillTasksTable(data);
 			}
-			getUserData();
+			if(!stopServerCalls) getUserData();
 		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
 		}, error: function (data) {
 			alert('Server Error!');
@@ -4487,6 +4803,7 @@ function goToChangeOrder(edit){
 	clearTabs_CHANGE_ORDER();
 	$('.editProject').hide();
 	$('#changeOrder').show();
+	$('#changeOrderInfo').addClass('active');
 	setCurrentDivLocation('changeOrder');
 	console.log("EDIT = ", edit);
 	if(edit == 0) {
@@ -4604,6 +4921,9 @@ function convertCurrentDivLocation (currentDivLocation){
 		case "changeOrder":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
 			break;
+		case "equipmentDiv":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Equipment <small id='projectHeader'>---</small></p>");
+			break;
 	}
 }
 
@@ -4641,23 +4961,298 @@ function preparePage() {
 
 	if(id){ 
 		projectID = id;
-		edit = true;
+		EDIT_INTENTION = true;
 		console.log("PROJECT ID = ", id);
 		currentDivLocation = "projectManager";
 		getProject_PROJECT_MANAGER(id);
 		$('#projectManager').show();
-		//if(!RETRIEVED_PROJECTS) $('.projectNavigator').hide();
 		$('.projectNavigator-projectManager').show();
 		PAGE_ENTRY = "fromTask";
 		if(from) {
 			PAGE_ENTRY = from;
-			//getAllProjects();
 		}
 	} else {
 		$('.projectNavigator').show();
 		$('.projectNavigator-projectFinder').hide();
 		getAllProjects();
 		$('#findProject').show();
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+$(document).ready(function()
+{
+	$('.nav-tabs > li').click(function () {
+		$('.info-tab').removeClass('active');
+		$('#' + $(this).attr('data-tab')).addClass('active');
+		
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$('#saveButton > button').prop('disabled', true);
+
+	});
+	
+ 	$('#equipmentForm #estDeliveryDate').datepicker();   
+ 	$('#equipmentForm #deliveryDate').datepicker(); 
+ 	$('#equipmentForm #orderedDate').datepicker();   
+
+});
+
+function getDropdownInfo_EQUIP()
+{
+	//PAGETYPE_EQUIP = getParameterByName("type");	
+	//projectID_EQUIP = getParameterByName("id");
+	if(projectID_EQUIP === null) {
+		alert('Invalid URL. Try returning to this page again.');
+		return;
+	}
+	
+	//if(projectID !== null) {}
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		data: 
+		{
+			'domain': 'project',
+			'action': 'getSpecificObjects',		
+			'equipmentvendor': true,
+			'equipmentstatus' : true
+		},
+		success: function(data)
+		{
+			fillDropdowns_EQUIP(data);
+			getProject_EQUIP();
+		}
+	});
+}
+
+function getProject_EQUIP()
+{
+	console.log(getParameterByName("id"));
+	if(projectID_EQUIP !== null) {	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID_EQUIP,
+				
+			},
+			success: function(data)
+			{
+				PROJECT_DATA_EQUIP = (data);
+				setProjectHeader(data , currentDivLocation , 'projectManager');
+				
+				if(PAGETYPE_EQUIP == 'edit')
+				{
+					//EQUIPMENT_ID_EQUIP = getParameterByName("equipmentID");
+					PROJECT_DATA_EQUIP = data;
+					fillTabs_EQUIP(PROJECT_DATA_EQUIP);
+	
+				} else {
+					establishPOnum(PROJECT_DATA_EQUIP);
+				}
+				//getTasks();
+			}
+		});
+	} else {
+		alert('Something went wrong');
+	}
+}
+
+
+function fillDropdowns_EQUIP(json)
+{
+	
+	$('#equipmentForm').find('#supplier').find('option').remove();
+
+	console.log(json);
+	var equipmentVendor = JSON.parse(json["equipmentvendor"]);
+	var d = document.createDocumentFragment();
+	
+	var option = document.createElement("option");
+	option.innerHTML = "--Select Supplier--";
+	option.setAttribute("value", "default");
+	d.appendChild(option);
+	
+	for(var i = 0; i < equipmentVendor.length; i++)
+	{
+		var option = document.createElement("option");
+		option.innerHTML = equipmentVendor[i].name;
+		option.setAttribute("value", equipmentVendor[i].name);
+		d.appendChild(option);
+	}
+	$("#equipmentForm #supplier").append(d);
+	
+	$('#equipmentForm').find('#deliveryStatusEquipment').find('option').remove();
+
+	console.log(json);
+	var equipmentDeliveryStatus = JSON.parse(json["equipmentstatus"]);
+	var d = document.createDocumentFragment();
+	
+	var option = document.createElement("option");
+	option.innerHTML = "--Select Delivery Status--";
+	option.setAttribute("value", "default");
+	d.appendChild(option);
+	
+	for(var i = 0; i < equipmentDeliveryStatus.length; i++)
+	{
+		var option = document.createElement("option");
+		option.innerHTML = equipmentDeliveryStatus[i].name;
+		option.setAttribute("value", equipmentDeliveryStatus[i].name);
+		d.appendChild(option);
+	}
+	$("#equipmentForm #deliveryStatusEquipment").append(d);
+	
+	
+}
+
+function fillTabs_EQUIP(json)
+{	
+	console.log("EQUIP JSON: " , json);
+	console.log("EQUIP SELECT: " , EQUIPMENT_ID_EQUIP);
+
+	var equipmentToEdit;
+	for(var i = 0; i < json.projEquipment.length; i++)
+		if(json.projEquipment[i].id == EQUIPMENT_ID_EQUIP)
+			equipmentToEdit = json.projEquipment[i];
+	
+	console.log(equipmentToEdit);
+	$('#equipmentForm #poNum').val(equipmentToEdit.poNum);
+	$('#equipmentForm #equipmentName').val(equipmentToEdit.equipmentName);
+	$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
+	$('#equipmentForm #estDeliveryDate').val(equipmentToEdit.estDeliveryDate);
+	$('#equipmentForm #deliveryDate').val(equipmentToEdit.deliveryDate);
+	$('#equipmentForm #orderedDate').val(equipmentToEdit.orderedDate);
+	$('#equipmentForm #notes').val(equipmentToEdit.notes);
+	$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
+	$('#equipmentForm #providerName').val(equipmentToEdit.providerName);
+	$('#equipmentForm #equipmentDescription').val(equipmentToEdit.description);
+}
+
+function saveProject_EQUIP()
+{
+	var poNum = $('#equipmentForm #poNum').val();
+	var equipmentName = $('#equipmentForm #equipmentName').val();
+	var equipmentDescription = $('#equipmentForm #equipmentDescription').val();
+	var supplier = $('#equipmentForm #supplier').val();
+	var deliveryDate = $('#equipmentForm #deliveryDate').val();
+	var estDeliveryDate = $('#equipmentForm #estDeliveryDate').val();
+	var orderedDate = $('#equipmentForm #orderedDate').val();
+	var notes = $('#equipmentForm #notes').val();
+	var deliveryStatus = $('#equipmentForm #deliveryStatusEquipment').val();
+	
+	var dates = [deliveryDate, estDeliveryDate];
+	var action = 'addEquipment';
+	if(PAGETYPE_EQUIP == 'edit')
+		action = 'editEquipment';
+	
+	// TODO: Required Fields?
+	if(isValidInput_EQUIP(dates))
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data:
+			{
+				'domain': 'project',
+				'projectID': projectID_EQUIP,
+				'equipmentID': EQUIPMENT_ID_EQUIP,
+				'action': action,
+				'poNum': poNum,
+				'equipmentName': equipmentName,
+				'equipmentDescription' : equipmentDescription,
+				'vendor': supplier,
+				'deliveryDate': deliveryDate,
+				'estDeliveryDate': estDeliveryDate,
+				'orderedDate' : orderedDate,
+				'notes': notes,
+				'deliveryStatus' : deliveryStatus,
+			},
+			success:function(data){
+				alert('Saved Equipment');
+				$('#saveButton > button').prop('disabled', false);
+				console.log(data);
+				goToProjectManager();
+			},
+			error: function()
+			{
+				alert('Saved Equipment');
+				$('#saveButton > button').prop('disabled', false);
+				goToProjectManager();
+			}
+		});
+	}
+}
+
+function isValidInput_EQUIP(dates)
+{		
+	//Check if all of the dates are in the correct format
+	for (var i = 0; i < dates.length; i++)
+	{
+		var date = dates[i];
+		if (date != "" && !isDate(date))
+		{
+			console.log("----------");
+
+			console.log(date);
+			console.log("----------");
+			console.log(i);
+
+			alert("Dates must be in this format: mm/dd/yyyy");
+			return false
+		}
+	}
+	return true;
+}
+
+function returnToProjectManager_EQUIP () {
+	window.location.href = PROJECTMANAGER + '?id=' + projectID;
+}
+
+function clearEquipmentFormValues() {
+	$('#equipmentForm').find('.equipment-input').val('');
+	$('#equipmentForm').find('.equipment-select').val('default');
+}
+
+function establishPOnum(json) {
+	
+	console.log("EQUIP PO JSON: " , json);
+	var highPOnum = 1;
+	if(json.projEquipment) {
+		if(json.projEquipment.length > 0) {		
+			for(var i = 0; i < json.projEquipment.length; i++)
+				if(json.projEquipment[i].poNum > highPOnum)
+					highPOnum = json.projEquipment[i].poNum;
+		}
+		if(json.projEquipment.length > 0) highPOnum++;
+	}
+	$('#equipmentForm #poNum').val(highPOnum);
+
+	
+}
+
+function toggleTaskAssignee() {
+	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		$('#taskCreationZone').find('#employeeAssigneeTableElement').hide();
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
+		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+
+	}
+	else {
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').hide();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+
 	}
 }
 

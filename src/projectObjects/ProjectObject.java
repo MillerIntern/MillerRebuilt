@@ -21,7 +21,7 @@ public abstract class ProjectObject
 	/**
 	 * The database id of this object
 	 */
-	Long id;
+	protected Long id;
 	
 	/**
 	 * This method returns the id of this object. The annotation of the method

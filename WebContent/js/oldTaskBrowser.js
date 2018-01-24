@@ -1,4 +1,5 @@
-/* This document provides all of the functionality for taskBrowser.html
+/*
+ * This document provides all of the functionality for taskBrowser.html
  * 
  */
 'use strict';
@@ -179,22 +180,16 @@ function getProjectManagers () {
  * INNER FUNCTION CALLS: createTaskTable(), tasksByManager() 
  */
 function preparePageForUserStatus(){
-	 $('#taskSelector').chosen({ width: "210px" });
-	 $('#sortSelector').chosen({ width: "210px" });
-	 $('#sortOrder').chosen({ width: "210px" });
-
 	if (user.permission.id === 1) 
 	{
-		 document.getElementById("projectManagerDropdown").style.display = 'inline';
+		 document.getElementById("projectManagerSelection").style.display = 'inline';
 		 console.log("preparePageForUserStatus() INVOKED");
 		 createTaskTable();
 		 tasksByManager();
-
 	 } 
 	else 
 	{ 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
-		document.getElementById("projectManagerDropdown").style.display = 'none';
 	 	$(".advancedSortingOptions").hide();
 	 	createTaskTable();
 	 }	
@@ -616,11 +611,13 @@ function saveTaskChanges () {
 	let dueDate = $('#taskWell > span > .dueDate').val();
 	
 	console.log("DUE DATE == " , dueDate);
-	let date = dueDate.split("/");
-	let yearString = date[2].toString();
-	if(yearString.length == 2) date[2] = "20"+date[2];
-	let dateString = date[0]+"/"+date[1]+"/"+date[2];
-	dueDate = dateString;
+	if(dueDate) {
+		let date = dueDate.split("/");
+		let yearString = date[2].toString();
+		if(yearString.length == 2) date[2] = "20"+date[2];
+		let dateString = date[0]+"/"+date[1]+"/"+date[2];
+		dueDate = dateString;
+	}
 	
 	let assignedBy = user.id;	// changes to whoever made the update
 	let assignedTo = $('#taskWell > span > .assignedTo').val();

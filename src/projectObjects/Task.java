@@ -3,6 +3,7 @@ package projectObjects;
 import java.util.Date;
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -25,13 +26,15 @@ public class Task extends ProjectObject implements Comparable<Task> {
 	private Date assignedDate;
 	private User assigner;
 	private User assignee;
+	private Subcontractor subAssignee;
 	private boolean completed;
 	private String notes;
 	private TaskStatus status;
+	private String type;
 	
 	
 	public Task (String title, String description, Project p, int s, Date due, 
-			Date assigned, User assigner, User assignee, boolean c, String notes, TaskStatus status) {
+			Date assigned, User assigner, User assignee, boolean c, String notes, TaskStatus status, String type, Subcontractor subAssignee) {
 		this.title = title;
 		this.description = description;
 		this.project = p;
@@ -43,6 +46,8 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		this.completed = c;
 		this.setNotes(notes);
 		this.status = status;
+		this.type = type;
+		this.subAssignee = subAssignee;
 	}
 	
 	public Task() {
@@ -57,6 +62,8 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		completed = false;
 		setNotes(null);
 		status = null;
+		type = null;
+		subAssignee = null;
 	}
 	
 	public synchronized String getTitle() {
@@ -130,6 +137,24 @@ public class Task extends ProjectObject implements Comparable<Task> {
 
 	public synchronized void setNotes(String notes) {
 		this.notes = notes;
+	}
+	
+	public synchronized String getType() {
+		return type;
+	}
+
+	public synchronized void setType(String type) {
+		this.type = type;
+	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	public synchronized Subcontractor getSubAssignee() {
+		return subAssignee;
+	}
+
+	public synchronized void setSubAssignee(Subcontractor subAssignee) {
+		this.subAssignee = subAssignee;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)

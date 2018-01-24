@@ -67,8 +67,10 @@ function getUserData () {
 	}
 	
 	function createDropdown (json) {
+		$('#assigneeEntry').find('option').remove();
+
 		let d = document.createDocumentFragment();
-		
+				
 		json.sort(function(a,b){
 			if(a.firstName < b.firstName) return -1;
 			else if(a.firstName > b.firstName) return 1;
@@ -88,14 +90,26 @@ function getUserData () {
 	}
 	
 	function submitTask () {
-		let title = $('#titleEntry').val();
-		let description = $('#descriptionEntry').val();
-		let assignee = $('#assigneeEntry').val();
+		console.log("Task Action = " , TASK_ACTION);
+		
+		let title = $('#taskCreationZone').find('#titleEntry').val();
+		let description = $('#taskCreationZone').find('#descriptionEntry').val();
 
-		let initiatedDate = $('#initDate').val();
-		let dueDate = $('#dueDate').val();
-		let severity = $('#severity').val();
-		let notes = $('#notes').val();
+		let initiatedDate = $('#taskCreationZone').find('#initDate').val();
+		let dueDate = $('#taskCreationZone').find('#dueDate').val();
+		let severity = $('#taskCreationZone').find('#severity').val();
+		let notes = $('#taskCreationZone').find('#notes').val();
+		let type = document.getElementById('toggleTaskAssignee').value;
+		console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
+		console.log("TYPE: ", type);
+		
+		let assignee;
+		if(type == "EMPLOYEE")
+			assignee = $('#taskCreationZone').find('#assigneeEntry').val();
+		else
+			assignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
+
+		console.log("ASSIGNEE: " , assignee);
 		
 		//let projectID = getParameterByName('id');
 		console.log(projectID);
@@ -109,7 +123,7 @@ function getUserData () {
 		
 		let taskData = {
 			'title': title,
-			'action': 'createTask',
+			'action': TASK_ACTION,
 			'project': projectID,
 			'description': description,
 			'assignee': assignee,
@@ -118,6 +132,7 @@ function getUserData () {
 			'severity': severity,
 			'notes': notes,
 			'description': description,
+			'type' : type ,
 		};
 	
 		console.log("PROJECT == ", project);
@@ -126,7 +141,8 @@ function getUserData () {
 			url: 'Project', 
 			data: {
 				'title': title,
-				'action': 'createTask',
+				'action': TASK_ACTION,
+				'taskID' : SELECTED_TASK_ID,
 				'project': projectID,
 				'description': description,
 				'assignee': assignee,
@@ -134,19 +150,37 @@ function getUserData () {
 				'dueDate': dueDate,
 				'severity': severity,
 				'notes': notes,
+				'type' : type,
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
-				if (response === 'TASK_ADDED') {
-					
-					alert('Task Added Successfully');
+				
+				let taskAddedMessage = "Task Added Successfully";
+				let taskUpdatedMessage = "Task Updated Successfully";
+				let taskErrorMessage = "ERROR UPDATING OR ADDING TASK";
+				let alertMessage;
+				
+				if(response == "TASK_ADDED")
+					alertMessage = taskAddedMessage;
+				else if(response == "UPDATED_TASK")
+					alertMessage = taskUpdatedMessage;
+				else
+					alertMessage = taskErrorMessage;
+				
+				if (alertMessage == taskErrorMessage) 				
+					alert(taskErrorMessage);
+				else 
+				{
+					alert(alertMessage);
 					$(".editProject").hide();
 					$("#projectManager").show();
 					$('#taskCreationZone').hide();
 					$('#taskDisplay').show();
-					sendTaskAlert(taskData);
+					clearTaskTable();
+					getTasks(1);
 					
-					//window.location.href='taskBrowser.html'
+					if(alertMessage == taskAddedMessage && type == "EMPLOYEE")
+						sendTaskAlert(taskData);	
 				}
 			}
 		});
@@ -171,6 +205,7 @@ function getUserData () {
 				'severity' : taskData.severity,
 				'dueDate' : taskData.dueDate,
 				'description': taskData.description,
+				'type' : taskData.type ,
 			}, complete: function (response) {
 				console.log("RESPONSE FROM sendTaskAlert() = ", response);		
 				clearTaskForm();
@@ -187,6 +222,12 @@ function getUserData () {
 		$('#taskCreationZone').find('#dueDate').val('');
 		$('#taskCreationZone').find('#severityEntry').val('1');
 		$('#taskCreationZone').find('#notes').val('');
+		
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').hide();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
 	}
 	
 	// TODO: Honestly, this function should probably be in global.js

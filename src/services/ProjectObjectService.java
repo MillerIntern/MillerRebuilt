@@ -2,9 +2,12 @@ package services;
 
 import java.lang.reflect.Field;
 
+
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
@@ -30,7 +33,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import objects.HibernateUtil;
-import projectObjects.ChangeOrder;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permission;
@@ -39,6 +41,7 @@ import projectObjects.Project;
 import projectObjects.ProjectObject;
 import projectObjects.Status;
 import projectObjects.Task;
+import projectObjects.ChangeOrder;
 
 
 /**
@@ -49,6 +52,83 @@ import projectObjects.Task;
  */
 public class ProjectObjectService 
 {	
+	
+	
+	/**
+	 * This class returns all objects of a certain type from the database.
+	 * @param domain the type of object to be returned.
+	 * @return a list of all objects of a specific type in the database.
+	 */
+	public synchronized static List<Object> getProjectSupervisors()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+				
+		//Get all objects of type "domain"
+		Query q = session.createQuery("from project_supervisors");
+	    @SuppressWarnings("unchecked")
+		List<Object> list = q.list();
+	    tx.commit();
+		        
+	    return list;		
+        
+	}
+	
+	public synchronized static String getTheProjects()
+	{
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		Query q = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+		
+			tx.commit();
+		}
+		Class<?> c;
+		
+		try 
+		{
+			c = Class.forName("projectObjects.Project");
+			
+			
+			Criteria criteria = session.createCriteria(c);
+				
+				
+				ProjectionList projectionList = Projections.projectionList();
+				
+				
+
+				projectionList.add(Projections.property("id").as("id"));
+				projectionList.add(Projections.property("mcsNumber").as("McsNumber"));
+				projectionList.add(Projections.property("projectItem.id").as("projectItem"));
+				projectionList.add(Projections.property("projectType.id").as("projectType"));
+				projectionList.add(Projections.property("stage.id").as("stage"));
+				projectionList.add(Projections.property("status.id").as("status"));
+				projectionList.add(Projections.property("warehouse.id").as("warehouse"));
+				projectionList.add(Projections.property("projectManagers.id").as("projectManagers"));
+				projectionList.add(Projections.property("projectClass.id").as("projectClass"));
+				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
+
+				criteria.setProjection(projectionList);
+				
+			List<?> list = criteria.list();
+	       
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	/**
 	 * This class returns all objects of a certain type from the database.
 	 * @param domain the type of object to be returned.
@@ -221,6 +301,7 @@ public class ProjectObjectService
 				
 				
 				ProjectionList projectionList = Projections.projectionList();
+
 				projectionList.add(Projections.property("id").as("id"));
 				projectionList.add(Projections.property("mcsNumber").as("McsNumber"));
 				projectionList.add(Projections.property("projectItem").as("projectItem"));
@@ -229,6 +310,8 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("status").as("status"));
 				projectionList.add(Projections.property("warehouse").as("warehouse"));
 				projectionList.add(Projections.property("projectManagers").as("projectManagers"));
+				projectionList.add(Projections.property("projectClass").as("projectClass"));
+				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
 				

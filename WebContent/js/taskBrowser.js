@@ -1,5 +1,4 @@
-/*
- * This document provides all of the functionality for taskBrowser.html
+/* This document provides all of the functionality for taskBrowser.html
  * 
  */
 'use strict';
@@ -7,11 +6,15 @@
 let user;
 let users = new Array();
 let projectManagers;
+let subcontractors;
 let task;
 let tasks;
 let tasksOfInterest = new Array();
 let projectsOfInterest = new Array();
 let selectedProjID;
+let taskAssigneeType = "EMPLOYEE";
+let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
+let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 
 
 
@@ -163,13 +166,73 @@ function getProjectManagers () {
 			console.log("REPONSE JSON FROM getProjectManagers() = ",data.responseJSON);
 			projectManagers = data.responseJSON;
 			if (data.responseJSON) {
-				createManagerQueue(data.responseJSON);
+				//createManagerQueue(data.responseJSON);
+				getSubcontractors();
 			}
 
 			else{console.log("NO RESPONSE JSON FROM getProjectManagers()");}
 		}
 		
 	});
+}
+
+function getSubcontractors() {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSubcontractors',
+		}, complete: function (data) {
+			console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
+			subcontractors = data.responseJSON;
+			if (data.responseJSON) {
+				createManagerQueue();
+				createSubDropdown(data.responseJSON);
+			}
+
+			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
+		}
+		
+	});
+}
+
+function toggleTaskAssignee() {
+	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		$('#employeeDropdown').hide();
+		$('#subcontractorsDropdown').show();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
+		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+
+	}
+	else {
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		$('#employeeDropdown').show();
+		$('#subcontractorsDropdown').hide();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+
+	}
+}
+
+function createSubDropdown (json) {
+	let d = document.createDocumentFragment();
+	
+	json.sort(function(a,b){
+		if(a.name < b.name) return -1;
+		else if(a.name > b.name) return 1;
+		return 0;
+	});
+	for (var i = 0; i < json.length; i++) {
+		let option = document.createElement('option');
+		// when users store both username and name, access the user's name and username fields
+		option.innerHTML = json[i].name;
+		option.setAttribute("value", json[i].name);
+		option.setAttribute("id", json[i].name + "Option");
+		d.appendChild(option);
+	}
+	$('#subcontractorsDropdown').append(d);
 }
 
 
@@ -180,16 +243,22 @@ function getProjectManagers () {
  * INNER FUNCTION CALLS: createTaskTable(), tasksByManager() 
  */
 function preparePageForUserStatus(){
+	 $('#taskSelector').chosen({ width: "210px" });
+	 $('#sortSelector').chosen({ width: "210px" });
+	 $('#sortOrder').chosen({ width: "210px" });
+
 	if (user.permission.id === 1) 
 	{
-		 document.getElementById("projectManagerSelection").style.display = 'inline';
+		 document.getElementById("projectManagerDropdown").style.display = 'inline';
 		 console.log("preparePageForUserStatus() INVOKED");
 		 createTaskTable();
 		 tasksByManager();
+
 	 } 
 	else 
 	{ 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
+		document.getElementById("projectManagerDropdown").style.display = 'none';
 	 	$(".advancedSortingOptions").hide();
 	 	createTaskTable();
 	 }	
@@ -250,8 +319,22 @@ function createTaskTable () {
 	console.log("taskSelector EQUALS " , selector);
 	console.log("TASKS WHILE CREATING TABLE == ", tasks);
 	tasks.sort(function(a,b){
-		if(a.assignee.name < b.assignee.name) return -1;
-		if(a.assignee.name > b.assignee.name) return 1;
+		if(a.assignee && b.assignee) {
+			if(a.assignee.name < b.assignee.name) return -1;
+			if(a.assignee.name > b.assignee.name) return 1;
+		} 
+		else if(a.assignee && b.subAssignee) {
+			if(a.assignee.name < b.subAssignee.name.toLowerCase()) return -1;
+			if(a.assignee.name > b.subAssignee.name.toLowerCase()) return 1;
+		}
+		else if(a.subAssignee && b.assignee) {
+			if(a.subAssignee.name.toLowerCase() < b.assignee.name) return -1;
+			if(a.subAssignee.name.toLowerCase() > b.assignee.name) return 1;
+		}
+		else if(a.subAssignee && b.subAssignee) {
+			if(a.subAssignee.name.toLowerCase() < b.subAssignee.name.toLowerCase()) return -1;
+			if(a.subAssignee.name.toLowerCase() > b.subAssignee.name.toLowerCase()) return 1;
+		}
 		else{
 			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
 				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
@@ -317,7 +400,11 @@ function createTaskTable () {
 						' #' + tasks[i].project.warehouse.warehouseID +
 						' - ' + tasks[i].project.projectItem.name;
 			taskTitle.innerHTML = tasks[i].title;
-			taskAssignee.innerHTML = tasks[i].assignee.firstName;
+			if(tasks[i].assignee)
+				taskAssignee.innerHTML = tasks[i].assignee.firstName;
+			else
+				taskAssignee.innerHTML = tasks[i].subAssignee.name;
+			
 			taskDesc.innerHTML = tasks[i].description;
 			createdDate.innerHTML = tasks[i].assignedDate;
 			dueDate.innerHTML = tasks[i].dueDate;
@@ -382,7 +469,11 @@ function createTaskTableFromFilter(){
 						' #' + projectsOfInterest[i].project.warehouse.warehouseID +
 						' - ' + projectsOfInterest[i].project.projectItem.name;
 			taskTitle.innerHTML = projectsOfInterest[i].title;
-			taskAssignee.innerHTML = projectsOfInterest[i].assignee.firstName;
+			if(projectsOfInterest[i].assignee)
+				taskAssignee.innerHTML = projectsOfInterest[i].assignee.firstName;
+			else
+				taskAssignee.innerHTML = projectsOfInterest[i].subAssignee.name;
+
 			taskDesc.innerHTML = projectsOfInterest[i].description;
 			createdDate.innerHTML = projectsOfInterest[i].assignedDate;
 			dueDate.innerHTML = projectsOfInterest[i].dueDate;
@@ -477,7 +568,9 @@ function collapseWell() {
 		task.description !== $('#taskWell > div > .description').val() || 
 		task.severity != $('#taskWell > span > .severity').val() || 
 		task.dueDate !== $('#taskWell > span > .dueDate').val() || 
-		task.assignee.firstName !== $('#taskWell > span > .assignedTo').val()) {
+	
+		((task.assignee && task.assignee.firstName !== $('#taskWell > span > .assignedTo').val()) ||
+		(task.subAssignee && task.subAssignee.name !== $('#taskWell > span > .assignedTo').val()))) {
 		if (!confirm("Collapsing Will Remove Task Changes! Continue?")) {
 			return;
 		}
@@ -563,8 +656,18 @@ function expandTaskInfo(param) {
 	var dueDate = date[0] +"/"+date[1]+"/"+date[2];
 	} else dueDate = task.dueDate;
 	$('#taskWell > span > .dueDate').val(dueDate);							
-	$('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
-	$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
+	if(task.assigner) $('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
+	if(task.assignee) {
+		$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		toggleTaskAssignee();
+	}
+	else {
+		$('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		toggleTaskAssignee();
+	}
+
 	$('#taskWell > span > .taskStatus').val(task.status.status);
 	$('#taskWell > div > .notes').val(task.notes);
 	
@@ -611,14 +714,26 @@ function saveTaskChanges () {
 	let dueDate = $('#taskWell > span > .dueDate').val();
 	
 	console.log("DUE DATE == " , dueDate);
-	let date = dueDate.split("/");
-	let yearString = date[2].toString();
-	if(yearString.length == 2) date[2] = "20"+date[2];
-	let dateString = date[0]+"/"+date[1]+"/"+date[2];
-	dueDate = dateString;
+	if(dueDate) {
+		let date = dueDate.split("/");
+		let yearString = date[2].toString();
+		if(yearString.length == 2) date[2] = "20"+date[2];
+		let dateString = date[0]+"/"+date[1]+"/"+date[2];
+		dueDate = dateString;
+	}
 	
 	let assignedBy = user.id;	// changes to whoever made the update
-	let assignedTo = $('#taskWell > span > .assignedTo').val();
+	let assignedTo , assignedToObject;
+	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE)
+		assignedTo = $('#employeeDropdown').val();
+	else
+		assignedTo = $('#subcontractorsDropdown').val();
+	
+	for(var i = 0; i < subcontractors.length; i++){
+		  if(subcontractors[i].name.toLowerCase() == assignedTo.toLowerCase())
+			  assignedToObject = subcontractors[i];
+	  }
+
 	let taskStatus = $('#taskWell > span > .taskStatus').val();
 	
 	if(taskStatus == "Open") taskStatus = 1;
@@ -642,7 +757,26 @@ function saveTaskChanges () {
 		  tasks[i].description = description;
 		  tasks[i].severity = severity;
 		  tasks[i].dueDate = dueDate;
-		  tasks[i].assignee = assignedTo;
+		  
+		  let taskAssignee;
+		  
+		  if(assignedTo.firstName) {
+			  for(var i = 0; i < users.length; i++){
+				  if(users[i].firstName.toLowerCase() == assignedTo.firstName.toLowerCase())
+					  taskAssignee = users[i];
+			  }
+				  
+			  tasks[i].assignee = taskAssignee;
+			  tasks[i].subAssignee = undefined;
+		  }
+		  else {
+			  for(var i = 0; i < subcontractors.length; i++){
+				  if(subcontractors[i].name.toLowerCase() == assignedTo.toLowerCase())
+					  taskAssignee = subcontractors[i];
+			  }
+			  tasks[i].subAssignee = taskAssignee;
+			  tasks[i].assignee = undefined;
+		  }
 		  tasks[i].status.id = taskStatus;
 		  if(tasks[i].status.id == 1) tasks[i].status.status = 'Open';
 		  else if(tasks[i].status.id == 2) tasks[i].status.status = 'Completed';
@@ -657,7 +791,15 @@ function saveTaskChanges () {
 			  projectsOfInterest[i].description = description;
 			  projectsOfInterest[i].severity = severity;
 			  projectsOfInterest[i].dueDate = dueDate;
-			  projectsOfInterest[i].assignee = assignedTo;
+			  if(assignedTo.firstName) {
+				  projectsOfInterest[i].assignee = assignedTo;
+				  projectsOfInterest[i].subAssignee = undefined;
+			  }
+			  else {
+				  projectsOfInterest[i].subAssignee = assignedToObject;
+				  projectsOfInterest[i].assignee = undefined;
+			  }
+			  
 			  projectsOfInterest[i].status.id = taskStatus;
 			  if(projectsOfInterest[i].status.id == 1) projectsOfInterest[i].status.status = 'Open';
 			  else if(projectsOfInterest[i].status.id == 2) projectsOfInterest[i].status.status = 'Completed';
@@ -673,7 +815,14 @@ function saveTaskChanges () {
 			 tasksOfInterest[i].description = description;
 			 tasksOfInterest[i].severity = severity;
 			 tasksOfInterest[i].dueDate = dueDate;
-			 tasksOfInterest[i].assignee = assignedTo;
+			  if(assignedTo.firstName) {
+				 tasksOfInterest[i].assignee = assignedTo;
+				 tasksOfInterest[i].subAssignee = undefined;
+			  }
+			  else {
+				  tasksOfInterest[i].subAssignee = assignedToObject;
+				  tasksOfInterest[i].assignee = undefined;
+			  }
 			 tasksOfInterest[i].status.id = taskStatus;
 			 if(tasksOfInterest[i].status.id == 1) tasksOfInterest[i].status.status = 'Open';
 			 else if(tasksOfInterest[i].status.id == 2) tasksOfInterest[i].status.status = 'Completed';
@@ -681,6 +830,15 @@ function saveTaskChanges () {
 			 tasksOfInterest[i].notes = notes;
 			break;}
 		}
+	
+	let assigneeName;
+	
+	if(assignedTo.firstName)
+		assigneeName = assignedTo.firstName;
+	else
+		assigneeName = assignedToObject.name;
+	
+	console.log("ASSIGNEE NAME = " , assigneeName , "TYPE = " , taskAssigneeType );
 	
 	if (isValidInput([dueDate])) {
 		$.ajax({
@@ -692,12 +850,13 @@ function saveTaskChanges () {
 				'title': title,
 				'project': projectID,
 				'description': description,
-				'assignee': assignedTo.firstName,
+				'assignee': assigneeName,
 				'initiatedDate': assignedDate,
 				'dueDate': dueDate,
 				'severity': severity,
 				'status': taskStatus,
-				'notes': notes
+				'notes': notes,
+				'type' : taskAssigneeType
 			}, complete: function (data) {
 				console.log("DATA AFTER TASK SAVE == ", data);
 				let response = $.trim(data.responseText);

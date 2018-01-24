@@ -48,7 +48,7 @@ function establishManagersOfInterest()
 	managersOfInterest = [];
 	$('.taskManager').each(function(i, obj) {
 		if(!obj.value) return;
-	    if(obj.selected == true) managersOfInterest.push(obj.value);
+	    if(obj.checked == true) managersOfInterest.push(obj.value);
 	});
 }
 
@@ -209,23 +209,37 @@ function createTaskTableByManager (tasks) {
 
 function createManagerQueue(json)
 {
-	
-	let managerDropdown = document.getElementById("projectManagerDropdown");
-	
-	let managerAllOption = document.createElement('option');
-	managerAllOption.text = "All";
-	managerAllOption.value = "All";	
-	managerAllOption.id =  "AllTasks";
-	managerAllOption.className = "taskManager";
-	managerDropdown.add(managerAllOption);
-	
-	let managerNoneOption = document.createElement('option');
-	managerNoneOption.text = "None";
-	managerNoneOption.value = "None";	
-	managerNoneOption.id =  "NoneTasks";
-	managerNoneOption.className = "taskManager";
-	managerDropdown.add(managerNoneOption);
-		
+    let d = document.createDocumentFragment();
+	let row = document.createElement('tr');
+	let name = document.createElement('td');
+	let none = document.createElement('td');
+	let checkBox = document.createElement('td');
+	let noneBox = document.createElement('td');
+	let input = document.createElement('input');
+	let inputNone = document.createElement('input');
+	let breakPoint = document.createElement('br')
+	row.setAttribute("value", 'all');
+	name.innerHTML = "<h4> All </h4>";
+	none.innerHTML = "<h4> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp; None </h4>"
+	input.setAttribute("type","checkbox");
+	input.value ='all';
+	input.setAttribute("id", "AllTasks");
+	input.setAttribute("class","taskManager");
+	input.checked = false;
+	inputNone.setAttribute("type","checkbox");
+	inputNone.value ='none';
+	inputNone.setAttribute("id", "NoTasks");
+	inputNone.setAttribute("class","taskManager");
+	inputNone.checked = false;
+	d.appendChild(row);
+	d.appendChild(name);
+	d.appendChild(checkBox);
+	d.appendChild(input);
+	d.appendChild(none);
+	d.appendChild(noneBox);
+	d.appendChild(inputNone);
+	d.appendChild(breakPoint);
+
     json.sort(function(a,b){
     	if(a.name < b.name) return -1;
     	else if(a.name > b.name) return 1;
@@ -235,64 +249,25 @@ function createManagerQueue(json)
 	for (var i = 0; i < json.length; i++) {
 		// when users store both username and name, access the user's name and username fields
 		if(json[i].name == "Bart" || json[i].name == "bart") continue;
-
-		let managerOption = document.createElement('option');
-		managerOption.text = json[i].name;
-		managerOption.value = json[i].name;
+		let name = document.createElement('td');
+		let checkBox = document.createElement('td');
+		let managerInput = document.createElement('input');
+		name.innerHTML = "<h4> &nbsp&nbsp&nbsp;"+json[i].name+ "</h4>";
+		managerInput.setAttribute("type","checkbox");
 		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()) 
-			managerOption.selected = true;
-		
-		managerOption.id =  json[i].name+"Tasks";
-		managerOption.className = "taskManager";
-		managerDropdown.add(managerOption);
-	}
-	
-    $('.chosenElement').chosen({ width: "400px" });
-    $('.chosenElement').on('change' , function(evt , params) {
-    	
-    	if(params.selected) {
-    		if(params.selected == "All") 
-    			selectAllManagersDropdown();
-    		if(params.selected == "None")
-    			deselectAllManagersDropdown();
-    	}    	
-    });
+			managerInput.checked = true;
+		else {managerInput.checked = false;}
+		managerInput.setAttribute("value", json[i].name);
+		managerInput.setAttribute("id", json[i].name+"Tasks");
+		managerInput.setAttribute("class","taskManager");
+		d.appendChild(name);
+		d.appendChild(checkBox);
+		d.appendChild(managerInput);
+}
 
-    console.log("OPTIONS: " , $('#projectManagerDropdown > option'));
-    
-    
+	
+	
+	$('#projectManagerSelection').append(d);
 	document.getElementById("assigneeSort").style.display = 'inline';
 }
-
-function deselectAllManagersDropdown() {
-	let managerDropdown = document.getElementById("projectManagerDropdown");
-	
-	for(var i = 0; i < managerDropdown.options.length; i++) {
-		managerDropdown.options[i].selected = false;
-	}
-	
-	$('#projectManagerDropdown').trigger('chosen:updated');
-
-	
-}
-
-function selectAllManagersDropdown() {
-	let managerDropdown = document.getElementById("projectManagerDropdown");
-	
-	for(var i = 0; i < managerDropdown.options.length; i++) {		
-		if(managerDropdown.options[i].value == "None") {
-			continue;
-		}
-		else if(managerDropdown.options[i].value == "All") {
-			managerDropdown.options[i].selected = false;
-		}
-		else {
-			managerDropdown.options[i].selected = true;
-		}
-	}
-	
-	$('#projectManagerDropdown').trigger('chosen:updated');
-	
-}
-
 

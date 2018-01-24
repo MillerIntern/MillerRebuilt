@@ -19,7 +19,7 @@
     javax.mail.Session
   </res-type>
   <res-auth>
-    Container
+  	 Container
   </res-auth>
 </resource-ref>
 

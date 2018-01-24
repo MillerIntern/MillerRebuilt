@@ -1,6 +1,7 @@
 package projectObjects;
 
 import java.util.Date;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,9 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import projectObjects.ChangeOrder;
+
 
 @Entity
 public class Project extends ProjectObject

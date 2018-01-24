@@ -1,4 +1,7 @@
 
+#equipmentTable > tbody > tr > td {
+	font-size: 12px;
+}
 
 #projectTableDiv {
 	width:100%;
@@ -45,6 +48,24 @@
 }
 
 #changeOrderInfo > table td {
+	padding: 2px;
+}
+
+#equipmentForm > table {
+	width: 95%;
+	table-layout : fixed;
+	border-spacing: 0;	
+}
+
+#equipmentForm > table td {
+	font-size: 87%;
+}
+
+#equipmentForm {
+	width: 50%;
+}
+
+#equipmentForm > table td {
 	padding: 2px;
 }
 

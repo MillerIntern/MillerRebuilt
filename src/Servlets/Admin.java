@@ -3,6 +3,7 @@ package Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import projectObjects.User;
 import projectObjects.Warehouse;
 import services.LoginService;
 import services.ProjectObjectService;
+import services.ProjectService;
 
 
 @WebServlet(description = "Servlet for handling admin requests", urlPatterns = { "/Admin" })
@@ -93,12 +95,24 @@ public class Admin extends HttpServlet
 			ProjectObjectService.addObject("ProjectItem", pItem);
 			response = "projectItem created";
 		}
-		else if(action.equals("createVendor"))
+		else if(action.equals("createSupplier"))
 		{
-			String vendorName = parameters.get("vendor");
+			String vendorName = parameters.get("supplier");
 			EquipmentVendor vendor = new EquipmentVendor(vendorName);
 			ProjectObjectService.addObject("EquipmentVendor", vendor);
-			response = "vendor created";
+			response = "supplier created";
+		}
+		else if(action.equals("createSubcontractor"))
+		{
+			
+			System.out.println("Creating Subcontractor");
+			
+			try {
+			response = ProjectService.createSubcontractor(parameters);
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+			response = "subcontractor created";
 		}
 		else if(action.equals("addPerson"))
 		{

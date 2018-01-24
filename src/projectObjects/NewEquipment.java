@@ -23,21 +23,29 @@ public class NewEquipment extends ProjectObject
 	private String poNum;
 	private String equipmentName;
 	private String vendor;
+	private Date orderedDate;
 	private Date deliveryDate;
 	private Date estDeliveryDate;
 	private String notes;
+	private String deliveryStatus;
+	private String providerName;
+	private String description;
 	
 	public NewEquipment(String poNum, String equipmentName,
 						String vendor,
-						Date deliveryDate, Date estDeliveryDate,
-						String notes)
+						Date deliveryDate, Date estDeliveryDate, Date orderedDate,
+						String notes,  String deliveryStatus, String providerName, String description)
 	{
 		this.poNum = poNum;
 		this.equipmentName = equipmentName;
 		this.vendor = vendor;
 		this.deliveryDate = deliveryDate;
 		this.estDeliveryDate = estDeliveryDate;
+		this.orderedDate = orderedDate;
 		this.notes = notes;
+		this.deliveryStatus = deliveryStatus;
+		this.providerName = providerName;
+		this.description = description;
 	}
 	
 	public NewEquipment()
@@ -47,7 +55,11 @@ public class NewEquipment extends ProjectObject
 		this.vendor = null;
 		this.deliveryDate = null;
 		this.estDeliveryDate = null;
+		this.orderedDate = null;
 		this.notes = null;
+		this.deliveryStatus = null;
+		this.providerName = null;
+		this.description = null;
 	}
 
 	public synchronized String getPoNum() {
@@ -81,6 +93,14 @@ public class NewEquipment extends ProjectObject
 	public synchronized void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
+	
+	public synchronized Date getOrderedDate() {
+		return orderedDate;
+	}
+
+	public synchronized void setOrderedDate(Date orderedDate) {
+		this.orderedDate = orderedDate;
+	}
 
 	public synchronized Date getEstDeliveryDate() {
 		return estDeliveryDate;
@@ -96,5 +116,28 @@ public class NewEquipment extends ProjectObject
 
 	public synchronized void setNotes(String notes) {
 		this.notes = notes;
+	}
+	
+	public synchronized String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+	
+	public synchronized void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
+	
+	public synchronized String getProviderName() {
+		return providerName;
+	}
+	
+	public synchronized void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+	public synchronized String getDescription() {
+		return description;
+	}
+	
+	public synchronized void setDescription(String description) {
+		this.description = description;
 	}
 }

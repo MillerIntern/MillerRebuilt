@@ -1,6 +1,7 @@
 package Servlets.helpers;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +15,11 @@ import comparators.ChangeOrderNumberComparator;
 import comparators.ProjectItemComparator;
 import comparators.ProjectRegionComparator;
 import comparators.WarehouseComparator;
-import projectObjects.ChangeOrder;
 import projectObjects.NewEquipment;
 import projectObjects.Person;
 import projectObjects.Project;
 import projectObjects.Task;
+import projectObjects.ChangeOrder;
 
 /**
  * Helper Classes will be statically called to do perform actions.
@@ -586,9 +587,9 @@ public class ReportHelper
 		}
 		else if (value.equals("warehouse") && p.getWarehouse() != null)
 		{
-			if(p.getWarehouse().getCity().getName().equals("APANA")) 
+			if(p.getWarehouse().getCity().getName().contains("APANA")) 
 			{
-				return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getRegion());
+				return (p.getWarehouse().getCity().getName());
 			}
 			
 			return (p.getWarehouse().getCity().getName() + ", " + p.getWarehouse().getState().getAbbreviation());
@@ -1616,7 +1617,10 @@ public class ReportHelper
 		} else if(value.equals("task_title")){
 			returnVal = t.getTitle();
 		} else if(value.equals("task_assignee")) {
-			returnVal = t.getAssignee().getFirstName();
+			if(t.getSubAssignee() == null)
+				returnVal = t.getAssignee().getFirstName();
+			else
+				returnVal = t.getSubAssignee().getName();
 		} else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
 		} else if(value.equals("task_created_date")) {

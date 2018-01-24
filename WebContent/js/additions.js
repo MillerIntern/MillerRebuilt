@@ -1,4 +1,6 @@
 let users;
+let equipmentSuppliers;
+let subcontractors;
 
 
 $(document).ready(function()
@@ -55,6 +57,7 @@ function getStates()
 		success: function(data)
 		{
 			var states = JSON.parse(data);
+			getEquipmentSuppliers();
 			fillStates(states);
 		},
 	});
@@ -132,11 +135,18 @@ function createItem()
 	}
 }
 
-function createVendor()
+function createSupplier()
 {
-	var vendor = $('#vendor').val();
+	var supplier = $('#supplier').val();
 	
-	if(vendor != '')
+	for(var i = 0; i < equipmentSuppliers.length; i++) {
+		if(equipmentSupplies[i].toUpperCase() == supplier.toUpperCase()) {
+			alert("Supplier name must not already exist in the database!");
+			return;
+		}
+	}
+	
+	if(supplier != '')
 	{
 		$.ajax(
 		{
@@ -144,14 +154,59 @@ function createVendor()
 			url: 'Admin',
 			data:
 			{
-				'action': 'createVendor',
-				'vendor': vendor,
+				'action': 'createSupplier',
+				'supplier': supplier,
 			},
 			success: function(data)
 			{
 				console.log(data);
-				$('#vendor').val('');
-				alert("Vendor Created Successfully!");
+				$('#supplier').val('');
+				alert("Supplier Created Successfully!");
+			}
+		});
+	}
+}
+
+function createSubcontractor()
+{
+	var subcontractor = $('#subcontractorName').val();
+	var subcontractorEmail = $('#subcontractorEmail').val();
+
+	if(!subcontractor) {
+		alert("Subcontractors must have a name!");
+		return;
+	}
+	
+	if(!subcontractorEmail) {
+		alert("Subcontractors must have an email!");
+		return;
+	}
+	
+	for(var i = 0; i < subcontractors.length; i++) {
+		if(subcontractors[i].name.toUpperCase() == subcontractor.toUpperCase()) {
+			alert("Subcontractor name must not already exist in the database!");
+			return;
+		}
+	}
+	
+	if(supplier != '')
+	{
+		$.ajax(
+		{
+			type: 'POST',
+			url: 'Admin',
+			data:
+			{
+				'action': 'createSubcontractor',
+				'name': subcontractor,
+				'email' : subcontractorEmail ,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#subcontractorName').val('');
+				$('#subcontractorEmail').val('');
+				alert("Subcontractor Created Successfully!");
 			}
 		});
 	}
@@ -252,7 +307,6 @@ function addUser()
 
 /**
  * This function gets all Miller users from the database
- * INNER FUNCTION CALLS: createDropdown(), getTasks()
  */
 function getUsers () {
 	$.ajax({
@@ -273,6 +327,48 @@ function getUsers () {
 	});	
 }
 
+/**
+ * This function gets all Miller users from the database
+ */
+function getEquipmentSuppliers () {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getEquipmentSuppliers',
+		}, complete: function (data) {
+			console.log("RESPONSE JSON FOR getEquipmentSuppliers() = ",data.responseJSON);
+			if (data.responseJSON) {
+				equipmentSuppliers = data.responseJSON;
+				console.log("EQUIPMENT PROVIDER NAMES = ",equipmentSuppliers);
+			}
+			getSubcontractors();
+		}
+		
+	});	
+}
+
+/**
+ * This function gets all Miller users from the database
+ */
+function getSubcontractors() {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSubcontractors',
+		}, complete: function (data) {
+			console.log("RESPONSE JSON FOR getSubcontractors() = ",data.responseJSON);
+			if (data.responseJSON) {
+				subcontractors = data.responseJSON;
+				console.log("SUBCONTRACTOR NAMES = ", subcontractors);
+			}
+		}
+		
+	});	
+}
 function deleteProjectObject() {
 	if(!confirm("Are you sure you want to permanently delete this data from the database?")) return;
 	let id = document.getElementById("objectId").value;

@@ -24,3 +24,15 @@ local.properties
 /target/
 
 Initialization.txt
+
+src/projectObjects/ChangeOrderType.java
+
+src/projectObjects/ChangeOrder.java
+
+src/projectObjects/changeOrderObjects/ChangeOrder.java
+
+src/projectObjects/ChangeOrderStatus.java
+
+src/projectObjects/ChangeOrder.java
+
+src/projectObjects/ChangeOrder.java

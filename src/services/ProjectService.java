@@ -2,6 +2,9 @@ package services;
 
 import java.text.ParseException;
 
+
+
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +18,6 @@ import org.hibernate.Transaction;
 import com.google.gson.Gson;
 
 import objects.HibernateUtil;
-import projectObjects.ChangeOrder;
 import projectObjects.CloseoutDetails;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
@@ -25,6 +27,7 @@ import projectObjects.ProjectObject;
 import projectObjects.Region;
 import projectObjects.SalvageValue;
 import projectObjects.Task;
+import projectObjects.ChangeOrder;
 import projectObjects.Subcontractor;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
@@ -240,6 +243,12 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("equipmentvendor") != null && !parameters.get("equipmentvendor").isEmpty())
 			if(parameters.get("equipmentvendor").equals("true"))
 				map.put("equipmentvendor",ProjectObjectService.getAllAsJsonString("EquipmentVendor"));
+		if(parameters.get("equipmentstatus") != null && !parameters.get("equipmentstatus").isEmpty())
+			if(parameters.get("equipmentstatus").equals("true"))
+				map.put("equipmentstatus",ProjectObjectService.getAllAsJsonString("EquipmentStatus"));
+		if(parameters.get("subcontractors") != null && !parameters.get("subcontractors").isEmpty())
+			if(parameters.get("subcontractors").equals("true"))
+				map.put("subcontractors",ProjectObjectService.getAllAsJsonString("Subcontractor"));
 		return g.toJson(map);
 	}
 
@@ -791,4 +800,5 @@ public class ProjectService extends ProjectObjectService
 		
 		return "SUBCONTRACTOR_ADDED";
 	}
+	
 }

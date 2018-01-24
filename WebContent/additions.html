@@ -3,6 +3,8 @@
 	<head>
 		<script type="text/javascript" src="js/jquery.js" ></script>
 		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<script src="js/bootstrap.min.js"></script>
+		
 		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/global.js"></script>
 		<script type="text/javascript" src="js/additions.js"></script>
@@ -88,7 +90,8 @@
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="warehouse">Warehouse</li>
 		<li class="tab-link" data-tab="item">Project Item</li>
-		<li class="tab-link" data-tab="equipmentVendor">Equipment Vendor</li>
+		<li class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
+		<li class="tab-link" data-tab="subcontractor">Subcontractor</li>
 		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
 		<li class="tab-link" data-tab="userTab">New User</li>
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
@@ -138,19 +141,36 @@
 		</table>
 		<button onclick="createItem()">Create New Item</button>		
 	</div>
-	<div id="equipmentVendor" class="tab-content">
+	<div id="subcontractor" class="tab-content">
 		<table>
 			<tr>
-			<td>Vendor</td><td></td>
+				<td>Subcontractor</td>
+				<td>        
+				</td>
+			</tr>
+			<tr>
+				<td>Name:</td>        					
+				<td><input id="subcontractorName" type="text"></td>
+			</tr>
+		    <tr>
+				<td>Email:</td>        					
+				<td><input id="subcontractorEmail" type="text"></td>
+			</tr>
+		</table>
+		<button onclick="createSubcontractor()">Add Subcontractor</button>		
+	</div>
+	<div id="equipmentSupplier" class="tab-content">
+		<table>
+			<tr>
+			<td>Equipment Supplier</td><td></td>
 			</tr>
 			<tr>
 			<td>Name:</td>
-			<td><input id="vendor" type="text"></td>
+			<td><input id="supplier" type="text"></td>
 			</tr>
 		</table>
-		<button onclick="createVendor()">Create New Equipment Vendor</button>		
-	</div>
-	
+		<button onclick="createSupplier()">Create New Equipment Supplier</button>		
+	</div>	
 	<div id="personTab" class="tab-content">
 		<table>
 			<tr>

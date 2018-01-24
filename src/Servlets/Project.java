@@ -29,6 +29,7 @@ import objects.RequestHandler;
 import projectObjects.City;
 import projectObjects.Region;
 import projectObjects.State;
+import projectObjects.Subcontractor;
 import projectObjects.Task;
 import projectObjects.User;
 import projectObjects.Warehouse;
@@ -105,10 +106,16 @@ public class Project extends HttpServlet
 		} else if(action.equals("sendTaskAlert")) {
 			System.out.println("SENDING TASK ALERT");
 	         String assignee = parameters.get("assignee");
-	         User recipient = User.mapNameToUser(assignee);
+	         System.out.println("ASSIGNEE: " + assignee);
+	         User employeeRecipient = User.mapNameToUser(assignee);
+	         Subcontractor subRecipient = Subcontractor.mapNameToSubcontractor(assignee);
 			// Recipient's email ID needs to be mentioned.
-		      String to = recipient.getEmail();
-
+		      String to;
+		      if(employeeRecipient == null)
+		    	  to = subRecipient.getEmail();
+		      else
+		    	  to = employeeRecipient.getEmail();
+		      
 		      // Sender's email ID needs to be mentioned
 		      String from = "mcstaskalert@millerconstructionservices.com";
 
@@ -209,7 +216,7 @@ public class Project extends HttpServlet
 		      String to = phoneNumber+"@"+phoneCarrier ;
 		      //to = "6106576953@txt.att.net";
 		      // Sender's email ID needs to be mentioned
-		      String from = "Bennett Wisner";
+		      String from = "BennettWisner";
 
 		      // Assuming you are sending email from localhost
 		      String host = "localhost";
@@ -255,6 +262,8 @@ public class Project extends HttpServlet
 		} else if (action.equals("getSpecificObjects")) {
 			System.out.println("getting specific objects");
 			response = ProjectService.getSpecificAsJson(parameters);
+			System.out.println("SPECIFIC OBJECT SIZE = " + response.length());
+
 		}
 		else if (action.equals("getEditQueryObjects"))
 		{
@@ -464,6 +473,8 @@ public class Project extends HttpServlet
 		{
 			System.out.println("getting the projectsssss!");
 			response = ProjectService.getAllProjectsAsJson();
+			
+			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
 		}
 		else if(action.equals("getProjectsWithStage")){
 			System.out.println("getting projects of certain stages!");
@@ -639,22 +650,41 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
-		else if(action.equals("createSubcontractor"))
+		else if(action.equals("getSubcontractors"))
 		{
 			
-			System.out.println("Creating Subcontractor");
+			System.out.println("Getting Subcontractors");
 			
-			try {
-			response = ProjectService.createSubcontractor(parameters);
-			} catch(ClassNotFoundException | ParseException e) {
-				e.printStackTrace();
-			}
-			response = "subcontractor created";
+			List<Object> subcontractors = ProjectObjectService.getAll("Subcontractor");
+			Gson gson = new Gson();
+			response = gson.toJson(subcontractors);
+			System.out.println("Subcontractors = " + response);
 		}
+		else if(action.equals("GET_ALL_PROJECTS"))
+		{
+			
+			System.out.println("Getting PROJECTS");
+			
+			String projects = ProjectObjectService.getTheProjects();
+			Gson gson = new Gson();
+			
+			response = gson.toJson(projects);
 		
+			System.out.println("SIZE OF GET ALL PROJECTS = " + response.length());
+			
+			System.out.println("Projects = " + response);
+		}
+
+		
+		/*
 		if(!(action.equals("getAllProjects") || action.equals("getTasks") ||
 				action.equals("getSpecificObjects") || action.equals("getAllObjects") || action.equals("getQueryEnums")))
 			System.out.println("ACTION = " + action + "\nRESPONSE = " + response);
+			*/
+		if(response.length() <= 750)
+			System.out.println("ACTION = " + action + "\nRESPONSE = " + response);
+		else System.out.println("ACTION = " + action);
+
 
 		
 			out = resp.getWriter();

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Map;
 
 import projectObjects.Project;
+import projectObjects.Subcontractor;
 import projectObjects.Task;
 import projectObjects.TaskStatus;
 import projectObjects.User;
@@ -27,12 +28,12 @@ public class TaskFiller {
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		
 		Date dueDate = null;
-		if(!params.get("dueDate").isEmpty())
+		if(params.get("dueDate") != null && !params.get("dueDate").isEmpty())
 			dueDate = formatter.parse(params.get("dueDate"));
 		t.setDueDate(dueDate);
 		
 		Date assignedDate = null;
-		if(!params.get("initiatedDate").isEmpty())
+		if(params.get("initiatedDate") != null && !params.get("initiatedDate").isEmpty())
 			assignedDate = formatter.parse(params.get("initiatedDate"));
 		t.setAssignedDate(assignedDate);
 		
@@ -45,6 +46,7 @@ public class TaskFiller {
 		t.setAssignee(User.mapNameToUser(params.get("assignee")));
 		t.setAssigner(User.mapNameToUser(sessionName));
 
+		t.setSubAssignee(Subcontractor.mapNameToSubcontractor(params.get("assignee")));
 		
 		t.setProject((Project)ProjectObjectService.get(Long.parseLong(params.get("project")), "Project"));
 		
@@ -53,5 +55,6 @@ public class TaskFiller {
 		else t.setTaskStatus(new TaskStatus("Open"));
 		
 		t.setCompleted(false);
+		t.setType(params.get("type"));
 	}
 }

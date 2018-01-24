@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import projectObjects.ProjectObject;
+
 /**
  * This class models the various change orders of a project: these are revisions or extra
  * aspects of a project that are added later in a project's lifecycle. A project can have
