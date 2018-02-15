@@ -19,7 +19,9 @@ import projectObjects.NewEquipment;
 import projectObjects.Person;
 import projectObjects.Project;
 import projectObjects.Task;
+import services.ProjectObjectService;
 import projectObjects.ChangeOrder;
+import projectObjects.ChangeOrderType;
 
 /**
  * Helper Classes will be statically called to do perform actions.
@@ -156,7 +158,7 @@ public class ReportHelper
 		else if (value.equals("costcoDueDate"))
 		{	
 			sb.append("<th>");
-			sb.append("Costco Due Date");
+			sb.append("Proposal Due");
 		}
 		else if (value.equals("proposalSubmitted"))
 		{	
@@ -517,7 +519,7 @@ public class ReportHelper
 			sb.append("Release of Liens");
 		} else if (value.equals("mulvannyG2SignOff")) {
 			sb.append("<th>");
-			sb.append("Mulvanny G2 Sign Off");
+			sb.append("MG2 Sign Off");
 		} else if (value.equals("equipmentName")) {
 			sb.append("<th>Warehouse</th><th>Item</th><th>Status</th><th>Equipment Name</th>" +
 					  "<th>Vendor</th><th>Estimated Delivery Date</th>" +
@@ -525,12 +527,12 @@ public class ReportHelper
 		} else if (value.equals("changeOrder") || value.contains("changeOrder_")) {
 			sb.append("<th>Warehouse</th><th>Project</><th>Manager</th><th>MCS CO#</th><th>Title</th>" + 
 					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
-					  "<th>Subs Submitted Date</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
+					  "<th>Subs Submitted Date</th><th>Customer</th><th>Submitted Date</th><th>Approved Date</th>" + 
 					  "<th>Cost</th><th>Sell</th><th>Invoice #</th><th>Customer COP#</th><th class='longText'>Notes");
 		} else if (value.equals("changeOrderSolo")) {
 			sb.append("<th>MCS CO#</th><th>Warehouse</th><th>Project</><th>Manager</th><th>Title</th>" + 
 					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
-					  "<th>Subs Submitted Date</th><th>Submitted To</th><th>Submitted Date</th><th>Approved Date</th>" + 
+					  "<th>Subs Submitted Date</th><th>Customer</th><th>Submitted Date</th><th>Approved Date</th>" + 
 					  "<th>Cost</th><th>Sell</th><th>Invoice #</th><th>Customer COP#</th><th class='longText'>Notes");
 		} else if(value.equals("permitNotes")) {
 			sb.append("<th>");
@@ -562,6 +564,15 @@ public class ReportHelper
 		} else if(value.equals("task_status")) {
 			sb.append("<th>");
 			sb.append("Status");
+		} else if(value.equals("task_item")) {
+			sb.append("<th>");
+			sb.append("Project");
+		} else if(value.equals("budgetaryDue")) {
+			sb.append("<th>");
+			sb.append("Budgetary Due");
+		} else if(value.equals("budgetarySubmitted")) {
+			sb.append("<th>");
+			sb.append("Budgetary Submitted");
 		}
 	}
 	
@@ -640,11 +651,17 @@ public class ReportHelper
 		else if (value.equals("siteSurvey") && p.getSiteSurvey() != null)
 			return dForm.format(p.getSiteSurvey()).toString();
 		
-		else if (value.equals("costcoDueDate") && p.getCostcoDueDate() != null)
-			return dForm.format(p.getCostcoDueDate()).toString();
+		else if (value.equals("costcoDueDate") && p.getProposalDue() != null)
+			return dForm.format(p.getProposalDue()).toString();
 		
 		else if (value.equals("proposalSubmitted") && p.getProposalSubmitted() != null)
 			return dForm.format(p.getProposalSubmitted()).toString();
+		
+		else if (value.equals("budgetaryDue") && p.getBudgetaryDue() != null)
+			return dForm.format(p.getBudgetaryDue()).toString();
+		
+		else if (value.equals("budgetarySubmitted") && p.getBudgetarySubmitted() != null)
+			return dForm.format(p.getBudgetarySubmitted()).toString();
 		
 		else if (value.equals("type") && p.getProjectType() != null)
 			return p.getProjectType().getName();
@@ -1614,6 +1631,10 @@ public class ReportHelper
 		String returnVal;
 		if(value.equals("warehouse")){
 		     returnVal = t.getProject().getWarehouse().getCity().getName() + " #" + t.getProject().getWarehouse().getWarehouseID();
+		} else if(value.equals("task_item")){
+			if(t.getProject().getProjectItem() == null || t.getProject().getProjectItem().getName() == null)
+				returnVal = "---";
+			else returnVal = t.getProject().getProjectItem().getName();
 		} else if(value.equals("task_title")){
 			returnVal = t.getTitle();
 		} else if(value.equals("task_assignee")) {
@@ -1710,30 +1731,54 @@ public class ReportHelper
 	
 	private static String convertChangeOrderType(String i) {
 		if(i == null) return "---";
-		if(i.equals("1"))
-			return "MG2";
-		else if(i.equals("2")) 
-			return "Costco Refrigeration";
-		else if(i.equals("3")) 
-			return "Costco Warehouse";
-		else if(i.equals("4")) 
-			return "Costco Facilities";
-		else if(i.equals("5"))
-			return "Vendor";
-		else if(i.equals("6"))
-			return "Undefined";
-		else if(i.equals("7")) 
-			return "Reserve";
-		else if(i.equals("8"))
-			return "No Cost";
-		else if(i.equals("9"))
-			return "Non-Billable";
 		
-					
+		List<Object> types = ProjectObjectService.getAll("ChangeOrderType");
+
+		projectObjects.ChangeOrderType tmp;
+		
+		for(Object type: types)
+		{
+			try 
+			{
+				tmp = (projectObjects.ChangeOrderType) type;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+			
+			if(i.equals(tmp.getId().toString()))
+				return tmp.getName();
+		}
+		
 		return "---";
 	}
 	
 	private static String convertChangeOrderStatus(String i) {
+		
+		if(i == null) return "---";
+		
+		List<Object> statuses = ProjectObjectService.getAll("ChangeOrderStatus");
+
+		projectObjects.ChangeOrderStatus tmp;
+		
+		for(Object status: statuses)
+		{
+			try 
+			{
+				tmp = (projectObjects.ChangeOrderStatus) status;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+			
+			if(i.equals(tmp.getId().toString()))
+				return tmp.getName();
+		}
+		
+		return "---";
+		/*
 		if (i == null) return "---";
 		
 		if(i.equals("1"))
@@ -1752,6 +1797,7 @@ public class ReportHelper
 		
 		
 		return "---";
+		*/
 	}
 	
 	public synchronized static void sortChangeOrders(List<ChangeOrder> changeOrders)

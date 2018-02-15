@@ -67,12 +67,22 @@ public class ProjectInformationFiller
 		Date fcostco = null;
 		if (!(params.get("costco")).isEmpty())
 			fcostco = formatter.parse(params.get("costco"));
-		currentProject.setCostcoDueDate(fcostco);
+		currentProject.setProposalDue(fcostco);
 
 		Date fproposal = null;
 		if (!(params.get("proposalDate")).isEmpty())
 			fproposal = formatter.parse(params.get("proposalDate"));
 		currentProject.setProposalSubmitted(fproposal);
+		
+		Date budgetaryDue = null;
+		if (params.get("budgetaryDue") != null && !(params.get("budgetaryDue")).isEmpty())
+			budgetaryDue = formatter.parse(params.get("budgetaryDue"));
+		currentProject.setBudgetaryDue(budgetaryDue);
+
+		Date budgetarySubmitted = null;
+		if (params.get("budgetaryDue") != null && !(params.get("budgetarySubmitted")).isEmpty())
+			budgetarySubmitted = formatter.parse(params.get("budgetarySubmitted"));
+		currentProject.setBudgetarySubmitted(budgetarySubmitted);
 
 		Date fstart = null;
 		if (!params.get("startDate").isEmpty())

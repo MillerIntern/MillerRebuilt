@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 
 
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,8 @@ import projectObjects.ProjectObject;
 import projectObjects.Status;
 import projectObjects.Task;
 import projectObjects.ChangeOrder;
+
+import java.util.Set;
 
 
 /**
@@ -169,6 +172,7 @@ public class ProjectObjectService
         return list;
 	}
 	
+	
 	/**
 	 * This function returns all Projects from the database.
 	 * @return a list of all Projects in the database.
@@ -241,6 +245,44 @@ public class ProjectObjectService
         
         return list;
 	}
+	
+	/**
+	 * This function returns all Tasks from the database.
+	 * @param task statuses
+	 * @return a list of all Tasks of a specific status in the database.
+	 */
+	public synchronized static List<projectObjects.Task> getAllTasksByStatus(String statuses)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+		Query q = null;
+		
+		char[] status_ids = statuses.toCharArray();
+		String taskQuery = "taskStatus_id = ";
+		
+		for(int i = 0; i < status_ids.length; i++)
+		{
+			taskQuery += status_ids[i] + " ";
+			
+			if(i != status_ids.length - 1) taskQuery += " or taskStatus_id = ";
+		}
+		
+		
+		
+		
+		
+		q = session.createQuery("from Task where " + taskQuery);
+		
+	    @SuppressWarnings("unchecked")
+		List<projectObjects.Task> list = q.list();
+        tx.commit();
+        
+        return list;
+	}
+	
 	
 	/**
 	 * This method returns all objects of a certain type from the database,
@@ -334,91 +376,7 @@ public class ProjectObjectService
 		return "";
 	}
 	
-	/**
-	 * This method returns all objects of a certain type from the database,
-	 * and formats them as a JSON array. This method is to be used to send information
-	 * to the front-end of this application.
-	 * 
-	 * @param domain the type of object to be returned.
-	 * @return A JSON array string representing all of the objects.
-	 */
-	public synchronized static String getProjectsAsJSON(String stages) throws NonUniqueObjectException
-	{
-        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
-        
-        List<String> projStages = Arrays.asList(stages.split(","));
-       
-        
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-		try
-		{
-		tx = session.beginTransaction();
-		}
-		catch(TransactionException ex)
-		{
-		
-			tx.commit();
-			return "ERROR";
-		}
-		Class<?> c;
-		
-		try 
-		{
-			c = Class.forName("projectObjects.Project");
-			
-			Criteria criteria = session.createCriteria(c);
-			char[] stage = stages.toCharArray();
-			boolean closed=false, onHold=false, canceled=false, cancelled=false, budgetary=false, proposal=false, active=false, 
-					closeout=false, billingCloseout =false;
-	
-			for(String current: projStages) {
-				if(current.equals("1")) proposal = true;
-				if(current.equals("2")) active = true;
-				if(current.equals("4")) closed = true;
-				if(current.equals("8")) budgetary = true;
-				if(current.equals("9")) onHold = true;
-				if(current.equals("15")) canceled = true;
-				if(current.equals("16")) billingCloseout = true;
-				if(current.equals("17")) closeout = true;
-				
-				
-			}
-			
-			Criterion sample;
-			if(!closed) {sample = Restrictions.sqlRestriction("stage_id != 4");
-			criteria.add(sample);}
-			if(!onHold) {sample = Restrictions.sqlRestriction("stage_id != 9");
-			criteria.add(sample);}
-			if(!billingCloseout) {sample = Restrictions.sqlRestriction("stage_id != 16");
-			criteria.add(sample);}
-			if(!cancelled) {sample = Restrictions.sqlRestriction("stage_id != 15");
-			criteria.add(sample);}
-			if(!budgetary) {sample = Restrictions.sqlRestriction("stage_id != 8");
-			criteria.add(sample);}
-			if(!proposal) {sample = Restrictions.sqlRestriction("stage_id != 1");
-			criteria.add(sample);}
-			if(!active) {sample = Restrictions.sqlRestriction("stage_id != 2");
-			criteria.add(sample);}
-			if(!closeout) {sample = Restrictions.sqlRestriction("stage_id != 17");
-			criteria.add(sample);}
-			
-			
-		
-	        List<?> list = criteria.list();
-	        
-	        
-	        tx.commit();
-	       
 
-	        return gson.toJson(list);
-		} 
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		return "";
-	}
 	
 	public synchronized static String getID(String domain) throws NonUniqueObjectException
 	{
@@ -511,32 +469,6 @@ public class ProjectObjectService
 	
 		return gson.toJson(o);
 	}
-	/**
-	public synchronized static Project getProjectByID(long projectID){
-		Session s = HibernateUtil.getSessionFactory().openSession();
-	    Transaction tx = null;
-	    try {
-
-	        tx = s.beginTransaction();        
-
-	        // here get object
-	        List<projectObjects.Project> list = s.createCriteria(projectObjects.Project.class).list();
-
-	        tx.commit();
-
-	    } catch (HibernateException ex) {
-	        if (tx != null) {
-	            tx.rollback();
-	        }            
-	       // Logger.getLogger("con").info("Exception: " + ex.getMessage());
-	        ex.printStackTrace(System.err);
-	    } finally {
-	        s.close(); 
-	    }
-		
-		
-	}
-	*/
 	
 	/**
 	 * this method is vital for any new fields that are added to the database
@@ -682,6 +614,18 @@ public class ProjectObjectService
 		tx.commit();
 
 		return id;
+	}
+	
+	public synchronized static void setNullProjectItemId(Long id)
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		Query setNullIdsForItem = session.createSQLQuery("update project set projectItem_id = NULL where projectItem_id = " + id +";");
+		setNullIdsForItem.executeUpdate();
+		tx.commit();
+		
+		
 	}
 	
 	/**
@@ -834,6 +778,8 @@ public class ProjectObjectService
 		
 		return "";
 	}
+	
+	
 
 	
 }

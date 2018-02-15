@@ -77,35 +77,35 @@ public class Report extends HttpServlet
 		String title = req.getParameter("title");
 		String type = req.getParameter("type");
 		
-		if(title != null && type != null && !type.equals("ChangeOrderStatuses")) 
+		if((title != null && type != null && !type.equals("ChangeOrderStatuses"))) 
 		{
 		
 
-		List<projectObjects.Project> projects = null;
-		try 
-		{
-			projects = QueryService.queryProjects(map);
-			System.out.println("Projects size = " +projects.size());
-		} 
-		catch (ParseException e) 
-		{
-			System.out.println("Something went wrong with parsing the parameters");
-			e.printStackTrace();
-		}
+			List<projectObjects.Project> projects = null;
+			try 
+			{
+				projects = QueryService.queryProjects(map);
+				System.out.println("Projects size = " +projects.size());
+			} 
+			catch (ParseException e) 
+			{
+				System.out.println("Something went wrong with parsing the parameters");
+				e.printStackTrace();
+			}
+			
 		
-	
-				
-		//System.out.println(req.getParameter("onGoing"));
+					
+			//System.out.println(req.getParameter("onGoing"));
+			
+			System.out.println(title);
+					
+			
+			List<String> shownFields = convertStringToList(req.getParameter("shownFields"));
+			shownFields.toString();
+			
+			//Send HTML table of projects to front end
 		
-		System.out.println(title);
-				
-		
-		List<String> shownFields = convertStringToList(req.getParameter("shownFields"));
-		shownFields.toString();
-		
-		//Send HTML table of projects to front end
-	
-		out.println(generateProjectReport(projects, title, shownFields ));
+			out.println(generateProjectReport(projects, title, shownFields ));
 		} 
 		else if(type != null)
 		{
@@ -117,7 +117,7 @@ public class Report extends HttpServlet
 	            type = "Task Report";
 	            tasks = acquireSpecificTasks(req);
 								
-	            String[] taskFields = {"warehouse","task_title","task_assignee","task_description","task_created_date",
+	            String[] taskFields = {"warehouse","task_item","task_title","task_assignee","task_description","task_created_date",
                 "task_due_date", "task_status", "task_priority","task_notes"};
 				
 				List<String> shownFields = new ArrayList<>();
@@ -219,10 +219,11 @@ public class Report extends HttpServlet
 	public synchronized List<projectObjects.Task> acquireProperTasks(HttpServletRequest req){
 		String assignee_id = req.getParameter("task_assignee");
 		String status = req.getParameter("task_status");
+		String statuses = req.getParameter("task_statuses");
 		List<projectObjects.Task> tasks = null;
 		
-		
-		if(assignee_id == null) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
+		if(statuses != null) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksByStatus(statuses);
+		else if(assignee_id == null) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		else if(assignee_id.equals("all") && status.equals("all")) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		else tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, status);
 		

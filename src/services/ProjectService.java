@@ -118,6 +118,38 @@ public class ProjectService extends ProjectObjectService
 
 	}
 	
+	/**
+	 * @param projID
+	 * @param parameters
+	 */
+	public synchronized static void removeEquipment(Long projID, Long equipmentID)  throws ClassNotFoundException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	
+        Iterator<projectObjects.NewEquipment> iter = currentProject.getProjEquipment().iterator();
+        while(iter.hasNext()) {
+        	long id = iter.next().getId();
+        	if(id == equipmentID) {
+        		System.out.println("REMOVED THE EQUIPMENT FROM PROJECT: " + equipmentID);
+        		iter.remove();
+        	}
+        }
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+	}
+	
 	
 	
 
@@ -267,20 +299,6 @@ public class ProjectService extends ProjectObjectService
 		return g.toJson(map);
 	}
 	
-	/**
-	 * This method gets all of the projects
-	 * @return A string representing a JSON array containing this information
-	 */
-	public synchronized static String getAllProjectsWithStageAsJson(String stages)
-	{
-		Gson g = new Gson();
-		HashMap<String, String> map = new HashMap<String, String>();
-
-		map.put("projects", ProjectObjectService.getProjectsAsJSON(stages));
-
-
-		return g.toJson(map);
-	}
 	
 	/**
 	 * This method gets all of the tasks

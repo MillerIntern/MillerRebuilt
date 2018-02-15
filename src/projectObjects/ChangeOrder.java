@@ -32,7 +32,7 @@ public class ChangeOrder extends ProjectObject
 	private Date submittedDate;
 	private Date approvedDate;
 	
-	private String submittedTo;
+	private String customerCOPnum;
 	
 	private String briefDescription;
 	private String notes;
@@ -55,7 +55,7 @@ public class ChangeOrder extends ProjectObject
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
 					   String briefDescription, String notes, double cost, double sell, String type,
-					   String submittedTo, String subCO, String title, String invoiceNumber)
+					   String customerCOPnum, String subCO, String title, String invoiceNumber)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -66,10 +66,10 @@ public class ChangeOrder extends ProjectObject
 		this.briefDescription = briefDescription;
 		this.notes = notes;
 		this.cost = cost;
-		this.submittedTo = submittedTo;
+		this.customerCOPnum = customerCOPnum;
 		this.subCO = subCO;
 		this.sell = sell;
-		this.setType(type);
+		this.type = type;
 		this.title = title;
 		this.invoiceNumber = invoiceNumber;
 	}
@@ -88,7 +88,7 @@ public class ChangeOrder extends ProjectObject
 		this.cost = 0;
 		this.sell = 0;
 		this.subCO = null;
-		this.submittedTo = null;
+		this.customerCOPnum = null;
 		this.title = null;
 		this.invoiceNumber = null;
 	}
@@ -204,11 +204,11 @@ public class ChangeOrder extends ProjectObject
 	}
 
 	public synchronized String getSubmittedTo() {
-		return submittedTo;
+		return customerCOPnum;
 	}
 
 	public synchronized void setSubmittedTo(String submittedTo) {
-		this.submittedTo = submittedTo;
+		this.customerCOPnum = submittedTo;
 	}	
 	
 	public synchronized String getTitle() {
@@ -226,4 +226,14 @@ public class ChangeOrder extends ProjectObject
 	public synchronized void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
+	
+	public synchronized String getCustomerCOPnum() {
+		return customerCOPnum;
+	}
+	
+	public synchronized void setCustomerCOPnum(String customerCOPnum) {
+		this.customerCOPnum = customerCOPnum;
+	}
+	
+	
 }

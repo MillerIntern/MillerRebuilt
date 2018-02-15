@@ -476,11 +476,6 @@ public class Project extends HttpServlet
 			
 			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
 		}
-		else if(action.equals("getProjectsWithStage")){
-			System.out.println("getting projects of certain stages!");
-			String stages = parameters.get("stages");
-			response = ProjectService.getAllProjectsWithStageAsJson(parameters.get("stages"));
-		}
 		else if(action.equals("getManager"))
 		{
 			response = getManager(req);
@@ -523,7 +518,31 @@ public class Project extends HttpServlet
 			}
 			
 		}
-		
+		else if(action.equals("deleteEquipment"))
+		{
+			
+			System.out.println("Deleting Equipment");
+			
+			String equipmentToDelete = parameters.get("equipmentID");
+			String associatedProjectID = parameters.get("projectID");
+			
+			Long equipmentID = Long.parseLong(equipmentToDelete);
+			Long projectID = Long.parseLong(associatedProjectID);
+			
+			try {
+				ProjectService.removeEquipment(projectID , equipmentID);
+				ProjectService.delete(equipmentID , "NewEquipment");
+				response = "DELETED";
+				//PUT BACK CLASS NOT FOUND EXCEPTION
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			response = "DELETED EQUIPMENT";
+		}
 		else if(action.equals("getProjectManagers"))
 		{
 			System.out.println("Gettng Names of All Project Managers");

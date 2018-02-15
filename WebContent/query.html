@@ -135,6 +135,17 @@
 	                                 
                 </div> 
                 
+               <div style="display: none" class="taskStatusGroup inner-param-field">
+                	<span>Task Statuses</span>
+                	 <input type = "checkbox" value="All" onclick="toggleTaskStatus('All')"> All: &nbsp;&nbsp;</input>
+                	 <input type = "checkbox" value="1" onclick="toggleTaskStatus('1')"> Open &nbsp;&nbsp;</input>
+                	 <input type = "checkbox" value="2" onclick="toggleTaskStatus('2')"> Completed &nbsp;&nbsp;</input>
+                	 <input type = "checkbox" value="3" onclick="toggleTaskStatus('3')"> Closed &nbsp;&nbsp;</input>
+	                 <br><br>
+	                 <button id="taskStatusButton" class = "btn btn-success btn-block" onclick="generateTaskReport('TASK')">Generate Task Report </button>	
+	                                 
+                </div> 
+                
                 <br><br>
 	            
 	  

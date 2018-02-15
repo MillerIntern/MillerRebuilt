@@ -9,11 +9,15 @@
 		<script type="text/javascript" src="js/global.js"></script>
 		<script type="text/javascript" src="js/additions.js"></script>
 		<script type="text/javascript" src="js/contentControl.js"></script>
+		<script src="js/chosen.jquery.min.js"></script>
 
-
-        <link href="css/theme/currentTheme/projectManager.css" type="text/css" rel="stylesheet" />
         <link href="css/bootstrap.min.css" rel="stylesheet">
-         <link href="css/additions.css" rel="stylesheet">
+        <link href="css/additions.css" rel="stylesheet">
+        <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
+ 	    <link href="css/style.css" rel="stylesheet">
+         
+         
+         
                 
 		<title>Miller Construction Site</title>
 		<meta charset="UTF-8">
@@ -87,7 +91,7 @@
 <br>
 
 <div class="container">
-	<ul class="tabs">
+	<ul class="tabs categoriesToEdit">
 		<li class="tab-link current" data-tab="warehouse">Warehouse</li>
 		<li class="tab-link" data-tab="item">Project Item</li>
 		<li class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
@@ -127,50 +131,106 @@
 		</table>
 		<button onclick="createWarehouse()">Create New Warehouse</button>		
 	</div>
-	<div id="item" class="tab-content">
+	<div id="item" class="tab-content editable">
 		<table>
 			<tr>
 				<td>Item</td>
-				<td>        
+				<td>    
+				    <select class = "projectObjectDropdown" id = "projectItemDropdown">
+					</select>      
 				</td>
 			</tr>
-			<tr>
+			<tr class = "duplicateRemoval" style = "display : none">
+				<td>Duplicate Item To Remove</td>
+				<td>    
+				    <select class = "duplicateRemovalDropdown" id = "duplicateProjectItemDropdown">
+				    	<option selected disabled id = "defaultOption">Select duplicate item</option>
+					</select>      
+				</td>
+			</tr>
+			<tr class = "editingRow">
 				<td>Name:</td>        					
-				<td><input id="projectItem" type="text"></td>
+				<td><input class = "editingField name" id="projectItem" type="text" style = "width : 300px"></td>
 			</tr>
 		</table>
-		<button onclick="createItem()">Create New Item</button>		
+		<button class = "btn btn-primary makeChanges" onclick="makeChanges()">Make Changes</button>		
+		
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
+			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
+		</div>
 	</div>
-	<div id="subcontractor" class="tab-content">
+	<div id="subcontractor" class="tab-content editable">
 		<table>
 			<tr>
 				<td>Subcontractor</td>
-				<td>        
+				<td>    
+					<select id = "subcontractorDropdown" class = "projectObjectDropdown">
+					</select>    
 				</td>
 			</tr>
-			<tr>
-				<td>Name:</td>        					
-				<td><input id="subcontractorName" type="text"></td>
+			<tr class = "duplicateRemoval" style = "display : none">
+				<td>Duplicate Subcontractor To Remove</td>
+				<td>    
+				    <select id = "duplicateSubcontractorDropdown" class = "duplicateRemovalDropdown">
+				    	<option selected disabled id = "defaultOption">Select duplicate subcontractor</option>
+					</select>      
+				</td>
 			</tr>
-		    <tr>
+			<tr class = "editingRow">
+				<td>Name:</td>        					
+				<td><input class = "editingField name" id="subcontractorName" type="text" style = "width : 300px"></td>
+			</tr>
+		    <tr class = "editingRow">
 				<td>Email:</td>        					
-				<td><input id="subcontractorEmail" type="text"></td>
+				<td><input class = "editingField email" id="subcontractorEmail" type="text" style = "width : 300px"></td>
 			</tr>
 		</table>
-		<button onclick="createSubcontractor()">Add Subcontractor</button>		
+		
+		<br>
+		
+		<button class = "btn btn-primary makeChanges" onclick="makeChanges()">Make Changes</button>	
+	
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
+			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
+		</div>	
 	</div>
-	<div id="equipmentSupplier" class="tab-content">
+	<div id="equipmentSupplier" class="tab-content editable">
 		<table>
 			<tr>
-			<td>Equipment Supplier</td><td></td>
+			<td>Equipment Supplier</td>
+			<td>
+				<select id = "supplierDropdown" class = "projectObjectDropdown">
+			    </select> 
+			</td>
 			</tr>
-			<tr>
+			<tr class = "duplicateRemoval" style = "display : none">
+				<td>Duplicate Equipment Supplier To Remove</td>
+				<td>    
+				    <select id = "duplicateEquipmentSupplierDropdown" class = "duplicateRemovalDropdown">
+				    	<option selected disabled id = "defaultOption">Select duplicate equipment supplier</option>
+					</select>      
+				</td>
+			</tr>
+			<tr class = "editingRow">
 			<td>Name:</td>
-			<td><input id="supplier" type="text"></td>
+			<td><input id="supplier" type="text" class = "editingField name" style = "width : 300px"></td>
 			</tr>
 		</table>
-		<button onclick="createSupplier()">Create New Equipment Supplier</button>		
-	</div>	
+		
+		<button class = "btn btn-primary makeChanges" onclick="makeChanges()">Make Changes</button>		
+		
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
+			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
+		</div>	</div>	
 	<div id="personTab" class="tab-content">
 		<table>
 			<tr>

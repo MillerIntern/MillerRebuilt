@@ -59,8 +59,8 @@ public class ChangeOrderFiller
 		co.setMcsCO(params.get("mcsCO"));
 		co.setType(params.get("customerCO"));
 		co.setSubCO(params.get("subCO"));
-		co.setSubmittedTo(params.get("submittedTo"));
 		co.setTitle(params.get("title"));
 		co.setInvoiceNumber(params.get("invoiceNumber"));
+		co.setCustomerCOPnum(params.get("customerCOPnum"));
 	}
 }

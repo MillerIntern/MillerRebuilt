@@ -96,6 +96,7 @@ let taskAssigneeType = "EMPLOYEE";
 let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
 let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 let TASK_ACTION = "createTask";
+let CHANGE_ORDER_TYPES = new Array();
 
 
 
@@ -847,7 +848,7 @@ function saveProject_CLOSEOUT()
 			},
 			success:function(data){
 				updateFrontEnd();			
-				getProject_PROJECT_MANAGER(projectID);
+				getProject_PROJECT_MANAGER(projectID , 1);
 				alert('Project Saved');
 				console.log(data);
 				//UPDATE CLOSEOUT SUMMARY
@@ -865,7 +866,7 @@ function saveProject_CLOSEOUT()
 				alert('Project Saved');
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 				//UPDATE CLOSEOUT SUMMARY
-				getProject_PROJECT_MANAGER(projectID);
+				getProject_PROJECT_MANAGER(projectID , 1);
 				goToProjectManager();
 
 			       //alert("Status: " + textStatus); 
@@ -961,6 +962,7 @@ function viewTasks() {
  * @returns
  */
 function goToFindProject() {
+	clearPermitsAndInspectionsOverview();
 	updateFrontEnd();
 	switch(currentDivLocation){
 		case "projectData":
@@ -1002,6 +1004,8 @@ function goToFindProject() {
 	$(".editProject").hide();
 	$("#findProject").show();
 	
+	
+	
 }
 
 /**
@@ -1018,7 +1022,7 @@ function goToProjectManager() {
 	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
 	switch(currentDivLocation){
 		case "projectData":
-			getProject_PROJECT_MANAGER(projectID);
+			getProject_PROJECT_MANAGER(projectID , 1);
 			$('#projectData').find('.info-tab').removeClass('active');
 			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
 			$('#projectData').find('#generalInformation').addClass('active');
@@ -1027,7 +1031,7 @@ function goToProjectManager() {
 			$('#projectManager').find('#projectInformation').addClass('active');
 			break;
 		case "permitData":
-			getProject_PROJECT_MANAGER(projectID);
+			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#permitData').find('.info-tab').removeClass('active');
 			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
 			let activeTab = $('#projectManager').find('.nav-tabs > li.active').id;
@@ -1037,7 +1041,7 @@ function goToProjectManager() {
 			$('#projectManager').find('#'+activeTab).addClass('active');
 			break;
 		case "closeoutData":
-			getProject_PROJECT_MANAGER(projectID);
+			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#closeoutData').find('.info-tab').removeClass('active');
 			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
 			$('#closeoutData').find('#closeout').addClass('active');
@@ -1046,7 +1050,7 @@ function goToProjectManager() {
 			$('#projectManager').find('#closeout').addClass('active');
 			break;
 		case "changeOrder":
-			getProject_PROJECT_MANAGER(projectID);
+			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#changeOrder').find('.info-tab').removeClass('active');
 			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
 			$('#changeOrder').find('#changeOrderTab').addClass('active');
@@ -1063,7 +1067,7 @@ function goToProjectManager() {
 			$('#saveButton').removeClass('active');
 			break;
 		case "equipmentDiv":
-			getProject_PROJECT_MANAGER(projectID);
+			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#equipment').addClass('active');
 			break;
 			
@@ -1203,8 +1207,8 @@ function getProjectEnums_PERMIT()
 		success: function(data)
 		{
 			fillDropdowns_PERMIT(data);
-			if(edit == true)
-			getProject_PERMIT();
+			if(EDIT_INTENTION == true)
+				getProject_PERMIT();
 		}
 	});
 }
@@ -1520,7 +1524,7 @@ function saveProject_PERMIT()
 				console.log(data);
 				updateFrontEnd();
 				alert('Save Complete!');
-				getProject_PROJECT_MANAGER(projectID);
+				getProject_PROJECT_MANAGER(projectID , 1);
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 				$('#permitData').find('.active').removeClass('active');
 				$('#permitData').find('#buildingPermit').addClass('active')
@@ -1537,7 +1541,7 @@ function saveProject_PERMIT()
 			error: function(data)
 			{
 				console.log(data);
-				getProject_PROJECT_MANAGER(projectID);
+				getProject_PROJECT_MANAGER(projectID , 1);
 				alert('Save Complete!');
 				/*
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
@@ -1632,7 +1636,9 @@ $(document).ready(function()
 	
 	$('#projectData').find("#initiatedDate").datepicker();
 	$('#projectData').find("#surveyDate").datepicker();
-	$('#projectData').find("#costcoDate").datepicker();
+	$('#projectData').find("#proposalDueDate").datepicker();
+	$('#projectData').find("#budgetaryDueDate").datepicker();
+	$('#projectData').find("#budgetarySubmittedDate").datepicker();
 	$('#projectData').find("#proposalDate_pd").datepicker();
 	$('#projectData').find("#startDate").datepicker();
 	$('#projectData').find("#scheduledTurnover").datepicker();
@@ -1672,6 +1678,7 @@ function getProjectEnums_PROJECT_DATA(edit)
 		{
 			console.log(data);
 			console.log("about ot fill dropdowns");
+			
 			fillDropdowns_PROJECT_DATA(data);
 			
 			//PAGETYPE_PROJECT_DATA = getParameterByName("type");	
@@ -1811,7 +1818,9 @@ function saveProject_PROJECT_DATA() {
 	// scheduling
 	var initiated = $('#projectData').find("#initiatedDate").val();
 	var survey = $('#projectData').find("#surveyDate").val();
-	var costco = $('#projectData').find("#costcoDate").val();
+	var budgetaryDue = $('#projectData').find("#budgetaryDueDate").val();
+	var budgetarySubmitted = $('#projectData').find("#budgetarySubmittedDate").val();
+	var costco = $('#projectData').find("#proposalDueDate").val();
 	var proposalDate = $('#projectData').find("#proposalDate_pd").val();
 	var startDate = $('#projectData').find("#startDate").val();
 	var scheduledTurnover = $('#projectData').find("#scheduledTurnover").val();
@@ -1903,6 +1912,8 @@ function saveProject_PROJECT_DATA() {
 				'refrigNotes': refrigNotes,
 				'cost': cost,
 				'customerNumber': customerNumber,
+				'budgetaryDue' : budgetaryDue , 
+				'budgetarySubmitted' : budgetarySubmitted,
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
@@ -2199,7 +2210,7 @@ function getProject_PROJECT_DATA()
 */
 function fillForm_PROJECT_DATA(data)
 {
-	console.log(data);
+	console.log("PROJECT DATA" , data);
 	var json = (data);	
 	
 	$('#projectData').find("#mcsNumber").val(json.McsNumber);
@@ -2219,7 +2230,9 @@ function fillForm_PROJECT_DATA(data)
 	
 	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);;
 	$('#projectData').find("#surveyDate").val(json.siteSurvey);
-	$('#projectData').find("#costcoDate").val(json.costcoDueDate);
+	$('#projectData').find("#budgetaryDueDate").val(json.budgetaryDue);
+	$('#projectData').find("#budgetarySubmittedDate").val(json.budgetarySubmitted);
+	$('#projectData').find("#proposalDueDate").val(json.proposalDue);
 	$('#projectData').find("#proposalDate_pd").val(json.proposalSubmitted);
 	$('#projectData').find("#startDate").val(json.scheduledStartDate);
 	$('#projectData').find("#scheduledTurnover").val(json.scheduledTurnover);
@@ -2316,7 +2329,7 @@ $(document).ready(function () {
  * @params project_id
  * @returns
  */
-function getProject_PROJECT_MANAGER(project_id) {
+function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 	console.log("ID = ", project_id);
     projectID = project_id;
 	if (projectID !== null) {
@@ -2334,7 +2347,7 @@ function getProject_PROJECT_MANAGER(project_id) {
 
 				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
 				
-				getTasks();
+				getTasks(stopServerCalls);
 			}, error: function (data) {
 				alert('Server Error!');
 			}
@@ -2527,6 +2540,7 @@ function addEquipment () {
 	$('.projectEdit').show();
 	$('.projectNavigator').show();
 	$('#equipmentDiv').show();
+	$('#deleteEquipment').hide();
 	
 	getDropdownInfo_EQUIP();
 
@@ -2557,7 +2571,7 @@ function fillProjectInformation (data) {
  */
 function fillChangeOrders (data) {
 	clearChangeOrderTable();
-	console.log("CALLED FILL CO");
+	console.log("CALLED FILL CO" , data);
 	if(data) CHANGE_ORDERS = data.changeOrders;
 	let changeOrders = CHANGE_ORDERS;
 	
@@ -2571,14 +2585,7 @@ function fillChangeOrders (data) {
 		
 	});
 	console.log("CO's = ", changeOrders);
-	
-	/*
-	for(var i = 0; i < changeOrders.length; i++)
-	{
-		changeOrders[i].mcsCO = i + 1;
-	}
-	*/
-	
+		
 	
 	for (var i = 0; i < changeOrders.length; i++) {
 		let changeOrder = changeOrders[i];
@@ -2603,20 +2610,46 @@ function fillChangeOrders (data) {
 		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
 		
 		var title = document.createElement('td');
-		title.width = "13%";
+		title.width = "10%";
 		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
 		else  title.appendChild(document.createTextNode("---"));
 		
 		var briefDescription = document.createElement('td');
+		briefDescription.width = "20%";
 		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
 		
 		var status = document.createElement('td');
-		status.width = "10%";
+		status.width = "9%";
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
 		var subNames = document.createElement('td');
-		subNames.width = "15%";
+		subNames.width = "12%";
 		subNames.appendChild(document.createTextNode(changeOrder.subNames));
+		
+		var type = document.createElement('td');
+		type.width = "10%";
+		type.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
+		
+		var submittedDate = document.createElement('td');
+		submittedDate.width = "8%";
+		if(changeOrder.submittedDate)
+			submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
+		else submittedDate.appendChild(document.createTextNode("---"));
+		
+		var cost = document.createElement('td');
+		cost.width = "5%";
+		if(changeOrder.cost)
+			cost.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.cost)));
+		else 
+			cost.appendChild(document.createTextNode("---"));
+
+		
+		var sell = document.createElement('td');
+		sell.width = "5%";
+		if(changeOrder.sell)
+			sell.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.sell)));
+		else 
+			sell.appendChild(document.createTextNode("---"));		
 		
 		var notes = document.createElement('td');
 		notes.appendChild(document.createTextNode(changeOrder.notes));
@@ -2632,6 +2665,10 @@ function fillChangeOrders (data) {
 		tableRow.appendChild(briefDescription);
 		tableRow.appendChild(status);
 		tableRow.appendChild(subNames);
+		tableRow.appendChild(type);
+		tableRow.appendChild(submittedDate);
+		tableRow.appendChild(cost);
+		tableRow.appendChild(sell);
 		tableRow.appendChild(notes);
 		tableRow.ondblclick = function() {
 			goToChangeOrder(1);
@@ -2640,6 +2677,17 @@ function fillChangeOrders (data) {
 	}
 }
 
+function convertChangeOrderType(type , co) {
+	if(!type) return "---";
+	console.log("CO_TYPES = " , CHANGE_ORDER_TYPES , co);
+	for(var i = 0; i < CHANGE_ORDER_TYPES.length; i++) {
+		console.log( " TYPE = " , type , CHANGE_ORDER_TYPES[i]);
+		if(CHANGE_ORDER_TYPES[i].id == type)
+			return CHANGE_ORDER_TYPES[i].name;
+	}
+	
+	return "---";
+}
 
 /**
  * This function fills out the information on the page for the permits and inspections
@@ -2648,6 +2696,7 @@ function fillChangeOrders (data) {
  */
 function fillPermitsAndInspections (data) {
 	let tabData = data.permits;
+	
 	
 	// permits 
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
@@ -2684,6 +2733,17 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
+}
+
+function clearPermitsAndInspectionsOverview () {
+	
+	$('.permitTableData').each(function(i , obj){
+		obj.innerHTML = "";
+	});
+	
+	$('.inspectionTableData').each(function(i , obj){
+		obj.innerHTML = "";
+	});
 }
 
 
@@ -3156,6 +3216,7 @@ function editSelectedEquipment (source) {
 	$('.projectEdit').show();
 	$('.projectNavigator').show();
 	$('#equipmentDiv').show();
+	$('#deleteEquipment').show();
 	
 	getDropdownInfo_EQUIP();
 }
@@ -3647,9 +3708,13 @@ function getSearchCriteria() {
 			'person': true,
 			'type': true,
 			'status': true,
+			'changeordertype' : true ,
 		}, success: function(data) {
 			
+			CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
+
 			fillDropdowns_FIND_PROJECT(data);
+			
 			
 			$('#paramID1').val('Warehouse');
 			$('#paramVal1').empty();
@@ -4158,8 +4223,15 @@ function filterProjects () {
 						navigateTo(projectListing);
 					}
 
-					listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
+					//if(json[k].warehouse.city.name == "APANA") 
+					if(json[k].warehouse && json[k].warehouse.city && json[k].warehouse.city.name && json[k].warehouse.city.name.includes("APANA")) {
+						listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
+						json[k].warehouse.region;
+					}
+					else {
+						listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
 											json[k].warehouse.warehouseID;
+					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;
@@ -4195,8 +4267,14 @@ function filterProjects () {
 						navigateTo(projectListing);
 					}
 
-					listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
+					if(json[k].warehouse && json[k].warehouse.city && json[k].warehouse.city.name && json[k].warehouse.city.name.includes("APANA")) {
+						listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
+						json[k].warehouse.region;
+					}
+					else {
+						listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
 											json[k].warehouse.warehouseID;
+					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;
@@ -4389,7 +4467,7 @@ function getDropdownInfo_CHANGE_ORDER()
 			'domain': 'project',
 			'action': 'getSpecificObjects',		
 			'changeordertype': true,
-			'changeorderstatus': true
+			'changeorderstatus': true,
 		},
 		success: function(data)
 		{
@@ -4445,13 +4523,15 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#sell").val(changeOrderToEdit.sell);
 	
 	$('#changeOrder').find("#status").val(changeOrderToEdit.status);
-	$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
+	//$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
 	$('#changeOrder').find("#submittedDate").val(changeOrderToEdit.submittedDate);
 	$('#changeOrder').find("#approvedDate").val(changeOrderToEdit.approvedDate);
     formatRelativeTextAreas(changeOrderToEdit.notes , "notes", "changeOrder");
 	$('#changeOrder').find("#notes").val(changeOrderToEdit.notes);
 	$('#changeOrder').find('#title').val(changeOrderToEdit.title);
 	$('#changeOrder').find('#invoiceNumber').val(changeOrderToEdit.invoiceNumber);
+	$('#changeOrder').find('#customerCOPnum').val(changeOrderToEdit.customerCOPnum);
+
 	
 	}
 }
@@ -4478,7 +4558,7 @@ function cleanNumericValueForSaving(num)
  */
 function cleanNumericValueForDisplaying(num)
 {
-	console.log("BEFORE: ", num);
+	//console.log("BEFORE: ", num);
 	var str = num.toString();
 	
 	var price, cleanPrice;
@@ -4490,7 +4570,7 @@ function cleanNumericValueForDisplaying(num)
 	if(str.indexOf(".") != -1) 
 	{
 		price = str.split(".");
-		console.log("PRICE = ", price);
+		//console.log("PRICE = ", price);
 		dollars = price[0];
 		cents = price[1];
 		if(cents.length == 1) cleanCents = cents + "0";
@@ -4517,7 +4597,7 @@ function cleanNumericValueForDisplaying(num)
 		}
 		
 		cleanPrice = correctOrder + "." + cleanCents;
-		console.log("AFTER: ", cleanPrice);
+		//console.log("AFTER: ", cleanPrice);
 		return cleanPrice;
 	} 
 	else
@@ -4530,14 +4610,14 @@ function cleanNumericValueForDisplaying(num)
 			dollarArray.push(str[i]);
 			if(commaCount % 3 == 0 && i != 0) dollarArray.push("-");
 		}
-		console.log("D ARRAY = ", dollarArray);
+		//console.log("D ARRAY = ", dollarArray);
 		cleanDollars = dollarArray.toString();
 
 		while(cleanDollars.indexOf(",") != -1) {
 			cleanDollars = cleanDollars.replace(",","");
 		}
 		
-		console.log("CLEAN DOLLARS = ", cleanDollars);
+		//console.log("CLEAN DOLLARS = ", cleanDollars);
 		
 		while(cleanDollars.indexOf("-") != -1) {
 		cleanDollars = cleanDollars.replace("-",",");
@@ -4549,7 +4629,7 @@ function cleanNumericValueForDisplaying(num)
 		}
 		
 		cleanPrice = correctOrder;
-		console.log("AFTER: ", cleanPrice);
+		//console.log("AFTER: ", cleanPrice);
 		return cleanPrice;
 		
 	}
@@ -4679,7 +4759,6 @@ function saveProject_CHANGE_ORDER()
 	var subCO = $('#changeOrder').find("#subCO").val();
 	var subNames = $('#changeOrder').find("#subNames").val();
 	var status = $('#changeOrder').find("#status").val();
-	var submittedTo = $('#changeOrder').find("#submittedTo").val();
 	
 	var briefDescription = $('#changeOrder').find("#briefDescription").val();
 	var notes = $('#changeOrder').find("#notes").val();
@@ -4692,6 +4771,7 @@ function saveProject_CHANGE_ORDER()
 	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
 	
 	var invoiceNumber = $('#changeOrder').find("#invoiceNumber").val();
+	var customerCOPnum = $('#changeOrder').find("#customerCOPnum").val();
 	
 	var dates = [proposalDate, submittedDate, approvedDate];
 	
@@ -4738,13 +4818,13 @@ function saveProject_CHANGE_ORDER()
 				'subCO': subCO,
 				'subNames': subNames,
 				'status': status,
-				'submittedTo': submittedTo,
 				'briefDescription': briefDescription,
 				'notes': notes,
 				'cost': cost,
 				'sell': sell,
 				'title':title,
-				'invoiceNumber' : invoiceNumber
+				'invoiceNumber' : invoiceNumber,
+				'customerCOPnum' : customerCOPnum ,
 			},
 			success:function(data){
 				
@@ -4964,13 +5044,33 @@ function preparePage() {
 		EDIT_INTENTION = true;
 		console.log("PROJECT ID = ", id);
 		currentDivLocation = "projectManager";
-		getProject_PROJECT_MANAGER(id);
-		$('#projectManager').show();
-		$('.projectNavigator-projectManager').show();
-		PAGE_ENTRY = "fromTask";
-		if(from) {
-			PAGE_ENTRY = from;
-		}
+		
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'getSpecificObjects',		
+				'changeordertype': true,
+			},
+			success: function(data)
+			{
+				CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
+				console.log("CO TYPES = " , CHANGE_ORDER_TYPES);
+				getProject_PROJECT_MANAGER(id);
+				$('#projectManager').show();
+				$('.projectNavigator-projectManager').show();
+				PAGE_ENTRY = "fromTask";
+				if(from) {
+					PAGE_ENTRY = from;
+				}
+			}
+		
+		});
+		
+	
+		
 	} else {
 		$('.projectNavigator').show();
 		$('.projectNavigator-projectFinder').hide();
@@ -5050,12 +5150,11 @@ function getProject_EQUIP()
 				
 				if(PAGETYPE_EQUIP == 'edit')
 				{
+					$('#equipmentForm #poNum').val('');
 					//EQUIPMENT_ID_EQUIP = getParameterByName("equipmentID");
 					PROJECT_DATA_EQUIP = data;
 					fillTabs_EQUIP(PROJECT_DATA_EQUIP);
-	
-				} else {
-					establishPOnum(PROJECT_DATA_EQUIP);
+					
 				}
 				//getTasks();
 			}
@@ -5220,20 +5319,39 @@ function clearEquipmentFormValues() {
 	$('#equipmentForm').find('.equipment-select').val('default');
 }
 
-function establishPOnum(json) {
-	
-	console.log("EQUIP PO JSON: " , json);
-	var highPOnum = 1;
-	if(json.projEquipment) {
-		if(json.projEquipment.length > 0) {		
-			for(var i = 0; i < json.projEquipment.length; i++)
-				if(json.projEquipment[i].poNum > highPOnum)
-					highPOnum = json.projEquipment[i].poNum;
-		}
-		if(json.projEquipment.length > 0) highPOnum++;
+function deleteEquipment() {
+	if(!selectedEquipment || !PROJECT_DATA) {
+		alert("No equipment selected to delete!");
+		return;
 	}
-	$('#equipmentForm #poNum').val(highPOnum);
+	
+	if(!confirm("Are you sure you want to delete this equipment?"))
+		return;
+	
+	console.log("SELECTED EQUIPMENT " , selectedEquipment , PROJECT_DATA);
 
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data:
+		{
+			'action' : 'deleteEquipment' ,
+			'equipmentID' : selectedEquipment ,
+			'projectID' : PROJECT_DATA.id ,
+		},
+		success:function(data){
+			alert('Deleted Equipment');
+			goToProjectManager();
+		},
+		error: function(data)
+		{
+			console.log("DATA = " , data);
+			alert('Deleted Equipment');
+			goToProjectManager();
+		}
+	});
+
+	
 	
 }
 

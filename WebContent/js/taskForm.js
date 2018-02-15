@@ -100,6 +100,12 @@ function getUserData () {
 		let severity = $('#taskCreationZone').find('#severity').val();
 		let notes = $('#taskCreationZone').find('#notes').val();
 		let type = document.getElementById('toggleTaskAssignee').value;
+		
+		let taskStatus = $('#taskCreationZone').find('#taskStatus').val();
+		if(taskStatus == "Open") taskStatus = 1;
+		else if(taskStatus == "Completed") taskStatus = 2;
+		else taskStatus = 3;
+		
 		console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
 		console.log("TYPE: ", type);
 		
@@ -120,6 +126,8 @@ function getUserData () {
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (!isValidInput([dueDate, initiatedDate])) return alert('Bad Dates');
+		
+		console.log("TASK STATUS " , taskStatus);
 		
 		let taskData = {
 			'title': title,
@@ -148,6 +156,7 @@ function getUserData () {
 				'assignee': assignee,
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
+				'status' : taskStatus,
 				'severity': severity,
 				'notes': notes,
 				'type' : type,

@@ -10,3 +10,158 @@
 	margin : auto;
 	width : 70%;
 }
+
+table tr{
+	background-color : white;
+}
+
+.container
+{
+	width: 90%;
+}
+
+ul.tabs
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    background-color: #ECF0FC;
+}
+ul.tabs li
+{
+    background-color: #ECF0FC;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'Raleway',sans-serif;
+    font-size: 20px; 
+    font-weight: 350;
+    transition: all 0.3s ease 0s;
+}
+
+ul.tabs li:last-child
+{
+    border-left: none;
+    border-right: 1.5px solid #555555;
+}
+
+ul.tabs li:hover:not(.current)
+{
+	-webkit-transition: ease-in-out all .4s;
+    background-color: #e3fbff;
+    
+}
+
+ul.tabs li.current
+{
+    background: white;
+    color: #222;
+}
+
+.tab-content
+{
+    display: none;
+    background: white;
+    padding: 15px;
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px; 
+}
+
+.tab-content.current
+{
+    display: inherit;
+}
+
+table
+{
+	border-collapse: collapse;
+	width: 100%; 
+}
+
+table, th, td
+{
+	border: 5px black;
+}
+
+td
+{
+	margin-left: 1%;
+	padding: 0px 4px;
+    
+}
+
+tr:first-child
+{
+	font-size: 20px;
+	height: 50px;
+}
+
+tr:not(:first-child)
+{
+	height: 40px;
+}
+
+tr:nth-child(even) 
+{
+	background-color: white;
+}
+
+tr:hover:not(:first-child)
+{
+	background-color: #7fb2c4;
+}
+
+button
+{
+	margin-top: 10px;
+	padding: 8px 8px;
+	font-family: 'Raleway',sans-serif;
+    font-size: 18px; 
+    background-color: #AAAAAA;
+}
+button:hover:not(:disabled)
+{
+	background-color: #ebedff; 
+	color: #2860B8;
+	-webkit-transition: ease-in-out all .2s;	
+}
+
+select, input, textarea
+{
+    font-family: 'Raleway',sans-serif;
+    font-size: 16px;
+}
+
+
+.projectIdentifier
+{
+	padding: 6px 5px;
+    background: #dAdAdA;
+	font-family: 'Raleway',sans-serif;
+    font-size: 20px;
+    border-top: 3px solid gray;
+    border-right: 1.5px solid gray;
+    border-bottom: 1.5px solid gray;
+    color: #222;
+    text-align:center;
+    -webkit-transition: all .75s ease;
+	-moz-transition: all .75s ease;
+	-ms-transition: all .75s ease;
+	-o-transition: all .75s ease;
+	transition: all .75s ease;
+
+}
+
+#deleteButton
+{
+	background-color: #B33A3A;
+	border-color: #C33838;
+	color: #DFDFDF;
+}
+
+#deleteButton:hover
+{
+	background-color: #CC3030;
+}
+

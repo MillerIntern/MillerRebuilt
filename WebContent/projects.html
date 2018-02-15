@@ -206,7 +206,7 @@
 					<li class="list-group-item project-info-list-item" id="general-info-item">General Info</li>
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
 					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
-					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>	
+					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>						
 				</ul>
 			</div> <!-- Project Information -->
 			<div class='info-tab' id='changeOrders'>
@@ -222,7 +222,20 @@
 				
 				<div id = "changeOrderTableDiv">
 				<table id='changeOrderTable' class='table'>				
-					<thead class="changeOrderTableHead"><tr><th width = 5%>CO #</th><th width = 13%>Title</th><th>Description</th><th width = 10%>Status</th><th width = 15%>Sub Name(s)</th><th>CO Notes</th></tr></thead>
+					<thead class="changeOrderTableHead">
+					  <tr>
+						<th width = 5%>CO #</th>
+						<th width = 13%>Title</th>
+						<th width = 20%>Description</th>
+						<th width = 9%>Status</th>
+						<th width = 12%>Sub Name(s)</th>
+						<th>Customer</th>
+						<th>Submit Date</th>
+						<th>Cost</th>
+						<th>Sell</th>
+						<th>CO Notes</th>
+					  </tr>
+					</thead>
 					<tbody>
 					</tbody>
 				</table>
@@ -235,28 +248,28 @@
 			<div class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr><th></th><th>Permit Stage</th><th>Permit Last Updated</th></tr>
-					<tr><td width = 25% class = "bold">Building Permit</td><td id='buildingPermit' class ="italics" width = 20%></td><td id='buildingPermitDate' class ="italics" width = 20%></td></tr>
-					<tr><td class = "bold">Roofing Permit</td><td id='roofingPermit' class ="italics"></td><td id='roofingPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Mechanical Permit</td><td id='mechanicalPermit' class ="italics"></td><td id='mechanicalPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Electrical Permit</td><td id='electricalPermit' class ="italics"></td><td id='electricalPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Plumbing Permit</td><td id='plumbingPermit' class ="italics"></td><td id='plumbingPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler Permit</td><td id='sprinklerPermit' class ="italics"></td><td id='sprinklerPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Alarm Permit</td><td id='fireAlarmPermit' class ="italics"></td><td id='fireAlarmPermitDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Low Voltage Permit</td><td id='lowVoltagePermit' class ="italics"></td><td id='lowVoltagePermitDate' class ="italics"></td></tr>
+					<tr><td width = 25% class = "bold">Building Permit</td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
+					<tr><td class = "bold">Roofing Permit</td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Mechanical Permit</td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Electrical Permit</td><td id='electricalPermit' class ="italics permitTableData"></td><td id='electricalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Plumbing Permit</td><td id='plumbingPermit' class ="italics permitTableData"></td><td id='plumbingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Permit</td><td id='sprinklerPermit' class ="italics permitTableData"></td><td id='sprinklerPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm Permit</td><td id='fireAlarmPermit' class ="italics permitTableData"></td><td id='fireAlarmPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage Permit</td><td id='lowVoltagePermit' class ="italics permitTableData"></td><td id='lowVoltagePermitDate' class ="italics permitTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr><th></th><th>Inspection Stage</th><th>Inspection Last Updated</th></tr>
-					<tr><td class = "bold">Building Inspection</td><td id='buildingInspection' class ="italics"></td><td id='buildingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Roofing Inspection</td><td id='roofingInspection' class ="italics"></td><td id='roofingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Mechanical Inspection</td><td id='mechanicalInspection' class ="italics"></td><td id='mechanicalInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Electrical Inspection</td><td id='electricalInspection' class ="italics"></td><td id='electricalInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Plumbing Inspection</td><td id='plumbingInspection' class ="italics"></td><td id='plumbingInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler Inspection</td><td id='sprinklerInspection' class ="italics"></td><td id='sprinklerInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Fire Alarm Inspection</td><td id='fireAlarmInspection' class ="italics"></td><td id='fireAlarmInspectionDate' class ="italics"></td></tr>
-					<tr><td class = "bold">Low Voltage Inspection</td><td id='lowVoltageInspection' class ="italics"></td><td id='lowVoltageInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Building Inspection</td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Roofing Inspection</td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Mechanical Inspection</td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Electrical Inspection</td><td id='electricalInspection' class ="italics inspectionTableData"></td><td id='electricalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Plumbing Inspection</td><td id='plumbingInspection' class ="italics inspectionTableData"></td><td id='plumbingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler Inspection</td><td id='sprinklerInspection' class ="italics inspectionTableData"></td><td id='sprinklerInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm Inspection</td><td id='fireAlarmInspection' class ="italics inspectionTableData"></td><td id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage Inspection</td><td id='lowVoltageInspection' class ="italics inspectionTableData"></td><td id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -335,6 +348,7 @@
 
 		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
 		<ul class="nav nav-tabs">
+
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
@@ -440,10 +454,18 @@
 		        <td class = "bold">Site Survey Date</td>
 		        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 		        </tr>
+				<tr>
+		        <td class = "bold">Budgetary Due Date</td>
+		        <td><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
+		        </tr>
 		
 		        <tr>
-		        <td class = "bold">Costco Due Date</td>
-		        <td><input type="text" id="costcoDate" placeholder="Select a Date"/></td>
+		        <td class = "bold">Budgetary Submitted Date</td>
+		        <td><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
+		        </tr>
+		        <tr>
+		        <td class = "bold">Proposal Due Date</td>
+		        <td><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
@@ -1509,9 +1531,9 @@
 		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order'>
 		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		      
-		     <!--    <li role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
-		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li>
-		       -->
+		         <!-- <li class = "adminContent" role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
+		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li> -->
+		       
 			</ul>
 		
 		    <!-- Closeout Documents Tab--> 
@@ -1564,7 +1586,7 @@
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td class="coLabel">Submitted To</td>
+		                <td class="coLabel">Customer</td>
 		 				
 		                <td>
 		                	<select class="closeout-input" id="customerCO">
@@ -1573,7 +1595,7 @@
 		                </td>   
 		            </tr>		           
 		            <tr>
-		                <td class="coLabel">Submitted Date</td>
+		                <td class="coLabel">Submit Date</td>
 		 
 		                <td>
 		                	<input type="text" id="submittedDate" />
@@ -1608,7 +1630,7 @@
 		            <tr>
 		                <td  class="coLabel">Customer COP #</td>
 		                <td>
-		                    <input type="text" id="submittedTo" />               
+		                    <input type="text" id="customerCOPnum" />               
 		                </td>
 		            </tr>
 		            <tr>
@@ -1715,6 +1737,7 @@
 	            	</td>
 	            </tr>
 	        </table>
+	       <button class = "adminContent btn btn-danger" id = "deleteEquipment" onclick = "deleteEquipment()"> DELETE </button>
 		</div>
 	    <!-- End Equipment Tab--> 
 		<div class='info-tab' id='saveButton'>

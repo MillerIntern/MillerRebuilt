@@ -2,6 +2,7 @@ package projectObjects;
 
 import java.util.Date;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,7 +49,11 @@ public class Project extends ProjectObject
 	
 	private Date siteSurvey;
 	
-	private Date costcoDueDate;
+	private Date budgetaryDue;
+	
+	private Date budgetarySubmitted;
+	
+	private Date proposalDue;
 	
 	private Date proposalSubmitted;
 	
@@ -103,7 +108,8 @@ public class Project extends ProjectObject
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
-			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes)
+			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
+			Date budgetaryDue , Date budgetarySubmitted)
 	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
@@ -112,7 +118,7 @@ public class Project extends ProjectObject
 		this.status = status;
 		this.projectInitiatedDate = projectInitiatedDate;
 		this.siteSurvey = siteSurvey;
-		this.costcoDueDate = costcoDueDate;
+		this.proposalDue = costcoDueDate;
 		this.proposalSubmitted = proposalSubmitted;
 		this.closeoutDetails = closeoutDetails;
 		this.setChangeOrders(changeOrders);
@@ -133,6 +139,8 @@ public class Project extends ProjectObject
 		this.permits = permits;
 		this.setProjEquipment(projEquipment);
 		this.managerNotes = managerNotes;
+		this.budgetaryDue = budgetaryDue;
+		this.budgetarySubmitted = budgetarySubmitted;
 
 	}
 	
@@ -146,7 +154,7 @@ public class Project extends ProjectObject
 		this.status = null;
 		this.projectInitiatedDate = null;
 		this.siteSurvey = null;
-		this.costcoDueDate = null;
+		this.proposalDue = null;
 		this.proposalSubmitted = null;
 		this.closeoutDetails = new CloseoutDetails();
 		this.permits = new Permits();
@@ -169,6 +177,8 @@ public class Project extends ProjectObject
 		this.permitApp = null;
 		this.DrawingsDue=null;
 		this.setProjEquipment(new HashSet<NewEquipment>());
+		this.budgetaryDue = null;
+		this.budgetarySubmitted = null;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -297,12 +307,12 @@ public class Project extends ProjectObject
 		this.siteSurvey = siteSurvey;
 	}
 
-	public synchronized Date getCostcoDueDate() {
-		return costcoDueDate;
+	public synchronized Date getProposalDue() {
+		return proposalDue;
 	}
 
-	public synchronized void setCostcoDueDate(Date costcoDueDate) {
-		this.costcoDueDate = costcoDueDate;
+	public synchronized void setProposalDue(Date costcoDueDate) {
+		this.proposalDue = costcoDueDate;
 	}
 
 	public synchronized Date getProposalSubmitted() {
@@ -311,6 +321,22 @@ public class Project extends ProjectObject
 
 	public synchronized void setProposalSubmitted(Date proposalSubmitted) {
 		this.proposalSubmitted = proposalSubmitted;
+	}
+	
+	public synchronized Date getBudgetarySubmitted() {
+		return budgetarySubmitted;
+	}
+
+	public synchronized void setBudgetarySubmitted(Date budgetarySubmitted) {
+		this.budgetarySubmitted = budgetarySubmitted;
+	}
+	
+	public synchronized Date getBudgetaryDue() {
+		return budgetaryDue;
+	}
+
+	public synchronized void setBudgetaryDue(Date budgetaryDue) {
+		this.budgetaryDue = budgetaryDue;
 	}
 
 	@ElementCollection

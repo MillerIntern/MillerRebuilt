@@ -18,6 +18,8 @@ let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 
 
 
+
+
 $(document).ready(function () {
     if(window.location.href.indexOf("taskReport.html") != -1) return;
 	$('#taskWell > span > .dueDate').datepicker({defaultDate: getToday()});
@@ -187,7 +189,7 @@ function getSubcontractors() {
 			console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
 			subcontractors = data.responseJSON;
 			if (data.responseJSON) {
-				createManagerQueue();
+				if(user.permission.id === 1) createManagerQueue();
 				createSubDropdown(data.responseJSON);
 			}
 
@@ -224,6 +226,7 @@ function createSubDropdown (json) {
 		else if(a.name > b.name) return 1;
 		return 0;
 	});
+	
 	for (var i = 0; i < json.length; i++) {
 		let option = document.createElement('option');
 		// when users store both username and name, access the user's name and username fields
@@ -243,25 +246,24 @@ function createSubDropdown (json) {
  * INNER FUNCTION CALLS: createTaskTable(), tasksByManager() 
  */
 function preparePageForUserStatus(){
-	 $('#taskSelector').chosen({ width: "210px" });
+	$('#taskSelector').chosen({ width: "210px" });
 	 $('#sortSelector').chosen({ width: "210px" });
 	 $('#sortOrder').chosen({ width: "210px" });
 
 	if (user.permission.id === 1) 
 	{
-		 document.getElementById("projectManagerDropdown").style.display = 'inline';
+		 $("#projectManagerDropdown").show();
 		 console.log("preparePageForUserStatus() INVOKED");
-		 createTaskTable();
-		 tasksByManager();
-
 	 } 
 	else 
 	{ 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
-		document.getElementById("projectManagerDropdown").style.display = 'none';
+	 	 $("#projectManagerDropdown").hide()
 	 	$(".advancedSortingOptions").hide();
-	 	createTaskTable();
 	 }	
+	
+	 createTaskTable();
+	 tasksByManager();
 }
 
 /**
@@ -395,6 +397,9 @@ function createTaskTable () {
 
 			
 			
+			
+			if(!tasks[i].project.projectItem)
+				console.log("NULL TASK " , tasks[i]);
 			
 			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
 						' #' + tasks[i].project.warehouse.warehouseID +
@@ -865,6 +870,7 @@ function saveTaskChanges () {
 					$('#taskWell').slideUp();
 					clearTaskTable();
 					createProperTaskTable();
+					location.reload(true);
 				}
 			}
 		});
@@ -959,7 +965,6 @@ function printButton(){
 	}
 	
 	console.log("REPORT URL = ", reportURL);
-	
 	
 	window.location.href = reportURL;
 	

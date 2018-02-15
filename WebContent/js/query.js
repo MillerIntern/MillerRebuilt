@@ -20,7 +20,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"scope": "Project Scope", "class": "Project Classification", "manager": "Project Manager", "supervisor": "Project Supervisor",
 			"region": "Region", "status": "Project Status", "scheduledStartDate": "Scheduled Start Date", 
 			"scheduledTurnover" : "Scheduled Turn Over", "actualTurnover" : "Actual Turn Over", "initiated": "Project Initiated Date", 
-			"siteSurvey" : "Site Survey", "costcoDueDate" : "Costco Due Date", "proposalSubmitted" : "Proposal Submitted", "type" : "Type", 
+			"siteSurvey" : "Site Survey", "budgetarySubmitted" : "Budgetary Submitted" , "budgetaryDue" : "Budgetary Due" , "costcoDueDate" : "Costco Due Date", "proposalSubmitted" : "Proposal Submitted", "type" : "Type", 
 			"asBuilts" : "As-Builts", "punchList":"Punch List", "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", 
 			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
 			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
@@ -293,7 +293,7 @@ const INACTIVE_WEEKLY_KEYS = new Array("stage", "item","scope","status");
 
 
 const BUDGETARY_WEEKLY_KEYS = new Array("stage", "warehouse", "item","scope","manager", "supervisor", 
-		"region", "status","initiated","siteSurvey","costcoDueDate","proposalSubmitted","type", "projectNotes");
+		"region", "status","initiated","siteSurvey","budgetaryDue","budgetarySubmitted","type", "projectNotes");
 
 
 const CLOSED_WEEKLY_KEYS = new Array("mcsNum", "stage", "warehouse", "item","scope","manager", "supervisor",
@@ -456,6 +456,13 @@ let changeOrderStatuses = {
 		"All" : false
 };
 
+let taskStatuses = {
+		"1" : false,
+		"2" : false,
+		"3" : false,
+		"All" : false
+};
+
 $(document).on('change', 'select.params',function(){
 	setVals($(this));
 });
@@ -473,17 +480,42 @@ $(document).ready(function()
 $(document).on('change', '.reportTypePicker',function(){
 	console.log("value  == ", this.value);
 	if(this.value == ADRIENNE) generateReport(ADRIENNE);
-	else if(this.value == TASK) generateTaskReport(TASK);
+	else if(this.value == TASK) 
+	{
+		$('.taskStatusGroup').show(); 
+		$('#taskStatusButton').show();
+		
+		$('.changeOrderStatusGroup').hide(); 
+		$('#changeOrderButton').hide();
+		
+		$('.stageGroup').hide();
+		
+		$('.notCO').hide(); 
+	}
 	else if(this.value == "CO_REPORT") 
 	{
 		$('.changeOrderStatusGroup').show(); 
 		$('#changeOrderButton').show();
+		
+		$('.taskStatusGroup').hide(); 
+		$('#taskStatusButton').hide();
+		
+		$('.stageGroup').show();
+
+		
 		$('.notCO').hide(); 
 	}
 	else 
 	{
 		$('.changeOrderStatusGroup').hide(); 
 		$('#changeOrderButton').hide();
+		
+		$('.taskStatusGroup').hide(); 
+		$('#taskStatusButton').hide();
+		
+		$('.stageGroup').show();
+
+		
 		$('.notCO').show(); 
 	}
 });
@@ -505,6 +537,28 @@ function toggleChangeOrderStatus(status)
 		let inputElement = $('.changeOrderStatusGroup').find('[value='+status+']')[0];
 		if(inputElement.checked == true) changeOrderStatuses[inputElement.value] = true;
 		else changeOrderStatuses[inputElement.value] = false;	
+	}
+	
+	
+}
+
+function toggleTaskStatus(status)
+{
+	
+	if(status == "All")
+	{
+		let allStatus = $('.taskStatusGroup').find('[value="All"]')[0].checked;
+		console.log("ALL STATUS == ", allStatus);
+		$('.taskStatusGroup > input').each(function(i, obj) {
+			if(allStatus == true) {obj.checked = true; taskStatuses[obj.value] = true}
+			else {obj.checked = false; taskStatuses[obj.value] = false}
+		});
+	}
+	else
+	{
+		let inputElement = $('.taskStatusGroup').find('[value='+status+']')[0];
+		if(inputElement.checked == true) taskStatuses[inputElement.value] = true;
+		else taskStatuses[inputElement.value] = false;	
 	}
 	
 	
@@ -1118,7 +1172,7 @@ function reportCreator(elem)
 		case 'Billing Closeout':
 			generateReport($('.reportTypePicker :selected').val()+'_BC');
 			break;
-		case 'Tasks':
+		case TASK:
 			generateTaskReport($('.reportTypePicker :selected').val());
 			break;
 	}
@@ -1140,6 +1194,8 @@ function generateTaskReport(reportType){
 	var selectedFields = JSON.stringify(genType);
 	var title = undefined;
 	
+	
+	
 	switch(reportType){
 		case TASK:
 			title = 'Tasks for All Projects';
@@ -1152,25 +1208,50 @@ function generateTaskReport(reportType){
 	}
 
 
-if($('#reportTitle').val() != null && $('#reportTitle').val() != '')
-{
-title = $('#reportTitle').val();
-}
+	if($('#reportTitle').val() != null && $('#reportTitle').val() != '')
+	{
+	title = $('#reportTitle').val();
+	}
+	
+	let taskStatusString = '';
+	
+	if(taskStatuses["1"] == true)
+		taskStatusString += "1";
+	if(taskStatuses["2"] == true)
+		taskStatusString += "2";
+	if(taskStatuses["3"] == true)
+		taskStatusString += "3";
+	
+	if(taskStatusString == '') {
+		alert("Must select at least one status in order to generate a task report");
+		return;
+	}
 
-// 'mcsNum','task_title','task_assignee','task_description','task_created_date',
-// 'task_due_date','task_priority','task_notes'
-var data = {
-		'domain': 'task',
-		'action': 'query', 
-		'task_title':title,
-};
+	
+	// 'mcsNum','task_title','task_assignee','task_description','task_created_date',
+	// 'task_due_date','task_priority','task_notes'
+	var data = {
+			'domain': 'task',
+			'action': 'query', 
+			'task_title':title,
+			'task_statuses' : taskStatusString
+	};
+	
+	console.log(data);
+	data['shownFields'] = selectedFields;
+	console.log("selected fields == ", selectedFields);
+	var params = $.param(data);
+	console.log(REPORT_URL+"?"+params);
+	
+	taskStatuses["1"] = false;
+	taskStatuses["2"] = false;
+	taskStatuses["3"] = false;
+	
+	$('.taskStatusGroup').find('input').each(function(){
+	    this.checked = false;;
+	})
 
-console.log(data);
-data['shownFields'] = selectedFields;
-console.log("selected fields == ", selectedFields);
-var params = $.param(data);
-console.log(REPORT_URL+"?"+params)
-document.location.href = REPORT_URL+"?"+params;
+	document.location.href = REPORT_URL+"?"+params;
 }
 
 	

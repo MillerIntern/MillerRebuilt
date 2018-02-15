@@ -1,11 +1,13 @@
 package Servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import objects.HashGen;
+import objects.HibernateUtil;
 import objects.RequestHandler;
 import projectObjects.City;
 import projectObjects.EquipmentVendor;
@@ -31,6 +34,7 @@ import projectObjects.State;
 import projectObjects.Status;
 import projectObjects.User;
 import projectObjects.Warehouse;
+import projectObjects.Subcontractor;
 import services.LoginService;
 import services.ProjectObjectService;
 import services.ProjectService;
@@ -95,12 +99,78 @@ public class Admin extends HttpServlet
 			ProjectObjectService.addObject("ProjectItem", pItem);
 			response = "projectItem created";
 		}
+		else if(action.equals("editItem"))
+		{
+			String newItemName = parameters.get("itemName");
+			String itemID = parameters.get("itemId");
+			Long id = Long.parseLong(itemID);
+			
+			ProjectItem pItem = new ProjectItem(newItemName);
+			try {
+				ProjectObjectService.editObject("ProjectItem", id , pItem , 1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			response = "projectItem edited";
+		}
+		else if(action.equals("removeItem"))
+		{
+			System.out.println("REMOVING ITEM");
+			String itemID = parameters.get("itemId");
+			Long id = Long.parseLong(itemID);
+			
+			List<Object> projects = ProjectObjectService.getAll("Project");
+			
+			boolean inUse = false;
+			for(Object obj : projects) {
+				projectObjects.Project prj = (projectObjects.Project) obj;
+				if(prj.getProjectItem().getId().equals(id)) {
+					inUse = true;
+					response = "IN_USE";
+					break;
+				}
+					
+			}
+		
+			
+			
+			
+			//ProjectObjectService.setNullProjectItemId(id);
+			
+			if(!inUse)
+			{
+				/*
+				try {
+					ProjectObjectService.delete(id , "ProjectItem");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				*/
+				
+				response = "projectItem removed";
+			}
+
+		}
 		else if(action.equals("createSupplier"))
 		{
 			String vendorName = parameters.get("supplier");
 			EquipmentVendor vendor = new EquipmentVendor(vendorName);
 			ProjectObjectService.addObject("EquipmentVendor", vendor);
 			response = "supplier created";
+		}
+		else if(action.equals("editEquipmentSupplier"))
+		{
+			String newSupplierName = parameters.get("supplierName");
+			String supplierID = parameters.get("supplierId");
+			Long id = Long.parseLong(supplierID);
+			
+			EquipmentVendor vendor = new EquipmentVendor(newSupplierName);
+			try {
+				ProjectObjectService.editObject("EquipmentVendor", id , vendor , 1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			response = "equipment supplier edited";
 		}
 		else if(action.equals("createSubcontractor"))
 		{
@@ -113,6 +183,21 @@ public class Admin extends HttpServlet
 				e.printStackTrace();
 			}
 			response = "subcontractor created";
+		}
+		else if(action.equals("editSubcontractor"))
+		{
+			String newSubName = parameters.get("name");
+			String newSubEmail = parameters.get("email");
+			String subID = parameters.get("subcontractorId");
+			Long id = Long.parseLong(subID);
+			
+			Subcontractor sub = new Subcontractor(newSubName , newSubEmail);
+			try {
+				ProjectObjectService.editObject("Subcontractor", id , sub , 1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			response = "subcontractor edited";
 		}
 		else if(action.equals("addPerson"))
 		{
