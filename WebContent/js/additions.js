@@ -33,6 +33,8 @@ $(document).ready(function()
 $(document).ready(function()
 		{
 	
+			$('.removeButton').hide();
+		
 			attachEventHandlersToDuplicateSelects();
 			
 			CURRENT_INTENT.INTENT = 1;
@@ -263,6 +265,48 @@ function removeItem()
 	}
 }
 
+function swapDuplicateItem()
+{
+	var newItemId = $('#projectItemDropdown').val();
+	var oldItemId = $('#duplicateProjectItemDropdown').val();
+	
+	if((newItemId != '' || !newItemId) || (oldItemId != '' || !oldItemId || oldItemId == "default"))
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'swapAndRemove',
+				'table' : "Project" ,
+				'column' : "projectItem_id" ,
+				'tableToRemoveFrom' : 'ProjectItem',
+				'newObjectId' : newItemId,
+				'oldObjectId' : oldItemId ,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				if(data == "IN_USE")
+				{
+					alert("Project Item Still In Use By Another Project! NOT DELETED");
+				}
+				else
+				{
+					alert("Project Item Deleted Successfully!");
+					location.reload(true);
+				}
+				$('#projectItem').val('');
+				$('#duplicateProjectItemDropdown').val('default');
+
+
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+}
+
 function createEquipmentSupplier()
 {
 	var supplier = $('#supplier').val();
@@ -356,6 +400,48 @@ function removeEquipmentSupplier()
 					location.reload(true);
 				}
 				$('#supplier').val('');
+
+
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+}
+
+function swapDuplicateEquipmentSupplier()
+{
+	var newEqId = $('#supplierDropdown').val();
+	var oldEqId = $('#duplicateEquipmentSupplierDropdown').val();
+	
+	if((newEqId != '' || !newEqId) || (oldEqId != '' || !oldEqId || oldEqId == "default"))
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'swapAndRemove',
+				'table' : "NewEquipment" ,
+				'column' : "eqSupplier_id" ,
+				'tableToRemoveFrom' : 'EquipmentVendor',
+				'newObjectId' : newEqId,
+				'oldObjectId' : oldEqId ,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				if(data == "IN_USE")
+				{
+					alert("Equipment Supplier Still In Use By Another Project! NOT DELETED");
+				}
+				else
+				{
+					alert("Equipment Supplier Successfully Replaced!");
+					location.reload(true);
+				}
+				$('#supplier').val('');
+				$('#duplicateEquipmentSupplierDropdown').val('default');
 
 
 			}
@@ -472,6 +558,48 @@ function removeSubcontractor()
 					location.reload(true);
 				}
 				$('#supplier').val('');
+
+
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+}
+
+function swapDuplicateSubcontractor()
+{
+	var newSubId = $('#subcontractorDropdown').val();
+	var oldSubId = $('#duplicateSubcontractorDropdown').val();
+	
+	if((newSubId != '' || !newSubId) || (oldSubId != '' || !oldSubId || oldSubId == "default"))
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'swapAndRemove',
+				'table' : "Task" ,
+				'column' : "subAssignee_id" ,
+				'tableToRemoveFrom' : 'Subcontractor',
+				'newObjectId' : newSubId,
+				'oldObjectId' : oldSubId ,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				if(data == "IN_USE")
+				{
+					alert("Subcontractor Still In Use By Another Project! NOT DELETED");
+				}
+				else
+				{
+					alert("Subcontractor Successfully Replaced!");
+					location.reload(true);
+				}
+				//$('#subcontractorDropdown').val('');
+				//$('#duplicateSubcontractorDropdown').val('default');
 
 
 			}
@@ -783,6 +911,8 @@ function intentSwitch(intent)
 {
 	console.log("INTENT SWITCH" , intent);
 	
+	$('.removeButton').hide();
+
 	$('.duplicateRemoval').hide();
 
 	switch(intent)
@@ -832,20 +962,20 @@ function intentSwitch(intent)
 
 function attachEventHandlersToDuplicateSelects()
 {
+	/*
 	$('.projectObjectDropdown').each(function (index){
-		console.log("HERE WE ISZZZ" , this);
 
 		$(this).change(function(){
 			//TO DO NOT COMPLETE
 			$('.tab-content.current').find('.duplicateRemovalDropdown').find('option').show();
 			$('.tab-content.current').find('.duplicateRemovalDropdown').trigger('chosen : updated');
 			let selectedId = $('.tab-content.current').find('.projectObjectDropdown').val();
-			let found = $('.tab-content.current').find('.duplicateRemovalDropdown').find("[value = '" + selectedId + "']").hide();
-			console.log("HERE WE IS" , this , selectedId , found);
+			let found = $('.tab-content.current').find('.duplicateRemovalDropdown').find("[value = '" + selectedId + "']").remove();
 
 			$('.tab-content.current').find('.duplicateRemovalDropdown').trigger('chosen : updated');
 		});
 	});
+	*/
 
 }
 
@@ -979,6 +1109,9 @@ function handleProjectItemChanges()
 		case CURRENT_INTENT.REMOVE:
 			removeItem();
 			break;
+		case CURRENT_INTENT.REMOVE_DUPLICATE:
+			swapDuplicateItem();
+			break;
 	}
 }
 
@@ -995,6 +1128,9 @@ function handleEquipmentSupplierChanges()
 		case CURRENT_INTENT.REMOVE:
 			removeEquipmentSupplier();
 			break;
+		case CURRENT_INTENT.REMOVE_DUPLICATE:
+			swapDuplicateEquipmentSupplier();
+			break;
 	}
 }
 
@@ -1010,6 +1146,9 @@ function handleSubcontractorChanges()
 			break;
 		case CURRENT_INTENT.REMOVE:
 			removeSubcontractor();
+			break;
+		case CURRENT_INTENT.REMOVE_DUPLICATE:
+			swapDuplicateSubcontractor();
 			break;
 	}
 }

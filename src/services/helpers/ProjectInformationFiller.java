@@ -80,7 +80,7 @@ public class ProjectInformationFiller
 		currentProject.setBudgetaryDue(budgetaryDue);
 
 		Date budgetarySubmitted = null;
-		if (params.get("budgetaryDue") != null && !(params.get("budgetarySubmitted")).isEmpty())
+		if (params.get("budgetarySubmitted") != null && !(params.get("budgetarySubmitted")).isEmpty())
 			budgetarySubmitted = formatter.parse(params.get("budgetarySubmitted"));
 		currentProject.setBudgetarySubmitted(budgetarySubmitted);
 

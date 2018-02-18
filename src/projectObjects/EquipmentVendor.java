@@ -1,6 +1,10 @@
 package projectObjects;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+
+import services.ProjectObjectService;
 
 /**
  * This class is used to store the different equipment vendors to be used with 
@@ -48,6 +52,21 @@ public class EquipmentVendor extends ProjectObject {
 	 */
 	public synchronized void setName(String name) {
 		this.name = name;
+	}
+	
+	public static EquipmentVendor matchEquipmentVendor(String field) {
+		if(field == null) return null;
+		
+		List<Object> vendors = ProjectObjectService.getAll("EquipmentVendor");
+		
+		for(Object vendor : vendors) {
+			EquipmentVendor ven = (EquipmentVendor) vendor;
+			if(field.equalsIgnoreCase(ven.getName()) || field.equals(ven.getId().toString()))
+				return ven;
+		}
+		
+		return null;
+		
 	}
 
 

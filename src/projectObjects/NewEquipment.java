@@ -3,6 +3,11 @@ package projectObjects;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * this class holds the information about equipment for a project. 
@@ -28,13 +33,16 @@ public class NewEquipment extends ProjectObject
 	private Date estDeliveryDate;
 	private String notes;
 	private String deliveryStatus;
+	private EquipmentVendor eqSupplier;
+	private EquipmentStatus eqStatus;
 	private String providerName;
 	private String description;
 	
 	public NewEquipment(String poNum, String equipmentName,
 						String vendor,
 						Date deliveryDate, Date estDeliveryDate, Date orderedDate,
-						String notes,  String deliveryStatus, String providerName, String description)
+						String notes,  String deliveryStatus, String providerName, String description,
+						EquipmentVendor eqSupplier , EquipmentStatus eqStatus)
 	{
 		this.poNum = poNum;
 		this.equipmentName = equipmentName;
@@ -46,6 +54,8 @@ public class NewEquipment extends ProjectObject
 		this.deliveryStatus = deliveryStatus;
 		this.providerName = providerName;
 		this.description = description;
+		this.eqSupplier = eqSupplier;
+		this.eqStatus = eqStatus;
 	}
 	
 	public NewEquipment()
@@ -60,6 +70,8 @@ public class NewEquipment extends ProjectObject
 		this.deliveryStatus = null;
 		this.providerName = null;
 		this.description = null;
+		this.eqSupplier = null;
+		this.eqStatus = null;
 	}
 
 	public synchronized String getPoNum() {
@@ -140,4 +152,26 @@ public class NewEquipment extends ProjectObject
 	public synchronized void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	public synchronized EquipmentVendor getEqSupplier() {
+		return eqSupplier;
+	}
+	
+	public synchronized void setEqSupplier(EquipmentVendor vendor) {
+		this.eqSupplier = vendor;
+	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	public synchronized EquipmentStatus getEqStatus() {
+		return eqStatus;
+	}
+	
+	public synchronized void setEqStatus(EquipmentStatus eqStatus) {
+		this.eqStatus = eqStatus;
+	}
+	
+	
 }

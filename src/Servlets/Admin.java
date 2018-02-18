@@ -9,6 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -130,7 +135,7 @@ public class Admin extends HttpServlet
 					break;
 				}
 					
-			}
+		    }
 		
 			
 			
@@ -149,6 +154,44 @@ public class Admin extends HttpServlet
 				
 				response = "projectItem removed";
 			}
+
+		}
+		else if(action.equals("swapAndRemove"))
+		{
+			System.out.println("SWAPPING ITEM");
+			
+			String table = parameters.get("table");
+			String column = parameters.get("column");
+			String tableToRemoveFrom = parameters.get("tableToRemoveFrom");
+			
+			String oldObjectId = parameters.get("oldObjectId");
+			Long oldId = Long.parseLong(oldObjectId);
+			
+			String newObjectId = parameters.get("newObjectId");
+			Long newId = Long.parseLong(newObjectId);
+			
+			System.out.println(table + " " + column + " " + oldObjectId + " " + newObjectId);
+			
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			Transaction tx = session.beginTransaction();
+									
+			SQLQuery sqlQuery = session.createSQLQuery("update " + table +" set " + column + " = " + newObjectId + " where " + column + " = " + oldObjectId);
+
+			sqlQuery.executeUpdate();
+						
+			tx.commit();
+
+				
+				try 
+				{
+					ProjectObjectService.delete(oldId , tableToRemoveFrom);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+				response =  tableToRemoveFrom + " removed";
+			
 
 		}
 		else if(action.equals("createSupplier"))

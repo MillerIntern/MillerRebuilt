@@ -1,6 +1,10 @@
 package projectObjects;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+
+import services.ProjectObjectService;
 
 
 @Entity
@@ -46,5 +50,19 @@ public class EquipmentStatus extends ProjectObject {
 		this.name = name;
 	}
 
+	public static EquipmentStatus matchEquipmentVendor(String field) {
+		if(field == null) return null;
+		
+		List<Object> statuses = ProjectObjectService.getAll("EquipmentStatus");
+		
+		for(Object status : statuses) {
+			EquipmentStatus stat = (EquipmentStatus) status;
+			if(field.equalsIgnoreCase(stat.getName())  || field.equals(stat.getId().toString()))
+				return stat;
+		}
+		
+		return null;
+		
+	}
 
 }

@@ -2797,15 +2797,21 @@ function fillEquipment (data) {
 		
 		var deliveryStatus = document.createElement('td');
 		deliveryStatus.width = "80px";
-		var deliveryStatusText = equipment.deliveryStatus;
+		var deliveryStatusText = "";
+		if(equipment.eqStatus)
+			deliveryStatusText = equipment.eqStatus.name;
 		
 		if(deliveryStatusText == undefined || deliveryStatusText == "undefined" || deliveryStatusText == "default")
 			deliveryStatusText = "";
 		deliveryStatus.appendChild(document.createTextNode(deliveryStatusText));
 		
+		
 		var supplier = document.createElement('td');
 		supplier.width = "80px";
-		supplier.appendChild(document.createTextNode(equipment.vendor));
+		var supplierText = "";
+		if(equipment.eqSupplier)
+			supplierText = equipment.eqSupplier.name;
+		supplier.appendChild(document.createTextNode(supplierText));
 		
 		
 		
@@ -5183,7 +5189,8 @@ function fillDropdowns_EQUIP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentVendor[i].name;
-		option.setAttribute("value", equipmentVendor[i].name);
+		//option.setAttribute("value", equipmentVendor[i].name);
+		option.setAttribute("value", equipmentVendor[i].id);
 		d.appendChild(option);
 	}
 	$("#equipmentForm #supplier").append(d);
@@ -5203,7 +5210,9 @@ function fillDropdowns_EQUIP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentDeliveryStatus[i].name;
-		option.setAttribute("value", equipmentDeliveryStatus[i].name);
+//		option.setAttribute("value", equipmentDeliveryStatus[i].name);
+		option.setAttribute("value", equipmentDeliveryStatus[i].id);
+
 		d.appendChild(option);
 	}
 	$("#equipmentForm #deliveryStatusEquipment").append(d);
@@ -5224,12 +5233,22 @@ function fillTabs_EQUIP(json)
 	console.log(equipmentToEdit);
 	$('#equipmentForm #poNum').val(equipmentToEdit.poNum);
 	$('#equipmentForm #equipmentName').val(equipmentToEdit.equipmentName);
-	$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
+	//$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
+	
+	if(equipmentToEdit.eqStatus)
+		$('#equipmentForm #supplier').val(equipmentToEdit.eqSupplier.id);
+	else
+		$('#equipmentForm #supplier').val("default");
+	
 	$('#equipmentForm #estDeliveryDate').val(equipmentToEdit.estDeliveryDate);
 	$('#equipmentForm #deliveryDate').val(equipmentToEdit.deliveryDate);
 	$('#equipmentForm #orderedDate').val(equipmentToEdit.orderedDate);
 	$('#equipmentForm #notes').val(equipmentToEdit.notes);
-	$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
+	//$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
+	if(equipmentToEdit.eqStatus)
+		$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.eqStatus.id);
+	else
+		$('#equipmentForm #deliveryStatusEquipment').val("default");
 	$('#equipmentForm #providerName').val(equipmentToEdit.providerName);
 	$('#equipmentForm #equipmentDescription').val(equipmentToEdit.description);
 }

@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import projectObjects.EquipmentStatus;
+import projectObjects.EquipmentVendor;
 import projectObjects.NewEquipment;
 
 /**
@@ -40,11 +42,14 @@ public class EquipmentFiller
 		
 		eq.setPoNum(params.get("poNum"));
 		eq.setEquipmentName(params.get("equipmentName"));
-		eq.setVendor(params.get("vendor"));
+		//eq.setVendor(params.get("vendor"));
 		eq.setNotes(params.get("notes"));
-		eq.setDeliveryStatus(params.get("deliveryStatus"));
+		//eq.setDeliveryStatus(params.get("deliveryStatus"));
 		eq.setProviderName(params.get("providerName"));
 		eq.setDescription(params.get("equipmentDescription"));
+		
+		eq.setEqSupplier(EquipmentVendor.matchEquipmentVendor(params.get("vendor")));
+		eq.setEqStatus(EquipmentStatus.matchEquipmentVendor(params.get("deliveryStatus")));
 
 		
 				
