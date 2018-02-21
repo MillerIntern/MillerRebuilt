@@ -34,6 +34,9 @@ $(document).ready(function()
 		{
 	
 			$('.removeButton').hide();
+			$('.makeChanges').click( function() {
+				makeChanges();
+			});
 		
 			attachEventHandlersToDuplicateSelects();
 			
@@ -198,6 +201,13 @@ function createItem()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+	
+	$('.makeChanges').click(function() { 		
+		makeChanges(); 	
+	});
+	
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function editItem()
@@ -227,6 +237,11 @@ function editItem()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() {
+			makeChanges();
+		});
+	$('.makeChanges').removeAttr('disabled');
 }
 
 function removeItem()
@@ -263,12 +278,22 @@ function removeItem()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled');
 }
 
 function swapDuplicateItem()
 {
 	var newItemId = $('#projectItemDropdown').val();
 	var oldItemId = $('#duplicateProjectItemDropdown').val();
+	
+	if(newItemId == oldItemId){
+		alert("Item to remove must be different from the item you want to replace it with!");
+		$('.makeChanges').removeAttr('disabled');
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+		return;
+	}
 	
 	if((newItemId != '' || !newItemId) || (oldItemId != '' || !oldItemId || oldItemId == "default"))
 		$.ajax({
@@ -305,6 +330,9 @@ function swapDuplicateItem()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+	//	$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function createEquipmentSupplier()
@@ -343,6 +371,9 @@ function createEquipmentSupplier()
 			}
 		});
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function editEquipmentSupplier()
@@ -372,6 +403,9 @@ function editEquipmentSupplier()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function removeEquipmentSupplier()
@@ -408,12 +442,22 @@ function removeEquipmentSupplier()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function swapDuplicateEquipmentSupplier()
 {
 	var newEqId = $('#supplierDropdown').val();
 	var oldEqId = $('#duplicateEquipmentSupplierDropdown').val();
+	
+	if(newEqId == oldEqId){
+		alert("Equipment Supplier to remove must be different from the Equipment Supplier you want to replace it with!");
+		$('.makeChanges').removeAttr('disabled');
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+		return;
+	}
 	
 	if((newEqId != '' || !newEqId) || (oldEqId != '' || !oldEqId || oldEqId == "default"))
 		$.ajax({
@@ -450,6 +494,9 @@ function swapDuplicateEquipmentSupplier()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function createSubcontractor()
@@ -496,6 +543,9 @@ function createSubcontractor()
 			}
 		});
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function editSubcontractor()
@@ -530,6 +580,9 @@ function editSubcontractor()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function removeSubcontractor()
@@ -566,12 +619,22 @@ function removeSubcontractor()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function swapDuplicateSubcontractor()
 {
 	var newSubId = $('#subcontractorDropdown').val();
 	var oldSubId = $('#duplicateSubcontractorDropdown').val();
+	
+	if(newSubId == oldSubId){
+		alert("Subcontractor to remove must be different from the Subcontractor you want to replace it with!");
+		$('.makeChanges').removeAttr('disabled');
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+		return;
+	}
 	
 	if((newSubId != '' || !newSubId) || (oldSubId != '' || !oldSubId || oldSubId == "default"))
 		$.ajax({
@@ -608,6 +671,11 @@ function swapDuplicateSubcontractor()
 	{
 		alert("Please fill out all of the information!");
 	}
+	
+	$('.makeChanges').click(function() {
+		makeChanges();
+	});
+	$('.makeChanges').removeAttr('disabled'); 
 }
 
 function addPerson()
@@ -1026,7 +1094,7 @@ function fillTabForEdit(projectObject , tabId)
 function matchProjectObject(selectedId , _tabId)
 {
 	let tabId = $('.tab-content.current').attr('id');
-	
+
 	if(_tabId) 
 		tabId = _tabId;
 	
@@ -1077,7 +1145,8 @@ function matchProjectObject(selectedId , _tabId)
 function makeChanges()
 {
 	
-	$('.makeChanges').addClass('disabled');
+	$('.makeChanges').attr('disabled' , 'true');
+	$('.makeChanges').off('click');
 	
 	let currentTabId = $('.tab-content.current').attr('id');
 			

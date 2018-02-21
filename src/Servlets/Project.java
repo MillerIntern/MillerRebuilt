@@ -687,11 +687,12 @@ public class Project extends HttpServlet
 			String projects = ProjectObjectService.getTheProjects();
 			Gson gson = new Gson();
 			
-			response = gson.toJson(projects);
+			//response = gson.toJson(projects);
+			response = projects;
 		
 			System.out.println("SIZE OF GET ALL PROJECTS = " + response.length());
 			
-			System.out.println("Projects = " + response);
+			//System.out.println("Projects = " + response);
 		}
 
 		

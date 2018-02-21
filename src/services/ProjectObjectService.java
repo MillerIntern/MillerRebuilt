@@ -108,15 +108,17 @@ public class ProjectObjectService
 				
 				
 
-				projectionList.add(Projections.property("id").as("id"));
-				projectionList.add(Projections.property("mcsNumber").as("McsNumber"));
-				projectionList.add(Projections.property("projectItem.id").as("projectItem"));
-				projectionList.add(Projections.property("projectType.id").as("projectType"));
-				projectionList.add(Projections.property("stage.id").as("stage"));
-				projectionList.add(Projections.property("status.id").as("status"));
-				projectionList.add(Projections.property("warehouse.id").as("warehouse"));
-				projectionList.add(Projections.property("projectManagers.id").as("projectManagers"));
-				projectionList.add(Projections.property("projectClass.id").as("projectClass"));
+				//THE ORDER OF THESE ADDS MATTERS DUE TO HOW THESE IDS ARE MATCHED ON THE FRONT END IN
+				// projectRetrieval.js
+				projectionList.add(Projections.property("id"));
+				projectionList.add(Projections.property("mcsNumber"));
+				projectionList.add(Projections.property("projectItem.id"));
+				projectionList.add(Projections.property("projectType.id"));
+				projectionList.add(Projections.property("stage.id"));
+				projectionList.add(Projections.property("status.id"));
+				projectionList.add(Projections.property("warehouse.id"));
+				projectionList.add(Projections.property("projectManagers.id"));
+				projectionList.add(Projections.property("projectClass.id"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -362,6 +364,19 @@ public class ProjectObjectService
 				
 	
 			} else if(domain.equals("Task")) {
+				
+				/*
+				ProjectionList projectionList = Projections.projectionList();
+				
+				projectionList.add(Projections.property("project.id"));
+				projectionList.add(Projections.property("project.warehouse"));
+				//projectionList.add(Projections.property("project"));
+
+				criteria.setProjection(projectionList);
+				*/
+				
+
+				
 				System.out.println("Task id = " + Order.asc("id"));
 			}
 			List<?> list = criteria.list();

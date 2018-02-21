@@ -848,7 +848,7 @@ function saveProject_CLOSEOUT()
 			},
 			success:function(data){
 				updateFrontEnd();			
-				getProject_PROJECT_MANAGER(projectID , 1);
+				//getProject_PROJECT_MANAGER(projectID , 1);
 				alert('Project Saved');
 				console.log(data);
 				//UPDATE CLOSEOUT SUMMARY
@@ -866,7 +866,7 @@ function saveProject_CLOSEOUT()
 				alert('Project Saved');
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 				//UPDATE CLOSEOUT SUMMARY
-				getProject_PROJECT_MANAGER(projectID , 1);
+				//getProject_PROJECT_MANAGER(projectID , 1);
 				goToProjectManager();
 
 			       //alert("Status: " + textStatus); 
@@ -1454,17 +1454,17 @@ function saveProject_PERMIT()
 			return;
 		}
 		
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
-			dataType: 'json',
+	//		dataType: 'json',
 			data: 
 			{
 				'domain': 'project',
 				'action': action,
 				'projectID':PROJECT_DATA.id,
 				
-				//Permit Data
 				'permitsID':PERMIT_ID,
 				
 				'building_p':buildingPermitLastUpdated, 
@@ -1518,19 +1518,26 @@ function saveProject_PERMIT()
 				'otherBInspectionLastUpdated': otherBInspectionLastUpdated,
 
 				'permitNotes': permitNotes,
-				'inspectionNotes': inspectionNotes
+				'inspectionNotes': inspectionNotes,
 			},
 			success:function(data){
 				console.log(data);
 				updateFrontEnd();
 				alert('Save Complete!');
-				getProject_PROJECT_MANAGER(projectID , 1);
+				
+				
+				//getProject_PROJECT_MANAGER(projectID , 1);
+				/*
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active')
+				$('#permitData').find('#buildingPermit').addClass('active');
 
 				$(".editProject").hide();
 				$("#projectManager").show();
+				*/
+				
+				
+				goToProjectManager();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -1541,7 +1548,8 @@ function saveProject_PERMIT()
 			error: function(data)
 			{
 				console.log(data);
-				getProject_PROJECT_MANAGER(projectID , 1);
+				updateFrontEnd();
+				//getProject_PROJECT_MANAGER(projectID , 1);
 				alert('Save Complete!');
 				/*
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
@@ -1552,6 +1560,7 @@ function saveProject_PERMIT()
 				$("#projectManager").show();
 				*/
 				goToProjectManager();
+			
 				
 			}
 		});
@@ -1928,6 +1937,8 @@ function saveProject_PROJECT_DATA() {
 				alert('Save Complete!');				
 				$('#saveButton > button').prop('disabled', false);
 				
+				/*
+				
 				$('#projectManager').find('.info-tab').removeClass('active');
 				$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
 				$('#projectManager').find('#projectInformation').addClass('active');
@@ -1936,7 +1947,8 @@ function saveProject_PROJECT_DATA() {
 				
 				$(".editProject").hide();
 				$("#projectManager").show();
-				
+				*/
+				goToProjectManager();
 				
 				
 				
@@ -2681,7 +2693,7 @@ function convertChangeOrderType(type , co) {
 	if(!type) return "---";
 	console.log("CO_TYPES = " , CHANGE_ORDER_TYPES , co);
 	for(var i = 0; i < CHANGE_ORDER_TYPES.length; i++) {
-		console.log( " TYPE = " , type , CHANGE_ORDER_TYPES[i]);
+		//console.log( " TYPE = " , type , CHANGE_ORDER_TYPES[i]);
 		if(CHANGE_ORDER_TYPES[i].id == type)
 			return CHANGE_ORDER_TYPES[i].name;
 	}
@@ -3641,7 +3653,7 @@ function establishRetrievedProjects()
  */
 function updateFrontEnd() {
 	let from = getParameterByName("from");
-	if(from == "projectData") getAllProjects();
+	if(from == "projectData") getTheProjects();
 	else {
 		clearAndAddSingleRow("Retrieving Projects...");
 		if (getParameterByName('type') === 'findTaskProject') {
@@ -4353,7 +4365,7 @@ function getTasks(stopServerCalls) {
 		}, success: function (data) {
 			console.log(data);
 			let type = getParameterByName("from");
-			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getAllProjects();
+			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
 			tasks = data;
 			if (data) {
 				clearTaskTable();
@@ -4439,7 +4451,7 @@ function getProject_CHANGE_ORDER()
 						mcsCO = 1;
 				    }
 					console.log("MCS CO = ", mcsCO);
-					$('#changeOrder').find('#mcsCO').html(mcsCO);
+					$('#changeOrder').find('#mcsCO').val(mcsCO);
 				}
 				//getTasks();
 
@@ -4515,7 +4527,7 @@ function fillTabs_CHANGE_ORDER(json)
 	console.log("CO TO EDIT = ", changeOrderToEdit);
 	if(changeOrderToEdit){
 	$('#changeOrder').find("#customerCO").val(changeOrderToEdit.type);
-	$('#changeOrder').find("#mcsCO").html(changeOrderToEdit.mcsCO);
+	$('#changeOrder').find("#mcsCO").val(changeOrderToEdit.mcsCO);
 	$('#changeOrder').find("#subCO").val(changeOrderToEdit.subCO);
 	$('#changeOrder').find("#proposalDate").val(changeOrderToEdit.proposalDate);
     formatRelativeTextAreas(changeOrderToEdit.briefDescription , "briefDescription", "changeOrder");
@@ -4648,7 +4660,7 @@ function cleanNumericValueForDisplaying(num)
 function clearTabs_CHANGE_ORDER(){
 	
 	$('#changeOrder').find("#customerCO").val("");
-	$('#changeOrder').find("#mcsCO").html("");
+	$('#changeOrder').find("#mcsCO").val("");
 	$('#changeOrder').find("#subCO").val("");
 	$('#changeOrder').find("#proposalDate").val("");
 	$('#changeOrder').find("#briefDescription").val("");
@@ -4760,7 +4772,7 @@ function saveProject_CHANGE_ORDER()
 	var approvedDate = $('#changeOrder').find("#approvedDate").val();
 	
 	var customerCO = $('#changeOrder').find("#customerCO").val();
-	var mcsCO = $('#changeOrder').find("#mcsCO").html();
+	var mcsCO = $('#changeOrder').find("#mcsCO").val();
 
 	var subCO = $('#changeOrder').find("#subCO").val();
 	var subNames = $('#changeOrder').find("#subNames").val();
@@ -5080,7 +5092,8 @@ function preparePage() {
 	} else {
 		$('.projectNavigator').show();
 		$('.projectNavigator-projectFinder').hide();
-		getAllProjects();
+		//getAllProjects();
+		getTheProjects();
 		$('#findProject').show();
 	}
 }
@@ -5235,7 +5248,7 @@ function fillTabs_EQUIP(json)
 	$('#equipmentForm #equipmentName').val(equipmentToEdit.equipmentName);
 	//$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
 	
-	if(equipmentToEdit.eqStatus)
+	if(equipmentToEdit.eqSupplier)
 		$('#equipmentForm #supplier').val(equipmentToEdit.eqSupplier.id);
 	else
 		$('#equipmentForm #supplier').val("default");

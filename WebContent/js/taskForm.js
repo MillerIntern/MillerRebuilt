@@ -55,7 +55,7 @@ function getUserData () {
 					PAGE_ENTRY = "fromTask";
 					if(from) {
 						PAGE_ENTRY = from;
-						if(!RETRIEVED_PROJECTS) getAllProjects();
+						if(!RETRIEVED_PROJECTS) getTheProjects();
 						else $('.projectNavigator-projectFinder').show();
 
 					}

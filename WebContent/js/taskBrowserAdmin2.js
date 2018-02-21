@@ -96,8 +96,6 @@ function createTaskTableByManager (tasks) {
 		clearAndAddSingleRow('No Tasks to Display!');
 	}
 }
-
-
 function createManagerQueue()
 {
 	
