@@ -96,6 +96,7 @@
 		<li class="tab-link" data-tab="item">Project Item</li>
 		<li class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
 		<li class="tab-link" data-tab="subcontractor">Subcontractor</li>
+		<li class="tab-link" data-tab="cityTab">City</li>
 		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
 		<li class="tab-link" data-tab="userTab">New User</li>
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
@@ -230,7 +231,41 @@
 			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
 			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
-		</div>	</div>	
+		</div>	
+	</div>
+	
+	<div id="cityTab" class="tab-content editable">
+		<table>
+			<tr>
+			<td>City</td>
+			<td>
+				<select id = "cityDropdown" class = "projectObjectDropdown">
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "duplicateRemoval" style = "display : none">
+				<td>Duplicate City To Remove</td>
+				<td>    
+				    <select id = "duplicateCityDropdown" class = "duplicateRemovalDropdown">
+				    	<option selected disabled id = "defaultOption" value = "default">Select duplicate city</option>
+					</select>      
+				</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Name:</td>
+			<td><input id="cityName" type="text" class = "editingField name" style = "width : 300px"></td>
+			</tr>
+		</table>
+		
+		<button class = "btn btn-primary makeChanges">Make Changes</button>		
+		
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
+			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
+		</div>	
+	</div>	
 	<div id="personTab" class="tab-content">
 		<table>
 			<tr>

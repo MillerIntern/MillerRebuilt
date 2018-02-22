@@ -2353,11 +2353,13 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				'action': 'get',
 				'id': projectID
 			}, success: function (data) {
+				//getTheProjects();
 				
 				PROJECT_DATA = data;
 				setProjectHeader(data, currentDivLocation);
 
 				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
+				
 				
 				getTasks(stopServerCalls);
 			}, error: function (data) {
@@ -3710,7 +3712,7 @@ function updateDisplayableProjects(){
  *  that the user can filter projects with
  * INNER FUNCTION CALLS: clearAndAddSingleRow(), fillDropdowns_FIND_PROJECT(), checkInitFilter()
  */
-function getSearchCriteria() {
+function getSearchCriteria(_stopServerCalls) {
 	
 	clearAndAddSingleRow("Retrieving Search Criteria...");
 	
@@ -3729,6 +3731,7 @@ function getSearchCriteria() {
 			'changeordertype' : true ,
 		}, success: function(data) {
 			
+			
 			CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
 
 			fillDropdowns_FIND_PROJECT(data);
@@ -3744,6 +3747,7 @@ function getSearchCriteria() {
 			
 			checkInitFilter();
 			filterProjects();
+			 
 			
 		}, error: function(data) {
 			console.log(data);
@@ -4365,7 +4369,7 @@ function getTasks(stopServerCalls) {
 		}, success: function (data) {
 			console.log(data);
 			let type = getParameterByName("from");
-			if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
+			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
 			tasks = data;
 			if (data) {
 				clearTaskTable();

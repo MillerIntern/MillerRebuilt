@@ -83,10 +83,10 @@ let TIME_FINISH;
 			PROJECT_OBJECT.STAGES = JSON.parse(data.stage);
 			PROJECT_OBJECT.STATUSES = JSON.parse(data.status);
 			PROJECT_OBJECT.WAREHOUSES = JSON.parse(data.warehouse);
-			PROJECT_OBJECT.CLASSES = JSON.parse(data["class"])
-			
-			console.log("PROJECT_OBJECT " , PROJECT_OBJECT);
-			
+			PROJECT_OBJECT.CLASSES = JSON.parse(data["class"]);
+				
+			createMaps();
+						
 			beginProjectMatching();
 			
 			
@@ -111,24 +111,52 @@ let TIME_FINISH;
 
   }
   
-  function beginProjectMatching() {
-	  assignProjectItems();
-	  assignProjectStages();
-	  assignProjectStatuses();
-	  assignProjectTypes();
-	  assignProjectWarehouses();
-	  assignProjectManagers();
-	  assignProjectClasses();
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		for(var q = 0; q < 9; q++){
-			var num = 8 - q;
-			PROJECT_OBJECT.PROJECTS[i].splice(num, 1);
-		}
+  function createMaps()
+  {
+	  for(var i = 0; i < PROJECT_OBJECT.ITEMS.length; i++)
+	  {
+		 PROJECT_OBJECT.ITEMS["_" + PROJECT_OBJECT.ITEMS[i].id] = PROJECT_OBJECT.ITEMS[i];
 	  }
 	  
-
-	  
+	  for(var i = 0; i < PROJECT_OBJECT.PERSONS.length; i++)
+	  {
+		 PROJECT_OBJECT.PERSONS["_" + PROJECT_OBJECT.PERSONS[i].id] = PROJECT_OBJECT.PERSONS[i];
+	  }
+	  for(var i = 0; i < PROJECT_OBJECT.TYPES.length; i++)
+	  {
+		 PROJECT_OBJECT.TYPES["_" + PROJECT_OBJECT.TYPES[i].id] = PROJECT_OBJECT.TYPES[i];
+	  }
+	  for(var i = 0; i < PROJECT_OBJECT.STAGES.length; i++)
+	  {
+		 PROJECT_OBJECT.STAGES["_" + PROJECT_OBJECT.STAGES[i].id] = PROJECT_OBJECT.STAGES[i];
+	  }
+	  for(var i = 0; i < PROJECT_OBJECT.STATUSES.length; i++)
+	  {		 
+		 PROJECT_OBJECT.STATUSES["_" + PROJECT_OBJECT.STATUSES[i].id] = PROJECT_OBJECT.STATUSES[i];
+	  }
+	  for(var i = 0; i < PROJECT_OBJECT.WAREHOUSES.length; i++)
+	  {
+		 PROJECT_OBJECT.WAREHOUSES["_" + PROJECT_OBJECT.WAREHOUSES[i].id] = PROJECT_OBJECT.WAREHOUSES[i];
+	  }
+	  for(var i = 0; i < PROJECT_OBJECT.CLASSES.length; i++)
+	  {
+		 PROJECT_OBJECT.CLASSES["_" + PROJECT_OBJECT.CLASSES[i].id] = PROJECT_OBJECT.CLASSES[i];
+	  }
+	 
+  }
+  
+  function beginProjectMatching() {
+	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) 
+	  {
+		  PROJECT_OBJECT.PROJECTS[i].projectItem = PROJECT_OBJECT.ITEMS["_" + PROJECT_OBJECT.PROJECTS[i].projectItem];		  
+		  PROJECT_OBJECT.PROJECTS[i].stage = PROJECT_OBJECT.STAGES["_" + PROJECT_OBJECT.PROJECTS[i].stage];
+		  PROJECT_OBJECT.PROJECTS[i].status = PROJECT_OBJECT.STATUSES["_" + PROJECT_OBJECT.PROJECTS[i].status];
+	      PROJECT_OBJECT.PROJECTS[i].projectType = PROJECT_OBJECT.TYPES["_" + PROJECT_OBJECT.PROJECTS[i].projectType];		  
+	      PROJECT_OBJECT.PROJECTS[i].warehouse = PROJECT_OBJECT.WAREHOUSES["_" + PROJECT_OBJECT.PROJECTS[i].warehouse];
+	      PROJECT_OBJECT.PROJECTS[i].projectManagers = PROJECT_OBJECT.PERSONS["_" + PROJECT_OBJECT.PROJECTS[i].projectManagers];
+	      PROJECT_OBJECT.PROJECTS[i].projectClass = PROJECT_OBJECT.CLASSES["_" + PROJECT_OBJECT.PROJECTS[i].projectClass];
+	  }
+	 
 	  let date = new Date();
 
 	  TIME_FINISHED = date.getTime();
@@ -140,87 +168,4 @@ let TIME_FINISH;
 	  
   }
   
-  function assignProjectItems() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.ITEMS.length; j++) {	 
-			  
-			  if(PROJECT_OBJECT.PROJECTS[i].projectItem == PROJECT_OBJECT.ITEMS[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].projectItem = PROJECT_OBJECT.ITEMS[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
   
-  function assignProjectStages() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.STAGES.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].stage == PROJECT_OBJECT.STAGES[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].stage = PROJECT_OBJECT.STAGES[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
-  
-  function assignProjectStatuses() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.STATUSES.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].status == PROJECT_OBJECT.STATUSES[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].status = PROJECT_OBJECT.STATUSES[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
-  
-  function assignProjectTypes() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.TYPES.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].projectType == PROJECT_OBJECT.TYPES[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].projectType = PROJECT_OBJECT.TYPES[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
-  
-  function assignProjectWarehouses() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.WAREHOUSES.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].warehouse == PROJECT_OBJECT.WAREHOUSES[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].warehouse = PROJECT_OBJECT.WAREHOUSES[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
-  
-  function assignProjectManagers() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.PERSONS.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].projectManagers == PROJECT_OBJECT.PERSONS[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].projectManagers = PROJECT_OBJECT.PERSONS[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }
-  
-  function assignProjectClasses() {
-	  
-	  for(var i = 0; i < PROJECT_OBJECT.PROJECTS.length; i++) {
-		  for(var j = 0; j < PROJECT_OBJECT.CLASSES.length; j++) {
-			  if(PROJECT_OBJECT.PROJECTS[i].projectClass == PROJECT_OBJECT.CLASSES[j].id)
-				  PROJECT_OBJECT.PROJECTS[i].projectClass = PROJECT_OBJECT.CLASSES[j];
-		  }
-	  }
-	  
-	  //console.log("PROJECT_OBJECT_MATCH " , PROJECT_OBJECT);
-  }

@@ -368,13 +368,25 @@ public class ProjectObjectService
 				/*
 				ProjectionList projectionList = Projections.projectionList();
 				
+				projectionList.add(Projections.property("id"));
 				projectionList.add(Projections.property("project.id"));
-				projectionList.add(Projections.property("project.warehouse"));
-				//projectionList.add(Projections.property("project"));
+				projectionList.add(Projections.property("assignedDate"));
+				projectionList.add(Projections.property("assignee.id"));
+				projectionList.add(Projections.property("subAssignee.id"));
+				projectionList.add(Projections.property("assignedDate"));
+				projectionList.add(Projections.property("dueDate"));
+				projectionList.add(Projections.property("completed"));
+				projectionList.add(Projections.property("description"));
+				projectionList.add(Projections.property("notes"));
+				projectionList.add(Projections.property("taskStatus.id"));
+				projectionList.add(Projections.property("title"));
+				projectionList.add(Projections.property("type"));
+				projectionList.add(Projections.property("severity"));
+
 
 				criteria.setProjection(projectionList);
-				*/
 				
+				*/
 
 				
 				System.out.println("Task id = " + Order.asc("id"));

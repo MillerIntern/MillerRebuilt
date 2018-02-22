@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 
 
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,6 +30,7 @@ import projectObjects.SalvageValue;
 import projectObjects.Task;
 import projectObjects.ChangeOrder;
 import projectObjects.Subcontractor;
+import projectObjects.City;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.EquipmentFiller;
@@ -38,6 +40,7 @@ import services.helpers.ProjectInformationFiller;
 import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
+import services.helpers.CityFiller;
 
 
 
@@ -281,6 +284,9 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("subcontractors") != null && !parameters.get("subcontractors").isEmpty())
 			if(parameters.get("subcontractors").equals("true"))
 				map.put("subcontractors",ProjectObjectService.getAllAsJsonString("Subcontractor"));
+		if(parameters.get("cities") != null && !parameters.get("cities").isEmpty())
+			if(parameters.get("cities").equals("true"))
+				map.put("cities",ProjectObjectService.getAllAsJsonString("City"));
 		return g.toJson(map);
 	}
 
@@ -817,6 +823,21 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.addObject("Subcontractor", s);
 		
 		return "SUBCONTRACTOR_ADDED";
+	}
+	
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public synchronized static String createCity(Map<String, String> parameters) throws ClassNotFoundException, ParseException {				
+		
+		City city = new City();
+
+		CityFiller.fillCity(city, parameters);
+
+		ProjectObjectService.addObject("City", city);
+		
+		return "CITY_ADDED";
 	}
 	
 }

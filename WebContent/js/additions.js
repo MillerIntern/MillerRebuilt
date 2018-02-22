@@ -2,6 +2,7 @@ let users;
 let projectItems;
 let equipmentSuppliers;
 let subcontractors;
+let cities;
 
 let CURRENT_INTENT = {
 		ADD : 1 ,
@@ -120,6 +121,7 @@ function getStates()
 	});
 }
 
+
 function fillStates(json)
 {
 	var d = document.createDocumentFragment();
@@ -136,6 +138,7 @@ function fillStates(json)
 	$('#region').chosen({width : '200px'});
 
 }
+
 
 function createWarehouse()
 {
@@ -331,7 +334,7 @@ function swapDuplicateItem()
 		alert("Please fill out all of the information!");
 	}
 	
-	//	$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').click(function() { 		makeChanges(); 	});
 	$('.makeChanges').removeAttr('disabled'); 
 }
 
@@ -678,6 +681,177 @@ function swapDuplicateSubcontractor()
 	$('.makeChanges').removeAttr('disabled'); 
 }
 
+function createCity()
+{
+	var city = $('#cityName').val();
+	
+	console.log("CITY NAME = " , city);
+	
+	for(var i = 0; i < cities.length; i++) {
+		if(cities[i].name == city) {
+			alert("Project Item must not already exist in the database!");
+			return;
+		}
+	}
+	
+	if(city != '')
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'createCity',
+				'cityName': city,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#cityName').val('');
+				alert("City Created Successfully!");
+				location.reload(true);
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+	
+	
+	$('.makeChanges').click(function() { 		
+		makeChanges(); 	
+	});
+	
+	$('.makeChanges').removeAttr('disabled'); 
+}
+
+function editCity()
+{
+	var city = $('#cityName').val();
+	var cityId = $('#cityDropdown').val();
+	
+	if(city != '')
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'editCity',
+				'cityName': city,
+				'cityId' : cityId,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#cityName').val('');
+				alert("City Edited Successfully!");
+				location.reload(true);
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+	
+		$('.makeChanges').click(function() {
+			makeChanges();
+		});
+	$('.makeChanges').removeAttr('disabled');
+}
+
+function removeCity()
+{
+	var cityId = $('#projectItemDropdown').val();
+	
+	if(cityId != '' || !cityId)
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'removeCity',
+				'itemId' : cityId,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				if(data == "IN_USE")
+				{
+					alert("City Still In Use By Another Project! NOT DELETED");
+				}
+				else
+				{
+					alert("City Deleted Successfully!");
+					location.reload(true);
+				}
+				$('#cityName').val('');
+
+
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+	
+	$('.makeChanges').click(function() { 		
+		makeChanges(); 	
+	});
+	
+	$('.makeChanges').removeAttr('disabled');
+}
+
+function swapDuplicateCity()
+{
+	var newCityId = $('#cityDropdown').val();
+	var oldCityId = $('#duplicateCityDropdown').val();
+	
+	if(newCityId == oldCityId){
+		alert("City to remove must be different from the item you want to replace it with!");
+		$('.makeChanges').removeAttr('disabled');
+		$('.makeChanges').click(function() { 		makeChanges(); 	});
+		return;
+	}
+	
+	if((newCityId != '' || !newCityId  || newCityId == "default") || (oldCityId != '' || !oldCityId || oldCityId == "default"))
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'swapAndRemove',
+				'table' : "Warehouse" ,
+				'column' : "city_id" ,
+				'tableToRemoveFrom' : 'City',
+				'newObjectId' : newCityId,
+				'oldObjectId' : oldCityId ,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				if(data == "IN_USE")
+				{
+					alert("City Still In Use By Another Project! NOT DELETED");
+				}
+				else
+				{
+					alert("City Deleted Successfully!");
+					location.reload(true);
+				}
+				$('#cityName').val('');
+				$('#duplicateCityDropdown').val('default');
+
+
+			}
+		});
+	else
+	{
+		alert("Please fill out all of the information!");
+	}
+	
+	$('.makeChanges').click(function() { 		makeChanges(); 	});
+	$('.makeChanges').removeAttr('disabled'); 
+}
+
 function addPerson()
 {
 	var personName = $('#personName').val();
@@ -804,7 +978,9 @@ function getEquipmentSuppliers () {
 			'domain': 'project',
 			'action': 'getSpecificObjects',		
 			'equipmentvendor': true,
-			'item' : true
+			'item' : true,
+			'cities' : true,
+			'subcontractors' : true
 		}, complete: function (data) {
 			console.log("RESPONSE JSON FOR getEquipmentSuppliers() = ",data.responseJSON);
 			if (data.responseJSON.equipmentvendor) {
@@ -817,7 +993,17 @@ function getEquipmentSuppliers () {
 				fillProjectItemsDropdown();
 				console.log("Project Item NAMES = ",projectItems);
 			}
-			getSubcontractors();
+			if (data.responseJSON.cities) {
+				cities = JSON.parse(data.responseJSON.cities);
+				fillCityDropdown();
+				console.log("City NAMES = ", cities);
+			}
+			if (data.responseJSON.subcontractors) {
+				subcontractors = JSON.parse(data.responseJSON.subcontractors);
+				fillSubcontractorDropdown();
+				console.log("Sub NAMES = ",subcontractors);
+			}
+			
 		}
 		
 	});	
@@ -960,6 +1146,40 @@ function fillSubcontractorDropdown()
 	
 	$('#subcontractorDropdown').chosen({width : '200px'});
 	$('#duplicateSubcontractorDropdown').chosen({width : '200px'});
+
+
+}
+
+function fillCityDropdown(json)
+{
+	console.log("FILLING CITIES" , cities);
+	$('#cityDropdown').find('option').remove();
+	
+	cities.sort(function(a,b){
+		if(!a.name) return -1;
+		if(!b.name) return 1;
+		
+		if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	for(var i = 0; i < cities.length; i++) 
+	{
+		let option = document.createElement('option');
+		option.text = cities[i].name;
+		option.value = cities[i].id;
+		$('#cityDropdown').append(option);
+		
+		option = document.createElement('option');
+		option.text = cities[i].name;
+		option.value = cities[i].id;
+		$('#duplicateCityDropdown').append(option);
+	}
+	
+	$('#cityDropdown').chosen({width : '200px'});
+	$('#duplicateCityDropdown').chosen({width : '200px'});
 
 
 }
@@ -1136,6 +1356,16 @@ function matchProjectObject(selectedId , _tabId)
 				}
 			}
 			break;
+		case "cityTab":
+			if(cities) 
+			{
+				console.log("ABOUT TO SEARH");
+				for(var i = 0; i < cities.length; i++) {
+					if(cities[i].id == selectedId)
+						return cities[i];
+				}
+			}
+			break;
 	}
 	
 }
@@ -1160,6 +1390,9 @@ function makeChanges()
 			break;
 		case "equipmentSupplier":
 			handleEquipmentSupplierChanges();
+			break;
+		case "cityTab":
+			handleCityChanges();
 			break;
 	}
 	
@@ -1218,6 +1451,25 @@ function handleSubcontractorChanges()
 			break;
 		case CURRENT_INTENT.REMOVE_DUPLICATE:
 			swapDuplicateSubcontractor();
+			break;
+	}
+}
+
+function handleCityChanges()
+{
+	switch(CURRENT_INTENT.INTENT)
+	{
+		case CURRENT_INTENT.ADD:
+			createCity();
+			break;
+		case CURRENT_INTENT.EDIT:
+			editCity();
+			break;
+		case CURRENT_INTENT.REMOVE:
+			removeCity();
+			break;
+		case CURRENT_INTENT.REMOVE_DUPLICATE:
+			swapDuplicateCity();
 			break;
 	}
 }

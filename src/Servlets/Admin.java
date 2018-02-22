@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -241,6 +242,32 @@ public class Admin extends HttpServlet
 				e.printStackTrace();
 			}
 			response = "subcontractor edited";
+		}
+		else if(action.equals("createCity"))
+		{
+			
+			System.out.println("Creating City");
+			
+			try {
+			response = ProjectService.createCity(parameters);
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+			response = "city created";
+		}
+		else if(action.equals("editCity"))
+		{
+			String newCityName = parameters.get("cityName");
+			String cityID = parameters.get("cityId");
+			Long id = Long.parseLong(cityID);
+			
+			City city = new City(newCityName);
+			try {
+				ProjectObjectService.editObject("City", id , city , 1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			response = "city edited";
 		}
 		else if(action.equals("addPerson"))
 		{
