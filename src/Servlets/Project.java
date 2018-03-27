@@ -581,6 +581,15 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 
+		} else if (action.equals("getTheTasks")) {
+			try {
+				System.out.println("Getting Tasks");
+				response = ProjectObjectService.getAllAsJsonString("Task");
+
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+
 		} else if (action.equals("getUserInfo")) {
 			System.out.println("getting User Info");
 			System.out.println("GET == " + req.getSession().getAttribute("user"));
@@ -693,6 +702,16 @@ public class Project extends HttpServlet
 			System.out.println("SIZE OF GET ALL PROJECTS = " + response.length());
 			
 			//System.out.println("Projects = " + response);
+		}
+		else if(action.equals("getSpecificFieldIdsOfProject"))
+		{
+			
+			System.out.println("Getting PROJECT FIELDS FOR TASK");
+			
+			String projects = ProjectObjectService.getSpecificFieldIdsOfProject(parameters);
+			Gson gson = new Gson();
+			
+			response = projects;
 		}
 
 		

@@ -35,6 +35,8 @@ $(document).ready(function()
 		{
 	
 			$('.removeButton').hide();
+			$('.projectObjectDropdowns').hide();
+
 			$('.makeChanges').click( function() {
 				makeChanges();
 			});
@@ -1202,12 +1204,15 @@ function intentSwitch(intent)
 	$('.removeButton').hide();
 
 	$('.duplicateRemoval').hide();
+	
+	$('.projectObjectDropdowns').show();
 
 	switch(intent)
 	{
 		case CURRENT_INTENT.ADD:
 			CURRENT_INTENT.INTENT = CURRENT_INTENT.ADD;
 			clearEditingFields();
+			$('.projectObjectDropdowns').hide();
 			$('.projectObjectDropdown').off('change');
 			$('.editingRow').show();
 

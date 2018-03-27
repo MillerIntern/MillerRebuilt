@@ -102,7 +102,7 @@ function getUsers () {
 				users = data.responseJSON;
 				console.log("USERS = ",users);
 				createDropdown(data.responseJSON);
-				getTasks();
+				getTheTasks();
 			}
 		}
 		
@@ -398,6 +398,76 @@ function createTaskTableFromFilter(){
 	for (var i = 0; i < projectsOfInterest.length; i++) {
 			count++;
 			addTaskToTable(projectsOfInterest[i]);
+	}
+	if (count === 0) {
+		clearAndAddSingleRow('No Tasks to Display!');
+	}
+	
+	
+}
+
+/**
+ * This function creates the task table with from a
+ * certain filter
+ * 
+ * INNER FUNCTION CALLS: clearAndAddSingleRow()
+ */
+function createTaskTableFromFilter(){
+	console.log("PROJECTS OF INTEREST == ", projectsOfInterest);
+	var count = 0;
+	for (var i = 0; i < projectsOfInterest.length; i++) {
+			count++;
+			let taskListing = document.createElement('tr');
+			console.log("PROJ IDDDDDD = ", projectsOfInterest[i].id);
+			taskListing.id = projectsOfInterest[i].id;
+			taskListing.value = projectsOfInterest[i].id;
+			taskListing.onclick = function () { 
+				expandTaskInfo(this); 
+			}; 
+			
+			let projectDetails = document.createElement('td');
+			let taskTitle = document.createElement('td');
+			let taskAssignee = document.createElement('td');
+			let taskDesc = document.createElement('td');
+			let createdDate = document.createElement('td');
+			let dueDate = document.createElement('td');
+			let severity = document.createElement('td');
+			let status = document.createElement('td');
+			let notes = document.createElement('td');
+			
+			
+			projectDetails.innerHTML = projectsOfInterest[i].project.warehouse.city.name + 
+						' #' + projectsOfInterest[i].project.warehouse.warehouseID +
+						' - ' + projectsOfInterest[i].project.projectItem.name;
+			taskTitle.innerHTML = projectsOfInterest[i].title;
+			if(projectsOfInterest[i].assignee)
+				taskAssignee.innerHTML = projectsOfInterest[i].assignee.firstName;
+			else
+				taskAssignee.innerHTML = projectsOfInterest[i].subAssignee.name;
+
+			taskDesc.innerHTML = projectsOfInterest[i].description;
+			createdDate.innerHTML = projectsOfInterest[i].assignedDate;
+			dueDate.innerHTML = projectsOfInterest[i].dueDate;
+			severity.innerHTML = projectsOfInterest[i].severity;
+			severity.align = 'center';
+			status.innerHTML = projectsOfInterest[i].status.status;
+			status.align = 'center';
+			notes.innerHTML = projectsOfInterest[i].notes;
+			
+			
+			$(taskListing).append(projectDetails);
+			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskAssignee);
+			$(taskListing).append(taskDesc);
+			$(taskListing).append(createdDate);
+			$(taskListing).append(dueDate);
+			$(taskListing).append(severity);
+			$(taskListing).append(status);
+			$(taskListing).append(notes);
+			
+			
+			$('#taskTable > tbody').append(taskListing);
+		
 	}
 	if (count === 0) {
 		clearAndAddSingleRow('No Tasks to Display!');
@@ -1018,7 +1088,8 @@ function printTasks(projectsOfInterest) {
 
 function addTaskToTable(_task)
 {
-	if(_task) return;
+	if(!_task) return;
+	
 	let taskListing = document.createElement('tr');
 	
 	taskListing.id = _task.id;
@@ -1074,318 +1145,13 @@ function addTaskToTable(_task)
 
 	
 	$('#taskTable > tbody').append(taskListing);	
+	console.log("APPENDED");
 }
 
-//ORIGNAL
 
-/**
- * This function creates the task table.  It initially sorts
- * the tasks as well.  It then displays all of the applicable tasks
- * in the table
- * 
- * INNER FUNCTION CALLS: clearAndAddSingleRow()
- */
-function createTaskTable () {
-	tasksOfInterest = new Array();
-	let selector = $('#taskSelector').val();
-	console.log("taskSelector EQUALS " , selector);
-	console.log("TASKS WHILE CREATING TABLE == ", tasks);
-	tasks.sort(function(a,b){
-		if(a.assignee && b.assignee) {
-			if(a.assignee.name < b.assignee.name) return -1;
-			if(a.assignee.name > b.assignee.name) return 1;
-		} 
-		else if(a.assignee && b.subAssignee) {
-			if(a.assignee.name < b.subAssignee.name.toLowerCase()) return -1;
-			if(a.assignee.name > b.subAssignee.name.toLowerCase()) return 1;
-		}
-		else if(a.subAssignee && b.assignee) {
-			if(a.subAssignee.name.toLowerCase() < b.assignee.name) return -1;
-			if(a.subAssignee.name.toLowerCase() > b.assignee.name) return 1;
-		}
-		else if(a.subAssignee && b.subAssignee) {
-			if(a.subAssignee.name.toLowerCase() < b.subAssignee.name.toLowerCase()) return -1;
-			if(a.subAssignee.name.toLowerCase() > b.subAssignee.name.toLowerCase()) return 1;
-		}
-		else{
-			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
-				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
-				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
-				else{
-					if(a.project.projectItem.name < b.project.projectItem.name) return -1;
-					if(a.project.projectItem.name > b.project.projectItem.name) return 1;
-					else{
-						if(a.severity < b.severity) return -1;
-						if(a.severity > b.severity) return 1;
-						return 0;
-					}
-				}
-			} else{ //SORTS BY SEVERITY IF USER IS ADMIN
-				if(a.severity < b.severity) return -1;
-				if(a.severity > b.severity) return 1;
-				else{
-					if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
-					if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
-					else{
-						if(a.project.projectItem.name < b.project.projectItem.name) return -1;
-						if(a.project.projectItem.name > b.project.projectItem.name) return 1;
-						return 0;
-					}
-				}
-			}
-		}  
-	});
-	var count = 0;
-	for (var i = 0; i < tasks.length; i++) { 
-		if((selector === 'open' && tasks[i].status.id != 1) || 
-				(selector === 'complete' && tasks[i].status.id != 2) ||
-				(selector === 'open_complete' && tasks[i].status.id == 3) ||
-				(selector === 'closed' && tasks[i].status.id != 3)) 
-				continue; // do nothing
-	
-        if(tasks[i].assignee == null) continue; 
-		if (tasks[i].assignee.name === user.name) {  
-			count++;
-			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
-			let taskListing = document.createElement('tr');
-		
-			taskListing.id = tasks[i].id;
-			taskListing.value = tasks[i].id;
-			taskListing.onclick = function () { 
-				expandTaskInfo(this); 
-			}; 
-			
-			let projectDetails = document.createElement('td');
-			let taskTitle = document.createElement('td');
-			let taskAssignee = document.createElement('td');
-			let taskDesc = document.createElement('td');
-			let createdDate = document.createElement('td');
-			let dueDate = document.createElement('td');
-			let severity = document.createElement('td');
-			let status = document.createElement('td');
-			let notes = document.createElement('td');
 
-			
-			
-			
-			if(!tasks[i].project.projectItem)
-				console.log("NULL TASK " , tasks[i]);
-			
-			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
-						' #' + tasks[i].project.warehouse.warehouseID +
-						' - ' + tasks[i].project.projectItem.name;
-			taskTitle.innerHTML = tasks[i].title;
-			if(tasks[i].assignee)
-				taskAssignee.innerHTML = tasks[i].assignee.firstName;
-			else
-				taskAssignee.innerHTML = tasks[i].subAssignee.name;
-			
-			taskDesc.innerHTML = tasks[i].description;
-			createdDate.innerHTML = tasks[i].assignedDate;
-			dueDate.innerHTML = tasks[i].dueDate;
-			severity.innerHTML = tasks[i].severity;
-			severity.align = 'center';
-			status.innerHTML = tasks[i].status.status;
-			status.align = 'center';
-			notes.innerHTML = tasks[i].notes;
-			
-			
-			$(taskListing).append(projectDetails);
-			$(taskListing).append(taskTitle);
-			$(taskListing).append(taskAssignee);
-			$(taskListing).append(taskDesc);
-			$(taskListing).append(createdDate);
-			$(taskListing).append(dueDate);
-			$(taskListing).append(severity);
-			$(taskListing).append(status);
-			$(taskListing).append(notes);
-		
-			
-			$('#taskTable > tbody').append(taskListing);
-		}
-	}
-	projectsOfInterest = tasksOfInterest;
-	if (count === 0) {
-		clearAndAddSingleRow('No Tasks to Display!');
-	}
-}
 
-function createTaskTableByManager (tasks) {
-	let selector = $('#taskSelector').val();
-    tasksOfInterest = new Array();
-	console.log("SELECTOR ==== " ,selector);
-	console.log("MANAGERS OF INTEREST  == ",managersOfInterest);
-	tasks.sort(function(a,b){
-		if(a.assignee && b.assignee) {
-			if(a.assignee.name < b.assignee.name) return -1;
-			if(a.assignee.name > b.assignee.name) return 1;
-		} 
-		else if(a.assignee && b.subAssignee) {
-			if(a.assignee.name < b.subAssignee.name.toLowerCase()) return -1;
-			if(a.assignee.name > b.subAssignee.name.toLowerCase()) return 1;
-		}
-		else if(a.subAssignee && b.assignee) {
-			if(a.subAssignee.name.toLowerCase() < b.assignee.name) return -1;
-			if(a.subAssignee.name.toLowerCase() > b.assignee.name) return 1;
-		}
-		else if(a.subAssignee && b.subAssignee) {
-			if(a.subAssignee.name.toLowerCase() < b.subAssignee.name.toLowerCase()) return -1;
-			if(a.subAssignee.name.toLowerCase() > b.subAssignee.name.toLowerCase()) return 1;
-		}
-		else{
-			if(a.severity < b.severity) return -1;
-			if(a.severity > b.severity) return 1;
-			else{
-				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
-				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
-				else{
-					if(a.project.projectItem.name < b.project.projectItem.name) return -1;
-					if(a.project.projectItem.name > b.project.projectItem.name) return 1;
-					return 0;
-				}
-			}
-		}
-	});
-	var count = 0;
-	var all = false;
-	for(var k = 0; k < managersOfInterest.length; k++)
-		if(managersOfInterest[k].toLowerCase() == "all") all = true;
-	for (var i = 0; i < tasks.length; i++) {
-		if((selector === 'open' && tasks[i].status.id != 1) || 
-				(selector === 'complete' && tasks[i].status.id != 2) ||
-				(selector === 'open_complete' && tasks[i].status.id == 3) ||
-				(selector === 'closed' && tasks[i].status.id != 3)) 
-				continue; // do nothing
-		if(all == true)
-			{
-			//console.log("taks = " + tasks[i].assignee);
-			tasksOfInterest.push(tasks[i]);
-			count++;
-			let taskListing = document.createElement('tr');
-			taskListing.id = tasks[i].id;
-			taskListing.value = tasks[i].id;
-			taskListing.onclick = function () { 
-				expandTaskInfo(this); 
-			}; 
-			
-			let projectDetails = document.createElement('td');
-			let taskTitle = document.createElement('td');
-			let taskAssignee = document.createElement('td');
-			let taskDesc = document.createElement('td');
-			let createdDate = document.createElement('td');
-			let dueDate = document.createElement('td');
-			let severity = document.createElement('td');
-			let status = document.createElement('td');
-			let notes = document.createElement('td');
-			
-			
-			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
-						' #' + tasks[i].project.warehouse.warehouseID +
-						' - ' + tasks[i].project.projectItem.name;
-			taskTitle.innerHTML = tasks[i].title;
-			if(tasks[i].assignee)
-				taskAssignee.innerHTML = tasks[i].assignee.firstName;
-			else
-				taskAssignee.innerHTML = tasks[i].subAssignee.name;
-			taskAssignee.id = "assigneeDisplay";
-			taskAssignee.width = "10px";
-			taskDesc.innerHTML = tasks[i].description;
-			taskDesc.width = "200%";
-			taskDesc.style ="white-space: normal";
-			//taskDesc.style ="max-width: 750px";
-			createdDate.innerHTML = tasks[i].assignedDate;
-			dueDate.innerHTML = tasks[i].assignedDate;
-			severity.innerHTML = tasks[i].severity;
-			severity.align = 'center';
-			severity.width = "30%";
-			status.innerHTML = tasks[i].status.status;
-			status.align = 'center';
-			notes.innerHTML = tasks[i].notes;
-			notes.width = "500%";
-			notes.style ="white-space: normal";
-			
-			
-			$(taskListing).append(projectDetails);
-			$(taskListing).append(taskTitle);
-			$(taskListing).append(taskAssignee);
-			$(taskListing).append(taskDesc);
-			$(taskListing).append(createdDate);
-			$(taskListing).append(dueDate);
-			$(taskListing).append(severity);
-			$(taskListing).append(status);
-			$(taskListing).append(notes);
-	
-			
-			$('#taskTable > tbody').append(taskListing);
-			
-			}
-		else if(!all){
-	    //console.log("tasks assignee = " + tasks[i].assignee.firstName);
-	    for(var q = 0; q < managersOfInterest.length; q++)
-	    {
-	    	//console.log("interesr in " + managersOfInterest[q]);
-	    
-		if ((tasks[i].assignee != undefined && tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) ||
-				(tasks[i].subAssignee != undefined && tasks[i].subAssignee.name.toLowerCase() == managersOfInterest[q].toLowerCase())) {
-			count++;
-			tasksOfInterest.push(tasks[i]);
-			let taskListing = document.createElement('tr');
-			taskListing.id = tasks[i].id;
-			taskListing.value = tasks[i].id;
-			taskListing.onclick = function () { 
-				expandTaskInfo(this); 
-			}; 
-			
-			let projectDetails = document.createElement('td');
-			let taskTitle = document.createElement('td');
-			let taskAssignee = document.createElement('td');
-			let taskDesc = document.createElement('td');
-			let createdDate = document.createElement('td');
-			let dueDate = document.createElement('td');
-			let severity = document.createElement('td');
-			let status = document.createElement('td');
-			let notes = document.createElement('td');
-	
 
-			
-			projectDetails.innerHTML = tasks[i].project.warehouse.city.name + 
-						' #' + tasks[i].project.warehouse.warehouseID +
-						' - ' + tasks[i].project.projectItem.name;
-			taskTitle.innerHTML = tasks[i].title;
-			
-			if(tasks[i].assignee)
-				taskAssignee.innerHTML = tasks[i].assignee.firstName;
-			else
-				taskAssignee.innerHTML = tasks[i].subAssignee.name;
-			
-			taskDesc.innerHTML = tasks[i].description;
-			createdDate.innerHTML = tasks[i].assignedDate;
-			dueDate.innerHTML = tasks[i].dueDate;
-			severity.innerHTML = tasks[i].severity;
-			severity.align = 'center';
-			status.innerHTML = tasks[i].status.status;
-			notes.innerHTML = tasks[i].notes;
-			
-			
-			$(taskListing).append(projectDetails);
-			$(taskListing).append(taskTitle);
-			$(taskListing).append(taskAssignee);
-			$(taskListing).append(taskDesc);
-			$(taskListing).append(createdDate);
-			$(taskListing).append(dueDate);
-			$(taskListing).append(severity);
-			$(taskListing).append(status);
-			$(taskListing).append(notes);
-			
-			
-			$('#taskTable > tbody').append(taskListing);
-		}
-	  }
-     } 
-	}
-	projectsOfInterest = tasksOfInterest;
-	if (count === 0) {
-		clearAndAddSingleRow('No Tasks to Display!');
-	}
-}
+
+
 

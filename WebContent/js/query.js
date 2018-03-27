@@ -1485,7 +1485,7 @@ function generateReport(reportType)
 		case PROPOSAL_ON_HOLD:
 			stage.push(PROPOSAL_STAGE);
 			title = "On Hold Proposals";
-			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			break;
 		case ACTIVE_WEEKLY:
 			stage.push(ACTIVE_STAGE);
@@ -1520,7 +1520,7 @@ function generateReport(reportType)
 			break;
 		case ACTIVE_ON_HOLD:
 			stage.push(ACTIVE_STAGE);
-			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			title = "On Hold Active Projects";
 			break;
 			
@@ -1545,7 +1545,7 @@ function generateReport(reportType)
 		case BUDGETARY_ON_HOLD:
 			stage.push(BUDGETARY_STAGE);
 			title="On Hold Budgetary Projects";
-			status.push(PROJECT_STATUS_ON_HOLD);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			break;
 		case INACTIVE_WEEKLY:
 			stage.push(INACTIVE_STAGE);
@@ -1574,7 +1574,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_SITE_SURVEY);
+			//status.push(PROJECT_STATUS_SITE_SURVEY);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
 			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
@@ -1597,7 +1597,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_SITE_SURVEY);
+			//status.push(PROJECT_STATUS_SITE_SURVEY);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
 			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
@@ -1620,7 +1620,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_SITE_SURVEY);
+			//status.push(PROJECT_STATUS_SITE_SURVEY);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
 			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
@@ -1692,7 +1692,7 @@ function generateReport(reportType)
 			region.push("SE");
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
-			status.push(PROJECT_STATUS_ON_HOLD);
+			//status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_SCHEDULED);
@@ -1719,7 +1719,7 @@ function generateReport(reportType)
 			region.push("NE");
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
-			status.push(PROJECT_STATUS_ON_HOLD);
+			//status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_PO);
@@ -1743,7 +1743,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_PREPARING_PROPOSAL);
-			status.push(PROJECT_STATUS_SITE_SURVEY);
+			//status.push(PROJECT_STATUS_SITE_SURVEY);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_ENGINEERING_REPORTS);
 			status.push(PROJECT_STATUS_PROPOSAL_RESUBMITTED);
@@ -1804,7 +1804,7 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_H);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
-			status.push(PROJECT_STATUS_ON_HOLD);
+			//status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
@@ -1982,7 +1982,7 @@ function generateReport(reportType)
 			title = "Hearing Center Report";
 			stage.push(ACTIVE_STAGE);
 			stage.push(PROPOSAL_STAGE);
-			status.push(PROJECT_STATUS_ON_HOLD);
+			//status.push(PROJECT_STATUS_ON_HOLD);
 			status.push(PROJECT_STATUS_PROPOSAL_SUBMITTED);
 			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);

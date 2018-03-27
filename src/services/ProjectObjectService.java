@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
@@ -135,6 +136,78 @@ public class ProjectObjectService
 		
 		return null;
 	}
+	
+	public synchronized static String getSpecificFieldIdsOfProject(Map<String, String> parameters)
+	{
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		Query q = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+		
+			tx.commit();
+		}
+		Class<?> c;
+		
+		try 
+		{
+			c = Class.forName("projectObjects.Project");
+			
+			
+			Criteria criteria = session.createCriteria(c);
+				
+				
+				ProjectionList projectionList = Projections.projectionList();
+				
+				
+
+				//THE ORDER OF THESE ADDS MATTERS DUE TO HOW THESE IDS ARE MATCHED ON THE FRONT END IN
+
+				projectionList.add(Projections.property("id"));
+				if(parameters.get("item") != null && !parameters.get("item").isEmpty())
+					if(parameters.get("item").equals("true"))
+						projectionList.add(Projections.property("projectItem.id") , "projectItem");
+				
+				if(parameters.get("stage") != null && !parameters.get("stage").isEmpty())
+					if(parameters.get("stage").equals("true"))
+						projectionList.add(Projections.property("stage.id") , "stage");
+				
+				if(parameters.get("status") != null && !parameters.get("status").isEmpty())
+					if(parameters.get("status").equals("true"))
+						projectionList.add(Projections.property("status.id") , "status");
+				
+				if(parameters.get("warehouse") != null && !parameters.get("warehouse").isEmpty())
+					if(parameters.get("warehouse").equals("true"))
+						projectionList.add(Projections.property("warehouse.id") , "warehouse");
+				
+				if(parameters.get("manager") != null && !parameters.get("manager").isEmpty())
+					if(parameters.get("manager").equals("true"))
+						projectionList.add(Projections.property("projectManagers.id") , "projectManagers");
+				
+				if(parameters.get("class") != null && !parameters.get("class").isEmpty())
+					if(parameters.get("class").equals("true"))
+						projectionList.add(Projections.property("projectClass.id") , "projectClass");
+
+				criteria.setProjection(projectionList);
+				
+			List<?> list = criteria.list();
+	       
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * This class returns all objects of a certain type from the database.
 	 * @param domain the type of object to be returned.
@@ -365,7 +438,7 @@ public class ProjectObjectService
 	
 			} else if(domain.equals("Task")) {
 				
-				/*
+				
 				ProjectionList projectionList = Projections.projectionList();
 				
 				projectionList.add(Projections.property("id"));
@@ -373,12 +446,11 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("assignedDate"));
 				projectionList.add(Projections.property("assignee.id"));
 				projectionList.add(Projections.property("subAssignee.id"));
-				projectionList.add(Projections.property("assignedDate"));
 				projectionList.add(Projections.property("dueDate"));
 				projectionList.add(Projections.property("completed"));
 				projectionList.add(Projections.property("description"));
 				projectionList.add(Projections.property("notes"));
-				projectionList.add(Projections.property("taskStatus.id"));
+				projectionList.add(Projections.property("taskStatus"));
 				projectionList.add(Projections.property("title"));
 				projectionList.add(Projections.property("type"));
 				projectionList.add(Projections.property("severity"));
@@ -386,7 +458,10 @@ public class ProjectObjectService
 
 				criteria.setProjection(projectionList);
 				
-				*/
+				
+				
+				
+				
 
 				
 				System.out.println("Task id = " + Order.asc("id"));

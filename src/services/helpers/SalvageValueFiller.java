@@ -37,6 +37,12 @@ public class SalvageValueFiller
 			{
 				sv = new SalvageValue(fsalvageDate, salvageAmount);
 			}
+			else
+			{
+				cd.getSalvageValue().setValue(salvageAmount);
+				cd.getSalvageValue().setDate(fsalvageDate);
+				return cd.getSalvageValue();
+			}
 
 		}
 		return sv;

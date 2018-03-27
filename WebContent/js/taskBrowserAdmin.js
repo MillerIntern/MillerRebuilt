@@ -168,7 +168,6 @@ function createManagerQueue()
     	}    	
     });
 
-    console.log("OPTIONS: " , $('#projectManagerDropdown > option'));
     
     
 	document.getElementById("assigneeSort").style.display = 'inline';

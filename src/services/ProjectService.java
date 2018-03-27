@@ -263,6 +263,9 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("stage") != null && !parameters.get("stage").isEmpty())
 			if(parameters.get("stage").equals("true"))
 				map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));
+		if(parameters.get("inspectionstatus") != null && !parameters.get("inspectionstatus").isEmpty())
+			if(parameters.get("inspectionstatus").equals("true"))
+				map.put("inspectionstatus", ProjectObjectService.getAllAsJsonString("InspectionStatus"));
 		if(parameters.get("permitstage") != null && !parameters.get("permitstage").isEmpty())
 			if(parameters.get("permitstage").equals("true"))
 				map.put("permitstage", ProjectObjectService.getAllAsJsonString("PermitStage"));
@@ -287,6 +290,12 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("cities") != null && !parameters.get("cities").isEmpty())
 			if(parameters.get("cities").equals("true"))
 				map.put("cities",ProjectObjectService.getAllAsJsonString("City"));
+		if(parameters.get("task_status") != null && !parameters.get("task_status").isEmpty())
+			if(parameters.get("task_status").equals("true"))
+				map.put("taskStatus",ProjectObjectService.getAllAsJsonString("TaskStatus"));
+		if(parameters.get("users") != null && !parameters.get("users").isEmpty())
+			if(parameters.get("users").equals("true"))
+				map.put("users", ProjectObjectService.getAllAsJsonString("User"));
 		return g.toJson(map);
 	}
 
@@ -717,10 +726,10 @@ public class ProjectService extends ProjectObjectService
 		{
 			NewEquipment item = iter.next();
 
-			System.out.println(item.getId() + " is the ID compared to " + equipmentID);
+			//System.out.println(item.getId() + " is the ID compared to " + equipmentID);
 			if(item.getId().longValue() == equipmentID.longValue())
 			{
-				System.out.println("Found the correct equipment!");
+				//System.out.println("Found the correct equipment!");
 				oldEquipment = item;
 				EquipmentFiller.fillNewEquipment(oldEquipment, params);
 

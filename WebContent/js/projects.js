@@ -21,6 +21,19 @@ $(document).ready(function(){$('textarea').keydown(function(){
 	autoSizeTextAreas(this);
 })});
 
+$(document).ready(function(){$('.autofill_NA').click(function(){
+	
+	if(!(confirm("Are you sure you want to mark all of the Permits and Inspections for this project as N/A?")))
+		return;
+	
+	$('.autofill_NA').each(function(index){
+			$(this).val('true');
+	});
+
+	
+	fillPermitsAndInspectionsWithNA(this);
+})});
+
 
 //NEXT 3 FUNCTIONS CORRESPOND TO CHOSEN STUFF
 /*
@@ -97,6 +110,8 @@ let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
 let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 let TASK_ACTION = "createTask";
 let CHANGE_ORDER_TYPES = new Array();
+
+
 
 
 
@@ -408,9 +423,13 @@ function fillTabs_CLOSEOUT(data)
 		
 		if(json.closeoutDetails.salvageValue != null)
 		{
-			$('#closeoutData').find("#salvageDate").val(json.closeoutDetails.salvageValue.date);
-			$('#closeoutData').find("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
+			$('#otherItemsSalvageTable').find("#salvageDate").val(json.closeoutDetails.salvageValue.date);
+			$('#otherItemsSalvageTable').find("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
 		}
+		
+	    console.log("SALVAGE AMOUNT FILL" , 			$('#otherItemsSalvageTable').find("#salvageAmount").val());
+;
+
 	
 		
 	}
@@ -595,8 +614,10 @@ function saveProject_CLOSEOUT()
 
     var closeoutDocumentsNotes = $('#closeoutData').find("#closeoutDocumentsNotes").val();
     
-    var salvageDate = $('#closeoutData').find("#salvageDate").val();
-    var salvageAmount = $('#closeoutData').find("#salvageAmount").val();
+    var salvageDate = $('#otherItemsSalvageTable').find("#salvageDate").val();
+    var salvageAmount = $('#otherItemsSalvageTable').find("#salvageAmount").val();
+    
+    console.log("SALVAGE AMOUNT " , salvageAmount);
     
     var substantialCompletionStatus = $('#closeoutData').find('#substantialCompletionStatus').val();
     var substantialCompletionDate = $('#closeoutData').find('#substantialCompletionDate').val();
@@ -1179,7 +1200,16 @@ function getProject_PERMIT()
 				PROJECT_DATA = (data);
 				setProjectHeader(data, currentDivLocation);
 
-				fillTabs_PERMIT(PROJECT_DATA);
+				let autofilled = false;
+				$('.autofill_NA').each(function(index){
+					if($(this).val() == 'true') autofilled = true;
+					else return;
+				});
+				
+				if(!autofilled)
+					fillTabs_PERMIT(PROJECT_DATA);
+				else
+					fillPermitsAndInspectionsWithNA();
 				//getTasks();
 			}
 		});
@@ -1202,7 +1232,8 @@ function getProjectEnums_PERMIT()
 		{
 			'domain': 'project',
 			'action': 'getSpecificObjects',	
-			'permitstage': true
+			'permitstage': true ,
+			'inspectionstatus' : true
 		},
 		success: function(data)
 		{
@@ -1221,9 +1252,24 @@ function getProjectEnums_PERMIT()
  */
 function fillDropdowns_PERMIT(json)
 {
-	console.log("PERMIT JSON = ", json);
-	var permitStage = [{"name": "Preparing"}, {"name": "Submitted"}, {"name": "Approved"}, {"name": 'Issued'}, {'name': 'Closed'}, {'name': 'N/A'}];
-	var inspectionStage = [{'name': 'Scheduled'}, {'name': 'Passed'}, {'name': 'Failed'}, {'name': 'N/A'}];
+	console.log("PERMIT/INSPECTION JSON = ", json);
+	
+	var permitStage = JSON.parse(json["permitstage"]);
+	permitStage.sort(function(a , b) {
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id ) return 1;
+		else return 0;
+	});
+	
+	var inspectionStage = JSON.parse(json["inspectionstatus"]);
+	inspectionStage.sort(function(a , b) {
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id ) return 1;
+		else return 0;
+	});
+	//var permitStage = [{"name": "Preparing"}, {"name": "Submitted"}, {"name": "Approved"}, {"name": 'Issued'}, {'name': 'Closed'}, {'name': 'N/A'} , {'name' : 'TBD'}];
+	//var inspectionStage = [{'name': 'Scheduled'}, {'name': 'Passed'}, {'name': 'Failed'}, {'name': 'N/A'} , {'name' : 'TBD'}];
+	
 	var d = document.createDocumentFragment();
 	
 	for(var i = 0; i < permitStage.length; i++)
@@ -1249,6 +1295,53 @@ function fillDropdowns_PERMIT(json)
 	$('#permitData').find('.inspectionStatus').append(dd);
 	
 }
+
+
+function fillPermitsAndInspectionsWithNA()
+{
+	let today = getToday();
+	
+	
+	
+	$('.permitTableData').each(function(index){
+		
+		if($(this).attr('id').includes("Date"))
+		{
+			$(this).html(today);
+		}		
+		else
+		{
+			$(this).html('N/A');
+		}	
+	});
+	
+	$('.inspectionTableData').each(function(index){
+		
+		if($(this).attr('id').includes("Date"))
+		{
+			$(this).html(today);
+		}		
+		else
+		{
+			$(this).html('N/A');
+		}	
+	});
+	
+	$('.permitAndInspectionStatusDate').each(function(index){
+		$(this).val(today);
+	});
+	
+	$('.permitStatus').each(function(index){
+		$(this).val('N/A');
+	});
+	
+	$('.inspectionStatus').each(function(index){
+		$(this).val('N/A');
+	});
+}
+
+
+
 
 
 /**
@@ -2507,6 +2600,8 @@ function editPermitsAndInspections () {
 	document.getElementById("projectManager").style.display = 'none';
 	EDIT_INTENTION = true;
 	getProjectEnums_PERMIT(true);
+	
+	
 	currentDivLocation = "permitData";
 	document.getElementById("permitData").style.display = 'inline';
 	$('#permitData').find('#buildingPermit').addClass('active');
@@ -4325,6 +4420,7 @@ function navigateTo(source) {
 		window.location.href = TASK_CREATOR + '?id=' + 
 			$(source).attr('id').replace('project', '');
 	} else {
+		
 		document.getElementById("findProject").style.display = 'none';
 		$(source).attr('id').replace('project', '');
 		var proj_id = $(source).attr('id');
@@ -4336,6 +4432,10 @@ function navigateTo(source) {
 		$('#projectInformation').addClass('active');
 		$('#projectInformation').addClass('active');
 		$('#closeout').removeClass('active');
+		
+		$('.autofill_NA').each(function(index){
+			$(this).val('false');
+		});
 
 		
 		currentDivLocation = "projectManager";

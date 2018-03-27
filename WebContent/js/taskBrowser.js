@@ -23,7 +23,8 @@ let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 $(document).ready(function () {
     if(window.location.href.indexOf("taskReport.html") != -1) return;
 	$('#taskWell > span > .dueDate').datepicker({defaultDate: getToday()});
-	getUserData(); //Gets the User from the database on page load
+	getTheTasks();
+	//getUserData(); //Gets the User from the database on page load
 });
 
 /*
@@ -73,7 +74,7 @@ function getUserData () {
 			if(data.responseJSON) {
 			  user = data.responseJSON;
 			  console.log("USER = ", user);
-			  if(user.permission.id != 1) hideAdminContent();	 
+			  if(user.permission.id != 1) hideAdminContent();	
 		      getUsers();		 
 				
 			} else {
@@ -102,7 +103,7 @@ function getUsers () {
 				users = data.responseJSON;
 				console.log("USERS = ",users);
 				createDropdown(data.responseJSON);
-				getTasks();
+				preparePageForUserStatus();
 			}
 		}
 		
@@ -158,6 +159,7 @@ function getTasks() {
  * INNER FUNCTION CALLS: createManagerQueue() 
  */
 function getProjectManagers () {
+	/*
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -176,9 +178,14 @@ function getProjectManagers () {
 		}
 		
 	});
+	*/
+	projectManagers = TASK_OBJECT.PERSONS;
+	getSubcontractors();
+	
 }
 
 function getSubcontractors() {
+	/*
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -197,6 +204,10 @@ function getSubcontractors() {
 		}
 		
 	});
+	*/
+	subcontractors = TASK_OBJECT.SUBS;
+		if(user.permission.id === 1) createManagerQueue();
+		createSubDropdown(TASK_OBJECT.SUBS);
 }
 
 function toggleTaskAssignee() {
