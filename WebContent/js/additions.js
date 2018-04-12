@@ -91,7 +91,7 @@ function preparePage() {
 			if(data.responseJSON) {
 			 if(data.responseJSON.id == 20) $('#myContent').show();
 			  console.log("USER = ", data.responseJSON);
-		      if(data.responseJSON.permission.id != 1) {
+		      if(data.responseJSON.permission.name != "admin") {
 		    	  alert("Sorry but it looks like you don't have access to this page!");
 		    	  document.location.href = "homepage.html";
 		      }

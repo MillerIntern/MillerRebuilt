@@ -76,7 +76,7 @@ function getUser() {
 		}, complete: function (data) {
 			if(data.responseJSON) {
 			  console.log("USER = ", data.responseJSON);
-		      if(data.responseJSON.permission.id != 1) hideAdminContent();	 
+		      if(data.responseJSON.permission.name != "admin") hideAdminContent();	 
 
 				
 			} else {
