@@ -16,7 +16,7 @@
 	<script src="js/taskForm.js"></script>
 	<script type="text/javascript" src="js/contentControl.js"></script>
 	<script src="js/chosen.jquery.min.js"></script>
-	<script src="js/autofill.js"></script>
+	<!-- <script src="js/autofill.js"></script> -->
 	
 	
 	
@@ -249,29 +249,29 @@
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Permit Requirement</th><th>Permit Status</th><th>Permit Last Updated</th></tr>
-					<tr><td width = 25% class = "bold">Building</td><td id='buildingPermitReq' class ="italics permitReq"></td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
-					<tr><td class = "bold">Roofing</td><td id='roofingPermitReq' class ="italics permitReq"></td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Mechanical</td><td id='mechanicalPermitReq' class ="italics permitReq"></td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Electrical</td><td id='electricalPermitReq' class ="italics permitReq"></td><td id='electricalPermit' class ="italics permitTableData"></td><td id='electricalPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Plumbing</td><td id='plumbingPermitReq' class ="italics permitReq"></td><td id='plumbingPermit' class ="italics permitTableData"></td><td id='plumbingPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerPermitReq' class ="italics permitReq"></td><td id='sprinklerPermit' class ="italics permitTableData"></td><td id='sprinklerPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmPermitReq' class ="italics permitReq"></td><td id='fireAlarmPermit' class ="italics permitTableData"></td><td id='fireAlarmPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Low Voltage</td><td id='lowVolvatgePermitReq' class ="italics permitReq"></td><td id='lowVoltagePermit' class ="italics permitTableData"></td><td id='lowVoltagePermitDate' class ="italics permitTableData"></td></tr>
+					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Permit Status</th><th>Permit Last Updated</th></tr>
+					<tr><td width = 25% class = "bold">Building</td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
+					<tr><td class = "bold">Roofing</td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Mechanical</td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Electrical</td><td id='electricalPermit' class ="italics permitTableData"></td><td id='electricalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Plumbing</td><td id='plumbingPermit' class ="italics permitTableData"></td><td id='plumbingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerPermit' class ="italics permitTableData"></td><td id='sprinklerPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmPermit' class ="italics permitTableData"></td><td id='fireAlarmPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage</td><td id='lowVoltagePermit' class ="italics permitTableData"></td><td id='lowVoltagePermitDate' class ="italics permitTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Inspection Requirement</th><th>Inspection Status</th><th>Inspection Last Updated</th></tr>
-					<tr><td class = "bold">Building</td><td id='buildingInspectionReq' class ="italics inspectionReq"></td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Roofing</td><td id='roofingInspectionReq' class ="italics inspectionReq"></td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Mechanical</td><td id='mechanicalInspectionReq' class ="italics inspectionReq"></td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Electrical</td><td id='electricalInspectionReq' class ="italics inspectionReq"></td><td id='electricalInspection' class ="italics inspectionTableData"></td><td id='electricalInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Plumbing</td><td id='plumbingInspectionReq' class ="italics inspectionReq"></td><td id='plumbingInspection' class ="italics inspectionTableData"></td><td id='plumbingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerInspectionReq' class ="italics inspectionReq"></td><td id='sprinklerInspection' class ="italics inspectionTableData"></td><td id='sprinklerInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmInspectionReq' class ="italics inspectionReq"></td><td id='fireAlarmInspection' class ="italics inspectionTableData"></td><td id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Low Voltage</td><td id='lowVoltageInspectionReq' class ="italics inspectionReq"></td><td id='lowVoltageInspection' class ="italics inspectionTableData"></td><td id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Inspection Status</th><th>Inspection Last Updated</th></tr>
+					<tr><td class = "bold">Building</td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Roofing</td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Mechanical</td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Electrical</td><td id='electricalInspection' class ="italics inspectionTableData"></td><td id='electricalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Plumbing</td><td id='plumbingInspection' class ="italics inspectionTableData"></td><td id='plumbingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerInspection' class ="italics inspectionTableData"></td><td id='sprinklerInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmInspection' class ="italics inspectionTableData"></td><td id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage</td><td id='lowVoltageInspection' class ="italics inspectionTableData"></td><td id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -439,6 +439,7 @@
 			</td>
 			</tr>
 			
+			<!--
 		    <tr>
 	        <td><b>HVAC</b></td>
 	       	<td>
@@ -473,6 +474,7 @@
 	        </select>
 			</td>
 			</tr>
+			-->
 			
 			        
 	        
@@ -692,7 +694,6 @@
 		
 		
 			<div id="buildingPermits" class="info-tab active">
-			<button class="autofill">AUTO</button>
 				<table class="manager table table-hover">
 				<tr>
 					<td></td><td class = "bold permitEditHeader">Permit</td>

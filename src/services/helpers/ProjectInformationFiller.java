@@ -14,6 +14,7 @@ import projectObjects.ProjectStage;
 import projectObjects.ProjectStatus;
 import projectObjects.ProjectType;
 import projectObjects.Warehouse;
+import services.AutoFillService;
 import services.ProjectObjectService;
 
 
@@ -53,7 +54,7 @@ public class ProjectInformationFiller
 		currentProject.setZachUpdates(params.get("refrigNotes"));
 		currentProject.setCost(params.get("cost"));
 		currentProject.setCustomerNumber(params.get("customerNumber"));
-
+		
 		Date finitiatedDate = null;
 		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
@@ -103,5 +104,21 @@ public class ProjectInformationFiller
 		if (!params.get("permitApp").isEmpty())
 			permitApp = formatter.parse(params.get("permitApp"));
 		currentProject.setPermitApplication(permitApp);
+		
+		//Autofill
+		
+		
+		if(params.get("autofill-HVAC") != null && !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
+			AutoFillService.autoFillProject(currentProject , "HVAC" , params.get("autofill-HVAC"));
+		}
+		
+		if(params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1") || params.get("autofill-Refrigeration").equals(""))) {
+			AutoFillService.autoFillProject(currentProject , "Refrigeration" , params.get("autofill-Refrigeration"));
+		}
+		
+		if(params.get("autofill-Permits") != null && !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
+			AutoFillService.autoFillProject(currentProject , "Permits" , params.get("autofill-Permits"));
+		}
+			
 	}
 }

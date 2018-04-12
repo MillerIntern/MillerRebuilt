@@ -206,6 +206,10 @@ function saveProject() {
 	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
 	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
 	
+	var autoFillHVAC = determineAutofillValue($('#autofill-HVAC').val());
+	var autoFillRefrigeration = determineAutofillValue($('#autofill-Refrigeration').val());
+	var autoFillPermits = determineAutofillValue($('#autofill-Permits').val());
+		
 	if(isValidInput(required, dates)) {
 		$('.info-tab').removeClass('active');
 		$('#saveButton').addClass('active');
@@ -252,6 +256,9 @@ function saveProject() {
 				'refrigNotes': refrigNotes,
 				'cost': cost,
 				'customerNumber': customerNumber,
+				'autofill-HVAC' : autoFillHVAC,
+				'autofill-Refrigeration' : autoFillRefrigeration ,
+				'autofill-Permits' : autoFillPermits,
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
@@ -262,6 +269,19 @@ function saveProject() {
 			
 		});
 	}
+}
+
+function determineAutofillValue(value)
+{
+	console.log("VALUE" , value);
+	if(!value)
+		return "-1";
+	
+	if(value == "default")
+		return "-1";
+	
+	return value;
+	
 }
 
 function returnToProjectManager () {

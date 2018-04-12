@@ -12,42 +12,58 @@ public class Permits extends ProjectObject
 	private String inspectionNotes;
 	
 	private Date building;
+	private String buildingPermitRequired;
 	private String buildingPermitStatus;
+	private String buildingInspectionRequired;
 	private String buildingInspectionStatus;
 	private Date buildingInspectionLastUpdated;
 	
 	private Date mechanical;
+	private String mechanicalPermitRequired;
 	private String mechanicalPermitStatus;
+	private String mechanicalInspectionRequired;
 	private String mechanicalInspectionStatus;
 	private Date mechanicalInspectionLastUpdated;
 	
 	private Date electrical;
+	private String electricalPermitRequired;
 	private String electricalPermitStatus;
+	private String electricalInspectionRequired;
 	private String electricalInspectionStatus;
 	private Date electricalInspectionLastUpdated;
 	
 	private Date plumbing;
+	private String plumbingPermitRequired;
 	private String plumbingPermitStatus;
+	private String plumbingInspectionRequired;
 	private String plumbingInspectionStatus;
 	private Date plumbingInspectionLastUpdated;
 	
 	private Date fire_sprinkler;
+	private String sprinklerPermitRequired;
 	private String sprinklerPermitStatus;
+	private String sprinklerInspectionRequired;
 	private String sprinklerInspectionStatus;
 	private Date sprinklerInspectionLastUpdated;
 	
 	private Date fire_alarm;
+	private String fireAlarmPermitRequired;
 	private String fireAlarmPermitStatus;
+	private String fireAlarmInspectionRequired;
 	private String fireAlarmInspectionStatus;
 	private Date fireAlarmInspectionLastUpdated;
 	
 	private Date low_voltage;
+	private String voltagePermitRequired;
 	private String voltagePermitStatus;
+	private String voltageInspectionRequired;
 	private String voltageInspectionStatus;
 	private Date voltageInspectionLastUpdated;
 	
 	private Date roofing;
+	private String roofingPermitRequired;
 	private String roofingPermitStatus;
+	private String roofingInspectionRequired;
 	private String roofingInspectionStatus;
 	private Date roofingInspectionLastUpdated;
 	
@@ -76,7 +92,6 @@ public class Permits extends ProjectObject
 		this.fire_sprinkler = fireSprinklerDate;
 		this.fire_alarm = fireAlarmPermitDate;
 		this.low_voltage = lowVoltagePermitDate;
-		
 	  }
 
 	public synchronized void setBuildingPermitDate( Date a)
@@ -162,11 +177,27 @@ public class Permits extends ProjectObject
 	public synchronized String getBuildingPermitStatus() {
 		return buildingPermitStatus;
 	}
-
+	
 	public synchronized void setBuildingPermitStatus(String buildingPermitStatus) {
 		this.buildingPermitStatus = buildingPermitStatus;
 	}
 
+	public synchronized String getBuildingPermitRequired() {
+		return buildingPermitRequired;
+	}
+	
+	public synchronized void setBuildingPermitRequired(String val) {
+		this.buildingPermitRequired = val;
+	}
+	
+	public synchronized String getBuildingInspectionRequired() {
+		return buildingInspectionRequired;
+	}
+	
+	public synchronized void setBuildingInspectionRequired(String val) {
+		this.buildingInspectionRequired = val;
+	}
+	
 	public synchronized String getBuildingInspectionStatus() {
 		return buildingInspectionStatus;
 	}
@@ -197,6 +228,22 @@ public class Permits extends ProjectObject
 
 	public synchronized void setMechanicalPermitStatus(String mechanicalPermitStatus) {
 		this.mechanicalPermitStatus = mechanicalPermitStatus;
+	}
+	
+	public synchronized String getMechanicalPermitRequired() {
+		return mechanicalPermitRequired;
+	}
+	
+	public synchronized void setMechanicalPermitRequired(String val) {
+		this.mechanicalPermitRequired = val;
+	}
+	
+	public synchronized String getMechanicalInspectionRequired() {
+		return mechanicalInspectionRequired;
+	}
+	
+	public synchronized void setMechanicalInspectionRequired(String val) {
+		this.mechanicalInspectionRequired = val;
 	}
 
 	public synchronized String getMechanicalInspectionStatus() {
@@ -230,6 +277,22 @@ public class Permits extends ProjectObject
 	public synchronized void setElectricalPermitStatus(String electricalPermitStatus) {
 		this.electricalPermitStatus = electricalPermitStatus;
 	}
+	
+	public synchronized String getElectricalPermitRequired() {
+		return electricalPermitRequired;
+	}
+	
+	public synchronized void setElectricalPermitRequired(String val) {
+		this.electricalPermitRequired = val;
+	}
+	
+	public synchronized String getElectricalInspectionRequired() {
+		return electricalInspectionRequired;
+	}
+	
+	public synchronized void setElectricalInspectionRequired(String val) {
+		this.electricalInspectionRequired = val;
+	}	
 
 	public synchronized String getElectricalInspectionStatus() {
 		return electricalInspectionStatus;
@@ -262,6 +325,22 @@ public class Permits extends ProjectObject
 	public synchronized void setPlumbingPermitStatus(String plumbingPermitStatus) {
 		this.plumbingPermitStatus = plumbingPermitStatus;
 	}
+	
+	public synchronized String getPlumbingPermitRequired() {
+		return plumbingPermitRequired;
+	}
+	
+	public synchronized void setPlumbingPermitRequired(String val) {
+		this.plumbingPermitRequired = val;
+	}
+	
+	public synchronized String getPlumbingInspectionRequired() {
+		return plumbingInspectionRequired;
+	}
+	
+	public synchronized void setPlumbingInspectionRequired(String val) {
+		this.plumbingInspectionRequired = val;
+	}	
 
 	public synchronized String getPlumbingInspectionStatus() {
 		return plumbingInspectionStatus;
@@ -294,7 +373,23 @@ public class Permits extends ProjectObject
 	public synchronized void setSprinklerPermitStatus(String sprinklerPermitStatus) {
 		this.sprinklerPermitStatus = sprinklerPermitStatus;
 	}
-
+	
+	public synchronized String getSprinklerPermitRequired() {
+		return sprinklerPermitRequired;
+	}
+	
+	public synchronized void setSprinklerPermitRequired(String val) {
+		this.sprinklerPermitRequired = val;
+	}
+	
+	public synchronized String getSprinklerInspectionRequired() {
+		return sprinklerInspectionRequired;
+	}
+	
+	public synchronized void setSprinklerInspectionRequired(String val) {
+		this.sprinklerInspectionRequired = val;
+	}
+	
 	public synchronized String getSprinklerInspectionStatus() {
 		return sprinklerInspectionStatus;
 	}
@@ -326,6 +421,22 @@ public class Permits extends ProjectObject
 	public synchronized void setFireAlarmPermitStatus(String fireAlarmPermitStatus) {
 		this.fireAlarmPermitStatus = fireAlarmPermitStatus;
 	}
+	
+	public synchronized String getFireAlarmPermitRequired() {
+		return fireAlarmPermitRequired;
+	}
+	
+	public synchronized void setFireAlarmPermitRequired(String val) {
+		this.fireAlarmPermitRequired = val;
+	}
+	
+	public synchronized String getFireAlarmInspectionRequired() {
+		return fireAlarmInspectionRequired;
+	}
+	
+	public synchronized void setFireAlarmInspectionRequired(String val) {
+		this.fireAlarmInspectionRequired = val;
+	}	
 
 	public synchronized String getFireAlarmInspectionStatus() {
 		return fireAlarmInspectionStatus;
@@ -357,6 +468,22 @@ public class Permits extends ProjectObject
 
 	public synchronized void setVoltagePermitStatus(String voltagePermitStatus) {
 		this.voltagePermitStatus = voltagePermitStatus;
+	}
+	
+	public synchronized String getVoltagePermitRequired() {
+		return voltagePermitRequired;
+	}
+	
+	public synchronized void setVoltagePermitRequired(String val) {
+		this.voltagePermitRequired = val;
+	}
+	
+	public synchronized String getVoltageInspectionRequired() {
+		return voltageInspectionRequired;
+	}
+	
+	public synchronized void setVoltageInspectionRequired(String val) {
+		this.voltageInspectionRequired = val;
 	}
 
 	public synchronized String getVoltageInspectionStatus() {
@@ -390,6 +517,22 @@ public class Permits extends ProjectObject
 	public synchronized void setRoofingPermitStatus(String roofingPermitStatus) {
 		this.roofingPermitStatus = roofingPermitStatus;
 	}
+	
+	public synchronized String getRoofingPermitRequired() {
+		return roofingPermitRequired;
+	}
+	
+	public synchronized void setRoofingPermitRequired(String val) {
+		this.roofingPermitRequired = val;
+	}
+	
+	public synchronized String getRoofingInspectionRequired() {
+		return roofingInspectionRequired;
+	}
+	
+	public synchronized void setRoofingInspectionRequired(String val) {
+		this.roofingInspectionRequired = val;
+	}	
 
 	public synchronized String getRoofingInspectionStatus() {
 		return roofingInspectionStatus;

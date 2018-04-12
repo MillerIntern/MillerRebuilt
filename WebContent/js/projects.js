@@ -8,12 +8,14 @@
  * Corresponding Javascript File				Lines pertaining to file
  * ______________________________				____________________________
  * 
- * projectData/closeoutData.js 					23      THRU     957
- * projectData/permitData.js					961     THRU     1419
- * projectData.js								1420    THRU     2000
- * projectManager.js							2001    THRU     2679
- * findProject.js 								2683	THRU     3800
- * projectData/changeOrderData.js				3801	TRHU	 4019
+ * projectData/closeoutData.js 					94      THRU     962
+ * projectData/permitData.js					963     THRU     1533
+ * projectData.js								1536    THRU     2235
+ * projectManager.js							2238    THRU     3448
+ * findProject.js 								3450	THRU     4364
+ * projectData/changeOrderData.js				4365	TRHU	 4967
+ * equipment									4970	THRU	 5261
+ * Navigational									5265	THRU	 5514
  */
 
 
@@ -937,169 +939,6 @@ function isValidInput_CLOSEOUT(dates_CLOSEOUT)
 function returnToProjectManager () {
 	window.location.href = PROJECTMANAGER + '?id=' + projectID;
 }
-
-function createTask() {
-
-	TASK_ACTION = "createTask";
-	clearTaskForm();
-	let dateObj = new Date();
-	let month = dateObj.getUTCMonth() + 1;
-	let day = dateObj.getUTCDate();
-	let year = dateObj.getUTCFullYear();
-	
-	let todaysDate = month + "/" + day + "/" + year;
-	
-	$('#taskCreationZone').find('#initDate').val(todaysDate);
-	
-	document.getElementById('tasksInformation').style.width = "55%";
-	$('#taskDisplay').hide();
-	$('#taskCreationZone').show();
-	
-}
-
-function viewTasks() {
-	
-	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
-	let createMessage = "This task will not be added, are you sure you want to leave this screen?";
-	let displayedMessage;
-	
-	if(TASK_ACTION == "createTask")
-		displayedMessage = createMessage;
-	else 
-		displayedMessage = updateMessage;
-	
-	if(confirm(displayedMessage))
-	{
-		document.getElementById('tasksInformation').style.width = "100%";
-		$('#taskCreationZone').hide();
-		$('#taskDisplay').show();
-	}
-
-}
-
-/**
- * This function makes the findProject div visible and hides all other divs
- * INNER FUNCTION CALLS: none
- * @returns
- */
-function goToFindProject() {
-	clearPermitsAndInspectionsOverview();
-	updateFrontEnd();
-	switch(currentDivLocation){
-		case "projectData":
-			$('#projectData').find('.info-tab').removeClass('active');
-			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
-			$('#projectData').find('#generalInformation').addClass('active');
-			$('#projectData').find('#generalInformationTabLink').addClass('active');			
-			break;
-		case "permitData":
-			$('#permitData').find('.info-tab').removeClass('active');
-			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
-			$('#permitData').find('#buildingPermit').addClass('active');
-			$('#permitData').find('#buildingPermits').addClass('active');
-			break;
-		case "closeoutData":
-			$('#closeoutData').find('.info-tab').removeClass('active');
-			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
-			$('#closeoutData').find('#closeout').addClass('active');
-			$('#closeoutData').find('#closeoutDocuments').addClass('active');
-			break;
-		case "projectManager":
-			$('#projectManager').find('.info-tab').removeClass('active');
-			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
-			$('#projectManager').find('#projectInformation').addClass('active');
-			$('#projectManager').find('#projectInformationTabLink').addClass('active');
-			break;
-		case "changeOrder":
-			$('#changeOrder').find('.info-tab').removeClass('active');
-			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
-			$('#changeOrder').find('#changeOrderInfo').addClass('active');
-			$('#changeOrder').find('#changeOrderTab').addClass('active');
-			$('#projectManager').find('.info-tab').removeClass('active');
-			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
-			$('#projectManager').find('#changeOrders').addClass('active');
-			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
-			break;
-		
-	}
-	$(".editProject").hide();
-	$("#findProject").show();
-	
-	
-	
-}
-
-/**
- * This function makes the projectManager div visible while hiding the remaining divs
- * It also manages the activeness of the info-tabs
- * INNER FUNCTION CALLS: setCurrentDivLocation()
- * @returns
- */
-function goToProjectManager() {
-	
-	$(".editProject").hide();
-	$("#projectManager").show();
-	
-	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
-	switch(currentDivLocation){
-		case "projectData":
-			getProject_PROJECT_MANAGER(projectID , 1);
-			$('#projectData').find('.info-tab').removeClass('active');
-			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
-			$('#projectData').find('#generalInformation').addClass('active');
-			$('#projectData').find('#generalInformationTabLink').addClass('active');
-			$('#projectManager').find('#projectInformationTabLink').addClass('active');
-			$('#projectManager').find('#projectInformation').addClass('active');
-			break;
-		case "permitData":
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#permitData').find('.info-tab').removeClass('active');
-			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
-			let activeTab = $('#projectManager').find('.nav-tabs > li.active').id;
-			$('#permitData').find('#buildingPermit').addClass('active');
-			$('#permitData').find('#buildingPermits').addClass('active');
-			$('#projectManager').find('#permits').addClass('active');
-			$('#projectManager').find('#'+activeTab).addClass('active');
-			break;
-		case "closeoutData":
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#closeoutData').find('.info-tab').removeClass('active');
-			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
-			$('#closeoutData').find('#closeout').addClass('active');
-			$('#closeoutData').find('#closeoutDocuments').addClass('active');
-			$('#projectManager').find('#closeoutTabLink').addClass('active');
-			$('#projectManager').find('#closeout').addClass('active');
-			break;
-		case "changeOrder":
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#changeOrder').find('.info-tab').removeClass('active');
-			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
-			$('#changeOrder').find('#changeOrderTab').addClass('active');
-			$('#changeOrder').find('#changeOrderInfo').addClass('active');
-			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
-			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
-			$('#projectManager').find('#changeOrders').addClass('active');
-			$('#projectManager').find('#editChangeOrder').prop('disabled', true);
-			$('#closeoutData').find('.info-tab').removeClass('active');
-			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
-			$('#closeoutData').find('#closeout').addClass('active');
-			$('#closeoutData').find('#closeoutDocuments').addClass('active');
-			$('#projectData').find('#generalInformation').addClass('active');
-			$('#saveButton').removeClass('active');
-			break;
-		case "equipmentDiv":
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#equipment').addClass('active');
-			break;
-			
-	}
-	
-	setCurrentDivLocation('projectManager');
-}
-
-
-
-
 
 var CLOSEOUTSTATUS_DROPDOWNS = [
                                 "mg2CompletionStatus",                
@@ -2426,7 +2265,44 @@ $(document).ready(function () {
 
 });
 
+function createTask() {
 
+	TASK_ACTION = "createTask";
+	clearTaskForm();
+	let dateObj = new Date();
+	let month = dateObj.getUTCMonth() + 1;
+	let day = dateObj.getUTCDate();
+	let year = dateObj.getUTCFullYear();
+	
+	let todaysDate = month + "/" + day + "/" + year;
+	
+	$('#taskCreationZone').find('#initDate').val(todaysDate);
+	
+	document.getElementById('tasksInformation').style.width = "55%";
+	$('#taskDisplay').hide();
+	$('#taskCreationZone').show();
+	
+}
+
+function viewTasks() {
+	
+	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
+	let createMessage = "This task will not be added, are you sure you want to leave this screen?";
+	let displayedMessage;
+	
+	if(TASK_ACTION == "createTask")
+		displayedMessage = createMessage;
+	else 
+		displayedMessage = updateMessage;
+	
+	if(confirm(displayedMessage))
+	{
+		document.getElementById('tasksInformation').style.width = "100%";
+		$('#taskCreationZone').hide();
+		$('#taskDisplay').show();
+	}
+
+}
 
 /**
  * This function retrieves a specific project from the database
@@ -3216,6 +3092,8 @@ function closeoutStatusConverter(param)
 		return "Incomplete";
 	else if (param == 3)
 		return "N/A";
+	else if(param == 4)
+		return "Required";
 	else
 		return "---";
 }
@@ -5092,119 +4970,11 @@ function changeOrderReport () {
 //
 //
 
-/**
- * This function sets the current div location so we know what to display
- * INNER FUNCTION CALLS: none
- */
-function setCurrentDivLocation(location) {
-	currentDivLocation = location;
-	console.log("LOCATION = ", location);
-}
 
-/**
- * This function converts the current Div Location in order to display a proper header
- * INNER FUNCTION CALLS: none
- */
-function convertCurrentDivLocation (currentDivLocation){
-	console.log("CURRENT DIV: ", currentDivLocation);
-	switch(currentDivLocation) {
-		case "projectManager":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Project Manager <small id='projectHeader'>---</small></p>");
-			break;
-		case "projectData":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Project Editor <small id='projectHeader'>---</small></p>");
-			break;
-		case "permitData":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Permit & Inspection Editor <small id='projectHeader'>---</small></p>");
-			break;
-		case "closeoutData":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
-			break;
-		case "changeOrder":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
-			break;
-		case "equipmentDiv":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Equipment <small id='projectHeader'>---</small></p>");
-			break;
-	}
-}
-
-/**
- * This function updates all of the data on the front end
- * ----------CURRENTLY THIS FUNCTION DOES NOTHING ---------
- * INNER FUNCTION CALLS: none
- */
-function updateProjectManager() {
-	if(currentDivLocation == 'projectData'){
-		
-		
-	}else if(currentDivLocation == 'permitData'){
-		
-	}else if(currentDivLocation == 'closeoutData'){
-		
-	} else {
-		console.log("Not Prepared for this div location!");
-	}
-}
-
-/**
- * This function is used in projects.html in order to properly prepare
- * which div will be displayed along with which features to make available
- * INNER FUNCTION CALLS: getParameterByName(), getProject_PROJECT_MANAGER(), getAllProjects()
- */
-function preparePage() {
-	
-	let id = getParameterByName("id");
-	let from = getParameterByName("from");
-	let type = getParameterByName("type");
-
-	$('#findProject').hide();
-	$('.editProject').hide();
-
-	if(id){ 
-		projectID = id;
-		EDIT_INTENTION = true;
-		console.log("PROJECT ID = ", id);
-		currentDivLocation = "projectManager";
-		
-		$.ajax({
-			type: 'POST',
-			url: 'Project', 
-			data: 
-			{
-				'domain': 'project',
-				'action': 'getSpecificObjects',		
-				'changeordertype': true,
-			},
-			success: function(data)
-			{
-				CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
-				console.log("CO TYPES = " , CHANGE_ORDER_TYPES);
-				getProject_PROJECT_MANAGER(id);
-				$('#projectManager').show();
-				$('.projectNavigator-projectManager').show();
-				PAGE_ENTRY = "fromTask";
-				if(from) {
-					PAGE_ENTRY = from;
-				}
-			}
-		
-		});
-		
-	
-		
-	} else {
-		$('.projectNavigator').show();
-		$('.projectNavigator-projectFinder').hide();
-		//getAllProjects();
-		getTheProjects();
-		$('#findProject').show();
-	}
-}
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+//Equipment Code
 
 $(document).ready(function()
 {
@@ -5509,6 +5279,240 @@ function toggleTaskAssignee() {
 
 	}
 }
+
+
+//Navigational 
+
+/**
+ * This function makes the findProject div visible and hides all other divs
+ * INNER FUNCTION CALLS: none
+ * @returns
+ */
+function goToFindProject() {
+	clearPermitsAndInspectionsOverview();
+	updateFrontEnd();
+	switch(currentDivLocation){
+		case "projectData":
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');			
+			break;
+		case "permitData":
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
+			$('#permitData').find('#buildingPermit').addClass('active');
+			$('#permitData').find('#buildingPermits').addClass('active');
+			break;
+		case "closeoutData":
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			break;
+		case "projectManager":
+			$('#projectManager').find('.info-tab').removeClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#projectInformation').addClass('active');
+			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			break;
+		case "changeOrder":
+			$('#changeOrder').find('.info-tab').removeClass('active');
+			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
+			$('#changeOrder').find('#changeOrderInfo').addClass('active');
+			$('#changeOrder').find('#changeOrderTab').addClass('active');
+			$('#projectManager').find('.info-tab').removeClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#changeOrders').addClass('active');
+			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
+			break;
+		
+	}
+	$(".editProject").hide();
+	$("#findProject").show();
+	
+	
+	
+}
+
+/**
+ * This function makes the projectManager div visible while hiding the remaining divs
+ * It also manages the activeness of the info-tabs
+ * INNER FUNCTION CALLS: setCurrentDivLocation()
+ * @returns
+ */
+function goToProjectManager() {
+	
+	$(".editProject").hide();
+	$("#projectManager").show();
+	
+	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
+	switch(currentDivLocation){
+		case "projectData":
+			getProject_PROJECT_MANAGER(projectID , 1);
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformation').addClass('active');
+			break;
+		case "permitData":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
+			let activeTab = $('#projectManager').find('.nav-tabs > li.active').id;
+			$('#permitData').find('#buildingPermit').addClass('active');
+			$('#permitData').find('#buildingPermits').addClass('active');
+			$('#projectManager').find('#permits').addClass('active');
+			$('#projectManager').find('#'+activeTab).addClass('active');
+			break;
+		case "closeoutData":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectManager').find('#closeoutTabLink').addClass('active');
+			$('#projectManager').find('#closeout').addClass('active');
+			break;
+		case "changeOrder":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#changeOrder').find('.info-tab').removeClass('active');
+			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
+			$('#changeOrder').find('#changeOrderTab').addClass('active');
+			$('#changeOrder').find('#changeOrderInfo').addClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
+			$('#projectManager').find('#changeOrders').addClass('active');
+			$('#projectManager').find('#editChangeOrder').prop('disabled', true);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#saveButton').removeClass('active');
+			break;
+		case "equipmentDiv":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#equipment').addClass('active');
+			break;
+			
+	}
+	
+	setCurrentDivLocation('projectManager');
+}
+
+/**
+ * This function sets the current div location so we know what to display
+ * INNER FUNCTION CALLS: none
+ */
+function setCurrentDivLocation(location) {
+	currentDivLocation = location;
+	console.log("LOCATION = ", location);
+}
+
+/**
+ * This function converts the current Div Location in order to display a proper header
+ * INNER FUNCTION CALLS: none
+ */
+function convertCurrentDivLocation (currentDivLocation){
+	console.log("CURRENT DIV: ", currentDivLocation);
+	switch(currentDivLocation) {
+		case "projectManager":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Project Manager <small id='projectHeader'>---</small></p>");
+			break;
+		case "projectData":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Project Editor <small id='projectHeader'>---</small></p>");
+			break;
+		case "permitData":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Permit & Inspection Editor <small id='projectHeader'>---</small></p>");
+			break;
+		case "closeoutData":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
+			break;
+		case "changeOrder":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
+			break;
+		case "equipmentDiv":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Equipment <small id='projectHeader'>---</small></p>");
+			break;
+	}
+}
+
+/**
+ * This function updates all of the data on the front end
+ * ----------CURRENTLY THIS FUNCTION DOES NOTHING ---------
+ * INNER FUNCTION CALLS: none
+ */
+function updateProjectManager() {
+	if(currentDivLocation == 'projectData'){
+		
+		
+	}else if(currentDivLocation == 'permitData'){
+		
+	}else if(currentDivLocation == 'closeoutData'){
+		
+	} else {
+		console.log("Not Prepared for this div location!");
+	}
+}
+
+/**
+ * This function is used in projects.html in order to properly prepare
+ * which div will be displayed along with which features to make available
+ * INNER FUNCTION CALLS: getParameterByName(), getProject_PROJECT_MANAGER(), getAllProjects()
+ */
+function preparePage() {
+	
+	let id = getParameterByName("id");
+	let from = getParameterByName("from");
+	let type = getParameterByName("type");
+
+	$('#findProject').hide();
+	$('.editProject').hide();
+
+	if(id){ 
+		projectID = id;
+		EDIT_INTENTION = true;
+		console.log("PROJECT ID = ", id);
+		currentDivLocation = "projectManager";
+		
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'getSpecificObjects',		
+				'changeordertype': true,
+			},
+			success: function(data)
+			{
+				CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
+				console.log("CO TYPES = " , CHANGE_ORDER_TYPES);
+				getProject_PROJECT_MANAGER(id);
+				$('#projectManager').show();
+				$('.projectNavigator-projectManager').show();
+				PAGE_ENTRY = "fromTask";
+				if(from) {
+					PAGE_ENTRY = from;
+				}
+			}
+		
+		});
+		
+	
+		
+	} else {
+		$('.projectNavigator').show();
+		$('.projectNavigator-projectFinder').hide();
+		//getAllProjects();
+		getTheProjects();
+		$('#findProject').show();
+	}
+}
+
 
 
 
