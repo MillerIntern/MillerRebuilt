@@ -236,4 +236,23 @@ public class ChangeOrder extends ProjectObject
 	}
 	
 	
+	public static Object getChangeOrderFields(String name , ChangeOrder co)
+	{
+		if(co == null || name == null)
+			return null;
+		
+		if(name.equalsIgnoreCase("proposalDate"))
+			return co.getProposalDate();
+		else if(name.equalsIgnoreCase("submittedDate"))
+			return co.getSubmittedDate();
+		else if(name.equalsIgnoreCase("approvedDate"))
+			return co.getApprovedDate();
+		else if(name.equalsIgnoreCase("cost"))
+			return (Double) co.getCost();
+		else if(name.equalsIgnoreCase("sell"))
+			return (Double) co.getSell();
+		
+		return null;
+	}
+	
 }

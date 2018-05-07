@@ -173,5 +173,21 @@ public class NewEquipment extends ProjectObject
 		this.eqStatus = eqStatus;
 	}
 	
+
+	
+	public static Object getNewEquipmentFields(String name , NewEquipment eq)
+	{
+		if(name.equalsIgnoreCase("orderedDate"))
+			return eq.getOrderedDate();
+		else if(name.equalsIgnoreCase("deliveryDate"))
+			return eq.getDeliveryDate();
+		else if(name.equalsIgnoreCase("estDeliveryDate"))
+			return eq.getEstDeliveryDate();
+		else if(name.equalsIgnoreCase("deliveryStatus"))
+			return eq.getDeliveryStatus();
+
+		return null;
+	}
+	
 	
 }

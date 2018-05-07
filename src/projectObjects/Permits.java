@@ -629,4 +629,154 @@ public class Permits extends ProjectObject
 	public synchronized void setInspectionNotes(String inspectionNotes) {
 		this.inspectionNotes = inspectionNotes;
 	}
+	
+	public static Object getPermitAndInspectionFields(String name , Permits perms)
+	{
+		if(name == null || perms == null) return null;
+		
+		if(name.contains("building"))
+		{
+			if(name.equals("building"))
+				return perms.getBuilding();
+			else if(name.contains("PermitRequired"))
+				return perms.getBuildingPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getBuildingPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getBuildingInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getBuildingInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getBuildingInspectionLastUpdated();
+		}
+		else if(name.contains("mechanical"))
+		{
+			if(name.equals("mechanical"))
+				return perms.getMechanical();
+			else if(name.contains("PermitRequired"))
+				return perms.getMechanicalPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getMechanicalPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getMechanicalInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getMechanicalInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getMechanicalInspectionLastUpdated();
+		}
+		else if(name.contains("electrical"))
+		{
+			if(name.equals("electrical"))
+				return perms.getElectrical();
+			else if(name.contains("PermitRequired"))
+				return perms.getElectricalPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getElectricalPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getElectricalInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getElectricalInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getElectricalInspectionLastUpdated();
+		}
+		else if(name.contains("plumbing"))
+		{
+			if(name.equals("plumbing"))
+				return perms.getPlumbing();
+			else if(name.contains("PermitRequired"))
+				return perms.getPlumbingPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getPlumbingPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getPlumbingInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getPlumbingInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getPlumbingInspectionLastUpdated();
+		}
+		else if(name.contains("sprinkler") || name.equals("fire_sprinkler"))
+		{
+			if(name.equals("fire_sprinkler"))
+				return perms.getFire_sprinkler();
+			else if(name.contains("PermitRequired"))
+				return perms.getSprinklerPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getSprinklerPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getSprinklerInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getSprinklerInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getSprinklerInspectionLastUpdated();
+		}
+		else if(name.contains("fireAlarm") || name.equals("fire_alarm"))
+		{
+			if(name.equals("fire_alarm"))
+				return perms.getFire_alarm();
+			else if(name.contains("PermitRequired"))
+				return perms.getFireAlarmPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getFireAlarmPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getFireAlarmInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getFireAlarmInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getFireAlarmInspectionLastUpdated();
+		}
+		else if(name.contains("voltage") || name.equals("low_voltage"))
+		{
+			if(name.equals("low_voltage"))
+				return perms.getLow_voltage();
+			else if(name.contains("PermitRequired"))
+				return perms.getVoltagePermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getVoltagePermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getVoltageInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getVoltageInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getVoltageInspectionLastUpdated();
+		}
+		else if(name.contains("roofing"))
+		{
+			if(name.equals("roofing"))
+				return perms.getRoofing();
+			else if(name.contains("PermitRequired"))
+				return perms.getRoofingPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getRoofingPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getRoofingInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getRoofingInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getRoofingInspectionLastUpdated();
+		}
+		else if(name.contains("otherA"))
+		{
+			if(name.equals("otherA"))
+				return perms.getOtherAPermit();
+			else if(name.contains("PermitStatus"))
+				return perms.getOtherAPermitStatus();
+			else if(name.contains("InspectionStatus"))
+				return perms.getOtherAInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getOtherAInspectionLastUpdated();
+		}
+		else if(name.contains("otherB"))
+		{
+			if(name.equals("otherA"))
+				return perms.getOtherBPermit();
+			else if(name.contains("PermitStatus"))
+				return perms.getOtherBPermitStatus();
+			else if(name.contains("InspectionStatus"))
+				return perms.getOtherBInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getOtherBInspectionLastUpdated();
+		}
+		
+		return null;
+	}
 }

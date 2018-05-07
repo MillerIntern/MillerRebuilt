@@ -229,6 +229,46 @@ public class ProjectObjectService
 	}
 	
 	/**
+	 * This function returns all Projects from the database.
+	 * @return a list of all Projects of a specific type in the database.
+	 */
+	public synchronized static List<projectObjects.Project> getAllRawProjects()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Project");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Project> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
+	 * This function returns all Rules from the database.
+	 * @return a list of all Rules of a specific type in the database.
+	 */
+	public synchronized static List<projectObjects.ProjectRule> getAllRules()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ProjectRule");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.ProjectRule> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
 	 * This function returns all Tasks from the database.
 	 * @return a list of all Tasks of a specific type in the database.
 	 */
@@ -240,6 +280,26 @@ public class ProjectObjectService
 		
 		//Get all objects of type "domain"
         Query q = session.createQuery("from Task");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Task> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	/**
+	 * This function returns all Tasks from the database for a given project.
+	 * @return a list of all Tasks of a specific type in the database.
+	 */
+	public synchronized static List<projectObjects.Task> getAllTasks(Long projectId)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Task where project_id = " + projectId);
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
    

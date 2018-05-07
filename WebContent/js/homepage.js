@@ -236,6 +236,52 @@ function sendText() {
 
 }
 
+function test() {
+	console.log("IN IT");
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'action': 'TESTevaluateProject',
+		}, complete: function (response) {
+			console.log("RESPONSE FROM test() = ",response);			
+			if (response.responseJSON) {
+				console.log(response);
+			}
+			else { 
+				console.log("ERROR RESPONE FROM test() = ", response);
+			}
+			
+		}
+	});
+	
+
+}
+
+function testAll() {
+	console.log("IZZZZ IT");
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'action': 'TESTevaluateAllProjects',
+		}, complete: function (response) {
+			console.log("RESPONSE FROM test() = ",response);			
+			if (response.responseJSON) {
+				console.log(response);
+			}
+			else { 
+				console.log("ERROR RESPONE FROM test() = ", response);
+			}
+			
+		}
+	});
+	
+
+}
+
 
 
 

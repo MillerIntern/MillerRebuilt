@@ -1381,5 +1381,113 @@ public class CloseoutDetails extends ProjectObject
 
 	public synchronized void setMulvannySignOffDate(Date mulvannySignOffDate) {
 		this.mulvannySignOffDate = mulvannySignOffDate;
-	}	
+	}
+		
+	public static Object getCloseoutFields(String name , CloseoutDetails co)
+	{
+		System.out.println("GETTING CLOSOEUT");
+		if(co == null || name == null)
+			return null;
+		System.out.println("GETTING CLOSOEUT AFTER");
+	
+		if(name.equalsIgnoreCase("numOfChangeOrders"))
+			return (Double) (double) co.getNumOfChangeOrders();
+		else if(name.equalsIgnoreCase("numOfChangeOrdersCompleted"))
+			return (Double) (double) co.getNumOfChangeOrdersCompleted();
+		else if(name.equalsIgnoreCase("numOfMCSChangeOrders"))
+			return (Double) (double) co.getNumOfMCSChangeOrders();
+		else if(name.equalsIgnoreCase("numOfMCSChangeOrdersCompleted"))
+			return co.getNumOfMCSChangeOrdersCompleted();
+		//All Strings from this point
+		else if(name.equalsIgnoreCase("MCSStatus"))
+			return co.getMCSStatus();
+		else if(name.equalsIgnoreCase("GCStatus"))
+			return co.getGCStatus();
+		else if(name.equalsIgnoreCase("mechanicalStatus"))
+			return co.getMechanicalStatus();
+		else if(name.equalsIgnoreCase("electricalStatus"))
+			return co.getElectricalStatus();
+		else if(name.equalsIgnoreCase("plumbingStatus"))
+			return co.getPlumbingStatus();
+		else if(name.equalsIgnoreCase("sprinkleStatus"))
+			return co.getSprinkleStatus();
+		else if(name.equalsIgnoreCase("roofingStatus"))
+			return co.getRoofingStatus();
+		else if(name.equalsIgnoreCase("HTIStatus"))
+			return co.getHTIStatus();
+		else if(name.equalsIgnoreCase("mulvannySignOffStatus"))
+			return co.getMulvannySignOffStatus();
+		else if(name.equalsIgnoreCase("releaseOfLiensStatus"))
+			return co.getReleaseOfLiensStatus();
+		else if(name.equalsIgnoreCase("paymentOfDebtsAndClaimsStatus"))
+			return co.getPaymentOfDebtsAndClaimsStatus();
+		else if(name.equalsIgnoreCase("substantialCompletionStatus"))
+			return co.getSubstantialCompletionStatus();
+		else if(name.equalsIgnoreCase("warrantyNotes"))
+			return co.getWarrantyNotes();
+		else if(name.equalsIgnoreCase("closeoutDocumentsNotes"))
+			return co.getCloseoutDocumentsNotes();
+		else if(name.equalsIgnoreCase("finalLiensNotes"))
+			return co.getFinalLiensNotes();
+		else if(name.equalsIgnoreCase("finalInspectionNotes"))
+			return co.getFinalInspectionNotes();
+		else if(name.equalsIgnoreCase("mg2CompletionStatus"))
+			return co.getMg2CompletionStatus();
+		else if(name.equalsIgnoreCase("verisaeReportStatus"))
+			return co.getVerisaeReportStatus();
+		else if(name.equalsIgnoreCase("alarmFormStatus"))
+			return co.getAlarmFormStatus();
+		else if(name.equalsIgnoreCase("HVACstartupFormStatus"))
+			return co.getHVACstartupFormStatus();
+		else if(name.equalsIgnoreCase("closeOutPhotosStatus"))
+			return co.getCloseOutPhotosStatus();
+		else if(name.equalsIgnoreCase("asBuiltDrawingsStatus"))
+			return co.getAsBuiltDrawingsStatus();
+		else if(name.equalsIgnoreCase("punchListStatus"))
+			return co.getPunchListStatus();
+		else if(name.equalsIgnoreCase("manualStatus"))
+			return co.getManualStatus();
+		else if(name.equalsIgnoreCase("equipmentSubmittalStatus"))
+			return co.getEquipmentSubmittalStatus();
+		else if(name.equalsIgnoreCase("otherWarrantyStatusB"))
+			return co.getOtherWarrantyStatusB();
+		else if(name.equalsIgnoreCase("otherWarrantyStatusA"))
+			return co.getOtherWarrantyStatusA();
+		else if(name.equalsIgnoreCase("HTIWarrantyStatus"))
+			return co.getHTIWarrantyStatus();
+		else if(name.equalsIgnoreCase("roofingWarrantyStatus"))
+			return co.getRoofingWarrantyStatus();
+		else if(name.equalsIgnoreCase("sprinkleWarrantyStatus"))
+			return co.getSprinkleWarrantyStatus();
+		else if(name.equalsIgnoreCase("plumbingWarrantyStatus"))
+			return co.getPlumbingWarrantyStatus();
+		else if(name.equalsIgnoreCase("electricalWarrantyStatus"))
+			return co.getElectricalWarrantyStatus();
+		else if(name.equalsIgnoreCase("mechanicalWarrantyStatus"))
+			return co.getMechanicalWarrantyStatus();
+		else if(name.equalsIgnoreCase("GCWarrantyStatus"))
+			return co.getGCWarrantyStatus();
+		else if(name.equalsIgnoreCase("MCSWarrantyStatus"))
+			return co.getMCSWarrantyStatus();
+		//
+		else if(name.equalsIgnoreCase("certificateStatus"))
+			return co.getCertificateStatus();
+		else if(name.equalsIgnoreCase("tmpCertificateStatus"))
+			return co.getTmpCertificateStatus();
+		else if(name.equalsIgnoreCase("buildingFinalStatus"))
+			return co.getBuildingFinalStatus();
+		else if(name.equalsIgnoreCase("sprinkleFinalStatus"))
+			return co.getSprinkleFinalStatus();
+		else if(name.equalsIgnoreCase("plumbingFinalStatus"))
+			return co.getPlumbingFinalStatus();
+		else if(name.equalsIgnoreCase("elecFinalStatus"))
+			return co.getElecFinalStatus();
+		else if(name.equalsIgnoreCase("mechFinalStatus"))
+			return co.getMechFinalStatus();
+		else if(name.equalsIgnoreCase("otherFinalLeinsStatus"))
+			return co.getOtherFinalLeinsStatus();
+		
+		return null;
+
+	}
 }

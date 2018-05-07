@@ -533,4 +533,43 @@ public class Project extends ProjectObject
 	public synchronized void setManagerNotes(String managerNotes) {
 		this.managerNotes = managerNotes;
 	}
+	
+	
+	public static Date getSchedulingFields(String name , Project project)
+	{
+		if(name.equalsIgnoreCase("projectInitiatedDate"))
+			return project.getProjectInitiatedDate();
+		else if(name.equalsIgnoreCase("siteSurvey"))
+			return project.getSiteSurvey();
+		else if(name.equalsIgnoreCase("budgetaryDue"))
+			return project.getBudgetaryDue();
+		else if(name.equalsIgnoreCase("budgetarySubmitted"))
+			return project.getBudgetarySubmitted();
+		else if(name.equalsIgnoreCase("proposalDue"))
+			return project.getProposalDue();
+		else if(name.equalsIgnoreCase("proposalSubmitted"))
+			return project.getProposalSubmitted();
+		else if(name.equalsIgnoreCase("scheduledStartDate"))
+			return project.getScheduledStartDate();
+		else if(name.equalsIgnoreCase("scheduledTurnover"))
+			return project.getScheduledTurnover();
+		else if(name.equalsIgnoreCase("actualTurnover"))
+			return project.getActualTurnover();
+		else if(name.equalsIgnoreCase("permitApp"))
+			return project.getPermitApplication();
+		
+		return null;
+	}
+	
+	public static Double getFinancialFields(String name , Project project)
+	{
+		if(name.equalsIgnoreCase("shouldInvoice"))
+			return (Double) (double) project.getShouldInvoice();
+		else if(name.equalsIgnoreCase("actualInvoice"))
+			return (Double) (double) project.getInvoiced();
+		else if(name.equalsIgnoreCase("cost"))
+			return (Double) Double.parseDouble("cost");
+		
+		return null;
+	}
 }

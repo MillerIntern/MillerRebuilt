@@ -385,7 +385,6 @@ public class ProjectService extends ProjectObjectService
 		Long salvageID = (long)-1;
 		
 		String numOfMCSChangeOrders = params.get("numOfMCSChangeOrders");
-		System.out.println("BOOOO" + numOfMCSChangeOrders);
 
 		try
 		{

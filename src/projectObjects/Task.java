@@ -188,4 +188,16 @@ public class Task extends ProjectObject implements Comparable<Task> {
 	public synchronized String toString() {
 		return this.title + ": " + this.description;
 	}
+	
+	public static Object getTaskFields(String name , Task task)
+	{
+		if(name == null)
+			return null;
+		if(name.equalsIgnoreCase("dueDate"))
+			return task.getDueDate();
+		else if(name.equalsIgnoreCase("status"))
+			return task.getTaskStatus();
+		
+		return null;
+	}
 }
