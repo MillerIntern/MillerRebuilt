@@ -249,29 +249,29 @@
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Permit Status</th><th>Permit Last Updated</th></tr>
-					<tr><td width = 25% class = "bold">Building</td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
-					<tr><td class = "bold">Roofing</td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Mechanical</td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Electrical</td><td id='electricalPermit' class ="italics permitTableData"></td><td id='electricalPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Plumbing</td><td id='plumbingPermit' class ="italics permitTableData"></td><td id='plumbingPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerPermit' class ="italics permitTableData"></td><td id='sprinklerPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmPermit' class ="italics permitTableData"></td><td id='fireAlarmPermitDate' class ="italics permitTableData"></td></tr>
-					<tr><td class = "bold">Low Voltage</td><td id='lowVoltagePermit' class ="italics permitTableData"></td><td id='lowVoltagePermitDate' class ="italics permitTableData"></td></tr>
+					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Permit Requirement</th><th>Permit Status</th><th>Permit Last Updated</th></tr>
+					<tr><td class = "bold">Building</td><td id='buildingRequired' class="italics inspectionTableData"></td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
+					<tr><td class = "bold">Roofing</td><td id='roofingRequired' class="italics inspectionTableData"></td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Mechanical</td><td id='mechanicalRequired' class="italics inspectionTableData"></td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Electrical</td><td id='electricalRequired' class="italics inspectionTableData"></td><td id='electricalPermit' class ="italics permitTableData"></td><td id='electricalPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Plumbing</td><td id='plumbingRequired' class="italics inspectionTableData"></td><td id='plumbingPermit' class ="italics permitTableData"></td><td id='plumbingPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerRequired' class="italics inspectionTableData"></td><td id='sprinklerPermit' class ="italics permitTableData"></td><td id='sprinklerPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm</td><td id='fileAlarmRequired' class="italics inspectionTableData"></td><td id='fireAlarmPermit' class ="italics permitTableData"></td><td id='fireAlarmPermitDate' class ="italics permitTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage</td><td id='lowVoltageRequired' class="italics inspectionTableData"></td><td id='lowVoltagePermit' class ="italics permitTableData"></td><td id='lowVoltagePermitDate' class ="italics permitTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Inspection Status</th><th>Inspection Last Updated</th></tr>
-					<tr><td class = "bold">Building</td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Roofing</td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Mechanical</td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Electrical</td><td id='electricalInspection' class ="italics inspectionTableData"></td><td id='electricalInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Plumbing</td><td id='plumbingInspection' class ="italics inspectionTableData"></td><td id='plumbingInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerInspection' class ="italics inspectionTableData"></td><td id='sprinklerInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmInspection' class ="italics inspectionTableData"></td><td id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td></tr>
-					<tr><td class = "bold">Low Voltage</td><td id='lowVoltageInspection' class ="italics inspectionTableData"></td><td id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Inspection Requirement</th><th>Inspection Status</th><th>Inspection Last Updated</th></tr>
+					<tr><td class = "bold">Building</td><td id='buildingRequired' class="italics inspectionTableData"></td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Roofing</td><td id='roofingRequired' class="italics inspectionTableData"></td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Mechanical</td><td id='mechanicalRequired' class="italics inspectionTableData"></td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Electrical</td><td id='electricalRequired' class="italics inspectionTableData"></td><td id='electricalInspection' class ="italics inspectionTableData"></td><td id='electricalInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Plumbing</td><td id='plumbingRequired' class="italics inspectionTableData"></td><td id='plumbingInspection' class ="italics inspectionTableData"></td><td id='plumbingInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Sprinkler</td><td id='sprinklerRequired' class="italics inspectionTableData"></td><td id='sprinklerInspection' class ="italics inspectionTableData"></td><td id='sprinklerInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Fire Alarm</td><td id='fireAlarmRequired' class="italics inspectionTableData"></td><td id='fireAlarmInspection' class ="italics inspectionTableData"></td><td id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td></tr>
+					<tr><td class = "bold">Low Voltage</td><td id='lowVoltageRequired' class="italics inspectionTableData"></td><td id='lowVoltageInspection' class ="italics inspectionTableData"></td><td id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -696,13 +696,21 @@
 			<div id="buildingPermits" class="info-tab active">
 				<table class="manager table table-hover">
 				<tr>
-					<td></td><td class = "bold permitEditHeader">Permit</td>
+					<td></td>
+				    <td class = "bold permitEditHeader">Permit Required</td>
+					<td class = "bold permitEditHeader">Permit</td>
 					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection Required</td>
 					<td class = "bold permitEditHeader">Inspection</td>
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
 					<td class = "bold">Building</td>
+					<td>
+					    <select data-associated-date='buildingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="buildingPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
 					<td>
 					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='buildingPermitLastUpdated' TO SELECT -->
 						<select data-associated-date='buildingPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="buildingPermitStatus">
@@ -711,6 +719,11 @@
 					</td>
 					<td>
 		            	<input type="text" id="buildingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='buildingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="buildingInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='buildingInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="buildingInspectionStatus">
@@ -725,12 +738,22 @@
 						<tr>
 					<td class = "bold">Roofing</td>
 					<td>
+					    <select data-associated-date='roofingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="roofingPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
 						<select data-associated-date='roofingPermitLastUpdated' class="permitStatus  autofill-Permit-Status" id="roofingPermitStatus">
 							<option value="default"> TBD </option>
 						</select>
 					</td>
 					<td>
 		            	<input type="text" id="roofingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='roofingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="roofingInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='roofingInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="roofingInspectionStatus">
@@ -748,13 +771,20 @@
 			<div id="technicalPermits" class="info-tab">
 			        <table class="manager table table-hover">
 		        <tr>
-					<td></td><td class = "bold permitEditHeader">Permit</td>
+					<td></td>
+					<td class = "bold permitEditHeader"> Permit Required</td> 
+					<td class = "bold permitEditHeader">Permit</td>
 					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection Required</td>
 					<td class = "bold permitEditHeader">Inspection</td>
-					<td  class = "bold">Inspection Date</td>
+					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
 					<td class = "bold">Mechanical</td>
+					<td>
+					    <select data-associated-date='mechanicalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="mechanicalPermitReq">
+					        <option value="default"> TBD </option>
+					    </select></td>
 					<td>
 						<select data-associated-date='mechanicalPermitLastUpdated' class="permitStatus  autofill-Permit-Status" id="mechanicalPermitStatus">
 							<option value="default">TBD</option>
@@ -762,6 +792,11 @@
 					</td>
 					<td>
 		            	<input type="text" id="mechanicalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='mechanicalInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="mechanicalInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='mechanicalInspectionLastUpdated' class="inspectionStatus  autofill-Inspection-Status" id="mechanicalInspectionStatus">
@@ -776,12 +811,22 @@
 				<tr>
 					<td class = "bold">Electrical</td>
 					<td>
+					    <select data-associated-date='electricalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="electricalPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
 						<select data-associated-date='electricalPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="electricalPermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
 		            	<input type="text" id="electricalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='electricalInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="electricalInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='electricalInspectionLastUpdated' class="inspectionStatus  autofill-Inspection-Status" id="electricalInspectionStatus">
@@ -796,12 +841,22 @@
 				<tr>
 					<td class = "bold">Plumbing</td>
 					<td>
+					    <select data-associated-date='plumbingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="plumbingPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
 						<select data-associated-date='plumbingPermitLastUpdated' class="permitStatus  autofill-Permit-Status" id="plumbingPermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
 		            	<input type="text" id="plumbingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='plumbingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="plumbingInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='plumbingInspectionLastUpdated' class="inspectionStatus  autofill-Inspection-Status" id="plumbingInspectionStatus">
@@ -820,13 +875,20 @@
 					        <table class="manager table table-hover">
 		        <tr>
 					<td></td>
+					<td class = "bold permitEditHeader">Permit Required</td>
 					<td class = "bold permitEditHeader">Permit</td>
 					<td class = "bold">Permit Date</td>
+					<td class = "bold permitEditHeader">Inspection Required</td>
 					<td class = "bold permitEditHeader">Inspection</td>
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
 					<td class = "bold">Sprinkler</td>
+					<td>
+					    <select data-associated-date='sprinklerPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="sprinklerPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
 					<td>
 						<select data-associated-date='sprinklerPermitLastUpdated' class="permitStatus  autofill-Permit-Status" id="sprinklerPermitStatus">
 							<option value="default">TBD</option>
@@ -834,6 +896,11 @@
 					</td>
 					<td>
 		            	<input type="text" id="sprinklerPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='sprinklerInspectionLastUpdated' class="permitReq autofill-Permit-Requirement" id="sprinklerInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='sprinklerInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="sprinklerInspectionStatus">
@@ -848,12 +915,22 @@
 				<tr>
 					<td class = "bold">Fire Alarm</td>
 					<td>
+					    <select data-associated-date='fireAlarmPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="fireAlarmPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
 						<select data-associated-date='fireAlarmPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="fireAlarmPermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
 		            	<input type="text" id="fireAlarmPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='fireAlarmInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="fireAlarmPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='fireAlarmInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="fireAlarmInspectionStatus">
@@ -868,12 +945,22 @@
 				<tr>
 					<td class = "bold">Low-Voltage</td>
 					<td>
+					    <select data-associated-date='voltagePermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="voltagePermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
 						<select data-associated-date='voltagePermitLastUpdated' class="permitStatus  autofill-Permit-Status" id="voltagePermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
 		            	<input type="text" id="voltagePermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					<td>
+					    <select data-associated-date='voltageInspectionLastUpdated' class="inspectionReq autofill-Permit-Requirement" id="voltageInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
 					</td>
 					<td>
 						<select data-associated-date='voltageInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="voltageInspectionStatus">
@@ -892,48 +979,70 @@
 			       <table class="manager table table-hover">
 		        <tr>
 					<td></td>
+					<td class = "bold permitEditHeader">Permit Required</td>
 					<td class = "bold permitEditHeader">Permit</td>
 					<td class = "bold">Permit Date</td>
+                    <td class = "bold permitEditHeader">Inspection Required</td>
 					<td class = "bold permitEditHeader">Inspection</td>
 					<td class = "bold">Inspection Date</td>
 				</tr>
 				<tr>
 					<td class = "bold">Other Permit (A)</td>
 					<td>
-						<select data-associated-date='otherAPermitLastUpdated' class="permitStatus" id="otherAPermitStatus">
+					    <select data-associated-date='otherAPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="otherAPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
+						<select data-associated-date='otherAPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="otherAPermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
-		            	<input type="text" id="otherAPermitLastUpdated" class="permitAndInspectionStatusDate"/>
+		            	<input type="text" id="otherAPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-Date"/>
 					</td>
 					<td>
-						<select data-associated-date='otherAInspectionLastUpdated' class="inspectionStatus" id="otherAInspectionStatus">
+					    <select data-associated-date='otherAInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="otherAInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
+						<select data-associated-date='otherAInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="otherAInspectionStatus">
 							<option value="default">--Status--</option>
 						</select>
 					</td>
 					<td>
-		           		<input type="text" id="otherAInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
+		           		<input type="text" id="otherAInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-Date"/>
 					</td>
 				</tr>
 				
 				<tr>
 					<td class = "bold">Other Permit (B)</td>
 					<td>
-						<select data-associated-date='otherBPermitLastUpdated' class="permitStatus" id="otherBPermitStatus">
+					    <select data-associated-date='otherBPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="otherBPermitReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
+						<select data-associated-date='otherBPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="otherBPermitStatus">
 							<option value="default">TBD</option>
 						</select>
 					</td>
 					<td>
-		            	<input type="text" id="otherBPermitLastUpdated" class="permitAndInspectionStatusDate"/>
+		            	<input type="text" id="otherBPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-Date"/>
 					</td>
 					<td>
-						<select data-associated-date='otherBInspectionLastUpdated' class="inspectionStatus" id="otherBInspectionStatus">
+					    <select data-associated-date='otherBInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="otherBInspectionReq">
+					        <option value="default"> TBD </option>
+					    </select>
+					</td>
+					<td>
+						<select data-associated-date='otherBInspectionLastUpdated' class="inspectionStatus autofill-Inspection-Status" id="otherBInspectionStatus">
 							<option value="default">--Status--</option>
 						</select>
 					</td>
 					<td>
-		           		<input type="text" id="otherBInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
+		           		<input type="text" id="otherBInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-Date"/>
 					</td>
 				</tr>
 				</table>
