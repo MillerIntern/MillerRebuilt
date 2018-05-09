@@ -121,4 +121,19 @@ public class ProjectInformationFiller
 		}
 			
 	}
+	
+	public synchronized static void fillProjectScore(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
+	{
+		if(params.get("lowScore") != null)
+			currentProject.setLowScore(Integer.parseInt(params.get("lowScore")));
+		if(params.get("mediumScore") != null)
+			currentProject.setMediumScore(Integer.parseInt(params.get("mediumScore")));
+		if(params.get("highScore") != null)
+			currentProject.setHighScore(Integer.parseInt(params.get("highScore")));
+		
+		Date now = new Date();
+		
+		currentProject.setScoreLastUpdated(now);
+	}
+
 }

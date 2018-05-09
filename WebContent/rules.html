@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Projects</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/global.js"></script>
+	<script src="js/rules.js"></script>
+	<script src="js/ruleRetrieval.js"></script>
+	<script type="text/javascript" src="js/contentControl.js"></script>
+	<script src="js/chosen.jquery.min.js"></script>
+	<!-- <script src="js/autofill.js"></script> -->
+	
+	
+	
+	
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/findProjectNew.css" rel="stylesheet">
+    <link href="css/projectManagerNew.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/projects.css" rel="stylesheet">
+    <link href="css/rules.css" rel="stylesheet">
+    <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
+    
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
+	
+	</head>
+	<body id= "dom_body" onload = "preparePage()">
+	
+	
+	
+	<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Miller Construction Services</a>
+		    </div>
+		    <ul class="nav navbar-nav">
+		      <li><a href="homepage.html">Home</a></li>
+		      <li class="dropdown">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+		        <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Add Project</a></li>
+		          <li><a href = "projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
+		        </ul>
+		      </li>
+		      <li><a href="#">Triggers</a></li>
+		      <li class='dropdown'>
+		      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+		      		<span class='caret'></span>
+		      	</a>
+		      	<ul class='dropdown-menu'>
+		      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+		      		<li><a href='projects.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Create Task</a></li>
+		      	</ul>
+		      </li>
+		      <li><a href="query.html">Reports</a></li>
+		      <li class="active"><a href="rules.html">Rules</a></li>
+		      <li class="adminContent"><a href="additions.html">Tools</a></li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+		    </ul>
+		  </div>
+		</nav>
+		
+	
+<!--  
+		LINES 73 THRU 137 CORRESPOND TO THE FIND PROJECT DIV
+ -->	
+	<div id = 'findProject' >
+	    <div class="container">
+	   		<div id="param-field" class="param-field">
+	   			<span>
+	   			Search Criteria
+	   			<button onClick="addParameter()" class="addParamButton btn btn-primary">Add Parameter</button>
+	   			</span>
+	   			
+	   			
+				
+				<div id = "stagesOfInterest">
+				
+				<!--  THE INPUT VALUES CORRESPOND TO THE PROJECTSTAGE DATABASE ID -->
+				
+				<input id="AllStages" class="stage" type ="checkbox" value="all" checked = 'true'><span id="all" class = "stageLabel"> All</span>
+				<input id="NoStages" class="stage" type = "checkbox" value="none"> <span id="none" class = "stageLabel">None</span> &nbsp;&nbsp; : &nbsp;&nbsp;
+				 
+				
+				<input class = "commonStage stage" type ="checkbox" value="8" checked = 'true'><span id="8" class = "stageLabel">Budgetary</span>&nbsp;
+				<input class = "commonStage stage" type ="checkbox" value="1" checked = 'true'><span id="1" class = "stageLabel">Proposal</span>&nbsp;
+				<input class = "commonStage stage" type ="checkbox" value="2" checked = 'true'><span id="2" class = "stageLabel">Active</span>&nbsp;
+				<input class = "commonStage stage" type ="checkbox" value="17" checked = 'true'><span id="17" class = "stageLabel">Closeout</span>&nbsp;
+				<input class = "commonStage stage" type ="checkbox" value="16" checked = 'true'><span id="16" class = "stageLabel">Billing Closeout</span>
+				
+				<br>
+				<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class ="stage" type ="checkbox" value="4"><span id="4" class = "stageLabel">Closed</span> &nbsp;
+				<input class ="stage" type ="checkbox" value="9"><span id="9" class = "stageLabel">On Hold</span> &nbsp;
+				<input class ="stage" type ="checkbox" value="15"><span id="15" class = "stageLabel">Canceled</span>
+				
+				</div>
+				<br>
+				<!--  <button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button> -->
+				<br>
+	   			
+			    <div class="paramHolder">
+			        <select class="parameterID" id="paramID1">
+			            <option value="default">-- Please select an option --</option>
+			        </select>
+			        <select class="parameterValue" id="paramVal1">
+			            <option value="default">---</option>
+			        </select>
+			        <span onClick="removeParam(this)">&times;</span>
+			   </div>
+			   <div class="paramHolder">
+			        <select class="parameterID" id="paramID2">
+			            <option value="default">-- Please select an option --</option>
+			        </select>
+			        <select class="parameterValue" id="paramVal2">
+			            <option value="default">---</option>
+			        </select>
+			        <span onClick="removeParam(this)">&times;</span>
+			   </div>
+			   </div>
+	   		<br>
+	   		
+	   		<div class = "well param-field" id="projectTableDiv">
+	   		<table id="results" class="table table-striped">
+	   			<tr class='head'><th>Warehouse</th><th>Item</th><th>Manager</th><th>Low</th><th>Medium</th><th>High</th><th>Last Updated</th></tr>
+	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
+	   		
+	   		</table>
+	   		
+	   		</div>
+	   		
+	  	
+	    </div>
+		
+	
+	
+	</div>  <!-- THIS ENDS THE DIV FOR FIND PROJECT -->
+	<div id = "ruleManagerDiv" style = "display : none">
+		<h3 id = "ruleManagerHeader">Rule Manager<span></span></h3>
+		<div id = "ruleManagerTopLevelDiv">
+			<ul class = "list-group">
+				<li class = "list-group-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
+				<li class = "list-group-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
+				<li class = "list-group-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
+				<li class = "list-group-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
+				<li class = "list-group-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
+				<li class = "list-group-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
+				<li class = "list-group-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>
+			</ul>
+		</div>
+		<button class = "btn ruleNav" onclick = "displayProjectFinder();">Find Another Project</button>	
+	</div>
+	<div id = "failedRulesDiv" style = "display : none">
+		<h3 id = "failedRulesHeader">Failed Rules - <span></span></h3>
+		<div id = "failedRulesTable" class = "well param-field" >
+			<table class = "table table-responsive table-striped">
+				<thead>
+					<tr class = "head"><th>Title</th><th>Action</th></tr>
+				</thead>
+				<tbody>
+				
+				</tbody>
+			</table>
+		</div>
+		
+		<button class = "btn ruleNav" onclick = "displayRuleManager();"> Back to Rule Manager</button>
+	</div>
+	
+</body>
+</html>

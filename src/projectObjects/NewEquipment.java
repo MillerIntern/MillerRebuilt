@@ -1,6 +1,8 @@
 package projectObjects;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -187,6 +189,18 @@ public class NewEquipment extends ProjectObject
 			return eq.getDeliveryStatus();
 
 		return null;
+	}
+	
+	public static Map<String , String> getAllNewEquipmentFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		fields.put("orderedDate", "Date");
+		fields.put("deliveryDate", "Date");
+		fields.put("estDeliveryDate", "Date");
+		fields.put("deliveryStatus", "String");
+		
+		return fields;
+
 	}
 	
 	

@@ -1,6 +1,10 @@
 package projectObjects;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -1385,10 +1389,8 @@ public class CloseoutDetails extends ProjectObject
 		
 	public static Object getCloseoutFields(String name , CloseoutDetails co)
 	{
-		System.out.println("GETTING CLOSOEUT");
 		if(co == null || name == null)
 			return null;
-		System.out.println("GETTING CLOSOEUT AFTER");
 	
 		if(name.equalsIgnoreCase("numOfChangeOrders"))
 			return (Double) (double) co.getNumOfChangeOrders();
@@ -1489,5 +1491,62 @@ public class CloseoutDetails extends ProjectObject
 		
 		return null;
 
+	}
+	
+	public static Map<String , String> getAllCloseoutFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		/*
+		fields.put("numOfChangeOrders" , "Number");
+		fields.put("numOfChangeOrdersCompleted" , "Number");
+		fields.put("numOfMCSChangeOrders" , "Number");
+		fields.put("numOfMCSChangeOrdersCompleted" , "Number");
+		*/
+		//All Strings from this point
+		fields.put("MCSStatus" , "String");
+		fields.put("GCStatus" , "String");
+		fields.put("mechanicalStatus" , "String");
+		fields.put("electricalStatus" , "String");
+		fields.put("plumbingStatus" , "String");
+		fields.put("sprinkleStatus" , "String");
+		fields.put("roofingStatus" , "String");
+		fields.put("HTIStatus" , "String");
+		fields.put("mulvannySignOffStatus" , "String");
+		fields.put("releaseOfLiensStatus" , "String");
+		fields.put("paymentOfDebtsAndClaimsStatus" , "String");
+		fields.put("substantialCompletionStatus" , "String");
+		fields.put("warrantyNotes" , "String");
+		fields.put("closeoutDocumentsNotes" , "String");
+		fields.put("finalLiensNotes" , "String");
+		fields.put("finalInspectionNotes" , "String");
+		fields.put("mg2CompletionStatus" , "String");
+		fields.put("verisaeReportStatus" , "String");
+		fields.put("alarmFormStatus" , "String");
+		fields.put("HVACstartupFormStatus" , "String");
+		fields.put("closeOutPhotosStatus" , "String");
+		fields.put("asBuiltDrawingsStatus" , "String");
+		fields.put("punchListStatus" , "String");
+		fields.put("manualStatus" , "String");
+		fields.put("equipmentSubmittalStatus" , "String");
+		fields.put("otherWarrantyStatusB" , "String");
+		fields.put("otherWarrantyStatusA" , "String");
+		fields.put("HTIWarrantyStatus" , "String");
+		fields.put("roofingWarrantyStatus" , "String");
+		fields.put("sprinkleWarrantyStatus" , "String");
+		fields.put("plumbingWarrantyStatus" , "String");
+		fields.put("electricalWarrantyStatus" , "String");
+		fields.put("mechanicalWarrantyStatus" , "String");
+		fields.put("GCWarrantyStatus" , "String");
+		fields.put("MCSWarrantyStatus" , "String");
+		fields.put("certificateStatus" , "String");
+		fields.put("tmpCertificateStatus" , "String");
+		fields.put("buildingFinalStatus" , "String");
+		fields.put("sprinkleFinalStatus" , "String");
+		fields.put("plumbingFinalStatus" , "String");
+		fields.put("elecFinalStatus" , "String");
+		fields.put("mechFinalStatus" , "String");
+		fields.put("otherFinalLeinsStatus" , "String");
+
+		return fields;
 	}
 }
