@@ -35,6 +35,7 @@ import projectObjects.EquipmentVendor;
 import projectObjects.Permission;
 import projectObjects.Person;
 import projectObjects.ProjectItem;
+import projectObjects.ProjectRule;
 import projectObjects.Region;
 import projectObjects.State;
 import projectObjects.Status;
@@ -44,6 +45,7 @@ import projectObjects.Subcontractor;
 import services.LoginService;
 import services.ProjectObjectService;
 import services.ProjectService;
+import services.helpers.ProjectRuleFiller;
 
 
 @WebServlet(description = "Servlet for handling admin requests", urlPatterns = { "/Admin" })
@@ -275,6 +277,49 @@ public class Admin extends HttpServlet
 			Person person = new Person(username);
 			ProjectObjectService.addObject("Person",  person);
 			response = "person added";
+		}
+		else if(action.equals("addRule"))
+		{
+			ProjectRule rule = new ProjectRule();
+			try {
+			ProjectRuleFiller.fillRule(rule , parameters);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			ProjectObjectService.addObject("ProjectRule",  rule);
+			response = "rule added";
+		}
+		else if(action.equals("editRule"))
+		{
+			ProjectRule rule = new ProjectRule();
+			Long ruleId = Long.parseLong(parameters.get("ruleId"));
+			
+
+			try {
+			ProjectService.editExistingRule(ruleId , parameters);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			response = "rule added";
+		}
+		else if(action.equals("deleteRule"))
+		{
+			Long ruleId = Long.parseLong(parameters.get("ruleId"));
+			
+
+			try {
+			ProjectObjectService.delete(ruleId , "ProjectRule");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			response = "rule deleted";
 		}
 		else if(action.equals("addUser"))
 		{

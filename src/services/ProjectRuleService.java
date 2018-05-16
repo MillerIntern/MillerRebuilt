@@ -33,7 +33,6 @@ public class ProjectRuleService
 	 */
 	public static RuleResult EvaluateDates(Date d1 , Date d2)
 	{
-		System.out.println("EVAL DATES");
 		if(d1 == null && d2 == null)
 			return RuleResult.DD_NN;
 		else if(d1 == null && d2 != null)
@@ -94,7 +93,6 @@ public class ProjectRuleService
 	
 	public static RuleResult EvaluateStrings(String d1 , String d2)
 	{
-		System.out.println("D1 = " + d1 + " D2 = " + d2);
 		if(d1 == null && d2 == null)
 			return RuleResult.SS_NN;
 		else if(d1 == null && d2 != null)
@@ -162,8 +160,6 @@ public class ProjectRuleService
 		Object field1 = CloseoutDetails.getCloseoutFields(f1 , co);
 		Object field2 = CloseoutDetails.getCloseoutFields(f2 , co);
 		
-		System.out.println("FIELD1 = " + field1);
-
 		if(field1 instanceof String || field1 == null)
 			return _rule.evaluate(EvaluateCloseoutStatus((String) field1));
 		
@@ -191,9 +187,17 @@ public class ProjectRuleService
 		
 		if(field1 instanceof Date && field2 instanceof Date)
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
-		else if(field1 instanceof Double && field2 instanceof Double)
-			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
+		if(field1 instanceof Double && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
+		else if(field1 instanceof Double && field2 == null)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , null));
+		else if(field1 == null && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers(null , (Double) field2));
 		
 		return false;
 	}
@@ -251,7 +255,6 @@ public class ProjectRuleService
 		Date field2 = Project.getSchedulingFields(f2 , proj);
 		
 
-		System.out.println("IN SCHED");
 		return _rule.evaluate(EvaluateDates(field1 , field2));
 		
 				
@@ -278,6 +281,10 @@ public class ProjectRuleService
 
 		if(field1 instanceof Date && field2 instanceof Date)
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
 		return false;
 
@@ -290,11 +297,9 @@ public class ProjectRuleService
 		if(proj == null)	proj = _rule.getProject();
 		//Maybe handle it elsewhere if the rule is newly created?
 		
-		System.out.println("PERMITZZZ");
 		Permits perms = proj.getPermits();
 		if(perms == null)
 			return true;
-		System.out.println("PERMITZZZWWWW");
 
 		String f1 , f2;
 		f1 = _rule.getField1();
@@ -310,7 +315,14 @@ public class ProjectRuleService
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
 		else if(field1 instanceof String && field2 instanceof String)
 			return _rule.evaluate(EvaluateStrings((String) field1 , (String) field2));
-		
+		else if(field1 instanceof String && field2 == null)
+			return _rule.evaluate(EvaluateStrings((String) field1 , null));
+		else if(field1 == null && field2 instanceof String)
+			return _rule.evaluate(EvaluateStrings( null , (String) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
 		return false;
 		
@@ -322,6 +334,10 @@ public class ProjectRuleService
 		
 		Map<String , Object> evaluation = new HashMap<String , Object>();
 		evaluation.put("PROJECT", project);
+		project.setLowScore(0);
+		project.setMediumScore(0);
+		project.setHighScore(0);
+		
 		for(ProjectRule rule : rules)
 		{
 			Map<String , Object> map = new HashMap<String , Object>();
@@ -339,6 +355,7 @@ public class ProjectRuleService
 				{
 					case PermitsAndInspections:
 						result = PermitAndInspectionEvaluate(rule , project);
+						map.put("type", "PermitsAndInspections");
 						break;
 					case Scheduling:
 						result = SchedulingEvaluate(rule , project);
@@ -352,38 +369,61 @@ public class ProjectRuleService
 						map.put("scheduledTurnover", project.getScheduledTurnover());
 						map.put("actualTurnover", project.getActualTurnover());
 						map.put("permitApp" , project.getPermitApplication());
+						map.put("type", "Scheduling");
 						break;
 					case Tasks:
 						Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);
 						map.put("taskResults", taskMap);
+						map.put("type", "Task");
 						break;
 					case Financial:
 						result = FinancialEvaluate(rule , project);
 						map.put("shouldInvoice", project.getShouldInvoice());
 						map.put("actualInvoice", project.getInvoiced());
 						map.put("cost", project.getCost());
+						map.put("type", "Financial");
 						break;
 					case ChangeOrders:
 						Map<String , Object> changeOrderMap = EvaluateProjectChangeOrders(rule , project);
 						map.put("changeOrderResults", changeOrderMap);
+						map.put("type", "ChangeOrders");
 						break;
 					case Closeout:
 						result = CloseoutEvaluate(rule , project.getCloseoutDetails());
 						map.put("closeoutDetails", project.getCloseoutDetails());
+						map.put("type", "Closeout");
 						break;
 					case Equipment:
 						Map<String , Object> equipmentMap = EvaluateProjectChangeOrders(rule , project);
 						map.put("equipmentResults", equipmentMap);
+						map.put("type", "Equipment");
 						break;
 					default:
 						break;
 				}
 				if(result != null)
 				{
-					if(result == true)
+					if(result == true) {
 						map.put("message" , rule.getPassMessage());
-					else
+						map.put("passed", "true");
+					}
+					else 
+					{
+						switch(rule.getSeverity())
+						{
+							case LOW:
+								project.setLowScore(project.getLowScore() + 1);
+								break;
+							case MEDIUM:
+								project.setMediumScore(project.getMediumScore() + 1);
+								break;
+							case HIGH:
+								project.setHighScore(project.getHighScore() + 1);
+								break;
+						}
 						map.put("message", rule.getFailMessage());
+						map.put("passed", "false");
+					}
 				}
 					
 			}
@@ -403,7 +443,6 @@ public class ProjectRuleService
 		map.put("TASKS", tasks);
 		for(Task task : tasks)
 		{
-			System.out.println("YU YUH");
 			boolean result;
 			Map<String , Object> results = new HashMap<String , Object>();
 			map.put(task.getId().toString(), results);
@@ -420,10 +459,14 @@ public class ProjectRuleService
 			results.put("notes", task.getNotes());
 			results.put("status", task.getTaskStatus());
 										
-			if(result == true)
+			if(result == true) {
 				results.put("message" , rule.getPassMessage());
-			else
+				results.put("passed", "true");
+			}
+			else {
 				results.put("message" , rule.getFailMessage());
+				results.put("passed", "false");
+			}
 		}
 		
 		return map;
@@ -458,10 +501,14 @@ public class ProjectRuleService
 			results.put("notes", co.getNotes());
 			results.put("status", co.getStatus());
 										
-			if(result == true)
+			if(result == true) {
 				results.put("message" , rule.getPassMessage());
-			else
+				results.put("passed", "true");
+			}
+			else {
 				results.put("message" , rule.getFailMessage());
+				results.put("passed", "false");
+			}
 		}
 		
 		return map;
@@ -495,10 +542,15 @@ public class ProjectRuleService
 			results.put("deliveryStatus", eq.getDeliveryStatus());
 			results.put("eqStatus", eq.getEqStatus());
 										
-			if(result == true)
+			if(result == true) {
 				results.put("message" , rule.getPassMessage());
-			else
+				results.put("passed", "true");
+			}
+			else {
 				results.put("message" , rule.getFailMessage());
+				results.put("passed", "false");
+			}
+			
 		}
 		
 		return map;

@@ -1,6 +1,11 @@
 package projectObjects;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
@@ -778,5 +783,44 @@ public class Permits extends ProjectObject
 		}
 		
 		return null;
+	}
+	
+	public static Map<String , String> getAllPermitFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		allRelationsFromStub("building" , fields);
+		allRelationsFromStub("mechancial" , fields);
+		allRelationsFromStub("electrical" , fields);
+		allRelationsFromStub("plumbing" , fields);
+		allRelationsFromStub("fireAlarm" , fields);
+		allRelationsFromStub("voltage" , fields);
+		allRelationsFromStub("sprinkler" , fields);
+		allRelationsFromStub("roofing" , fields);
+		allRelationsFromStub("otherA" , fields);
+		allRelationsFromStub("otherB" , fields);
+		
+		return fields;
+
+	}
+	
+	public static void allRelationsFromStub(String stub , Map<String , String> map)
+	{
+		if(map == null || stub == null) return;
+		
+		String first = null;
+		if(stub.equalsIgnoreCase("fireAlarm"))
+			first = "fire_alarm";
+		else if(stub.equals("voltage"))
+			first = "low_voltage";
+		else if(stub.equalsIgnoreCase("sprinkler"))
+			first = "fire_sprinkler";
+		else
+			first = stub;
+		
+		map.put(first + "PermitLastUpdated" , "Date");
+		map.put(stub + "PermitStatus" , "String");
+		map.put(stub + "InspectionStatus" , "String");
+		map.put(stub + "InspectionLastUpdated" , "Date");
+		
 	}
 }

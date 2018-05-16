@@ -1,8 +1,10 @@
 package projectObjects;
 
+import java.util.ArrayList;
 import java.util.Date;
-
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -199,5 +201,15 @@ public class Task extends ProjectObject implements Comparable<Task> {
 			return task.getTaskStatus();
 		
 		return null;
+	}
+	
+	public static Map<String , String> getAllTaskFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		fields.put("dueDate", "Date");
+		fields.put("status", "String");
+		
+		return fields;
+
 	}
 }

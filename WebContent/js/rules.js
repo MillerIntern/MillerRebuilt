@@ -19,6 +19,7 @@
  */
 
 
+
 $(document).ready(function(){$('textarea').keydown(function(){
 	autoSizeTextAreas(this);
 })});
@@ -112,7 +113,7 @@ let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
 let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 let TASK_ACTION = "createTask";
 let CHANGE_ORDER_TYPES = new Array();
-let PERSONS;
+
 
 
 
@@ -1076,7 +1077,6 @@ function getProjectEnums_PERMIT()
 		},
 		success: function(data)
 		{
-			console.log("STATUSES" , data);
 			fillDropdowns_PERMIT(data);
 			if(EDIT_INTENTION == true)
 				getProject_PERMIT();
@@ -1094,20 +1094,6 @@ function fillDropdowns_PERMIT(json)
 {
 	console.log("PERMIT/INSPECTION JSON = ", json);
 	
-//	var permitRequirement = JSON.parse(json["permitreq"]);
-//	permitRequirement.sort(function(a , b) {
-//		if(a.id < b.id) return -1;
-//		else if(a.id > b.id ) return 1;
-//		else return 0;
-//	});
-//	
-//	var inspectionRequirement = JSON.parse(json["inspectionreq"]);
-//	inspectionRequirement.sort(function(a , b) {
-//		if(a.id < b.id) return -1;
-//		else if(a.id > b.id ) return 1;
-//		else return 0;
-//	});
-	
 	var permitStage = JSON.parse(json["permitstage"]);
 	permitStage.sort(function(a , b) {
 		if(a.id < b.id) return -1;
@@ -1115,35 +1101,16 @@ function fillDropdowns_PERMIT(json)
 		else return 0;
 	});
 	
-	
 	var inspectionStage = JSON.parse(json["inspectionstatus"]);
 	inspectionStage.sort(function(a , b) {
 		if(a.id < b.id) return -1;
 		else if(a.id > b.id ) return 1;
 		else return 0;
 	});
-
-	
 	//var permitStage = [{"name": "Preparing"}, {"name": "Submitted"}, {"name": "Approved"}, {"name": 'Issued'}, {'name': 'Closed'}, {'name': 'N/A'} , {'name' : 'TBD'}];
 	//var inspectionStage = [{'name': 'Scheduled'}, {'name': 'Passed'}, {'name': 'Failed'}, {'name': 'N/A'} , {'name' : 'TBD'}];
 	
 	var d = document.createDocumentFragment();
-	
-//	for(var i = 0; i < permitRequirement.length; i++)
-//	{
-//		var option = document.createElement("option");
-//		option.innerHTML = permitRequirement[i].name;
-//		option.setAttribute("value", permitRequirement[i].name);
-//		d.appendChild(option);
-//	}
-//	
-//	for(var i = 0; i < inspectionRequirement.length; i++)
-//    {
-//		var option = document.createElement("option");
-//		option.innerHTML = inspectionRequirement[i].name;
-//		option.setAttribute("value", inspectionRequirement[i].name);
-//		d.appendChild(option);
-//    }
 	
 	for(var i = 0; i < permitStage.length; i++)
 	{
@@ -1153,11 +1120,7 @@ function fillDropdowns_PERMIT(json)
 		d.appendChild(option);
 	}
 	
-	var defaultOption = document.createElement('option');
-	defaultOption.value = "default";
-	defaultOption.innerHTML = "---Status---";
 	$('#permitData').find(".permitStatus").find('option').remove();
-	$('#permitData').find('.permitStatus').append(defaultOption);
 	$('#permitData').find(".permitStatus").append(d);
 	
 	var dd = document.createDocumentFragment();
@@ -1169,9 +1132,7 @@ function fillDropdowns_PERMIT(json)
 	}
 	
 	$('#permitData').find('.inspectionStatus').find('option').remove();
-	$('#permitData').find('.inspectionStatus').append(defaultOption);
 	$('#permitData').find('.inspectionStatus').append(dd);
-	
 	
 }
 
@@ -1241,71 +1202,51 @@ function fillTabs_PERMIT(data)
 	{	
 		$('#permitData').find("#buildingPermitLastUpdated").val(json.permits.building);
 		$('#permitData').find("#buildingPermitStatus").val(json.permits.buildingPermitStatus);
-		$('#permitData').find("#buildingPermitReq").val(json.permits.buildingPermitRequired);
-		$('#permitData').find("#buildingInspectionReq").val(json.permits.buildingInspectionRequired);
 		$('#permitData').find("#buildingInspectionStatus").val(json.permits.buildingInspectionStatus);
 		$('#permitData').find("#buildingInspectionLastUpdated").val(json.permits.buildingInspectionLastUpdated);
 		
 		$('#permitData').find("#roofingPermitLastUpdated").val(json.permits.roofing);
 		$('#permitData').find("#roofingPermitStatus").val(json.permits.roofingPermitStatus);
-		$('#permitData').find("#roofingPermitReq").val(json.permits.roofingPermitRequired);
-		$('#permitData').find("#roofingInspectionReq").val(json.permits.roofingInspectionRequired);
 		$('#permitData').find("#roofingInspectionStatus").val(json.permits.roofingInspectionStatus);
 		$('#permitData').find("#roofingInspectionLastUpdated").val(json.permits.roofingInspectionLastUpdated);
 		
 		$('#permitData').find("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
 		$('#permitData').find("#mechanicalPermitStatus").val(json.permits.mechanicalPermitStatus);
-		$('#permitData').find("#mechanicalPermitReq").val(json.permits.mechanicalPermitRequired);
-		$('#permitData').find("#mechanicalInspectionReq").val(json.permits.mechanicalInspectionRequired);
 		$('#permitData').find("#mechanicalInspectionStatus").val(json.permits.mechanicalInspectionStatus);
 		$('#permitData').find("#mechanicalInspectionLastUpdated").val(json.permits.mechanicalInspectionLastUpdated);
 		
 		$('#permitData').find("#electricalPermitLastUpdated").val(json.permits.electrical);
 		$('#permitData').find("#electricalPermitStatus").val(json.permits.electricalPermitStatus);
-		$('#permitData').find("#electricalPermitReq").val(json.permits.electricalPermitRequired);
-		$('#permitData').find("#electricalInspectionReq").val(json.permits.electricalInspectionRequired);
 		$('#permitData').find("#electricalInspectionStatus").val(json.permits.electricalInspectionStatus);
 		$('#permitData').find("#electricalInspectionLastUpdated").val(json.permits.electricalInspectionLastUpdated);
 		
 		$('#permitData').find("#plumbingPermitLastUpdated").val(json.permits.plumbing);
 		$('#permitData').find("#plumbingPermitStatus").val(json.permits.plumbingPermitStatus);
-		$('#permitData').find("#plumbingPermitReq").val(json.permits.plumbingPermitRequired);
-		$('#permitData').find("#plumbingInspectionReq").val(json.permits.plumbingInspectionRequired);
 		$('#permitData').find("#plumbingInspectionStatus").val(json.permits.plumbingInspectionStatus);
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(json.permits.plumbingInspectionLastUpdated);
 		
 		$('#permitData').find("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
 		$('#permitData').find("#sprinklerPermitStatus").val(json.permits.sprinklerPermitStatus);
-		$('#permitData').find("#sprinklerPermitReq").val(json.permits.sprinklerPermitRequired);
-		$('#permitData').find("#sprinklerInspectionReq").val(json.permits.sprinklerInspectionRequired);
 		$('#permitData').find("#sprinklerInspectionStatus").val(json.permits.sprinklerInspectionStatus);
 		$('#permitData').find("#sprinklerInspectionLastUpdated").val(json.permits.sprinklerInspectionLastUpdated);
 		
 		$('#permitData').find("#fireAlarmPermitLastUpdated").val(json.permits.fire_alarm);
 		$('#permitData').find("#fireAlarmPermitStatus").val(json.permits.fireAlarmPermitStatus);
-		$('#permitData').find("#fireAlarmPermitReq").val(json.permits.fireAlarmPermitRequired);
-		$('#permitData').find("#fireAlarmInspectionReq").val(json.permits.fireAlarmInspectionRequired);
 		$('#permitData').find("#fireAlarmInspectionStatus").val(json.permits.fireAlarmInspectionStatus);
 		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(json.permits.fireAlarmInspectionLastUpdated);
 		
 		$('#permitData').find("#voltagePermitLastUpdated").val(json.permits.low_voltage);
 		$('#permitData').find("#voltagePermitStatus").val(json.permits.voltagePermitStatus);
-		$('#permitData').find("#voltagePermitReq").val(json.permits.voltagePermitRequired);
-		$('#permitData').find("#voltageInspectionReq").val(json.permits.voltageInspectionRequired);
 		$('#permitData').find("#voltageInspectionStatus").val(json.permits.voltageInspectionStatus);
 		$('#permitData').find("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
 		
 	    $('#permitData').find("#otherAPermitStatus").val(json.permits.otherAPermitStatus);
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
-//	    $('#permitData').find("#otherAPermitReq").val(json.permits.otherAPermitRequired);
-//	    $('#permitData').find("#otherAInspectionReq").val(json.permits.otherAInspectionRequired);
 	    $('#permitData').find("#otherAInspectionStatus").val(json.permits.otherAInspectionStatus);
 	    $('#permitData').find("#otherAInspectionLastUpdated").val(json.permits.otherAInspectionLastUpdated);
 	    
 	    $('#permitData').find("#otherBPermitStatus").val(json.permits.otherBPermitStatus);
 	    $('#permitData').find("#otherBPermitLastUpdated").val(json.permits.otherBPermit);
-//	    $('#permitData').find("#otherBPermitReq").val(json.permits.otherBPermitRequired);
-//	    $('#permitData').find("#otherBInspectionReq").val(json.permits.otherBInspectionRequired);
 	    $('#permitData').find("#otherBInspectionStatus").val(json.permits.otherBInspectionStatus);
 	    $('#permitData').find("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
 	    
@@ -1331,73 +1272,53 @@ function saveProject_PERMIT()
 {
     console.log("Saving Permit Information");
 	
-    var buildingPermitReq = $('#permitData').find("#buildingPermitReq").val();
     var buildingPermitStatus = $('#permitData').find("#buildingPermitStatus").val();
     var buildingPermitLastUpdated = $('#permitData').find("#buildingPermitLastUpdated").val();
-    var buildingInspectionReq = $('#permitData').find("#buildingInspectionReq").val();
     var buildingInspectionStatus = $('#permitData').find("#buildingInspectionStatus").val();
     var buildingInspectionLastUpdated = $('#permitData').find("#buildingInspectionLastUpdated").val();
     
-    var roofingPermitReq = $('#permitData').find("#roofingPermitReq").val();
     var roofingPermitStatus = $('#permitData').find("#roofingPermitStatus").val();
     var roofingPermitLastUpdated = $('#permitData').find("#roofingPermitLastUpdated").val();
-    var roofingInspectionReq = $('#permitData').find("#roofingInspectionReq").val();
     var roofingInspectionStatus = $('#permitData').find("#roofingInspectionStatus").val();
     var roofingInspectionLastUpdated = $('#permitData').find("#roofingInspectionLastUpdated").val();
     
-    var mechanicalPermitReq = $('#permitData').find("#mechanicalPermitReq").val();
     var mechanicalPermitStatus = $('#permitData').find("#mechanicalPermitStatus").val();
     var mechanicalPermitLastUpdated = $('#permitData').find("#mechanicalPermitLastUpdated").val();
-    var mechanicalInspectionReq = $('#permitData').find("#mechanicalInspectionReq").val();
     var mechanicalInspectionStatus = $('#permitData').find("#mechanicalInspectionStatus").val();
     var mechanicalInspectionLastUpdated = $('#permitData').find("#mechanicalInspectionLastUpdated").val();
     
-    var electricalPermitReq = $('#permitData').find("#electricalPermitReq").val();
     var electricalPermitStatus = $('#permitData').find("#electricalPermitStatus").val();
     var electricalPermitLastUpdated = $('#permitData').find("#electricalPermitLastUpdated").val();
-    var electricalInspectionReq = $('#permitData').find("#electricalInspectionReq").val();
     var electricalInspectionStatus = $('#permitData').find("#electricalInspectionStatus").val();
     var electricalInspectionLastUpdated = $('#permitData').find("#electricalInspectionLastUpdated").val();
     
-    var plumbingPermitReq = $('#permitData').find("#plumbingPermitReq").val();
     var plumbingPermitStatus = $('#permitData').find("#plumbingPermitStatus").val();
     var plumbingPermitLastUpdated = $('#permitData').find("#plumbingPermitLastUpdated").val();
-    var plumbingInspectionReq = $('#permitData').find("#plumbingInspectionReq").val();
     var plumbingInspectionStatus = $('#permitData').find("#plumbingInspectionStatus").val();
     var plumbingInspectionLastUpdated = $('#permitData').find("#plumbingInspectionLastUpdated").val();
     
-    var sprinklerPermitReq = $('#permitData').find("#sprinklerPermitReq").val();
     var sprinklerPermitStatus = $('#permitData').find("#sprinklerPermitStatus").val();
     var sprinklerPermitLastUpdated = $('#permitData').find("#sprinklerPermitLastUpdated").val();
-    var sprinklerInspectionReq = $('#permitData').find("#sprinklerInspectionReq").val();
     var sprinklerInspectionStatus = $('#permitData').find("#sprinklerInspectionStatus").val();
     var sprinklerInspectionLastUpdated = $('#permitData').find("#sprinklerInspectionLastUpdated").val();
     
-    var fireAlarmPermitReq = $('#permitData').find("#fireAlarmPermitReq").val();
     var fireAlarmPermitStatus = $('#permitData').find("#fireAlarmPermitStatus").val();
     var fireAlarmPermitLastUpdated = $('#permitData').find("#fireAlarmPermitLastUpdated").val();
-    var fireAlarmInspectionReq = $('#permitData').find("#fireAlarmInspectionReq").val();
     var fireAlarmInspectionStatus = $('#permitData').find("#fireAlarmInspectionStatus").val();
     var fireAlarmInspectionLastUpdated = $('#permitData').find("#fireAlarmInspectionLastUpdated").val();
     
-    var voltagePermitReq = $('#permitData').find("#voltagePermitReq").val();
     var voltagePermitStatus = $('#permitData').find("#voltagePermitStatus").val();
     var voltagePermitLastUpdated = $('#permitData').find("#voltagePermitLastUpdated").val();
-    var voltageInspectionReq = $('#permitData').find("#voltageInspectionReq").val();
     var voltageInspectionStatus = $('#permitData').find("#voltageInspectionStatus").val();
     var voltageInspectionLastUpdated = $('#permitData').find("#voltageInspectionLastUpdated").val();
     
-//    var otherAPermitReq = $('#permitData').find("#otherAPermitReq").val();
     var otherAPermitStatus = $('#permitData').find("#otherAPermitStatus").val();
     var otherAPermitLastUpdated = $('#permitData').find("#otherAPermitLastUpdated").val();
-//    var otherAInspectionReq = $('#permitData').find("#otherAInspectionReq").val();
     var otherAInspectionStatus = $('#permitData').find("#otherAInspectionStatus").val();
     var otherAInspectionLastUpdated = $('#permitData').find("#otherAInspectionLastUpdated").val();
     
-//    var otherBPermitReq = $('#permitData').find("#otherBPermitReq").val();
     var otherBPermitStatus = $('#permitData').find("#otherBPermitStatus").val();
     var otherBPermitLastUpdated = $('#permitData').find("#otherBPermitLastUpdated").val();
-//    var otherBInspectionReq = $('#permitData').find("#otherBInspectionReq").val();
     var otherBInspectionStatus = $('#permitData').find("#otherBInspectionStatus").val();
     var otherBInspectionLastUpdated = $('#permitData').find("#otherBInspectionLastUpdated").val();
 
@@ -1481,57 +1402,41 @@ function saveProject_PERMIT()
 				
 				'building_p':buildingPermitLastUpdated, 
 				'buildingPermitStatus': buildingPermitStatus,
-				'buildingPermitReq': buildingPermitReq,
-				'buildingInspectionReq': buildingInspectionReq,
 				'buildingInspectionStatus': buildingInspectionStatus,
 				'buildingInspectionLastUpdated': buildingInspectionLastUpdated,
 				
 				'mechanical_p' :mechanicalPermitLastUpdated,
 				'mechanicalPermitStatus': mechanicalPermitStatus,
-				'mechanicalPermitReq': mechanicalPermitReq,
-				'mechanicalInspectionReq': mechanicalInspectionReq,
 				'mechanicalInspectionStatus': mechanicalInspectionStatus,
 				'mechanicalInspectionLastUpdated': mechanicalInspectionLastUpdated,
 				
 				'electrical_p':electricalPermitLastUpdated,
 				'electricalPermitStatus': electricalPermitStatus,
-				'electricalPermitReq': electricalPermitReq,
-				'electricalInspectionReq': electricalInspectionReq,
 				'electricalInspectionStatus': electricalInspectionStatus,
 				'electricalInspectionLastUpdated': electricalInspectionLastUpdated,
 				
 				'plumbing_p':plumbingPermitLastUpdated,
 				'plumbingPermitStatus': plumbingPermitStatus,
-				'plumbingPermitReq': plumbingPermitReq,
-				'plumbingInspectionReq': plumbingInspectionReq,
 				'plumbingInspectionStatus': plumbingInspectionStatus,
 				'plumbingInspectionLastUpdated': plumbingInspectionLastUpdated,
 				
 				'fireSprinkler_p':sprinklerPermitLastUpdated,
 				'sprinklerPermitStatus': sprinklerPermitStatus,
-				'sprinklerPermitReq': sprinklerPermitReq,
-				'sprinklerInspectionReq': sprinklerInspectionReq,
 				'sprinklerInspectionStatus': sprinklerInspectionStatus,
 				'sprinklerInspectionLastUpdated': sprinklerInspectionLastUpdated,
 				
 				'fireAlarm_p':fireAlarmPermitLastUpdated, 
 				'fireAlarmPermitStatus': fireAlarmPermitStatus,
-				'fireAlarmPermitReq': fireAlarmPermitReq,
-				'fireAlarmInspectionReq': fireAlarmInspectionReq,
 				'fireAlarmInspectionStatus': fireAlarmInspectionStatus,
 				'fireAlarmInspectionLastUpdated': fireAlarmInspectionLastUpdated,
 				
 				'lowVoltage_p':voltagePermitLastUpdated,
 				'voltagePermitStatus': voltagePermitStatus,
-				'voltagePermitReq': voltagePermitReq,
-				'voltageInspectionReq': voltageInspectionReq,
 				'voltageInspectionStatus': voltageInspectionStatus,
 				'voltageInspectionLastUpdated': voltageInspectionLastUpdated,
 				
 				'roofingPermit': roofingPermitLastUpdated,
 				'roofingPermitStatus': roofingPermitStatus,
-				'roofingPermitReq': roofingPermitReq,
-				'roofingInspectionReq': roofingInspectionReq,
 				'roofingInspectionStatus': roofingInspectionStatus,
 				'roofingInspectionLastUpdated': roofingInspectionLastUpdated,
 				
@@ -1873,10 +1778,6 @@ function saveProject_PROJECT_DATA() {
 	if(cost) {cost = cleanNumericValueForSaving($('#projectData').find("#projectCost")[0].value); cost = parseFloat(cost);}
 	var customerNumber = $('#projectData').find("#custNum").val();
 	
-	var autofill_HVAC = $('#projectData').find("#autofill-HVAC").val();
-	var autofill_Refrigeration = $('#projectData').find("#autofill-Refrigeration").val();
-	var autofill_Permits = $('#projectData').find("#autofill-Permits").val();
-	
 	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
 	var dates_PROJECT_DATA = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
 	
@@ -1955,11 +1856,6 @@ function saveProject_PROJECT_DATA() {
 				'customerNumber': customerNumber,
 				'budgetaryDue' : budgetaryDue , 
 				'budgetarySubmitted' : budgetarySubmitted,
-				
-				'autofill-HVAC': autofill_HVAC,
-				'autofill-Refrigeration': autofill_Refrigeration,
-		        'autofill-Permits': autofill_Permits
-		        
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
@@ -2063,20 +1959,42 @@ function convertStage(data) {
  * INNER FUNCTION CALLS: removeParam()
  */
 function matchUsernameToPerson(userFirstName){
-	if(! PERSONS)
+	switch(userFirstName) {
+	case 'Bart': 
+		return '14';
+		break;
+	case "Alex":
 		return '3';
-	
-	console.log("PEOPLE" , PERSONS , userFirstName);
-	for(var i = 0; i < PERSONS.length; i++)
-	{
-		if(PERSONS[i].name.toLowerCase() == userFirstName.toLowerCase())
-		{
-			return PERSONS[i].id;
-		}
+		break;
+	case "Andy":
+		return '2';
+		break;
+	case "Craig":
+		return '12';
+		break;
+	case "Dave":
+		return '7';
+		break;
+	case "David":
+		return '1';
+		break;
+	case "Jim": 
+		return '8';
+		break;
+	case "Joe":
+		return '5';
+		break;
+	case "Adrienne":
+		return '17';
+		break;
+	case "Tony":
+		return '4';
+		break;
+	case "Marvin":
+		return '18';
+		break;
 	}
-	
-	return '3';
-	
+
 }
 
 function convertItem(data){
@@ -2275,21 +2193,6 @@ function fillForm_PROJECT_DATA(data)
 	if(json.cost) json.cost = cleanNumericValueForDisplaying(json.cost);
 	$('#projectData').find("#projectCost").val(json.cost);
 	$('#projectData').find("#custNum").val(json.customerNumber);
-	
-	if(data.autofillHVAC != undefined)
-		$('#generalInformation').find('#autofill-HVAC').val(data.autofillHVAC);
-	else
-		$('#generalInformation').find('#autofill-HVAC').val("default");
-	
-	if(data.autofillRefrigeration != undefined)
-		$('#generalInformation').find('#autofill-Refrigeration').val(data.autofillRefrigeration);
-	else
-		$('#generalInformation').find('#autofill-Refrigeration').val("default");
-
-	if(data.autofillPermits != undefined)
-		$('#generalInformation').find('#autofill-Permits').val(data.autofillPermits);
-	else
-		$('#generalInformation').find('#autofill-Permits').val("default");
 }
 
 
@@ -2637,7 +2540,6 @@ function addEquipment () {
  */
 function fillProjectInformation (data) {
 	
-	console.log("DATZ" , data);
 	$('#projectManager').find('#mcsNumber').text(data.McsNumber);
 	$('#projectManager').find('#projectItem').text(data.projectItem.name);
 	$('#projectManager').find('#projectStatus').text(data.status.name);
@@ -2773,21 +2675,6 @@ function convertChangeOrderType(type , co) {
 	return "---";
 }
 
-
-function convertRequired(req)
-{
-	if(req == undefined)
-		return;
-	
-	if(req == "0")
-		return "No";
-	else if(req == "1")
-		return "Yes";
-	else if(req == "2")
-		return "TBD";
-	else
-		return;
-}
 /**
  * This function fills out the information on the page for the permits and inspections
  * INNER FUNCTION CALLS: none
@@ -2795,71 +2682,41 @@ function convertRequired(req)
  */
 function fillPermitsAndInspections (data) {
 	let tabData = data.permits;
-	console.log("TAB DATA" , tabData);
+	
 	
 	// permits 
-	$('#projectManager').find('#buildingPermitRequired').text(convertRequired(tabData.buildingPermitRequired));
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
 	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
-	
-	$('#projectManager').find('#roofingPermitRequired').text(convertRequired(tabData.roofingPermitRequired));
 	$('#projectManager').find('#roofingPermitDate').text(tabData.roofing);
 	$('#projectManager').find('#roofingPermit').text(tabData.roofingPermitStatus);
-	
-	$('#projectManager').find('#mechanicalPermitRequired').text(convertRequired(tabData.mechanicalPermitRequired));
 	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
 	$('#projectManager').find('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
-	
-	$('#projectManager').find('#electricalPermitRequired').text(convertRequired(tabData.electricalPermitRequired));
 	$('#projectManager').find('#electricalPermitDate').text(tabData.electrical);
 	$('#projectManager').find('#electricalPermit').text(tabData.electricalPermitStatus);
-	
-	$('#projectManager').find('#plumbingPermitRequired').text(convertRequired(tabData.plumbingPermitRequired));
 	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
 	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
-	
-	$('#projectManager').find('#sprinklerPermitRequired').text(convertRequired(tabData.sprinklerPermitRequired));
 	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
 	$('#projectManager').find('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
-	
-	$('#projectManager').find('#fireAlarmPermitRequired').text(convertRequired(tabData.fireAlarmPermitRequired));
 	$('#projectManager').find('#fireAlarmPermitDate').text(tabData.fire_alarm);
 	$('#projectManager').find('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
-	
-	$('#projectManager').find('#lowVoltagePermitRequired').text(convertRequired(tabData.voltagePermitRequired));
 	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
 	$('#projectManager').find('#lowVoltagePermit').text(tabData.voltagePermitStatus);
 	
 	// inspections
-	$('#projectManager').find('#buildingInspectionRequired').text(convertRequired(tabData.buildingInspectionRequired));
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
 	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
-	
-	$('#projectManager').find('#roofingInspectionRequired').text(convertRequired(tabData.roofingInspectionRequired));
 	$('#projectManager').find('#roofingInspectionDate').text(tabData.roofingInspectionLastUpdated);
 	$('#projectManager').find('#roofingInspection').text(tabData.roofingInspectionStatus);
-	
-	$('#projectManager').find('#mechanicalInspectionRequired').text(convertRequired(tabData.mechanicalInspectionRequired));
 	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
 	$('#projectManager').find('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
-	
-	$('#projectManager').find('#electricalInspectionRequired').text(convertRequired(tabData.electricalInspectionRequired));
 	$('#projectManager').find('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
 	$('#projectManager').find('#electricalInspection').text(tabData.electricalInspectionStatus);
-	
-	$('#projectManager').find('#plumbingInspectionRequired').text(convertRequired(tabData.plumbingInspectionRequired));
 	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
 	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
-	
-	$('#projectManager').find('#sprinklerInspectionRequired').text(convertRequired(tabData.sprinklerInspectionRequired));
 	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
 	$('#projectManager').find('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
-	
-	$('#projectManager').find('#fireAlarmInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
 	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
-	
-	$('#projectManager').find('#lowVoltageInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
 }
@@ -3758,10 +3615,14 @@ function establishRetrievedProjects()
 		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
 		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
 		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
+		RETRIEVED_PROJECTS[i].lowScore = RETRIEVED_PROJECTS[i][9];
+		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][10];
+		RETRIEVED_PROJECTS[i].highScore = RETRIEVED_PROJECTS[i][11];
+		RETRIEVED_PROJECTS[i].scoreLastUpdated = RETRIEVED_PROJECTS[i][12];
 
 		
-		for(var q = 0; q < 9; q++){
-			var num = 8 - q;
+		for(var q = 0; q < 13; q++){
+			var num = 12 - q;
 			RETRIEVED_PROJECTS[i].splice(num, 1);
 		}
 	}
@@ -3819,7 +3680,6 @@ function updateDisplayableProjects(){
 		}
 	}	
 	
-	//console.log("DISPL" , RETRIEVED_PROJECTS);
 	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
 	
 }
@@ -3851,7 +3711,6 @@ function getSearchCriteria(_stopServerCalls) {
 			
 			
 			CHANGE_ORDER_TYPES = JSON.parse(data.changeordertype);
-			PERSONS = JSON.parse(data.person);
 
 			fillDropdowns_FIND_PROJECT(data);
 			
@@ -4008,24 +3867,65 @@ function checkInitFilter () {
  * INNER FUNCTION CALLS: removeParam()
  */
 function matchUsernameToPersonID(userFirstName, paramNum){
-	
-	if(! PERSONS)
+	switch(userFirstName) {
+	case 'Bart': 
+		document.getElementById('paramVal'+paramNum).value = '14';
+		removeParam(document.getElementById('paramID2'));
+		return '14';
+		break;
+	case "Alex":
+		document.getElementById('paramVal'+paramNum).value = '3';
+		removeParam(document.getElementById('paramID2'));
 		return '3';
-	
-	console.log("PEOPLE" , PERSONS , userFirstName);
-	for(var i = 0; i < PERSONS.length; i++)
-	{
-		if(PERSONS[i].name.toLowerCase() == userFirstName.toLowerCase())
-		{
-			document.getElementById("paramVal" + paramNum).value = PERSONS[i].id;
-			removeParam(document.getElementById('paramID2'));
-			return PERSONS[i].id;
-		}
-	}
-	
-	removeParam(document.getElementById('paramID2'));
-
-	return '3';
+		break;
+	case "Andy":
+		document.getElementById('paramVal'+paramNum).value = '2';
+		removeParam(document.getElementById('paramID2'));
+		return '2';
+		break;
+	case "Craig":
+		document.getElementById('paramVal'+paramNum).value = '12';
+		removeParam(document.getElementById('paramID2'));
+		return '12';
+		break;
+	case "Dave":
+		document.getElementById('paramVal'+paramNum).value = '7';
+		removeParam(document.getElementById('paramID2'));
+		return '7';
+		break;
+	case "David":
+		document.getElementById('paramVal'+paramNum).value = '1';
+		removeParam(document.getElementById('paramID2'));
+		return '1';
+		break;
+	case "Jim": 
+		document.getElementById('paramVal'+paramNum).value = '8';
+		removeParam(document.getElementById('paramID2'));
+		return '8';
+		break;
+	case "Joe":
+		document.getElementById('paramVal'+paramNum).value = '5';
+		removeParam(document.getElementById('paramID2'));
+		return '5';
+		break;
+	case "Adrienne":
+		document.getElementById('paramVal'+paramNum).value = '17';
+		removeParam(document.getElementById('paramID2'));
+		return '17';
+		break;
+	case "Tony":
+		document.getElementById('paramVal'+paramNum).value = '4';
+		removeParam(document.getElementById('paramID2'));
+		return '4';
+		break;
+	case 'Marvin': 
+		document.getElementById('paramVal'+paramNum).value = '18';
+		removeParam(document.getElementById('paramID2'));
+		return '18';
+		break;
+	default:
+		removeParam(document.getElementById('paramID2'));
+}
 }
 
 
@@ -4249,16 +4149,16 @@ function filterProjects () {
 	updateDisplayableProjects();
 	//let json = JSON.parse(projects['projects']);
 	let json = DISPLAYABLE_PROJECTS;
-	console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS.length);
-
+	console.log("DISPLAYABLE " , DISPLAYABLE_PROJECTS);
 	let parameters = $('.paramHolder').children('select');
+	
 	
 	let remaining = json.length;
 	if(paramNum != 0){
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
 		let val = $(parameters[i + 1]).val();
-		console.log("VAL = ", val , id);
+		console.log("VAL = ", val);
 		
 		for (var j = 0; j < json.length; j++) {
 			if(id === 'Warehouse') { 
@@ -4280,7 +4180,7 @@ function filterProjects () {
 				if (json[j] != null && json[j].projectManagers.id != val) {
 					json[j] = null;
 					remaining = remaining -1;
-				} 
+				}
 			} else if (id === 'Supervisor') {
 				console.log("ID VAL: ", json[j].supervisors);
 				if (json[j] != null && json[j].supervisors != null && json[j].supervisors[0].id != val) {
@@ -4313,11 +4213,14 @@ function filterProjects () {
 			for (var k = 0; k < json.length; k++) {
 				if(json[k] != null) {
 					let projectListing = document.createElement('tr');
-					let listDetails0 = document.createElement('td');
-					let listDetails1 = document.createElement('td');
-					let listDetails2 = document.createElement('td');
-					let listDetails3 = document.createElement('td');
-					
+					let listDetails0 = document.createElement('td'); //Warehouse
+					let listDetails1 = document.createElement('td'); //Item
+					let listDetails2 = document.createElement('td'); //Manager
+					let listDetails3 = document.createElement('td'); //Low
+					let listDetails4 = document.createElement('td'); //Medium
+					let listDetails5 = document.createElement('td'); //High
+					let listDetails6 = document.createElement('td'); //Last Updated
+
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
@@ -4332,14 +4235,21 @@ function filterProjects () {
 						listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
 											json[k].warehouse.warehouseID;
 					}
-					listDetails1.innerHTML = json[k].McsNumber;
-					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;
-					
+					listDetails1.innerHTML = json[k].projectItem.name;
+					listDetails2.innerHTML = json[k].projectManagers.name;
+					listDetails3.innerHTML = json[k].lowScore;
+					listDetails4.innerHTML = json[k].mediumScore;
+					listDetails5.innerHTML = json[k].highScore;
+					listDetails6.innerHTML = json[k].scoreLastUpdated;
+		
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
+					$(projectListing).append(listDetails4);
+					$(projectListing).append(listDetails5);
+					$(projectListing).append(listDetails6);
+					
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -4357,16 +4267,20 @@ function filterProjects () {
 			for (var k = 0; k < json.length; k++) {
 				if(json[k] != null) {
 					let projectListing = document.createElement('tr');
-					let listDetails0 = document.createElement('td');
-					let listDetails1 = document.createElement('td');
-					let listDetails2 = document.createElement('td');
-					let listDetails3 = document.createElement('td');
-					
+					let listDetails0 = document.createElement('td'); //Warehouse
+					let listDetails1 = document.createElement('td'); //Item
+					let listDetails2 = document.createElement('td'); //Manager
+					let listDetails3 = document.createElement('td'); //Low
+					let listDetails4 = document.createElement('td'); //Medium
+					let listDetails5 = document.createElement('td'); //High
+					let listDetails6 = document.createElement('td'); //Last Updated
+
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
 					}
 
+					//if(json[k].warehouse.city.name == "APANA") 
 					if(json[k].warehouse && json[k].warehouse.city && json[k].warehouse.city.name && json[k].warehouse.city.name.includes("APANA")) {
 						listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
 						json[k].warehouse.region;
@@ -4375,14 +4289,21 @@ function filterProjects () {
 						listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
 											json[k].warehouse.warehouseID;
 					}
-					listDetails1.innerHTML = json[k].McsNumber;
-					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;
-					
+					listDetails1.innerHTML = json[k].projectItem.name;
+					listDetails2.innerHTML = json[k].projectManagers.name;
+					listDetails3.innerHTML = json[k].lowScore;
+					listDetails4.innerHTML = json[k].mediumScore;
+					listDetails5.innerHTML = json[k].highScore;
+					listDetails6.innerHTML = json[k].scoreLastUpdated;
+		
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
+					$(projectListing).append(listDetails4);
+					$(projectListing).append(listDetails5);
+					$(projectListing).append(listDetails6);
+					
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -4398,7 +4319,6 @@ function filterProjects () {
  */
 function navigateTo(source) {
 	EDIT_INTENTION = true;
-	console.log($(source).attr('id'));
 	if(taskFinder) {
 		window.location.href = TASK_CREATOR + '?id=' + 
 			$(source).attr('id').replace('project', '');
@@ -4408,26 +4328,370 @@ function navigateTo(source) {
 		$(source).attr('id').replace('project', '');
 		var proj_id = $(source).attr('id');
 		proj_id = proj_id.replace('project','');
-		console.log("PROJ MAN: ", proj_id, PROJECT_DATA);
 		projectID = proj_id;			
-		getProject_PROJECT_MANAGER(proj_id);
-		$('#projectInformationTabLink').addClass('active');
-		$('#projectInformation').addClass('active');
-		$('#projectInformation').addClass('active');
-		$('#closeout').removeClass('active');
-		
-		$('.autofill_NA').each(function(index){
-			$(this).val('false');
-		});
-
-		
-		currentDivLocation = "projectManager";
-		document.getElementById("projectManager").style.display = 'inline';
+		getProject_PROJECT_RULE_MANAGER(proj_id);
+	
+		//currentDivLocation = "projectManager";
+		//document.getElementById("projectManager").style.display = 'inline';
 		//window.location.href = PROJECTMANAGER + '?id=' + 
 			
 	}
 
 }
+
+function getProject_PROJECT_RULE_MANAGER(project_id) {
+	if (project_id !== null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'get',
+				'id': project_id
+			}, success: function (data) {
+				
+				PROJECT_DATA = data;
+				RULE_DATA = data;
+				
+				reevaluateProject(project_id);
+
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	} else {
+		$('#projectHeader').text('No Project Selected!');
+		if (confirm('No Project Selected. Return to find project?')) {
+			window.location.href = FINDPROJECT;
+		}
+	}
+}
+
+let RULES;
+let FAILED_RULES;
+let RULE_DATA;
+
+let LOW_COLOR = "rgb(0, 255, 0)";
+let MEDIUM_COLOR = "rgb(255, 255, 0)";
+let HIGH_COLOR = "rgb(255, 92, 51)";
+
+let NO_COLOR = "rgb(255, 255, 255)";
+
+function reevaluateProject(project_id) {
+	if (project_id !== null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'evaluateProject',
+				'projectId': project_id
+			}, success: function (data) {
+				console.log("DAT" , data);
+				prepareRuleManager(data);
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	} else {
+		$('#projectHeader').text('No Project Selected!');
+		if (confirm('No Project Selected. Return to find project?')) {
+			window.location.href = "rules.html";
+		}
+	}
+}
+
+function prepareRuleManager(data)
+{
+	var rules = data.applicableRules;
+	RULES = data.applicableRules;
+	console.log("PRM" , data);
+	for(var rule in data)
+	{
+		if(rule == "PROJECT" || rule == "applicableRules")
+			continue;
+		
+		for(var i = 0; i < RULES.length; i++)
+		{
+			if(RULES[i].id == data[rule].RULE_ID) 
+			{
+				if(data[rule].passed != undefined)
+					RULES[i].passed = data[rule].passed;
+				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
+				{
+					if(evaluateSetResults(data[rule]) == true)
+						RULES[i].passed = "true";
+					else
+						RULES[i].passed = "false";
+				}
+
+					
+			}
+		}	
+	}
+	
+	
+	let city = data.PROJECT.warehouse.city.name;
+	let state = data.PROJECT.warehouse.state;
+	
+	state = state.replace('_', ' ');
+	state = toTitleCase(state);
+	
+	let item = data.PROJECT.projectItem.name;
+	
+	$("#ruleManagerHeader").find('span').html(" - [ " + city + " #" + data.PROJECT.warehouse.warehouseID  + " - " +  item +" ]");
+
+
+	
+	$('#ruleManagerTopLevelDiv').find('ul').find('li').each(function(index) {
+		$(this).css("background-color" , NO_COLOR );
+		$(this).click(function(event) {
+			if($(this).css("background-color") == NO_COLOR)
+				return;
+			displayFailedRules(this.id.replace("Item" , ""));
+		});
+		
+		var worst = getWorstRuleResult(data , rules , this.id.replace("Item" , ""));
+		switch(worst)
+		{
+			case "LOW":
+				$(this).css("background-color" , LOW_COLOR);
+				break;
+			case "MEDIUM":
+				$(this).css("background-color" , MEDIUM_COLOR);
+				break;
+			case "HIGH":
+				$(this).css("background-color" , HIGH_COLOR);
+				break;	 
+		}
+	});
+
+	
+	$('#ruleManagerDiv').show();
+}
+
+function evaluateSetResults(data)
+{
+	if(data.taskResults)
+	{
+		for(var task in data.taskResults)
+		{
+			if(task == "TASKS")
+				continue;
+			
+			if(data.taskResults[task].passed == "false")
+				return false;
+		}
+	}
+	
+	if(data.changeOrderResults)
+	{
+		for(var changeOrder in data.changeOrderResults)
+		{
+			if(changeOrder == "CHANGE ORDER")
+				continue;
+			
+			if(data.changeOrderResults[changeOrder].passed == "false")
+				return false;
+		}
+	}
+	
+	if(data.equipmentResults)
+	{
+		for(var equipment in data.equipmentResults)
+		{
+			if(equipment == "CHANGE ORDER")
+				continue;
+			
+			if(data.equipmentResults[equipment].passed == "false")
+				return false;
+		}
+	}
+
+	return true;
+}
+
+function displayFailedRules(domain)
+{
+	console.log("RULEZZ" , RULES);
+	$('#ruleManagerDiv').hide();
+	$('#failedRulesDiv').show();
+	
+	var header = domain;
+	if(domain == "PermitsAndInspections")
+		header = "Permits/Inspections";
+	if(domain == "ChangeOrders")
+		header = "Change Orders";
+	
+	
+	$('#failedRulesHeader').find('span').html(header);
+	
+	fillFailedRulesTable(domain);
+}
+
+function fillFailedRulesTable(domain)
+{
+	console.log("RULES" , RULES , domain);
+	if(RULES == undefined)
+		return;
+	
+	$('#failedRulesTable').find('tbody').find('tr').remove();
+	
+	for(var i = 0; i < RULES.length; i++)
+	{
+		//console.log("RULES EYE" , RULES[i] , domain);
+		if(RULES[i].domain != domain)
+			continue;
+		if(RULES[i].passed == "true")
+			continue;
+		
+		
+		var tr = document.createElement('tr');
+		var title = document.createElement('td');
+		var action = document.createElement('td');
+		
+		title.innerHTML = RULES[i].title;
+		action.innerHTML = RULES[i].failMessage;
+		
+		$(tr).append(title);
+		$(tr).append(action);
+		
+		if(RULES[i].severity == "HIGH")
+			$(tr).css("background-color" , HIGH_COLOR);
+		if(RULES[i].severity == "MEDIUM")
+			$(tr).css("background-color" , MEDIUM_COLOR);
+		if(RULES[i].severity == "LOW")
+			$(tr).css("background-color" , LOW_COLOR);
+		
+		$('#failedRulesTable').find('tbody').append(tr);		
+	}
+}
+
+
+
+function displayProjectFinder()
+{
+	$('#findProject').show();
+	$('#ruleManagerDiv').hide();
+	$('#failedRulesDiv').hide();
+}
+
+function displayRuleManager()
+{
+	$('#findProject').hide();
+	$('#ruleManagerDiv').show();
+	$('#failedRulesDiv').hide();
+}
+
+
+
+function getWorstRuleResult(data , rules , domain)
+{
+	console.log("GETTING WORST" , data, rules , domain);
+	var worst;
+	for(var i = 0; i < rules.length; i++)
+	{
+
+		if(rules[i].domain != domain)
+			continue;
+		
+		if(data[rules[i].title].passed == undefined)
+		{
+			return getWorstSetResult(data , rules , domain);
+		}	
+		
+		
+		if(data[rules[i].title] && (data[rules[i].title].passed == "false" || data[rules[i].title].passed == undefined))
+		{
+			if(worst == undefined)
+				worst = rules[i].severity;
+			else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+				worst = rules[i].severity;
+			else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+				return "HIGH";
+			else if(worst == "HIGH" && rules[i].severity == "HIGH")
+				return "HIGH";
+		}
+	}
+	
+	return worst;
+}
+
+function getWorstSetResult(data , rules , domain)
+{
+	console.log("GET WORST " , data , rules , domain);
+	//return "LOW";
+	
+	var worst;
+	for(var i = 0; i < rules.length; i++)
+	{
+		if(rules[i].domain != domain)
+			continue;
+		
+		if(data[rules[i].title].taskResults)
+		{
+			console.log("IN TASK");
+			for(var task in data[rules[i].title].taskResults)
+			{
+				console.log("IN TASK" , task);
+				if(data[rules[i].title].taskResults[task].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return"HIGH";
+				}
+			}
+		}
+		
+		if(data[rules[i].title].changeOrderResults)
+		{
+			for(var changeOrder in data[rules[i].title].changeOrderResults)
+			{
+				if(data[rules[i].title].changeOrderResults[changeOrder].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+		if(data[rules[i].title].equipmentResults)
+		{
+			for(var equipment in data[rules[i].title].equipmentResults)
+			{
+				if(data[rules[i].title].equipmentResults[equipment].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+	}
+	
+	return worst;
+	
+}
+
+
+
 //This enables the user to filter tasks based off status
 $(document).on('change', '#taskSelector2', function () {
 	clearTaskTable();
@@ -4468,9 +4732,9 @@ function getTasks(stopServerCalls) {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////
-////////     This begins the javascript that applies to the change order div     ////////
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////       This begins the javascript that applies to the change order div 
+///////////////////////////////////////////////////////////////////////////////////////////
 
 var PAGETYPE = "add";
 
@@ -5471,8 +5735,6 @@ function goToProjectManager() {
 			$('#permitData').find('#buildingPermits').addClass('active');
 			$('#projectManager').find('#permits').addClass('active');
 			$('#projectManager').find('#'+activeTab).addClass('active');
-			$('#inspectionsTabLink').removeClass('active');
-			$('#permitsTabLink').addClass('active');
 			break;
 		case "closeoutData":
 			getProject_PROJECT_MANAGER(projectID, 1);

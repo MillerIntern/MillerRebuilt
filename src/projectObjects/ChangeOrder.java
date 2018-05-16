@@ -1,6 +1,8 @@
 package projectObjects;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 
@@ -253,6 +255,18 @@ public class ChangeOrder extends ProjectObject
 			return (Double) co.getSell();
 		
 		return null;
+	}
+	
+	public static Map<String , String> getAllChangeOrderFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		fields.put("proposalDate" , "Date");
+		fields.put("submittedDate" , "Date");
+		fields.put("approvedDate" , "Date");
+		fields.put("cost" , "Number");
+		fields.put("sell" , "Number");
+
+		return fields;
 	}
 	
 }

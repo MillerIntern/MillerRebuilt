@@ -1,9 +1,11 @@
 package projectObjects;
 
+import java.util.ArrayList;
 import java.util.Date;
-
-
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -100,10 +102,17 @@ public class Project extends ProjectObject
 	private Set<Equipment> equipment;
 	private Set<NewEquipment> projEquipment;
 	
+<<<<<<< HEAD
 	private String autofillHVAC;
 	private String autofillRefrigeration;
 	private String autofillPermits;
 	
+=======
+	private int lowScore;
+	private int mediumScore;
+	private int highScore;
+	private Date scoreLastUpdated;
+>>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
@@ -114,7 +123,11 @@ public class Project extends ProjectObject
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
+<<<<<<< HEAD
 			Date budgetaryDue , Date budgetarySubmitted , String autofill_HVAC , String autofill_Refrigeration , String autofill_Permits)
+=======
+			Date budgetaryDue , Date budgetarySubmitted, int _low , int _med , int _high , Date _scoreLast)
+>>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
@@ -146,10 +159,17 @@ public class Project extends ProjectObject
 		this.managerNotes = managerNotes;
 		this.budgetaryDue = budgetaryDue;
 		this.budgetarySubmitted = budgetarySubmitted;
+<<<<<<< HEAD
 		
 		this.autofillHVAC = autofill_HVAC;
 		this.autofillRefrigeration = autofill_Refrigeration;
 		this.autofillPermits = autofill_Permits;
+=======
+		this.lowScore = _low;
+		this.mediumScore = _med;
+		this.highScore = _high;
+		this.scoreLastUpdated = _scoreLast;
+>>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 
 	}
 	
@@ -188,10 +208,17 @@ public class Project extends ProjectObject
 		this.setProjEquipment(new HashSet<NewEquipment>());
 		this.budgetaryDue = null;
 		this.budgetarySubmitted = null;
+<<<<<<< HEAD
 		
 		this.autofillHVAC = null;
 		this.autofillPermits = null;
 		this.autofillRefrigeration = null;
+=======
+		this.lowScore = 0;
+		this.mediumScore = 0;
+		this.highScore = 0;
+		this.scoreLastUpdated = null;
+>>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -547,6 +574,7 @@ public class Project extends ProjectObject
 		this.managerNotes = managerNotes;
 	}
 	
+<<<<<<< HEAD
 	public synchronized String getAutofillHVAC() {
 		return autofillHVAC;
 	}
@@ -571,6 +599,47 @@ public class Project extends ProjectObject
 		this.autofillPermits = autofill_Permits;
 	}
 	
+=======
+	public int getLowScore()
+	{
+		return lowScore;
+	}
+	
+	public void setLowScore(int _low)
+	{
+		lowScore = _low;
+	}
+	
+	public int getMediumScore()
+	{
+		return mediumScore;
+	}
+	
+	public void setMediumScore(int _medium)
+	{
+		mediumScore = _medium;
+	}
+	
+	public int getHighScore()
+	{
+		return highScore;
+	}
+	
+	public void setHighScore(int _high)
+	{
+		highScore = _high;
+	}
+	
+	public Date getScoreLastUpdated()
+	{
+		return scoreLastUpdated;
+	}
+	
+	public void setScoreLastUpdated(Date date)
+	{
+		scoreLastUpdated = date;
+	}
+>>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	
 	
 	public static Date getSchedulingFields(String name , Project project)
@@ -599,6 +668,26 @@ public class Project extends ProjectObject
 		return null;
 	}
 	
+	public static Map<String , String> getAllSchedulingFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		
+		fields.put("projectInitiatedDate" , "Date");
+		fields.put("siteSurvey" , "Date");
+		fields.put("budgetaryDue" , "Date");
+		fields.put("budgetarySubmitted" , "Date");
+		fields.put("proposalSubmitted" , "Date");
+		fields.put("proposalDue" , "Date");
+		fields.put("proposalSubmitted" , "Date");
+		fields.put("scheduledStartDate" , "Date");
+		fields.put("scheduledTurnover" , "Date");
+		fields.put("actualTurnover" , "Date");
+		fields.put("permitApp" , "Date");
+		
+
+		return fields;
+	}
+	
 	public static Double getFinancialFields(String name , Project project)
 	{
 		if(name.equalsIgnoreCase("shouldInvoice"))
@@ -606,8 +695,24 @@ public class Project extends ProjectObject
 		else if(name.equalsIgnoreCase("actualInvoice"))
 			return (Double) (double) project.getInvoiced();
 		else if(name.equalsIgnoreCase("cost"))
-			return (Double) Double.parseDouble("cost");
+		{
+			if(project.getCost() == null || project.getCost().isEmpty())
+				return null;
+			else
+				return (Double) (double) Double.parseDouble(project.getCost());
+		}
 		
 		return null;
+	}
+	
+	public static Map<String , String> getAllFinancialFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		fields.put("shouldInvoice" , "Number");
+		fields.put("actualInvoice" , "Number");
+		fields.put("cost" , "Number");
+
+
+		return fields;
 	}
 }

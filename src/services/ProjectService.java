@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 
 
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +26,11 @@ import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectObject;
+import projectObjects.ProjectRule;
 import projectObjects.Region;
+import projectObjects.RuleDomain;
+import projectObjects.RuleResult;
+import projectObjects.RuleSeverity;
 import projectObjects.SalvageValue;
 import projectObjects.Task;
 import projectObjects.ChangeOrder;
@@ -37,6 +42,7 @@ import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
 import services.helpers.ProjectInformationFiller;
+import services.helpers.ProjectRuleFiller;
 import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
@@ -70,7 +76,7 @@ public class ProjectService extends ProjectObjectService
 	public synchronized static long editExistingProject(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
 		Project currentProject = null;
 		try {
-			currentProject = (Project)ProjectObjectService.get(projID,  "Project");
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -87,6 +93,72 @@ public class ProjectService extends ProjectObjectService
 		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
 
 		return projID;
+	}
+	
+	/**
+	 * @param ruleId
+	 * @param parameters
+	 */
+	public synchronized static long editExistingRule(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		ProjectRule rule = null;
+		
+		try 
+		{
+			rule = (ProjectRule) ProjectObjectService.get(projID,  "ProjectRule");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectRuleFiller.fillRule(rule, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(rule);
+		tx.commit();
+		
+		return projID;
+	}
+	
+	/**
+	 * @param projID
+	 * @param parameters
+	 */
+	public synchronized static long editExistingProjectScore(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillProjectScore(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
+	/**
+	 * @param projID
+	 * @param parameters
+	 */
+	public synchronized static Project editExistingProjects(Project project, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		if(project == null)
+			return null;
+
+		ProjectInformationFiller.fillProjectScore(project, parameters);
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return project;
 	}
 	
 	/**
@@ -296,6 +368,41 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("users") != null && !parameters.get("users").isEmpty())
 			if(parameters.get("users").equals("true"))
 				map.put("users", ProjectObjectService.getAllAsJsonString("User"));
+		if(parameters.get("projectRules") != null && !parameters.get("projectRules").isEmpty())
+			if(parameters.get("projectRules").equals("true"))
+				map.put("projectRules", ProjectObjectService.getAllAsJsonString("ProjectRule"));
+		if(parameters.get("ruleDomains") != null && !parameters.get("ruleDomains").isEmpty())
+			if(parameters.get("ruleDomains").equals("true"))
+				map.put("ruleDomains", g.toJson(RuleDomain.returnAllAsMap()));
+		if(parameters.get("ruleResults") != null && !parameters.get("ruleResults").isEmpty())
+			if(parameters.get("ruleResults").equals("true"))
+				map.put("ruleResults", g.toJson(RuleResult.returnAllAsMap()));
+		if(parameters.get("ruleSeverity") != null && !parameters.get("ruleSeverity").isEmpty())
+			if(parameters.get("ruleSeverity").equals("true"))
+				map.put("ruleSeverity", g.toJson(RuleSeverity.returnAllAsMap()));
+		//
+		if(parameters.get("changeOrderFields") != null && !parameters.get("changeOrderFields").isEmpty())
+			if(parameters.get("changeOrderFields").equals("true"))
+				map.put("changeOrderFields", g.toJson(ChangeOrder.getAllChangeOrderFields()));
+		if(parameters.get("equipmentFields") != null && !parameters.get("equipmentFields").isEmpty())
+			if(parameters.get("equipmentFields").equals("true"))
+				map.put("equipmentFields", g.toJson(NewEquipment.getAllNewEquipmentFields()));
+		if(parameters.get("closeoutFields") != null && !parameters.get("closeoutFields").isEmpty())
+			if(parameters.get("closeoutFields").equals("true"))
+				map.put("closeoutFields", g.toJson(CloseoutDetails.getAllCloseoutFields()));
+		if(parameters.get("permitAndInspectionFields") != null && !parameters.get("permitAndInspectionFields").isEmpty())
+			if(parameters.get("permitAndInspectionFields").equals("true"))
+				map.put("permitAndInspectionFields", g.toJson(Permits.getAllPermitFields()));
+		if(parameters.get("schedulingFields") != null && !parameters.get("schedulingFields").isEmpty())
+			if(parameters.get("schedulingFields").equals("true"))
+				map.put("schedulingFields", g.toJson(Project.getAllSchedulingFields()));
+		if(parameters.get("financialFields") != null && !parameters.get("financialFields").isEmpty())
+			if(parameters.get("financialFields").equals("true"))
+				map.put("financialFields", g.toJson(Project.getAllFinancialFields()));
+		if(parameters.get("taskFields") != null && !parameters.get("taskFields").isEmpty())
+			if(parameters.get("taskFields").equals("true"))
+				map.put("taskFields", g.toJson(Task.getAllTaskFields()));
+		
 		return g.toJson(map);
 	}
 

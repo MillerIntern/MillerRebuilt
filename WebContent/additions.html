@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="js/global.js"></script>
 		<script type="text/javascript" src="js/additions.js"></script>
 		<script type="text/javascript" src="js/contentControl.js"></script>
-		<script src="js/chosen.jquery.min.js"></script>
+		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/additions.css" rel="stylesheet">
@@ -87,6 +87,7 @@
 	      	</ul>
 	      </li>
 	      <li><a href="query.html">Reports</a></li>
+	      <li><a href = "rules.html">Rules</a></li>
 	      <li class="adminContent active"><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
@@ -107,6 +108,7 @@
 		<li class="tab-link" data-tab="cityTab">City</li>
 		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
 		<li class="tab-link" data-tab="userTab">New User</li>
+		<li class="tab-link" data-tab="ruleTab">Rules</li>
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
@@ -331,6 +333,116 @@
 			</tr>
 		</table>
 		<button onclick="addUser()">Add New User</button>
+	</div>
+	<div id="ruleTab" class="tab-content editable">
+		<table>
+			<tr>
+			<td>Rule</td>
+			<td class = "projectObjectDropdowns">
+				<select id = "ruleDropdown" class = "projectObjectDropdown">
+					<option value = "default" selected disabled> --- Select a Rule --- </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Category</td>
+			<td>
+				<select id = "ruleDomainDropdown">
+					<option value = "default" selected disabled> --- Select a Category --- </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Name</td>
+			<td>
+				<input id = "ruleTitle" type = "text" maxlength = "40" style = "width : 50%">
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>First Field</td>
+			<td>
+				<select id = "ruleField1">
+					<option value = "default" selected disabled> --- Select a Field --- </option>				
+				</select>
+			</td>
+			</tr>
+			<tr id = "secondFieldRow" class = "editingRow">
+			<td>Second Field</td>
+			<td>
+				<select id = "ruleField2">
+					<option value = "default" selected disabled> --- Select a Field --- </option>	
+				</select>
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Goal</td>
+			<td>
+				<select id = "ruleGoalDropdown">
+					<option value = "default" selected disabled> --- Select a Goal --- </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Severity</td>
+			<td>
+				<select id = "ruleSeverityDropdown">
+					<option value = "default" selected disabled> --- Select a Severity --- </option>	
+			    </select> 
+			</td>
+			</tr>
+			<!-- 
+			<tr>
+			<td>Project</td>
+			<td class = "projectObjectDropdowns">
+				<select id = "cityDropdown" class = "projectObjectDropdown">
+			    </select> 
+			</td>
+			</tr>
+			-->
+			<tr class = "editingRow">
+			<td>Project Class</td>
+			<td>
+				<select id = "ruleProjectClassDropdown">
+					<option value = "default" selected disabled> --- Select a Project Class --- </option>	
+					<option value = "none"> All Classes </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Pass Message</td>
+			<td>
+				<textarea id = "passMessage" maxlength = "255"></textarea>
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Fail Message</td>
+			<td>
+				<textarea id = "failMessage" maxlength = "255"></textarea>
+			</td>
+			</tr>	
+			<tr class = "ruleRemoval" style = "display : none">
+				<td>Duplicate Rule To Remove</td>
+				<td>    
+				    <select id = "removeRuleDropdown" class = "ruleRemovalDropdown">
+				    	<option selected disabled id = "defaultOption" value = "default">Select rule to remove</option>
+					</select>      
+				</td>
+			</tr>
+			<!-- 
+			<tr class = "editingRow">
+			<td>Name:</td>
+			<td><input id="cityName" type="text" class = "editingField name" style = "width : 300px"></td>
+			</tr>
+			-->
+		</table>
+		
+		<button class = "btn btn-primary makeChanges">Submit Changes</button>		
+		
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" id = "ruleRemoveButton" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove</button>	
+		</div>	
 	</div>
 	<div id="deleteTab" class="tab-content">
 		<input id = "objectDomain">Project Domain <br>

@@ -1,12 +1,10 @@
 package services;
 
 import java.lang.reflect.Field;
-
-
-
-
-
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +118,68 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("warehouse.id"));
 				projectionList.add(Projections.property("projectManagers.id"));
 				projectionList.add(Projections.property("projectClass.id"));
+				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
+
+				criteria.setProjection(projectionList);
+				
+			List<?> list = criteria.list();
+	       
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public synchronized static String getTheProjectsWithRuleResults()
+	{
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		Query q = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+		
+			tx.commit();
+		}
+		Class<?> c;
+		
+		try 
+		{
+			c = Class.forName("projectObjects.Project");
+			
+			
+			Criteria criteria = session.createCriteria(c);
+				
+				
+				ProjectionList projectionList = Projections.projectionList();
+				
+				
+
+				//THE ORDER OF THESE ADDS MATTERS DUE TO HOW THESE IDS ARE MATCHED ON THE FRONT END IN
+				// projectRetrieval.js
+				projectionList.add(Projections.property("id"));
+				projectionList.add(Projections.property("mcsNumber"));
+				projectionList.add(Projections.property("projectItem.id"));
+				projectionList.add(Projections.property("projectType.id"));
+				projectionList.add(Projections.property("stage.id"));
+				projectionList.add(Projections.property("status.id"));
+				projectionList.add(Projections.property("warehouse.id"));
+				projectionList.add(Projections.property("projectManagers.id"));
+				projectionList.add(Projections.property("projectClass.id"));
+				projectionList.add(Projections.property("lowScore"));
+				projectionList.add(Projections.property("mediumScore"));
+				projectionList.add(Projections.property("highScore"));
+				projectionList.add(Projections.property("scoreLastUpdated"));
+
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -460,7 +520,8 @@ public class ProjectObjectService
 				!domain.equals("Proposal") && 
 				!domain.equals("Task") &&
 				!domain.equals("Subcontractor") &&
-				!domain.equals("Trade"))
+				!domain.equals("Trade") &&
+				!domain.equals("ProjectRule"))
 				criteria.addOrder(Order.asc("name"));
 			else if(domain.equals("Inspections")) {
 				criteria.addOrder(Order.asc("id"));
@@ -745,6 +806,7 @@ public class ProjectObjectService
 	}
 	
 	
+	
 	/**
 	 * TODO: I'm pretty sure this is awful garbage code that we don't need. See ProjectService.editExistingProject()
 	 * 
@@ -779,6 +841,35 @@ public class ProjectObjectService
 		return id;
 	}
 	
+	public synchronized static void editProjectScores(List<Project> newObjects,  int i2) throws ClassNotFoundException, NonUniqueObjectException
+	{
+		
+		//Get session and start transaction
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		for(Project project : newObjects)
+		{
+			Map<String , String> parameters = new HashMap<String , String>();
+			parameters.put("lowScore", String.valueOf(project.getLowScore()));
+			parameters.put("mediumScore", String.valueOf(project.getMediumScore()));
+			parameters.put("highScore", String.valueOf(project.getHighScore()));
+			Project currentProject = null;
+			
+			try {		
+				currentProject = ProjectService.editExistingProjects(project, parameters);		
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}
+			
+			if(currentProject != null)
+				session.update(currentProject);
+		}
+		tx.commit();
+	}
+	
 	public synchronized static void setNullProjectItemId(Long id)
 	{
 		Session session = HibernateUtil.getSession();
@@ -786,9 +877,48 @@ public class ProjectObjectService
 		
 		Query setNullIdsForItem = session.createSQLQuery("update project set projectItem_id = NULL where projectItem_id = " + id +";");
 		setNullIdsForItem.executeUpdate();
-		tx.commit();
+		tx.commit();		
+	}
+	
+	public synchronized static void updateProjectScore(Project project)
+	{
+		if(project == null)
+			return;
+		
+		Date now = new Date();
+		project.setScoreLastUpdated(now);
+		Map<String , String> map = new HashMap<String , String>();
+		map.put("lowScore", String.valueOf(project.getLowScore()));
+		map.put("mediumScore", String.valueOf(project.getMediumScore()));
+		map.put("highScore", String.valueOf(project.getHighScore()));
+		map.put("scoreLastUpdated", String.valueOf(project.getScoreLastUpdated()));
+		
+		try
+		{
+			ProjectService.editExistingProjectScore(project.getId() , map);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+	
+	public synchronized static void updateProjectScores(List<Project> projects)
+	{
+		if(projects == null)
+			return;
 		
 		
+		try
+		{
+			ProjectObjectService.editProjectScores(projects , 1);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 	
 	/**

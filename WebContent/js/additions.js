@@ -3,6 +3,19 @@ let projectItems;
 let equipmentSuppliers;
 let subcontractors;
 let cities;
+let projectRules;
+let ruleDomains;
+let ruleResults;
+let ruleSeverity;
+let projectClasses;
+let changeOrderFields;
+let equipmentFields;
+let closeoutFields;
+let permitAndInspectionFields;
+let schedulingFields;
+let financialFields;
+let taskFields;
+
 
 let CURRENT_INTENT = {
 		ADD : 1 ,
@@ -21,15 +34,18 @@ $(document).ready(function()
 				var tab_id = $(this).attr('data-tab');
 		        if(tab_id == "saveButton")
 		            return;
-
+		       	
 				$('ul.tabs li').removeClass('current');
 				$('.tab-content').removeClass('current');
 
 				$(this).addClass('current');
 				$("#"+tab_id).addClass('current');
 			});	
-	
 });
+
+$(document).ready(function(){$('textarea').keydown(function(){
+	autoSizeTextAreas(this);
+})});
 
 $(document).ready(function()
 		{
@@ -940,11 +956,143 @@ function addUser()
 				}
 			});
 		}
+
+}
+
+function removeRule()
+{
+	let ruleId = $('#ruleDropdown').val();
 	
 	
+	$.ajax({
+		type: 'POST',
+		url: 'Admin', 
+		data: 
+		{
+			'action': 'deleteRule', 
+			'ruleId' : ruleId ,
+		},
+		success: function(data)
+		{
+			console.log(data);
+			
+			alert("Rule Deleted Successfully!");
+			location.reload(true);
+		}
+	});	
+}
+
+function addRule(action)
+{
+	let domain = $('#ruleTab').find('#ruleDomainDropdown').val();
+	let title = $('#ruleTab').find('#ruleTitle').val();
+	let field1 = $('#ruleTab').find('#ruleField1').val();
+	let field2 = $('#ruleTab').find('#ruleField2').val();
+	let goal = $('#ruleTab').find("#ruleGoalDropdown").val();
+	let severity = $('#ruleTab').find('#ruleSeverityDropdown').val();
+	let projectClass = $('#ruleTab').find('#ruleProjectClassDropdown').val();
+	let passMessage = $('#ruleTab').find('#passMessage').val();
+	let failMessage = $('#ruleTab').find('#failMessage').val();
 	
 	
+	let validData = true;
 	
+	if(domain == undefined || domain == "default") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Must select a category!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(field1 == undefined || field1 == "default") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Field 1 must have a value!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(! title) {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Each rule must have a title!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	};
+	
+	if(goal == undefined || goal == "default") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Each rule must have a goal!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(severity == undefined || severity == "default") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Each rule must have a severity!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(projectClass == undefined || projectClass == "default") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Please select a project class to apply this rule to!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(passMessage == "") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Each rule must have a pass message!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	
+	if(failMessage == "") {
+		$('.makeChanges').removeAttr('disabled');
+		alert("Each rule must have a fail message!");
+		$('.makeChanges').click(makeChanges);
+		return;
+	}
+	if(field2 == "default" || field2 == "none")
+		field2 = undefined;
+	
+	
+	let intent = "addRule";
+	let ruleId;
+	if(action == "edit") 
+	{
+		ruleId = $('#ruleDropdown').val();
+		intent = "editRule";
+		console.log("RID " , ruleId);
+	}
+
+		
+			$.ajax({
+				type: 'POST',
+				url: 'Admin', 
+				data: 
+				{
+					'action': intent, 
+					'ruleId' : ruleId,
+					'domain': domain,
+					'title': title,
+					'field1' : field1,
+					'field2' : field2,
+					'goal' : goal,
+					'severity' : severity ,
+					'projectClass' : projectClass,
+					'passMessage' : passMessage,
+					'failMessage' : failMessage
+				},
+				success: function(data)
+				{
+					console.log(data);
+					if(intent == "edit")
+						alert("Rule Edited Successfully!");
+					else
+						alert("Rule Added Successfully!");
+					location.reload(true);
+				}
+			});
 }
 
 /**
@@ -982,7 +1130,19 @@ function getEquipmentSuppliers () {
 			'equipmentvendor': true,
 			'item' : true,
 			'cities' : true,
-			'subcontractors' : true
+			'subcontractors' : true ,
+			'ruleDomains' : true ,
+			'ruleResults' : true ,
+			'ruleSeverity' : true ,
+			'projectRules' : true , 
+			'class' : true , 
+			'changeOrderFields' : true ,
+			'equipmentFields' : true ,
+			'closeoutFields' : true ,
+			'permitAndInspectionFields' : true ,
+			'schedulingFields' : true ,
+			'financialFields' : true ,
+			'taskFields' : true 
 		}, complete: function (data) {
 			console.log("RESPONSE JSON FOR getEquipmentSuppliers() = ",data.responseJSON);
 			if (data.responseJSON.equipmentvendor) {
@@ -1005,12 +1165,376 @@ function getEquipmentSuppliers () {
 				fillSubcontractorDropdown();
 				console.log("Sub NAMES = ",subcontractors);
 			}
+			//
+			if (data.responseJSON.ruleResults) {
+				ruleResults = JSON.parse(data.responseJSON.ruleResults);
+				fillRuleResultsDropdown();
+				console.log("RULE RESULTS = ",ruleResults);
+			}
+			if (data.responseJSON.ruleDomains) {
+				ruleDomains = JSON.parse(data.responseJSON.ruleDomains);
+				fillRuleDomainsDropdown();
+				console.log("RULE DOMAINS = ",ruleDomains);
+			}
+			if (data.responseJSON.ruleSeverity) {
+				ruleSeverity = JSON.parse(data.responseJSON.ruleSeverity);
+				fillRuleSeverityDropdown();
+				console.log("RULE SEVERITY = ", ruleSeverity);
+			}
+			if (data.responseJSON.projectRules) {
+				projectRules = JSON.parse(data.responseJSON.projectRules);
+				fillProjectRulesDropdown();
+				console.log("PROJECT RULES = ", projectRules);
+			}
+			if (data.responseJSON["class"]) {
+				projectClasses = JSON.parse(data.responseJSON["class"]);
+				fillProjectClassesDropdown();
+			}
+			if (data.responseJSON.changeOrderFields) {
+				changeOrderFields = JSON.parse(data.responseJSON.changeOrderFields);
+			}
+			//
+			if (data.responseJSON.equipmentFields) {
+				equipmentFields = JSON.parse(data.responseJSON.equipmentFields);
+			}
+			if (data.responseJSON.financialFields) {
+				financialFields = JSON.parse(data.responseJSON.financialFields);
+			}
+			if (data.responseJSON.schedulingFields) {
+				schedulingFields = JSON.parse(data.responseJSON.schedulingFields);
+			}
+			if (data.responseJSON.taskFields) {
+				taskFields = JSON.parse(data.responseJSON.taskFields);
+			}
+			if (data.responseJSON.closeoutFields) {
+				closeoutFields = JSON.parse(data.responseJSON.closeoutFields);
+			}
+			if (data.responseJSON.permitAndInspectionFields) {
+				permitAndInspectionFields = JSON.parse(data.responseJSON.permitAndInspectionFields);
+			}
 			
 		}
 		
 	});	
 }
 
+function fillRuleResultsDropdown()
+{
+	if(ruleResults == undefined)
+		return;
+	
+	for(var result in ruleResults)
+	{
+		if(ruleResults[result].visible == "false")
+			continue;
+		
+		var option = document.createElement('option');
+		option.value = ruleResults[result].id;
+		option.innerHTML = ruleResults[result].meaning;
+		
+		$('#ruleGoalDropdown').append(option);
+	}
+	
+	$('#ruleGoalDropdown').chosen({width : "500px"});
+	$('#ruleField1').chosen({width : "500px"});
+	$('#ruleField2').chosen({width : "500px"});
+	
+}
+
+function fillRuleDomainsDropdown()
+{
+	if(ruleDomains == undefined)
+		return;
+	
+	for(var ruleDomain in ruleDomains)
+	{
+		var option = document.createElement('option');
+		option.value = ruleDomains[ruleDomain].domain;
+		option.innerHTML = ruleDomains[ruleDomain].domain;
+		
+		$('#ruleDomainDropdown').append(option);
+		
+	}
+	
+	$('#ruleDomainDropdown').chosen({width : "200px"});
+	$('#ruleDomainDropdown').change(filterFieldsByDomain);
+	$('#ruleDomainDropdown').change(filterGoalsByDomain);	
+	$('#ruleField1').change(filterSecondField);
+}
+
+function filterSecondField()
+{
+	var val = $('#ruleField1').val();
+	
+	console.log("VAL " , val);
+	
+	var type = getFieldType(val);
+	
+	$('#ruleField2').find('option').each(function(index){
+		if(this.type != type && this.type != undefined) {
+			$(this).hide();
+		}
+		else {
+			$(this).show();
+			console.log("NOT EQUAL");
+		}
+	});
+	
+	$('#ruleField2').trigger('chosen:updated');
+	
+}
+
+function getFieldType(val)
+{
+	var dropVal = $('#ruleDomainDropdown').val();
+	
+	console.log("DROP = " , dropVal);
+	switch(dropVal)
+	{
+		case "Permits/Inspections":
+			return permitAndInspectionFields[val];
+		case "Change Orders":
+			return changeOrderFields[val];
+		case "Equipment":
+			return equipmentFields[val];
+		case "Financial":
+			return financialFields[val];
+		case "Scheduling":
+			return schedulingFields[val];
+		case "Closeout":
+			return closeoutFields[val];
+		case "Tasks":
+			return taskFields[val];
+	}
+}
+
+function filterGoalsByDomain()
+{
+	var domain = $('#ruleDomainDropdown').val();
+	console.log("DOM" , domain , ruleDomains[domain]);
+
+	$('#ruleGoalDropdown').find('option').each(function(index){
+		$(this).show();
+		switch(domain)
+		{
+			case "Tasks":
+				if(! this.value.includes("TASK"))
+					$(this).hide();
+				break;
+			case "Closeout":
+				if(! this.value.includes("CLOSEOUT"))
+					$(this).hide();
+				break;	
+			case "Scheduling":
+				if(! this.value.includes("DD_") && ! this.value.includes("D_"))
+					$(this).hide();
+				break;
+			case "Financial":
+				if(! this.value.includes("NN_") && ! this.value.includes("N_"))
+					$(this).hide();
+				break;
+		}
+		
+	});
+	
+	$('#ruleGoalDropdown').trigger('chosen:updated');
+}
+
+function filterFieldsByDomain()
+{
+	var dropVal = $('#ruleDomainDropdown').val();
+	
+	if(CURRENT_INTENT.INTENT == CURRENT_INTENT.REMOVE_DUPLICATE)
+		return;
+	
+	$('#secondFieldRow').show();
+	console.log("DROP = " , dropVal);
+	switch(dropVal)
+	{
+		case "Permits/Inspections":
+			fillField1(permitAndInspectionFields);
+			fillField2(permitAndInspectionFields);
+			break;
+		case "Change Orders":
+			fillField1(changeOrderFields);
+			fillField2(changeOrderFields);
+			break;
+		case "Equipment":
+			fillField1(equipmentFields);
+			fillField2(equipmentFields);
+			break;
+		case "Financial":
+			fillField1(financialFields);
+			fillField2(financialFields);
+			break;
+		case "Scheduling":
+			fillField1(schedulingFields);
+			fillField2(schedulingFields);
+			break;
+		case "Closeout":
+			fillField1(closeoutFields);
+			fillField2(closeoutFields);
+			$('#secondFieldRow').hide();
+			break;
+		case "Tasks":
+			fillField1(taskFields);
+			fillField2(taskFields);
+			$('#secondFieldRow').hide();
+			break;
+	}
+}
+
+function fillField1(options)
+{
+	$('#ruleField1').find('option').remove();
+	
+	var defaultOption = document.createElement('option');
+	defaultOption.value = "default";
+	defaultOption.innerHTML = "---Select a field---";
+	defaultOption.disabled = true;
+	defaultOption.selected = true;
+
+	
+	$('#ruleField1').append(defaultOption);
+	
+	if(options == undefined)
+		return;
+	
+	for(var opt in options)
+	{
+		if(opt == undefined || options[opt] == undefined)
+			continue;
+		
+		var option = document.createElement('option');
+		option.type = options[opt];
+		option.value = opt;
+		option.innerHTML = humanize(opt);
+		$('#ruleField1').append(option);
+	}
+	
+	$('#ruleField1').trigger("chosen:updated");
+}
+
+function fillField2(options)
+{
+	$('#ruleField2').find('option').remove();
+	
+	if(options == undefined)
+		return;
+	
+	var defaultOption = document.createElement('option');
+	defaultOption.value = "default";
+	defaultOption.innerHTML = "---Select a field---";
+	defaultOption.disabled = true;
+	defaultOption.selected = true;
+	
+	$('#ruleField2').append(defaultOption);
+	
+	var optionN = document.createElement('option');
+	optionN.value = "None";
+	optionN.innerHTML = "None";
+	
+	$('#ruleField2').append(optionN);
+	
+	for(var opt in options)
+	{
+		if(opt == undefined || options[opt] == undefined)
+			continue;
+		var option = document.createElement('option');
+		option.type = options[opt];
+		option.value = opt;
+		option.innerHTML = humanize(opt);
+		$('#ruleField2').append(option);
+	}
+	
+	$('#ruleField2').trigger("chosen:updated");
+}
+
+function humanize(str)
+{
+	if(str == undefined)
+		return;
+	
+	var result = "";
+	
+	result += str[0].toUpperCase();
+	
+	for(var i = 0; i < str.length; i++)
+	{
+		if(i == 0)
+			continue;
+		
+		if(str.charAt(i) == "_")
+			continue;
+		
+		if(str.charAt(i) == str.charAt(i).toUpperCase())
+		{
+			if(str.charAt(i + 1) != undefined && str.charAt(i + 1).toUpperCase() == str.charAt(i + 1))	
+				result += str.charAt(i);
+			else 
+				result += " " + str.charAt(i);
+		}
+		else
+			result += str.charAt(i);
+	}
+	
+	return result;
+}
+
+function fillRuleSeverityDropdown()
+{
+	if(ruleSeverity == undefined)
+		return;
+	
+	
+	
+	for(var severity in ruleSeverity)
+	{
+		var option = document.createElement('option');
+		option.value = ruleSeverity[severity].severity;
+		option.innerHTML = ruleSeverity[severity].severityName;
+		
+		$('#ruleSeverityDropdown').append(option);
+	}
+	
+	$('#ruleSeverityDropdown').chosen({width : "200px"});
+}
+
+function fillProjectRulesDropdown()
+{
+	if(projectRules == undefined)
+		return;
+	
+	$('#ruleDropdown').find('option').remove();
+	
+	for(var i = 0; i < projectRules.length; i++)
+	{
+		var option = document.createElement('option');
+		option.value = projectRules[i].id;
+		option.innerHTML = projectRules[i].title;
+		
+		$('#ruleDropdown').append(option);
+	}
+	
+	$('#ruleDropdown').chosen({width : "200px"});
+}
+
+function fillProjectClassesDropdown()
+{
+	if(projectClasses == undefined)
+		return;
+	
+	for(var i = 0; i < projectClasses.length; i++)
+	{
+		var option = document.createElement('option');
+		option.value = projectClasses[i].id;
+		option.innerHTML = projectClasses[i].name;
+		
+		$('#ruleProjectClassDropdown').append(option);
+	}
+	
+	$('#ruleProjectClassDropdown').chosen({width : "200px"});
+}
 /**
  * This function gets all Miller users from the database
  */
@@ -1239,7 +1763,7 @@ function intentSwitch(intent)
 			CURRENT_INTENT.INTENT = CURRENT_INTENT.REMOVE;
 			clearEditingFields();
 			$('.projectObjectDropdown').off('change');
-			$('.editingRow').hide();
+			//$('.editingRow').hide();
 
 			break;
 		case CURRENT_INTENT.REMOVE_DUPLICATE:
@@ -1277,6 +1801,8 @@ function clearEditingFields()
 	$('.editingField').each(function(index){
 		$(this).val('');
 	});
+	
+	$('select').trigger('chosen:updated');
 }
 
 function fillEditingFields()
@@ -1301,10 +1827,50 @@ function fillTabForEdit(projectObject , tabId)
 {
 	
 	console.log("FILLED TAB FOR EDIT , " , projectObject , tabId);
-	if(tabId) 
+	if(tabId && tabId != "ruleTab") 
 	{
 		$('#' + tabId).find('.editingField.name').val(projectObject.name);
 		$('#' + tabId).find('.editingField.email').val(projectObject.email);
+	}
+	else if(projectObject.title && projectObject.goal && projectObject.domain) //Rules tab
+	{
+		$('#ruleTitle').val(projectObject.title);
+		
+		if(projectObject.domain == "ChangeOrders")
+			$('#ruleDomainDropdown').val("Change Orders");
+		else if(projectObject.domain == "PermitsAndInspections")
+			$('#ruleDomainDropdown').val("Permits/Inspections");
+		else
+			$('#ruleDomainDropdown').val(projectObject.domain);
+			
+		
+		$('#ruleDomainDropdown').trigger('change');
+		
+		
+		$('#ruleField1').val(projectObject.field1);
+		$('#ruleField2').val(projectObject.field2);
+		
+		
+		if(projectObject.severity == "LOW")
+			$('#ruleSeverityDropdown').val(1);
+		else if(projectObject.severity == "MEDIUM")
+			$('#ruleSeverityDropdown').val(2);
+		else if(projectObject.severity == "HIGH")
+			$('#ruleSeverityDropdown').val(3);
+		
+		
+		if(projectObject.projectClass)
+			$('#ruleProjectClassDropdown').val(projectObject.projectClass.id);
+		else
+			$('#ruleProjectClassDropdown').val("none");
+		
+		$('#ruleGoalDropdown').val(projectObject.goal);
+		
+		$('#passMessage').val(projectObject.passMessage);
+		$('#failMessage').val(projectObject.failMessage);
+		
+		$('#ruleTab').find('select').trigger('chosen:updated');
+
 	}
 	else
 	{
@@ -1371,10 +1937,18 @@ function matchProjectObject(selectedId , _tabId)
 				}
 			}
 			break;
+		case "ruleTab":
+			if(projectRules) 
+			{
+				for(var i = 0; i < projectRules.length; i++) {
+					if(projectRules[i].id == selectedId)
+						return projectRules[i];
+				}
+			}
+			break;
 	}
 	
 }
-
 
 
 function makeChanges()
@@ -1388,96 +1962,43 @@ function makeChanges()
 	switch(currentTabId)
 	{
 		case "item":
-			handleProjectItemChanges();
+			handleChanges(createItem , editItem , removeItem , swapDuplicateItem);
 			break;
 		case "subcontractor":
-			handleSubcontractorChanges();
+			handleChanges(createSubcontractor , editSubcontractor , removeSubcontractor , swapDuplicateSubcontractor);
 			break;
 		case "equipmentSupplier":
-			handleEquipmentSupplierChanges();
+			handleChanges(createEquipmentSupplier , editEquipmentSupplier , removeEquipmentSupplier , swapDuplicateEquipmentSupplier);
 			break;
 		case "cityTab":
-			handleCityChanges();
+			handleChanges(createCity , editCity , removeCity , swapDuplicateCity);
+			break;
+		case "ruleTab":
+			handleChanges(addRule , addRule , removeRule , removeRule);
 			break;
 	}
 	
 }
 
-function handleProjectItemChanges()
+function handleChanges(create , edit , remove , removeDuplicate)
 {
 	switch(CURRENT_INTENT.INTENT)
 	{
 		case CURRENT_INTENT.ADD:
-			createItem();
+			create();
 			break;
 		case CURRENT_INTENT.EDIT:
-			editItem();
+			edit("edit");
 			break;
 		case CURRENT_INTENT.REMOVE:
-			removeItem();
+			remove();
 			break;
 		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateItem();
+			removeDuplicate();
 			break;
 	}
 }
 
-function handleEquipmentSupplierChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateEquipmentSupplier();
-			break;
-	}
-}
-
-function handleSubcontractorChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createSubcontractor();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editSubcontractor();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeSubcontractor();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateSubcontractor();
-			break;
-	}
-}
-
-function handleCityChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createCity();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editCity();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeCity();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateCity();
-			break;
-	}
-}
 
 
 function sendText()
