@@ -137,20 +137,20 @@ public class AutoFillService {
 		if(_value.equals("1")) {
 			permitStatus = "TBD";
 			inspectionStatus = "TBD";
-			permitReq = "TBD";
-			inspectionReq = "TBD";
+			permitReq = "2";
+			inspectionReq = "2";
 		}		
 		else if(_value.equals("2")) {
 			permitStatus = "TBD";
 			inspectionStatus = "TBD";
-			permitReq = "TBD";
-			inspectionReq = "TBD";
+			permitReq = "2";
+			inspectionReq = "2";
 		}
 		else {
 			permitStatus = "N/A";
 			inspectionStatus = "N/A";
-			permitReq = "No";
-			inspectionReq = "No";
+			permitReq = "0";
+			inspectionReq = "0";
 		}
 		
 		permits.setBuilding(today);

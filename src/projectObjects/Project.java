@@ -100,6 +100,11 @@ public class Project extends ProjectObject
 	private Set<Equipment> equipment;
 	private Set<NewEquipment> projEquipment;
 	
+	private String autofillHVAC;
+	private String autofillRefrigeration;
+	private String autofillPermits;
+	
+	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
@@ -109,7 +114,7 @@ public class Project extends ProjectObject
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
-			Date budgetaryDue , Date budgetarySubmitted)
+			Date budgetaryDue , Date budgetarySubmitted , String autofill_HVAC , String autofill_Refrigeration , String autofill_Permits)
 	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
@@ -141,6 +146,10 @@ public class Project extends ProjectObject
 		this.managerNotes = managerNotes;
 		this.budgetaryDue = budgetaryDue;
 		this.budgetarySubmitted = budgetarySubmitted;
+		
+		this.autofillHVAC = autofill_HVAC;
+		this.autofillRefrigeration = autofill_Refrigeration;
+		this.autofillPermits = autofill_Permits;
 
 	}
 	
@@ -179,6 +188,10 @@ public class Project extends ProjectObject
 		this.setProjEquipment(new HashSet<NewEquipment>());
 		this.budgetaryDue = null;
 		this.budgetarySubmitted = null;
+		
+		this.autofillHVAC = null;
+		this.autofillPermits = null;
+		this.autofillRefrigeration = null;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -533,6 +546,31 @@ public class Project extends ProjectObject
 	public synchronized void setManagerNotes(String managerNotes) {
 		this.managerNotes = managerNotes;
 	}
+	
+	public synchronized String getAutofillHVAC() {
+		return autofillHVAC;
+	}
+	
+	public synchronized void setAutofillHVAC(String autofill_HVAC) {
+		this.autofillHVAC = autofill_HVAC;
+	}
+	
+	public synchronized String getAutofillRefrigeration() {
+		return autofillRefrigeration;
+	}
+	
+	public synchronized void setAutofillRefrigeration(String autofill_Refrigeration) {
+		this.autofillRefrigeration = autofill_Refrigeration;
+	}
+	
+	public synchronized String getAutofillPermits() {
+		return autofillPermits;
+	}
+	
+	public synchronized void setAutofillPermits(String autofill_Permits) {
+		this.autofillPermits = autofill_Permits;
+	}
+	
 	
 	
 	public static Date getSchedulingFields(String name , Project project)

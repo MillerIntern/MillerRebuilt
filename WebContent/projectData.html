@@ -42,20 +42,33 @@
 	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 	        </ul>
 	      </li>
-	      <li><a href="#">Triggers</a></li>
+          <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Triggers
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='triggerBrowser.html'>Browse Alerts</a></li>
+	      		<li><a href='triggerForm.html'>Create Trigger</a></li>
+	      	</ul>
+	      </li>
 	      <li class='dropdown'>
 	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
 	      		<span class='caret'></span>
 	      	</a>
 	      	<ul class='dropdown-menu'>
-	      		<li><a href='taskBrowser.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
-	      		<li><a href='findProject.html?type=findTaskProject' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		
+	      		<li><a href='projects.html?type=findTaskProject'
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
 	      	</ul>
 	      </li>
 	      <li><a href="query.html">Reports</a></li>
-	      <li><a href="additions.html">Tools</a></li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -74,7 +87,7 @@
         				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 	
-	<div id="generalInformation" class="info-tab active">
+	<div style = "width: 75%" id="generalInformation" class="info-tab active">
 		<table class='table table-hover'>
 	
 		<tr>
@@ -98,12 +111,9 @@
 
         <tr>
         <td><b>Manager:</b></td>
-        <td>
+        <td style = "width : 30%">
         <select id="manager"><option value="default">--Please select an option--</option></select>
 		</td>
-		</tr>
-
-        <tr>
         <td><b>Supervisor:</b></td>
         <td>
         <select id="supervisor"><option value="default">--Please select an option--</option></select>
@@ -115,10 +125,7 @@
         <td>
         <select id="stage"><option value="default">--Please select an option--</option></select>
 		</td>
-		</tr>
-	
-        <tr>	
-        <td><b>Status:</b></td>
+		<td><b>Status:</b></td>
         <td>
         <select id="status"><option value="default">--Please select an option--</option></select>
 		</td>
@@ -130,28 +137,6 @@
         <select id="pType"><option value="default">--Please select an option--</option></select>
 		</td>
 		</tr>
-
-        <tr>
-        <td>Scope:</td>
-        <td><textarea  maxlength="999" id="scope" ></textarea></td>
-        </tr>
-        
-        <tr>
-        <td>MCS Notes:</td>
-        <td><textarea  maxlength="999" id="notes" ></textarea></td>
-        </tr>
-
-        <tr>
-        <td>Customer Notes:</td>
-        <td><textarea  maxlength="999" id="zUpdates" ></textarea></td>
-        </tr>
-        
-        <tr>
-        <td><b>Classification:</b></td>
-       	<td>
-        <select id="class"><option value="default">--Please select an option--</option></select>
-		</td>
-		</tr>	 
 		
 		<tr>
 	    	<td><b>HVAC</b></td>
@@ -186,7 +171,29 @@
                              	
 	        </select>
 			</td>
-		</tr>		       
+		</tr>	
+
+        <tr>
+        <td>Scope:</td>
+        <td><textarea  maxlength="999" id="scope" ></textarea></td>
+        </tr>
+        
+        <tr>
+        <td>MCS Notes:</td>
+        <td><textarea  maxlength="999" id="notes" ></textarea></td>
+        </tr>
+
+        <tr>
+        <td>Customer Notes:</td>
+        <td><textarea  maxlength="999" id="zUpdates" ></textarea></td>
+        </tr>
+        
+        <tr>
+        <td><b>Classification:</b></td>
+       	<td>
+        <select id="class"><option value="default">--Please select an option--</option></select>
+		</td>
+		</tr>	 		       
         
         
         </table>

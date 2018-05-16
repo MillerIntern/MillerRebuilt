@@ -56,8 +56,11 @@ public class ProjectInformationFiller
 		currentProject.setCustomerNumber(params.get("customerNumber"));
 		
 		Date finitiatedDate = null;
-		if (!(params.get("initiated")).isEmpty())
+		if (!(params.get("initiated")).isEmpty()) 
 			finitiatedDate = formatter.parse(params.get("initiated"));
+		else {
+			finitiatedDate = new Date();
+		}
 		currentProject.setProjectInitiatedDate(finitiatedDate);
 
 		Date fsurvey = null;
@@ -110,14 +113,17 @@ public class ProjectInformationFiller
 		
 		if(params.get("autofill-HVAC") != null && !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
 			AutoFillService.autoFillProject(currentProject , "HVAC" , params.get("autofill-HVAC"));
+			currentProject.setAutofillHVAC(params.get("autofill-HVAC"));
 		}
 		
 		if(params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1") || params.get("autofill-Refrigeration").equals(""))) {
 			AutoFillService.autoFillProject(currentProject , "Refrigeration" , params.get("autofill-Refrigeration"));
+			currentProject.setAutofillRefrigeration(params.get("autofill-Refrigeration"));
 		}
 		
 		if(params.get("autofill-Permits") != null && !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
 			AutoFillService.autoFillProject(currentProject , "Permits" , params.get("autofill-Permits"));
+			currentProject.setAutofillPermits(params.get("autofill-Permits"));
 		}
 			
 	}

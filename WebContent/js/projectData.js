@@ -98,6 +98,7 @@ function fillDropdowns(data)
 	generateDropdowns(data["status"], "status");
 	generateDropdowns(data["stage"], "stage");
 	generateDropdowns(data["type"], "pType");	
+	$("#initiatedDate").val(getToday());
 }
 
 //This function puts data into a specific dropdown menu
@@ -355,42 +356,42 @@ function getProject()
 	}
 }
 
-//This function fills out the page with project data. This is so the user can edit the project information
-//Input: JSON object representing a project
-//Output: none (fills out data on the page)
-function fillForm(data)
-{
-	console.log(data);
-	var json = (data);	
-	$("#mcsNumber").val(json.McsNumber);
-
-    $("#warehouse").val(json.warehouse.id);
-	$("#class").val(json.projectClass.id);
-	$("#project").val(json.projectItem.id);
-	$("#manager").val(json.projectManagers.id);
-	$("#supervisor").val(json.supervisors[0].id);
-	$("#stage").val(json.stage.id);
-	$("#status").val(json.status.id);
-	$("#pType").val(json.projectType.id);
-	$("#scope").val(json.scope);
-
-	
-	$("#initiatedDate").val(json.projectInitiatedDate);;
-	$("#surveyDate").val(json.siteSurvey);
-	$("#costcoDate").val(json.costcoDueDate);
-	$("#proposalDate").val(json.proposalSubmitted);
-	$("#startDate").val(json.scheduledStartDate);
-	$("#scheduledTurnover").val(json.scheduledTurnover);
-	$("#actualTurnover").val(json.actualTurnover);
-	$("#permitApp").val(json.permitApp);
-
-	$("#shouldInvoice").val(json.shouldInvoice);
-	$("#actualInvoice").val(json.invoiced);
-	$("#notes").val(json.projectNotes);
-	$("#zUpdates").val(json.zachUpdates);
-	$("#projectCost").val(json.cost);
-	$("#custNum").val(json.customerNumber);
-}
+////This function fills out the page with project data. This is so the user can edit the project information
+////Input: JSON object representing a project
+////Output: none (fills out data on the page)
+//function fillForm(data)
+//{
+//	console.log(data);
+//	var json = (data);	
+//	$("#mcsNumber").val(json.McsNumber);
+//
+//    $("#warehouse").val(json.warehouse.id);
+//	$("#class").val(json.projectClass.id);
+//	$("#project").val(json.projectItem.id);
+//	$("#manager").val(json.projectManagers.id);
+//	$("#supervisor").val(json.supervisors[0].id);
+//	$("#stage").val(json.stage.id);
+//	$("#status").val(json.status.id);
+//	$("#pType").val(json.projectType.id);
+//	$("#scope").val(json.scope);
+//
+//	
+//	$("#initiatedDate").val(json.projectInitiatedDate);;
+//	$("#surveyDate").val(json.siteSurvey);
+//	$("#costcoDate").val(json.costcoDueDate);
+//	$("#proposalDate").val(json.proposalSubmitted);
+//	$("#startDate").val(json.scheduledStartDate);
+//	$("#scheduledTurnover").val(json.scheduledTurnover);
+//	$("#actualTurnover").val(json.actualTurnover);
+//	$("#permitApp").val(json.permitApp);
+//
+//	$("#shouldInvoice").val(json.shouldInvoice);
+//	$("#actualInvoice").val(json.invoiced);
+//	$("#notes").val(json.projectNotes);
+//	$("#zUpdates").val(json.zachUpdates);
+//	$("#projectCost").val(json.cost);
+//	$("#custNum").val(json.customerNumber);
+//}
 
 
 function sortByName(object, className)

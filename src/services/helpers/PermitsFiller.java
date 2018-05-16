@@ -28,8 +28,10 @@ public class PermitsFiller
 			buildingInspection = formatter.parse(params.get("buildingInspectionLastUpdated"));
 		permits.setBuildingInspectionLastUpdated(buildingInspection);
 		permits.setBuildingInspectionStatus(params.get("buildingInspectionStatus"));
+		permits.setBuildingInspectionRequired(params.get("buildingInspectionReq"));
 		permits.setBuildingPermitStatus(params.get("buildingPermitStatus"));
-
+		permits.setBuildingPermitRequired(params.get("buildingPermitReq"));
+		
 		Date mechanicalPermit = null;
 		if(!params.get("mechanical_p").isEmpty())
 			mechanicalPermit = formatter.parse(params.get("mechanical_p"));
@@ -39,7 +41,9 @@ public class PermitsFiller
 			mechanicalInspection = formatter.parse(params.get("mechanicalInspectionLastUpdated"));
 		permits.setMechanicalInspectionLastUpdated(mechanicalInspection);
 		permits.setMechanicalInspectionStatus(params.get("mechanicalInspectionStatus"));
+		permits.setMechanicalInspectionRequired(params.get("mechanicalInspectionReq"));
 		permits.setMechanicalPermitStatus(params.get("mechanicalPermitStatus"));
+		permits.setMechanicalPermitRequired(params.get("mechanicalPermitReq"));
 
 		Date electricalPermit = null;
 		if(!params.get("electrical_p").isEmpty())
@@ -50,7 +54,9 @@ public class PermitsFiller
 			electricalInspection = formatter.parse(params.get("electricalInspectionLastUpdated"));
 		permits.setElectricalInspectionLastUpdated(electricalInspection);
 		permits.setElectricalInspectionStatus(params.get("electricalInspectionStatus"));
+		permits.setElectricalInspectionRequired(params.get("electricalInspectionReq"));
 		permits.setElectricalPermitStatus(params.get("electricalPermitStatus"));
+		permits.setElectricalPermitRequired(params.get("electricalPermitReq"));
 
 		Date plumbingPermit = null;
 		if(!params.get("plumbing_p").isEmpty())
@@ -61,7 +67,9 @@ public class PermitsFiller
 			plumbingInspection = formatter.parse(params.get("plumbingInspectionLastUpdated"));
 		permits.setPlumbingInspectionLastUpdated(plumbingInspection);
 		permits.setPlumbingInspectionStatus(params.get("plumbingInspectionStatus"));
+		permits.setPlumbingInspectionRequired(params.get("plumbingInspectionReq"));
 		permits.setPlumbingPermitStatus(params.get("plumbingPermitStatus"));
+		permits.setPlumbingPermitRequired(params.get("plumbingPermitReq"));
 
 		Date fireSprinklePermit = null;
 		if(!params.get("fireSprinkler_p").isEmpty())
@@ -72,8 +80,10 @@ public class PermitsFiller
 			fireSprinkleInspection = formatter.parse(params.get("sprinklerInspectionLastUpdated"));
 		permits.setSprinklerInspectionLastUpdated(fireSprinkleInspection);
 		permits.setSprinklerInspectionStatus(params.get("sprinklerInspectionStatus"));
+		permits.setSprinklerInspectionRequired(params.get("sprinklerInspectionReq"));
 		permits.setSprinklerPermitStatus(params.get("sprinklerPermitStatus"));
-
+		permits.setSprinklerPermitRequired(params.get("sprinklerPermitReq"));
+		
 		Date fireAlarmPermit = null;
 		if(!params.get("fireAlarm_p").isEmpty())
 			fireAlarmPermit = formatter.parse(params.get("fireAlarm_p"));
@@ -83,8 +93,10 @@ public class PermitsFiller
 			fireAlarmInspection = formatter.parse(params.get("fireAlarmInspectionLastUpdated"));
 		permits.setFireAlarmInspectionLastUpdated(fireAlarmInspection);
 		permits.setFireAlarmInspectionStatus(params.get("fireAlarmInspectionStatus"));
+		permits.setFireAlarmInspectionRequired(params.get("fireAlarmInspectionReq"));
 		permits.setFireAlarmPermitStatus(params.get("fireAlarmPermitStatus"));
-
+		permits.setFireAlarmPermitRequired(params.get("fireAlarmPermitReq"));
+		
 		Date lowVoltagePermit = null;
 		if(!params.get("lowVoltage_p").isEmpty())
 			lowVoltagePermit = formatter.parse(params.get("lowVoltage_p"));
@@ -94,7 +106,9 @@ public class PermitsFiller
 			voltageInspection = formatter.parse(params.get("voltageInspectionLastUpdated"));
 		permits.setVoltageInspectionLastUpdated(voltageInspection);
 		permits.setVoltageInspectionStatus(params.get("voltageInspectionStatus"));
+		permits.setVoltageInspectionRequired(params.get("voltageInspectionReq"));
 		permits.setVoltagePermitStatus(params.get("voltagePermitStatus"));
+		permits.setVoltagePermitRequired(params.get("voltagePermitReq"));
 
 		Date roofingPermit = null;
 		if(!params.get("roofingPermit").isEmpty())
@@ -105,7 +119,9 @@ public class PermitsFiller
 			roofingInspection = formatter.parse(params.get("roofingInspectionLastUpdated"));
 		permits.setRoofingInspectionLastUpdated(roofingInspection);
 		permits.setRoofingInspectionStatus(params.get("roofingInspectionStatus"));
+		permits.setRoofingInspectionRequired(params.get("roofingInspectionReq"));
 		permits.setRoofingPermitStatus(params.get("roofingPermitStatus"));
+		permits.setRoofingPermitRequired(params.get("roofingPermitReq"));
 
 		Date aPermit = null;
 		if(!params.get("otherPermitA").isEmpty())
