@@ -52,10 +52,10 @@ public enum RuleSeverity {
 		
 		for(int i = 0; i < rs.length; i++)
 		{
-			Map<String , String> oneDomain = new HashMap<String , String>();
-			oneDomain.put("severity", String.valueOf(rs[i].severity));
-			oneDomain.put("severityName", rs[i].level);
-			severities.put(rs[i] , oneDomain);
+			Map<String , String> oneSeverity = new HashMap<String , String>();
+			oneSeverity.put("severity", String.valueOf(rs[i].severity));
+			oneSeverity.put("severityName", rs[i].level);
+			severities.put(rs[i] , oneSeverity);
 		}
 		
 		return severities;

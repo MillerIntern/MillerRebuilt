@@ -187,9 +187,17 @@ public class ProjectRuleService
 		
 		if(field1 instanceof Date && field2 instanceof Date)
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
-		else if(field1 instanceof Double && field2 instanceof Double)
-			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
+		if(field1 instanceof Double && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
+		else if(field1 instanceof Double && field2 == null)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , null));
+		else if(field1 == null && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers(null , (Double) field2));
 		
 		return false;
 	}
@@ -273,6 +281,10 @@ public class ProjectRuleService
 
 		if(field1 instanceof Date && field2 instanceof Date)
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
 		return false;
 
@@ -303,7 +315,14 @@ public class ProjectRuleService
 			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
 		else if(field1 instanceof String && field2 instanceof String)
 			return _rule.evaluate(EvaluateStrings((String) field1 , (String) field2));
-		
+		else if(field1 instanceof String && field2 == null)
+			return _rule.evaluate(EvaluateStrings((String) field1 , null));
+		else if(field1 == null && field2 instanceof String)
+			return _rule.evaluate(EvaluateStrings( null , (String) field2));
+		else if(field1 instanceof Date && field2 == null)
+			return _rule.evaluate(EvaluateDates((Date) field1 , null));
+		else if(field1 == null && field2 instanceof Date)
+			return _rule.evaluate(EvaluateDates(null , (Date) field2));
 		
 		return false;
 		

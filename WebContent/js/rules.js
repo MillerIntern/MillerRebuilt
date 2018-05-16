@@ -4370,6 +4370,13 @@ function getProject_PROJECT_RULE_MANAGER(project_id) {
 let RULES;
 let FAILED_RULES;
 let RULE_DATA;
+
+let LOW_COLOR = "rgb(0, 255, 0)";
+let MEDIUM_COLOR = "rgb(255, 255, 0)";
+let HIGH_COLOR = "rgb(255, 92, 51)";
+
+let NO_COLOR = "rgb(255, 255, 255)";
+
 function reevaluateProject(project_id) {
 	if (project_id !== null) {
 		$.ajax({
@@ -4437,9 +4444,9 @@ function prepareRuleManager(data)
 
 	
 	$('#ruleManagerTopLevelDiv').find('ul').find('li').each(function(index) {
-		$(this).css("background-color" ,"rgb(255, 255, 255)" );
+		$(this).css("background-color" , NO_COLOR );
 		$(this).click(function(event) {
-			if($(this).css("background-color") == "rgb(255, 255, 255)")
+			if($(this).css("background-color") == NO_COLOR)
 				return;
 			displayFailedRules(this.id.replace("Item" , ""));
 		});
@@ -4448,13 +4455,13 @@ function prepareRuleManager(data)
 		switch(worst)
 		{
 			case "LOW":
-				$(this).css("background-color" , "rgb(0, 255, 0)");
+				$(this).css("background-color" , LOW_COLOR);
 				break;
 			case "MEDIUM":
-				$(this).css("background-color" , "rgb(255, 255, 0)");
+				$(this).css("background-color" , MEDIUM_COLOR);
 				break;
 			case "HIGH":
-				$(this).css("background-color" , "rgb(255, 92, 51)");
+				$(this).css("background-color" , HIGH_COLOR);
 				break;	 
 		}
 	});
@@ -4550,11 +4557,11 @@ function fillFailedRulesTable(domain)
 		$(tr).append(action);
 		
 		if(RULES[i].severity == "HIGH")
-			$(tr).css("background-color" , "rgb(255, 92, 51)");
+			$(tr).css("background-color" , HIGH_COLOR);
 		if(RULES[i].severity == "MEDIUM")
-			$(tr).css("background-color" , "rgb(255, 255, 0)");
+			$(tr).css("background-color" , MEDIUM_COLOR);
 		if(RULES[i].severity == "LOW")
-			$(tr).css("background-color" , "rgb(0, 255, 0)");
+			$(tr).css("background-color" , LOW_COLOR);
 		
 		$('#failedRulesTable').find('tbody').append(tr);		
 	}

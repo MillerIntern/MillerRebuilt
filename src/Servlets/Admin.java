@@ -292,6 +292,35 @@ public class Admin extends HttpServlet
 			ProjectObjectService.addObject("ProjectRule",  rule);
 			response = "rule added";
 		}
+		else if(action.equals("editRule"))
+		{
+			ProjectRule rule = new ProjectRule();
+			Long ruleId = Long.parseLong(parameters.get("ruleId"));
+			
+
+			try {
+			ProjectService.editExistingRule(ruleId , parameters);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			response = "rule added";
+		}
+		else if(action.equals("deleteRule"))
+		{
+			Long ruleId = Long.parseLong(parameters.get("ruleId"));
+			
+
+			try {
+			ProjectObjectService.delete(ruleId , "ProjectRule");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			response = "rule deleted";
+		}
 		else if(action.equals("addUser"))
 		{
 			String logInName = parameters.get("logInName");

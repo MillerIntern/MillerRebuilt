@@ -26,6 +26,7 @@ import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectObject;
+import projectObjects.ProjectRule;
 import projectObjects.Region;
 import projectObjects.RuleDomain;
 import projectObjects.RuleResult;
@@ -41,6 +42,7 @@ import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
 import services.helpers.ProjectInformationFiller;
+import services.helpers.ProjectRuleFiller;
 import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
@@ -90,6 +92,31 @@ public class ProjectService extends ProjectObjectService
 
 		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
 
+		return projID;
+	}
+	
+	/**
+	 * @param ruleId
+	 * @param parameters
+	 */
+	public synchronized static long editExistingRule(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		ProjectRule rule = null;
+		
+		try 
+		{
+			rule = (ProjectRule) ProjectObjectService.get(projID,  "ProjectRule");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectRuleFiller.fillRule(rule, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(rule);
+		tx.commit();
+		
 		return projID;
 	}
 	

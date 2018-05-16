@@ -3,7 +3,7 @@ let projectItems;
 let equipmentSuppliers;
 let subcontractors;
 let cities;
-let rules;
+let projectRules;
 let ruleDomains;
 let ruleResults;
 let ruleSeverity;
@@ -34,15 +34,18 @@ $(document).ready(function()
 				var tab_id = $(this).attr('data-tab');
 		        if(tab_id == "saveButton")
 		            return;
-
+		       	
 				$('ul.tabs li').removeClass('current');
 				$('.tab-content').removeClass('current');
 
 				$(this).addClass('current');
 				$("#"+tab_id).addClass('current');
 			});	
-	
 });
+
+$(document).ready(function(){$('textarea').keydown(function(){
+	autoSizeTextAreas(this);
+})});
 
 $(document).ready(function()
 		{
@@ -953,14 +956,33 @@ function addUser()
 				}
 			});
 		}
-	
-	
-	
-	
-	
+
 }
 
-function addRule()
+function removeRule()
+{
+	let ruleId = $('#ruleDropdown').val();
+	
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Admin', 
+		data: 
+		{
+			'action': 'deleteRule', 
+			'ruleId' : ruleId ,
+		},
+		success: function(data)
+		{
+			console.log(data);
+			
+			alert("Rule Deleted Successfully!");
+			location.reload(true);
+		}
+	});	
+}
+
+function addRule(action)
 {
 	let domain = $('#ruleTab').find('#ruleDomainDropdown').val();
 	let title = $('#ruleTab').find('#ruleTitle').val();
@@ -976,56 +998,72 @@ function addRule()
 	let validData = true;
 	
 	if(domain == undefined || domain == "default") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Must select a category!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(field1 == undefined || field1 == "default") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Field 1 must have a value!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(! title) {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Each rule must have a title!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	};
 	
 	if(goal == undefined || goal == "default") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Each rule must have a goal!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(severity == undefined || severity == "default") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Each rule must have a severity!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(projectClass == undefined || projectClass == "default") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Please select a project class to apply this rule to!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(passMessage == "") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Each rule must have a pass message!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	
 	if(failMessage == "") {
-		$('.makeChanges').attr('disabled' , 'false');
+		$('.makeChanges').removeAttr('disabled');
 		alert("Each rule must have a fail message!");
+		$('.makeChanges').click(makeChanges);
 		return;
 	}
 	if(field2 == "default" || field2 == "none")
 		field2 = undefined;
 	
 	
+	let intent = "addRule";
+	let ruleId;
+	if(action == "edit") 
+	{
+		ruleId = $('#ruleDropdown').val();
+		intent = "editRule";
+		console.log("RID " , ruleId);
+	}
 
 		
 			$.ajax({
@@ -1033,7 +1071,8 @@ function addRule()
 				url: 'Admin', 
 				data: 
 				{
-					'action': 'addRule', 
+					'action': intent, 
+					'ruleId' : ruleId,
 					'domain': domain,
 					'title': title,
 					'field1' : field1,
@@ -1047,7 +1086,10 @@ function addRule()
 				success: function(data)
 				{
 					console.log(data);
-					alert("Rule Added Successfully!");
+					if(intent == "edit")
+						alert("Rule Edited Successfully!");
+					else
+						alert("Rule Added Successfully!");
 					location.reload(true);
 				}
 			});
@@ -1302,6 +1344,9 @@ function filterFieldsByDomain()
 {
 	var dropVal = $('#ruleDomainDropdown').val();
 	
+	if(CURRENT_INTENT.INTENT == CURRENT_INTENT.REMOVE_DUPLICATE)
+		return;
+	
 	$('#secondFieldRow').show();
 	console.log("DROP = " , dropVal);
 	switch(dropVal)
@@ -1441,6 +1486,8 @@ function fillRuleSeverityDropdown()
 	if(ruleSeverity == undefined)
 		return;
 	
+	
+	
 	for(var severity in ruleSeverity)
 	{
 		var option = document.createElement('option');
@@ -1455,19 +1502,21 @@ function fillRuleSeverityDropdown()
 
 function fillProjectRulesDropdown()
 {
-	if(rules == undefined)
+	if(projectRules == undefined)
 		return;
 	
-	for(var i = 0; i < rules.length; i++)
+	$('#ruleDropdown').find('option').remove();
+	
+	for(var i = 0; i < projectRules.length; i++)
 	{
 		var option = document.createElement('option');
-		option.value = rules[i].id;
-		option.innerHTML = rules[i].title;
+		option.value = projectRules[i].id;
+		option.innerHTML = projectRules[i].title;
 		
-		$('#removeRuleDropdown').append(option);
+		$('#ruleDropdown').append(option);
 	}
 	
-	$('#removeRuleDropdown').chosen({width : "200px"});
+	$('#ruleDropdown').chosen({width : "200px"});
 }
 
 function fillProjectClassesDropdown()
@@ -1714,7 +1763,7 @@ function intentSwitch(intent)
 			CURRENT_INTENT.INTENT = CURRENT_INTENT.REMOVE;
 			clearEditingFields();
 			$('.projectObjectDropdown').off('change');
-			$('.editingRow').hide();
+			//$('.editingRow').hide();
 
 			break;
 		case CURRENT_INTENT.REMOVE_DUPLICATE:
@@ -1752,6 +1801,8 @@ function clearEditingFields()
 	$('.editingField').each(function(index){
 		$(this).val('');
 	});
+	
+	$('select').trigger('chosen:updated');
 }
 
 function fillEditingFields()
@@ -1776,10 +1827,50 @@ function fillTabForEdit(projectObject , tabId)
 {
 	
 	console.log("FILLED TAB FOR EDIT , " , projectObject , tabId);
-	if(tabId) 
+	if(tabId && tabId != "ruleTab") 
 	{
 		$('#' + tabId).find('.editingField.name').val(projectObject.name);
 		$('#' + tabId).find('.editingField.email').val(projectObject.email);
+	}
+	else if(projectObject.title && projectObject.goal && projectObject.domain) //Rules tab
+	{
+		$('#ruleTitle').val(projectObject.title);
+		
+		if(projectObject.domain == "ChangeOrders")
+			$('#ruleDomainDropdown').val("Change Orders");
+		else if(projectObject.domain == "PermitsAndInspections")
+			$('#ruleDomainDropdown').val("Permits/Inspections");
+		else
+			$('#ruleDomainDropdown').val(projectObject.domain);
+			
+		
+		$('#ruleDomainDropdown').trigger('change');
+		
+		
+		$('#ruleField1').val(projectObject.field1);
+		$('#ruleField2').val(projectObject.field2);
+		
+		
+		if(projectObject.severity == "LOW")
+			$('#ruleSeverityDropdown').val(1);
+		else if(projectObject.severity == "MEDIUM")
+			$('#ruleSeverityDropdown').val(2);
+		else if(projectObject.severity == "HIGH")
+			$('#ruleSeverityDropdown').val(3);
+		
+		
+		if(projectObject.projectClass)
+			$('#ruleProjectClassDropdown').val(projectObject.projectClass.id);
+		else
+			$('#ruleProjectClassDropdown').val("none");
+		
+		$('#ruleGoalDropdown').val(projectObject.goal);
+		
+		$('#passMessage').val(projectObject.passMessage);
+		$('#failMessage').val(projectObject.failMessage);
+		
+		$('#ruleTab').find('select').trigger('chosen:updated');
+
 	}
 	else
 	{
@@ -1846,10 +1937,18 @@ function matchProjectObject(selectedId , _tabId)
 				}
 			}
 			break;
+		case "ruleTab":
+			if(projectRules) 
+			{
+				for(var i = 0; i < projectRules.length; i++) {
+					if(projectRules[i].id == selectedId)
+						return projectRules[i];
+				}
+			}
+			break;
 	}
 	
 }
-
 
 
 function makeChanges()
@@ -1863,118 +1962,43 @@ function makeChanges()
 	switch(currentTabId)
 	{
 		case "item":
-			handleProjectItemChanges();
+			handleChanges(createItem , editItem , removeItem , swapDuplicateItem);
 			break;
 		case "subcontractor":
-			handleSubcontractorChanges();
+			handleChanges(createSubcontractor , editSubcontractor , removeSubcontractor , swapDuplicateSubcontractor);
 			break;
 		case "equipmentSupplier":
-			handleEquipmentSupplierChanges();
+			handleChanges(createEquipmentSupplier , editEquipmentSupplier , removeEquipmentSupplier , swapDuplicateEquipmentSupplier);
 			break;
 		case "cityTab":
-			handleCityChanges();
+			handleChanges(createCity , editCity , removeCity , swapDuplicateCity);
 			break;
 		case "ruleTab":
-			handleRuleChanges();
+			handleChanges(addRule , addRule , removeRule , removeRule);
 			break;
 	}
 	
 }
 
-function handleRuleChanges()
+function handleChanges(create , edit , remove , removeDuplicate)
 {
 	switch(CURRENT_INTENT.INTENT)
 	{
 		case CURRENT_INTENT.ADD:
-			addRule();
+			create();
 			break;
 		case CURRENT_INTENT.EDIT:
-			addRule();
+			edit("edit");
 			break;
 		case CURRENT_INTENT.REMOVE:
-			addRule();
+			remove();
 			break;
 		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			addRule();
+			removeDuplicate();
 			break;
 	}
 }
 
-function handleProjectItemChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createItem();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editItem();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeItem();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateItem();
-			break;
-	}
-}
-
-function handleEquipmentSupplierChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeEquipmentSupplier();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateEquipmentSupplier();
-			break;
-	}
-}
-
-function handleSubcontractorChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createSubcontractor();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editSubcontractor();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeSubcontractor();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateSubcontractor();
-			break;
-	}
-}
-
-function handleCityChanges()
-{
-	switch(CURRENT_INTENT.INTENT)
-	{
-		case CURRENT_INTENT.ADD:
-			createCity();
-			break;
-		case CURRENT_INTENT.EDIT:
-			editCity();
-			break;
-		case CURRENT_INTENT.REMOVE:
-			removeCity();
-			break;
-		case CURRENT_INTENT.REMOVE_DUPLICATE:
-			swapDuplicateCity();
-			break;
-	}
-}
 
 
 function sendText()
