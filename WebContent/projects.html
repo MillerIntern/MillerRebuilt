@@ -265,7 +265,7 @@
 			</div> <!-- Change Orders -->
 			<div class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Permit Requirement</th><th>Permit Status</th><th>Permit Last Updated</th></tr>
+					<tr><th style="width: 20%"></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th style="width: 20%">Permit Requirement</th><th>Permit Status</th><th>Permit Last Updated</th></tr>
 					<tr><td class = "bold">Building</td><td id='buildingPermitRequired' class="italics inspectionTableData"></td><td id='buildingPermit' class ="italics permitTableData" width = 20%></td><td id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
 					<tr><td class = "bold">Roofing</td><td id='roofingPermitRequired' class="italics inspectionTableData"></td><td id='roofingPermit' class ="italics permitTableData"></td><td id='roofingPermitDate' class ="italics permitTableData"></td></tr>
 					<tr><td class = "bold">Mechanical</td><td id='mechanicalPermitRequired' class="italics inspectionTableData"></td><td id='mechanicalPermit' class ="italics permitTableData"></td><td id='mechanicalPermitDate' class ="italics permitTableData"></td></tr>
@@ -279,7 +279,7 @@
 			</div> <!-- Permits -->
 			<div class='info-tab info-tab-inspections' id='inspections'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr><th></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th>Inspection Requirement</th><th>Inspection Status</th><th>Inspection Last Updated</th></tr>
+					<tr><th style="width: 25%"></th><!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> --><th style="width: 25%">Inspection Requirement</th><th>Inspection Status</th><th style="width: 25%">Inspection Last Updated</th></tr>
 					<tr><td class = "bold">Building</td><td id='buildingInspectionRequired' class="italics inspectionTableData"></td><td id='buildingInspection' class ="italics inspectionTableData"></td><td id='buildingInspectionDate' class ="italics inspectionTableData"></td></tr>
 					<tr><td class = "bold">Roofing</td><td id='roofingInspectionRequired' class="italics inspectionTableData"></td><td id='roofingInspection' class ="italics inspectionTableData"></td><td id='roofingInspectionDate' class ="italics inspectionTableData"></td></tr>
 					<tr><td class = "bold">Mechanical</td><td id='mechanicalInspectionRequired' class="italics inspectionTableData"></td><td id='mechanicalInspection' class ="italics inspectionTableData"></td><td id='mechanicalInspectionDate' class ="italics inspectionTableData"></td></tr>
@@ -1317,17 +1317,6 @@
 	        <table id='finalInspectionsTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	            <tr>
-	                <td class='bold'>Temp Certificate of Occupancy</td>
-	                <td>  
-	                    <select data-associated-date='tmpCertificateDate' class="closeout-input" id="tmpCertificateStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	            <input type="text" id="tmpCertificateDate" />
-	                </td>   
-	            </tr>
-	            <tr>
 	                <td class='bold'>Mechanical Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='mechFinalDate' class="closeout-input" id="mechFinalStatus">
@@ -1372,17 +1361,6 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Certificate of Occupancy</td>
-	                <td>  
-	                    <select data-associated-date='certificateDate' class="closeout-input" id="certificateStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" id="certificateDate" />
-	                </td>   
-	            </tr> 
-	            <tr>
 	                <td class='bold'>Building Final Inspection</td>
 	                <td>  
 	                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
@@ -1391,6 +1369,28 @@
 	                </td>
 	                <td>
 	                    <input id="buildingPermitCL" type="text"></input>
+	                </td>   
+	            </tr> 
+	            <tr>
+	                <td class='bold'>Temp Certificate of Occupancy</td>
+	                <td>  
+	                    <select data-associated-date='tmpCertificateDate' class="closeout-input" id="tmpCertificateStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	            <input type="text" id="tmpCertificateDate" />
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Certificate of Occupancy</td>
+	                <td>  
+	                    <select data-associated-date='certificateDate' class="closeout-input" id="certificateStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="certificateDate" />
 	                </td>   
 	            </tr> 
 	            <tr>

@@ -104,7 +104,7 @@ function autofillPermits()
 	console.log("Autofill Perm");
 
 	let required = $('#autofill-Permits').val();
-	if(required == "default") return;
+    if(required == "default") return;
 	
 	let PREPARING = "Preparing"; //Correspond to id in database for closeoutstatus (Required)
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
@@ -130,7 +130,7 @@ function autofillPermits()
 		permitStatusRequirementValue = NO;
 		permitTableReq = "No";
 	} 
-	else
+	else 
 	{
 		permitStatusValue = TBD_STATUS;
 		permitStatusRequirementValue = TBD;

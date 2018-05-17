@@ -146,12 +146,13 @@ public class AutoFillService {
 			permitReq = "2";
 			inspectionReq = "2";
 		}
-		else {
+		else
+		{
 			permitStatus = "N/A";
 			inspectionStatus = "N/A";
 			permitReq = "0";
 			inspectionReq = "0";
-		}
+		}	
 		
 		permits.setBuilding(today);
 		permits.setBuildingPermitRequired(permitReq);

@@ -102,23 +102,15 @@ public class Project extends ProjectObject
 	private Set<Equipment> equipment;
 	private Set<NewEquipment> projEquipment;
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
 	private String autofillHVAC;
 	private String autofillRefrigeration;
 	private String autofillPermits;
 	
-=======
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+
 	private int lowScore;
 	private int mediumScore;
 	private int highScore;
 	private Date scoreLastUpdated;
-<<<<<<< HEAD
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
@@ -129,15 +121,9 @@ public class Project extends ProjectObject
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
 			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			Date budgetaryDue , Date budgetarySubmitted , String autofill_HVAC , String autofill_Refrigeration , String autofill_Permits)
-=======
-			Date budgetaryDue , Date budgetarySubmitted, int _low , int _med , int _high , Date _scoreLast)
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
-=======
-			Date budgetaryDue , Date budgetarySubmitted, int _low , int _med , int _high , Date _scoreLast)
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+            Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
+            String autofill_Permits, int _low, int _med, int _high, Date _scoreLast)
+
 	{		
 		this.warehouse = warehouse;
 		this.scope = scope;
@@ -169,23 +155,19 @@ public class Project extends ProjectObject
 		this.managerNotes = managerNotes;
 		this.budgetaryDue = budgetaryDue;
 		this.budgetarySubmitted = budgetarySubmitted;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		
+
 		this.autofillHVAC = autofill_HVAC;
 		this.autofillRefrigeration = autofill_Refrigeration;
 		this.autofillPermits = autofill_Permits;
-=======
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+		
 		this.lowScore = _low;
 		this.mediumScore = _med;
 		this.highScore = _high;
 		this.scoreLastUpdated = _scoreLast;
-<<<<<<< HEAD
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+		
+		
+
+		
 
 	}
 	
@@ -224,23 +206,16 @@ public class Project extends ProjectObject
 		this.setProjEquipment(new HashSet<NewEquipment>());
 		this.budgetaryDue = null;
 		this.budgetarySubmitted = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		
+
 		this.autofillHVAC = null;
 		this.autofillPermits = null;
 		this.autofillRefrigeration = null;
-=======
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+
 		this.lowScore = 0;
 		this.mediumScore = 0;
 		this.highScore = 0;
 		this.scoreLastUpdated = null;
-<<<<<<< HEAD
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
+
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -596,8 +571,6 @@ public class Project extends ProjectObject
 		this.managerNotes = managerNotes;
 	}
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public synchronized String getAutofillHVAC() {
 		return autofillHVAC;
 	}
@@ -622,9 +595,6 @@ public class Project extends ProjectObject
 		this.autofillPermits = autofill_Permits;
 	}
 	
-=======
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	public int getLowScore()
 	{
 		return lowScore;
@@ -664,10 +634,6 @@ public class Project extends ProjectObject
 	{
 		scoreLastUpdated = date;
 	}
-<<<<<<< HEAD
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
-=======
->>>>>>> a2fa9049152ecbc8e680e611c7b435bd2aded57f
 	
 	
 	public static Date getSchedulingFields(String name , Project project)
