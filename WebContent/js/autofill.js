@@ -5,6 +5,9 @@ let AUTO_FILL_OBJECT = {
 		REFRIGERATION : false ,
 };
 
+$(document).ready(function(){
+	autofillCloseoutDocs();
+});
 
 $(document).ready(function(){$('#autofill-HVAC').change(function(){
 	if($(this).val() == "default") return;
@@ -99,12 +102,27 @@ function autofillRefrigeration()
 	
 }
 
+function autofillCloseoutDocs()
+{
+   let REQUIRED = 4; 
+
+   let value = REQUIRED; 
+   
+   $('.autofill-CloseoutDocs').each(function(index){
+		$(this).val(value);
+	});
+   
+   $('.autofill-CloseoutDocs-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
+}
+
 function autofillPermits()
 {
 	console.log("Autofill Perm");
 
 	let required = $('#autofill-Permits').val();
-    if(required == "default") return;
+    
 	
 	let PREPARING = "Preparing"; //Correspond to id in database for closeoutstatus (Required)
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
@@ -137,7 +155,6 @@ function autofillPermits()
 		permitTableReq = "TBD";
 	}
 	
-	
 	/*
 	$('.autofill-Permit-Requirement').each(function(index){
 		$(this).val(permitStatusRequirementValue);
@@ -163,7 +180,7 @@ function autofillInspections()
 	console.log("Autofill Inspections");
 
 	let required = $('#autofill-Permits').val();
-	if(required == "default") return;
+	
 	
 	let PREPARING = "Preparing"; //Correspond to id in database for closeoutstatus (Required)
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
@@ -190,11 +207,11 @@ function autofillInspections()
 		inspectionTableReq = "No";
 	} 
 	else
-	{
-		inspectionStatusValue = TBD_STATUS;
-		inspectionRequirementValue = TBD;
-		inspectionTableReq = "TBD";
-	}
+    {
+	    inspectionStatusValue = TBD_STATUS;
+	    inspectionRequirementValue = TBD;
+	    inspectionTableReq = "TBD";
+    }
 	
 	/*
 	$('.autofill-Inspection-Requirement').each(function(index){

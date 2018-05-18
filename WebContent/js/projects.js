@@ -2776,17 +2776,17 @@ function convertChangeOrderType(type , co) {
 
 function convertRequired(req)
 {
-	if(req == undefined)
-		return;
+//	if(req == "default")
+//		return "TBD";
 	
-	if(req == "0")
+	if(req == "2")
 		return "No";
 	else if(req == "1")
 		return "Yes";
-	else if(req == "2")
+	else(req == "0")
 		return "TBD";
-	else
-		return;
+//	else
+//		return;
 }
 /**
  * This function fills out the information on the page for the permits and inspections

@@ -66,6 +66,28 @@ public class AutoFillService {
 			
 	}
 	
+	public static void autoFillCloseoutDocs(Project proj, Date today)
+	{
+		String value = "4";
+		
+		CloseoutDetails cd;
+		if(proj.getCloseoutDetails() == null)
+			cd = new CloseoutDetails();
+		else 
+			cd = proj.getCloseoutDetails();
+		
+		cd.setPunchListStatus(value);
+		cd.setPunchList(today);
+		
+		cd.setAsBuiltDrawingsStatus(value);
+		cd.setAsBuilts(today);
+		
+		cd.setCloseOutPhotosStatus(value);
+		cd.setCloseoutPhotosCL(today);
+		
+		proj.setCloseoutDetails(cd);
+	}
+	
 	public static void autoFillHVAC(Project proj , String _value , Date today)
 	{		
 		String value = null;
@@ -134,22 +156,28 @@ public class AutoFillService {
 		else
 			permits = proj.getPermits();
 		
-		if(_value.equals("1")) {
+		if(_value.equals("0")) {
 			permitStatus = "TBD";
 			inspectionStatus = "TBD";
-			permitReq = "2";
-			inspectionReq = "2";
+			permitReq = "0";
+			inspectionReq = "0";
+		}
+		else if(_value.equals("1")) {
+			permitStatus = "TBD";
+			inspectionStatus = "TBD";
+			permitReq = "0";
+			inspectionReq = "0";
 		}		
 		else if(_value.equals("2")) {
-			permitStatus = "TBD";
-			inspectionStatus = "TBD";
+			permitStatus = "N/A";
+			inspectionStatus = "N/A";
 			permitReq = "2";
 			inspectionReq = "2";
 		}
 		else
 		{
-			permitStatus = "N/A";
-			inspectionStatus = "N/A";
+			permitStatus = "TBD";
+			inspectionStatus = "TBD";
 			permitReq = "0";
 			inspectionReq = "0";
 		}	
