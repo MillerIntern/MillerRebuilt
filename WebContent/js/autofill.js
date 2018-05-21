@@ -5,9 +5,11 @@ let AUTO_FILL_OBJECT = {
 		REFRIGERATION : false ,
 };
 
-$(document).ready(function(){
-	autofillCloseoutDocs();
-});
+//$(document).ready(function(){$('#closeoutDocuments').load(function(){	
+//
+//	autofillCloseoutDocs();
+//
+//})});
 
 $(document).ready(function(){$('#autofill-HVAC').change(function(){
 	if($(this).val() == "default") return;
@@ -102,20 +104,20 @@ function autofillRefrigeration()
 	
 }
 
-function autofillCloseoutDocs()
-{
-   let REQUIRED = 4; 
-
-   let value = REQUIRED; 
-   
-   $('.autofill-CloseoutDocs').each(function(index){
-		$(this).val(value);
-	});
-   
-   $('.autofill-CloseoutDocs-Date').each(function(index){
-		$(this).val(TODAYS_DATE);
-	});
-}
+//function autofillCloseoutDocs()
+//{
+//   let REQUIRED = "4"; 
+//
+//   let value = REQUIRED; 
+//   
+//   $('.autofill-CloseoutDocs').each(function(index){
+//		$(this).val(value);
+//	});
+//   
+//   $('.autofill-CloseoutDocs-Date').each(function(index){
+//		$(this).val(TODAYS_DATE);
+//	});
+//}
 
 function autofillPermits()
 {

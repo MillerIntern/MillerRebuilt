@@ -66,28 +66,28 @@ public class AutoFillService {
 			
 	}
 	
-	public static void autoFillCloseoutDocs(Project proj, Date today)
-	{
-		String value = "4";
-		
-		CloseoutDetails cd;
-		if(proj.getCloseoutDetails() == null)
-			cd = new CloseoutDetails();
-		else 
-			cd = proj.getCloseoutDetails();
-		
-		cd.setPunchListStatus(value);
-		cd.setPunchList(today);
-		
-		cd.setAsBuiltDrawingsStatus(value);
-		cd.setAsBuilts(today);
-		
-		cd.setCloseOutPhotosStatus(value);
-		cd.setCloseoutPhotosCL(today);
-		
-		proj.setCloseoutDetails(cd);
-	}
-	
+//	public static void autoFillCloseoutDocs(Project proj, Date today)
+//	{
+//		String value = "4";
+//		
+//		CloseoutDetails cd;
+//		if(proj.getCloseoutDetails() == null)
+//			cd = new CloseoutDetails();
+//		else 
+//			cd = proj.getCloseoutDetails();
+//		
+//		cd.setPunchListStatus(value);
+//		cd.setPunchList(today);
+//		
+//		cd.setAsBuiltDrawingsStatus(value);
+//		cd.setAsBuilts(today);
+//		
+//		cd.setCloseOutPhotosStatus(value);
+//		cd.setCloseoutPhotosCL(today);
+//		
+//		proj.setCloseoutDetails(cd);
+//	}
+//	
 	public static void autoFillHVAC(Project proj , String _value , Date today)
 	{		
 		String value = null;

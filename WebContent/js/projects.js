@@ -330,9 +330,15 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#manualStatus").val(json.closeoutDetails.manualStatus);
 		$('#closeoutData').find("#manualDate").val(json.closeoutDetails.manualDate);
 		
-		$('#closeoutData').find("#punchListStatus").val(json.closeoutDetails.punchListStatus);
+//		if(data.punchListStatus != undefined)
+		$('#closeoutDocuments').find("#punchListStatus").val(data.punchListStatus);
+//		else 
+//		$('#closeoutDocuments').find("#punchListStatus").val("default");
 		
-		$('#closeoutData').find("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
+//		if(data.asBuiltDrawingsStatus != undefined)
+		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val(data.asBuiltDrawingsStatus);
+//		else
+//		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val("default");
 		
 		$('#closeoutData').find("#closeOutPhotosStatus").val(json.closeoutDetails.closeOutPhotosStatus);
 		
@@ -437,6 +443,7 @@ function fillTabs_CLOSEOUT(data)
 	}
 	
 }
+
 
 /**
  * This function fills the dropdowns in the closeoutData div
