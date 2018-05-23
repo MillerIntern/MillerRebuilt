@@ -5,7 +5,10 @@ let AUTO_FILL_OBJECT = {
 		REFRIGERATION : false ,
 };
 
-//$(document).ready(function(){$('#closeoutDocuments').load(function(){	
+//var closeoutDocs = document.getElementById("closeoutDocuments").addEventListener("load", autofillCloseoutDocs); 
+
+
+//$(document).ready(function(){$('#closeoutDocuments').change(function(){	
 //
 //	autofillCloseoutDocs();
 //

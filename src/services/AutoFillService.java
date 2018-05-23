@@ -87,7 +87,7 @@ public class AutoFillService {
 //		
 //		proj.setCloseoutDetails(cd);
 //	}
-//	
+	
 	public static void autoFillHVAC(Project proj , String _value , Date today)
 	{		
 		String value = null;

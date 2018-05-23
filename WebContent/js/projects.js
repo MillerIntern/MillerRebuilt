@@ -331,12 +331,12 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#manualDate").val(json.closeoutDetails.manualDate);
 		
 //		if(data.punchListStatus != undefined)
-		$('#closeoutDocuments').find("#punchListStatus").val(data.punchListStatus);
+		$('#closeoutDocuments').find("#punchListStatus").val(json.closeoutDetails.punchListStatus);
 //		else 
 //		$('#closeoutDocuments').find("#punchListStatus").val("default");
 		
 //		if(data.asBuiltDrawingsStatus != undefined)
-		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val(data.asBuiltDrawingsStatus);
+		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
 //		else
 //		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val("default");
 		
