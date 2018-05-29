@@ -185,6 +185,10 @@ function saveProject() {
 	var pType = $('#pType').val();
 	var scope = $("#scope").val();
 	
+	var HVAC = $('#autofill-HVAC').val();
+	var refrigeration = $('#autofill-Refrigeration').val();
+	var permits = $('#autofill-Permits').val();
+	
 
 	// scheduling
 	var initiated = $("#initiatedDate").val();
@@ -204,7 +208,7 @@ function saveProject() {
 	var cost = $("#projectCost").val();
 	var customerNumber = $("#custNum").val();
 	
-	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
+	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, HVAC, refrigeration, permits, scope];
 	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
 	
 	var autoFillHVAC = determineAutofillValue($('#autofill-HVAC').val());

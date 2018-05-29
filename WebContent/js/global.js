@@ -179,7 +179,7 @@ function comingSoon(source) {
 }
 
 /* *
- * Expected input, button with value attribute equal to task to close
+ * Expected input, button with value attribute equal to the task id 
  */
 function closeTaskById (source) {
 	let taskID = $(source).val();

@@ -331,16 +331,19 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#manualDate").val(json.closeoutDetails.manualDate);
 		
 //		if(data.punchListStatus != undefined)
-		$('#closeoutDocuments').find("#punchListStatus").val(json.closeoutDetails.punchListStatus);
+		$('#closeoutData').find("#punchListStatus").val(json.closeoutDetails.punchListStatus);
 //		else 
-//		$('#closeoutDocuments').find("#punchListStatus").val("default");
+//			$('#closeoutData').find("#punchListStatus").val("default");
 		
 //		if(data.asBuiltDrawingsStatus != undefined)
-		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
+		$('#closeoutData').find("#asBuiltDrawingsStatus").val(json.closeoutDetails.asBuiltDrawingsStatus);
 //		else
-//		$('#closeoutDocuments').find("#asBuiltDrawingsStatus").val("default");
+//			$('#closeoutData').find("#asBuiltDrawingsStatus").val("default");
 		
+//		if(data.closeOutPhotosStatus != undefined)
 		$('#closeoutData').find("#closeOutPhotosStatus").val(json.closeoutDetails.closeOutPhotosStatus);
+//		else
+//			$('#closeoutData').find("#closeOutPhotosStatus").val("default");
 		
 		$('#closeoutData').find("#HVACstartupFormStatus").val(json.closeoutDetails.HVACstartupFormStatus);
 		$('#closeoutData').find("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
@@ -5392,8 +5395,9 @@ function toggleTaskAssignee() {
 	}
 }
 
-
-//Navigational 
+///////////////////////////////////////////////////////////////////////
+//////////////////////////Navigational ////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 /**
  * This function makes the findProject div visible and hides all other divs

@@ -5,11 +5,11 @@ let AUTO_FILL_OBJECT = {
 		REFRIGERATION : false ,
 };
 
-//var closeoutDocs = document.getElementById("closeoutDocuments").addEventListener("load", autofillCloseoutDocs); 
+//var closeoutDocs = document.getElementById("closeoutDocuments").addEventListener("focus", autofillCloseoutDocs); 
 
-
-//$(document).ready(function(){$('#closeoutDocuments').change(function(){	
 //
+//$(document).ready(function(){$('generalInformationTable').change(function(){
+//	
 //	autofillCloseoutDocs();
 //
 //})});
@@ -64,6 +64,16 @@ function autofillHVAC()
 		$(this).val(TODAYS_DATE);
 	});
 	
+	value = REQUIRED; 
+	   
+	$('.autofill-CloseoutDocs').each(function(index){
+			$(this).val(value);
+	});
+	   
+	$('.autofill-CloseoutDocs-Date').each(function(index){
+			$(this).val(TODAYS_DATE);
+	});
+	
 }
 
 function autofillRefrigeration()
@@ -101,18 +111,28 @@ function autofillRefrigeration()
 	}
 	
 	$('.autofill-Refrigeration-num').each(function(index){
-		$(this).val(value);
+    	$(this).val(html);
 		$(this).html(html);
+	});
+	
+	value = REQUIRED; 
+	   
+	$('.autofill-CloseoutDocs').each(function(index){
+			$(this).val(value);
+	});
+	   
+	$('.autofill-CloseoutDocs-Date').each(function(index){
+			$(this).val(TODAYS_DATE);
 	});
 	
 }
 
 //function autofillCloseoutDocs()
 //{
-//   let REQUIRED = "4"; 
+//   let REQUIRED = 4; 
 //
 //   let value = REQUIRED; 
-//   
+//      
 //   $('.autofill-CloseoutDocs').each(function(index){
 //		$(this).val(value);
 //	});

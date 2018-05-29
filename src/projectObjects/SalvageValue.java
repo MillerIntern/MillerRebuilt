@@ -22,6 +22,8 @@ public class SalvageValue extends ProjectObject
 	 */
 	private double value;
 	
+	
+	
 	public SalvageValue(Date date, double value)
 	{
 		this.date = date;
@@ -73,6 +75,5 @@ public class SalvageValue extends ProjectObject
 		
 	}
 	
-	
-	}
+}
 

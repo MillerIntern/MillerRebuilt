@@ -63,6 +63,7 @@ public class AutoFillService {
 		} else if(domain.equals("Permits")) {
 			autoFillPermits(proj , value , today);
 		}
+		
 			
 	}
 	
@@ -109,6 +110,17 @@ public class AutoFillService {
 		cd.setVerisaeShutdownReport(today);
 		cd.setVerisaeReportStatus(value);
 		
+		value = "4";
+		
+		cd.setPunchListStatus(value);
+		cd.setPunchList(today);
+		
+		cd.setAsBuiltDrawingsStatus(value);
+		cd.setAsBuilts(today);
+		
+		cd.setCloseOutPhotosStatus(value);
+		cd.setCloseoutPhotosCL(today);
+		
 		proj.setCloseoutDetails(cd);
 	}
 	
@@ -137,6 +149,17 @@ public class AutoFillService {
 		
 		projectObjects.SalvageValue salvageValue = new projectObjects.SalvageValue(today, salVal);
 		cd.setSalvageValue(salvageValue);
+		
+		value = "4";
+		
+		cd.setPunchListStatus(value);
+		cd.setPunchList(today);
+		
+		cd.setAsBuiltDrawingsStatus(value);
+		cd.setAsBuilts(today);
+		
+		cd.setCloseOutPhotosStatus(value);
+		cd.setCloseoutPhotosCL(today);
 		
 		proj.setCloseoutDetails(cd);
 		
