@@ -269,6 +269,16 @@ function getDropdownItems_CLOSEOUT()
 	});
 }
 
+function convertSalvage( value )
+{
+  if(value === -2 )
+	  return "TBD";
+  else if(value === -1)
+	  return "N/A";
+	  
+  return value;
+}
+
 /**
  * This function fills the closeout information for the project
  * INNER FUNCTION CALLS: none
@@ -301,8 +311,19 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#numOfChangeOrders").val(json.closeoutDetails.numOfChangeOrders);
 		$('#closeoutData').find("#numOfChangeOrdersCompleted").val(json.closeoutDetails.numOfChangeOrdersCompleted);
 		
-		$('#closeoutData').find("#numOfMCSChangeOrders").val(json.closeoutDetails.numOfMCSChangeOrders);
-		$('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val(json.closeoutDetails.numOfMCSChangeOrdersCompleted);
+		$('#closeoutData').find("#numOfMCSChangeOrders").val(json.changeOrders.length);
+		
+		var cos = json.changeOrders;
+		var completed = 0;
+
+		for(var i = 0; i < cos.length; i++)
+		{
+			var changeOrder = cos[i];
+			if(changeOrder.status === "5")
+				completed = completed + 1;
+		}	
+		
+		$('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val(completed);
 		
 		$('#closeoutData').find("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
 		$('#closeoutData').find("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
@@ -435,7 +456,7 @@ function fillTabs_CLOSEOUT(data)
 		if(json.closeoutDetails.salvageValue != null)
 		{
 			$('#otherItemsSalvageTable').find("#salvageDate").val(json.closeoutDetails.salvageValue.date);
-			$('#otherItemsSalvageTable').find("#salvageAmount").val(json.closeoutDetails.salvageValue.value);
+			$('#otherItemsSalvageTable').find("#salvageAmount").val(convertSalvage(json.closeoutDetails.salvageValue.value));
 		}
 		
 	    console.log("SALVAGE AMOUNT FILL" , 			$('#otherItemsSalvageTable').find("#salvageAmount").val());
@@ -507,7 +528,7 @@ function saveProject_CLOSEOUT()
 	var numOfChangeOrders = $('#closeoutData').find("#numOfChangeOrders").val();
 	var numOfChangeOrdersCompleted = $('#closeoutData').find("#numOfChangeOrdersCompleted").val();
 	
-	var numOfMCSChangeOrders = $('#closeoutData').find("#numOfMCSChangeOrders").val();
+	var numOfMCSChangeOrders = $('#closeoutData').find("#numOfMCSChangeOrders").val();	
 	var numOfMCSChangeOrdersCompleted = $('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val();
     
         // LIENS
@@ -628,6 +649,11 @@ function saveProject_CLOSEOUT()
     
     var salvageDate = $('#otherItemsSalvageTable').find("#salvageDate").val();
     var salvageAmount = $('#otherItemsSalvageTable').find("#salvageAmount").val();
+    
+    if(salvageAmount === "N/A")
+    	salvageAmount = -1;
+    else if(salvageAmount === "TBD")
+    	salvageAmount = -2;
     
     console.log("SALVAGE AMOUNT " , salvageAmount);
     
@@ -997,14 +1023,16 @@ $(document).ready(function(){
 	
 	$('#permitData').find("#buildingPermitLastUpdated").datepicker();
 	$('#permitData').find("#buildingInspectionLastUpdated").datepicker();
-	$('#permitData').find("#roofingPermitLastUpdated").datepicker();
-	$('#permitData').find("#roofingInspectionLastUpdated").datepicker();
+	$('#permitData').find("#ceilingPermitLastUpdated").datepicker();
+	$('#permitData').find("#ceilingInspectionLastUpdated").datepicker();
 	$('#permitData').find("#mechanicalPermitLastUpdated").datepicker();
 	$('#permitData').find("#mechanicalInspectionLastUpdated").datepicker();
 	$('#permitData').find("#electricalPermitLastUpdated").datepicker();
 	$('#permitData').find("#electricalInspectionLastUpdated").datepicker();
 	$('#permitData').find("#plumbingPermitLastUpdated").datepicker();
 	$('#permitData').find("#plumbingInspectionLastUpdated").datepicker();
+	$('#permitData').find("#gasPermitLastUpdated").datepicker();
+	$('#permitData').find("#gasInspectionLastUpdated").datepicker();
 	$('#permitData').find("#sprinklerPermitLastUpdated").datepicker();
 	$('#permitData').find("#sprinklerInspectionLastUpdated").datepicker();
 	$('#permitData').find("#fireAlarmInspectionLastUpdated").datepicker();
@@ -1256,12 +1284,12 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#buildingInspectionStatus").val(json.permits.buildingInspectionStatus);
 		$('#permitData').find("#buildingInspectionLastUpdated").val(json.permits.buildingInspectionLastUpdated);
 		
-		$('#permitData').find("#roofingPermitLastUpdated").val(json.permits.roofing);
-		$('#permitData').find("#roofingPermitStatus").val(json.permits.roofingPermitStatus);
-		$('#permitData').find("#roofingPermitReq").val(json.permits.roofingPermitRequired);
-		$('#permitData').find("#roofingInspectionReq").val(json.permits.roofingInspectionRequired);
-		$('#permitData').find("#roofingInspectionStatus").val(json.permits.roofingInspectionStatus);
-		$('#permitData').find("#roofingInspectionLastUpdated").val(json.permits.roofingInspectionLastUpdated);
+		$('#permitData').find("#ceilingPermitLastUpdated").val(json.permits.ceiling);
+		$('#permitData').find("#ceilingPermitStatus").val(json.permits.ceilingPermitStatus);
+		$('#permitData').find("#ceilingPermitReq").val(json.permits.ceilingPermitRequired);
+		$('#permitData').find("#ceilingInspectionReq").val(json.permits.ceilingInspectionRequired);
+		$('#permitData').find("#ceilingInspectionStatus").val(json.permits.ceilingInspectionStatus);
+		$('#permitData').find("#ceilingInspectionLastUpdated").val(json.permits.ceilingInspectionLastUpdated);
 		
 		$('#permitData').find("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
 		$('#permitData').find("#mechanicalPermitStatus").val(json.permits.mechanicalPermitStatus);
@@ -1283,6 +1311,13 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#plumbingInspectionReq").val(json.permits.plumbingInspectionRequired);
 		$('#permitData').find("#plumbingInspectionStatus").val(json.permits.plumbingInspectionStatus);
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(json.permits.plumbingInspectionLastUpdated);
+		
+		$('#permitData').find("#gasPermitLastUpdated").val(json.permits.gas);
+		$('#permitData').find("#gasPermitStatus").val(json.permits.gasPermitStatus);
+		$('#permitData').find("#gasPermitReq").val(json.permits.gasPermitRequired);
+		$('#permitData').find("#gasInspectionReq").val(json.permits.gasInspectionRequired);
+		$('#permitData').find("#gasInspectionStatus").val(json.permits.gasInspectionStatus);
+		$('#permitData').find("#gasInspectionLastUpdated").val(json.permits.gasInspectionLastUpdated);
 		
 		$('#permitData').find("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
 		$('#permitData').find("#sprinklerPermitStatus").val(json.permits.sprinklerPermitStatus);
@@ -1348,12 +1383,12 @@ function saveProject_PERMIT()
     var buildingInspectionStatus = $('#permitData').find("#buildingInspectionStatus").val();
     var buildingInspectionLastUpdated = $('#permitData').find("#buildingInspectionLastUpdated").val();
     
-    var roofingPermitReq = $('#permitData').find("#roofingPermitReq").val();
-    var roofingPermitStatus = $('#permitData').find("#roofingPermitStatus").val();
-    var roofingPermitLastUpdated = $('#permitData').find("#roofingPermitLastUpdated").val();
-    var roofingInspectionReq = $('#permitData').find("#roofingInspectionReq").val();
-    var roofingInspectionStatus = $('#permitData').find("#roofingInspectionStatus").val();
-    var roofingInspectionLastUpdated = $('#permitData').find("#roofingInspectionLastUpdated").val();
+    var ceilingPermitReq = $('#permitData').find("#ceilingPermitReq").val();
+    var ceilingPermitStatus = $('#permitData').find("#ceilingPermitStatus").val();
+    var ceilingPermitLastUpdated = $('#permitData').find("#ceilingPermitLastUpdated").val();
+    var ceilingInspectionReq = $('#permitData').find("#ceilingInspectionReq").val();
+    var ceilingInspectionStatus = $('#permitData').find("#ceilingInspectionStatus").val();
+    var ceilingInspectionLastUpdated = $('#permitData').find("#ceilingInspectionLastUpdated").val();
     
     var mechanicalPermitReq = $('#permitData').find("#mechanicalPermitReq").val();
     var mechanicalPermitStatus = $('#permitData').find("#mechanicalPermitStatus").val();
@@ -1376,6 +1411,13 @@ function saveProject_PERMIT()
     var plumbingInspectionStatus = $('#permitData').find("#plumbingInspectionStatus").val();
     var plumbingInspectionLastUpdated = $('#permitData').find("#plumbingInspectionLastUpdated").val();
     
+    var gasPermitReq = $('#permitData').find("#gasPermitReq").val();
+    var gasPermitStatus = $('#permitData').find("#gasPermitStatus").val();
+    var gasPermitLastUpdated = $('#permitData').find("#gasPermitLastUpdated").val();
+    var gasInspectionReq = $('#permitData').find("#gasInspectionReq").val();
+    var gasInspectionStatus = $('#permitData').find("#gasInspectionStatus").val();
+    var gasInspectionLastUpdated = $('#permitData').find("#gasInspectionLastUpdated").val();
+    
     var sprinklerPermitReq = $('#permitData').find("#sprinklerPermitReq").val();
     var sprinklerPermitStatus = $('#permitData').find("#sprinklerPermitStatus").val();
     var sprinklerPermitLastUpdated = $('#permitData').find("#sprinklerPermitLastUpdated").val();
@@ -1397,17 +1439,17 @@ function saveProject_PERMIT()
     var voltageInspectionStatus = $('#permitData').find("#voltageInspectionStatus").val();
     var voltageInspectionLastUpdated = $('#permitData').find("#voltageInspectionLastUpdated").val();
     
-//    var otherAPermitReq = $('#permitData').find("#otherAPermitReq").val();
+ //   var otherAPermitReq = $('#permitData').find("#otherAPermitReq").val();
     var otherAPermitStatus = $('#permitData').find("#otherAPermitStatus").val();
     var otherAPermitLastUpdated = $('#permitData').find("#otherAPermitLastUpdated").val();
-//    var otherAInspectionReq = $('#permitData').find("#otherAInspectionReq").val();
+ //   var otherAInspectionReq = $('#permitData').find("#otherAInspectionReq").val();
     var otherAInspectionStatus = $('#permitData').find("#otherAInspectionStatus").val();
     var otherAInspectionLastUpdated = $('#permitData').find("#otherAInspectionLastUpdated").val();
     
-//    var otherBPermitReq = $('#permitData').find("#otherBPermitReq").val();
+ //   var otherBPermitReq = $('#permitData').find("#otherBPermitReq").val();
     var otherBPermitStatus = $('#permitData').find("#otherBPermitStatus").val();
     var otherBPermitLastUpdated = $('#permitData').find("#otherBPermitLastUpdated").val();
-//    var otherBInspectionReq = $('#permitData').find("#otherBInspectionReq").val();
+ //   var otherBInspectionReq = $('#permitData').find("#otherBInspectionReq").val();
     var otherBInspectionStatus = $('#permitData').find("#otherBInspectionStatus").val();
     var otherBInspectionLastUpdated = $('#permitData').find("#otherBInspectionLastUpdated").val();
 
@@ -1419,10 +1461,11 @@ function saveProject_PERMIT()
     
     var dates_PERMIT =[
 				buildingPermitLastUpdated, buildingInspectionLastUpdated,
-				roofingPermitLastUpdated, roofingInspectionLastUpdated,
+				ceilingPermitLastUpdated, ceilingInspectionLastUpdated,
 				mechanicalPermitLastUpdated, mechanicalInspectionLastUpdated, 
 				electricalPermitLastUpdated, electricalInspectionLastUpdated,
 				plumbingPermitLastUpdated, plumbingInspectionLastUpdated,
+				gasPermitLastUpdated, gasInspectionLastUpdated,
 				sprinklerPermitLastUpdated, sprinklerInspectionLastUpdated,
 				fireAlarmPermitLastUpdated, fireAlarmInspectionLastUpdated,
 				voltagePermitLastUpdated, voltageInspectionLastUpdated,
@@ -1439,24 +1482,26 @@ function saveProject_PERMIT()
     		if(dates_PERMIT[i]) dates_PERMIT[i] = dateCleaner(dates_PERMIT[i]);
     		if(i == 0) buildingPermitLastUpdated = dates_PERMIT[i];
     		if(i == 1) buildingInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 2) roofingPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 3) roofingInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 2) ceilingPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 3) ceilingInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 4) mechanicalPermitLastUpdated = dates_PERMIT[i];
     		if(i == 5) mechanicalInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 6) electricalPermitLastUpdated = dates_PERMIT[i];
     		if(i == 7) electricalInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 8) plumbingPermitLastUpdated = dates_PERMIT[i];
     		if(i == 9) plumbingInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 10) sprinklerPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 11) sprinklerInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 12) fireAlarmPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 13) fireAlarmInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 14) voltagePermitLastUpdated = dates_PERMIT[i];
-    		if(i == 15) voltageInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 16) otherAPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 17) otherAInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 18) otherBPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 19) otherBInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 10) gasPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 11) gasInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 12) sprinklerPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 13) sprinklerInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 14) fireAlarmPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 15) fireAlarmInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 16) voltagePermitLastUpdated = dates_PERMIT[i];
+    		if(i == 17) voltageInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 18) otherAPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 19) otherAInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 20) otherBPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 21) otherBInspectionLastUpdated = dates_PERMIT[i];
     	}
 		var action = "editPermits";
 		var PERMIT_ID = 0;
@@ -1538,20 +1583,31 @@ function saveProject_PERMIT()
 				'voltageInspectionStatus': voltageInspectionStatus,
 				'voltageInspectionLastUpdated': voltageInspectionLastUpdated,
 				
-				'roofingPermit': roofingPermitLastUpdated,
-				'roofingPermitStatus': roofingPermitStatus,
-				'roofingPermitReq': roofingPermitReq,
-				'roofingInspectionReq': roofingInspectionReq,
-				'roofingInspectionStatus': roofingInspectionStatus,
-				'roofingInspectionLastUpdated': roofingInspectionLastUpdated,
+				'ceilingPermit': ceilingPermitLastUpdated,
+				'ceilingPermitStatus': ceilingPermitStatus,
+				'ceilingPermitReq': ceilingPermitReq,
+				'ceilingInspectionReq': ceilingInspectionReq,
+				'ceilingInspectionStatus': ceilingInspectionStatus,
+				'ceilingInspectionLastUpdated': ceilingInspectionLastUpdated,
+				
+				'gasPermit': gasPermitLastUpdated,
+				'gasPermitStatus': gasPermitStatus,
+				'gasPermitReq': gasPermitReq,
+				'gasInspectionReq': gasInspectionReq,
+				'gasInspectionStatus': gasInspectionStatus,
+				'gasInspectionLastUpdated': gasInspectionLastUpdated,
 				
 				'otherPermitA': otherAPermitLastUpdated,
 				'otherAPermitStatus': otherAPermitStatus,
+	//			'otherAPermitReq': otherAPermitReq,
+	//			'otherAInspectionReq': otherAInspectionReq,
 				'otherAInspectionStatus': otherAInspectionStatus,
 				'otherAInspectionLastUpdated': otherAInspectionLastUpdated,
 				
 				'otherBPermit': otherBPermitLastUpdated,
 				'otherBPermitStatus': otherBPermitStatus,
+	//			'otherBPermitReq': otherBPermitReq,
+	//			'otherBInspectionReq': otherBInspectionReq,
 				'otherBInspectionStatus': otherBInspectionStatus,
 				'otherBInspectionLastUpdated': otherBInspectionLastUpdated,
 
@@ -2793,11 +2849,12 @@ function convertRequired(req)
 		return "No";
 	else if(req == "1")
 		return "Yes";
-	else(req == "0")
+	else
 		return "TBD";
 //	else
 //		return;
 }
+
 /**
  * This function fills out the information on the page for the permits and inspections
  * INNER FUNCTION CALLS: none
@@ -2812,9 +2869,9 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
 	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
 	
-	$('#projectManager').find('#roofingPermitRequired').text(convertRequired(tabData.roofingPermitRequired));
-	$('#projectManager').find('#roofingPermitDate').text(tabData.roofing);
-	$('#projectManager').find('#roofingPermit').text(tabData.roofingPermitStatus);
+	$('#projectManager').find('#ceilingPermitRequired').text(convertRequired(tabData.ceilingPermitRequired));
+	$('#projectManager').find('#ceilingPermitDate').text(tabData.ceiling);
+	$('#projectManager').find('#ceilingPermit').text(tabData.ceilingPermitStatus);
 	
 	$('#projectManager').find('#mechanicalPermitRequired').text(convertRequired(tabData.mechanicalPermitRequired));
 	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
@@ -2827,6 +2884,10 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#plumbingPermitRequired').text(convertRequired(tabData.plumbingPermitRequired));
 	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
 	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
+	
+	$('#projectManager').find('#gasPermitRequired').text(convertRequired(tabData.gasPermitRequired));
+	$('#projectManager').find('#gasPermitDate').text(tabData.gas);
+	$('#projectManager').find('#gasPermit').text(tabData.gasPermitStatus);
 	
 	$('#projectManager').find('#sprinklerPermitRequired').text(convertRequired(tabData.sprinklerPermitRequired));
 	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
@@ -2845,9 +2906,9 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
 	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
 	
-	$('#projectManager').find('#roofingInspectionRequired').text(convertRequired(tabData.roofingInspectionRequired));
-	$('#projectManager').find('#roofingInspectionDate').text(tabData.roofingInspectionLastUpdated);
-	$('#projectManager').find('#roofingInspection').text(tabData.roofingInspectionStatus);
+	$('#projectManager').find('#ceilingInspectionRequired').text(convertRequired(tabData.ceilingInspectionRequired));
+	$('#projectManager').find('#ceilingInspectionDate').text(tabData.ceilingInspectionLastUpdated);
+	$('#projectManager').find('#ceilingInspection').text(tabData.ceilingInspectionStatus);
 	
 	$('#projectManager').find('#mechanicalInspectionRequired').text(convertRequired(tabData.mechanicalInspectionRequired));
 	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
@@ -2860,6 +2921,10 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#plumbingInspectionRequired').text(convertRequired(tabData.plumbingInspectionRequired));
 	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
 	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
+	
+	$('#projectManager').find('#gasInspectionRequired').text(convertRequired(tabData.gasInspectionRequired));
+	$('#projectManager').find('#gasInspectionDate').text(tabData.gasInspectionLastUpdated);
+	$('#projectManager').find('#gasInspection').text(tabData.gasInspectionStatus);
 	
 	$('#projectManager').find('#sprinklerInspectionRequired').text(convertRequired(tabData.sprinklerInspectionRequired));
 	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);

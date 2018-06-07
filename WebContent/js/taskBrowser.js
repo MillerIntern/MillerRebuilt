@@ -257,23 +257,24 @@ function createSubDropdown (json) {
  */
 function preparePageForUserStatus(){
 	$('#taskSelector').chosen({ width: "210px" });
-	 $('#sortSelector').chosen({ width: "210px" });
-	 $('#sortOrder').chosen({ width: "210px" });
+	$('#sortSelector').chosen({ width: "210px" });
+	$('#sortOrder').chosen({ width: "210px" });
 
-	if (user.permission.id === 1) 
+	
+	if(user.permission_id === 1) 
 	{
 		 $("#projectManagerDropdown").show();
 		 console.log("preparePageForUserStatus() INVOKED");
-	 } 
+	} 
 	else 
 	{ 
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
-	 	 $("#projectManagerDropdown").hide()
+	 	$("#projectManagerDropdown").hide()
 	 	$(".advancedSortingOptions").hide();
-	 }	
+	}	
 	
-	 createTaskTable();
-	 tasksByManager();
+	createTaskTable();
+	tasksByManager();
 }
 
 /**

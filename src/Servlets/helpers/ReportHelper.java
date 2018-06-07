@@ -1419,9 +1419,18 @@ public class ReportHelper
 			}
 			return retVal;
 		}
-		else if(value.equals("roofingPermit") && p.getPermits() != null && p.getPermits().getRoofingPermitStatus() != null)
+		else if(value.equals("ceilingPermit") && p.getPermits() != null && p.getPermits().getCeilingPermitStatus() != null)
 		{
-			String retVal = convertStatusNumber(p.getPermits().getRoofingPermitStatus()); 
+			String retVal = convertStatusNumber(p.getPermits().getCeilingPermitStatus()); 
+			if(p.getPermits().getFireAlarmPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
+			}
+			return retVal;
+		}
+		else if(value.equals("gasPermit") && p.getPermits() != null && p.getPermits().getGasPermitStatus() != null)
+		{
+			String retVal = convertStatusNumber(p.getPermits().getGasPermitStatus()); 
 			if(p.getPermits().getFireAlarmPermitDate() != null){
 				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
 					retVal = retVal + " " + dForm.format(p.getPermits().getFireAlarmPermitDate());
@@ -1476,9 +1485,9 @@ public class ReportHelper
 		{
 			return p.getPermits().getPlumbingInspectionStatus();
 		}
-		else if(value.equals("roofingInspection") && p.getPermits() != null && p.getPermits().getRoofingInspectionStatus() != null)
+		else if(value.equals("ceilingInspection") && p.getPermits() != null && p.getPermits().getCeilingInspectionStatus() != null)
 		{
-			return p.getPermits().getRoofingInspectionStatus();
+			return p.getPermits().getCeilingInspectionStatus();
 		}
 		else if(value.equals("sprinklerInspection") && p.getPermits() != null && p.getPermits().getSprinklerInspectionStatus() != null)
 		{

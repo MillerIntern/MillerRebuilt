@@ -65,12 +65,19 @@ public class Permits extends ProjectObject
 	private String voltageInspectionStatus;
 	private Date voltageInspectionLastUpdated;
 	
-	private Date roofing;
-	private String roofingPermitRequired;
-	private String roofingPermitStatus;
-	private String roofingInspectionRequired;
-	private String roofingInspectionStatus;
-	private Date roofingInspectionLastUpdated;
+	private Date ceiling;
+	private String ceilingPermitRequired;
+	private String ceilingPermitStatus;
+	private String ceilingInspectionRequired;
+	private String ceilingInspectionStatus;
+	private Date ceilingInspectionLastUpdated;
+	
+	private Date gas;
+	private String gasPermitRequired;
+	private String gasPermitStatus;
+	private String gasInspectionRequired;
+	private String gasInspectionStatus;
+	private Date gasInspectionLastUpdated;
 	
 	private Date otherAPermit;
 	private String otherAPermitStatus;
@@ -87,13 +94,14 @@ public class Permits extends ProjectObject
 		
 	}
 	
-	public Permits(Date buildingPermitDate,	Date mechanicalPermitDate, Date electricalPermitDate, Date plumbingPermitDate, Date fireSprinklerDate,
+	public Permits(Date buildingPermitDate,	Date mechanicalPermitDate, Date electricalPermitDate, Date plumbingPermitDate, Date gasPermitDate, Date fireSprinklerDate,
 				   Date fireAlarmPermitDate,Date lowVoltagePermitDate)
 	 {
 		this.building = buildingPermitDate ;
 		this.mechanical = mechanicalPermitDate;
 		this.electrical = electricalPermitDate;
 		this.plumbing = plumbingPermitDate;
+		this.gas = gasPermitDate;
 		this.fire_sprinkler = fireSprinklerDate;
 		this.fire_alarm = fireAlarmPermitDate;
 		this.low_voltage = lowVoltagePermitDate;
@@ -134,7 +142,6 @@ public class Permits extends ProjectObject
 		this.plumbing= a;
 	}
 	
-
 	
 	public synchronized Date getPlumbingPermitDate()
 	{
@@ -507,52 +514,52 @@ public class Permits extends ProjectObject
 		this.voltageInspectionLastUpdated = voltageInspectionLastUpdated;
 	}
 
-	public synchronized Date getRoofing() {
-		return roofing;
+	public synchronized Date getCeiling() {
+		return ceiling;
 	}
 
-	public synchronized void setRoofing(Date roofing) {
-		this.roofing = roofing;
+	public synchronized void setCeiling(Date ceiling) {
+		this.ceiling = ceiling;
 	}
 
-	public synchronized String getRoofingPermitStatus() {
-		return roofingPermitStatus;
+	public synchronized String getCeilingPermitStatus() {
+		return ceilingPermitStatus;
 	}
 
-	public synchronized void setRoofingPermitStatus(String roofingPermitStatus) {
-		this.roofingPermitStatus = roofingPermitStatus;
+	public synchronized void setCeilingPermitStatus(String ceilingPermitStatus) {
+		this.ceilingPermitStatus = ceilingPermitStatus;
 	}
 	
-	public synchronized String getRoofingPermitRequired() {
-		return roofingPermitRequired;
+	public synchronized String getCeilingPermitRequired() {
+		return ceilingPermitRequired;
 	}
 	
-	public synchronized void setRoofingPermitRequired(String val) {
-		this.roofingPermitRequired = val;
+	public synchronized void setCeilingPermitRequired(String val) {
+		this.ceilingPermitRequired = val;
 	}
 	
-	public synchronized String getRoofingInspectionRequired() {
-		return roofingInspectionRequired;
+	public synchronized String getCeilingInspectionRequired() {
+		return ceilingInspectionRequired;
 	}
 	
-	public synchronized void setRoofingInspectionRequired(String val) {
-		this.roofingInspectionRequired = val;
+	public synchronized void setCeilingInspectionRequired(String val) {
+		this.ceilingInspectionRequired = val;
 	}	
 
-	public synchronized String getRoofingInspectionStatus() {
-		return roofingInspectionStatus;
+	public synchronized String getCeilingInspectionStatus() {
+		return ceilingInspectionStatus;
 	}
 
-	public synchronized void setRoofingInspectionStatus(String roofingInspectionStatus) {
-		this.roofingInspectionStatus = roofingInspectionStatus;
+	public synchronized void setCeilingInspectionStatus(String ceilingInspectionStatus) {
+		this.ceilingInspectionStatus = ceilingInspectionStatus;
 	}
 
-	public synchronized Date getRoofingInspectionLastUpdated() {
-		return roofingInspectionLastUpdated;
+	public synchronized Date getCeilingInspectionLastUpdated() {
+		return ceilingInspectionLastUpdated;
 	}
 
-	public synchronized void setRoofingInspectionLastUpdated(Date roofingInspectionLastUpdated) {
-		this.roofingInspectionLastUpdated = roofingInspectionLastUpdated;
+	public synchronized void setCeilingInspectionLastUpdated(Date ceilingInspectionLastUpdated) {
+		this.ceilingInspectionLastUpdated = ceilingInspectionLastUpdated;
 	}
 
 	public synchronized Date getOtherAPermit() {
@@ -619,6 +626,55 @@ public class Permits extends ProjectObject
 		this.otherBInspectionLastUpdated = otherBInspectionLastUpdated;
 	}
 
+	public synchronized Date getGas() {
+		return gas;
+	}
+
+	public synchronized void setGas(Date gas) {
+		this.gas = gas;
+	}
+
+	public synchronized String getGasPermitStatus() {
+		return gasPermitStatus;
+	}
+
+	public synchronized void setGasPermitStatus(String gasPermitStatus) {
+		this.gasPermitStatus = gasPermitStatus;
+	}
+	
+	public synchronized String getGasPermitRequired() {
+		return gasPermitRequired;
+	}
+	
+	public synchronized void setGasPermitRequired(String val) {
+		this.gasPermitRequired = val;
+	}
+	
+	public synchronized String getGasInspectionRequired() {
+		return gasInspectionRequired;
+	}
+	
+	public synchronized void setGasInspectionRequired(String val) {
+		this.gasInspectionRequired = val;
+	}	
+
+	public synchronized String getGasInspectionStatus() {
+		return gasInspectionStatus;
+	}
+
+	public synchronized void setGasInspectionStatus(String gasInspectionStatus) {
+		this.gasInspectionStatus = gasInspectionStatus;
+	}
+
+	public synchronized Date getGasInspectionLastUpdated() {
+		return gasInspectionLastUpdated;
+	}
+
+	public synchronized void setGasInspectionLastUpdated(Date gasInspectionLastUpdated) {
+		this.gasInspectionLastUpdated = gasInspectionLastUpdated;
+	}
+
+	
 	public synchronized String getPermitNotes() {
 		return permitNotes;
 	}
@@ -699,6 +755,21 @@ public class Permits extends ProjectObject
 			else if(name.contains("InspectionLastUpdated"))
 				return perms.getPlumbingInspectionLastUpdated();
 		}
+		else if(name.contains("gas"))
+		{
+			if(name.equals("gas"))
+				return perms.getGas();
+			else if(name.contains("PermitRequired"))
+				return perms.getGasPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getGasPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getGasInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getGasInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getGasInspectionLastUpdated();
+		}
 		else if(name.contains("sprinkler") || name.equals("fire_sprinkler"))
 		{
 			if(name.equals("fire_sprinkler"))
@@ -744,20 +815,20 @@ public class Permits extends ProjectObject
 			else if(name.contains("InspectionLastUpdated"))
 				return perms.getVoltageInspectionLastUpdated();
 		}
-		else if(name.contains("roofing"))
+		else if(name.contains("ceiling"))
 		{
-			if(name.equals("roofing"))
-				return perms.getRoofing();
+			if(name.equals("ceiling"))
+				return perms.getCeiling();
 			else if(name.contains("PermitRequired"))
-				return perms.getRoofingPermitRequired();
+				return perms.getCeilingPermitRequired();
 			else if(name.contains("PermitStatus"))
-				return perms.getRoofingPermitStatus();
+				return perms.getCeilingPermitStatus();
 			else if(name.contains("InspectionRequired"))
-				return perms.getRoofingInspectionRequired();
+				return perms.getCeilingInspectionRequired();
 			else if(name.contains("InspectionStatus"))
-				return perms.getRoofingInspectionStatus();
+				return perms.getCeilingInspectionStatus();
 			else if(name.contains("InspectionLastUpdated"))
-				return perms.getRoofingInspectionLastUpdated();
+				return perms.getCeilingInspectionLastUpdated();
 		}
 		else if(name.contains("otherA"))
 		{
@@ -792,10 +863,11 @@ public class Permits extends ProjectObject
 		allRelationsFromStub("mechancial" , fields);
 		allRelationsFromStub("electrical" , fields);
 		allRelationsFromStub("plumbing" , fields);
+		allRelationsFromStub("gas" , fields);
 		allRelationsFromStub("fireAlarm" , fields);
 		allRelationsFromStub("voltage" , fields);
 		allRelationsFromStub("sprinkler" , fields);
-		allRelationsFromStub("roofing" , fields);
+		allRelationsFromStub("ceiling" , fields);
 		allRelationsFromStub("otherA" , fields);
 		allRelationsFromStub("otherB" , fields);
 		

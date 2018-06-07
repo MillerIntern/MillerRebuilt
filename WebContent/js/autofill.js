@@ -45,16 +45,19 @@ function autofillHVAC()
 {
 	console.log("Autofill HVAC");
 	let required = $('#autofill-HVAC').val();
-	if(required == "default") return;
+	//if(required == "default") return;
 	
 	let REQUIRED = 4; //Correspond to id in database for closeoutstatus (Required)
 	let NA = 3; //Correspond to id in database for closeoutstatus (N/A)
+	let TBD = 6;
 	
 	let value;
 	if(required == 0)
 		value = NA;
-	else
+	else if(required == 1)
 		value = REQUIRED;
+	else
+		value = TBD;
 	
 	$('.autofill-HVAC').each(function(index){
 		$(this).val(value);
@@ -81,16 +84,20 @@ function autofillRefrigeration()
 	console.log("Autofill Ref");
 	
 	let required = $('#autofill-Refrigeration').val();
-	if(required == "default") return;
+	//if(required == "default") return;
 	
 	let REQUIRED = 4; //Correspond to id in database for closeoutstatus (Required)
 	let NA = 3; //Correspond to id in database for closeoutstatus (N/A)
-		
+	let TBD = 6;
+	
 	let value;
 	if(required == 0)
 		value = NA;
-	else
+	else if(required == 1)
 		value = REQUIRED;
+	else if(required == "default")
+		value = TBD;
+	
 	
 	$('.autofill-Refrigeration').each(function(index){
 		$(this).val(value);
@@ -101,13 +108,17 @@ function autofillRefrigeration()
 	});
 	
 	let html;
-	if(required == 0) {
+	if(required == 1) {
+		value = 0;
+		html = 0;
+	}
+	else if(required == 0) {
 		value = -1;
 		html = "N/A";
 	}
 	else {
-		value = 0;
-		html = 0;
+		value = -2;
+		html = "TBD";
 	}
 	
 	$('.autofill-Refrigeration-num').each(function(index){

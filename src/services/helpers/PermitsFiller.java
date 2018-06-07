@@ -110,18 +110,31 @@ public class PermitsFiller
 		permits.setVoltagePermitStatus(params.get("voltagePermitStatus"));
 		permits.setVoltagePermitRequired(params.get("voltagePermitReq"));
 
-		Date roofingPermit = null;
-		if(!params.get("roofingPermit").isEmpty())
-			roofingPermit = formatter.parse(params.get("roofingPermit"));
-		permits.setRoofing(roofingPermit);
-		Date roofingInspection = null;
-		if(!params.get("roofingInspectionLastUpdated").isEmpty())
-			roofingInspection = formatter.parse(params.get("roofingInspectionLastUpdated"));
-		permits.setRoofingInspectionLastUpdated(roofingInspection);
-		permits.setRoofingInspectionStatus(params.get("roofingInspectionStatus"));
-		permits.setRoofingInspectionRequired(params.get("roofingInspectionReq"));
-		permits.setRoofingPermitStatus(params.get("roofingPermitStatus"));
-		permits.setRoofingPermitRequired(params.get("roofingPermitReq"));
+		Date ceilingPermit = null;
+		if(!params.get("ceilingPermit").isEmpty())
+			ceilingPermit = formatter.parse(params.get("ceilingPermit"));
+		permits.setCeiling(ceilingPermit);
+		Date ceilingInspection = null;
+		if(!params.get("ceilingInspectionLastUpdated").isEmpty())
+			ceilingInspection = formatter.parse(params.get("ceilingInspectionLastUpdated"));
+		permits.setCeilingInspectionLastUpdated(ceilingInspection);
+		permits.setCeilingInspectionStatus(params.get("ceilingInspectionStatus"));
+		permits.setCeilingInspectionRequired(params.get("ceilingInspectionReq"));
+		permits.setCeilingPermitStatus(params.get("ceilingPermitStatus"));
+		permits.setCeilingPermitRequired(params.get("ceilingPermitReq"));
+		
+		Date gasPermit = null;
+		if(!params.get("gasPermit").isEmpty())
+			gasPermit = formatter.parse(params.get("gasPermit"));
+		permits.setGas(gasPermit);
+		Date gasInspection = null;
+		if(!params.get("gasInspectionLastUpdated").isEmpty())
+			gasInspection = formatter.parse(params.get("gasInspectionLastUpdated"));
+		permits.setGasInspectionLastUpdated(gasInspection);
+		permits.setGasInspectionStatus(params.get("gasInspectionStatus"));
+		permits.setGasInspectionRequired(params.get("gasInspectionReq"));
+		permits.setGasPermitStatus(params.get("gasPermitStatus"));
+		permits.setGasPermitRequired(params.get("gasPermitReq"));
 
 		Date aPermit = null;
 		if(!params.get("otherPermitA").isEmpty())

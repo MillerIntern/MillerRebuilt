@@ -80,11 +80,11 @@
         				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 	
-	<div style = "width: 80%" id="generalInformation" class="info-tab active">
+	<div style = "width: 90%" id="generalInformation" class="info-tab active">
 		<table class='table table-hover'>
 	
 		<tr>
-        <td style="width: 17%"><b>MCS Project#</b></td>
+        <td style="width: 17%"><b>MCS Project #</b></td>
         <td><input id="mcsNumber" type="text"></td>
         </tr>
 
@@ -129,6 +129,10 @@
         <td>
         <select id="pType"><option value="default">--Please select an option--</option></select>
 		</td>
+        <td><b>Classification</b></td>
+       	<td>
+        <select id="class"><option value="default">--Please select an option--</option></select>
+		</td>	 
 		</tr>
 		
 		<tr>
@@ -140,9 +144,6 @@
                 <option value="0">No</option>                	
 	        </select>
 			</td>
-			</tr>
-			
-		    <tr>
 	        <td><b>Refrigeration</b></td>
 	       	<td>
 	        <select id="autofill-Refrigeration">
@@ -179,14 +180,7 @@
         <tr>
         <td><b>Customer Notes</b></td>
         <td><textarea  maxlength="999" id="zUpdates" ></textarea></td>
-        </tr>
-        
-        <tr>
-        <td><b>Classification</b></td>
-       	<td>
-        <select id="class"><option value="default">--Please select an option--</option></select>
-		</td>
-		</tr>	 		       
+        </tr>		       
         
         
         </table>

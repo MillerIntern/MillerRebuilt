@@ -95,8 +95,10 @@ public class AutoFillService {
 		
 		if(_value.equals("1"))
 			value = "4";
-		else
+		else if(_value.equals("0"))
 			value = "3";
+		else
+			value = "6";
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -133,10 +135,15 @@ public class AutoFillService {
 			value = "4";
 			salVal = 0;
 		}
-		else {
+		else if(_value.equals("0")) {
 			value = "3";
 			salVal = -1;
+		}	
+		else {
+			value = "6";
+			salVal = -2;
 		}
+	
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -212,12 +219,12 @@ public class AutoFillService {
 		permits.setBuildingInspectionRequired(inspectionReq);
 		permits.setBuildingInspectionStatus(inspectionStatus);
 		
-		permits.setRoofing(today);
-		permits.setRoofingPermitRequired(permitReq);
-		permits.setRoofingPermitStatus(permitStatus);
-		permits.setRoofingInspectionLastUpdated(today);
-		permits.setRoofingInspectionRequired(inspectionReq);
-		permits.setRoofingInspectionStatus(inspectionStatus);
+		permits.setCeiling(today);
+		permits.setCeilingPermitRequired(permitReq);
+		permits.setCeilingPermitStatus(permitStatus);
+		permits.setCeilingInspectionLastUpdated(today);
+		permits.setCeilingInspectionRequired(inspectionReq);
+		permits.setCeilingInspectionStatus(inspectionStatus);
 		
 		permits.setMechanical(today);
 		permits.setMechanicalPermitRequired(permitReq);
@@ -239,6 +246,13 @@ public class AutoFillService {
 		permits.setPlumbingInspectionLastUpdated(today);
 		permits.setPlumbingInspectionRequired(inspectionReq);
 		permits.setPlumbingInspectionStatus(inspectionStatus);
+		
+		permits.setGas(today);
+		permits.setGasPermitRequired(permitReq);
+		permits.setGasPermitStatus(permitStatus);
+		permits.setGasInspectionLastUpdated(today);
+		permits.setGasInspectionRequired(inspectionReq);
+		permits.setGasInspectionStatus(inspectionStatus);
 		
 		permits.setFire_sprinkler(today);
 		permits.setSprinklerPermitRequired(permitReq);

@@ -172,24 +172,61 @@ function generateDropdowns(str, className)
 
 function saveProject() {
 	document.getElementById("saveProjectLink").onclick = "";
-	var mcsNumber = $('#mcsNumber').val();
 	
 	// Required Information
+	var mcsNumber = $('#mcsNumber').val();
+	if(mcsNumber === 'undefined' || mcsNumber === '')
+		return alert("The MCS Project # field is required. Please give it a value.");
+	
 	var warehouse = $('#warehouse').val();
-	var projectClass = $('#class').val();
+	if(warehouse === 'undefined' || warehouse === 'default')
+		return alert("The Warehouse field is required. Please give it a value.");
+	
 	var item = $('#project').val();
+    if(item === 'undefined' || item === 'default')
+    	return alert("The Item field is required. Please give it a value.");
+	
 	var manager = $('#manager').val();
+	if(manager === 'undefined' || manager === 'default')
+		return alert("The Manager field is required. Please give it a value.");
+	
 	var supervisor = $('#supervisor').val();
-	var status = $('#status').val();
+	if(supervisor === 'undefined' || supervisor === 'default')
+		return alert("The Supervisor field is required. Please give it a value.");
+	
 	var stage = $("#stage").val();
+	if(stage === 'undefined' || stage === 'default')
+		return alert("The Stage field is required. Please give it a value.");
+	
+	var status = $('#status').val();
+	if(status === 'undefined' || status === 'default')
+		return alert("The Status field is required. Please give it a value.");
+		
 	var pType = $('#pType').val();
-	var scope = $("#scope").val();
+	if(pType === 'undefined' || pType === 'default')
+		return alert("The Type field is required. Please give it a value.");
 	
 	var HVAC = $('#autofill-HVAC').val();
-	var refrigeration = $('#autofill-Refrigeration').val();
-	var permits = $('#autofill-Permits').val();
+	if(HVAC === 'undefined' || HVAC === 'default')
+		return alert("The HVAC field is required. Please give it a value.");
 	
+	var refrigeration = $('#autofill-Refrigeration').val();
+	if(refrigeration === 'undefined' || refrigeration === 'default')
+		return alert("The Refrigeration field is required. Please give it a value.");
+	
+	var permits = $('#autofill-Permits').val();
+	if(permits === 'undefined' || permits === 'default')
+		return alert("The Permits field is required. Please give it a value.");
+	
+	var scope = $('#scope').val();
+	if(scope === 'undefined' || scope === '')
+		return alert("The Scope field is required. Please give it a value.");
 
+	var projectClass = $('#class').val();
+	if(projectClass === 'undefined' || projectClass === 'default')
+		return alert("The Classification field is required. Please give it a value.");
+	
+	
 	// scheduling
 	var initiated = $("#initiatedDate").val();
 	var survey = $("#surveyDate").val();
@@ -200,6 +237,7 @@ function saveProject() {
 	var actualTurnover = $("#actualTurnover").val();
 	var permitApp = $("#permitApp").val();
 
+	
 	// financial
 	var shouldInvoice = $("#shouldInvoice").val();
 	var actualInvoice = $("#actualInvoice").val();
@@ -208,14 +246,16 @@ function saveProject() {
 	var cost = $("#projectCost").val();
 	var customerNumber = $("#custNum").val();
 	
-	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, HVAC, refrigeration, permits, scope];
-	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
 	
+	// autofill
 	var autoFillHVAC = determineAutofillValue($('#autofill-HVAC').val());
 	var autoFillRefrigeration = determineAutofillValue($('#autofill-Refrigeration').val());
 	var autoFillPermits = determineAutofillValue($('#autofill-Permits').val());
-		
-	if(isValidInput(required, dates)) {
+	
+	
+	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
+	
+	if(isValidInput(dates)) {
 		$('.info-tab').removeClass('active');
 		$('#saveButton').addClass('active');
 		
@@ -297,21 +337,9 @@ function returnToProjectManager () {
 //Input: array of str, array of str, array of ints, str, str, int
 //output: true if all of the fields are valid. False otherwise
 // TODO: Numbers, notes, 
-function isValidInput(requiredFields, dates)
+function isValidInput(dates)
 {
-	//Check required Fields 
-	
-	for (var i = 0; i < requiredFields.length; i++)
-	{
-		var field = requiredFields[i];
-		if (field === "default")
-		{
-			alert("You cannot leave any of the values in the 'Required Information' blank!");
-			return false;
-		}
-	}
-
-	
+		
 	//Check if all of the dates are in the correct format
 	for (var i = 0; i < dates.length; i++)
 	{
