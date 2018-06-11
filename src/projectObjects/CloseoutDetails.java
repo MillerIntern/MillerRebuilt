@@ -113,11 +113,14 @@ public class CloseoutDetails extends ProjectObject
 	private String plumbingStatus;
 	private Date plumbingDate;
 	
+	private String gasStatus;
+	private Date gasDate;
+	
 	private String sprinkleStatus;
 	private Date sprinkleDate;
 	
-	private String roofingStatus;
-	private Date roofingDate;
+	private String ceilingStatus;
+	private Date ceilingDate;
 	
 	private String HTIStatus;
 	private Date HTIDate;
@@ -136,11 +139,21 @@ public class CloseoutDetails extends ProjectObject
 
 	
 	private String plumbingFinalStatus;
-
 	private Date plumbingFinalDate;
 	
+	private String gasFinalStatus;
+	private Date gasFinalDate;
+	
+	private String ceilingFinalStatus;
+	private Date ceilingFinalDate;
+	
+	private String fireAlarmFinalStatus;
+	private Date fireAlarmFinalDate;
+	
+	private String lowVolFinalStatus;
+	private Date lowVolFinalDate;
+	
 	private String sprinkleFinalStatus;
-
 	private Date sprinkleFinalDate;
 	
 	private String buildingFinalStatus;
@@ -173,13 +186,15 @@ public class CloseoutDetails extends ProjectObject
 	private String plumbingWarrantyStatus;
 	private Date plumbingWarrantyDate;
 
+	private String gasWarrantyStatus;
+	private Date gasWarrantyDate;
 	
 	private String sprinkleWarrantyStatus;
 	private Date sprinkleWarrantyDate;
 
 	
-	private String roofingWarrantyStatus;
-	private Date roofingWarrantyDate;
+	private String ceilingWarrantyStatus;
+	private Date ceilingWarrantyDate;
 
 	
 	private String HTIWarrantyStatus;
@@ -243,16 +258,16 @@ public class CloseoutDetails extends ProjectObject
 			Date mPunchListCL, Date closeoutPhotosCL, Date subConWarrantiesCL,
 			Date mCSWarranty, Date equipmentSubCL, Date traneCL, Date MCSDate, String MCSStatus,
 			Date GCDate, 
-			String mechanicalStatus, Date electricalDate, String electricalStatus, Date plumbingDate, 
+			String mechanicalStatus, Date electricalDate, String electricalStatus, Date plumbingDate, Date gasDate,
 			String plumbingNotes, String sprinkleStatus, 
-			Date roofingDate, Date HTIDate, String HTIStatus, 
+			Date ceilingDate, Date HTIDate, String HTIStatus, 
 			Date otherFinalLeinsDate, String MCSWarrantyStatus, 
 			String otherFinalLeinsStatus, Date GCWarrantyDate, String GCWarrantyStatus, 
 			Date mechanicalWarrantyDate, String mechanicalWarrantyStatus, 
 			Date electricalWarrantyDate, String electricalWarrantyStatus, 
-			Date plumbingWarrantyDate, String plumbingWarrantyStatus, Date 
-			sprinkleWarrantyDate, String sprinkleWarrantyStatus, Date roofingWarrantyDate, 
-			String roofingWarrantyNotes, 
+			Date plumbingWarrantyDate, Date gasWarrantyDate, String gasWarrantyStatus, String plumbingWarrantyStatus, Date 
+			sprinkleWarrantyDate, String sprinkleWarrantyStatus, Date ceilingWarrantyDate, 
+			String ceilingWarrantyNotes, 
 			String HTIWarrantyStatus, Date otherWarrantyDateAA, String otherWarrantyStatusA, 
 			Date otherWarrantyDateB, 
 			String equipmentSubmittalStatus, Date manualDate, String manualStatus, 
@@ -260,12 +275,14 @@ public class CloseoutDetails extends ProjectObject
 			String HVACstartupFormNotes, String alarmFormStatus,
 			String verisaeReportNotes, String verisaeReportStatus, int numOfChangeOrders, int numOfChangeOrdersCompleted, 
 			Date mechFinalDate, String mechFinalStatus, Date elecFinalDate, String elecFinalStatus, 
-			Date plumbingFinalDate, String plumbingFinalStatus,
-			String buildingFinalNotes, 
-			String tmpCertificateStatus, Date certificateDate, String certificateStatus, 
+			Date plumbingFinalDate, String plumbingFinalStatus, String gasFinalStatus, Date gasFinalDate,
+			String ceilingFinalStatus, Date ceilingFinalDate, String fireAlarmFinalStatus, Date fireAlarmFinalDate,
+			String lowVolFinalStatus, Date lowVolFinalDate,
+			String buildingFinalNotes, String tmpCertificateStatus, Date certificateDate, String certificateStatus, 
 			String punchListStatus, Date mg2CompletionDate, String mg2CompletionStatus, Date tmpCertificateDate, 
 			String buildingFinalStatus, String HVACstartupFormStatus, String otherWarrantyStatusB, Date otherWarrantyDateA, 
-			Date HTIWarrantyDate, String roofingWarrantyStatus, String roofingStatus, Date sprinkleDate, String plumbingStatus, 
+			Date HTIWarrantyDate, String ceilingWarrantyStatus, String gasStatus, String ceilingStatus,
+			Date sprinkleDate, String plumbingStatus, 
 			Date mechanicalDate, String GCStatus, String warrantyNotes, String finalLiensNotes, String finalInspectionNotes,
 			String closeoutDocumentsNotes, String substantialCompletionStatus, Date substantialCompletionDate,
 			String paymentOfDebtsAndClaimsStatus, Date paymentOfDebtsAndClaimsDate, String releaseOfLiensStatus,
@@ -306,12 +323,15 @@ public class CloseoutDetails extends ProjectObject
 		this.plumbingDate = plumbingDate;
 		
 		this.plumbingStatus = plumbingStatus;
+		this.gasDate = gasDate;
+		
+		this.gasStatus = gasStatus;
 		this.sprinkleDate = sprinkleDate;
 		
 		this.sprinkleStatus = sprinkleStatus;
-		this.roofingDate = roofingDate;
+		this.ceilingDate = ceilingDate;
 		
-		this.roofingStatus = roofingStatus;
+		this.ceilingStatus = ceilingStatus;
 		this.HTIDate = HTIDate;
 		
 		this.HTIStatus = HTIStatus;
@@ -332,12 +352,15 @@ public class CloseoutDetails extends ProjectObject
 		this.plumbingWarrantyDate = plumbingWarrantyDate;
 		
 		this.plumbingWarrantyStatus = plumbingWarrantyStatus;
+		this.gasWarrantyDate = gasWarrantyDate;
+		
+		this.gasWarrantyStatus = gasWarrantyStatus;
 		this.sprinkleWarrantyDate = sprinkleWarrantyDate;
 		
 		this.sprinkleWarrantyStatus = sprinkleWarrantyStatus;
-		this.roofingWarrantyDate = roofingWarrantyDate;
+		this.ceilingWarrantyDate = ceilingWarrantyDate;
 		
-		this.roofingWarrantyStatus = roofingWarrantyStatus;
+		this.ceilingWarrantyStatus = ceilingWarrantyStatus;
 		this.HTIWarrantyDate = HTIWarrantyDate;
 		
 		this.HTIWarrantyStatus = HTIWarrantyStatus;
@@ -369,8 +392,19 @@ public class CloseoutDetails extends ProjectObject
 		this.elecFinalStatus = elecFinalStatus;
 		
 		this.plumbingFinalDate = plumbingFinalDate;
-		
 		this.plumbingFinalStatus = plumbingFinalStatus;
+		
+		this.gasFinalDate = gasFinalDate;
+		this.gasFinalStatus = gasFinalStatus;
+		
+		this.ceilingFinalStatus = ceilingFinalStatus;
+		this.ceilingFinalDate = ceilingFinalDate;
+		
+		this.fireAlarmFinalStatus = fireAlarmFinalStatus;
+		this.fireAlarmFinalDate = fireAlarmFinalDate;
+		
+		this.lowVolFinalStatus = lowVolFinalStatus;
+		this.lowVolFinalDate = lowVolFinalDate;
 		
 		this.buildingFinalStatus = buildingFinalStatus;
 		this.tmpCertificateDate = tmpCertificateDate;
@@ -437,12 +471,15 @@ public class CloseoutDetails extends ProjectObject
 		this.plumbingDate = null;
 		
 		this.plumbingStatus = null;
+		this.gasDate = null;
+		
+		this.gasStatus = null;
 		this.sprinkleDate = null;
 		
 		this.sprinkleStatus = null;
-		this.roofingDate = null;
+		this.ceilingDate = null;
 		
-		this.roofingStatus = null;
+		this.ceilingStatus = null;
 		this.HTIDate = null;
 		
 		this.HTIStatus = null;
@@ -463,12 +500,15 @@ public class CloseoutDetails extends ProjectObject
 		this.plumbingWarrantyDate = null;
 		
 		this.plumbingWarrantyStatus = null;
+		this.gasWarrantyDate = null;
+		
+		this.gasWarrantyStatus = null;
 		this.sprinkleWarrantyDate = null;
 		
 		this.sprinkleWarrantyStatus = null;
-		this.roofingWarrantyDate = null;
+		this.ceilingWarrantyDate = null;
 		
-		this.roofingWarrantyStatus = null;
+		this.ceilingWarrantyStatus = null;
 		this.HTIWarrantyDate = null;
 		
 		this.HTIWarrantyStatus = null;
@@ -483,24 +523,37 @@ public class CloseoutDetails extends ProjectObject
 		this.manualStatus = null;
 		
 		this.asBuiltDrawingsStatus = null;
-		this.HVACstartupFormDate = null;
 		
+		this.HVACstartupFormDate = null;
 		this.HVACstartupFormStatus = null;
 		
 		this.alarmFormStatus = null;
 		 
 		this.verisaeReportStatus = null;
+
 		this.numOfChangeOrders = 0;
 		this.numOfChangeOrdersCompleted = 0;
-		this.mechFinalDate = null;
 		
+		this.mechFinalDate = null;
 		this.mechFinalStatus = null;
+		
 		this.elecFinalDate = null;
 		this.elecFinalStatus = null;
 		
 		this.plumbingFinalDate = null;
-		
 		this.plumbingFinalStatus = null;
+		
+		this.gasFinalDate = null;
+		this.gasFinalStatus = null;
+		
+		this.ceilingFinalStatus = null;
+		this.ceilingFinalDate = null;
+		
+		this.fireAlarmFinalStatus = null;
+		this.fireAlarmFinalDate = null;
+		
+		this.lowVolFinalStatus = null;
+		this.lowVolFinalDate = null;
 		
 		this.buildingFinalStatus = null;
 		this.tmpCertificateDate = null;
@@ -890,22 +943,37 @@ public class CloseoutDetails extends ProjectObject
 	}
 
 
-	public synchronized String getRoofingStatus() {
-		return roofingStatus;
+	public synchronized String getCeilingStatus() {
+		return ceilingStatus;
 	}
 
-	public synchronized void setRoofingStatus(String roofingStatus) {
-		this.roofingStatus = roofingStatus;
+	public synchronized void setCeilingStatus(String ceilingStatus) {
+		this.ceilingStatus = ceilingStatus;
 	}
 
-	public synchronized Date getRoofingDate() {
-		return roofingDate;
+	public synchronized Date getCeilingDate() {
+		return ceilingDate;
 	}
 
-	public synchronized void setRoofingDate(Date roofingDate) {
-		this.roofingDate = roofingDate;
+	public synchronized void setCeilingDate(Date ceilingDate) {
+		this.ceilingDate = ceilingDate;
 	}
 
+	public synchronized String getGasStatus() {
+		return gasStatus;
+	}
+
+	public synchronized void setGasStatus(String gasStatus) {
+		this.gasStatus = gasStatus;
+	}
+
+	public synchronized Date getGasDate() {
+		return gasDate;
+	}
+
+	public synchronized void setGasDate(Date gasDate) {
+		this.gasDate = gasDate;
+	}
 
 	public synchronized String getHTIStatus() {
 		return HTIStatus;
@@ -987,6 +1055,38 @@ public class CloseoutDetails extends ProjectObject
 		this.plumbingFinalDate = plumbingFinalDate;
 	}
 
+	public synchronized String getGasFinalStatus() {
+		return gasFinalStatus;
+	}
+
+	public synchronized void setGasFinalStatus(String gasFinalStatus) {
+		this.gasFinalStatus = gasFinalStatus;
+	}
+
+	public synchronized Date getGasFinalDate() {
+		return gasFinalDate;
+	}
+
+	public synchronized void setGasFinalDate(Date gasFinalDate) {
+		this.gasFinalDate = gasFinalDate;
+	}
+	
+	public synchronized String getCeilingFinalStatus() {
+		return ceilingFinalStatus;
+	}
+
+	public synchronized void setCeilingFinalStatus(String ceilingFinalStatus) {
+		this.ceilingFinalStatus = ceilingFinalStatus;
+	}
+
+	public synchronized Date getCeilingFinalDate() {
+		return ceilingFinalDate;
+	}
+
+	public synchronized void setCeilingFinalDate(Date ceilingFinalDate) {
+		this.ceilingFinalDate = ceilingFinalDate;
+	}
+
 	public synchronized String getSprinkleFinalStatus() {
 		return sprinkleFinalStatus;
 	}
@@ -1003,6 +1103,38 @@ public class CloseoutDetails extends ProjectObject
 		this.sprinkleFinalDate = sprinkleFinalDate;
 	}
 
+	public synchronized String getFireAlarmFinalStatus() {
+		return fireAlarmFinalStatus;
+	}
+
+	public synchronized void setFireAlarmFinalStatus(String fireAlarmFinalStatus) {
+		this.fireAlarmFinalStatus = fireAlarmFinalStatus;
+	}
+
+	public synchronized Date getFireAlarmFinalDate() {
+		return fireAlarmFinalDate;
+	}
+
+	public synchronized void setFireAlarmFinalDate(Date fireAlarmFinalDate) {
+		this.fireAlarmFinalDate = fireAlarmFinalDate;
+	}
+	
+	public synchronized String getLowVolFinalStatus() {
+		return lowVolFinalStatus;
+	}
+
+	public synchronized void setLowVolFinalStatus(String lowVolFinalStatus) {
+		this.lowVolFinalStatus = lowVolFinalStatus;
+	}
+
+	public synchronized Date getLowVolFinalDate() {
+		return lowVolFinalDate;
+	}
+
+	public synchronized void setLowVolFinalDate(Date lowVolFinalDate) {
+		this.lowVolFinalDate = lowVolFinalDate;
+	}
+	
 	public synchronized String getBuildingFinalStatus() {
 		return buildingFinalStatus;
 	}
@@ -1131,20 +1263,36 @@ public class CloseoutDetails extends ProjectObject
 		this.sprinkleWarrantyDate = sprinkleWarrantyDate;
 	}
 
-	public synchronized String getRoofingWarrantyStatus() {
-		return roofingWarrantyStatus;
+	public synchronized String getCeilingWarrantyStatus() {
+		return ceilingWarrantyStatus;
 	}
 
-	public synchronized void setRoofingWarrantyStatus(String roofingWarrantyStatus) {
-		this.roofingWarrantyStatus = roofingWarrantyStatus;
+	public synchronized void setCeilingWarrantyStatus(String ceilingWarrantyStatus) {
+		this.ceilingWarrantyStatus = ceilingWarrantyStatus;
 	}
 
-	public synchronized Date getRoofingWarrantyDate() {
-		return roofingWarrantyDate;
+	public synchronized Date getCeilingWarrantyDate() {
+		return ceilingWarrantyDate;
 	}
 
-	public synchronized void setRoofingWarrantyDate(Date roofingWarrantyDate) {
-		this.roofingWarrantyDate = roofingWarrantyDate;
+	public synchronized void setCeilingWarrantyDate(Date ceilingWarrantyDate) {
+		this.ceilingWarrantyDate = ceilingWarrantyDate;
+	}
+	
+	public synchronized String getGasWarrantyStatus() {
+		return gasWarrantyStatus;
+	}
+
+	public synchronized void setGasWarrantyStatus(String gasWarrantyStatus) {
+		this.gasWarrantyStatus = gasWarrantyStatus;
+	}
+
+	public synchronized Date getGasWarrantyDate() {
+		return gasWarrantyDate;
+	}
+
+	public synchronized void setGasWarrantyDate(Date gasWarrantyDate) {
+		this.gasWarrantyDate = gasWarrantyDate;
 	}
 
 	public synchronized String getHTIWarrantyStatus() {
@@ -1411,10 +1559,12 @@ public class CloseoutDetails extends ProjectObject
 			return co.getElectricalStatus();
 		else if(name.equalsIgnoreCase("plumbingStatus"))
 			return co.getPlumbingStatus();
+		else if(name.equalsIgnoreCase("gasStatus"))
+			return co.getGasStatus();
 		else if(name.equalsIgnoreCase("sprinkleStatus"))
 			return co.getSprinkleStatus();
-		else if(name.equalsIgnoreCase("roofingStatus"))
-			return co.getRoofingStatus();
+		else if(name.equalsIgnoreCase("ceilingStatus"))
+			return co.getCeilingStatus();
 		else if(name.equalsIgnoreCase("HTIStatus"))
 			return co.getHTIStatus();
 		else if(name.equalsIgnoreCase("mulvannySignOffStatus"))
@@ -1457,12 +1607,14 @@ public class CloseoutDetails extends ProjectObject
 			return co.getOtherWarrantyStatusA();
 		else if(name.equalsIgnoreCase("HTIWarrantyStatus"))
 			return co.getHTIWarrantyStatus();
-		else if(name.equalsIgnoreCase("roofingWarrantyStatus"))
-			return co.getRoofingWarrantyStatus();
+		else if(name.equalsIgnoreCase("ceilingWarrantyStatus"))
+			return co.getCeilingWarrantyStatus();
 		else if(name.equalsIgnoreCase("sprinkleWarrantyStatus"))
 			return co.getSprinkleWarrantyStatus();
 		else if(name.equalsIgnoreCase("plumbingWarrantyStatus"))
 			return co.getPlumbingWarrantyStatus();
+		else if(name.equalsIgnoreCase("gasWarrantyStatus"))
+			return co.getGasWarrantyStatus();
 		else if(name.equalsIgnoreCase("electricalWarrantyStatus"))
 			return co.getElectricalWarrantyStatus();
 		else if(name.equalsIgnoreCase("mechanicalWarrantyStatus"))
@@ -1482,6 +1634,14 @@ public class CloseoutDetails extends ProjectObject
 			return co.getSprinkleFinalStatus();
 		else if(name.equalsIgnoreCase("plumbingFinalStatus"))
 			return co.getPlumbingFinalStatus();
+		else if(name.equalsIgnoreCase("gasFinalStatus"))
+			return co.getGasFinalStatus();
+		else if(name.equalsIgnoreCase("ceilingFinalStatus"))
+			return co.getCeilingFinalStatus();
+		else if(name.equalsIgnoreCase("fireAlarmFinalStatus"))
+			return co.getFireAlarmFinalStatus();
+		else if(name.equalsIgnoreCase("lowVolFinalStatus"))
+			return co.getLowVolFinalStatus();
 		else if(name.equalsIgnoreCase("elecFinalStatus"))
 			return co.getElecFinalStatus();
 		else if(name.equalsIgnoreCase("mechFinalStatus"))
@@ -1508,8 +1668,9 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("mechanicalStatus" , "String");
 		fields.put("electricalStatus" , "String");
 		fields.put("plumbingStatus" , "String");
+		fields.put("gasStatus" , "String");
 		fields.put("sprinkleStatus" , "String");
-		fields.put("roofingStatus" , "String");
+		fields.put("ceilingStatus" , "String");
 		fields.put("HTIStatus" , "String");
 		fields.put("mulvannySignOffStatus" , "String");
 		fields.put("releaseOfLiensStatus" , "String");
@@ -1531,9 +1692,10 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("otherWarrantyStatusB" , "String");
 		fields.put("otherWarrantyStatusA" , "String");
 		fields.put("HTIWarrantyStatus" , "String");
-		fields.put("roofingWarrantyStatus" , "String");
+		fields.put("ceilingWarrantyStatus" , "String");
 		fields.put("sprinkleWarrantyStatus" , "String");
 		fields.put("plumbingWarrantyStatus" , "String");
+		fields.put("gasWarrantyStatus" , "String");
 		fields.put("electricalWarrantyStatus" , "String");
 		fields.put("mechanicalWarrantyStatus" , "String");
 		fields.put("GCWarrantyStatus" , "String");
@@ -1543,6 +1705,10 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("buildingFinalStatus" , "String");
 		fields.put("sprinkleFinalStatus" , "String");
 		fields.put("plumbingFinalStatus" , "String");
+		fields.put("gasFinalStatus" , "String");
+		fields.put("ceilingFinalStatus" , "String");
+		fields.put("fireAlarmFinalStatus" , "String");
+		fields.put("lowVolFinalStatus" , "String");
 		fields.put("elecFinalStatus" , "String");
 		fields.put("mechFinalStatus" , "String");
 		fields.put("otherFinalLeinsStatus" , "String");

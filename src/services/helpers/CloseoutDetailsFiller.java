@@ -91,11 +91,17 @@ public class CloseoutDetailsFiller
 		cd.setSprinkleDate(sprinkleDate);
 		cd.setSprinkleStatus(params.get("sprinkleStatus"));
 
-		Date roofingDate = null;
-		if(!params.get("roofingDate").isEmpty())
-			roofingDate = formatter.parse(params.get("roofingDate"));
-		cd.setRoofingDate(roofingDate);
-		cd.setRoofingStatus(params.get("roofingStatus"));
+		Date ceilingDate = null;
+		if(!params.get("ceilingDate").isEmpty())
+			ceilingDate = formatter.parse(params.get("ceilingDate"));
+		cd.setCeilingDate(ceilingDate);
+		cd.setCeilingStatus(params.get("ceilingStatus"));
+		
+		Date gasDate = null;
+		if(!params.get("gasDate").isEmpty())
+			gasDate = formatter.parse(params.get("gasDate"));
+		cd.setGasDate(gasDate);
+		cd.setGasStatus(params.get("gasStatus"));
 
 		Date HTIDate = null;
 		if(!params.get("HTIDate").isEmpty())
@@ -145,12 +151,18 @@ public class CloseoutDetailsFiller
 		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
 		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
 
-		Date roofingWarrantyDate = null;
-		if(!params.get("roofingWarrantyDate").isEmpty())
-			roofingWarrantyDate = formatter.parse(params.get("roofingWarrantyDate"));
-		cd.setRoofingWarrantyDate(roofingWarrantyDate);
-		cd.setRoofingWarrantyStatus(params.get("roofingWarrantyStatus"));
+		Date ceilingWarrantyDate = null;
+		if(!params.get("ceilingWarrantyDate").isEmpty())
+			ceilingWarrantyDate = formatter.parse(params.get("ceilingWarrantyDate"));
+		cd.setCeilingWarrantyDate(ceilingWarrantyDate);
+		cd.setCeilingWarrantyStatus(params.get("ceilingWarrantyStatus"));
 
+		Date gasWarrantyDate = null;
+		if(!params.get("gasWarrantyDate").isEmpty())
+			gasWarrantyDate = formatter.parse(params.get("gasWarrantyDate"));
+		cd.setGasWarrantyDate(gasWarrantyDate);
+		cd.setGasWarrantyStatus(params.get("gasWarrantyStatus"));
+		
 		Date HTIWarrantyDate = null;
 		if(!params.get("HTIWarrantyDate").isEmpty())
 			HTIWarrantyDate = formatter.parse(params.get("HTIWarrantyDate"));
@@ -186,7 +198,31 @@ public class CloseoutDetailsFiller
 			plumbingFinalDate = formatter.parse(params.get("plumbingFinalDate"));
 		cd.setPlumbingFinalDate(plumbingFinalDate);
 		cd.setPlumbingFinalStatus(params.get("plumbingFinalStatus"));
+		
+		Date gasFinalDate = null;
+		if(!params.get("gasFinalDate").isEmpty())
+			gasFinalDate = formatter.parse(params.get("gasFinalDate"));
+		cd.setGasFinalDate(gasFinalDate);
+		cd.setGasFinalStatus(params.get("gasFinalStatus"));
+		
+		Date ceilingFinalDate = null;
+		if(!params.get("ceilingFinalDate").isEmpty())
+			ceilingFinalDate = formatter.parse(params.get("ceilingFinalDate"));
+		cd.setCeilingFinalDate(ceilingFinalDate);
+		cd.setCeilingFinalStatus(params.get("ceilingFinalStatus"));
+		
+		Date fireAlarmFinalDate = null;
+		if(!params.get("fireAlarmFinalDate").isEmpty())
+			fireAlarmFinalDate = formatter.parse(params.get("fireAlarmFinalDate"));
+		cd.setFireAlarmFinalDate(fireAlarmFinalDate);
+		cd.setFireAlarmFinalStatus(params.get("fireAlarmFinalStatus"));
 
+		Date lowVolFinalDate = null;
+		if(!params.get("lowVolFinalDate").isEmpty())
+			lowVolFinalDate = formatter.parse(params.get("lowVolFinalDate"));
+		cd.setLowVolFinalDate(lowVolFinalDate);
+		cd.setLowVolFinalStatus(params.get("lowVolFinalStatus"));
+		
 		Date sprinkleFinalDate = null;
 		if(!params.get("sprinkleFinalDate").isEmpty())
 			sprinkleFinalDate = formatter.parse(params.get("sprinkleFinalDate"));

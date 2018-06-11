@@ -143,8 +143,9 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#mechanicalDate").datepicker();
 	    $('#closeoutData').find("#electricalDate").datepicker();
 	    $('#closeoutData').find("#plumbingDate").datepicker();
+	    $('#closeoutData').find("#gasDate").datepicker();
 	    $('#closeoutData').find("#sprinkleDate").datepicker();
-	    $('#closeoutData').find("#roofingDate").datepicker();
+	    $('#closeoutData').find("#ceilingDate").datepicker();
 	    $('#closeoutData').find("#HTIDate").datepicker();
 	    $('#closeoutData').find("#otherFinalLiensDate").datepicker();
 	    
@@ -153,6 +154,10 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#mechFinalDate").datepicker();
 	    $('#closeoutData').find("#elecFinalDate").datepicker();
 	    $('#closeoutData').find("#plumbingFinalDate").datepicker();
+	    $('#closeoutData').find("#gasFinalDate").datepicker();
+	    $('#closeoutData').find("#ceilingFinalDate").datepicker();
+	    $('#closeoutData').find("#fireAlarmFinalDate").datepicker();
+	    $('#closeoutData').find("#lowVolFinalDate").datepicker();
 	    $('#closeoutData').find("#sprinkleFinalDate").datepicker();
 	    $('#closeoutData').find("#certificateDate").datepicker();
 	    $('#closeoutData').find("#buildingPermitCL").datepicker();
@@ -163,8 +168,9 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#mechanicalWarrantyDate").datepicker();
 	    $('#closeoutData').find("#electricalWarrantyDate").datepicker();
 	    $('#closeoutData').find("#plumbingWarrantyDate").datepicker();
+	    $('#closeoutData').find("#gasWarrantyDate").datepicker();
 	    $('#closeoutData').find("#sprinkleWarrantyDate").datepicker();
-	    $('#closeoutData').find("#roofingWarrantyDate").datepicker();
+	    $('#closeoutData').find("#ceilingWarrantyDate").datepicker();
 	    $('#closeoutData').find("#HTIWarrantyDate").datepicker();
 	    $('#closeoutData').find("#otherWarrantyDateA").datepicker();
 	    $('#closeoutData').find("#otherWarrantyDateB").datepicker();
@@ -338,6 +344,18 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#plumbingFinalStatus").val(json.closeoutDetails.plumbingFinalStatus);
 		$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
 		
+		$('#closeoutData').find("#gasFinalStatus").val(json.closeoutDetails.gasFinalStatus);
+		$('#closeoutData').find("#gasFinalDate").val(json.closeoutDetails.gasFinalDate);
+		
+		$('#closeoutData').find("#ceilingFinalStatus").val(json.closeoutDetails.ceilingFinalStatus);
+		$('#closeoutData').find("#ceilingFinalDate").val(json.closeoutDetails.ceilingFinalDate);
+
+		$('#closeoutData').find("#fireAlarmFinalStatus").val(json.closeoutDetails.fireAlarmFinalStatus);
+		$('#closeoutData').find("#fireAlarmFinalDate").val(json.closeoutDetails.fireAlarmFinalDate);
+		
+		$('#closeoutData').find("#lowVolFinalStatus").val(json.closeoutDetails.lowVolFinalStatus);
+		$('#closeoutData').find("#lowVolFinalDate").val(json.closeoutDetails.lowVolFinalDate);
+		
 		$('#closeoutData').find("#sprinkleFinalStatus").val(json.closeoutDetails.sprinkleFinalStatus);
 		$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
 		
@@ -387,11 +405,14 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#plumbingWarrantyStatus").val(json.closeoutDetails.plumbingWarrantyStatus);
 		$('#closeoutData').find("#plumbingWarrantyDate").val(json.closeoutDetails.plumbingWarrantyDate);
 		
+		$('#closeoutData').find("#gasWarrantyStatus").val(json.closeoutDetails.gasWarrantyStatus);
+		$('#closeoutData').find("#gasWarrantyDate").val(json.closeoutDetails.gasWarrantyDate);
+		
 		$('#closeoutData').find("#sprinkleWarrantyStatus").val(json.closeoutDetails.sprinkleWarrantyStatus);
 		$('#closeoutData').find("#sprinkleWarrantyDate").val(json.closeoutDetails.sprinkleWarrantyDate);
 		
-		$('#closeoutData').find("#roofingWarrantyStatus").val(json.closeoutDetails.roofingWarrantyStatus);
-		$('#closeoutData').find("#roofingWarrantyDate").val(json.closeoutDetails.roofingWarrantyDate);
+		$('#closeoutData').find("#ceilingWarrantyStatus").val(json.closeoutDetails.ceilingWarrantyStatus);
+		$('#closeoutData').find("#ceilingWarrantyDate").val(json.closeoutDetails.ceilingWarrantyDate);
 		
 		$('#closeoutData').find("#HTIWarrantyStatus").val(json.closeoutDetails.HTIWarrantyStatus);
 		$('#closeoutData').find("#HTIWarrantyDate").val(json.closeoutDetails.HTIWarrantyDate);
@@ -417,11 +438,14 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#plumbingStatus").val(json.closeoutDetails.plumbingStatus);
 		$('#closeoutData').find("#plumbingDate").val(json.closeoutDetails.plumbingDate);
 		
+		$('#closeoutData').find("#gasStatus").val(json.closeoutDetails.gasStatus);
+		$('#closeoutData').find("#gasDate").val(json.closeoutDetails.gasDate);
+		
 		$('#closeoutData').find("#sprinkleStatus").val(json.closeoutDetails.sprinkleStatus);
 		$('#closeoutData').find("#sprinkleDate").val(json.closeoutDetails.sprinkleDate);
 		
-		$('#closeoutData').find("#roofingStatus").val(json.closeoutDetails.roofingStatus);
-		$('#closeoutData').find("#roofingDate").val(json.closeoutDetails.roofingDate);
+		$('#closeoutData').find("#ceilingStatus").val(json.closeoutDetails.ceilingStatus);
+		$('#closeoutData').find("#ceilingDate").val(json.closeoutDetails.ceilingDate);
 		
 		$('#closeoutData').find("#HTIStatus").val(json.closeoutDetails.HTIStatus);
 		$('#closeoutData').find("#HTIDate").val(json.closeoutDetails.HTIDate);
@@ -547,11 +571,14 @@ function saveProject_CLOSEOUT()
     var plumbingStatus = $('#closeoutData').find("#plumbingStatus").val();
     var plumbingDate = $('#closeoutData').find("#plumbingDate").val();
     
+    var gasStatus = $('#closeoutData').find("#gasStatus").val();
+    var gasDate = $('#closeoutData').find("#gasDate").val();
+    
     var sprinkleStatus = $('#closeoutData').find("#sprinkleStatus").val();
     var sprinkleDate = $('#closeoutData').find("#sprinkleDate").val();
     
-    var roofingStatus = $('#closeoutData').find("#roofingStatus").val();
-    var roofingDate = $('#closeoutData').find("#roofingDate").val();
+    var ceilingStatus = $('#closeoutData').find("#ceilingStatus").val();
+    var ceilingDate = $('#closeoutData').find("#ceilingDate").val();
     
     var HTIStatus = $('#closeoutData').find("#HTIStatus").val();
     var HTIDate = $('#closeoutData').find("#HTIDate").val();
@@ -574,6 +601,18 @@ function saveProject_CLOSEOUT()
     
     var plumbingFinalDate = $('#closeoutData').find("#plumbingFinalDate").val();
     var plumbingFinalStatus = $('#closeoutData').find("#plumbingFinalStatus").val();
+    
+    var gasFinalDate = $('#closeoutData').find("#gasFinalDate").val();
+    var gasFinalStatus = $('#closeoutData').find("#gasFinalStatus").val();
+    
+    var ceilingFinalDate = $('#closeoutData').find("#ceilingFinalDate").val();
+    var ceilingFinalStatus = $('#closeoutData').find("#ceilingFinalStatus").val();
+    
+    var fireAlarmFinalDate = $('#closeoutData').find("#fireAlarmFinalDate").val();
+    var fireAlarmFinalStatus = $('#closeoutData').find("#fireAlarmFinalStatus").val();
+    
+    var lowVolFinalDate = $('#closeoutData').find("#lowVolFinalDate").val();
+    var lowVolFinalStatus = $('#closeoutData').find("#lowVolFinalStatus").val();
     
     var sprinkleFinalStatus = $('#closeoutData').find("#sprinkleFinalStatus").val();
     var sprinkleFinalDate = $('#closeoutData').find("#sprinkleFinalDate").val();
@@ -603,11 +642,14 @@ function saveProject_CLOSEOUT()
     var plumbingWarrantyStatus = $('#closeoutData').find("#plumbingWarrantyStatus").val();
     var plumbingWarrantyDate = $('#closeoutData').find("#plumbingWarrantyDate").val();
     
+    var gasWarrantyStatus = $('#closeoutData').find("#gasWarrantyStatus").val();
+    var gasWarrantyDate = $('#closeoutData').find("#gasWarrantyDate").val();
+    
     var sprinkleWarrantyStatus = $('#closeoutData').find("#sprinkleWarrantyStatus").val();
     var sprinkleWarrantyDate = $('#closeoutData').find("#sprinkleWarrantyDate").val();
     
-    var roofingWarrantyStatus = $('#closeoutData').find("#roofingWarrantyStatus").val();
-    var roofingWarrantyDate = $('#closeoutData').find("#roofingWarrantyDate").val();
+    var ceilingWarrantyStatus = $('#closeoutData').find("#ceilingWarrantyStatus").val();
+    var ceilingWarrantyDate = $('#closeoutData').find("#ceilingWarrantyDate").val();
     
     var HTIWarrantyStatus = $('#closeoutData').find("#HTIWarrantyStatus").val();
     var HTIWarrantyDate = $('#closeoutData').find("#HTIWarrantyDate").val();
@@ -680,13 +722,14 @@ function saveProject_CLOSEOUT()
 				// new closeout info
 				//mg2CompletionDate,
 				
-				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, 
-				sprinkleDate, roofingDate, HTIDate, otherFinalLeinsDate,
+				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, gasDate,
+				sprinkleDate, ceilingDate, HTIDate, otherFinalLeinsDate,
 				
-				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, tmpCertificateDate,
+				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
+				ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate, tmpCertificateDate,
 				
-				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, 
-				roofingWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
+				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, plumbingWarrantyDate, 
+				gasWarrantyDate, ceilingWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
 				
 				manualDate, HVACstartupFormDate, salvageDate, substantialCompletionDate, 
 				paymentOfDebtsAndClaimsDate, releaseOfLiensDate, mulvannySignOffDate, asBuilts,
@@ -708,35 +751,42 @@ function saveProject_CLOSEOUT()
     		if(i == 6) mechanicalDate = dates_CLOSEOUT[i];
     		if(i == 7) electricalDate = dates_CLOSEOUT[i];
     		if(i == 8) plumbingDate = dates_CLOSEOUT[i];
-    		if(i == 9) sprinkleDate = dates_CLOSEOUT[i];
-    		if(i == 10) roofingDate = dates_CLOSEOUT[i];
-    		if(i == 11) HTIDate = dates_CLOSEOUT[i];
-    		if(i == 12) otherFinalLeinsDate = dates_CLOSEOUT[i];
-    		if(i == 13) sprinkleFinalDate = dates_CLOSEOUT[i];
-    		if(i == 14) certificateDate = dates_CLOSEOUT[i];
-    		if(i == 15) mechFinalDate = dates_CLOSEOUT[i];
-    		if(i == 16) elecFinalDate = dates_CLOSEOUT[i];
-    		if(i == 17) plumbingFinalDate = dates_CLOSEOUT[i];
-    		if(i == 18) tmpCertificateDate = dates_CLOSEOUT[i];
-    		if(i == 19) GCWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 20) mechanicalWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 21) electricalWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 22) sprinkleWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 23) roofingWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 24) HTIWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 25) otherWarrantyDateA = dates_CLOSEOUT[i];
-    		if(i == 26) otherWarrantyDateB = dates_CLOSEOUT[i];
-    		if(i == 27) manualDate = dates_CLOSEOUT[i];
-    		if(i == 28) HVACstartupFormDate = dates_CLOSEOUT[i];
-    		if(i == 29) salvageDate = dates_CLOSEOUT[i];
-    		if(i == 30) substantialCompletionDate = dates_CLOSEOUT[i];
-    		if(i == 31) paymentOfDebtsAndClaimsDate = dates_CLOSEOUT[i];
-    		if(i == 32) releaseOfLiensDate = dates_CLOSEOUT[i];
-    		if(i == 33) mulvannySignOffDate = dates_CLOSEOUT[i];
-    		if(i == 34) asBuilts = dates_CLOSEOUT[i];
-    		if(i == 35) punchList = dates_CLOSEOUT[i];
-    		if(i == 36) alarmHvac = dates_CLOSEOUT[i];
-    		if(i == 37) verisae = dates_CLOSEOUT[i];
+    		if(i == 9) gasDate = dates_CLOSEOUT[i];
+    		if(i == 10) sprinkleDate = dates_CLOSEOUT[i];
+    		if(i == 11) ceilingDate = dates_CLOSEOUT[i];
+    		if(i == 12) HTIDate = dates_CLOSEOUT[i];
+    		if(i == 13) otherFinalLeinsDate = dates_CLOSEOUT[i];
+    		if(i == 14) sprinkleFinalDate = dates_CLOSEOUT[i];
+    		if(i == 15) certificateDate = dates_CLOSEOUT[i];
+    		if(i == 16) mechFinalDate = dates_CLOSEOUT[i];
+    		if(i == 17) elecFinalDate = dates_CLOSEOUT[i];
+    		if(i == 18) plumbingFinalDate = dates_CLOSEOUT[i];
+    		if(i == 19) gasFinalDate = dates_CLOSEOUT[i];
+    		if(i == 20) ceilingFinalDate = dates_CLOSEOUT[i];
+    		if(i == 21) fireAlarmFinalDate = dates_CLOSEOUT[i];
+    		if(i == 22) lowVolFinalDate = dates_CLOSEOUT[i];
+    		if(i == 23) tmpCertificateDate = dates_CLOSEOUT[i];
+    		if(i == 24) GCWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 25) mechanicalWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 26) electricalWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 27) sprinkleWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 28) plumbingWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 29) gasWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 30) ceilingWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 31) HTIWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 32) otherWarrantyDateA = dates_CLOSEOUT[i];
+    		if(i == 33) otherWarrantyDateB = dates_CLOSEOUT[i];
+    		if(i == 34) manualDate = dates_CLOSEOUT[i];
+    		if(i == 35) HVACstartupFormDate = dates_CLOSEOUT[i];
+    		if(i == 36) salvageDate = dates_CLOSEOUT[i];
+    		if(i == 37) substantialCompletionDate = dates_CLOSEOUT[i];
+    		if(i == 38) paymentOfDebtsAndClaimsDate = dates_CLOSEOUT[i];
+    		if(i == 39) releaseOfLiensDate = dates_CLOSEOUT[i];
+    		if(i == 40) mulvannySignOffDate = dates_CLOSEOUT[i];
+    		if(i == 41) asBuilts = dates_CLOSEOUT[i];
+    		if(i == 42) punchList = dates_CLOSEOUT[i];
+    		if(i == 43) alarmHvac = dates_CLOSEOUT[i];
+    		if(i == 44) verisae = dates_CLOSEOUT[i];
     	}
 		var action = "editCloseout";
 		var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
@@ -803,11 +853,14 @@ function saveProject_CLOSEOUT()
 				'plumbingStatus': plumbingStatus,
 				'plumbingDate': plumbingDate,
 				
+				'gasStatus': gasStatus,
+				'gasDate': gasDate,
+				
 				'sprinkleStatus': sprinkleStatus,
 				'sprinkleDate': sprinkleDate,
 				
-				'roofingStatus': roofingStatus,
-				'roofingDate': roofingDate,
+				'ceilingStatus': ceilingStatus,
+				'ceilingDate': ceilingDate,
 				
 				'HTIStatus': HTIStatus,
 				'HTIDate': HTIDate,
@@ -825,6 +878,18 @@ function saveProject_CLOSEOUT()
 				
 				'plumbingFinalStatus': plumbingFinalStatus,
 				'plumbingFinalDate': plumbingFinalDate,
+				
+				'gasFinalStatus': gasFinalStatus,
+				'gasFinalDate': gasFinalDate,
+				
+				'ceilingFinalStatus': ceilingFinalStatus,
+				'ceilingFinalDate': ceilingFinalDate,
+				
+				'fireAlarmFinalStatus': fireAlarmFinalStatus,
+				'fireAlarmFinalDate': fireAlarmFinalDate,
+				
+				'lowVolFinalStatus': lowVolFinalStatus,
+				'lowVolFinalDate': lowVolFinalDate,
 				
 				'sprinkleFinalStatus': sprinkleFinalStatus,
 				'sprinkleFinalDate': sprinkleFinalDate,
@@ -853,11 +918,14 @@ function saveProject_CLOSEOUT()
 				'plumbingWarrantyStatus': plumbingWarrantyStatus,
 				'plumbingWarrantyDate': plumbingWarrantyDate,
 				
+				'gasWarrantyStatus': gasWarrantyStatus,
+				'gasWarrantyDate': gasWarrantyDate,
+				
 				'sprinkleWarrantyStatus': sprinkleWarrantyStatus,
 				'sprinkleWarrantyDate': sprinkleWarrantyDate,
 				
-				'roofingWarrantyStatus': roofingWarrantyStatus,
-				'roofingWarrantyDate': roofingWarrantyDate,
+				'ceilingWarrantyStatus': ceilingWarrantyStatus,
+				'ceilingWarrantyDate': ceilingWarrantyDate,
 				
 				'HTIWarrantyStatus': HTIWarrantyStatus,
 				'HTIWarrantyDate': HTIWarrantyDate,
@@ -982,14 +1050,15 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"copSubmittedStatus", "copApprovedStatus", "copCompletedStatus", "changeOrderSubmittedStatus",
                 				"changeOrderApprovedStatus","revisionsSubmittedStatus", "revisionsApprovedStatus",
                 				
-                				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", 
-                				"sprinkleStatus", "roofingStatus", "HTIStatus", "otherFinalLiensStatus",
+                				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", "gasStatus",
+                				"sprinkleStatus", "ceilingStatus", "HTIStatus", "otherFinalLiensStatus",
                 				
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
-                				"plumbingFinalStatus", "buildFinalStatus",
+                				"plumbingFinalStatus", "gasFinalStatus", "buildFinalStatus", "ceilingFinalStatus", "fireAlarmFinalStatus", 
+                				"lowVolFinalStatus",
                 				
                 				"MCSWarrantyStatus", "GCWarrantyStatus", "mechanicalWarrantyStatus", "electricalWarrantyStatus", "sprinkleWarrantyStatus", 
-                				"plumbingWarrantyStatus", "roofingWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
+                				"plumbingWarrantyStatus", "gasWarrantyStatus", "ceilingWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
                 				
                 				"equipmentSubmittalStatus", "manualStatus","punchListStatus", "asBuiltDrawingsStatus", 
                                 "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",   
@@ -3098,6 +3167,42 @@ function fillCloseout (data) {
 			required++;
 			break;
 	}
+	switch (closeoutData.gasFinalStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.ceilingFinalStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.fireAlarmFinalStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.lowVolFinalStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
 	switch (closeoutData.sprinkleFinalStatus) {
 		case '1':
 			required++;
@@ -3191,7 +3296,16 @@ function fillCloseout (data) {
 		required++;
 		break;
 	}
-	switch (closeoutData.roofingWarrantyStatus) {
+	switch (closeoutData.gasWarrantyStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.ceilingWarrantyStatus) {
 	case '1':
 		required++;
 		completed++;
@@ -3276,6 +3390,15 @@ function fillCloseout (data) {
 		required++;
 		break;
 	}
+	switch(closeoutData.gasStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
 	switch(closeoutData.sprinkleStatus) {
 	case '1':
 		required++;
@@ -3285,7 +3408,7 @@ function fillCloseout (data) {
 		required++;
 		break;
 	}
-	switch(closeoutData.roofingStatus) {
+	switch(closeoutData.ceilingStatus) {
 	case '1':
 		required++;
 		completed++;

@@ -725,6 +725,18 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("gasFinal"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getGasFinalStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getGasFinalStatus()));
+			if(p.getCloseoutDetails().getGasFinalDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getGasFinalDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("sprinkleFinal"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -737,6 +749,30 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("fireAlarmFinal"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getFireAlarmFinalStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getFireAlarmFinalStatus()));
+			if(p.getCloseoutDetails().getFireAlarmFinalDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getFireAlarmFinalDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
+		else if(value.equals("lowVolFinal"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getLowVolFinalStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getLowVolFinalStatus()));
+			if(p.getCloseoutDetails().getLowVolFinalDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getLowVolFinalDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("buildingFinal"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -744,6 +780,18 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getBuildingFinalStatus()));
 			if(p.getCloseoutDetails().getBuildingPermitCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getBuildingPermitCL()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
+		else if(value.equals("ceilingFinal"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getCeilingFinalStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getCeilingFinalStatus()));
+			if(p.getCloseoutDetails().getCeilingFinalDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCeilingFinalDate()));
 			 
 			if(sb.toString().equals(""))
 				sb.append("---");
@@ -941,6 +989,18 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("gasWarranty"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getGasWarrantyStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getGasWarrantyStatus()));
+			if(p.getCloseoutDetails().getGasWarrantyDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getGasWarrantyDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("sprinklerWarranty"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -953,13 +1013,13 @@ public class ReportHelper
 				sb.append("---"); //changed line 882
 			return sb.toString();
 		}
-		else if(value.equals("roofingWarranty"))
+		else if(value.equals("ceilingWarranty"))
 		{
 			StringBuilder sb = new StringBuilder();
-			if(p.getCloseoutDetails().getRoofingWarrantyStatus() != null)
-				sb.append(convert(p.getCloseoutDetails().getRoofingWarrantyStatus()));
-			if(p.getCloseoutDetails().getRoofingWarrantyDate() != null)
-				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getRoofingWarrantyDate()));
+			if(p.getCloseoutDetails().getCeilingWarrantyStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getCeilingWarrantyStatus()));
+			if(p.getCloseoutDetails().getCeilingWarrantyDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCeilingWarrantyDate()));
 			 
 			if(sb.toString().equals(""))
 				sb.append("---");
@@ -1061,6 +1121,18 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("gasLiens"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getGasStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getGasStatus()));
+			if(p.getCloseoutDetails().getGasDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getGasDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("sprinkleLiens"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -1073,13 +1145,13 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
-		else if(value.equals("roofingLiens"))
+		else if(value.equals("ceilingLiens"))
 		{
 			StringBuilder sb = new StringBuilder();
-			if(p.getCloseoutDetails().getRoofingStatus() != null)
-				sb.append(convert(p.getCloseoutDetails().getRoofingStatus()));
-			if(p.getCloseoutDetails().getRoofingDate() != null)
-				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getRoofingDate()));
+			if(p.getCloseoutDetails().getCeilingStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getCeilingStatus()));
+			if(p.getCloseoutDetails().getCeilingDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCeilingDate()));
 			 
 			if(sb.toString().equals(""))
 				sb.append("---");
@@ -1189,6 +1261,13 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getPlumbingFinalStatus().equals(COMPLETE))
 					complete++;
 			}
+			if(p.getCloseoutDetails().getGasFinalStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getGasFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getGasFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleFinalStatus() != null)	
 			{
 				if(p.getCloseoutDetails().getSprinkleFinalStatus().equals(NA))
@@ -1196,11 +1275,32 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getSprinkleFinalStatus().equals(COMPLETE))
 					complete++;
 			}
+			if(p.getCloseoutDetails().getFireAlarmFinalStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getFireAlarmFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getFireAlarmFinalStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getLowVolFinalStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getLowVolFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getLowVolFinalStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getBuildingFinalStatus() != null)	
 			{
 				if(p.getCloseoutDetails().getBuildingFinalStatus().equals(NA))
 					required--;
 				else if(p.getCloseoutDetails().getBuildingFinalStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getCeilingFinalStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getCeilingFinalStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getCeilingFinalStatus().equals(COMPLETE))
 					complete++;
 			}
 			if(p.getCloseoutDetails().getTmpCertificateStatus() != null)
@@ -1258,6 +1358,13 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getPlumbingWarrantyStatus().equals(COMPLETE))
 					complete++;
 			}
+			if(p.getCloseoutDetails().getGasWarrantyStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getGasWarrantyStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getGasWarrantyStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleWarrantyStatus() != null)	
 			{
 				if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals(NA))
@@ -1265,11 +1372,11 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals(COMPLETE))
 					complete++;
 			}
-			if(p.getCloseoutDetails().getRoofingWarrantyStatus() != null)	
+			if(p.getCloseoutDetails().getCeilingWarrantyStatus() != null)	
 			{
-				if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals(NA))
+				if(p.getCloseoutDetails().getCeilingWarrantyStatus().equals(NA))
 					required--;
-				else if(p.getCloseoutDetails().getRoofingWarrantyStatus().equals(COMPLETE))
+				else if(p.getCloseoutDetails().getCeilingWarrantyStatus().equals(COMPLETE))
 					complete++;
 			}
 			if(p.getCloseoutDetails().getHTIWarrantyStatus() != null)
@@ -1336,6 +1443,13 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getPlumbingStatus().equals(COMPLETE))
 					complete++;
 			}
+			if(p.getCloseoutDetails().getGasStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getGasStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getGasStatus().equals(COMPLETE))
+					complete++;
+			}
 			if(p.getCloseoutDetails().getSprinkleStatus() != null)	
 			{
 				if(p.getCloseoutDetails().getSprinkleStatus().equals(NA))
@@ -1343,11 +1457,11 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getSprinkleStatus().equals(COMPLETE))
 					complete++;
 			}
-			if(p.getCloseoutDetails().getRoofingStatus() != null)
+			if(p.getCloseoutDetails().getCeilingStatus() != null)
 			{
-				if(p.getCloseoutDetails().getRoofingStatus().equals(NA))
+				if(p.getCloseoutDetails().getCeilingStatus().equals(NA))
 					required--;
-				else if(p.getCloseoutDetails().getRoofingStatus().equals(COMPLETE))
+				else if(p.getCloseoutDetails().getCeilingStatus().equals(COMPLETE))
 					complete++;
 			}
 			if(p.getCloseoutDetails().getHTIStatus() != null)	
@@ -1484,6 +1598,10 @@ public class ReportHelper
 		else if(value.equals("plumbingInspection") && p.getPermits() != null && p.getPermits().getPlumbingInspectionStatus() != null)
 		{
 			return p.getPermits().getPlumbingInspectionStatus();
+		}
+		else if(value.equals("gasInspection") && p.getPermits() != null && p.getPermits().getGasInspectionStatus() != null)
+		{
+			return p.getPermits().getGasInspectionStatus();
 		}
 		else if(value.equals("ceilingInspection") && p.getPermits() != null && p.getPermits().getCeilingInspectionStatus() != null)
 		{

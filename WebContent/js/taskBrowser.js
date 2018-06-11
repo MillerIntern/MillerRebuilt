@@ -261,7 +261,7 @@ function preparePageForUserStatus(){
 	$('#sortOrder').chosen({ width: "210px" });
 
 	
-	if(user.permission_id === 1) 
+	if(user.permission.id === 1) 
 	{
 		 $("#projectManagerDropdown").show();
 		 console.log("preparePageForUserStatus() INVOKED");

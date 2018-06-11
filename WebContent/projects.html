@@ -1425,14 +1425,14 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Sprinkler Final Inspection</td>
+	                <td class='bold'>Gas Final Inspection</td>
 	                <td>  
-	                    <select data-associated-date='sprinkleFinalDate' class="closeout-input" id="sprinkleFinalStatus">
+	                    <select data-associated-date='gasFinalDate' class="closeout-input" id="gasFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="sprinkleFinalDate" />
+	                    <input type="text" id="gasFinalDate" />
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1446,6 +1446,50 @@
 	                    <input id="buildingPermitCL" type="text"></input>
 	                </td>   
 	            </tr> 
+	            <tr>
+	                <td class='bold'>Ceiling Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='ceilingFinalDate' class="closeout-input" id="ceilingFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input id="ceilingFinalDate" type="text"></input>
+	                </td>   
+	            </tr>
+	             <tr>
+	                <td class='bold'>Sprinkler Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='sprinkleFinalDate' class="closeout-input" id="sprinkleFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="sprinkleFinalDate" />
+	                </td>   
+	            </tr> 
+	            <tr>
+	                <td class='bold'>Fire Alarm Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='fireAlarmFinalDate' class="closeout-input" id="fireAlarmFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input id="fireAlarmFinalDate" type="text"></input>
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Low Voltage Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='lowVolFinalDate' class="closeout-input" id="lowVolFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input id="lowVolFinalDate" type="text"></input>
+	                </td>   
+	            </tr>  
 	            <tr>
 	                <td class='bold'>Temp Certificate of Occupancy</td>
 	                <td>  
@@ -1541,6 +1585,28 @@
 	                    <input type="text" id="plumbingWarrantyDate" />
 	                </td>   
 	            </tr>
+	             <tr>
+	                <td class='bold'>Gas Warranty</td>
+	                <td>  
+	                    <select data-associated-date='gasWarrantyDate' class="closeout-input" id="gasWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="gasWarrantyDate" />
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Ceiling Warranty</td>
+	                <td>  
+	                    <select data-associated-date='ceilingWarrantyDate' class="closeout-input" id="ceilingWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="ceilingWarrantyDate" />
+	                </td>   
+	            </tr>
 	            <tr>
 	                <td class='bold'>Sprinkler Warranty</td>
 	                <td>  
@@ -1552,17 +1618,6 @@
 	                    <input type="text" id="sprinkleWarrantyDate" />
 	                </td>   
 	            </tr> 
-	            <tr>
-	                <td class='bold'>Roofing Warranty</td>
-	                <td>  
-	                    <select data-associated-date='roofingWarrantyDate' class="closeout-input" id="roofingWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" id="roofingWarrantyDate" />
-	                </td>   
-	            </tr>
 	            <tr>
 	                <td class='bold'>HTI Warranty</td>
 	                <td>  
@@ -1668,6 +1723,28 @@
 	                    <input type="text" id="plumbingDate" />
 	                </td>   
 	            </tr> 
+	             <tr>
+	                <td class='bold'>Gas Liens</td>
+	                <td>  
+	                    <select data-associated-date='gasDate' class="closeout-input" id="gasStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="gasDate" />
+	                </td>   
+	            </tr> 
+	            <tr>
+	                <td class='bold'>Ceiling Liens</td>
+	                <td>  
+	                    <select data-associated-date='ceilingDate' class="closeout-input" id="ceilingStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input type="text" id="ceilingDate" />
+	                </td>   
+	            </tr>
 	            <tr>
 	                <td class='bold'>Sprinkler Liens</td>
 	                <td>  
@@ -1679,17 +1756,6 @@
 	                    <input type="text" id="sprinkleDate" />
 	                </td>   
 	            </tr> 
-	            <tr>
-	                <td class='bold'>Roofing Liens</td>
-	                <td>  
-	                    <select data-associated-date='roofingDate' class="closeout-input" id="roofingStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" id="roofingDate" />
-	                </td>   
-	            </tr>
 	            <tr>
 	                <td class='bold'>HTI Liens</td>
 	                <td>  
