@@ -177,15 +177,15 @@ function saveProject() {
 	var mcsNumber = $('#mcsNumber').val();
 	if(mcsNumber === 'undefined' || mcsNumber === '')
 		return alert("The MCS Project # field is required. Please give it a value.");
-	
-	var warehouse = $('#warehouse').val();
-	if(warehouse === 'undefined' || warehouse === 'default')
-		return alert("The Warehouse field is required. Please give it a value.");
-	
+
 	var item = $('#project').val();
     if(item === 'undefined' || item === 'default')
     	return alert("The Item field is required. Please give it a value.");
 	
+	var warehouse = $('#warehouse').val();
+	if(warehouse === 'undefined' || warehouse === 'default')
+		return alert("The Warehouse field is required. Please give it a value.");
+		
 	var manager = $('#manager').val();
 	if(manager === 'undefined' || manager === 'default')
 		return alert("The Manager field is required. Please give it a value.");
@@ -206,6 +206,10 @@ function saveProject() {
 	if(pType === 'undefined' || pType === 'default')
 		return alert("The Type field is required. Please give it a value.");
 	
+	var projectClass = $('#class').val();
+	if(projectClass === 'undefined' || projectClass === 'default')
+		return alert("The Classification field is required. Please give it a value.");
+
 	var HVAC = $('#autofill-HVAC').val();
 	if(HVAC === 'undefined' || HVAC === 'default')
 		return alert("The HVAC field is required. Please give it a value.");
@@ -222,9 +226,6 @@ function saveProject() {
 	if(scope === 'undefined' || scope === '')
 		return alert("The Scope field is required. Please give it a value.");
 
-	var projectClass = $('#class').val();
-	if(projectClass === 'undefined' || projectClass === 'default')
-		return alert("The Classification field is required. Please give it a value.");
 	
 	
 	// scheduling

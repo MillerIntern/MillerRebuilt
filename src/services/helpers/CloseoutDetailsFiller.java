@@ -91,12 +91,6 @@ public class CloseoutDetailsFiller
 		cd.setSprinkleDate(sprinkleDate);
 		cd.setSprinkleStatus(params.get("sprinkleStatus"));
 
-		Date ceilingDate = null;
-		if(!params.get("ceilingDate").isEmpty())
-			ceilingDate = formatter.parse(params.get("ceilingDate"));
-		cd.setCeilingDate(ceilingDate);
-		cd.setCeilingStatus(params.get("ceilingStatus"));
-		
 		Date gasDate = null;
 		if(!params.get("gasDate").isEmpty())
 			gasDate = formatter.parse(params.get("gasDate"));
@@ -150,12 +144,6 @@ public class CloseoutDetailsFiller
 			sprinkleWarrantyDate = formatter.parse(params.get("sprinkleWarrantyDate"));
 		cd.setSprinkleWarrantyDate(sprinkleWarrantyDate);
 		cd.setSprinkleWarrantyStatus(params.get("sprinkleWarrantyStatus"));
-
-		Date ceilingWarrantyDate = null;
-		if(!params.get("ceilingWarrantyDate").isEmpty())
-			ceilingWarrantyDate = formatter.parse(params.get("ceilingWarrantyDate"));
-		cd.setCeilingWarrantyDate(ceilingWarrantyDate);
-		cd.setCeilingWarrantyStatus(params.get("ceilingWarrantyStatus"));
 
 		Date gasWarrantyDate = null;
 		if(!params.get("gasWarrantyDate").isEmpty())

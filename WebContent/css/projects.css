@@ -199,3 +199,9 @@
 	width : 90%;
 }
 
+.scrollTextBox {
+	height: 50px;
+	width: 270px;
+	overflow-y: scroll;
+	resize: none;
+}

@@ -22,6 +22,12 @@
 	border-radius: 0 4px 4px 4px;
 }
 
+.scrollTextBox {
+	height: 50px;
+	width: 330px;
+	overflow-y: scroll;
+	resize: none;
+}
 
 .info-tab > .table {
 	border-bottom: 1px solid #dddddd;

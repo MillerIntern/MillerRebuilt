@@ -72,6 +72,7 @@ function getUserData () {
 			'action': 'getUserInfo'
 		}, complete: function (data) {
 			if(data.responseJSON) {
+			  user = data.responseJSON;
 			  console.log("USER = ", data.responseJSON);
 			  if(data.responseJSON.permission.name != "admin") hideAdminContent();	
 		      getUsers();		 
@@ -260,7 +261,6 @@ function preparePageForUserStatus(){
 	$('#sortSelector').chosen({ width: "210px" });
 	$('#sortOrder').chosen({ width: "210px" });
 
-	
 	if(user.permission.id === 1) 
 	{
 		 $("#projectManagerDropdown").show();
@@ -460,9 +460,7 @@ function createTaskTableFromFilter(){
 			createdDate.innerHTML = projectsOfInterest[i].assignedDate;
 			dueDate.innerHTML = projectsOfInterest[i].dueDate;
 			severity.innerHTML = projectsOfInterest[i].severity;
-			severity.align = 'center';
 			status.innerHTML = projectsOfInterest[i].status.status;
-			status.align = 'center';
 			notes.innerHTML = projectsOfInterest[i].notes;
 			
 			

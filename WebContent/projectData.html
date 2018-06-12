@@ -88,19 +88,16 @@
         <td><input id="mcsNumber" type="text"></td>
         </tr>
 
-		<tr>
-        <td><b>Warehouse</b></td>
-        <td>
-        <select id="warehouse"><option value="default">--Please select an option--</option></select>
-        </td>
-        </tr>
-
         <tr>
         <td><b>Item</b></td>
         <td>
         <select id="project"><option value="default">--Please select an option--</option></select>
 		</td>
-		</tr>
+        <td><b>Warehouse</b></td>
+        <td>
+        <select id="warehouse"><option value="default">--Please select an option--</option></select>
+        </td>
+        </tr>
 
         <tr>
         <td><b>Manager</b></td>
@@ -147,7 +144,7 @@
 	        <td><b>Refrigeration</b></td>
 	       	<td>
 	        <select id="autofill-Refrigeration">
-	        	<option value="default">--Does this project require a refrigerator?--</option>
+	        	<option value="default">--Does this project require refrigeration?--</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>                	
 	        </select>
@@ -169,17 +166,14 @@
 
         <tr>
         <td><b>Scope</b></td>
-        <td><textarea  maxlength="999" id="scope" ></textarea></td>
-        </tr>
-        
-        <tr>
+        <td><textarea class="scrollTextBox" maxlength="999" id="scope" ></textarea></td>
         <td><b>MCS Notes</b></td>
-        <td><textarea  maxlength="999" id="notes" ></textarea></td>
+        <td><textarea class="scrollTextBox" maxlength="999" id="notes" ></textarea></td>
         </tr>
 
         <tr>
         <td><b>Customer Notes</b></td>
-        <td><textarea  maxlength="999" id="zUpdates" ></textarea></td>
+        <td><textarea class="scrollTextBox" maxlength="999" id="zUpdates" ></textarea></td>
         </tr>		       
         
         

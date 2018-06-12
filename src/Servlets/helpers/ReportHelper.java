@@ -1013,18 +1013,6 @@ public class ReportHelper
 				sb.append("---"); //changed line 882
 			return sb.toString();
 		}
-		else if(value.equals("ceilingWarranty"))
-		{
-			StringBuilder sb = new StringBuilder();
-			if(p.getCloseoutDetails().getCeilingWarrantyStatus() != null)
-				sb.append(convert(p.getCloseoutDetails().getCeilingWarrantyStatus()));
-			if(p.getCloseoutDetails().getCeilingWarrantyDate() != null)
-				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCeilingWarrantyDate()));
-			 
-			if(sb.toString().equals(""))
-				sb.append("---");
-			return sb.toString();
-		}
 		else if(value.equals("htiWarranty"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -1140,18 +1128,6 @@ public class ReportHelper
 				sb.append(convert(p.getCloseoutDetails().getSprinkleStatus()));
 			if(p.getCloseoutDetails().getSprinkleDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSprinkleDate()));
-			 
-			if(sb.toString().equals(""))
-				sb.append("---");
-			return sb.toString();
-		}
-		else if(value.equals("ceilingLiens"))
-		{
-			StringBuilder sb = new StringBuilder();
-			if(p.getCloseoutDetails().getCeilingStatus() != null)
-				sb.append(convert(p.getCloseoutDetails().getCeilingStatus()));
-			if(p.getCloseoutDetails().getCeilingDate() != null)
-				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCeilingDate()));
 			 
 			if(sb.toString().equals(""))
 				sb.append("---");
@@ -1372,13 +1348,6 @@ public class ReportHelper
 				else if(p.getCloseoutDetails().getSprinkleWarrantyStatus().equals(COMPLETE))
 					complete++;
 			}
-			if(p.getCloseoutDetails().getCeilingWarrantyStatus() != null)	
-			{
-				if(p.getCloseoutDetails().getCeilingWarrantyStatus().equals(NA))
-					required--;
-				else if(p.getCloseoutDetails().getCeilingWarrantyStatus().equals(COMPLETE))
-					complete++;
-			}
 			if(p.getCloseoutDetails().getHTIWarrantyStatus() != null)
 			{
 				if(p.getCloseoutDetails().getHTIWarrantyStatus().equals(NA))
@@ -1455,13 +1424,6 @@ public class ReportHelper
 				if(p.getCloseoutDetails().getSprinkleStatus().equals(NA))
 					required--;
 				else if(p.getCloseoutDetails().getSprinkleStatus().equals(COMPLETE))
-					complete++;
-			}
-			if(p.getCloseoutDetails().getCeilingStatus() != null)
-			{
-				if(p.getCloseoutDetails().getCeilingStatus().equals(NA))
-					required--;
-				else if(p.getCloseoutDetails().getCeilingStatus().equals(COMPLETE))
 					complete++;
 			}
 			if(p.getCloseoutDetails().getHTIStatus() != null)	

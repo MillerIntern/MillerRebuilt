@@ -135,7 +135,7 @@
 				</div>
 				<br>
 				<!--  <button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button> -->
-				<br>
+
 	   			
 			    <div class="paramHolder">
 			        <select class="parameterID" id="paramID1">
@@ -160,7 +160,10 @@
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
-	   			<tr class='head'><th>Warehouse</th><th>MCS Number</th><th>Item</th><th>Manager</th></tr>
+	   			<tr class='head'><th style="text-align: center">Warehouse</th>
+	   			<th style="text-align: center">MCS Number</th>
+	   			<th style="text-align: center">Item</th>
+	   			<th style="text-align: center">Manager</th></tr>
 	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
 	   		
 	   		</table>
@@ -470,19 +473,16 @@
 	        <td><input id="mcsNumber" type="text"></td>
 	        </tr>
 	
-			<tr>
-	        <td><b>Warehouse</b></td>
-	        <td>
-	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
-	        </td>
-	        </tr>
-	
 	        <tr>
 	        <td><b>Item</b></td>
 	        <td>
 	        <select id="project"><option value="default">--Please select an option--</option></select>
 			</td>
-			</tr>
+	        <td><b>Warehouse</b></td>
+	        <td>
+	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
+	        </td>
+	        </tr>
 	
 	        <tr>
 	        <td><b>Manager</b></td>
@@ -521,7 +521,7 @@
 	        <td><b>Refrigeration</b></td>
 	        <td>
 	        <select id="autofill-Refrigeration">
-	        	<option value="default">--Does this project require a refrigerator?--</option>
+	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
             </select>
@@ -531,7 +531,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits">
+	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tabs will be reset.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  
@@ -542,17 +542,16 @@
            	
 	        <tr>
 	        <td class="bold">Scope</td>
-	        <td><textarea  maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
+	        <td><textarea class="scrollTextBox" maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
+	        
+	        
+	        <td class="bold">MCS Notes</td>
+	        <td><textarea  class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
 	        </tr>
 	        
 	        <tr>
-	        <td class="bold">MCS Notes</td>
-	        <td><textarea  maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
-	        </tr>
-	
-	        <tr>
 	        <td class="bold">Customer Notes</td>
-	        <td><textarea  maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
+	        <td><textarea  class="scrollTextBox" maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
 	        </tr>	
 	        
 			
@@ -626,13 +625,13 @@
 				</select>
 				<table class='table' id='taskTable'>
 		   			<tr class='head'>
-		   				<th>Task</th>
-		   				<th>Description</th>
-		   				<th>Assigned</th>
-		   				<th>Due</th>
-		   				<th>Priority</th>
-		   				<th>Status</th>
-		   				<th style='width: 200px;'>Notes</th>
+		   				<th style="text-align: center">Task</th>
+		   				<th style="text-align: center">Description</th>
+		   				<th style="text-align: center">Assigned</th>
+		   				<th style="text-align: center">Due</th>
+		   				<th style="text-align: center">Priority</th>
+		   				<th style="text-align: center">Status</th>
+		   				<th style="text-align: center; width:200px">Notes</th>
 		   			</tr>
 				</table>
 				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
@@ -1280,7 +1279,11 @@
 	    <!-- Closeout Documents Tab--> 
 		<div id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
 	        <table id='closeoutDocumentsTable' class='table table-hover'>
-	        
+	            <tr>
+	            	<td></td>
+	            	<td><b>Closeout Document Status</b></td>
+	            	<td><b>Date Last Updated</b></td>
+	            </tr>
 	            <tr>
                 <td class='closeoutLabel'>Punch List</td>
                 <td style="width: 37%">  
@@ -1391,6 +1394,33 @@
 		<div id="finalInspections" class="info-tab info-tab-closeoutDocuments">
 	        <table id='finalInspectionsTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
+	        	<tr>
+	            	<td></td>
+	            	<td><b>Final Inspection Status</b></td>
+	            	<td><b>Date Last Updated</b></td>
+	            </tr>
+	        	<tr>
+	                <td class='bold'>Building Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input id="buildingPermitCL" type="text"></input>
+	                </td>   
+	            </tr> 
+	            <tr>
+	                <td class='bold'>Ceiling Final Inspection</td>
+	                <td>  
+	                    <select data-associated-date='ceilingFinalDate' class="closeout-input" id="ceilingFinalStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td>
+	                    <input id="ceilingFinalDate" type="text"></input>
+	                </td>   
+	            </tr>	        
 	            <tr>
 	                <td style="width: 40%"class='bold'>Mechanical Final Inspection</td>
 	                <td style="width: 40%">  
@@ -1435,28 +1465,7 @@
 	                    <input type="text" id="gasFinalDate" />
 	                </td>   
 	            </tr>
-	            <tr>
-	                <td class='bold'>Building Final Inspection</td>
-	                <td>  
-	                    <select data-associated-date='buildingPermitCL' class="closeout-input" id="buildFinalStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input id="buildingPermitCL" type="text"></input>
-	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>Ceiling Final Inspection</td>
-	                <td>  
-	                    <select data-associated-date='ceilingFinalDate' class="closeout-input" id="ceilingFinalStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input id="ceilingFinalDate" type="text"></input>
-	                </td>   
-	            </tr>
+	            
 	             <tr>
 	                <td class='bold'>Sprinkler Final Inspection</td>
 	                <td>  
@@ -1530,6 +1539,11 @@
 		<div id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
 	        <table id='warrantyLettersTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
+	        	<tr>
+	            	<td></td>
+	            	<td><b>Warranty Letter Status</b></td>
+	            	<td><b>Date Last Updated</b></td>
+	            </tr>
 	            <tr>
 	                <td style="width: 30%" class='bold'>MCS Warranty</td>
 	                <td style="width: 35%">  
@@ -1597,17 +1611,6 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Ceiling Warranty</td>
-	                <td>  
-	                    <select data-associated-date='ceilingWarrantyDate' class="closeout-input" id="ceilingWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" id="ceilingWarrantyDate" />
-	                </td>   
-	            </tr>
-	            <tr>
 	                <td class='bold'>Sprinkler Warranty</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input" id="sprinkleWarrantyStatus">
@@ -1668,6 +1671,11 @@
 		<div id="finalLiens" class="info-tab info-tab-closeoutDocuments">
 			<table id='finalLiensTable' class='table table-hover'>
 			<tr style="height: 0px;"></tr>
+	            <tr>
+	            	<td></td>
+	            	<td><b>Final Lien Status</b></td>
+	            	<td><b>Date Last Updated</b></td>
+	            </tr>
 	            <tr>
 	                <td style="width:25%" class='bold'>MCS Liens</td>
 	                <td style="width: 35%">  
@@ -1735,17 +1743,6 @@
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Ceiling Liens</td>
-	                <td>  
-	                    <select data-associated-date='ceilingDate' class="closeout-input" id="ceilingStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" id="ceilingDate" />
-	                </td>   
-	            </tr>
-	            <tr>
 	                <td class='bold'>Sprinkler Liens</td>
 	                <td>  
 	                    <select data-associated-date='sprinkleDate' class="closeout-input" id="sprinkleStatus">
@@ -1794,6 +1791,11 @@
 	    <!-- Other Items Tab -->
 	    <div id="otherItems" class="info-tab info-tab-closeoutDocuments">
 	        <table id='otherItemsTable' class='table table-hover'>
+	        <tr>
+	            	<td></td>
+	            	<td><b>AIA/MG2 Status</b></td>
+	            	<td><b>Date Last Updated</b></td>
+	            </tr>
 	        <tr>
 	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
 	                <td>  

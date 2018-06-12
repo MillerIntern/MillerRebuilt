@@ -115,7 +115,7 @@
 				</div>
 				<br>
 				<!--  <button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button> -->
-				<br>
+	
 	   			
 			    <div class="paramHolder">
 			        <select class="parameterID" id="paramID1">
@@ -140,7 +140,14 @@
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
-	   			<tr class='head'><th>Warehouse</th><th>Item</th><th>Manager</th><th>Low</th><th>Medium</th><th>High</th><th>Last Updated</th></tr>
+	   			<tr class='head'>
+	   			<th style="text-align: center">Warehouse</th>
+	   			<th style="text-align: center">Item</th>
+	   			<th style="text-align: center">Manager</th>
+	   			<th style="text-align: center">Low</th>
+	   			<th style="text-align: center">Medium</th>
+	   			<th style="text-align: center">High</th>
+	   			<th style="text-align: center">Last Updated</th></tr>
 	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
 	   		
 	   		</table>
@@ -154,13 +161,14 @@
 	
 	</div>  <!-- THIS ENDS THE DIV FOR FIND PROJECT -->
 	<div id = "ruleManagerDiv" style = "display : none">
-		<h3 id = "ruleManagerHeader">Rule Manager<span></span></h3>
+		<h3 id = "ruleManagerHeader" style="font-size: 18px"><b>Rule Manager</b><small style="color: black; font-size: 15px"><span></span></small></h3>
 		<div id = "ruleManagerTopLevelDiv">
 			<ul class = "list-group">
 				<li class = "list-group-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
 				<li class = "list-group-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
 				<li class = "list-group-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
 				<li class = "list-group-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
+				<li class = "list-group-item" id = "GeneralInfoItem">General Info <span id = "generalInfoStatus"></span></li>
 				<li class = "list-group-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
 				<li class = "list-group-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
 				<li class = "list-group-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>

@@ -35,7 +35,7 @@ ul.tabs li
     padding: 10px 15px;
     cursor: pointer;
     font-family: 'Raleway',sans-serif;
-    font-size: 20px; 
+    font-size: 18px; 
     font-weight: 350;
     transition: all 0.3s ease 0s;
 }
@@ -43,7 +43,6 @@ ul.tabs li
 ul.tabs li:last-child
 {
     border-left: none;
-    border-right: 1.5px solid #555555;
 }
 
 ul.tabs li:hover:not(.current)
