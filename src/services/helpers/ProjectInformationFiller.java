@@ -125,6 +125,11 @@ public class ProjectInformationFiller
 			AutoFillService.autoFillProject(currentProject , "Permits" , params.get("autofill-Permits"));
 			currentProject.setAutofillPermits(params.get("autofill-Permits"));
 		}
+		
+		if(params.get("class") != null && !(params.get("class").equals("-1") || params.get("class").equals(""))) {
+			AutoFillService.autoFillProject(currentProject , "ProjectClass" , params.get("class"));
+			currentProject.setProjectClass((ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
+		}
 			
 	}
 	

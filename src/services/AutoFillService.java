@@ -38,6 +38,7 @@ public class AutoFillService {
 	public static void autoFillProject(Project proj , String domain , String value)
 	{
 		System.out.println("autofill Called");
+		System.out.println("domain is " + domain);
 
 		if(proj == null || domain == null || value == null) {
 			System.out.println("Error: Null Autofill");
@@ -55,39 +56,147 @@ public class AutoFillService {
 		}
 		
 		
-		if(domain.equals("HVAC")) {
+		if(domain.equals("HVAC"))
+		{
 			autoFillHVAC(proj , value , today);
-		} else if(domain.equals("Refrigeration")) {
+		}
+		else if(domain.equals("Refrigeration"))
+		{
 			autoFillRefrigeration(proj , value , today);
-			
-		} else if(domain.equals("Permits")) {
+		}
+		else if(domain.equals("Permits")) 
+		{
 			autoFillPermits(proj , value , today);
+			autoFillFinalInspections(proj , value , today);
+		}
+		else if(domain.equals("ProjectClass"))
+		{
+			autoFillCloseoutDocs(proj, value, today);
+			autoFillCloseout(proj, value, today);
 		}
 		
 			
 	}
 	
-//	public static void autoFillCloseoutDocs(Project proj, Date today)
-//	{
-//		String value = "4";
-//		
-//		CloseoutDetails cd;
-//		if(proj.getCloseoutDetails() == null)
-//			cd = new CloseoutDetails();
-//		else 
-//			cd = proj.getCloseoutDetails();
-//		
-//		cd.setPunchListStatus(value);
-//		cd.setPunchList(today);
-//		
-//		cd.setAsBuiltDrawingsStatus(value);
-//		cd.setAsBuilts(today);
-//		
-//		cd.setCloseOutPhotosStatus(value);
-//		cd.setCloseoutPhotosCL(today);
-//		
-//		proj.setCloseoutDetails(cd);
-//	}
+	public static void autoFillCloseoutDocs(Project proj, String _value, Date today)
+	{
+		String value = null;
+		
+		if(_value.equals("2"))
+			value = "4";
+		else
+			value = "3";
+		
+		CloseoutDetails cd;
+		if(proj.getCloseoutDetails() == null)
+			cd = new CloseoutDetails();
+		else 
+			cd = proj.getCloseoutDetails();
+		
+		cd.setPunchListStatus(value);
+		cd.setPunchList(today);
+		
+		cd.setAsBuiltDrawingsStatus(value);
+		cd.setAsBuilts(today);
+		
+		cd.setCloseOutPhotosStatus(value);
+		cd.setCloseoutPhotosCL(today);
+		
+		proj.setCloseoutDetails(cd);
+	}
+	
+	public static void autoFillCloseout(Project proj, String _value, Date today)
+	{
+		String value = null;
+		
+		if(_value.equals("2"))
+			value = "6";
+		else
+			value = "6";
+		
+		CloseoutDetails cd;
+		if(proj.getCloseoutDetails() == null)
+			cd = new CloseoutDetails();
+		else 
+			cd = proj.getCloseoutDetails();
+		
+		cd.setMCSWarrantyStatus(value);
+		cd.setMCSWarranty(today);
+		
+		cd.setGCWarrantyStatus(value);
+		cd.setGCWarrantyDate(today);
+		
+		cd.setMechanicalWarrantyStatus(value);
+		cd.setMechanicalWarrantyDate(today);
+		
+		cd.setElectricalWarrantyStatus(value);
+		cd.setElectricalWarrantyDate(today);
+		
+		cd.setPlumbingWarrantyStatus(value);
+		cd.setPlumbingWarrantyDate(today);
+		
+		cd.setGasWarrantyStatus(value);
+		cd.setGasWarrantyDate(today);
+		
+		cd.setSprinkleWarrantyStatus(value);
+		cd.setSprinkleWarrantyDate(today);
+		
+		cd.setHTIWarrantyStatus(value);
+		cd.setHTIWarrantyDate(today);
+		
+		cd.setOtherWarrantyStatusA(value);
+		cd.setOtherWarrantyDateA(today);
+		
+		cd.setOtherWarrantyStatusB(value);
+		cd.setOtherWarrantyDateB(today);
+		
+		cd.setMCSStatus(value);
+		cd.setMCSDate(today);
+		
+		cd.setGCStatus(value);
+		cd.setGCDate(today);
+		
+		cd.setMechanicalStatus(value);
+		cd.setMechanicalDate(today);
+		
+		cd.setElectricalStatus(value);
+		cd.setElectricalDate(today);
+		
+		cd.setPlumbingStatus(value);
+		cd.setPlumbingDate(today);
+		
+		cd.setGasStatus(value);
+		cd.setGasDate(today);
+		
+		cd.setSprinkleStatus(value);
+		cd.setSprinkleDate(today);
+		
+		cd.setHTIStatus(value);
+		cd.setHTIDate(today);
+
+		cd.setOtherFinalLeinsStatus(value);
+		cd.setOtherFinalLeinsDate(today);
+		
+		cd.setSubstantialCompletionStatus(value);
+		cd.setSubstantialCompletionDate(today);
+		
+		cd.setPaymentOfDebtsAndClaimsStatus(value);
+		cd.setPaymentOfDebtsAndClaimsDate(today);
+		
+		cd.setReleaseOfLiensStatus(value);
+		cd.setReleaseOfLiensDate(today);
+		
+		cd.setMulvannySignOffStatus(value);
+		cd.setMulvannySignOffDate(today);
+		
+		cd.setEquipmentSubmittalStatus(value);
+		cd.setEquipmentSubCL(today);
+		
+		cd.setManualStatus(value);
+		cd.setManualDate(today);
+		
+		proj.setCloseoutDetails(cd);
+	}
 	
 	public static void autoFillHVAC(Project proj , String _value , Date today)
 	{		
@@ -111,17 +220,6 @@ public class AutoFillService {
 		
 		cd.setVerisaeShutdownReport(today);
 		cd.setVerisaeReportStatus(value);
-		
-		value = "4";
-		
-		cd.setPunchListStatus(value);
-		cd.setPunchList(today);
-		
-		cd.setAsBuiltDrawingsStatus(value);
-		cd.setAsBuilts(today);
-		
-		cd.setCloseOutPhotosStatus(value);
-		cd.setCloseoutPhotosCL(today);
 		
 		proj.setCloseoutDetails(cd);
 	}
@@ -157,19 +255,63 @@ public class AutoFillService {
 		projectObjects.SalvageValue salvageValue = new projectObjects.SalvageValue(today, salVal);
 		cd.setSalvageValue(salvageValue);
 		
-		value = "4";
-		
-		cd.setPunchListStatus(value);
-		cd.setPunchList(today);
-		
-		cd.setAsBuiltDrawingsStatus(value);
-		cd.setAsBuilts(today);
-		
-		cd.setCloseOutPhotosStatus(value);
-		cd.setCloseoutPhotosCL(today);
-		
 		proj.setCloseoutDetails(cd);
 		
+	}
+	
+	public static void autoFillFinalInspections(Project proj, String _value, Date today)
+	{
+		String value = null;
+		
+		if(_value.equals("0"))
+			value = "6";
+		else if(_value.equals("1"))
+			value = "6";
+		else if(_value.equals("2"))
+			value = "3";
+		else
+			value = "6";
+
+		CloseoutDetails cd;
+		if(proj.getCloseoutDetails() == null)
+			cd = new CloseoutDetails();
+		else
+			cd = proj.getCloseoutDetails();
+		
+		cd.setBuildingFinalStatus(value);
+		cd.setBuildingPermitCL(today);
+		
+		cd.setCeilingFinalStatus(value);
+		cd.setCeilingFinalDate(today);
+		
+		cd.setMechFinalStatus(value);
+		cd.setMechFinalDate(today);
+		
+		cd.setElecFinalStatus(value);
+		cd.setElecFinalDate(today);
+		
+		cd.setPlumbingFinalStatus(value);
+		cd.setPlumbingFinalDate(today);
+		
+		cd.setGasFinalStatus(value);
+		cd.setGasFinalDate(today);
+		
+		cd.setSprinkleFinalStatus(value);
+		cd.setSprinkleFinalDate(today);
+		
+		cd.setFireAlarmFinalStatus(value);
+		cd.setFireAlarmFinalDate(today);
+
+		cd.setLowVolFinalStatus(value);
+		cd.setLowVolFinalDate(today);
+		
+		cd.setTmpCertificateStatus(value);
+		cd.setTmpCertificateDate(today);
+		
+		cd.setCertificateStatus(value);
+		cd.setCertificateDate(today);
+		
+		proj.setCloseoutDetails(cd);
 		
 	}
 	

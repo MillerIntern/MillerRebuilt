@@ -1,8 +1,10 @@
 let AUTO_FILL_OBJECT = {
 		PERMITS : false ,
 		INSPECTIONS : false ,
+		FINAL_INSPECTIONS : false,
 		HVAC : false ,
 		REFRIGERATION : false ,
+		AIA : false
 };
 
 //var closeoutDocs = document.getElementById("closeoutDocuments").addEventListener("focus", autofillCloseoutDocs); 
@@ -33,10 +35,22 @@ $(document).ready(function(){$('#autofill-Permits').change(function(){
 	
 	AUTO_FILL_OBJECT.PERMITS = true;
 	AUTO_FILL_OBJECT.INSPECTIONS = true;
+	AUTO_FILL_OBJECT.FINAL_INSPECTIONS = true;
 
 	autofillPermits();
 	autofillInspections();
+	autofillFinalInspections();
 })});
+
+$(document).ready(function(){$('#class').change(function(){
+	if($(this).val() == "default") return;
+	
+	AUTO_FILL_OBJECT.AIA = true;
+	
+	autofillCloseoutDocs();
+	autofillCloseout();
+})});
+
 
 
 let TODAYS_DATE = getTodaysDate();
@@ -67,15 +81,6 @@ function autofillHVAC()
 		$(this).val(TODAYS_DATE);
 	});
 	
-	value = REQUIRED; 
-	   
-	$('.autofill-CloseoutDocs').each(function(index){
-			$(this).val(value);
-	});
-	   
-	$('.autofill-CloseoutDocs-Date').each(function(index){
-			$(this).val(TODAYS_DATE);
-	});
 	
 }
 
@@ -125,37 +130,62 @@ function autofillRefrigeration()
     	$(this).val(html);
 		$(this).html(html);
 	});
-	
-	value = REQUIRED; 
-	   
-	$('.autofill-CloseoutDocs').each(function(index){
-			$(this).val(value);
-	});
-	   
-	$('.autofill-CloseoutDocs-Date').each(function(index){
-			$(this).val(TODAYS_DATE);
-	});
-	
+		
 }
 
-//function autofillCloseoutDocs()
-//{
-//   let REQUIRED = 4; 
-//
-//   let value = REQUIRED; 
-//      
-//   $('.autofill-CloseoutDocs').each(function(index){
-//		$(this).val(value);
-//	});
-//   
-//   $('.autofill-CloseoutDocs-Date').each(function(index){
-//		$(this).val(TODAYS_DATE);
-//	});
-//}
+function autofillCloseoutDocs()
+{
+	console.log("Autofill Closeout Docs");
+	
+	let required = $('#class').val();
+	
+	let REQUIRED = 4; 
+	let NA = 3; 
+	let TBD = 6;
+	
+    let value; 
+    if(required == 2)
+		value = REQUIRED;
+    else 
+    	value = NA;
+      
+    $('.autofill-CloseoutDocs').each(function(index){
+		$(this).val(value);
+	});
+   
+    $('.autofill-CloseoutDocs-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
+}
+
+function autofillCloseout()
+{
+	console.log("Autofill Closeout");
+	
+	let required = $('#class').val();
+	
+	let REQUIRED = 4; 
+	let NA = 3; 
+	let TBD = 6;
+	
+    let value; 
+    if(required == 2)
+		value = TBD;
+    else 
+    	value = TBD;
+      
+    $('.autofill-Closeout').each(function(index){
+		$(this).val(value);
+	});
+   
+    $('.autofill-Closeout-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
+}
 
 function autofillPermits()
 {
-	console.log("Autofill Perm");
+	console.log("Autofill Permits");
 
 	let required = $('#autofill-Permits').val();
     
@@ -217,7 +247,6 @@ function autofillInspections()
 
 	let required = $('#autofill-Permits').val();
 	
-	
 	let PREPARING = "Preparing"; //Correspond to id in database for closeoutstatus (Required)
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
 	let TBD_STATUS = "TBD";
@@ -268,6 +297,38 @@ function autofillInspections()
 		$(this).val(TODAYS_DATE);
 	});
 	
+}
 
+function autofillFinalInspections()
+{
+	console.log("Autofill Final Inspections");
+	
+	let required = $('#autofill-Permits').val();
+	
+	let NA = 3; 
+	let TBD = 6;
+	
+	let YES = 1;
+	let NO = 2;
+	let TBD = 0;
+	
+	let value;
+	
+	if(required == YES) 
+		value = TBD;
+	else if(required == NO) 
+		value = NA;
+	else if(required == TBD)
+		value = TBD;
+	else 
+		value = TBD;
+	
+	$('.autofill-Final-Insp').each(function(index){
+		$(this).val(value);
+	});
+   
+    $('.autofill-Final-Insp-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
 	
 }

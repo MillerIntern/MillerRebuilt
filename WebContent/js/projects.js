@@ -2343,25 +2343,6 @@ function getProject_PROJECT_DATA()
 }
 
 
-function confirmChangePermit()
-{   
-	var permitVal;
-	$("#autofill-Permits").change(function() {
-		
-		 var newVal = $(this).val();
-	
-		 var changePermit = confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tabs will be reset.');
-		 
-		 if(!changePermit)
-		 {	 
-			 $(this).val(permitVal)
-			 return;
-		 }
-		 else
-	    	 permitVal = newVal;	
-	});
-}
-
 /**
 * This function fills out the page with project data. This is so the user can edit the project information
 * Input: JSON object representing a project
@@ -3130,7 +3111,7 @@ function fillEquipment (data) {
  */
 function fillCloseout (data) {
 	let closeoutData = data.closeoutDetails;
-	$('#closeoutSummary').find('#mg2Completion').html(closeoutStatusConverter(closeoutData.mg2CompletionStatus));
+	$('#closeoutSummary').find('#mg2Completion').html(closeoutStatusConverter(closeoutData.substantialCompletionStatus));
 	$('#closeoutSummary').find('#punchList').html(closeoutStatusConverter(closeoutData.punchListStatus));
 	$('#closeoutSummary').find('#verisaeReport').html(closeoutStatusConverter(closeoutData.verisaeReportStatus));
 	
@@ -3416,6 +3397,8 @@ function closeoutStatusConverter(param)
 		return "N/A";
 	else if(param == 4)
 		return "Required";
+	else if(param == 6)
+		return "TBD";
 	else
 		return "---";
 }
