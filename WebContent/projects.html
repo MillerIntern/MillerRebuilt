@@ -192,8 +192,7 @@
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Information</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
-				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits</a></li>
-				<li role='presentation' data-tab='inspections' id="inspectionsTabLink"><a>Inspections</a></li>
+				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits and Inspections</a></li>
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
@@ -254,135 +253,101 @@
 				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
-			<div style="width: 55%" class='info-tab info-tab-permits' id='permits'>
+			<div style="width: 100%" class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr>
-						<th style="width: 20%; text-align: center"><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button></th>
+						<th style="width: 15%; text-align: center"><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits and Inspections</button></th>
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
-						<th style="width: 20%; text-align: center">Permit Required</th>
-						<th style="text-align: center; width: 20%">Permit Status</th>
-						<th style="text-align: center; width: 25%">Permit Last Updated</th>
+						<th style="width: 10%; text-align: center">Permit Required</th>
+						<th style="width: 10%; text-align: center">Permit Status</th>
+						<th style="width: 12%; text-align: center">Permit Last Updated</th>
+						<th style="width: 12%; text-align: center">Inspection Required</th>
+						<th style="width: 12%; text-align: center">Inspection Status</th>
+						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Building</td>
 						<td align="center" id='buildingPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='buildingPermit' class ="italics permitTableData" width = 20%></td>
-						<td align="center" id='buildingPermitDate' class ="italics permitTableData" width = 20%></td></tr>
-					<tr>
-						<td align="center" class = "bold">Ceiling</td>
-						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
-						<td align="center" id='ceilingPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Mechanical</td>
-						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
-						<td align="center" id='mechanicalPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Electrical</td>
-						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
-						<td align="center" id='electricalPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Plumbing</td>
-						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
-						<td align="center" id='plumbingPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Gas</td>
-						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
-						<td align="center" id='gasPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Fire Sprinkler</td>
-						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
-						<td align="center" id='sprinklerPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Fire Alarm</td>
-						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
-						<td align="center" id='fireAlarmPermitDate' class ="italics permitTableData"></td>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Low Voltage</td>
-						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
-						<td align="center" id='lowVoltagePermitDate' class ="italics permitTableData"></td>
-					</tr>
-				</table>	
-			</div> <!-- Permits -->
-			<div style="width: 60%" class='info-tab info-tab-inspections' id='inspections'>
-				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr>
-						<th style="width: 20%; text-align: center" ><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button></th>
-						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
-						<th style="width: 20%; text-align: center">Inspection Required</th>
-						<th style="width: 20%; text-align: center">Inspection Status</th>
-						<th style="width: 25%; text-align: center">Inspection Last Updated</th>
-					</tr>
-					<tr>
-						<td align="center" class = "bold">Building</td>
+						<td align="center" id='buildingPermit' class ="italics permitTableData"></td>
+						<td align="center" id='buildingPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='buildingInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='buildingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Ceiling</td>
+						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
+						<td align="center" id='ceilingPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='ceilingInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='ceilingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Mechanical</td>
+						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
+						<td align="center" id='mechanicalPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='mechanicalInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='mechanicalInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Electrical</td>
+						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
+						<td align="center" id='electricalPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='electricalInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='electricalInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Plumbing</td>
+						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
+						<td align="center" id='plumbingPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='plumbingInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='plumbingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Gas</td>
+						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
+						<td align="center" id='gasPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='gasInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='gasInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Fire Sprinkler</td>
+						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
+						<td align="center" id='sprinklerPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='sprinklerInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='sprinklerInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Fire Alarm</td>
+						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
+						<td align="center" id='fireAlarmPermitDate' class ="italics permitTableData"></td>
 						<td align="center" id='fireAlarmInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='fireAlarmInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>	
+					<tr>
 						<td align="center" class = "bold">Low Voltage</td>
+						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
+						<td align="center" id='lowVoltagePermitDate' class ="italics permitTableData"></td>	
 						<td align="center" id='lowVoltageInspectionRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltageInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 				</table>	
-			</div> <!-- Permits -->
+			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
 				    <thead>
@@ -531,7 +496,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tabs will be reset.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be reset.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  
@@ -774,11 +739,11 @@
 				<tr>
 					<td></td>
 				    <td align="center" class = "bold permitEditHeader">Permit Required</td>
-					<td align="center" class = "bold permitEditHeader">Permit</td>
-					<td align="center" class = "bold">Permit Date</td>
+					<td align="center" class = "bold permitEditHeader">Permit Status</td>
+					<td align="center" class = "bold">Permit Last Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
-					<td align="center" class = "bold permitEditHeader">Inspection</td>
-					<td align="center" class = "bold">Inspection Date</td>
+					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
+					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
 					<td align="center" class = "bold">Building</td>
@@ -797,7 +762,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="buildingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="buildingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='buildingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="buildingInspectionReq">
@@ -813,11 +778,10 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="buildingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="buildingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
-				
-						<tr>
+				<tr>
 					<td align="center" class = "bold">Ceiling</td>
 					<td align="center">
 					    <select data-associated-date='ceilingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="ceilingPermitReq">
@@ -834,7 +798,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="ceilingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="ceilingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='ceilingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="ceilingInspectionReq">
@@ -850,7 +814,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="ceilingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="ceilingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -862,11 +826,11 @@
 		        <tr>
 					<td></td>
 					<td align="center" class = "bold permitEditHeader"> Permit Required</td> 
-					<td align="center" class = "bold permitEditHeader">Permit</td>
-					<td align="center" class = "bold">Permit Date</td>
+					<td align="center" class = "bold permitEditHeader">Permit Status</td>
+					<td align="center" class = "bold">Permit Last Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
-					<td align="center" class = "bold permitEditHeader">Inspection</td>
-					<td align="center" class = "bold">Inspection Date</td>
+					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
+					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
 					<td align="center" class = "bold">Mechanical</td>
@@ -883,7 +847,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="mechanicalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="mechanicalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='mechanicalInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="mechanicalInspectionReq">
@@ -899,10 +863,9 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="mechanicalInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="mechanicalInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
-				
 				<tr>
 					<td align="center" class = "bold">Electrical</td>
 					<td align="center">
@@ -919,7 +882,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="electricalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="electricalPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='electricalInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="electricalInspectionReq">
@@ -935,7 +898,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="electricalInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="electricalInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -955,7 +918,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="plumbingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="plumbingPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='plumbingInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="plumbingInspectionReq">
@@ -971,7 +934,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="plumbingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="plumbingInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -991,7 +954,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="gasPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="gasPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='gasInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="gasInspectionReq">
@@ -1007,7 +970,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="gasInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="gasInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -1019,11 +982,11 @@
 		        <tr>
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
-					<td align="center" class = "bold permitEditHeader">Permit</td>
-					<td align="center" class = "bold">Permit Date</td>
+					<td align="center" class = "bold permitEditHeader">Permit Status</td>
+					<td align="center" class = "bold">Permit Last Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
-					<td align="center" class = "bold permitEditHeader">Inspection</td>
-					<td align="center" class = "bold">Inspection Date</td>
+					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
+					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
 					<td align="center" class = "bold">Sprinkler</td>
@@ -1041,7 +1004,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="sprinklerPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="sprinklerPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='sprinklerInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="sprinklerInspectionReq">
@@ -1057,7 +1020,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="sprinklerInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="sprinklerInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -1077,7 +1040,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="fireAlarmPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="fireAlarmPermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='fireAlarmInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="fireAlarmInspectionReq">
@@ -1093,7 +1056,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="fireAlarmInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="fireAlarmInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -1113,7 +1076,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="voltagePermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+		            	<input type="text" placeholder="Select a Date" id="voltagePermitLastUpdated" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='voltageInspectionLastUpdated' class="inspectionReq autofill-Inspection-Requirement" id="voltageInspectionReq">
@@ -1129,7 +1092,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="voltageInspectionLastUpdated" class="permitAndInspectionStatusDate  autofill-Inspection-date"/>
+		           		<input type="text" placeholder="Select a Date" id="voltageInspectionLastUpdated" class="permitAndInspectionStatusDate  autofill-Inspection-date"/>
 					</td>
 				</tr>
 				
@@ -1141,14 +1104,14 @@
 		        <tr>
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
-					<td align="center" class = "bold permitEditHeader">Permit</td>
-					<td align="center" class = "bold">Permit Date</td>
+					<td align="center" class = "bold permitEditHeader">Permit Status</td>
+					<td align="center" class = "bold">Permit Last Updated</td>
                     <td align="center" class = "bold permitEditHeader">Inspection Required</td>
-					<td align="center" class = "bold permitEditHeader">Inspection</td>
-					<td align="center" class = "bold">Inspection Date</td>
+					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
+					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Other Permit (A)</td>
+					<td align="center" class = "bold">Other (A)</td>
 					<td align="center">
 					    <select data-associated-date='otherAPermitLastUpdated' class="permitReq" id="otherAPermitReq">
 					        <option value="default">--Required--</option>
@@ -1163,7 +1126,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="otherAPermitLastUpdated" class="permitAndInspectionStatusDate"/>
+		            	<input type="text" placeholder="Select a Date" id="otherAPermitLastUpdated" class="permitAndInspectionStatusDate"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='otherAInspectionLastUpdated' class="inspectionReq" id="otherAInspectionReq">
@@ -1179,12 +1142,12 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="otherAInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
+		           		<input type="text" placeholder="Select a Date" id="otherAInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
 					</td>
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Other Permit (B)</td>
+					<td align="center" class = "bold">Other (B)</td>
 					<td align="center">
 					    <select data-associated-date='otherBPermitLastUpdated' class="permitReq" id="otherBPermitReq">
 					        <option value="default">--Required--</option>
@@ -1199,7 +1162,7 @@
 						</select>
 					</td>
 					<td align="center">
-		            	<input type="text" id="otherBPermitLastUpdated" class="permitAndInspectionStatusDate"/>
+		            	<input type="text" placeholder="Select a Date" id="otherBPermitLastUpdated" class="permitAndInspectionStatusDate"/>
 					</td>
 					<td align="center">
 					    <select data-associated-date='otherBInspectionLastUpdated' class="inspectionReq" id="otherBInspectionReq">
@@ -1215,7 +1178,7 @@
 						</select>
 					</td>
 					<td align="center">
-		           		<input type="text" id="otherBInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
+		           		<input type="text" placeholder="Select a Date" id="otherBInspectionLastUpdated" class="permitAndInspectionStatusDate"/>
 					</td>
 				</tr>
 				</table>
@@ -1292,7 +1255,7 @@
                     </select>
                 </td>
                 <td style="width: 37%">
-                    <input type="text" id="punchList" class="autofill-CloseoutDocs-Date" />
+                    <input type="text" placeholder="Select a Date" id="punchList" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
             <tr>
@@ -1303,7 +1266,7 @@
                     </select>
                 </td>
                 <td>
-                <input type="text" id="asBuilts" class="autofill-CloseoutDocs-Date" />
+                <input type="text" placeholder="Select a Date" id="asBuilts" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
             <tr>
@@ -1314,7 +1277,7 @@
                     </select>
                 </td>
                 <td>
-                    <input id="closeoutPhotosCL" type="text" class="autofill-CloseoutDocs-Date"></input>
+                    <input id="closeoutPhotosCL" placeholder="Select a Date" type="text" class="autofill-CloseoutDocs-Date"></input>
                 </td>   
             </tr>
             <tr>
@@ -1325,7 +1288,7 @@
                     </select>
                 </td>
                 <td>
-                    <input type="text" id="HVACstartupFormDate" class="autofill-HVAC-date" />
+                    <input type="text" placeholder="Select a Date" id="HVACstartupFormDate" class="autofill-HVAC-date" />
                 </td>   
             </tr>
             <tr>
@@ -1336,7 +1299,7 @@
                 </select>
                 </td>
                 <td>
-                <input type="text" id="alarmHvac" class="autofill-Refrigeration-date"/>
+                <input type="text" placeholder="Select a Date" id="alarmHvac" class="autofill-Refrigeration-date"/>
                 </td>   
             </tr>
             <tr>
@@ -1347,7 +1310,7 @@
                     </select>
                 </td>
                 <td>
-                <input type="text" id="verisae" class="autofill-HVAC-date"/>	
+                <input type="text" placeholder="Select a Date" id="verisae" class="autofill-HVAC-date"/>	
                 </td>   
             </tr>
         </table>
@@ -1407,7 +1370,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input id="buildingPermitCL" type="text" class="autofill-Final-Insp-Date"></input>
+	                    <input id="buildingPermitCL" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1418,7 +1381,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input id="ceilingFinalDate" type="text" class="autofill-Final-Insp-Date"></input>
+	                    <input id="ceilingFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>	        
 	            <tr>
@@ -1429,7 +1392,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="mechFinalDate" class="autofill-Final-Insp-Date"></input>
+	                    <input type="text" placeholder="Select a Date" id="mechFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1440,7 +1403,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	            <input type="text" id="elecFinalDate" class="autofill-Final-Insp-Date"/>
+	            <input type="text" placeholder="Select a Date" id="elecFinalDate" class="autofill-Final-Insp-Date"/>
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1451,7 +1414,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="plumbingFinalDate" class="autofill-Final-Insp-Date"></input>
+	                    <input type="text" placeholder="Select a Date" id="plumbingFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1462,7 +1425,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="gasFinalDate" class="autofill-Final-Insp-Date" />
+	                    <input type="text" placeholder="Select a Date" id="gasFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
 	            
@@ -1474,7 +1437,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="sprinkleFinalDate" class="autofill-Final-Insp-Date" />
+	                    <input type="text" placeholder="Select a Date" id="sprinkleFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1485,7 +1448,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input id="fireAlarmFinalDate" type="text" class="autofill-Final-Insp-Date"></input>
+	                    <input id="fireAlarmFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1496,7 +1459,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input id="lowVolFinalDate" type="text" class="autofill-Final-Insp-Date"></input>
+	                    <input id="lowVolFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>  
 	            <tr>
@@ -1507,7 +1470,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	            <input type="text" id="tmpCertificateDate" class="autofill-Final-Insp-Date" />
+	            <input type="text" placeholder="Select a Date" id="tmpCertificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1518,7 +1481,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="certificateDate" class="autofill-Final-Insp-Date" />
+	                    <input type="text" placeholder="Select a Date" id="certificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
 	       </table>
@@ -1552,7 +1515,7 @@
 	                    </select>
 	                </td>
 	                <td style="width: 35%">
-	                    <input id="MCSWarranty" class="autofill-Closeout-Date"  type="text"></input>
+	                    <input id="MCSWarranty" placeholder="Select a Date" class="autofill-Closeout-Date"  type="text"></input>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1563,7 +1526,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="GCWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="GCWarrantyDate" />
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1574,7 +1537,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="mechanicalWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="mechanicalWarrantyDate" />
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1585,7 +1548,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="electricalWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="electricalWarrantyDate" />
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1596,7 +1559,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="plumbingWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="plumbingWarrantyDate" />
 	                </td>   
 	            </tr>
 	             <tr>
@@ -1607,7 +1570,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="gasWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="gasWarrantyDate" />
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1618,7 +1581,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="sprinkleWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="sprinkleWarrantyDate" />
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1629,7 +1592,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" class="autofill-Closeout-Date" id="HTIWarrantyDate" />
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="HTIWarrantyDate" />
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1640,7 +1603,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="otherWarrantyDateA" class="autofill-Closeout-Date" />
+	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateA" class="autofill-Closeout-Date" />
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1651,7 +1614,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="otherWarrantyDateB" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateB" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	        </table>
@@ -1684,7 +1647,7 @@
 	                    </select>
 	                </td>
 	                <td style="width: 35%">
-	                    <input type="text" id="MCSDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="MCSDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1695,7 +1658,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="GCDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="GCDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1706,7 +1669,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="mechanicalDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="mechanicalDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1717,7 +1680,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="electricalDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="electricalDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1728,7 +1691,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="plumbingDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="plumbingDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	             <tr>
@@ -1739,7 +1702,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="gasDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="gasDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1750,7 +1713,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="sprinkleDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="sprinkleDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
@@ -1761,7 +1724,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="HTIDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="HTIDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr>
 	            <tr>
@@ -1772,7 +1735,7 @@
 	                    </select>
 	                </td>
 	                <td>
-	                    <input type="text" id="otherFinalLiensDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="otherFinalLiensDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr>
 	       </table>
@@ -1804,7 +1767,7 @@
 	                    </select>
 	                </td> 
 	                <td>
-	                    <input type="text" id="substantialCompletionDate" class="autofill-Closeout-Date"/>
+	                    <input type="text" placeholder="Select a Date" id="substantialCompletionDate" class="autofill-Closeout-Date"/>
 	                </td>
 	        </tr>
 	        <tr>
@@ -1815,7 +1778,7 @@
                     </select>
                 </td> 
                 <td>
-                    <input type="text" id="paymentOfDebtsAndClaimsDate" class="autofill-Closeout-Date"/>
+                    <input type="text" placeholder="Select a Date" id="paymentOfDebtsAndClaimsDate" class="autofill-Closeout-Date"/>
                 </td>
             </tr>
             <tr>
@@ -1826,7 +1789,7 @@
                     </select>
                 </td> 
                 <td>
-                    <input type="text" id="releaseOfLiensDate" class="autofill-Closeout-Date"/>
+                    <input type="text" placeholder="Select a Date" id="releaseOfLiensDate" class="autofill-Closeout-Date"/>
                 </td>
             </tr>
             <tr>
@@ -1837,7 +1800,7 @@
                     </select>
                 </td> 
                 <td>
-                    <input type="text" id="mulvannySignOffDate" class="autofill-Closeout-Date"/>
+                    <input type="text" placeholder="Select a Date" id="mulvannySignOffDate" class="autofill-Closeout-Date"/>
                 </td>
             </tr>     
 	        <tr>
@@ -1848,7 +1811,7 @@
                     </select>
                 </td>
                 <td>
-                    <input id="equipmentSubCL" type="text" class="autofill-Closeout-Date"></input>  
+                    <input id="equipmentSubCL" placeholder="Select a Date" type="text" class="autofill-Closeout-Date"></input>  
                 </td>
             </tr>
             <tr>
@@ -1859,7 +1822,7 @@
                     </select>
                 </td>
                 <td>
-                    <input type="text" id="manualDate" class="autofill-Closeout-Date"/>
+                    <input type="text" placeholder="Select a Date" id="manualDate" class="autofill-Closeout-Date"/>
                 </td>   
             </tr>
         </table>

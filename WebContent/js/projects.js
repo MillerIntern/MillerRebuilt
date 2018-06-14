@@ -1090,12 +1090,17 @@ $(document).ready(function(){
 	$('#permitData').find("#otherAInspectionLastUpdated").datepicker();
 	$('#permitData').find("#otherBInspectionLastUpdated").datepicker();
 	
-	/*
+	
 	$('.permitStatus, .inspectionStatus').change(function () {
 		//console.log($(this).attr('data-associated-date'));
 		$('#' + $(this).attr('data-associated-date')).val(getToday());
 	});
-	*/
+	
+	$('.permitReq, .inspectionReq').change(function () {
+		//console.log($(this).attr('data-associated-date'));
+		$('#' + $(this).attr('data-associated-date')).val(getToday());
+	});
+	
 	
 });
 
@@ -1156,6 +1161,7 @@ function getProjectEnums_PERMIT()
 			'domain': 'project',
 			'action': 'getSpecificObjects',	
 			'permitstage': true ,
+//			'permitreq' : true,
 			'inspectionstatus' : true
 		},
 		success: function(data)
@@ -1184,13 +1190,7 @@ function fillDropdowns_PERMIT(json)
 //		else if(a.id > b.id ) return 1;
 //		else return 0;
 //	});
-//	
-//	var inspectionRequirement = JSON.parse(json["inspectionreq"]);
-//	inspectionRequirement.sort(function(a , b) {
-//		if(a.id < b.id) return -1;
-//		else if(a.id > b.id ) return 1;
-//		else return 0;
-//	});
+	
 	
 	var permitStage = JSON.parse(json["permitstage"]);
 	permitStage.sort(function(a , b) {
@@ -1220,14 +1220,7 @@ function fillDropdowns_PERMIT(json)
 //		option.setAttribute("value", permitRequirement[i].name);
 //		d.appendChild(option);
 //	}
-//	
-//	for(var i = 0; i < inspectionRequirement.length; i++)
-//    {
-//		var option = document.createElement("option");
-//		option.innerHTML = inspectionRequirement[i].name;
-//		option.setAttribute("value", inspectionRequirement[i].name);
-//		d.appendChild(option);
-//    }
+	
 	
 	for(var i = 0; i < permitStage.length; i++)
 	{
@@ -1240,9 +1233,10 @@ function fillDropdowns_PERMIT(json)
 	var defaultOption = document.createElement('option');
 	defaultOption.value = "default";
 	defaultOption.innerHTML = "---Status---";
-	$('#permitData').find(".permitStatus").find('option').remove();
+
+	$('#permitData').find('.permitStatus').find('option').remove();
 	$('#permitData').find('.permitStatus').append(defaultOption);
-	$('#permitData').find(".permitStatus").append(d);
+	$('#permitData').find('.permitStatus').append(d);
 	
 	var dd = document.createDocumentFragment();
 	for (var i = 0; i < inspectionStage.length; i++) {
@@ -1256,7 +1250,7 @@ function fillDropdowns_PERMIT(json)
 	$('#permitData').find('.inspectionStatus').append(defaultOption);
 	$('#permitData').find('.inspectionStatus').append(dd);
 	
-	
+
 }
 
 
@@ -1386,11 +1380,11 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#voltageInspectionStatus").val(json.permits.voltageInspectionStatus);
 		$('#permitData').find("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
 		
-	    $('#permitData').find("#otherAPermitStatus").val(json.permits.otherAPermitStatus);
+	    $('#permitData').find("#otherAPermitStatus").val(convertDefault(json.permits.otherAPermitStatus));
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
 //	    $('#permitData').find("#otherAPermitReq").val(json.permits.otherAPermitRequired);
 //	    $('#permitData').find("#otherAInspectionReq").val(json.permits.otherAInspectionRequired);
-	    $('#permitData').find("#otherAInspectionStatus").val(json.permits.otherAInspectionStatus);
+	    $('#permitData').find("#otherAInspectionStatus").val(convertDefault(json.permits.otherAInspectionStatus));
 	    $('#permitData').find("#otherAInspectionLastUpdated").val(json.permits.otherAInspectionLastUpdated);
 	    
 	    $('#permitData').find("#otherBPermitStatus").val(json.permits.otherBPermitStatus);
@@ -2889,17 +2883,14 @@ function convertChangeOrderType(type , co) {
 
 function convertRequired(req)
 {
-//	if(req == "default")
-//		return "TBD";
-	
-	if(req == "2")
+	if(req == "default" || req == undefined || req == null)
+		return "";
+	else if(req == "2")
 		return "No";
 	else if(req == "1")
 		return "Yes";
 	else
 		return "TBD";
-//	else
-//		return;
 }
 
 /**
