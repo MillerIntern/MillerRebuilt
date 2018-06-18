@@ -124,22 +124,6 @@ public class Equipment extends ProjectObject {
 		return this.PO;
 	}
 	
-	/**
-	 * used for nothing so far. ID is not of the given project
-	 * @param null
-	 */
-	public void setProjectID(long num)
-	{
-		this.projectID = num;
-	}
-	/**
-	 * used for nothing so far. ID is not of the given project
-	 * @return null
-	 */
-	public long getProjectID()
-	{
-		return this.projectID;
-	}
 	
 	/**
 	 * set the equipment vendor of the 

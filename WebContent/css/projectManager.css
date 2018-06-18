@@ -30,6 +30,13 @@
 	resize: none;
 }
 
+.scrollTextBoxTaskForm {
+	height: 50px;
+	width: 190px;
+	overflow-y: scroll;
+	resize: none;
+}
+
 .info-tab > .table {
 	border-bottom: 1px solid #dddddd;
 }

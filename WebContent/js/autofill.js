@@ -140,14 +140,8 @@ function autofillCloseoutDocs()
 	let required = $('#class').val();
 	
 	let REQUIRED = 4; 
-	let NA = 3; 
-	let TBD = 6;
 	
-    let value; 
-    if(required == 2)
-		value = REQUIRED;
-    else 
-    	value = NA;
+    let value = REQUIRED;
       
     $('.autofill-CloseoutDocs').each(function(index){
 		$(this).val(value);
@@ -172,7 +166,7 @@ function autofillCloseout()
     if(required == 2)
 		value = TBD;
     else 
-    	value = TBD;
+    	value = NA;
       
     $('.autofill-Closeout').each(function(index){
 		$(this).val(value);
@@ -181,6 +175,20 @@ function autofillCloseout()
     $('.autofill-Closeout-Date').each(function(index){
 		$(this).val(TODAYS_DATE);
 	});
+    
+    if(required == 2)
+    	value = REQUIRED;
+    else 
+    	value = NA;
+    
+    $('.autofill-Closeout-AIA').each(function(index){
+		$(this).val(value);
+	});
+   
+    $('.autofill-Closeout-AIA-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
+    
 }
 
 function autofillPermits()

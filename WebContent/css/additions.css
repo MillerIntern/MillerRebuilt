@@ -169,3 +169,10 @@ select, input, textarea
 	background-color: #22cc00;
 }
 
+
+.scrollTextBoxRule {
+	height: 40px;
+	width: 340px;
+	overflow-y: scroll;
+	resize: none;
+}

@@ -49,7 +49,7 @@ public class EquipmentFiller
 		eq.setDescription(params.get("equipmentDescription"));
 		
 		eq.setEqSupplier(EquipmentVendor.matchEquipmentVendor(params.get("vendor")));
-		eq.setEqStatus(EquipmentStatus.matchEquipmentVendor(params.get("deliveryStatus")));
+		eq.setEqStatus(EquipmentStatus.matchEquipmentStatus(params.get("deliveryStatus")));
 
 		
 				

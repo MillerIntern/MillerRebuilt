@@ -147,6 +147,7 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#sprinkleDate").datepicker();
 	    $('#closeoutData').find("#HTIDate").datepicker();
 	    $('#closeoutData').find("#otherFinalLiensDate").datepicker();
+	    $('#closeoutData').find("#otherFinalLiensBDate").datepicker();
 	    
 	    	// Final Inspections //Move other fields here from above
 	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
@@ -444,6 +445,9 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#otherFinalLiensStatus").val(convertDefault(json.closeoutDetails.otherFinalLeinsStatus));
 		$('#closeoutData').find("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
 		
+		$('#closeoutData').find("#otherFinalLiensBStatus").val(convertDefault(json.closeoutDetails.otherFinalLeinsBStatus));
+		$('#closeoutData').find("#otherFinalLiensBDate").val(json.closeoutDetails.otherFinalLeinsBDate);
+		
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
@@ -573,6 +577,9 @@ function saveProject_CLOSEOUT()
     
     var otherFinalLeinsStatus = $('#closeoutData').find("#otherFinalLiensStatus").val();
     var otherFinalLeinsDate = $('#closeoutData').find("#otherFinalLiensDate").val();
+    
+    var otherFinalLeinsBStatus = $('#closeoutData').find("#otherFinalLiensBStatus").val();
+    var otherFinalLeinsBDate = $('#closeoutData').find("#otherFinalLiensBDate").val();
     
     var finalLiensNotes = $('#closeoutData').find("#finalLiensNotes").val();
         
@@ -850,6 +857,9 @@ function saveProject_CLOSEOUT()
 				'otherFinalLeinsStatus': otherFinalLeinsStatus,
 				'otherFinalLeinsDate': otherFinalLeinsDate,
 				
+				'otherFinalLeinsBStatus': otherFinalLeinsBStatus,
+				'otherFinalLeinsBDate': otherFinalLeinsBDate,
+				
 				'mechFinalStatus': mechFinalStatus,
 				'mechFinalDate': mechFinalDate,
 				
@@ -1028,7 +1038,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"changeOrderApprovedStatus","revisionsSubmittedStatus", "revisionsApprovedStatus",
                 				
                 				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", "gasStatus",
-                				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus",
+                				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus", "otherFinalLiensBStatus",
                 				
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
                 				"plumbingFinalStatus", "gasFinalStatus", "buildFinalStatus", "ceilingFinalStatus", "fireAlarmFinalStatus", 
@@ -2797,38 +2807,46 @@ function fillChangeOrders (data) {
 		
 		var coNumber = document.createElement('td');
 		coNumber.className = 'coNumber';
+		coNumber.align = 'center';
 		coNumber.width = "5%";
 		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
 		
 		var title = document.createElement('td');
 		title.width = "10%";
+		title.align = 'center';
 		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
 		else  title.appendChild(document.createTextNode("---"));
 		
 		var briefDescription = document.createElement('td');
 		briefDescription.width = "20%";
+		briefDescription.align = 'center';
 		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
 		
 		var status = document.createElement('td');
 		status.width = "9%";
+		status.align = 'center';
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
 		var subNames = document.createElement('td');
 		subNames.width = "12%";
+		subNames.align = 'center';
 		subNames.appendChild(document.createTextNode(changeOrder.subNames));
 		
 		var type = document.createElement('td');
 		type.width = "10%";
+		type.align = 'center'
 		type.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
 		
 		var submittedDate = document.createElement('td');
 		submittedDate.width = "8%";
+		submittedDate.align = 'center';
 		if(changeOrder.submittedDate)
 			submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
 		else submittedDate.appendChild(document.createTextNode("---"));
 		
 		var cost = document.createElement('td');
 		cost.width = "5%";
+		cost.align = 'center';
 		if(changeOrder.cost)
 			cost.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.cost)));
 		else 
@@ -2837,12 +2855,14 @@ function fillChangeOrders (data) {
 		
 		var sell = document.createElement('td');
 		sell.width = "5%";
+		sell.align = 'center';
 		if(changeOrder.sell)
 			sell.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.sell)));
 		else 
 			sell.appendChild(document.createTextNode("---"));		
 		
 		var notes = document.createElement('td');
+		notes.align = 'center';
 		notes.appendChild(document.createTextNode(changeOrder.notes));
 		
 		//var approvedDate = document.createElement('td');
@@ -2889,8 +2909,10 @@ function convertRequired(req)
 		return "No";
 	else if(req == "1")
 		return "Yes";
-	else
+	else if(req == "0")
 		return "TBD";
+	else 
+		return;
 }
 
 /**
@@ -3026,10 +3048,12 @@ function fillEquipment (data) {
 		
 		var equipmentName = document.createElement('td');
 		equipmentName.width = "120px";
+		equipmentName.align = 'center';
 		equipmentName.appendChild(document.createTextNode(equipment.equipmentName));
 		
 		var equipmentDescription = document.createElement('td');
 		equipmentDescription.width = "175px";
+		equipmentDescription.align = 'center';
 		var descriptionText = equipment.description;
 		
 		if(descriptionText == undefined || descriptionText == "undefined")
@@ -3039,6 +3063,7 @@ function fillEquipment (data) {
 		
 		var deliveryStatus = document.createElement('td');
 		deliveryStatus.width = "80px";
+		deliveryStatus.align = 'center';
 		var deliveryStatusText = "";
 		if(equipment.eqStatus)
 			deliveryStatusText = equipment.eqStatus.name;
@@ -3050,15 +3075,16 @@ function fillEquipment (data) {
 		
 		var supplier = document.createElement('td');
 		supplier.width = "80px";
+		supplier.align = 'center';
 		var supplierText = "";
 		if(equipment.eqSupplier)
 			supplierText = equipment.eqSupplier.name;
 		supplier.appendChild(document.createTextNode(supplierText));
 		
 		
-		
 		var orderedDate = document.createElement('td');
 		orderedDate.width = "70px";
+		orderedDate.align = 'center';
 		if (equipment.orderedDate === undefined)
 			orderedDate.appendChild(document.createTextNode("---"));
 		else
@@ -3066,6 +3092,7 @@ function fillEquipment (data) {
 		
 		var estDeliveryDate = document.createElement('td');
 		estDeliveryDate.width = "70px";
+		estDeliveryDate.align = 'center';
 		if (equipment.estDeliveryDate === undefined)
 			estDeliveryDate.appendChild(document.createTextNode("---"));
 		else
@@ -3073,6 +3100,7 @@ function fillEquipment (data) {
 		
 		var deliveryDate = document.createElement('td');
 		deliveryDate.width = "70px";
+		deliveryDate.align = 'center';
 		if (equipment.deliveryDate === undefined)
 			deliveryDate.appendChild(document.createTextNode('---'));
 		else 
@@ -3080,6 +3108,7 @@ function fillEquipment (data) {
 		
 		var equipmentNotes = document.createElement('td');
 		equipmentNotes.width = "200px";
+		equipmentNotes.align = 'center';
 		equipmentNotes.appendChild(document.createTextNode(equipment.notes));
 		
 		tableRow.appendChild(equipmentName);
@@ -3333,6 +3362,15 @@ function fillCloseout (data) {
 		break;
 	}
 	switch (closeoutData.otherFinalLeinsStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.otherFinalLeinsBStatus) {
 	case '1':
 		required++;
 		completed++;

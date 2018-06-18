@@ -205,3 +205,45 @@
 	overflow-y: scroll;
 	resize: none;
 }
+
+.scrollTextBoxCloseout {
+	height: 40px;
+	width: 350px;
+	overflow-y: scroll;
+	resize: none;
+}
+
+.scrollTextBoxCloseoutDocs {
+	height: 40px;
+	width: 230px;
+	overflow-y: scroll;
+	resize: none;
+}
+
+.scrollTextBoxTask {
+	height: 40px;
+	width: 230px;
+	overflow-y: scroll;
+	resize: none;
+}
+
+.scrollTextBoxPermits {
+	height: 40px;
+	width: 500px;
+	overflow-y: scroll;
+	resize: none;
+}
+
+.scrollTextBoxCO {
+	height: 40px;
+	width: 270px;
+	overflow-y: scroll;
+	resize: none;
+}
+
+.scrollTextBoxEquip {
+	height: 40px;
+	width: 255px;
+	overflow-y: scroll;
+	resize: none;
+}

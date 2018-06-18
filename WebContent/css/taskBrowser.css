@@ -158,3 +158,10 @@
 	color: blue;
 }
 
+
+.scrollTextBoxTask {
+	height: 50px;
+	width: 100px;
+	overflow-y: scroll;
+	resize: none;
+}

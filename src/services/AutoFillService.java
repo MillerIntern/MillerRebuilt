@@ -82,10 +82,7 @@ public class AutoFillService {
 	{
 		String value = null;
 		
-		if(_value.equals("2"))
-			value = "4";
-		else
-			value = "3";
+		value = "4";
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -112,7 +109,7 @@ public class AutoFillService {
 		if(_value.equals("2"))
 			value = "6";
 		else
-			value = "6";
+			value = "3";
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -177,6 +174,20 @@ public class AutoFillService {
 		cd.setOtherFinalLeinsStatus(value);
 		cd.setOtherFinalLeinsDate(today);
 		
+		cd.setOtherFinalLeinsBStatus(value);
+		cd.setOtherFinalLeinsBDate(today);
+		
+		cd.setEquipmentSubmittalStatus(value);
+		cd.setEquipmentSubCL(today);
+		
+		cd.setManualStatus(value);
+		cd.setManualDate(today);
+		
+		if(_value.equals("2"))
+			value = "4";
+		else
+			value = "3";
+		
 		cd.setSubstantialCompletionStatus(value);
 		cd.setSubstantialCompletionDate(today);
 		
@@ -188,12 +199,6 @@ public class AutoFillService {
 		
 		cd.setMulvannySignOffStatus(value);
 		cd.setMulvannySignOffDate(today);
-		
-		cd.setEquipmentSubmittalStatus(value);
-		cd.setEquipmentSubCL(today);
-		
-		cd.setManualStatus(value);
-		cd.setManualDate(today);
 		
 		proj.setCloseoutDetails(cd);
 	}

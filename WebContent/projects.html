@@ -232,16 +232,16 @@
 				<table id='changeOrderTable' class='table'>				
 					<thead class="changeOrderTableHead">
 					  <tr>
-						<th width = 5%>CO #</th>
-						<th width = 13%>Title</th>
-						<th width = 20%>Description</th>
-						<th width = 9%>Status</th>
-						<th width = 12%>Sub Name(s)</th>
-						<th>Customer</th>
-						<th>Submit Date</th>
-						<th>Cost</th>
-						<th>Sell</th>
-						<th>CO Notes</th>
+						<th width = 5% style="text-align: center">CO #</th>
+						<th width = 13% style="text-align: center">Title</th>
+						<th width = 17% style="text-align: center">Description</th>
+						<th width = 8% style="text-align: center">Status</th>
+						<th width = 12% style="text-align: center">Sub Name(s)</th>
+						<th style="text-align: center">Customer</th>
+						<th style="text-align: center">Submit Date</th>
+						<th width = 7% style="text-align: center">Cost</th>
+						<th width = 7% style="text-align: center">Sell</th>
+						<th width = 13% style="text-align: center">CO Notes</th>
 					  </tr>
 					</thead>
 					<tbody>
@@ -351,7 +351,16 @@
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
 				    <thead>
-					<tr class = "equipmentTableHead"><th>Name</th><th>Description</th><th>Supplier</th><th>Delivery Status</th><th>Ordered Date</th><th>Scheduled Date</th><th>Actual Date</th><th>Notes</th></tr>
+					<tr class = "equipmentTableHead">
+						<th width = 13% style="text-align: center">Name</th>
+						<th width = 15% style="text-align: center">Description</th>
+						<th width = 7% style="text-align: center">Supplier</th>
+						<th width = 12% style="text-align: center">Delivery Status</th>
+						<th width = 11% style="text-align: center">Ordered Date</th>
+						<th width = 11% style="text-align: center">Scheduled Date</th>
+						<th width = 11% style="text-align: center">Actual Date</th>
+						<th width = 15% style="text-align: center">Notes</th>
+					</tr>
 					</thead>
 					<tbody></tbody>
 				</table>	
@@ -378,8 +387,7 @@
 				<ul class="closeout-information list-group">
 					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
 					<li class="list-group-item closeout-info-list-item" id="final-inspection-item">Final Inspections</li>
-					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters</li>	
-					<li class="list-group-item closeout-info-list-item" id="final-liens-item">Final Liens</li>
+					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
 					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA/MG2</li>
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
 				</ul>
@@ -387,16 +395,37 @@
 			<div class='info-tab' id='tasks'>
 				
 			</div>
-			<div class='info-tab' id='settings'>
-				<h3>Project Tools</h3>
-				<button onclick='goToTaskForm()' type='button' class='btn btn-success'>Create a Task for this Project</button>
+			<div style="width: 65%" class='info-tab' id='settings'>
+			<table>	
+				<tr>
+					<td style="text-align: center">
+						<h3>Project Tools </h3>
+					</td>
+					<td>
+					&emsp;&emsp;&emsp;&emsp;
+					</td>
+					<td style="text-align: center">	
+						<h3> Danger Zone</h3>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center">
+						<button onclick='goToTaskForm()' type='button' class='btn btn-success'>Create a Task for this Project</button>
+					</td>
+					<td>
+					&emsp;&emsp;&emsp;&emsp;
+					</td>
+					<td style="text-align: center">
+						<button onclick='deleteConfirm()' type="button" class="btn btn-danger">Delete Project</button>
+					</td>
+				</tr>
+				<tr>
+				<p></p>
+				</tr>
 				<!-- <button onclick='comingSoon(this)' type="button" class="btn btn-success">Scan Project For Triggers</button>
 				<button onclick='comingSoon(this)' type='button' class='btn btn-success'>Audit Project Changes</button>
 				<button onclick='comingSoon(this)' type='button' class='btn btn-warning'>Flag Project</button> -->
-				
-				<h3>Danger Zone</h3>
-				<button onclick='deleteConfirm()' type="button" class="btn btn-danger">Delete Project</button>
-			
+			</table>				
 			</div>
 			
 			
@@ -470,14 +499,16 @@
 			</td>
 	        <td><b>Classification</b></td>
 	       	<td>
-	        <select id="class"><option value="default">--Please select an option--</option></select>
+	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Classification? The Classification-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        	<option value="default">--Please select an option--</option>
+	        </select>
 			</td>
 			</tr>
 			
 			<tr>
 			<td><b>HVAC</b></td>
 			<td>
-			<select id="autofill-HVAC">
+			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC? The HVAC-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
 				<option value="default">--Does this project require an HVAC unit?--</option>
 				<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -485,7 +516,7 @@
 	        </td>
 	        <td><b>Refrigeration</b></td>
 	        <td>
-	        <select id="autofill-Refrigeration">
+	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration? Thr data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
 	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -496,7 +527,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be reset.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  
@@ -610,7 +641,7 @@
 						</tr>
 						<tr>
 							<td><label for='descriptionEntry'>Description:</label></td>
-							<td><textarea  maxlength="254" id='descriptionEntry' placeholder='Task Description'></textarea></td>
+							<td><textarea class="scrollTextBoxTask" maxlength="254" id='descriptionEntry' placeholder='Task Description'></textarea></td>
 							
 						</tr>
 						<tr>
@@ -660,7 +691,7 @@
 				        <tr>
 				        	<td><label>Notes:</label></td>
 				        	<td>
-				        	<textarea maxlength="999" id='notes'></textarea>
+				        	<textarea class="scrollTextBoxTask" maxlength="999" id='notes'></textarea>
 				        	</td>
 				        </tr>
 					</table>
@@ -713,7 +744,7 @@
 			
 		
 		
-	</div>  <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	
+  <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	
 <!--  
 		LINES 492 THRU 795 CORRESPOND TO THE PERMIT DATA DIV	
  -->
@@ -1185,12 +1216,12 @@
 				
 				<table class='table table-hover'>
 					<tr>
-						<td align="center" class = "bold" width = 20%>Permit Notes</td>
-						<td><textarea id='permitNotes' rows="5" cols="30" maxlength = "255"></textarea></td>
+						<td align="center" class = "bold" width = 13%>Permit Notes</td>
+						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "255"></textarea></td>
 					</tr>
 					<tr>
 						<td align="center" class = "bold">Inspection Notes</td>
-						<td><textarea id='inspectionNotes' rows='5' cols='30' maxlength = "255"></textarea></td>
+						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "255"></textarea></td>
 					</tr>
 				</table>
 			</div>
@@ -1230,8 +1261,7 @@
 		<ul class="nav nav-tabs">
 			<li id = "closeout" role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
 			<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
-	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
-			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
+	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
 	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
@@ -1240,85 +1270,103 @@
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
-		<div id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
+		<div style="width: 47%" id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
 	        <table id='closeoutDocumentsTable' class='table table-hover'>
 	            <tr>
-	            	<td></td>
-	            	<td><b>Closeout Document Status</b></td>
-	            	<td><b>Date Last Updated</b></td>
+	            	<td style="width: 25%; text-align: center"></td>
+	            	<td style="width: 33%; text-align: center"><b>Closeout Document Status</b></td>
+	            	<td style="width: 42%; text-align: center"><b>Closeout Document Last Updated</b></td>
 	            </tr>
 	            <tr>
                 <td class='closeoutLabel'>Punch List</td>
-                <td style="width: 37%">  
+                <td style="text-align: center">  
                     <select data-associated-date='punchList' class="closeout-input autofill-CloseoutDocs" id="punchListStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="width: 37%">
+                <td style="text-align: center">
                     <input type="text" placeholder="Select a Date" id="punchList" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
             <tr>
                 <td class='closeoutLabel'>As-Built Drawings</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='asBuilts' class="closeout-input autofill-CloseoutDocs" id="asBuiltDrawingsStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                 <input type="text" placeholder="Select a Date" id="asBuilts" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
             <tr>
                 <td class='closeoutLabel'>Close Out Photos</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='closeoutPhotosCL' class="closeout-input autofill-CloseoutDocs" id="closeOutPhotosStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <input id="closeoutPhotosCL" placeholder="Select a Date" type="text" class="autofill-CloseoutDocs-Date"></input>
                 </td>   
             </tr>
             <tr>
                 <td class='closeoutLabel'>HVAC Startup Form</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='HVACstartupFormDate' class="closeout-input autofill-HVAC" id="HVACstartupFormStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <input type="text" placeholder="Select a Date" id="HVACstartupFormDate" class="autofill-HVAC-date" />
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Alarm Form</td>
-                <td>  
-                <select data-associated-date='alarmHvac' class="closeout-input autofill-Refrigeration" id="alarmFormStatus">
-                    <option value="default">--Status--</option>
-                </select>
-                </td>
-                <td>
-                <input type="text" placeholder="Select a Date" id="alarmHvac" class="autofill-Refrigeration-date"/>
-                </td>   
-            </tr>
-            <tr>
                 <td class='closeoutLabel'>Verisae Report</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='verisae' class="closeout-input autofill-HVAC" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                 <input type="text" placeholder="Select a Date" id="verisae" class="autofill-HVAC-date"/>	
                 </td>   
             </tr>
+             <tr>
+                <td class='closeoutLabel'>Alarm Form</td>
+                <td style="text-align: center">  
+                <select data-associated-date='alarmHvac' class="closeout-input autofill-Refrigeration" id="alarmFormStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                </td>
+                <td style="text-align: center">
+                <input type="text" placeholder="Select a Date" id="alarmHvac" class="autofill-Refrigeration-date"/>
+                </td>   
+            </tr>
         </table>
+        
+        <table id='otherItemsSalvageTable' class='table table-hover'>
+	        	<tr>
+	        		<td style="width: 25%"></td>
+	        		<td style="width: 33%; text-align: center" class='bold'>Amount</td>
+	        		<td style="width: 42%; text-align: center" class='bold'>Date Last Updated</td>
+	        	</tr>
+	        	<tr>
+	        		<td class='bold'>Salvage Value</td>
+	        		<td style="text-align: center">
+						<input type="text" id="salvageAmount" class="autofill-Refrigeration-num"/>
+	        		</td>
+	        		<td style="text-align: center">
+	        			<input type="text" id="salvageDate" class="autofill-Refrigeration-date"/>
+	        		</td>
+	        	</tr>
+	    </table>
+        
         <table id='closeoutDocumentsTable' class='table table-hover'>
             <tr>
-                <td style="width: 50%" class='closeoutLabel'>Number of MCS Change Orders</td>
-                <td>  
-                 <input type="text" id="numOfMCSChangeOrders" />   
+                <td style="width: 53%" class='closeoutLabel'>Number of MCS Change Orders</td>
+                <td style="width: 47%">  
+                 <input type="text"  id="numOfMCSChangeOrders" />   
                 </td>  
             </tr>
             <tr>
@@ -1329,158 +1377,143 @@
             </tr>
             <tr>
                 <td class='closeoutLabel'>Closeout Documents Notes</td>
-                <td>  
-                <textarea id="closeoutDocumentsNotes"> </textarea>
+                <td style="text-align: center">  
+                <textarea id="closeoutDocumentsNotes" class="scrollTextBoxCloseoutDocs"> </textarea>
                 </td> 
             </tr>
-	        </table>
-	        
-	        <table id='otherItemsSalvageTable' class='table table-hover'>
-	        	<tr>
-	        	<td></td><td class='bold'>Amount</td><td class='bold'>Date</td>
-	        	</tr>
-	        	<tr>
-	        	<td class='bold'>Salvage Value</td>
-	        	<td>
-					<input type="text" id="salvageAmount" class="autofill-Refrigeration-num"/>
-	        	</td>
-	        	<td>
-	        		<input type="text" id="salvageDate" class="autofill-Refrigeration-date"/>
-	        	</td>
-	        	</tr>
 	        </table>
 
 		</div>
 	    <!-- End Closeout Documents Tab--> 
 	
 	    <!-- Final Inspections Tab -->
-		<div id="finalInspections" class="info-tab info-tab-closeoutDocuments">
+		<div style="width: 50%" id="finalInspections" class="info-tab info-tab-closeoutDocuments">
 	        <table id='finalInspectionsTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	        	<tr>
-	            	<td></td>
-	            	<td><b>Final Inspection Status</b></td>
-	            	<td><b>Date Last Updated</b></td>
+	            	<td style="width: 36%"></td>
+	            	<td style="width: 28%; text-align: center"><b>Final Inspection Status</b></td>
+	            	<td style="width: 36%; text-align: center"><b>Final Inspection Last Updated</b></td>
 	            </tr>
 	        	<tr>
 	                <td class='bold'>Building Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='buildingPermitCL' class="closeout-input autofill-Final-Insp" id="buildFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input id="buildingPermitCL" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr> 
 	            <tr>
 	                <td class='bold'>Ceiling Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='ceilingFinalDate' class="closeout-input autofill-Final-Insp" id="ceilingFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input id="ceilingFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>	        
 	            <tr>
-	                <td style="width: 40%"class='bold'>Mechanical Final Inspection</td>
-	                <td style="width: 40%">  
+	                <td class='bold'>Mechanical Final Inspection</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='mechFinalDate' class="closeout-input autofill-Final-Insp" id="mechFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="mechFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
 	                <td class='bold'>Electrical Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='elecFinalDate' class="closeout-input autofill-Final-Insp" id="elecFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	            <input type="text" placeholder="Select a Date" id="elecFinalDate" class="autofill-Final-Insp-Date"/>
 	                </td>   
 	            </tr>
 	            <tr>
 	                <td class='bold'>Plumbing Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='plumbingFinalDate' class="closeout-input autofill-Final-Insp" id="plumbingFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="plumbingFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
 	                <td class='bold'>Gas Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='gasFinalDate' class="closeout-input autofill-Final-Insp" id="gasFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="gasFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
 	            
 	             <tr>
 	                <td class='bold'>Sprinkler Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='sprinkleFinalDate' class="closeout-input autofill-Final-Insp" id="sprinkleFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="sprinkleFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
 	            <tr>
 	                <td class='bold'>Fire Alarm Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='fireAlarmFinalDate' class="closeout-input autofill-Final-Insp" id="fireAlarmFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input id="fireAlarmFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
 	            <tr>
 	                <td class='bold'>Low Voltage Final Inspection</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='lowVolFinalDate' class="closeout-input autofill-Final-Insp" id="lowVolFinalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input id="lowVolFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>  
 	            <tr>
 	                <td class='bold'>Temp Certificate of Occupancy</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='tmpCertificateDate' class="closeout-input autofill-Final-Insp" id="tmpCertificateStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	            <input type="text" placeholder="Select a Date" id="tmpCertificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
 	            <tr>
 	                <td class='bold'>Certificate of Occupancy</td>
-	                <td>  
+	                <td style="text-align: center">  
 	                    <select data-associated-date='certificateDate' class="closeout-input autofill-Final-Insp" id="certificateStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="certificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
@@ -1488,8 +1521,8 @@
 	       <table id='finalInspectionsTable' class='table table-hover'>     
 	            <tr>
 	                <td class='bold'>Final Inspection Notes</td>
-	                <td>  
-	                    <textarea id="finalInspectionNotes"> </textarea>
+	                <td style="text-align: center">  
+	                    <textarea id="finalInspectionNotes" class="scrollTextBoxCloseout"> </textarea>
 	                </td>
 	            </tr> 
 	        
@@ -1498,337 +1531,312 @@
 	    </div>
 	    <!-- End Final Inspections Tab --> 
 	    
-	    <!-- Warranty Letters Tab -->
-		<div id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
+	    <!-- Warranty Letters and Final Liens Tab -->
+		<div style="width: 90%" id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
 	        <table id='warrantyLettersTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	        	<tr>
-	            	<td></td>
-	            	<td><b>Warranty Letter Status</b></td>
-	            	<td><b>Date Last Updated</b></td>
+	            	<td style="width: 13%"></td>
+	            	<td style="width: 13%; text-align: center"><b>Warranty Letter Status</b></td>
+	            	<td style="width: 18%; text-align: center"><b>Warranty Letter Last Updated</b></td>
+	            	<td style="width: 13%"></td>
+	            	<td style="width: 13%; text-align: center"><b>Final Lien Status</b></td>
+	            	<td style="width: 18%; text-align: center"><b>Final Lien Last Updated</b></td>
 	            </tr>
 	            <tr>
-	                <td style="width: 30%" class='bold'>MCS Warranty</td>
-	                <td style="width: 35%">  
+	                <td  class='bold'>MCS Warranty</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='MCSWarranty' class="closeout-input autofill-Closeout" id="MCSWarrantyStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="width: 35%">
+	                <td style="text-align: center">
 	                    <input id="MCSWarranty" placeholder="Select a Date" class="autofill-Closeout-Date"  type="text"></input>
 	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>GC Warranty</td>
-	                <td>  
-	                    <select data-associated-date='GCWarrantyDate' class="closeout-input autofill-Closeout" id="GCWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="GCWarrantyDate" />
-	                </td>   
-	            </tr>
-	            <tr>
-	                <td class='bold'>Mechanical Warranty</td>
-	                <td>  
-	                    <select data-associated-date='mechanicalWarrantyDate' class="closeout-input autofill-Closeout" id="mechanicalWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="mechanicalWarrantyDate" />
-	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>Electrical Warranty</td>
-	                <td>  
-	                    <select data-associated-date='electricalWarrantyDate' class="closeout-input autofill-Closeout" id="electricalWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="electricalWarrantyDate" />
-	                </td>   
-	            </tr>
-	            <tr>
-	                <td class='bold'>Plumbing Warranty</td>
-	                <td>  
-	                    <select data-associated-date='plumbingWarrantyDate' class="closeout-input autofill-Closeout" id="plumbingWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="plumbingWarrantyDate" />
-	                </td>   
-	            </tr>
-	             <tr>
-	                <td class='bold'>Gas Warranty</td>
-	                <td>  
-	                    <select data-associated-date='gasWarrantyDate' class="closeout-input autofill-Closeout" id="gasWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="gasWarrantyDate" />
-	                </td>   
-	            </tr>
-	            <tr>
-	                <td class='bold'>Sprinkler Warranty</td>
-	                <td>  
-	                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input autofill-Closeout" id="sprinkleWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="sprinkleWarrantyDate" />
-	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>HTI Warranty</td>
-	                <td>  
-	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input autofill-Closeout" id="HTIWarrantyStatus">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="HTIWarrantyDate" />
-	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>Other Warranty (A)</td>
-	                <td>  
-	                    <select data-associated-date='otherWarrantyDateA' class="closeout-input autofill-Closeout" id="otherWarrantyStatusA">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateA" class="autofill-Closeout-Date" />
-	                </td>   
-	            </tr> 
-	            <tr>
-	                <td class='bold'>Other Warranty (B)</td>
-	                <td>  
-	                    <select data-associated-date='otherWarrantyDateB' class="closeout-input autofill-Closeout" id="otherWarrantyStatusB">
-	                        <option value="default">--Status--</option>
-	                    </select>
-	                </td>
-	                <td>
-	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateB" class="autofill-Closeout-Date"/>
-	                </td>   
-	            </tr> 
-	        </table>
-	        <table id='warrantyLettersTable' class='table table-hover'>
-	            <tr>
-	                <td class='bold'>Warranty Notes</td>
-	                <td>  
-	                    <textarea id="warrantyNotes"> </textarea>
-	                </td>
-	            </tr> 
-	        </table>
-	
-	    </div>
-	    <!-- End Warranty Letters Tab -->
-	
-	    <!-- Final Liens Tab -->
-		<div id="finalLiens" class="info-tab info-tab-closeoutDocuments">
-			<table id='finalLiensTable' class='table table-hover'>
-			<tr style="height: 0px;"></tr>
-	            <tr>
-	            	<td></td>
-	            	<td><b>Final Lien Status</b></td>
-	            	<td><b>Date Last Updated</b></td>
-	            </tr>
-	            <tr>
-	                <td style="width:25%" class='bold'>MCS Liens</td>
-	                <td style="width: 35%">  
+	                <td class='bold'>MCS Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='MCSDate' class="closeout-input autofill-Closeout" id="MCSStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="width: 35%">
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="MCSDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>GC Liens</td>
-	                <td>  
+	                <td class='bold'>GC Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='GCWarrantyDate' class="closeout-input autofill-Closeout" id="GCWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="GCWarrantyDate" />
+	                </td>   
+	                <td class='bold'>GC Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='GCDate' class="closeout-input autofill-Closeout" id="GCStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="GCDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Mechanical Liens</td>
-	                <td>  
+	                <td class='bold'>Mechanical Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='mechanicalWarrantyDate' class="closeout-input autofill-Closeout" id="mechanicalWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="mechanicalWarrantyDate" />
+	                </td>   
+	                <td class='bold'>Mechanical Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='mechanicalDate' class="closeout-input autofill-Closeout" id="mechanicalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="mechanicalDate" class="autofill-Closeout-Date"/>
 	                </td>   
-	            </tr> 
+	            </tr>  
 	            <tr>
-	                <td class='bold'>Electrical Liens</td>
-	                <td>  
+	                <td class='bold'>Electrical Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='electricalWarrantyDate' class="closeout-input autofill-Closeout" id="electricalWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="electricalWarrantyDate" />
+	                </td>   
+	                <td class='bold'>Electrical Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='electricalDate' class="closeout-input autofill-Closeout" id="electricalStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="electricalDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Plumbing Liens</td>
-	                <td>  
+	                <td class='bold'>Plumbing Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='plumbingWarrantyDate' class="closeout-input autofill-Closeout" id="plumbingWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="plumbingWarrantyDate" />
+	                </td>   
+	                <td class='bold'>Plumbing Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='plumbingDate' class="closeout-input autofill-Closeout" id="plumbingStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="plumbingDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	             <tr>
-	                <td class='bold'>Gas Liens</td>
-	                <td>  
+	                <td class='bold'>Gas Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='gasWarrantyDate' class="closeout-input autofill-Closeout" id="gasWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="gasWarrantyDate" />
+	                </td>   
+	                <td class='bold'>Gas Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='gasDate' class="closeout-input autofill-Closeout" id="gasStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="gasDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr> 
 	            <tr>
-	                <td class='bold'>Sprinkler Liens</td>
-	                <td>  
+	                <td class='bold'>Sprinkler Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='sprinkleWarrantyDate' class="closeout-input autofill-Closeout" id="sprinkleWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="sprinkleWarrantyDate" />
+	                </td>   
+	                <td class='bold'>Sprinkler Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='sprinkleDate' class="closeout-input autofill-Closeout" id="sprinkleStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="sprinkleDate" class="autofill-Closeout-Date"/>
 	                </td>   
-	            </tr> 
+	            </tr> 	           
 	            <tr>
-	                <td class='bold'>HTI Liens</td>
-	                <td>  
+	                <td class='bold'>HTI Warranty</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input autofill-Closeout" id="HTIWarrantyStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="HTIWarrantyDate" />
+	                </td>   
+	                <td class='bold'>HTI Lien</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='HTIDate' class="closeout-input autofill-Closeout" id="HTIStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="HTIDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>Other Liens</td>
-	                <td>  
+	                <td class='bold'>Other Warranty (A)</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='otherWarrantyDateA' class="closeout-input autofill-Closeout" id="otherWarrantyStatusA">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateA" class="autofill-Closeout-Date" />
+	                </td>   
+	                <td class='bold'>Other Lien (A)</td>
+	                <td style="text-align: center">  
 	                    <select data-associated-date='otherFinalLiensDate' class="closeout-input autofill-Closeout" id="otherFinalLiensStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td>
+	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" id="otherFinalLiensDate" class="autofill-Closeout-Date"/>
 	                </td>   
 	            </tr>
-	       </table>
-	       <table id='finalLiensTable' class='table table-hover'>
 	            <tr>
-	                <td class='bold'>Final Liens Notes</td>
-	                <td>  
-	                    <textarea id="finalLiensNotes"> </textarea>
+	                <td class='bold'>Other Warranty (B)</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='otherWarrantyDateB' class="closeout-input autofill-Closeout" id="otherWarrantyStatusB">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" id="otherWarrantyDateB" class="autofill-Closeout-Date"/>
+	                </td>
+	                 <td class='bold'>Other Lien (B)</td>
+	                <td style="text-align: center">  
+	                    <select data-associated-date='otherFinalLiensBDate' class="closeout-input autofill-Closeout" id="otherFinalLiensBStatus">
+	                        <option value="default">--Status--</option>
+	                    </select>
+	                </td>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" id="otherFinalLiensBDate" class="autofill-Closeout-Date"/>
+	                </td>      
+	            </tr> 
+	        </table>
+	        <table id='warrantyLettersTable' class='table table-hover'>
+	            <tr>
+	                <td style="width: 15%" class='bold'>Warranty Letter Notes</td>
+	                <td style="width: 35%; text-align: center">  
+	                    <textarea id="warrantyNotes" class="scrollTextBoxCloseout"> </textarea>
+	                </td>
+	                <td style="width: 15%" class='bold'>Final Liens Notes</td>
+	                <td style="width: 35%; text-align: center">  
+	                    <textarea id="finalLiensNotes" class="scrollTextBoxCloseout"> </textarea>
 	                </td>   
-	            </tr>
-			</table>
-			
+	            </tr> 
+	        </table>
 		</div>
-	    <!-- End Final Liens Tab -->
+	     <!-- End Warranty Letters and Final Liens Tab -->
 	
 	    <!-- Other Items Tab -->
-	    <div id="otherItems" class="info-tab info-tab-closeoutDocuments">
+	    <div style="width: 54%" id="otherItems" class="info-tab info-tab-closeoutDocuments">
 	        <table id='otherItemsTable' class='table table-hover'>
 	        <tr>
-	            	<td></td>
-	            	<td><b>AIA/MG2 Status</b></td>
-	            	<td><b>Date Last Updated</b></td>
-	            </tr>
+	            	<td style="width: 50%"></td>
+	            	<td style="width: 20%; text-align: center"><b>AIA/MG2 Status</b></td>
+	            	<td style="width: 30%; text-align: center"><b>AIA/MG2 Last Updated</b></td>
+	        </tr>
 	        <tr>
 	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
-	                <td>  
-	                    <select data-associated-date='substantialCompletionDate' class="closeout-input autofill-Closeout" id="substantialCompletionStatus">
+	                <td style="text-align: center">  
+	                    <select data-associated-date='substantialCompletionDate' class="closeout-input autofill-Closeout-AIA" id="substantialCompletionStatus">
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td> 
-	                <td>
-	                    <input type="text" placeholder="Select a Date" id="substantialCompletionDate" class="autofill-Closeout-Date"/>
+	                <td style="text-align: center">
+	                    <input type="text" placeholder="Select a Date" id="substantialCompletionDate" class="autofill-Closeout-AIA-Date"/>
 	                </td>
 	        </tr>
 	        <tr>
                 <td class='bold'>G706 - Affidavit of Payment of Debts and Claims</td>
-                <td>  
-                    <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input autofill-Closeout" id="paymentOfDebtsAndClaimsStatus">
+                <td style="text-align: center">  
+                    <select data-associated-date='paymentOfDebtsAndClaimsDate' class="closeout-input autofill-Closeout-AIA" id="paymentOfDebtsAndClaimsStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td>
-                    <input type="text" placeholder="Select a Date" id="paymentOfDebtsAndClaimsDate" class="autofill-Closeout-Date"/>
+                <td style="text-align: center">
+                    <input type="text" placeholder="Select a Date" id="paymentOfDebtsAndClaimsDate" class="autofill-Closeout-AIA-Date"/>
                 </td>
             </tr>
             <tr>
                 <td class='bold'>G706A - Contractor's Lien Releases</td>
-                <td>  
-                    <select data-associated-date='releaseOfLiensDate' class="closeout-input autofill-Closeout" id="releaseOfLiensStatus">
+                <td style="text-align: center">  
+                    <select data-associated-date='releaseOfLiensDate' class="closeout-input autofill-Closeout-AIA" id="releaseOfLiensStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td>
-                    <input type="text" placeholder="Select a Date" id="releaseOfLiensDate" class="autofill-Closeout-Date"/>
+                <td style="text-align: center">
+                    <input type="text" placeholder="Select a Date" id="releaseOfLiensDate" class="autofill-Closeout-AIA-Date" />
                 </td>
             </tr>
             <tr>
                 <td class='bold'>MG2 Project Sign-off</td>
-                <td>  
-                    <select data-associated-date='mulvannySignOffDate' class="closeout-input autofill-Closeout" id="mulvannySignOffStatus">
+                <td style="text-align: center">  
+                    <select data-associated-date='mulvannySignOffDate' class="closeout-input autofill-Closeout-AIA" id="mulvannySignOffStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td>
-                    <input type="text" placeholder="Select a Date" id="mulvannySignOffDate" class="autofill-Closeout-Date"/>
+                <td style="text-align: center">
+                    <input type="text" placeholder="Select a Date" id="mulvannySignOffDate" class="autofill-Closeout-AIA-Date"/>
                 </td>
             </tr>     
 	        <tr>
                 <td class='bold'>Equipment Submittal</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='equipmentSubCL' class="closeout-input autofill-Closeout" id="equipmentSubmittalStatus">
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <input id="equipmentSubCL" placeholder="Select a Date" type="text" class="autofill-Closeout-Date"></input>  
                 </td>
             </tr>
             <tr>
                 <td class='bold'>Operations and Maintenance Manuals</td>
-                <td>  
+                <td style="text-align: center">  
                     <select data-associated-date='manualDate' class="closeout-input autofill-Closeout" id="manualStatus">
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <input type="text" placeholder="Select a Date" id="manualDate" class="autofill-Closeout-Date"/>
                 </td>   
             </tr>
         </table>
         <table id='otherItemsTable' class='table table-hover'>
             <tr>
-                <td style="width: 50%" class='bold'>Number of MG2 Change Orders</td>
+                <td style="width: 45%" class='bold'>Number of MG2 Change Orders</td>
                 <td>  
                  <input type="text" id="numOfChangeOrders" />   
                 </td>  
@@ -1847,13 +1855,13 @@
 	    <div id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
 				<table id='closeoutSummaryDocumentsTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
+					<tr><td width = 30% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
 					<tr><td class="bold">Punch List</td><td id='punchList'></td></tr>
 					<tr><td class="bold">Verisae Report</td><td id='verisaeReport'></td></tr>
 				</table>	
 				<table id='closeoutSummaryCompletionTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
-					<tr><td width = 35% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
+					<tr><td width = 30% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
 					<tr><td class="bold">Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
 					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>
@@ -1919,7 +1927,7 @@
 		            <tr>
 		                <td class="coLabel">Description</td>
 		                <td>
-		                    <textarea id="briefDescription" maxlength="998" rows="4" cols="40"> </textarea>
+		                    <textarea id="briefDescription" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40"> </textarea>
 		                </td>   
 		            </tr>
 		            <tr>
@@ -2000,7 +2008,7 @@
 		             <tr>
 		                <td class="coLabel">CO Notes</td>
 		                <td>
-		                    <textarea id="notes" maxlength="998" rows="4" cols="40"> </textarea>
+		                    <textarea id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40"> </textarea>
 		                </td>   
 		            </tr>
 				 </table>
@@ -2036,7 +2044,6 @@
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		</ul>
 	
-	    <!-- Closeout Documents Tab--> 
 		<div style="width: 45%" id="equipmentForm" class="info-tab active">
 	        <table class="table table-hover">
 	        
@@ -2059,7 +2066,7 @@
 	            <tr>
 	                <td class='bold'>Description</td>
 	                <td>
-	                    <textarea maxlength = 998 class="equipment-input" id="equipmentDescription"> </textarea>
+	                    <textarea maxlength = 998 class="equipment-input scrollTextBoxEquip" id="equipmentDescription"> </textarea>
 	                </td>
 	            </tr>
 	            <tr>
@@ -2099,7 +2106,7 @@
 	            <tr>
 	            	<td class='bold'>Equipment Notes</td>
 	            	<td>
-	            		<textarea id="notes" rows="" cols="" class = "equipment-input" maxlength = 999></textarea>
+	            		<textarea id="notes" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999></textarea>
 	            	</td>
 	            </tr>
 	        </table>

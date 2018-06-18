@@ -1157,6 +1157,18 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		else if(value.equals("otherBLiens"))
+		{
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getOtherFinalLeinsBStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getOtherFinalLeinsBStatus()));
+			if(p.getCloseoutDetails().getOtherFinalLeinsBDate() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getOtherFinalLeinsBDate()));
+			 
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if(value.equals("mg2Completion"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -1438,6 +1450,13 @@ public class ReportHelper
 				if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals(NA))
 					required--;
 				else if(p.getCloseoutDetails().getOtherFinalLeinsStatus().equals(COMPLETE))
+					complete++;
+			}
+			if(p.getCloseoutDetails().getOtherFinalLeinsBStatus() != null)	
+			{
+				if(p.getCloseoutDetails().getOtherFinalLeinsBStatus().equals(NA))
+					required--;
+				else if(p.getCloseoutDetails().getOtherFinalLeinsBStatus().equals(COMPLETE))
 					complete++;
 			}
 			return complete + " / " + required;

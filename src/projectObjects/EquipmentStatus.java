@@ -50,7 +50,7 @@ public class EquipmentStatus extends ProjectObject {
 		this.name = name;
 	}
 
-	public static EquipmentStatus matchEquipmentVendor(String field) {
+	public static EquipmentStatus matchEquipmentStatus(String field) {
 		if(field == null) return null;
 		
 		List<Object> statuses = ProjectObjectService.getAll("EquipmentStatus");

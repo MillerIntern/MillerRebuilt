@@ -148,6 +148,7 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#sprinkleDate").datepicker();
 	    $('#closeoutData').find("#HTIDate").datepicker();
 	    $('#closeoutData').find("#otherFinalLiensDate").datepicker();
+	    $('#closeoutData').find("#otherFinalLiensBDate").datepicker();
 	    
 	    	// Final Inspections //Move other fields here from above
 	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
@@ -448,6 +449,9 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#otherFinalLiensStatus").val(convertDefault(json.closeoutDetails.otherFinalLeinsStatus));
 		$('#closeoutData').find("#otherFinalLiensDate").val(json.closeoutDetails.otherFinalLeinsDate);
 		
+		$('#closeoutData').find("#otherFinalLiensBStatus").val(convertDefault(json.closeoutDetails.otherFinalLeinsBStatus));
+		$('#closeoutData').find("#otherFinalLiensBDate").val(json.closeoutDetails.otherFinalLeinsBDate);
+		
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
@@ -576,6 +580,9 @@ function saveProject_CLOSEOUT()
     
     var otherFinalLeinsStatus = $('#closeoutData').find("#otherFinalLiensStatus").val();
     var otherFinalLeinsDate = $('#closeoutData').find("#otherFinalLiensDate").val();
+
+    var otherFinalLeinsBStatus = $('#closeoutData').find("#otherFinalLiensBStatus").val();
+    var otherFinalLeinsBDate = $('#closeoutData').find("#otherFinalLiensBDate").val();
     
     var finalLiensNotes = $('#closeoutData').find("#finalLiensNotes").val();
         
@@ -853,6 +860,9 @@ function saveProject_CLOSEOUT()
 				'otherFinalLeinsStatus': otherFinalLeinsStatus,
 				'otherFinalLeinsDate': otherFinalLeinsDate,
 				
+				'otherFinalLeinsBStatus': otherFinalLeinsBStatus,
+				'otherFinalLeinsBDate': otherFinalLeinsBDate,
+				
 				'mechFinalStatus': mechFinalStatus,
 				'mechFinalDate': mechFinalDate,
 				
@@ -1031,7 +1041,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"changeOrderApprovedStatus","revisionsSubmittedStatus", "revisionsApprovedStatus",
                 				
                 				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", "gasStatus",
-                				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus",
+                				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus", "otherFinalLiensBStatus",
                 				
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
                 				"plumbingFinalStatus", "gasFinalStatus", "buildFinalStatus", "ceilingFinalStatus", "fireAlarmFinalStatus", "lowVolFinalStatus",
@@ -2697,37 +2707,45 @@ function fillChangeOrders (data) {
 		var coNumber = document.createElement('td');
 		coNumber.className = 'coNumber';
 		coNumber.width = "5%";
+		coNumber.align = 'center';
 		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
 		
 		var title = document.createElement('td');
 		title.width = "10%";
+		title.align = 'center';
 		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
 		else  title.appendChild(document.createTextNode("---"));
 		
 		var briefDescription = document.createElement('td');
 		briefDescription.width = "20%";
+		briefDescription.align = 'center';
 		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
 		
 		var status = document.createElement('td');
 		status.width = "9%";
+		status.align = 'center';
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
 		var subNames = document.createElement('td');
 		subNames.width = "12%";
+		subNames.align = 'center';
 		subNames.appendChild(document.createTextNode(changeOrder.subNames));
 		
 		var type = document.createElement('td');
 		type.width = "10%";
+		type.align = 'center';
 		type.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
 		
 		var submittedDate = document.createElement('td');
 		submittedDate.width = "8%";
+		submittedDate.align = 'center';
 		if(changeOrder.submittedDate)
 			submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
 		else submittedDate.appendChild(document.createTextNode("---"));
 		
 		var cost = document.createElement('td');
 		cost.width = "5%";
+		cost.align = 'center';
 		if(changeOrder.cost)
 			cost.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.cost)));
 		else 
@@ -2736,12 +2754,14 @@ function fillChangeOrders (data) {
 		
 		var sell = document.createElement('td');
 		sell.width = "5%";
+		sell.align = 'center';
 		if(changeOrder.sell)
 			sell.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.sell)));
 		else 
 			sell.appendChild(document.createTextNode("---"));		
 		
 		var notes = document.createElement('td');
+		notes.align = 'center';
 		notes.appendChild(document.createTextNode(changeOrder.notes));
 		
 		//var approvedDate = document.createElement('td');
@@ -2779,54 +2799,104 @@ function convertChangeOrderType(type , co) {
 	return "---";
 }
 
+function convertRequired(req)
+{
+	if(req == "default" || req == undefined || req == null)
+		return "";
+	else if(req == "2")
+		return "No";
+	else if(req == "1")
+		return "Yes";
+	else if(req == "0")
+		return "TBD";
+	else 
+		return;
+}
+
 /**
  * This function fills out the information on the page for the permits and inspections
  * INNER FUNCTION CALLS: none
  * @returns
  */
 function fillPermitsAndInspections (data) {
-	let tabData = data.permits;
 	
+	let tabData = data.permits;
+	console.log("TAB DATA" , tabData);
 	
 	// permits 
+	$('#projectManager').find('#buildingPermitRequired').text(convertRequired(tabData.buildingPermitRequired));
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
 	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
+	
+	$('#projectManager').find('#ceilingPermitRequired').text(convertRequired(tabData.ceilingPermitRequired));
 	$('#projectManager').find('#ceilingPermitDate').text(tabData.ceiling);
 	$('#projectManager').find('#ceilingPermit').text(tabData.ceilingPermitStatus);
+	
+	$('#projectManager').find('#mechanicalPermitRequired').text(convertRequired(tabData.mechanicalPermitRequired));
 	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
 	$('#projectManager').find('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
+	
+	$('#projectManager').find('#electricalPermitRequired').text(convertRequired(tabData.electricalPermitRequired));
 	$('#projectManager').find('#electricalPermitDate').text(tabData.electrical);
 	$('#projectManager').find('#electricalPermit').text(tabData.electricalPermitStatus);
+	
+	$('#projectManager').find('#plumbingPermitRequired').text(convertRequired(tabData.plumbingPermitRequired));
 	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
 	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
+	
+	$('#projectManager').find('#gasPermitRequired').text(convertRequired(tabData.gasPermitRequired));
 	$('#projectManager').find('#gasPermitDate').text(tabData.gas);
 	$('#projectManager').find('#gasPermit').text(tabData.gasPermitStatus);
+	
+	$('#projectManager').find('#sprinklerPermitRequired').text(convertRequired(tabData.sprinklerPermitRequired));
 	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
 	$('#projectManager').find('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
+	
+	$('#projectManager').find('#fireAlarmPermitRequired').text(convertRequired(tabData.fireAlarmPermitRequired));
 	$('#projectManager').find('#fireAlarmPermitDate').text(tabData.fire_alarm);
 	$('#projectManager').find('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
+	
+	$('#projectManager').find('#lowVoltagePermitRequired').text(convertRequired(tabData.voltagePermitRequired));
 	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
 	$('#projectManager').find('#lowVoltagePermit').text(tabData.voltagePermitStatus);
 	
 	// inspections
+	$('#projectManager').find('#buildingInspectionRequired').text(convertRequired(tabData.buildingInspectionRequired));
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
 	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
+	
+	$('#projectManager').find('#ceilingInspectionRequired').text(convertRequired(tabData.ceilingInspectionRequired));
 	$('#projectManager').find('#ceilingInspectionDate').text(tabData.ceilingInspectionLastUpdated);
 	$('#projectManager').find('#ceilingInspection').text(tabData.ceilingInspectionStatus);
+	
+	$('#projectManager').find('#mechanicalInspectionRequired').text(convertRequired(tabData.mechanicalInspectionRequired));
 	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
 	$('#projectManager').find('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
+	
+	$('#projectManager').find('#electricalInspectionRequired').text(convertRequired(tabData.electricalInspectionRequired));
 	$('#projectManager').find('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
 	$('#projectManager').find('#electricalInspection').text(tabData.electricalInspectionStatus);
+	
+	$('#projectManager').find('#plumbingInspectionRequired').text(convertRequired(tabData.plumbingInspectionRequired));
 	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
 	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
+	
+	$('#projectManager').find('#gasInspectionRequired').text(convertRequired(tabData.gasInspectionRequired));
 	$('#projectManager').find('#gasInspectionDate').text(tabData.gasInspectionLastUpdated);
 	$('#projectManager').find('#gasInspection').text(tabData.gasInspectionStatus);
+	
+	$('#projectManager').find('#sprinklerInspectionRequired').text(convertRequired(tabData.sprinklerInspectionRequired));
 	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
 	$('#projectManager').find('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
+	
+	$('#projectManager').find('#fireAlarmInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
 	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
+	
+	$('#projectManager').find('#lowVoltageInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
+	
 }
 
 function clearPermitsAndInspectionsOverview () {
@@ -2878,12 +2948,14 @@ function fillEquipment (data) {
 		
 		var equipmentName = document.createElement('td');
 		equipmentName.width = "120px";
+		equipmentName.align = 'center';
 		equipmentName.appendChild(document.createTextNode(equipment.equipmentName));
 		
 		var equipmentDescription = document.createElement('td');
 		equipmentDescription.width = "175px";
-		var descriptionText = equipment.description;
+		equipmentDescription.align = 'center';
 		
+		var descriptionText = equipment.description;
 		if(descriptionText == undefined || descriptionText == "undefined")
 			descriptionText = "";
 		
@@ -2891,6 +2963,7 @@ function fillEquipment (data) {
 		
 		var deliveryStatus = document.createElement('td');
 		deliveryStatus.width = "80px";
+		deliveryStatus.align = 'center';
 		var deliveryStatusText = "";
 		if(equipment.eqStatus)
 			deliveryStatusText = equipment.eqStatus.name;
@@ -2902,15 +2975,16 @@ function fillEquipment (data) {
 		
 		var supplier = document.createElement('td');
 		supplier.width = "80px";
+		supplier.align = 'center';
 		var supplierText = "";
 		if(equipment.eqSupplier)
 			supplierText = equipment.eqSupplier.name;
 		supplier.appendChild(document.createTextNode(supplierText));
 		
 		
-		
 		var orderedDate = document.createElement('td');
 		orderedDate.width = "70px";
+		orderedDate.align = 'center';
 		if (equipment.orderedDate === undefined)
 			orderedDate.appendChild(document.createTextNode("---"));
 		else
@@ -2918,6 +2992,7 @@ function fillEquipment (data) {
 		
 		var estDeliveryDate = document.createElement('td');
 		estDeliveryDate.width = "70px";
+		estDeliveryDate.align = 'center';
 		if (equipment.estDeliveryDate === undefined)
 			estDeliveryDate.appendChild(document.createTextNode("---"));
 		else
@@ -2925,6 +3000,7 @@ function fillEquipment (data) {
 		
 		var deliveryDate = document.createElement('td');
 		deliveryDate.width = "70px";
+		deliveryDate.align = 'center';
 		if (equipment.deliveryDate === undefined)
 			deliveryDate.appendChild(document.createTextNode('---'));
 		else 
@@ -2932,6 +3008,7 @@ function fillEquipment (data) {
 		
 		var equipmentNotes = document.createElement('td');
 		equipmentNotes.width = "200px";
+		equipmentNotes.align = 'center';
 		equipmentNotes.appendChild(document.createTextNode(equipment.notes));
 		
 		tableRow.appendChild(equipmentName);
@@ -3185,6 +3262,15 @@ function fillCloseout (data) {
 		break;
 	}
 	switch (closeoutData.otherFinalLeinsStatus) {
+	case '1':
+		required++;
+		completed++;
+		break;
+	case '2': 
+		required++;
+		break;
+	}
+	switch (closeoutData.otherFinalLeinsBStatus) {
 	case '1':
 		required++;
 		completed++;

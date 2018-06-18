@@ -109,6 +109,12 @@ public class CloseoutDetailsFiller
 		cd.setOtherFinalLeinsDate(otherFinalLeinsDate);
 		cd.setOtherFinalLeinsStatus(params.get("otherFinalLeinsStatus"));
 
+		Date otherFinalLeinsBDate = null;
+		if(!params.get("otherFinalLeinsBDate").isEmpty())
+			otherFinalLeinsBDate = formatter.parse(params.get("otherFinalLeinsBDate"));
+		cd.setOtherFinalLeinsBDate(otherFinalLeinsBDate);
+		cd.setOtherFinalLeinsBStatus(params.get("otherFinalLeinsBStatus"));
+		
 		Date mcsWarranty = null;
 		if(!params.get("MCSWarranty").isEmpty())
 			mcsWarranty = formatter.parse(params.get("MCSWarranty"));

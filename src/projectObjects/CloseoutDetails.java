@@ -126,6 +126,8 @@ public class CloseoutDetails extends ProjectObject
 	private String otherFinalLeinsStatus;
 	private Date otherFinalLeinsDate;
 
+	private String otherFinalLeinsBStatus;
+	private Date otherFinalLeinsBDate;
 	
 	// Inspections
 	private String mechFinalStatus;
@@ -268,7 +270,7 @@ public class CloseoutDetails extends ProjectObject
 			Date mechFinalDate, String mechFinalStatus, Date elecFinalDate, String elecFinalStatus, 
 			Date plumbingFinalDate, String plumbingFinalStatus, String gasFinalStatus, Date gasFinalDate,
 			String ceilingFinalStatus, Date ceilingFinalDate, String fireAlarmFinalStatus, Date fireAlarmFinalDate,
-			String lowVolFinalStatus, Date lowVolFinalDate,
+			String lowVolFinalStatus, Date lowVolFinalDate, String otherFinalLiensBStatus, Date otherFinalLiensBDate,
 			String buildingFinalNotes, String tmpCertificateStatus, Date certificateDate, String certificateStatus, 
 			String punchListStatus, Date mg2CompletionDate, String mg2CompletionStatus, Date tmpCertificateDate, 
 			String buildingFinalStatus, String HVACstartupFormStatus, String otherWarrantyStatusB, Date otherWarrantyDateA, 
@@ -299,50 +301,52 @@ public class CloseoutDetails extends ProjectObject
 		this.traneCL = traneCL;
 	
 		this.MCSDate = MCSDate;											///
-		
 		this.MCSStatus = MCSStatus;
+		
 		this.GCDate = GCDate;											///
-		
 		this.GCStatus = GCStatus;
+		
 		this.mechanicalDate = mechanicalDate;
-		
 		this.mechanicalStatus = mechanicalStatus;
+		
 		this.electricalDate = electricalDate;
-		
 		this.electricalStatus = electricalStatus;
+		
 		this.plumbingDate = plumbingDate;
-		
 		this.plumbingStatus = plumbingStatus;
+		
 		this.gasDate = gasDate;
-		
 		this.gasStatus = gasStatus;
-		this.sprinkleDate = sprinkleDate;
 		
+		this.sprinkleDate = sprinkleDate;
 		this.sprinkleStatus = sprinkleStatus;
 
 		this.HTIDate = HTIDate;
-		
 		this.HTIStatus = HTIStatus;
-		this.otherFinalLeinsDate = otherFinalLeinsDate;
 		
+		this.otherFinalLeinsDate = otherFinalLeinsDate;
 		this.otherFinalLeinsStatus = otherFinalLeinsStatus;
 		
+		this.otherFinalLeinsBDate = otherFinalLeinsBDate;
+		this.otherFinalLeinsBStatus = otherFinalLeinsBStatus;
+		
 		this.MCSWarrantyStatus = MCSWarrantyStatus;
+		
 		this.GCWarrantyDate = GCWarrantyDate;
-		
 		this.GCWarrantyStatus = GCWarrantyStatus;
+		
 		this.mechanicalWarrantyDate = mechanicalWarrantyDate;
-		
 		this.mechanicalWarrantyStatus = mechanicalWarrantyStatus;
+		
 		this.electricalWarrantyDate = electricalWarrantyDate; 
-		
 		this.electricalWarrantyStatus = electricalWarrantyStatus;
+		
 		this.plumbingWarrantyDate = plumbingWarrantyDate;
-		
 		this.plumbingWarrantyStatus = plumbingWarrantyStatus;
-		this.gasWarrantyDate = gasWarrantyDate;
 		
+		this.gasWarrantyDate = gasWarrantyDate;
 		this.gasWarrantyStatus = gasWarrantyStatus;
+		
 		this.sprinkleWarrantyDate = sprinkleWarrantyDate;
 		
 		this.sprinkleWarrantyStatus = sprinkleWarrantyStatus;
@@ -470,6 +474,9 @@ public class CloseoutDetails extends ProjectObject
 		this.otherFinalLeinsDate = null;
 		
 		this.otherFinalLeinsStatus = null;
+		
+		this.otherFinalLeinsBDate = null;
+		this.otherFinalLeinsBStatus = null;
 		
 		this.MCSWarrantyStatus = null;
 		this.GCWarrantyDate = null;
@@ -971,6 +978,22 @@ public class CloseoutDetails extends ProjectObject
 
 	public synchronized void setOtherFinalLeinsDate(Date otherFinalLeinsDate) {
 		this.otherFinalLeinsDate = otherFinalLeinsDate;
+	}
+	
+	public synchronized String getOtherFinalLeinsBStatus() {
+		return otherFinalLeinsBStatus;
+	}
+
+	public synchronized void setOtherFinalLeinsBStatus(String otherFinalLeinsBStatus) {
+		this.otherFinalLeinsBStatus = otherFinalLeinsBStatus;
+	}
+
+	public synchronized Date getOtherFinalLeinsBDate() {
+		return otherFinalLeinsBDate;
+	}
+
+	public synchronized void setOtherFinalLeinsBDate(Date otherFinalLeinsBDate) {
+		this.otherFinalLeinsBDate = otherFinalLeinsBDate;
 	}
 	
 	public synchronized String getMechFinalStatus() {
@@ -1594,6 +1617,8 @@ public class CloseoutDetails extends ProjectObject
 			return co.getMechFinalStatus();
 		else if(name.equalsIgnoreCase("otherFinalLeinsStatus"))
 			return co.getOtherFinalLeinsStatus();
+		else if(name.equalsIgnoreCase("otherFinalLeinsBStatus"))
+			return co.getOtherFinalLeinsBStatus();
 		
 		return null;
 
@@ -1656,6 +1681,7 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("elecFinalStatus" , "String");
 		fields.put("mechFinalStatus" , "String");
 		fields.put("otherFinalLeinsStatus" , "String");
+		fields.put("otherFinalLeinsBStatus" , "String");
 
 		return fields;
 	}
