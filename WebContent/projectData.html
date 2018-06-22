@@ -89,14 +89,14 @@
         </tr>
 
         <tr>
-        <td><b>Item</b></td>
-        <td>
-        <select id="project"><option value="default">--Please select an option--</option></select>
-		</td>
         <td><b>Warehouse</b></td>
         <td>
         <select id="warehouse"><option value="default">--Please select an option--</option></select>
         </td>
+        <td><b>Item</b></td>
+        <td>
+        <select id="project"><option value="default">--Please select an option--</option></select>
+		</td>
         </tr>
 
         <tr>
@@ -180,74 +180,84 @@
         </table>
 	</div> <!-- End General Information -->
 	
-	<div style="width: 50%" id="schedulingInformation" class="info-tab"> 
+	<div style="width: 45%" id="schedulingInformation" class="info-tab"> 
 	    <table class='table table-hover'>
 	
 	
 	        <tr>
-	        <td style="width: 43%"><b>Initiation Date</b></td>
-	            <td><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
+	        <td style="width: 45%"><b>Initiation Date</b></td>
+	        <td style="text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Site Survey Date</b></td>
-	        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+	        </tr>
+	
+			<tr>
+	        <td><b>Budgetary Due Date</b></td>
+	        <td style="text-align: center"><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
+	        </tr>
+	        
+	        <tr>
+	        <td><b>Budgetary Submitted Date</b></td>
+	        <td style="text-align: center"><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	        <tr>
-	        <td><b>Costco Due Date</b></td>
-	        <td><input type="text" id="costcoDate" placeholder="Select a Date"/></td>
+	        <td><b>Proposal Due Date</b></td>
+	        <td style="text-align: center"><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Proposal Submitted Date</b></td>
-	        <td><input type="text" id="proposalDate" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
 	        </tr>	
 	
 	        <tr>
 	        <td><b>Scheduled Start Date</b></td>
-	        <td><input type="text" id="startDate" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="startDate" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Scheduled Turnover</b></td>
-	        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
 	        </tr>		
 	
 	        <tr>
 	        <td><b>Actual Turnover</b></td>
-	        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Permit Application</b></td>
-	        <td><input type="text" id="permitApp" placeholder="Select a Date"/></td>
+	        <td style="text-align: center"><input type="text" id="permitApp" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	    </table>
 	</div> <!-- End Scheduling Information -->
 	
-	<div style="width: 50%" id='financialInformation' class='info-tab'>
+	<div style="width: 42%" id='financialInformation' class='info-tab'>
 		<table class='table table-hover'>
 
             <tr>
             <td style="width: 38%"><b>Should Invoice %</b></td>
-            <td><input type="text" id="shouldInvoice" value="0"/>%</td>
+            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
             </tr>		
 
             <tr>
             <td><b>Actual Invoice %</b></td>
-            <td><input type="text" id="actualInvoice" value="0" />%</td>
+            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" />%</td>
             </tr>		
 
             <tr>
             <td><b>Project Cost</b></td>
-            <td><input type="text" id="projectCost" value="" /></td>
+            <td style="text-align: center"><input type="text" id="projectCost" value="" /></td>
             </tr>		
 
             <tr>
             <td><b>Customer Number</b></td>
-            <td><input type="text" id="custNum" value="" /></td>
+            <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
             </tr>
     	</table>
 	</div> <!-- End Financial Information -->

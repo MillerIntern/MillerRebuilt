@@ -1241,10 +1241,14 @@ function fillRuleResultsDropdown()
 	
 }
 
+
 function fillRuleDomainsDropdown()
 {
 	if(ruleDomains == undefined)
 		return;
+	
+	$('#ruleDomainDropdown').find('option').remove();
+	
 	
 	for(var ruleDomain in ruleDomains)
 	{
@@ -1519,6 +1523,7 @@ function fillProjectRulesDropdown()
 	$('#ruleDropdown').chosen({width : "200px"});
 }
 
+
 function fillProjectClassesDropdown()
 {
 	if(projectClasses == undefined)
@@ -1535,6 +1540,8 @@ function fillProjectClassesDropdown()
 	
 	$('#ruleProjectClassDropdown').chosen({width : "200px"});
 }
+
+
 /**
  * This function gets all Miller users from the database
  */
@@ -1556,6 +1563,8 @@ function getSubcontractors() {
 		
 	});	
 }
+
+
 function deleteProjectObject() {
 	if(!confirm("Are you sure you want to permanently delete this data from the database?")) return;
 	let id = document.getElementById("objectId").value;

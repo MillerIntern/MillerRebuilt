@@ -2824,76 +2824,76 @@ function fillPermitsAndInspections (data) {
 	console.log("TAB DATA" , tabData);
 	
 	// permits 
-	$('#projectManager').find('#buildingPermitRequired').text(convertRequired(tabData.buildingPermitRequired));
+	$('#projectManager').find('#buildingPermitRequired').text(tabData.buildingPermitRequired);
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
 	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
 	
-	$('#projectManager').find('#ceilingPermitRequired').text(convertRequired(tabData.ceilingPermitRequired));
+	$('#projectManager').find('#ceilingPermitRequired').text(tabData.ceilingPermitRequired);
 	$('#projectManager').find('#ceilingPermitDate').text(tabData.ceiling);
 	$('#projectManager').find('#ceilingPermit').text(tabData.ceilingPermitStatus);
 	
-	$('#projectManager').find('#mechanicalPermitRequired').text(convertRequired(tabData.mechanicalPermitRequired));
+	$('#projectManager').find('#mechanicalPermitRequired').text(tabData.mechanicalPermitRequired);
 	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
 	$('#projectManager').find('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
 	
-	$('#projectManager').find('#electricalPermitRequired').text(convertRequired(tabData.electricalPermitRequired));
+	$('#projectManager').find('#electricalPermitRequired').text(tabData.electricalPermitRequired);
 	$('#projectManager').find('#electricalPermitDate').text(tabData.electrical);
 	$('#projectManager').find('#electricalPermit').text(tabData.electricalPermitStatus);
 	
-	$('#projectManager').find('#plumbingPermitRequired').text(convertRequired(tabData.plumbingPermitRequired));
+	$('#projectManager').find('#plumbingPermitRequired').text(tabData.plumbingPermitRequired);
 	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
 	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
 	
-	$('#projectManager').find('#gasPermitRequired').text(convertRequired(tabData.gasPermitRequired));
+	$('#projectManager').find('#gasPermitRequired').text(tabData.gasPermitRequired);
 	$('#projectManager').find('#gasPermitDate').text(tabData.gas);
 	$('#projectManager').find('#gasPermit').text(tabData.gasPermitStatus);
 	
-	$('#projectManager').find('#sprinklerPermitRequired').text(convertRequired(tabData.sprinklerPermitRequired));
+	$('#projectManager').find('#sprinklerPermitRequired').text(tabData.sprinklerPermitRequired);
 	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
 	$('#projectManager').find('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
 	
-	$('#projectManager').find('#fireAlarmPermitRequired').text(convertRequired(tabData.fireAlarmPermitRequired));
+	$('#projectManager').find('#fireAlarmPermitRequired').text(tabData.fireAlarmPermitRequired);
 	$('#projectManager').find('#fireAlarmPermitDate').text(tabData.fire_alarm);
 	$('#projectManager').find('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
 	
-	$('#projectManager').find('#lowVoltagePermitRequired').text(convertRequired(tabData.voltagePermitRequired));
+	$('#projectManager').find('#lowVoltagePermitRequired').text(tabData.voltagePermitRequired);
 	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
 	$('#projectManager').find('#lowVoltagePermit').text(tabData.voltagePermitStatus);
 	
 	// inspections
-	$('#projectManager').find('#buildingInspectionRequired').text(convertRequired(tabData.buildingInspectionRequired));
+	$('#projectManager').find('#buildingInspectionRequired').text(tabData.buildingInspectionRequired);
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
 	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
 	
-	$('#projectManager').find('#ceilingInspectionRequired').text(convertRequired(tabData.ceilingInspectionRequired));
+	$('#projectManager').find('#ceilingInspectionRequired').text(tabData.ceilingInspectionRequired);
 	$('#projectManager').find('#ceilingInspectionDate').text(tabData.ceilingInspectionLastUpdated);
 	$('#projectManager').find('#ceilingInspection').text(tabData.ceilingInspectionStatus);
 	
-	$('#projectManager').find('#mechanicalInspectionRequired').text(convertRequired(tabData.mechanicalInspectionRequired));
+	$('#projectManager').find('#mechanicalInspectionRequired').text(tabData.mechanicalInspectionRequired);
 	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
 	$('#projectManager').find('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
 	
-	$('#projectManager').find('#electricalInspectionRequired').text(convertRequired(tabData.electricalInspectionRequired));
+	$('#projectManager').find('#electricalInspectionRequired').text(tabData.electricalInspectionRequired);
 	$('#projectManager').find('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
 	$('#projectManager').find('#electricalInspection').text(tabData.electricalInspectionStatus);
 	
-	$('#projectManager').find('#plumbingInspectionRequired').text(convertRequired(tabData.plumbingInspectionRequired));
+	$('#projectManager').find('#plumbingInspectionRequired').text(tabData.plumbingInspectionRequired);
 	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
 	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
 	
-	$('#projectManager').find('#gasInspectionRequired').text(convertRequired(tabData.gasInspectionRequired));
+	$('#projectManager').find('#gasInspectionRequired').text(tabData.gasInspectionRequired);
 	$('#projectManager').find('#gasInspectionDate').text(tabData.gasInspectionLastUpdated);
 	$('#projectManager').find('#gasInspection').text(tabData.gasInspectionStatus);
 	
-	$('#projectManager').find('#sprinklerInspectionRequired').text(convertRequired(tabData.sprinklerInspectionRequired));
+	$('#projectManager').find('#sprinklerInspectionRequired').text(tabData.sprinklerInspectionRequired);
 	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
 	$('#projectManager').find('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
 	
-	$('#projectManager').find('#fireAlarmInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
+	$('#projectManager').find('#fireAlarmInspectionRequired').text(tabData.fireAlarmInspectionRequired);
 	$('#projectManager').find('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
 	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
 	
-	$('#projectManager').find('#lowVoltageInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
+	$('#projectManager').find('#lowVoltageInspectionRequired').text(tabData.fireAlarmInspectionRequired);
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
 	

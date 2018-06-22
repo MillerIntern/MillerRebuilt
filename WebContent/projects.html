@@ -253,10 +253,10 @@
 				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
-			<div style="width: 100%" class='info-tab info-tab-permits' id='permits'>
+			<div style="width: 90%" class='info-tab info-tab-permits' id='permits'>
 				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
 					<tr>
-						<th style="width: 15%; text-align: center"><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits and Inspections</button></th>
+						<th style="width: 7%; text-align: center"><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Permit Required</th>
 						<th style="width: 10%; text-align: center">Permit Status</th>
@@ -266,7 +266,7 @@
 						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Building</td>
+						<td class = "bold">Building</td>
 						<td align="center" id='buildingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='buildingPermit' class ="italics permitTableData"></td>
 						<td align="center" id='buildingPermitDate' class ="italics permitTableData"></td>
@@ -275,7 +275,7 @@
 						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Ceiling</td>
+						<td class = "bold">Ceiling</td>
 						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
 						<td align="center" id='ceilingPermitDate' class ="italics permitTableData"></td>
@@ -284,7 +284,7 @@
 						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Mechanical</td>
+						<td class = "bold">Mechanical</td>
 						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
 						<td align="center" id='mechanicalPermitDate' class ="italics permitTableData"></td>
@@ -293,7 +293,7 @@
 						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Electrical</td>
+						<td class = "bold">Electrical</td>
 						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
 						<td align="center" id='electricalPermitDate' class ="italics permitTableData"></td>
@@ -302,7 +302,7 @@
 						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Plumbing</td>
+						<td class = "bold">Plumbing</td>
 						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
 						<td align="center" id='plumbingPermitDate' class ="italics permitTableData"></td>
@@ -311,7 +311,7 @@
 						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Gas</td>
+						<td class = "bold">Gas</td>
 						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
 						<td align="center" id='gasPermitDate' class ="italics permitTableData"></td>
@@ -320,7 +320,7 @@
 						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Fire Sprinkler</td>
+						<td class = "bold">Sprinkler</td>
 						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
 						<td align="center" id='sprinklerPermitDate' class ="italics permitTableData"></td>
@@ -329,7 +329,7 @@
 						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Fire Alarm</td>
+						<td class = "bold">Fire Alarm</td>
 						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
 						<td align="center" id='fireAlarmPermitDate' class ="italics permitTableData"></td>
@@ -338,7 +338,7 @@
 						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Low Voltage</td>
+						<td class = "bold">Low Voltage</td>
 						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
 						<td align="center" id='lowVoltagePermitDate' class ="italics permitTableData"></td>	
@@ -459,23 +459,23 @@
 			
 		</ul>
 		
-		<div style= "width : 70%" id="generalInformation" class="info-tab active">
+		<div style= "width : 75%" id="generalInformation" class="info-tab active">
 			<table id="generalInformationTable" class='table table-hover'>
 		
 			<tr>
-	        <td style="width: 20%"><b>MCS Project#</b></td>
+	        <td style="width: 20%"><b>MCS Project #</b></td>
 	        <td><input id="mcsNumber" type="text"></td>
 	        </tr>
 	
 	        <tr>
-	        <td><b>Item</b></td>
-	        <td>
-	        <select id="project"><option value="default">--Please select an option--</option></select>
-			</td>
-	        <td><b>Warehouse</b></td>
+	         <td><b>Warehouse</b></td>
 	        <td>
 	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
 	        </td>
+	        <td style="width: 20%"><b>Item</b></td>
+	        <td>
+	        <select id="project"><option value="default">--Please select an option--</option></select>
+			</td>
 	        </tr>
 	
 	        <tr>
@@ -554,56 +554,56 @@
 	        </table>
 		</div> <!-- End General Information -->
 		
-		<div style="width: 40%" id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
+		<div style="width: 35%" id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
 		    <table id="schedulingInformationTable" class='table table-hover'>
 		
 		
 		        <tr>
-		        <td style="width: 40%" class = "bold">Initiation Date</td>
-		        <td style="width: 50%"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
+		        <td style="width: 45%" class = "bold">Initiation Date</td>
+		        <td style="width: 50%; text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
 		        <td class = "bold">Site Survey Date</td>
-		        <td><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 		        </tr>
 				<tr>
 		        <td class = "bold">Budgetary Due Date</td>
-		        <td><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
 		        <td class = "bold">Budgetary Submitted Date</td>
-		        <td><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		        <tr>
 		        <td class = "bold">Proposal Due Date</td>
-		        <td><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
 		        <td class = "bold">Proposal Submitted Date</td>
-		        <td><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
 		        </tr>	
 		
 		        <tr>
 		        <td class = "bold">Scheduled Start Date</td>
-		        <td><input type="text" id="startDate" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="startDate" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
 		        <td class = "bold">Scheduled Turnover</td>
-		        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
 		        </tr>		
 		
 		        <tr>
 		        <td class = "bold">Actual Turnover</td>
-		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		        <tr>
 		        <td class = "bold">Permit Application</td>
-		        <td><input type="text" id="permitApp" placeholder="Select a Date"/></td>
+		        <td style="text-align: center"><input type="text" id="permitApp" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		    </table>
@@ -631,6 +631,7 @@
 		   			</tr>
 				</table>
 				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
+				<button class ="edit-submit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
 			</div>
 			<div id = 'taskCreationZone' class = 'well'>
 				<div class='base-field'>
@@ -695,7 +696,7 @@
 				        	</td>
 				        </tr>
 					</table>
-					<button onclick='submitTask()' class='btn btn-success'>Submit Task</button>
+					<button onclick='submitTask()' class='btn btn-success'>Save Task</button>
 					<button onclick='viewTasks()' class='btn btn-primary'>Back to Task View</button>
 			</div>
 		
@@ -707,27 +708,27 @@
 		
 		</div>
 		
-		<div style="width: 40%"id='financialInformation' class='info-tab info-tab-financialInformation'>
+		<div style="width: 35%"id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table id="financialInformationTable" class='table table-hover'>
 	
 	            <tr>
-	            <td style="width: 35%"class = "bold">Should Invoice %</td>
-	            <td><input type="text" id="shouldInvoice" value="0"/>%</td>
+	            <td style="width: 35%" class = "bold">Should Invoice %</td>
+	            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Actual Invoice %</td>
-	            <td><input type="text" id="actualInvoice" value="0" />%</td>
+	            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" />%</td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Project Cost</td>
-	            <td><input type="text" id="projectCost" value="" /></td>
+	            <td style="text-align: center"><input type="text" id="projectCost" value="" /></td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Customer Number</td>
-	            <td><input type="text" id="custNum" value="" /></td>
+	            <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
 		</div> <!-- End Financial Information -->
@@ -777,7 +778,7 @@
 					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Building</td>
+					<td class = "bold">Building</td>
 					<td align="center">
 					    <select data-associated-date='buildingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="buildingPermitReq">
 					        <option value="default">--Required--</option>
@@ -813,7 +814,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Ceiling</td>
+					<td class = "bold">Ceiling</td>
 					<td align="center">
 					    <select data-associated-date='ceilingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="ceilingPermitReq">
 					        <option value="default">--Required--</option>
@@ -864,7 +865,7 @@
 					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Mechanical</td>
+					<td class = "bold">Mechanical</td>
 					<td align="center">
 					    <select data-associated-date='mechanicalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="mechanicalPermitReq">
 					        <option value="default">--Required--</option>
@@ -898,7 +899,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Electrical</td>
+					<td class = "bold">Electrical</td>
 					<td align="center">
 					    <select data-associated-date='electricalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="electricalPermitReq">
 					        <option value="default">--Required-- </option>
@@ -934,7 +935,7 @@
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Plumbing</td>
+					<td class = "bold">Plumbing</td>
 					<td align="center">
 					    <select data-associated-date='plumbingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="plumbingPermitReq">
 					        <option value="default">--Required--</option>
@@ -970,7 +971,7 @@
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Gas</td>
+					<td class = "bold">Gas</td>
 					<td align="center">
 					    <select data-associated-date='gasPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="gasPermitReq">
 					        <option value="default">--Required--</option>
@@ -1020,7 +1021,7 @@
 					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Sprinkler</td>
+					<td class = "bold">Sprinkler</td>
 					<td align="center">
 					    <select data-associated-date='sprinklerPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="sprinklerPermitReq">
 					        <option value="default">--Required--</option>
@@ -1056,7 +1057,7 @@
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Fire Alarm</td>
+					<td class = "bold">Fire Alarm</td>
 					<td align="center">
 					    <select data-associated-date='fireAlarmPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="fireAlarmPermitReq">
 					        <option value="default">--Required--</option>
@@ -1092,7 +1093,7 @@
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Low-Voltage</td>
+					<td class = "bold">Low-Voltage</td>
 					<td align="center">
 					    <select data-associated-date='voltagePermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="voltagePermitReq">
 					        <option value="default">--Required--</option>
@@ -1142,7 +1143,7 @@
 					<td align="center" class = "bold">Inspection Last Updated</td>
 				</tr>
 				<tr>
-					<td align="center" class = "bold">Other (A)</td>
+					<td class = "bold">Other (A)</td>
 					<td align="center">
 					    <select data-associated-date='otherAPermitLastUpdated' class="permitReq" id="otherAPermitReq">
 					        <option value="default">--Required--</option>
@@ -1178,7 +1179,7 @@
 				</tr>
 				
 				<tr>
-					<td align="center" class = "bold">Other (B)</td>
+					<td class = "bold">Other (B)</td>
 					<td align="center">
 					    <select data-associated-date='otherBPermitLastUpdated' class="permitReq" id="otherBPermitReq">
 					        <option value="default">--Required--</option>
@@ -2040,7 +2041,7 @@
 		
 		<ul class="nav nav-tabs">
 			<li role='presentation' class="active" data-tab="equipmentForm" id = "equipmentFormTabLink"><a>Equipment Form</a></li>
-	        <li role='presentation' onClick="saveProject_EQUIP()" data-tab="saveButton" id = "saveButtonTabLinkEquipment">
+	        <li role='presentation' onclick="saveProject_EQUIP()" data-tab="saveButton" id = "saveButtonTabLinkEquipment">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 		</ul>
 	

@@ -36,8 +36,10 @@ $(document).ready(function()
 	
 	$("#initiatedDate").datepicker();
 	$("#surveyDate").datepicker();
-	$("#costcoDate").datepicker();
-	$("#proposalDate").datepicker();
+	$("#budgetaryDueDate").datepicker();
+	$("#budgetarySubmittedDate").datepicker();
+	$("#proposalDueDate").datepicker();
+	$("#proposalDate_pd").datepicker();
 	$("#startDate").datepicker();
 	$("#scheduledTurnover").datepicker();
 	$("#actualTurnover").datepicker();
@@ -231,8 +233,10 @@ function saveProject() {
 	// scheduling
 	var initiated = $("#initiatedDate").val();
 	var survey = $("#surveyDate").val();
-	var costco = $("#costcoDate").val();
-	var proposalDate = $("#proposalDate").val();
+	var budgetaryDue = $("#budgetaryDueDate").val();
+	var budgetarySubmitted = $("#budgetarySubmittedDate").val();
+	var costco = $("#proposalDueDate").val();
+	var proposalDate = $("#proposalDate_pd").val();
 	var startDate = $("#startDate").val();
 	var scheduledTurnover = $("#scheduledTurnover").val();
 	var actualTurnover = $("#actualTurnover").val();
@@ -289,19 +293,23 @@ function saveProject() {
 				
 				'initiated': initiated,
 				'survey': survey,
-				'costco': costco,
+				
+				'costco' : costco, 
 				'proposalDate': proposalDate,
 				'startDate': startDate,
 				'scheduledTurnover': scheduledTurnover,
 				'actualTurnover': actualTurnover,
 				'permitApp': permitApp,
-				
+								
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
 				'notes': notes,
 				'refrigNotes': refrigNotes,
 				'cost': cost,
 				'customerNumber': customerNumber,
+				'budgetaryDue': budgetaryDue,
+				'budgetarySubmitted' : budgetarySubmitted,
+				
 				'autofill-HVAC' : autoFillHVAC,
 				'autofill-Refrigeration' : autoFillRefrigeration ,
 				'autofill-Permits' : autoFillPermits,
