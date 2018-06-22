@@ -3614,8 +3614,6 @@ function fillTasksTable(tasks) {
 
 		count++;
 		
-		
-	
 		taskListing.value = tasks[i].id;
 		taskListing.id = "task_" + tasks[i].id;
 		

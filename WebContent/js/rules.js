@@ -3497,11 +3497,21 @@ function fillTasksTable(tasks) {
 				(selector === 'open_complete' && tasks[i].status.id == 3) ||
 				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
+		var task = tasks[i];
+		var taskListing = document.createElement('tr');
+		taskListing.setAttribute("value", task.id);
+		taskListing.onclick = function() {
+			toggleTask(this);
+		};
+		
+		taskListing.ondblclick = function () {
+			TASK_ACTION = "updateTask";
+			displayTaskWell();
+			fillTaskWell(this);
+		};
 
 		count++;
-		let taskListing = document.createElement('tr');
-		
-	
+			
 		taskListing.value = tasks[i].id;
 		taskListing.id = "task_" + tasks[i].id;
 		
@@ -3544,10 +3554,7 @@ function fillTasksTable(tasks) {
 		taskListing.appendChild(severity);
 		taskListing.appendChild(status);
 		taskListing.appendChild(notes);
-		
-
-
-		
+			
 		$('#taskTable > tbody').append(taskListing);
 		
 	}
@@ -3556,22 +3563,25 @@ function fillTasksTable(tasks) {
 		clearAndAddSingleRowTask("No Tasks to Show");
 	}
 	
-	$('#taskTable tr:not(.head)').click(function() {		
-		toggleTask(this);
-	});
-	
-	$('#taskTable tr:not(.head)').dblclick(function() {		
-		//let tmp_id = this.id;
-		//let task_id = tmp_id.replace("task_","");
+}
 
-		//console.log(tmp_id);
-		TASK_ACTION = "updateTask";
-		displayTaskWell();
-		fillTaskWell(this);
-		//location.href = "taskBrowser.html?id="+tmp;
-		
-	});
-	
+
+let SELECTED_TASK_ID;
+
+function toggleTask (source)
+{
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editTask').prop('disabled', false);
+	SELECTED_TASK_ID = $(source).attr('value');
+	console.log("task id = ", SELECTED_TASK_ID);
+}
+
+function editSelectedTask()
+{
+	TASK_ACTION = "updateTask";
+	displayTaskWell();
+	fillTaskWell(SELECTED_TASK_ID);
 }
 
 function displayTaskWell() {
@@ -3583,15 +3593,12 @@ function displayTaskWell() {
 	document.getElementById('tasksInformation').style.width = "55%";
 }
 
-let SELECTED_TASK_ID;
-
 function fillTaskWell(source) {
-	let tmp_id = source.id;
-	let task_id = tmp_id.replace("task_","");
+	let tmp_id = source;
 	
 	let selected_task;
 	for(var i = 0; i < tasks.length; i++) {
-		if(tasks[i].id == task_id) {
+		if(tasks[i].id == tmp_id) {
 			selected_task = tasks[i];
 			SELECTED_TASK_ID = tasks[i].id;
 		}
@@ -3633,13 +3640,6 @@ function fillTaskWell(source) {
 		
 }
 
-function toggleTask (source) {
-	$(source).siblings().css('background-color', 'white');
-	$(source).css('background-color', '#dddddd');
-	//$('#editChangeOrder').prop('disabled', false);
-	//selectedChangeOrder = $(source).attr('value');
-	//CHANGE_ORDER_ID = selectedChangeOrder;
-}
 
 /**
  * This function clears and adds a single row to the task table
