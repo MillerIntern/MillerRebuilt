@@ -125,7 +125,8 @@ function getUserData () {
 		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
-		if (!isValidInput([dueDate, initiatedDate])) return alert('Bad Dates');
+		if (dueDate === 'undefined'|| dueDate === '') return alert('Bad Due Date');
+		
 		
 		console.log("TASK STATUS " , taskStatus);
 		

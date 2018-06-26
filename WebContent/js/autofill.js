@@ -66,7 +66,7 @@ function autofillHVAC()
 	let TBD = 6;
 	
 	let value;
-	if(required == 0)
+	if(required == 2)
 		value = NA;
 	else if(required == 1)
 		value = REQUIRED;
@@ -96,11 +96,11 @@ function autofillRefrigeration()
 	let TBD = 6;
 	
 	let value;
-	if(required == 0)
+	if(required == 2)
 		value = NA;
 	else if(required == 1)
 		value = REQUIRED;
-	else if(required == "default")
+	else
 		value = TBD;
 	
 	
@@ -202,9 +202,9 @@ function autofillPermits()
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
 	let TBD_STATUS = "TBD";
 	
-	let YES = 0;
-	let NO = 1;
-	let TBD = 2;
+	let YES = 1;
+	let NO = 2;
+	let TBD = 0;
 		
 	let permitStatusRequirementValue;
 	let permitStatusValue;
@@ -259,9 +259,9 @@ function autofillInspections()
 	let NA = "N/A"; //Correspond to id in database for closeoutstatus (N/A)
 	let TBD_STATUS = "TBD";
 	
-	let YES = 0;
-	let NO = 1;
-	let TBD = 2;
+	let YES = 1;
+	let NO = 2;
+	let TBD = 0;
 		
 	let inspectionStatusRequirementValue;
 	let inspectionStatusValue;
