@@ -5217,7 +5217,7 @@ function goToChangeOrder(edit){
  * @returns
  */
 function deleteChangeOrder() {
-	if(!confirm("Are you sure you want to permanently delete the change order from the database?")) return;
+	if(!confirm("Are you sure you want to permanently delete this change order?")) return;
 	
 	
 	console.log("PROJECT = ", PROJECT_DATA);
@@ -5545,7 +5545,7 @@ function deleteEquipment() {
 		return;
 	}
 	
-	if(!confirm("Are you sure you want to delete this equipment?"))
+	if(!confirm("Are you sure you want to permanently delete this piece of equipment?"))
 		return;
 	
 	console.log("SELECTED EQUIPMENT " , selectedEquipment , PROJECT_DATA);

@@ -679,8 +679,8 @@ function navigateToSelectedProject () {
  *                
  */
 function saveTaskChanges () {
-	if(!$('#taskWell > #title').val() || $('#taskWell > #title').val() == ""){ alert("Tasks much have a title"); return;}
-	if(!$('#taskWell > div > .description').val() || $('#taskWell > div > .description').val() == "") { alert("Tasks much have a description"); return;}
+	if(!$('#taskWell > #title').val() || $('#taskWell > #title').val() == ""){ alert("Tasks must have a title"); return;}
+	if(!$('#taskWell > div > .description').val() || $('#taskWell > div > .description').val() == "") { alert("Tasks must have a description"); return;}
 	if(typeof task === 'undefined')
 		return alert("No Task Selected, try reloading!");
 	
