@@ -478,10 +478,7 @@ function fillTabs_CLOSEOUT(data)
 			$('#otherItemsSalvageTable').find("#salvageAmount").val(convertSalvage(json.closeoutDetails.salvageValue.value));
 		}
 		
-	    console.log("SALVAGE AMOUNT FILL" , 			$('#otherItemsSalvageTable').find("#salvageAmount").val());
-;
-
-	
+	    console.log("SALVAGE AMOUNT FILL" ,	$('#otherItemsSalvageTable').find("#salvageAmount").val());	
 		
 	}
 	
@@ -1796,7 +1793,6 @@ $(document).ready(function()
 	$('#projectData').find("#startDate").datepicker();
 	$('#projectData').find("#scheduledTurnover").datepicker();
 	$('#projectData').find("#actualTurnover").datepicker();
-	$('#projectData').find("#permitApp").datepicker();
 	$('#projectData').find("#taskCreationZone").find('#initDate').datepicker();
 	$('#projectData').find("#taskCreationZone").find('#dueDate').datepicker();
 });
@@ -1978,7 +1974,6 @@ function saveProject_PROJECT_DATA() {
 	var startDate = $('#projectData').find("#startDate").val();
 	var scheduledTurnover = $('#projectData').find("#scheduledTurnover").val();
 	var actualTurnover = $('#projectData').find("#actualTurnover").val();
-	var permitApp = $('#projectData').find("#permitApp").val();
 
 	// financial
 	var shouldInvoice = $('#projectData').find("#shouldInvoice").val();
@@ -1994,7 +1989,7 @@ function saveProject_PROJECT_DATA() {
 	var autofill_Permits = $('#projectData').find("#autofill-Permits").val();
 	
 	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
-	var dates_PROJECT_DATA = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
+	var dates_PROJECT_DATA = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover];
 	
 	
 	if(isValidInput_PROJECT_DATA(required, dates_PROJECT_DATA)) {
@@ -2007,7 +2002,6 @@ function saveProject_PROJECT_DATA() {
 			if(i == 4) startDate = dates_PROJECT_DATA[i];
 			if(i == 5) scheduledTurnover = dates_PROJECT_DATA[i];
 			if(i == 6) actualTurnover = dates_PROJECT_DATA[i];
-			if(i == 7) permitApp = dates_PROJECT_DATA[i];
 		}
 	//	$('#projectData').find('.info-tab').removeClass('active');
 	//	$('#projectData').find('#saveButton').addClass('active');
@@ -2061,7 +2055,6 @@ function saveProject_PROJECT_DATA() {
 				'startDate': startDate,
 				'scheduledTurnover': scheduledTurnover,
 				'actualTurnover': actualTurnover,
-				'permitApp': permitApp,
 				
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
@@ -2372,7 +2365,7 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#scope").val(json.scope);
 
 	
-	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);;
+	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);
 	$('#projectData').find("#surveyDate").val(json.siteSurvey);
 	$('#projectData').find("#budgetaryDueDate").val(json.budgetaryDue);
 	$('#projectData').find("#budgetarySubmittedDate").val(json.budgetarySubmitted);
@@ -2381,7 +2374,6 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#startDate").val(json.scheduledStartDate);
 	$('#projectData').find("#scheduledTurnover").val(json.scheduledTurnover);
 	$('#projectData').find("#actualTurnover").val(json.actualTurnover);
-	$('#projectData').find("#permitApp").val(json.permitApp);
 
 	$('#projectData').find("#shouldInvoice").val(json.shouldInvoice);
 	$('#projectData').find("#actualInvoice").val(json.invoiced);
@@ -2848,7 +2840,7 @@ function fillChangeOrders (data) {
 		cost.width = "5%";
 		cost.align = 'center';
 		if(changeOrder.cost)
-			cost.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.cost)));
+			cost.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.cost)));
 		else 
 			cost.appendChild(document.createTextNode("---"));
 
@@ -2857,7 +2849,7 @@ function fillChangeOrders (data) {
 		sell.width = "5%";
 		sell.align = 'center';
 		if(changeOrder.sell)
-			sell.appendChild(document.createTextNode("$" + cleanNumericValueForDisplaying(changeOrder.sell)));
+			sell.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.sell)));
 		else 
 			sell.appendChild(document.createTextNode("---"));		
 		
@@ -3802,7 +3794,7 @@ let ready = false;
 
 let projects;
 
-let parameterFields = ["Warehouse", "Classification", "Item",
+let parameterFields = ["Warehouse", "Project", "Item",
                        "Manager", "Supervisor", "Type", "Status"];
 
 let paramNum = 2;
@@ -4349,7 +4341,7 @@ function setVals (param) {
 		modParam.empty();
 		modParam.append(warehouseOptions.cloneNode(true));	
 		break;
-	case 'Classification':
+	case 'Project':
 		modParam.empty();
 		modParam.append(classOptions.cloneNode(true));
 		break;
@@ -4467,7 +4459,7 @@ function filterProjects () {
 					json[j] = null;
 					remaining = remaining - 1;
 				}
-			} else if (id === 'Classification') {
+			} else if (id === 'Project') {
 				if (json[j] != null && json[j].projectClass.id != val) {
 					json[j] = null;
 					remaining = remaining - 1;
@@ -4864,6 +4856,10 @@ function cleanNumericValueForSaving(num)
 	while(num.indexOf(",") != -1) {
 		num = num.replace(",","");
 	}
+	
+	while(num.indexOf("$") != -1) {
+		num = num.replace("$","");
+	}
 	return num;
 }
 
@@ -4913,7 +4909,7 @@ function cleanNumericValueForDisplaying(num)
 			correctOrder += cleanDollars[i];
 		}
 		
-		cleanPrice = correctOrder + "." + cleanCents;
+		cleanPrice = "$" + correctOrder + "." + cleanCents;
 		//console.log("AFTER: ", cleanPrice);
 		return cleanPrice;
 	} 
@@ -4945,7 +4941,7 @@ function cleanNumericValueForDisplaying(num)
 			correctOrder += cleanDollars[i];
 		}
 		
-		cleanPrice = correctOrder;
+		cleanPrice = "$" + correctOrder;
 		//console.log("AFTER: ", cleanPrice);
 		return cleanPrice;
 		

@@ -368,7 +368,6 @@ public class ProjectRuleService
 						map.put("projectInitiatedDate", project.getProjectInitiatedDate());
 						map.put("scheduledTurnover", project.getScheduledTurnover());
 						map.put("actualTurnover", project.getActualTurnover());
-						map.put("permitApp" , project.getPermitApplication());
 						map.put("type", "Scheduling");
 						break;
 					case Tasks:

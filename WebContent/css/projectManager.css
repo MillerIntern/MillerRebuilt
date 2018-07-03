@@ -26,15 +26,19 @@
 .scrollTextBox {
 	height: 50px;
 	width: 330px;
-	overflow-y: scroll;
-	resize: none;
+	resize: vertical;
+}
+
+.scrollTextBoxNewProject {
+	height: 50px;
+	width: 270px;
+	resize: vertical;
 }
 
 .scrollTextBoxTaskForm {
 	height: 50px;
 	width: 190px;
-	overflow-y: scroll;
-	resize: none;
+	resize: vertical;
 }
 
 .info-tab > .table {

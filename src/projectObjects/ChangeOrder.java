@@ -265,7 +265,13 @@ public class ChangeOrder extends ProjectObject
 		fields.put("approvedDate" , "Date");
 		fields.put("cost" , "Number");
 		fields.put("sell" , "Number");
-
+		fields.put("customerCOPnum" , "String");
+		fields.put("subCO" , "String");
+		fields.put("status" , "String");
+		fields.put("title" , "String");
+		fields.put("briefDescription" , "String");
+		fields.put("subNames" , "String");
+		fields.put("type" , "String");
 		return fields;
 	}
 	

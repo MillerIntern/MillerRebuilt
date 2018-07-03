@@ -181,11 +181,24 @@ function autofillCloseout()
     else 
     	value = NA;
     
-    $('.autofill-Closeout-AIA').each(function(index){
+    $('.autofill-Closeout-MG2').each(function(index){
 		$(this).val(value);
 	});
    
-    $('.autofill-Closeout-AIA-Date').each(function(index){
+    $('.autofill-Closeout-MG2-Date').each(function(index){
+		$(this).val(TODAYS_DATE);
+	});
+    
+    if(required == 2 || required == 5)
+    	value = REQUIRED;
+    else 
+    	value = NA;
+    
+    $('.autofill-Closeout-MG2PO').each(function(index){
+		$(this).val(value);
+	});
+   
+    $('.autofill-Closeout-MG2PO-Date').each(function(index){
 		$(this).val(TODAYS_DATE);
 	});
     

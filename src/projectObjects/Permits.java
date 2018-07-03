@@ -891,7 +891,9 @@ public class Permits extends ProjectObject
 		
 		map.put(first + "PermitLastUpdated" , "Date");
 		map.put(stub + "PermitStatus" , "String");
+		map.put(stub + "PermitRequired" , "String");
 		map.put(stub + "InspectionStatus" , "String");
+		map.put(stub + "InspectionRequired" , "String");
 		map.put(stub + "InspectionLastUpdated" , "Date");
 		
 	}

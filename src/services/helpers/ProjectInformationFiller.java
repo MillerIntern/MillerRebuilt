@@ -58,9 +58,9 @@ public class ProjectInformationFiller
 		Date finitiatedDate = null;
 		if (!(params.get("initiated")).isEmpty()) 
 			finitiatedDate = formatter.parse(params.get("initiated"));
-		else {
-			finitiatedDate = new Date();
-		}
+	//	else {
+	//		finitiatedDate = new Date();
+	//	}
 		currentProject.setProjectInitiatedDate(finitiatedDate);
 
 		Date fsurvey = null;
@@ -103,10 +103,6 @@ public class ProjectInformationFiller
 			factual = formatter.parse(params.get("actualTurnover"));
 		currentProject.setActualTurnover(factual);
 
-		Date permitApp = null;
-		if (!params.get("permitApp").isEmpty())
-			permitApp = formatter.parse(params.get("permitApp"));
-		currentProject.setPermitApplication(permitApp);
 		
 		//Autofill
 		

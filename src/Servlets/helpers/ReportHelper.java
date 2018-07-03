@@ -687,8 +687,6 @@ public class ReportHelper
 			return String.valueOf(p.getCost());
 		else if (value.equals("zachNotes") && p.getZachUpdates() != null)
 			return String.valueOf(p.getZachUpdates());
-		else if (value.equals("permitApp") && p.getPermitApplication() != null)
-			return dForm.format(p.getPermitApplication()).toString();
 		else if(value.equals("mechanicalFinal"))
 		{
 			StringBuilder sb = new StringBuilder();

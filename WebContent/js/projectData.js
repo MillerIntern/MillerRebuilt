@@ -43,7 +43,7 @@ $(document).ready(function()
 	$("#startDate").datepicker();
 	$("#scheduledTurnover").datepicker();
 	$("#actualTurnover").datepicker();
-	$("#permitApp").datepicker();
+	$("#initiatedDate").val(getToday());
 });
 
 //This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
@@ -100,7 +100,6 @@ function fillDropdowns(data)
 	generateDropdowns(data["status"], "status");
 	generateDropdowns(data["stage"], "stage");
 	generateDropdowns(data["type"], "pType");	
-	$("#initiatedDate").val(getToday());
 }
 
 //This function puts data into a specific dropdown menu
@@ -240,7 +239,6 @@ function saveProject() {
 	var startDate = $("#startDate").val();
 	var scheduledTurnover = $("#scheduledTurnover").val();
 	var actualTurnover = $("#actualTurnover").val();
-	var permitApp = $("#permitApp").val();
 
 	
 	// financial
@@ -258,7 +256,7 @@ function saveProject() {
 	var autoFillPermits = determineAutofillValue($('#autofill-Permits').val());
 	
 	
-	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover, permitApp];
+	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover];
 	
 	if(isValidInput(dates)) {
 		$('.info-tab').removeClass('active');
@@ -299,7 +297,6 @@ function saveProject() {
 				'startDate': startDate,
 				'scheduledTurnover': scheduledTurnover,
 				'actualTurnover': actualTurnover,
-				'permitApp': permitApp,
 								
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,

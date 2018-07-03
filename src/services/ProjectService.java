@@ -338,6 +338,12 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("inspectionstatus") != null && !parameters.get("inspectionstatus").isEmpty())
 			if(parameters.get("inspectionstatus").equals("true"))
 				map.put("inspectionstatus", ProjectObjectService.getAllAsJsonString("InspectionStatus"));
+		if(parameters.get("permitreq") != null && !parameters.get("permitreq").isEmpty())
+			if(parameters.get("permitreq").equals("true"))
+				map.put("permitreq", ProjectObjectService.getAllAsJsonString("PermitRequired"));
+		if(parameters.get("inspectionreq") != null && !parameters.get("inspectionreq").isEmpty())
+			if(parameters.get("inspectionreq").equals("true"))
+				map.put("inspectionreq", ProjectObjectService.getAllAsJsonString("InspectionRequired"));
 		if(parameters.get("permitstage") != null && !parameters.get("permitstage").isEmpty())
 			if(parameters.get("permitstage").equals("true"))
 				map.put("permitstage", ProjectObjectService.getAllAsJsonString("PermitStage"));

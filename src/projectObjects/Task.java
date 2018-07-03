@@ -208,6 +208,7 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		Map<String , String> fields = new HashMap<String , String>();
 		fields.put("dueDate", "Date");
 		fields.put("status", "String");
+		fields.put("assignedDate" , "Date");
 		
 		return fields;
 

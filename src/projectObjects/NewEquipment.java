@@ -198,7 +198,10 @@ public class NewEquipment extends ProjectObject
 		fields.put("deliveryDate", "Date");
 		fields.put("estDeliveryDate", "Date");
 		fields.put("deliveryStatus", "String");
-		
+		fields.put("poNum" , "String");
+		fields.put("eqSupplier" , "String");
+		fields.put("description" , "String");
+		fields.put("equipmentName" , "String");
 		return fields;
 
 	}

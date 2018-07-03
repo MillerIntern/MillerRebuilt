@@ -173,6 +173,5 @@ select, input, textarea
 .scrollTextBoxRule {
 	height: 40px;
 	width: 340px;
-	overflow-y: scroll;
-	resize: none;
+	resize: vertical;
 }

@@ -80,12 +80,12 @@
         				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 	
-	<div style = "width: 90%" id="generalInformation" class="info-tab active">
+	<div style = "width: 75%" id="generalInformation" class="info-tab active">
 		<table class='table table-hover'>
 	
 		<tr>
-        <td style="width: 17%"><b>MCS Project #</b></td>
-        <td><input id="mcsNumber" type="text"></td>
+        <td style="width: 20%"><b>MCS Project #</b></td>
+        <td style="width: 30%"><input id="mcsNumber" type="text"></td>
         </tr>
 
         <tr>
@@ -93,8 +93,8 @@
         <td>
         <select id="warehouse"><option value="default">--Please select an option--</option></select>
         </td>
-        <td><b>Item</b></td>
-        <td>
+        <td style="width: 20%"><b>Item</b></td>
+        <td style="width: 30%">
         <select id="project"><option value="default">--Please select an option--</option></select>
 		</td>
         </tr>
@@ -126,7 +126,7 @@
         <td>
         <select id="pType"><option value="default">--Please select an option--</option></select>
 		</td>
-        <td><b>Classification</b></td>
+        <td><b>Project</b></td>
        	<td>
         <select id="class"><option value="default">--Please select an option--</option></select>
 		</td>	 
@@ -166,40 +166,34 @@
 
         <tr>
         <td><b>Scope</b></td>
-        <td><textarea class="scrollTextBox" maxlength="999" id="scope" ></textarea></td>
+        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="scope" ></textarea></td>
         <td><b>MCS Notes</b></td>
-        <td><textarea class="scrollTextBox" maxlength="999" id="notes" ></textarea></td>
+        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="notes" ></textarea></td>
         </tr>
 
         <tr>
         <td><b>Customer Notes</b></td>
-        <td><textarea class="scrollTextBox" maxlength="999" id="zUpdates" ></textarea></td>
+        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="zUpdates" ></textarea></td>
         </tr>		       
         
         
         </table>
 	</div> <!-- End General Information -->
 	
-	<div style="width: 45%" id="schedulingInformation" class="info-tab"> 
-	    <table class='table table-hover'>
+	<div style="width: 60%" id="schedulingInformation" class="info-tab"> 
+	    <table style="border-bottom: none" class='table table-hover'>
 	
 	
 	        <tr>
-	        <td style="width: 45%"><b>Initiation Date</b></td>
-	        <td style="text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
-	        </tr>
-	
-	        <tr>
-	        <td><b>Site Survey Date</b></td>
-	        <td style="text-align: center"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+	        <td style="width: 24%"><b>Initiation Date</b></td>
+	        <td style="width: 25%; text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
+	        <td style="width: 26%"><b>Site Survey Date</b></td>
+	        <td style="width: 25%; text-align: center"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 	        </tr>
 	
 			<tr>
 	        <td><b>Budgetary Due Date</b></td>
 	        <td style="text-align: center"><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
-	        </tr>
-	        
-	        <tr>
 	        <td><b>Budgetary Submitted Date</b></td>
 	        <td style="text-align: center"><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
 	        </tr>
@@ -207,9 +201,6 @@
 	        <tr>
 	        <td><b>Proposal Due Date</b></td>
 	        <td style="text-align: center"><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
-	        </tr>
-	
-	        <tr>
 	        <td><b>Proposal Submitted Date</b></td>
 	        <td style="text-align: center"><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
 	        </tr>	
@@ -217,32 +208,26 @@
 	        <tr>
 	        <td><b>Scheduled Start Date</b></td>
 	        <td style="text-align: center"><input type="text" id="startDate" placeholder="Select a Date"/></td>
-	        </tr>
-	
-	        <tr>
 	        <td><b>Scheduled Turnover</b></td>
 	        <td style="text-align: center"><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
-	        </tr>		
-	
-	        <tr>
+	        </tr>
+	        
+	        <tr style="border-bottom: none">
+	        <td style="border-right: none; border-bottom: none"></td>
+	        <td style="border-left: none"></td>
 	        <td><b>Actual Turnover</b></td>
 	        <td style="text-align: center"><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
-	        </tr>
-	
-	        <tr>
-	        <td><b>Permit Application</b></td>
-	        <td style="text-align: center"><input type="text" id="permitApp" placeholder="Select a Date"/></td>
 	        </tr>
 	
 	    </table>
 	</div> <!-- End Scheduling Information -->
 	
-	<div style="width: 42%" id='financialInformation' class='info-tab'>
+	<div style="width: 38%" id='financialInformation' class='info-tab'>
 		<table class='table table-hover'>
 
             <tr>
-            <td style="width: 38%"><b>Should Invoice %</b></td>
-            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
+            <td style="width: 33%"><b>Should Invoice %</b></td>
+            <td style="width: 62%; text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
             </tr>		
 
             <tr>
@@ -267,27 +252,6 @@
 		<button onclick='returnToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
 		<button onclick='document.location.href="projects.html"' class='btn btn-primary' disabled>Find Another Project</button>
 		<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
-		
-        
-		<select style='margin: 4px' id ='taskSelector' class='form-control'>
-			<option value='all'>All</option>
-			<option value='complete'>Complete</option>
-			<option value='incomplete'>Incomplete</option>
-			
-		</select>
-		
-      
-		<table class='table table-hover' id='taskTable'>
-			<tr class='head'>
-				<th>Task</th>
-				<th>Description</th>
-				<th>Assigned</th>
-				<th>Due</th>
-				<th>Priority</th>
-				<th style='width: 200px;'>Notes</th>
-				<th></th>
-			</tr>
-		</table>
 		
 	</div>
 

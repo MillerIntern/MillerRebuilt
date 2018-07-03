@@ -1627,62 +1627,106 @@ public class CloseoutDetails extends ProjectObject
 	public static Map<String , String> getAllCloseoutFields()
 	{
 		Map<String , String> fields = new HashMap<String , String>();
-		/*
+		
 		fields.put("numOfChangeOrders" , "Number");
 		fields.put("numOfChangeOrdersCompleted" , "Number");
 		fields.put("numOfMCSChangeOrders" , "Number");
 		fields.put("numOfMCSChangeOrdersCompleted" , "Number");
-		*/
-		//All Strings from this point
+	
 		fields.put("MCSStatus" , "String");
+		fields.put("MCSDate" , "Date");
 		fields.put("GCStatus" , "String");
+		fields.put("GCDate" , "Date");
 		fields.put("mechanicalStatus" , "String");
+		fields.put("mechanicalDate" , "Date");
 		fields.put("electricalStatus" , "String");
+		fields.put("electricalDate" , "Date");
 		fields.put("plumbingStatus" , "String");
+		fields.put("plumbingDate" , "Date");
 		fields.put("gasStatus" , "String");
+		fields.put("gasDate" , "Date");
 		fields.put("sprinkleStatus" , "String");
+		fields.put("sprinkleDate" , "Date");
 		fields.put("HTIStatus" , "String");
+		fields.put("HTIDate" , "Date");
 		fields.put("mulvannySignOffStatus" , "String");
+		fields.put("mulvannySignOffDate" , "Date");
 		fields.put("releaseOfLiensStatus" , "String");
+		fields.put("releaseOfLiensDate" , "Date");
 		fields.put("paymentOfDebtsAndClaimsStatus" , "String");
+		fields.put("paymentOfDebtsAndClaimsDate" , "Date");
 		fields.put("substantialCompletionStatus" , "String");
+		fields.put("substantialCompletionDate" , "Date");
+		
 		fields.put("warrantyNotes" , "String");
 		fields.put("closeoutDocumentsNotes" , "String");
 		fields.put("finalLiensNotes" , "String");
 		fields.put("finalInspectionNotes" , "String");
+		
 		fields.put("mg2CompletionStatus" , "String");
+		fields.put("mg2CompletionDate" , "Date");
 		fields.put("verisaeReportStatus" , "String");
+		fields.put("verisaeShutdownReport" , "Date");
 		fields.put("alarmFormStatus" , "String");
+		fields.put("alarmHvacForm" , "Date");
 		fields.put("HVACstartupFormStatus" , "String");
+		fields.put("HVACstartupFormDate" , "Date");
 		fields.put("closeOutPhotosStatus" , "String");
+		fields.put("closeoutPhotosCL" , "Date");
 		fields.put("asBuiltDrawingsStatus" , "String");
+		fields.put("asBuilts" , "Date");
 		fields.put("punchListStatus" , "String");
+		fields.put("punchList" , "Date");
 		fields.put("manualStatus" , "String");
+		fields.put("manualDate" , "Date");
 		fields.put("equipmentSubmittalStatus" , "String");
+		fields.put("equipmentSubCL" , "Date");
 		fields.put("otherWarrantyStatusB" , "String");
+		fields.put("otherWarrantyDateB" , "Date");
 		fields.put("otherWarrantyStatusA" , "String");
+		fields.put("otherWarrantyDateA" , "Date");
 		fields.put("HTIWarrantyStatus" , "String");
+		fields.put("HTIWarrantyDate" , "Date");
 		fields.put("sprinkleWarrantyStatus" , "String");
+		fields.put("sprinkleWarrantyDate" , "Date");
 		fields.put("plumbingWarrantyStatus" , "String");
+		fields.put("plumbingWarrantyDate" , "Date");
 		fields.put("gasWarrantyStatus" , "String");
+		fields.put("gasWarrantyDate" , "Date");
 		fields.put("electricalWarrantyStatus" , "String");
+		fields.put("electricalWarrantyDate" , "Date");
 		fields.put("mechanicalWarrantyStatus" , "String");
+		fields.put("mechanicalWarrantyDate" , "Date");
 		fields.put("GCWarrantyStatus" , "String");
+		fields.put("GCWarrantyDate" , "Date");
 		fields.put("MCSWarrantyStatus" , "String");
-		fields.put("certificateStatus" , "String");
-		fields.put("tmpCertificateStatus" , "String");
+		fields.put("MCSWarrantyDate" , "Date");
 		fields.put("buildingFinalStatus" , "String");
+		fields.put("buidlingFinalDate" , "Date");
 		fields.put("sprinkleFinalStatus" , "String");
+		fields.put("sprinkleFinalDate" , "Date");
 		fields.put("plumbingFinalStatus" , "String");
+		fields.put("plumbingFinalDate" , "Date");
 		fields.put("gasFinalStatus" , "String");
+		fields.put("gasFinalDate" , "Date");
 		fields.put("ceilingFinalStatus" , "String");
+		fields.put("ceilingFinalDate" , "Date");
 		fields.put("fireAlarmFinalStatus" , "String");
+		fields.put("fireAlarmFinalDate" , "Date");
 		fields.put("lowVolFinalStatus" , "String");
+		fields.put("lowVolFinalDate" , "Date");
 		fields.put("elecFinalStatus" , "String");
+		fields.put("elecFinalDate" , "Date");
 		fields.put("mechFinalStatus" , "String");
 		fields.put("otherFinalLeinsStatus" , "String");
+		fields.put("otherFinalLeinsDate" , "Date");
 		fields.put("otherFinalLeinsBStatus" , "String");
-
+		fields.put("otherFinalLeinsBDate" , "Date");
+		fields.put("certificateStatus" , "String");
+		fields.put("certificateDate" , "Date");
+		fields.put("tmpCertificateStatus" , "String");
+		fields.put("tmpCertificateDate" , "Date");
+		
 		return fields;
 	}
 }

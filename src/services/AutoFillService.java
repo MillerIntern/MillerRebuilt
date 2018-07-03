@@ -117,26 +117,9 @@ public class AutoFillService {
 		else 
 			cd = proj.getCloseoutDetails();
 		
-		cd.setMCSWarrantyStatus(value);
-		cd.setMCSWarranty(today);
-		
-		cd.setGCWarrantyStatus(value);
-		cd.setGCWarrantyDate(today);
-		
-		cd.setMechanicalWarrantyStatus(value);
-		cd.setMechanicalWarrantyDate(today);
-		
-		cd.setElectricalWarrantyStatus(value);
-		cd.setElectricalWarrantyDate(today);
-		
-		cd.setPlumbingWarrantyStatus(value);
-		cd.setPlumbingWarrantyDate(today);
 		
 		cd.setGasWarrantyStatus(value);
 		cd.setGasWarrantyDate(today);
-		
-		cd.setSprinkleWarrantyStatus(value);
-		cd.setSprinkleWarrantyDate(today);
 		
 		cd.setHTIWarrantyStatus(value);
 		cd.setHTIWarrantyDate(today);
@@ -147,26 +130,8 @@ public class AutoFillService {
 		cd.setOtherWarrantyStatusB(value);
 		cd.setOtherWarrantyDateB(today);
 		
-		cd.setMCSStatus(value);
-		cd.setMCSDate(today);
-		
-		cd.setGCStatus(value);
-		cd.setGCDate(today);
-		
-		cd.setMechanicalStatus(value);
-		cd.setMechanicalDate(today);
-		
-		cd.setElectricalStatus(value);
-		cd.setElectricalDate(today);
-		
-		cd.setPlumbingStatus(value);
-		cd.setPlumbingDate(today);
-		
 		cd.setGasStatus(value);
 		cd.setGasDate(today);
-		
-		cd.setSprinkleStatus(value);
-		cd.setSprinkleDate(today);
 		
 		cd.setHTIStatus(value);
 		cd.setHTIDate(today);
@@ -188,6 +153,42 @@ public class AutoFillService {
 		else
 			value = "3";
 		
+		cd.setMCSWarrantyStatus(value);
+		cd.setMCSWarranty(today);
+		
+		cd.setGCWarrantyStatus(value);
+		cd.setGCWarrantyDate(today);
+		
+		cd.setMechanicalWarrantyStatus(value);
+		cd.setMechanicalWarrantyDate(today);
+		
+		cd.setElectricalWarrantyStatus(value);
+		cd.setElectricalWarrantyDate(today);
+		
+		cd.setPlumbingWarrantyStatus(value);
+		cd.setPlumbingWarrantyDate(today);
+		
+		cd.setSprinkleWarrantyStatus(value);
+		cd.setSprinkleWarrantyDate(today);
+		
+		cd.setMCSStatus(value);
+		cd.setMCSDate(today);
+		
+		cd.setGCStatus(value);
+		cd.setGCDate(today);
+		
+		cd.setMechanicalStatus(value);
+		cd.setMechanicalDate(today);
+		
+		cd.setElectricalStatus(value);
+		cd.setElectricalDate(today);
+		
+		cd.setPlumbingStatus(value);
+		cd.setPlumbingDate(today);
+		
+		cd.setSprinkleStatus(value);
+		cd.setSprinkleDate(today);
+		
 		cd.setSubstantialCompletionStatus(value);
 		cd.setSubstantialCompletionDate(today);
 		
@@ -196,6 +197,11 @@ public class AutoFillService {
 		
 		cd.setReleaseOfLiensStatus(value);
 		cd.setReleaseOfLiensDate(today);
+		
+		if(_value.equals("2") || _value.equals("5"))
+			value = "4";
+		else
+			value = "3";
 		
 		cd.setMulvannySignOffStatus(value);
 		cd.setMulvannySignOffDate(today);

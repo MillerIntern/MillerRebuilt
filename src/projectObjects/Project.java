@@ -87,7 +87,6 @@ public class Project extends ProjectObject
 	
 	private String customerNumber;
 	
-	private Date permitApp;
 	
 	//private Equipment equipmentData;
 
@@ -119,7 +118,7 @@ public class Project extends ProjectObject
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
-			String cst, String custNum, Date permitApp, Equipment equipList, String DrawingsDue, 
+			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
             String autofill_Permits, int _low, int _med, int _high, Date _scoreLast)
@@ -147,7 +146,6 @@ public class Project extends ProjectObject
 		this.zachUpdates = zUpdates;
 		this.cost = cst;
 		this.customerNumber = custNum;
-		this.permitApp = permitApp;
 		this.DrawingsDue=DrawingsDue;
 		this.inspections= inspections;
 		this.permits = permits;
@@ -201,7 +199,6 @@ public class Project extends ProjectObject
 		this.zachUpdates = null;
 		this.cost = null;
 		this.customerNumber = null;
-		this.permitApp = null;
 		this.DrawingsDue=null;
 		this.setProjEquipment(new HashSet<NewEquipment>());
 		this.budgetaryDue = null;
@@ -481,15 +478,7 @@ public class Project extends ProjectObject
 	public synchronized void setCustomerNumber(String custNum) {
 		this.customerNumber = custNum;
 	}
-	
-	public synchronized Date getPermitApplication() {
-		return permitApp;
-	}
-
-	public synchronized void setPermitApplication(Date permitApp) {
-		this.permitApp = permitApp;
-	}
-	
+		
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn
@@ -656,8 +645,6 @@ public class Project extends ProjectObject
 			return project.getScheduledTurnover();
 		else if(name.equalsIgnoreCase("actualTurnover"))
 			return project.getActualTurnover();
-		else if(name.equalsIgnoreCase("permitApp"))
-			return project.getPermitApplication();
 		
 		return null;
 	}
@@ -676,8 +663,7 @@ public class Project extends ProjectObject
 		fields.put("scheduledStartDate" , "Date");
 		fields.put("scheduledTurnover" , "Date");
 		fields.put("actualTurnover" , "Date");
-		fields.put("permitApp" , "Date");
-		
+				
 
 		return fields;
 	}

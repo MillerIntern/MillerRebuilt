@@ -3697,7 +3697,7 @@ let ready = false;
 
 let projects;
 
-let parameterFields = ["Warehouse", "Classification", "Item",
+let parameterFields = ["Warehouse", "Project", "Item",
                        "Manager", "Supervisor", "Type", "Status"];
 
 let paramNum = 2;
@@ -4287,7 +4287,7 @@ function setVals (param) {
 		modParam.empty();
 		modParam.append(warehouseOptions.cloneNode(true));	
 		break;
-	case 'Classification':
+	case 'Project':
 		modParam.empty();
 		modParam.append(classOptions.cloneNode(true));
 		break;
@@ -4405,7 +4405,7 @@ function filterProjects () {
 					json[j] = null;
 					remaining = remaining - 1;
 				}
-			} else if (id === 'Classification') {
+			} else if (id === 'Project') {
 				if (json[j] != null && json[j].projectClass.id != val) {
 					json[j] = null;
 					remaining = remaining - 1;
@@ -4562,7 +4562,7 @@ function filterProjects () {
 					
 					$('#results > tbody').append(projectListing);
 				}
-	}
+			}
 		}
 	}
 }
@@ -4593,6 +4593,13 @@ function navigateTo(source) {
 	}
 
 }
+
+function navigateToProjManager() {
+	if (confirm('Are you sure you want to leave this page?')) {
+		window.location.href = "projects.html?id=" + projectID + "&from=rules";
+	}
+}
+
 
 function getProject_PROJECT_RULE_MANAGER(project_id) {
 	if (project_id !== null) {
