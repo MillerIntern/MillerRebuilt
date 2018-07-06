@@ -387,6 +387,9 @@ public class ProjectService extends ProjectObjectService
 			if(parameters.get("ruleSeverity").equals("true"))
 				map.put("ruleSeverity", g.toJson(RuleSeverity.returnAllAsMap()));
 		//
+		if(parameters.get("generalInfoFields") != null && !parameters.get("generalInfoFields").isEmpty())
+			if(parameters.get("generalInfoFields").equals("true"))
+				map.put("generalInfoFields", g.toJson(Project.getAllGeneralInfoFields()));
 		if(parameters.get("changeOrderFields") != null && !parameters.get("changeOrderFields").isEmpty())
 			if(parameters.get("changeOrderFields").equals("true"))
 				map.put("changeOrderFields", g.toJson(ChangeOrder.getAllChangeOrderFields()));

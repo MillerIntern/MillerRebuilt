@@ -8,6 +8,7 @@ let ruleDomains;
 let ruleResults;
 let ruleSeverity;
 let projectClasses;
+let genInfoFields;
 let changeOrderFields;
 let equipmentFields;
 let closeoutFields;
@@ -1136,6 +1137,7 @@ function getEquipmentSuppliers () {
 			'ruleSeverity' : true ,
 			'projectRules' : true , 
 			'class' : true , 
+			'generalInfoFields': true,
 			'changeOrderFields' : true ,
 			'equipmentFields' : true ,
 			'closeoutFields' : true ,
@@ -1194,6 +1196,9 @@ function getEquipmentSuppliers () {
 				changeOrderFields = JSON.parse(data.responseJSON.changeOrderFields);
 			}
 			//
+			if (data.responseJSON.generalInfoFields) {
+				generalInfoFields = JSON.parse(data.responseJSON.generalInfoFields);
+			}
 			if (data.responseJSON.equipmentFields) {
 				equipmentFields = JSON.parse(data.responseJSON.equipmentFields);
 			}
@@ -1295,6 +1300,8 @@ function getFieldType(val)
 	console.log("DROP = " , dropVal);
 	switch(dropVal)
 	{
+		case "General Information":
+			return generalInfoFields[val];
 		case "Permits/Inspections":
 			return permitAndInspectionFields[val];
 		case "Change Orders":
@@ -1355,6 +1362,10 @@ function filterFieldsByDomain()
 	console.log("DROP = " , dropVal);
 	switch(dropVal)
 	{
+		case "General Information":
+			fillField1(generalInfoFields);
+			fillField2(generalInfoFields);
+			break;
 		case "Permits/Inspections":
 			fillField1(permitAndInspectionFields);
 			fillField2(permitAndInspectionFields);
@@ -1378,12 +1389,10 @@ function filterFieldsByDomain()
 		case "Closeout":
 			fillField1(closeoutFields);
 			fillField2(closeoutFields);
-			$('#secondFieldRow').hide();
 			break;
 		case "Tasks":
 			fillField1(taskFields);
 			fillField2(taskFields);
-			$('#secondFieldRow').hide();
 			break;
 	}
 }
@@ -1461,26 +1470,430 @@ function humanize(str)
 	
 	var result = "";
 	
-	result += str[0].toUpperCase();
+	console.log( str );
 	
-	for(var i = 0; i < str.length; i++)
-	{
-		if(i == 0)
-			continue;
+	// Scheduling
+	if( str == "projectInitiatedDate")
+		result = "Initiation Date";
+	else if( str == "siteSurvey")
+		result = "Site Survey Date";
+	else if( str == "proposalSubmitted")
+		result = "Proposal Submitted Date";
+	else if( str == "budgetarySubmitted")
+		result = "Budgetary Submitted Date";
+	else if( str == "actualTurnover")
+		result = "Actual Turnover";
+	else if( str == "proposalDue")
+		result = "Proposal Due Date";
+	else if( str == "scheduledStartDate")
+		result = "Scheduled Start Date";
+	else if( str == "budgetaryDue")
+		result = "Budgetary Due Date";
+	else if( str == "scheduledTurnover")
+		result = "Scheduled Turnover"; 
+	// Tasks
+	else if( str == "assignedDate")
+		result = "Assigned Date";
+	else if( str == "dueDate")
+		result = "Due Date";
+	else if( str == "status")
+		result = "Status";	
+	// Financial
+	else if( str == "actualInvoice")
+		result = "Actual Invoice";
+	else if( str == "shouldInvoice")
+		result = "Should Invoice";
+	else if( str == "cost")
+		result = "Cost";
+	else if( str == "customerNumber")
+		result = "Customer Number"; 
+	// General Information
+	else if( str == "McsNumber")
+		result = "MCS Project #";
+	else if( str == "warehouse")
+		result = "Warehouse";
+	else if( str == "projectManagers")
+		result = "Manager";
+	else if( str == "projectItem")
+		result = "Item";
+	else if( str == "supervisors")
+		result = "Supervisor";
+	else if( str == "stage")
+		result = "Stage";
+	else if( str == "projectType")
+		result = "Type";
+	else if( str == "projectClass")
+		result = "Project";
+	else if( str == "autofillPermits")
+		result = "Permits";
+	else if( str == "autofillHVAC")
+		result = "HVAC";
+	else if( str == "autofillRefrigeration")
+		result = "Refrigeration";
+	else if( str == "scope" )
+		result = "Scope";
+	// Equipment
+	else if( str == "estDeliveryDate")
+		result = "Estimated Delivery Date";
+	else if( str == "description")
+		result = "Description";
+	else if( str == "orderedDate")
+		result = "Ordered Date";
+	else if( str == "poNum")
+		result = "PO #";
+	else if( str == "equipmentName")
+		result = "Equipment Name";
+	else if( str == "deliveryDate")
+		result = "Actual Delivery Date";
+	else if( str == "eqSupplier")
+		result = "Supplier";
+	else if( str == "deliveryStatus")
+		result = "Delivery Status"; 
+	// Change Order
+	else if( str == "customerCOPnum")
+		result = "Customer COP #";
+	else if( str == "sell")
+		result = "Sell";
+	else if( str == "mcsCO")
+		result = "MCS CO #";
+	else if( str == "subCO")
+		result = "Sub CO #";
+	else if( str == "title")
+		result = "Title";
+	else if( str == "approvedDate")
+		result = "Approved Date";
+	else if( str =="submittedDate")
+		result = "Submit Date";
+	else if( str == "proposalDate")
+		result = "Subs Submitted Date";
+	else if( str == "invoiceNumber")
+		result = "Invoice #";
+	else if( str == "subNames")
+		result = "Sub Names";
+	else if( str == "briefDescription")
+		result = "Description";
+	else if( str == "type")
+		result = "Customer";	
+	// Permits and Inspections
+	else if( str == "mechancialPermitRequired")
+		result = "Mechanical Permit Required";
+	else if( str == "mechancialPermitStatus")
+		result = "Mechanical Permit Status";
+	else if( str == "mechancialPermitLastUpdated")
+		result = "Mechanical Permit Last Updated";
+	else if( str == "mechancialInspectionRequired")
+		result = "Mechanical Inspection Required";
+	else if( str == "mechancialInspectionStatus")
+		result = "Mechanical Inspection Status";
+	else if( str == "mechancialInspectionLastUpdated")
+		result = "Mechanical Inspection Last Updated";
+	else if( str == "buildingPermitRequired")
+		result = "Building Permit Required";
+	else if( str == "buildingPermitStatus")
+		result = "Building Permit Status";
+	else if( str == "buildingPermitLastUpdated")
+		result = "Building Permit Last Updated";
+	else if( str == "buildingInspectionRequired")
+		result = "Building Inspection Required";
+	else if( str == "buildingInspectionStatus")
+		result = "Building Inspection Status";
+	else if( str == "buildingInspectionLastUpdated")
+		result = "Building Inspection Last Updated";
+	else if( str == "ceilingPermitRequired")
+		result = "Ceiling Permit Required";
+	else if( str == "ceilingPermitStatus")
+		result = "Ceiling Permit Status";
+	else if( str == "ceilingPermitLastUpdated")
+		result = "Ceiling Permit Last Updated";
+	else if( str == "ceilingInspectionRequired")
+		result = "Ceiling Inspection Required";
+	else if( str == "ceilingInspectionStatus")
+		result = "Ceiling Inspection Status";
+	else if( str == "ceilingInspectionLastUpdated")
+		result = "Ceiling Inspection Last Updated";
+	else if( str == "electricalPermitRequired")
+		result = "Electrical Permit Required";
+	else if( str == "electricalPermitStatus")
+		result = "Electrical Permit Status";
+	else if( str == "electricalPermitLastUpdated")
+		result = "Electrical Permit Last Updated";
+	else if( str == "electricalInspectionRequired")
+		result = "Electrical Inspection Required";
+	else if( str == "electricalInspectionStatus")
+		result = "Electrical Inspection Status";
+	else if( str == "electricalInspectionLastUpdated")
+		result = "Electrical Inspection Last Updated";
+	else if( str == "plumbingPermitRequired")
+		result = "Plumbing Permit Required";
+	else if( str == "plumbingPermitStatus")
+		result = "Plumbing Permit Status";	
+	else if( str == "plumbingPermitLastUpdated")
+		result = "Plumbing Permit Last Updated";
+	else if( str == "plumbingInspectionRequired")
+		result = "Plumbing Inspection Required";
+	else if( str == "plumbingInspectionStatus")
+		result = "Plumbing Inspection Status";
+	else if( str == "plumbingInspectionLastUpdated")
+		result = "Plumbing Inspection Last Updated";
+	else if( str == "gasPermitRequired")
+		result = "Gas Permit Required";
+	else if( str == "gasPermitStatus")
+		result = "Gas Permit Status";	
+	else if( str == "gasPermitLastUpdated")
+		result = "Gas Permit Last Updated";
+	else if( str == "gasInspectionRequired")
+		result = "Gas Inspection Required";
+	else if( str == "gasInspectionStatus")
+		result = "Gas Inspection Status";
+	else if( str == "gasInspectionLastUpdated")
+		result = "Gas Inspection Last Updated";
+	else if( str == "sprinklerPermitRequired")
+		result = "Sprinkler Permit Required";
+	else if( str == "sprinklerPermitStatus")
+		result = "Sprinkler Permit Status";	
+	else if( str == "fire_sprinklerPermitLastUpdated")
+		result = "Sprinkler Permit Last Updated";
+	else if( str == "sprinklerInspectionRequired")
+		result = "Sprinkler Inspection Required";
+	else if( str == "sprinklerInspectionStatus")
+		result = "Sprinkler Inspection Status";
+	else if( str == "sprinklerInspectionLastUpdated")
+		result = "Sprinkler Inspection Last Updated";
+	else if( str == "fireAlarmPermitRequired")
+		result = "Fire Alarm Permit Required";
+	else if( str == "fireAlarmPermitStatus")
+		result = "Fire Alarm Permit Status";	
+	else if( str == "fire_alarmPermitLastUpdated")
+		result = "Fire Alarm Permit Last Updated";
+	else if( str == "fireAlarmInspectionRequired")
+		result = "Fire Alarm Inspection Required";
+	else if( str == "fireAlarmInspectionStatus")
+		result = "Fire Alarm Inspection Status";
+	else if( str == "fireAlarmInspectionLastUpdated")
+		result = "Fire Alarm Inspection Last Updated";
+	else if( str == "voltagePermitRequired")
+		result = "Low Voltage Permit Required";
+	else if( str == "voltagePermitStatus")
+		result = "Low Voltage Permit Status";
+	else if( str == "low_voltagePermitLastUpdated")
+		result = "Low Voltage Permit Last Updated";
+	else if( str == "voltageInspectionRequired")
+		result = "Low Voltage Inspection Required";
+	else if( str == "voltageInspectionStatus")
+		result = "Low Voltage Inspection Status";
+	else if( str == "voltageInspectionLastUpdated")
+		result = "Low Voltage Inspection Last Updated";
+	else if( str == "otherAPermitRequired")
+		result = "Other Permit Required A";
+	else if( str == "otherAPermitStatus")
+		result = "Other Permit Status A";
+	else if( str == "otherAPermitLastUpdated")
+		result = "Other Permit Last Updated A";
+	else if( str == "otherAInspectionRequired")
+		result = "Other Inspection Required A";
+	else if( str == "otherAInspectionStatus")
+		result = "Other Inspection Status A";
+	else if( str == "otherAInspectionLastUpdated")
+		result = "Other Inspection Last Updated A";
+	else if( str == "otherBPermitRequired")
+		result = "Other Permit Required B";
+	else if( str == "otherBPermitStatus")
+		result = "Other Permit Status B";
+	else if( str == "otherBPermitLastUpdated")
+		result = "Other Permit Last Updated B";
+	else if( str == "otherBInspectionRequired")
+		result = "Other Inspection Required B";
+	else if( str == "otherBInspectionStatus")
+		result = "Other Inspection Status B";
+	else if( str == "otherBInspectionLastUpdated")
+		result = "Other Inspection Last Updated B";
+	// Closeout
+	else if( str == "buildingFinalStatus")
+		result = "Building Final Inspection Status";
+	else if( str == "ceilingFinalStatus")
+		result = "Ceiling Final Inspection Status";
+	else if( str == "mechFinalStatus")
+		result = "Mechanical Final Inspection Status";
+	else if( str == "elecFinalStatus")
+		result = "Electrical Final Inspection Status";
+	else if( str == "plumbingFinalStatus")
+		result = "Plumbing Final Inspection Status";
+	else if( str == "gasFinalStatus")
+		result = "Gas Final Inspection Status";
+	else if( str == "sprinkleFinalStatus")
+		result = "Sprinkler Final Inspection Status";
+	else if( str == "fireAlarmFinalStatus")
+		result = "Fire Alarm Final Inspection Status";
+	else if( str == "lowVolFinalStatus")
+		result = "Low Voltage Final Inspection Status";
+	else if( str == "tmpCertificateStatus")
+		result = "Temp Certificate of Occupancy Status";
+	else if( str == "certificateStatus")
+		result = "Certificate of Occupancy Status";
+	else if( str == "buidlingFinalDate")
+		result = "Building Final Inspection Last Updated";
+	else if( str == "ceilingFinalDate")
+		result = "Ceiling Final Inspection Last Updated";
+	else if( str == "mechFinalDate")
+		result = "Mechanical Final Inspection Last Updated";
+	else if( str == "elecFinalDate")
+		result = "Electrical Final Inspection Last Updated";
+	else if( str == "plumbingFinalDate")
+		result = "Plumbing Final Inspection Last Updated";
+	else if( str == "gasFinalDate")
+		result = "Gas Final Inspection Last Updated";
+	else if( str == "sprinkleFinalDate")
+		result = "Sprinkler Final Inspection Last Updated";
+	else if( str == "fireAlarmFinalDate")
+		result = "Fire Alarm Final Inspection Last Updated";
+	else if( str == "lowVolFinalDate")
+		result = "Low Voltage Final Inspection Last Updated";
+	else if( str == "tmpCertificateDate")
+		result = "Temp Certificate of Occupancy Last Updated";
+	else if( str == "certificateDate")
+		result = "Certificate of Occupancy Last Updated";
+	
+	else if( str == "MCSWarrantyStatus")
+		result = "MCS Warranty Status";
+	else if( str == "GCWarrantyStatus")
+		result = "GC WarrantyStatus";
+	else if( str == "mechanicalWarrantyStatus")
+		result = "Mechanical Warranty Status";
+	else if( str == "electricalWarrantyStatus")
+		result = "Electrical Warranty Status";
+	else if( str == "plumbingWarrantyStatus")
+		result = "Plumbing Warranty Status";
+	else if( str == "gasWarrantyStatus")
+		result = "Gas Warranty Status";
+	else if( str == "sprinkleWarrantyStatus")
+		result = "Sprinkler Warranty Status";
+	else if( str == "HTIWarrantyStatus")
+		result = "HTI Warranty Status";
+	else if( str == "otherWarrantyStatusA")
+		result = "Other Warranty Status A";
+	else if( str == "otherWarrantyStatusB")
+		result = "Other Warranty Status B";
+	else if( str == "MCSWarrantyDate")
+		result = "MCS Warranty Last Updated";
+	else if( str == "GCWarrantyDate")
+		result = "GC Warranty Last Updated";
+	else if( str == "mechanicalWarrantyDate")
+		result = "Mechanical Warranty Last Updated";
+	else if( str == "electricalWarrantyDate")
+		result = "Electrical Warranty Last Updated";
+	else if( str == "plumbingWarrantyDate")
+		result = "Plumbing Warranty Last Updated";
+	else if( str == "gasWarrantyDate")
+		result = "Gas Warranty Last Updated";
+	else if( str == "sprinkleWarrantyDate")
+		result = "Sprinkler Warranty Last Updated";
+	else if( str == "HTIWarrantyDate")
+		result = "HTI Warranty Last Updated";
+	else if( str == "otherWarrantyDateA")
+		result = "Other Warranty Last Updated A";
+	else if( str == "otherWarrantyDateB")
+		result = "Other Warranty Last Updated B";
 		
-		if(str.charAt(i) == "_")
-			continue;
-		
-		if(str.charAt(i) == str.charAt(i).toUpperCase())
-		{
-			if(str.charAt(i + 1) != undefined && str.charAt(i + 1).toUpperCase() == str.charAt(i + 1))	
-				result += str.charAt(i);
-			else 
-				result += " " + str.charAt(i);
-		}
-		else
-			result += str.charAt(i);
-	}
+	
+	else if( str == "MCSStatus")
+		result = "MCS Lien Status";
+	else if( str == "GCStatus")
+		result = "GC Lien Status";
+	else if( str == "mechanicalStatus")
+		result = "Mechanical Lien Status";
+	else if( str == "electricalStatus")
+		result = "Electrical Lien Status";
+	else if( str == "plumbingStatus")
+		result = "Plumbing Lien Status";
+	else if( str == "gasStatus")
+		result = "Gas Lien Status";
+	else if( str == "sprinkleStatus")
+		result = "Sprinkler Lien Status";
+	else if( str == "HTIStatus")
+		result = "HTI Lien Status";
+	else if( str == "otherFinalLeinsStatus")
+		result = "Other Lien Status A";
+	else if( str == "otherFinalLeinsBStatus")
+		result = "Other Lien Status B";
+	else if( str == "MCSDate")
+		result = "MCS Lien Last Updated";
+	else if( str == "GCDate")
+		result = "GC Lien Last Updated";
+	else if( str == "mechanicalDate")
+		result = "Mechanical Lien Last Updated";
+	else if( str == "electricalDate")
+		result = "Electrical Lien Last Updated";
+	else if( str == "plumbingDate")
+		result = "Plumbing Lien Last Updated";
+	else if( str == "gasDate")
+		result = "Gas Lien Last Updated";
+	else if( str == "sprinkleDate")
+		result = "Sprinkler Lien Last Updated";
+	else if( str == "HTIDate")
+		result = "HTI Lien Last Updated";
+	else if( str == "otherFinalLeinsDate")
+		result = "Other Lien Last Updated A";
+	else if( str == "otherFinalLeinsBDate")
+		result = "Other Lien Last Updated B";
+	
+	else if( str == "punchListStatus")
+		result = "Punch List Status";
+	else if( str == "punchList")
+		result = "Punch List Last Updated";
+	else if( str == "closeOutPhotosStatus")
+		result = "Closeout Photos Status";
+	else if( str == "closeoutPhotosCL")
+		result = "Closeout Photos Last Updated";
+	else if( str == "asBuiltDrawingsStatus")
+		result = "As-Built Drawings Status";
+	else if( str == "asBuilts")
+		result = "As-Built Drawings Last Updated";
+	else if( str == "alarmFormStatus")
+		result = "Alarm Form Status";
+	else if( str == "alarmHvacForm")
+		result = "Alarm Form Last Updated";
+	else if( str == "HVACstartupFormDate")
+		result = "HVAC Startup Form Last Updated";
+	else if( str == "HVACstartupFormStatus")
+		result = "HVAC Startup Form Status";
+	else if( str == "verisaeReportStatus")
+		result = "Verisae Report Status";
+	else if( str == "verisaeShutdownReport")
+		result = "Verisae Report Last Updated";
+	else if( str == "numOfMCSChangeOrdersCompleted")
+		result = "Number of MCS Change Orders Completed";
+	else if( str == "numOfMCSChangeOrders")
+		result = "Number of MCS Change Orders";
+	else if( str == "releaseOfLiensStatus")
+		result = "Contractor's Lien Release Status";
+	else if( str == "releaseOfLiensDate")
+		result = "Contractor's Lien Release Last Updated";
+	else if( str == "paymentOfDebtsAndClaimsDate")
+		result = "Affidavit of Payment of Debts and Claims Last Updated";
+	else if( str == "paymentOfDebtsAndClaimsStatus")
+		result = "Affidavit of Payment of Debts and Claims Status";
+	else if( str == "mulvannySignOffDate")
+		result = "MG2 Project Sign-off Last Updated";
+	else if( str == "mulvannySignOffStatus" )
+		result = "MG2 Project Sign-off Status";
+	else if( str == "substantialCompletionDate")
+		result = "Certificate of Substantial Completion Last Updated";
+	else if( str == "substantialCompletionStatus")
+		result = "Certificate of Substantial Completion Status";
+	else if( str == "equipmentSubCL")
+		result = "Equipment Submittal Last Updated";
+	else if( str == "equipmentSubmittalStatus")
+		result = "Equipment Submittal Status";
+	else if( str == "manualStatus")
+		result = "Operations and Maintenance Manuals Status";
+	else if( str == "manualDate")
+		result = "Operations and Maintenance Manuals Last Updated";
+	else if( str == "numOfChangeOrders")
+		result = "Number of MG2 Change Orders";
+	else if( str == "numOfChangeOrdersCompleted")
+		result = "Number of MG2 Change Orders Completed";
+	
+	console.log( result );
 	
 	return result;
 }
@@ -1849,6 +2262,8 @@ function fillTabForEdit(projectObject , tabId)
 			$('#ruleDomainDropdown').val("Change Orders");
 		else if(projectObject.domain == "PermitsAndInspections")
 			$('#ruleDomainDropdown').val("Permits/Inspections");
+		else if(projectObject.domain == "GeneralInfo")
+			$('#ruleDomainDropdown').val("General Information");
 		else
 			$('#ruleDomainDropdown').val(projectObject.domain);
 			

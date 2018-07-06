@@ -649,6 +649,38 @@ public class Project extends ProjectObject
 		return null;
 	}
 	
+	public static Object getGeneralInfoFields(String name , Project project)
+	{
+		if(name.equalsIgnoreCase("McsNumber"))
+			return project.getMcsNumber();
+		if(name.equalsIgnoreCase("warehouse"))
+			return project.getWarehouse();
+		if(name.equalsIgnoreCase("projectManagers"))
+			return project.getProjectManagers();
+		if(name.equalsIgnoreCase("projectItem"))
+			return project.getProjectItem();
+		if(name.equalsIgnoreCase("supervisors"))
+			return project.getSupervisors();
+		if(name.equalsIgnoreCase("stage"))
+			return project.getStage();
+		if(name.equalsIgnoreCase("status"))
+			return project.getStatus();
+		if(name.equalsIgnoreCase("projectType"))
+			return project.getProjectType();
+		if(name.equalsIgnoreCase("projectClass"))
+			return project.getProjectClass();
+		if(name.equalsIgnoreCase("autofillHVAC"))
+			return project.getAutofillHVAC();
+		if(name.equalsIgnoreCase("autofillPermits"))
+			return project.getAutofillPermits();
+		if(name.equalsIgnoreCase("autofillRefrigeration"))
+			return project.getAutofillRefrigeration();
+		if(name.equalsIgnoreCase("scope"))
+			return project.getScope();
+		
+		return null;
+	}
+	
 	public static Map<String , String> getAllSchedulingFields()
 	{
 		Map<String , String> fields = new HashMap<String , String>();
@@ -691,7 +723,28 @@ public class Project extends ProjectObject
 		fields.put("shouldInvoice" , "Number");
 		fields.put("actualInvoice" , "Number");
 		fields.put("cost" , "Number");
+		fields.put("customerNumber", "Number");
 
+		return fields;
+	}
+	
+	public static Map<String , String> getAllGeneralInfoFields()
+	{
+		Map<String , String> fields = new HashMap<String , String>();
+		
+		fields.put("McsNumber" , "Number");
+		fields.put("warehouse" , "String");
+		fields.put("projectManagers" , "String");
+		fields.put("projectItem", "String");
+		fields.put("supervisors", "String");
+		fields.put("stage", "String");
+		fields.put("status", "String");
+		fields.put("projectType", "String");
+		fields.put("projectClass", "String");
+		fields.put("autofillPermits", "String");
+		fields.put("autofillHVAC", "String");
+		fields.put("autofillRefrigeration", "String");
+		fields.put("scope", "String");
 
 		return fields;
 	}

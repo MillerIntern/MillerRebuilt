@@ -256,9 +256,28 @@ public class ProjectRuleService
 		
 
 		return _rule.evaluate(EvaluateDates(field1 , field2));
+				
+	}
+	
+	public static boolean generalInfoEvaluate(ProjectRule _rule, Project _proj)
+	{
+		Project proj = _proj;
 		
-				
-				
+		if(proj == null)	
+			proj = _rule.getProject();
+		
+		if(proj == null)
+			return false;
+		
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		Object field1 = Project.getGeneralInfoFields(f1 , proj);
+		Object field2 = Project.getGeneralInfoFields(f2 , proj);
+		
+		
+		return _rule.evaluate(EvaluateStrings((String)field1, (String)field2));
 	}
 	
 	public static boolean EquipmentEvaluate(ProjectRule _rule , NewEquipment _eq)
@@ -369,6 +388,23 @@ public class ProjectRuleService
 						map.put("scheduledTurnover", project.getScheduledTurnover());
 						map.put("actualTurnover", project.getActualTurnover());
 						map.put("type", "Scheduling");
+						break;
+					case GeneralInfo:
+						result = generalInfoEvaluate(rule, project);
+						map.put("McsNumber", project.getMcsNumber());
+						map.put("warehouse", project.getWarehouse());
+						map.put("projectItem", project.getProjectItem());
+						map.put("projectManagers", project.getProjectManagers());
+						map.put("supervisors", project.getSupervisors());
+						map.put("stage", project.getStage());
+						map.put("status", project.getStatus());
+						map.put("projectType", project.getProjectType());
+						map.put("projectClass", project.getProjectClass());
+						map.put("autofillHVAC", project.getAutofillHVAC());
+						map.put("autofillPermits", project.getAutofillPermits());
+						map.put("autofillRefrigeration", project.getAutofillRefrigeration());
+						map.put("scope", project.getScope());
+						map.put("type", "GeneralInfo");
 						break;
 					case Tasks:
 						Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);

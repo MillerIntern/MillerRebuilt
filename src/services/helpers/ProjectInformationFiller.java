@@ -17,36 +17,42 @@ import projectObjects.Warehouse;
 import services.AutoFillService;
 import services.ProjectObjectService;
 
-
 /**
  * @author Josh Mackin
  */
-public class ProjectInformationFiller
-{
-	public synchronized static void fillProjectInformation(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
-	{
+public class ProjectInformationFiller {
+	public synchronized static void fillProjectInformation(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
 		// required
-		currentProject.setWarehouse((Warehouse) ProjectObjectService.get(Long.parseLong(params.get("warehouse")), "Warehouse"));
-		currentProject.setProjectClass((ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
-		currentProject.setProjectItem((ProjectItem) ProjectObjectService.get(Long.parseLong(params.get("item")), "ProjectItem"));
-		currentProject.setProjectManagers((Person) ProjectObjectService.get(Long.parseLong(params.get("manager")), "Person"));
-		currentProject.addSupervisor((Person) ProjectObjectService.get(Long.parseLong(params.get("supervisor")), "Person"));
-		currentProject.setStatus((ProjectStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "ProjectStatus"));
-		currentProject.setStage((ProjectStage) ProjectObjectService.get(Long.parseLong(params.get("stage")), "ProjectStage"));
-		currentProject.setProjectType((ProjectType) ProjectObjectService.get(Long.parseLong(params.get("pType")), "ProjectType"));
+		currentProject.setWarehouse(
+				(Warehouse) ProjectObjectService.get(Long.parseLong(params.get("warehouse")), "Warehouse"));
+		currentProject.setProjectClass(
+				(ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
+		currentProject.setProjectItem(
+				(ProjectItem) ProjectObjectService.get(Long.parseLong(params.get("item")), "ProjectItem"));
+		currentProject
+				.setProjectManagers((Person) ProjectObjectService.get(Long.parseLong(params.get("manager")), "Person"));
+		currentProject
+				.addSupervisor((Person) ProjectObjectService.get(Long.parseLong(params.get("supervisor")), "Person"));
+		currentProject.setStatus(
+				(ProjectStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "ProjectStatus"));
+		currentProject
+				.setStage((ProjectStage) ProjectObjectService.get(Long.parseLong(params.get("stage")), "ProjectStage"));
+		currentProject.setProjectType(
+				(ProjectType) ProjectObjectService.get(Long.parseLong(params.get("pType")), "ProjectType"));
 
 		String mcsNumberString = params.get("mcsNumber");
 		try {
 			int mcsNum = Integer.parseInt(mcsNumberString);
 			currentProject.setMcsNumber(mcsNum);
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			currentProject.setMcsNumber(0);
 
 		}
 		currentProject.setScope(params.get("scope"));
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-		//Additional fields
+		// Additional fields
 		currentProject.setShouldInvoice(Integer.parseInt(params.get("shouldInvoice")));
 		currentProject.setInvoiced(Integer.parseInt(params.get("actualInvoice")));
 		currentProject.setProjectNotes(params.get("notes"));
@@ -54,13 +60,13 @@ public class ProjectInformationFiller
 		currentProject.setZachUpdates(params.get("refrigNotes"));
 		currentProject.setCost(params.get("cost"));
 		currentProject.setCustomerNumber(params.get("customerNumber"));
-		
+
 		Date finitiatedDate = null;
-		if (!(params.get("initiated")).isEmpty()) 
+		if (!(params.get("initiated")).isEmpty())
 			finitiatedDate = formatter.parse(params.get("initiated"));
-	//	else {
-	//		finitiatedDate = new Date();
-	//	}
+		// else {
+		// finitiatedDate = new Date();
+		// }
 		currentProject.setProjectInitiatedDate(finitiatedDate);
 
 		Date fsurvey = null;
@@ -77,7 +83,7 @@ public class ProjectInformationFiller
 		if (!(params.get("proposalDate")).isEmpty())
 			fproposal = formatter.parse(params.get("proposalDate"));
 		currentProject.setProposalSubmitted(fproposal);
-		
+
 		Date budgetaryDue = null;
 		if (params.get("budgetaryDue") != null && !(params.get("budgetaryDue")).isEmpty())
 			budgetaryDue = formatter.parse(params.get("budgetaryDue"));
@@ -103,43 +109,45 @@ public class ProjectInformationFiller
 			factual = formatter.parse(params.get("actualTurnover"));
 		currentProject.setActualTurnover(factual);
 
-		
-		//Autofill
-		
-		
-		if(params.get("autofill-HVAC") != null && !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
-			AutoFillService.autoFillProject(currentProject , "HVAC" , params.get("autofill-HVAC"));
+		// Autofill
+
+		if (params.get("autofill-HVAC") != null
+				&& !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
+			AutoFillService.autoFillProject(currentProject, "HVAC", params.get("autofill-HVAC"));
 			currentProject.setAutofillHVAC(params.get("autofill-HVAC"));
 		}
-		
-		if(params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1") || params.get("autofill-Refrigeration").equals(""))) {
-			AutoFillService.autoFillProject(currentProject , "Refrigeration" , params.get("autofill-Refrigeration"));
+
+		if (params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1")
+				|| params.get("autofill-Refrigeration").equals(""))) {
+			AutoFillService.autoFillProject(currentProject, "Refrigeration", params.get("autofill-Refrigeration"));
 			currentProject.setAutofillRefrigeration(params.get("autofill-Refrigeration"));
 		}
-		
-		if(params.get("autofill-Permits") != null && !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
-			AutoFillService.autoFillProject(currentProject , "Permits" , params.get("autofill-Permits"));
+
+		if (params.get("autofill-Permits") != null
+				&& !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
+			AutoFillService.autoFillProject(currentProject, "Permits", params.get("autofill-Permits"));
 			currentProject.setAutofillPermits(params.get("autofill-Permits"));
 		}
-		
-		if(params.get("class") != null && !(params.get("class").equals("-1") || params.get("class").equals(""))) {
-			AutoFillService.autoFillProject(currentProject , "ProjectClass" , params.get("class"));
-			currentProject.setProjectClass((ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
+
+		if (params.get("class") != null && !(params.get("class").equals("-1") || params.get("class").equals(""))) {
+			AutoFillService.autoFillProject(currentProject, "ProjectClass", params.get("class"));
+			currentProject.setProjectClass(
+					(ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
 		}
-			
+
 	}
-	
-	public synchronized static void fillProjectScore(Project currentProject,  Map<String, String>params) throws ParseException, NumberFormatException, ClassNotFoundException
-	{
-		if(params.get("lowScore") != null)
+
+	public synchronized static void fillProjectScore(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		if (params.get("lowScore") != null)
 			currentProject.setLowScore(Integer.parseInt(params.get("lowScore")));
-		if(params.get("mediumScore") != null)
+		if (params.get("mediumScore") != null)
 			currentProject.setMediumScore(Integer.parseInt(params.get("mediumScore")));
-		if(params.get("highScore") != null)
+		if (params.get("highScore") != null)
 			currentProject.setHighScore(Integer.parseInt(params.get("highScore")));
-		
+
 		Date now = new Date();
-		
+
 		currentProject.setScoreLastUpdated(now);
 	}
 
