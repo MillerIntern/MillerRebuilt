@@ -103,7 +103,7 @@
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
-	<div id="warehouse" class="tab-content current">
+	<div style="width: 45%" id="warehouse" class="tab-content current">
 		<table>
 			<tr>
 				<td>Warehouse</td><td></td>
@@ -131,7 +131,7 @@
 										</select></td>
 			</tr>
 		</table>
-		<button onclick="createWarehouse()">Create New Warehouse</button>		
+		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>		
 	</div>
 	<div id="item" class="tab-content editable">
 		<table>
@@ -277,7 +277,7 @@
 			<td><input id="personName" type="text"></td>
 			</tr>
 		</table>
-		<button onclick="addPerson()">Add New Person</button>
+		<button class = "btn btn-primary makeChanges" onclick="addPerson()">Add New Person</button>
 	</div>
 	<div id="userTab" class="tab-content">
 		<table>
@@ -323,7 +323,7 @@
 			</td>
 			</tr>
 		</table>
-		<button onclick="addUser()">Add New User</button>
+		<button class = "btn btn-primary makeChanges" onclick="addUser()">Add New User</button>
 	</div>
 	<div id="ruleTab" class="tab-content editable">
 		<table>
@@ -338,7 +338,7 @@
 			<tr class = "editingRow">
 			<td>Category</td>
 			<td>
-				<select id = "ruleDomainDropdown">
+				<select id = "ruleDomainDropdown" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Category --- </option>
 			    </select> 
 			</td>
@@ -346,29 +346,36 @@
 			<tr class = "editingRow">
 			<td>Name</td>
 			<td>
-				<input id = "ruleTitle" type = "text" maxlength = "40" style = "width : 50%">
+				<input class = "editingField" id = "ruleTitle" type = "text" maxlength = "40" style = "width : 50%">
 			</td>
 			</tr>
 			<tr class = "editingRow">
 			<td>First Field</td>
 			<td>
-				<select id = "ruleField1">
+				<select id = "ruleField1" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Field --- </option>				
 				</select>
 			</td>
 			</tr>
-			<tr id = "secondFieldRow" class = "editingRow">
-			<td>Second Field</td>
-			<td>
-				<select id = "ruleField2">
+			<tr id = "secondFieldRow" class = "editingRow ">
+			<td class="showSecondField"></td>
+			<td class="showSecondField">
+				<button class="btn btn-primary btn-sm" onclick ="showSecondField()">Add Second Field</button>
+			</td>
+			<td style="display: none" id="secondFieldTitle">Second Field</td>
+			<td style="display: none" id="secondFieldSelect">
+				<select id = "ruleField2" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Field --- </option>	
 				</select>
+			</td>
+			<td style="display: none" id="hideSecondField">
+				<button class="btn btn-primary btn-sm" onclick="hideSecondField()">Hide Second Field </button>
 			</td>
 			</tr>
 			<tr class = "editingRow">
 			<td>Goal</td>
 			<td>
-				<select id = "ruleGoalDropdown">
+				<select id = "ruleGoalDropdown" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Goal --- </option>
 			    </select> 
 			</td>
@@ -376,7 +383,7 @@
 			<tr class = "editingRow">
 			<td>Severity</td>
 			<td>
-				<select id = "ruleSeverityDropdown">
+				<select id = "ruleSeverityDropdown" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Severity --- </option>	
 			    </select> 
 			</td>
@@ -393,7 +400,7 @@
 			<tr class = "editingRow">
 			<td>Project Class</td>
 			<td>
-				<select id = "ruleProjectClassDropdown">
+				<select id = "ruleProjectClassDropdown" class = "editingField">
 					<option value = "default" selected disabled> --- Select a Project Class --- </option>	
 					<option value = "none"> All Classes </option>
 			    </select> 
@@ -402,13 +409,13 @@
 			<tr class = "editingRow">
 			<td>Pass Message</td>
 			<td>
-				<textarea class="scrollTextBoxRule" id = "passMessage" maxlength = "255"></textarea>
+				<textarea class="scrollTextBoxRule editingField" id = "passMessage" maxlength = "255"></textarea>
 			</td>
 			</tr>
 			<tr class = "editingRow">
 			<td>Fail Message</td>
 			<td>
-				<textarea id = "failMessage" class="scrollTextBoxRule" maxlength = "255"></textarea>
+				<textarea id = "failMessage" class= "editingField scrollTextBoxRule" maxlength = "255"></textarea>
 			</td>
 			</tr>	
 			<tr class = "ruleRemoval" style = "display : none">
@@ -438,7 +445,7 @@
 	<div id="deleteTab" class="tab-content">
 		<input id = "objectDomain">Project Domain <br>
 		<input id = "objectId">ID <br> 
-		<button onclick="deleteProjectObject()">Delete Project Object</button>
+		<button class = "btn btn-primary makeChanges" onclick="deleteProjectObject()">Delete Project Object</button>
 	</div>
 </div>
 

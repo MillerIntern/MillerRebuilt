@@ -1053,8 +1053,9 @@ function addRule(action)
 		$('.makeChanges').click(makeChanges);
 		return;
 	}
-	if(field2 == "default" || field2 == "none")
-		field2 = undefined;
+	
+	if(field2 == "default" || field2 == "None" || field2 == undefined)
+		field2 = "None";
 	
 	
 	let intent = "addRule";
@@ -1252,7 +1253,7 @@ function fillRuleDomainsDropdown()
 	if(ruleDomains == undefined)
 		return;
 	
-	$('#ruleDomainDropdown').find('option').remove();
+//	$('#ruleDomainDropdown').find('option').remove();
 	
 	
 	for(var ruleDomain in ruleDomains)
@@ -2161,6 +2162,8 @@ function intentSwitch(intent)
 			$('.projectObjectDropdowns').hide();
 			$('.projectObjectDropdown').off('change');
 			$('.editingRow').show();
+			hideSecondField();
+			removeDefaultAfterEdit();
 
 			break;
 		case CURRENT_INTENT.EDIT:
@@ -2227,6 +2230,8 @@ function clearEditingFields()
 	$('select').trigger('chosen:updated');
 }
 
+
+
 function fillEditingFields()
 {
 	$('.tab-content.editable').each(function(index) {
@@ -2247,7 +2252,7 @@ function fillEditingFields()
 
 function fillTabForEdit(projectObject , tabId) 
 {
-	
+	showSecondFieldForEdit();
 	console.log("FILLED TAB FOR EDIT , " , projectObject , tabId);
 	if(tabId && tabId != "ruleTab") 
 	{
@@ -2272,7 +2277,14 @@ function fillTabForEdit(projectObject , tabId)
 		
 		
 		$('#ruleField1').val(projectObject.field1);
-		$('#ruleField2').val(projectObject.field2);
+		
+		if(projectObject.field2 == null || projectObject.field2 == undefined)
+		{
+			$('#ruleField2').val("None");
+			$('#ruleField2').innerHTML("None");
+		}
+		else
+			$('#ruleField2').val(projectObject.field2);
 		
 		
 		if(projectObject.severity == "LOW")
@@ -2446,6 +2458,35 @@ function sendText()
 			console.log("RESPONSE FROM sendText() = ", response);			
 		}
 	});
+}
+
+function showSecondField()
+{
+  $(".showSecondField").css("display", "none");
+  $("#secondFieldTitle").css("display", "");
+  $("#secondFieldSelect").css("display", "");
+  $("#hideSecondField").css("display", "");
+}
+
+function showSecondFieldForEdit()
+{
+  $(".showSecondField").css("display", "none");
+  $("#secondFieldTitle").css("display", "");
+  $("#secondFieldSelect").css("display", "");
+  $("#hideSecondField").css("display", "none");
+}
+
+function hideSecondField()
+{
+  $(".showSecondField").css("display", "");
+  $("#secondFieldTitle").css("display", "none");
+  $("#secondFieldSelect").css("display", "none");
+  $("#hideSecondField").css("display", "none");
+}
+
+function removeDefaultAfterEdit()
+{
+	$(".chosen-single").removeClass('chosen-default');
 }
 
 
