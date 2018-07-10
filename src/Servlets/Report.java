@@ -461,9 +461,7 @@ public class Report extends HttpServlet
 				sb.append("<td>"+(i+1)+"</td>");
 				for (int j = 0; j < shownFields.size(); j++)
 				{	
-					if(shownFields.get(j).equals("task_notes") || shownFields.get(j).equals("task_description")) 
-						sb.append("<td>");
-					else sb.append("<td align = 'center'>");
+					sb.append("<td>");
 					String value = getValueFromTask(shownFields.get(j), t);
 					sb.append(value);
 					sb.append("</td>");		

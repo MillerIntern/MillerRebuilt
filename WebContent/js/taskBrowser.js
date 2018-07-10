@@ -1136,9 +1136,7 @@ function addTaskToTable(_task)
 	createdDate.innerHTML = _task.assignedDate;
 	dueDate.innerHTML = _task.dueDate;
 	severity.innerHTML = _task.severity;
-	severity.align = 'center';
 	status.innerHTML = _task.status.status;
-	status.align = 'center';
 	notes.innerHTML = _task.notes;
 	
 	
