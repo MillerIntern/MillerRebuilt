@@ -103,15 +103,15 @@
 		<li class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
-	<div style="width: 45%" id="warehouse" class="tab-content current">
+	<div style="width: 50%" id="warehouse" class="tab-content current">
 		<table>
 			<tr>
-				<td>Warehouse</td><td></td>
+				<td style="width: 34.6%">Warehouse</td><td></td>
 			</tr>
 				
 			<tr>
 				<td>City: </td>        					
-				<td><input id="city" type="text"></td>
+				<td><input style="width: 300px" id="city" type="text"></td>
 			</tr>
 			<tr>
 				<td>State:</td>        					
@@ -133,10 +133,10 @@
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>		
 	</div>
-	<div id="item" class="tab-content editable">
+	<div style="width: 51%" id="item" class="tab-content editable">
 		<table>
 			<tr>
-				<td>Item</td>
+				<td style="width: 33.9%">Item</td>
 				<td class = "projectObjectDropdowns">    
 				    <select class = "projectObjectDropdown" id = "projectItemDropdown">
 					</select>     
@@ -164,10 +164,10 @@
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
 		</div>
 	</div>
-	<div id="subcontractor" class="tab-content editable">
+	<div style="width: 51%" id="subcontractor" class="tab-content editable">
 		<table>
 			<tr>
-				<td>Subcontractor</td>
+				<td style="width: 33.9%">Subcontractor</td>
 				<td class = "projectObjectDropdowns">    
 					<select id = "subcontractorDropdown" class = "projectObjectDropdown">
 					</select>    
@@ -202,10 +202,10 @@
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
 		</div>	
 	</div>
-	<div id="equipmentSupplier" class="tab-content editable">
+	<div style="width: 52.5%" id="equipmentSupplier" class="tab-content editable">
 		<table>
 			<tr>
-			<td>Equipment Supplier</td>
+			<td style = "width: 32.9%">Equipment Supplier</td>
 			<td class = "projectObjectDropdowns">
 				<select id = "supplierDropdown" class = "projectObjectDropdown">
 			    </select> 
@@ -235,10 +235,10 @@
 		</div>	
 	</div>
 	
-	<div id="cityTab" class="tab-content editable">
+	<div style="width: 56.7%" id="cityTab" class="tab-content editable">
 		<table>
 			<tr>
-			<td>City</td>
+			<td style="width: 30.4%">City</td>
 			<td class = "projectObjectDropdowns">
 				<select id = "cityDropdown" class = "projectObjectDropdown">
 			    </select> 
@@ -254,7 +254,7 @@
 			</tr>
 			<tr class = "editingRow">
 			<td>Name:</td>
-			<td><input id="cityName" type="text" class = "editingField name" style = "width : 300px"></td>
+			<td><input id="cityName" type="text" class = "editingField" style = "width : 300px"></td>
 			</tr>
 		</table>
 		
@@ -267,42 +267,42 @@
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
 		</div>	
 	</div>	
-	<div id="personTab" class="tab-content">
+	<div style="width: 73.7%" id="personTab" class="tab-content">
 		<table>
 			<tr>
-			<td>Person</td><td></td>
+			<td style="width: 5%" >Manager/Supervisor</td><td></td>
 			</tr>
 			<tr>
 			<td>Name:</td>
-			<td><input id="personName" type="text"></td>
+			<td><input style="width: 300px" id="personName" type="text"></td>
 			</tr>
 		</table>
-		<button class = "btn btn-primary makeChanges" onclick="addPerson()">Add New Person</button>
+		<button class = "btn btn-primary makeChanges" onclick="addPerson()">Add New Manager/Supervisor</button>
 	</div>
-	<div id="userTab" class="tab-content">
+	<div style="width: 79.9%" id="userTab" class="tab-content">
 		<table>
 		    <tr>
-			<td>User</td><td></td>
+			<td style="width: 21.2%">User</td><td></td>
 			</tr>
 			<tr>
 			<td>Log-In Name:</td>
-			<td><input id="logInName" type="text" class="userInput"></td>
+			<td><input style="width: 300px" id="logInName" type="text" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>First Name:</td>
-			<td><input id="firstName" type="text" class="userInput"></td>
+			<td><input style="width: 300px" id="firstName" type="text" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>Miller Email:</td>
-			<td><input id="email" type="text" class="userInput"></td>
+			<td><input style="width: 300px" id="email" type="text" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>Password:</td>
-			<td><input id="password" type="password" class="userInput"></td>
+			<td><input style="width: 300px" id="password" type="password" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>Confirm Password:</td>
-			<td><input id="passwordConfirmation" type="password" class="userInput"></td>
+			<td><input style="width: 300px" id="passwordConfirmation" type="password" class="userInput"></td>
 			</tr>
 			<tr>
 			<td>Permission:</td>
@@ -325,10 +325,10 @@
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="addUser()">Add New User</button>
 	</div>
-	<div id="ruleTab" class="tab-content editable">
+	<div style="width: 87.25%" id="ruleTab" class="tab-content editable">
 		<table>
 			<tr>
-			<td>Rule</td>
+			<td style="width: 19.8%">Rule</td>
 			<td class = "projectObjectDropdowns">
 				<select id = "ruleDropdown" class = "projectObjectDropdown">
 					<option value = "default" selected disabled> --- Select a Rule --- </option>
@@ -346,7 +346,7 @@
 			<tr class = "editingRow">
 			<td>Name</td>
 			<td>
-				<input class = "editingField" id = "ruleTitle" type = "text" maxlength = "40" style = "width : 50%">
+				<input class = "editingField" id = "ruleTitle" type = "text" maxlength = "40" style = "width: 300px">
 			</td>
 			</tr>
 			<tr class = "editingRow">
@@ -442,9 +442,25 @@
 			<button type = "button" id = "ruleRemoveButton" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove</button>	
 		</div>	
 	</div>
-	<div id="deleteTab" class="tab-content">
-		<input id = "objectDomain">Project Domain <br>
-		<input id = "objectId">ID <br> 
+	<div style="width: 93.5%" id="deleteTab" class="tab-content">
+		<table>
+		<tr>
+		<td style="width: 18.05%"> Delete </td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Project Domain </td>
+		<td>
+			<input style="width: 300px" id = "objectDomain">
+		</td>
+		</tr>
+		<tr>
+		<td> ID </td>
+		<td>
+			<input style="width: 300px" id = "objectId"> 
+		</td>
+		</tr>
+		</table>
 		<button class = "btn btn-primary makeChanges" onclick="deleteProjectObject()">Delete Project Object</button>
 	</div>
 </div>
