@@ -380,7 +380,7 @@
 				-->
 				<ul class="closeout-information list-group">
 					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
-					<li class="list-group-item closeout-info-list-item" id="final-inspection-item">Final Inspections</li>
+					<li class="list-group-item closeout-info-list-item" id="final-inspection-item" >Final Inspections</li>
 					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
 					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA/MG2</li>
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
@@ -761,7 +761,7 @@
 				<tr>
 					<td class = "bold">Building</td>
 					<td align="center">
-					    <select data-associated-date='buildingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="buildingPermitReq">
+					    <select data-associated-date='buildingPermitLastUpdated' onchange="fillBuilding()" class="permitReq autofill-Permit-Requirement" id="buildingPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>  
@@ -797,7 +797,7 @@
 				<tr>
 					<td class = "bold">Ceiling</td>
 					<td align="center">
-					    <select data-associated-date='ceilingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="ceilingPermitReq">
+					    <select data-associated-date='ceilingPermitLastUpdated' onchange="fillCeiling()" class="permitReq autofill-Permit-Requirement" id="ceilingPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -848,7 +848,7 @@
 				<tr>
 					<td class = "bold">Mechanical</td>
 					<td align="center">
-					    <select data-associated-date='mechanicalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="mechanicalPermitReq">
+					    <select data-associated-date='mechanicalPermitLastUpdated' onchange="fillMechanical()" class="permitReq autofill-Permit-Requirement" id="mechanicalPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -882,7 +882,7 @@
 				<tr>
 					<td class = "bold">Electrical</td>
 					<td align="center">
-					    <select data-associated-date='electricalPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="electricalPermitReq">
+					    <select data-associated-date='electricalPermitLastUpdated' onchange="fillElectrical()" class="permitReq autofill-Permit-Requirement" id="electricalPermitReq">
 					        <option value="default">--Required-- </option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -918,7 +918,7 @@
 				<tr>
 					<td class = "bold">Plumbing</td>
 					<td align="center">
-					    <select data-associated-date='plumbingPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="plumbingPermitReq">
+					    <select data-associated-date='plumbingPermitLastUpdated' onchange="fillPlumbing()" class="permitReq autofill-Permit-Requirement" id="plumbingPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -954,7 +954,7 @@
 				<tr>
 					<td class = "bold">Gas</td>
 					<td align="center">
-					    <select data-associated-date='gasPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="gasPermitReq">
+					    <select data-associated-date='gasPermitLastUpdated' onchange="fillGas()" class="permitReq autofill-Permit-Requirement" id="gasPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -1004,7 +1004,7 @@
 				<tr>
 					<td class = "bold">Sprinkler</td>
 					<td align="center">
-					    <select data-associated-date='sprinklerPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="sprinklerPermitReq">
+					    <select data-associated-date='sprinklerPermitLastUpdated' onchange="fillSprinkler()" class="permitReq autofill-Permit-Requirement" id="sprinklerPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -1040,7 +1040,7 @@
 				<tr>
 					<td class = "bold">Fire Alarm</td>
 					<td align="center">
-					    <select data-associated-date='fireAlarmPermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="fireAlarmPermitReq">
+					    <select data-associated-date='fireAlarmPermitLastUpdated' onchange="fillFireAlarm()" class="permitReq autofill-Permit-Requirement" id="fireAlarmPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -1076,7 +1076,7 @@
 				<tr>
 					<td class = "bold">Low-Voltage</td>
 					<td align="center">
-					    <select data-associated-date='voltagePermitLastUpdated' class="permitReq autofill-Permit-Requirement" id="voltagePermitReq">
+					    <select data-associated-date='voltagePermitLastUpdated' onchange="fillLowVoltage()" class="permitReq autofill-Permit-Requirement" id="voltagePermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -1126,7 +1126,7 @@
 				<tr>
 					<td class = "bold">Other (A)</td>
 					<td align="center">
-					    <select data-associated-date='otherAPermitLastUpdated' class="permitReq" id="otherAPermitReq">
+					    <select data-associated-date='otherAPermitLastUpdated' onchange="fillOtherA()" class="permitReq" id="otherAPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -1162,7 +1162,7 @@
 				<tr>
 					<td class = "bold">Other (B)</td>
 					<td align="center">
-					    <select data-associated-date='otherBPermitLastUpdated' class="permitReq" id="otherBPermitReq">
+					    <select data-associated-date='otherBPermitLastUpdated' onchange="fillOtherB()" class="permitReq" id="otherBPermitReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
