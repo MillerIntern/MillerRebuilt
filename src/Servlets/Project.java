@@ -322,8 +322,55 @@ public class Project extends HttpServlet
 			} catch(ClassNotFoundException | ParseException e) {
 				System.out.println("Some other error!");
 			}
-		} else if (action.equals("editCloseout"))
-		{
+		} else if(action.equals("autofillPermits")) {
+			System.out.println("autofillPermits");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.autofillPermits(projID, parameters);		
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}
+		} else if(action.equals("autofillHVAC")) {
+			System.out.println("autofillHVAC");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.autofillHVAC(projID, parameters);		
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}
+		} else if(action.equals("autofillRefrigeration")) {
+			System.out.println("autofillRefrigeration");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.autofillRefrigeration(projID, parameters);		
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}
+		} else if(action.equals("autofillProjectClass")) {
+			System.out.println("autofillProjectClass");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.autofillProjectClass(projID, parameters);		
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}
+		} else if (action.equals("editCloseout")) {
 			Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
 			{

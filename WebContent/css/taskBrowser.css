@@ -59,7 +59,7 @@
 
 
 #taskTable > tbody > tr > td {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 #taskTable {
@@ -91,6 +91,7 @@
 
 .param-field {
 	width: 100%;
+	font-size: 14px;
 	background-color: white;
 	padding: 4px 4px 4px 4px;
 	border: 3px solid #223f82;

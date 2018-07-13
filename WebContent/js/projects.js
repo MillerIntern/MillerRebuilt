@@ -2306,12 +2306,144 @@ function generateDropdowns(str, className)
 		}
 }
 
+
+function autofillPermits() {
+
+	var autofill_Permits = $('#projectData').find("#autofill-Permits").val();
+	var action = 'autofillPermits';
+				
+	if(!projectID)
+	{
+		alert("Server Error! (Project ID)");
+		return;
+	}
+		
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectID': projectID,
+			
+			'autofill-Permits': autofill_Permits
+		        
+			   }, complete: function (data){
+				console.log(data);
+				projectID = data.responseJSON;
+				
+				alert('Autofill Permits Complete');				
+		}
+			
+	});
+}
+
+
+
+function autofillHVAC() {
+
+	var autofill_HVAC = $('#projectData').find("#autofill-HVAC").val();
+	var action = 'autofillHVAC';
+				
+	if(!projectID)
+	{
+		alert("Server Error! (Project ID)");
+		return;
+	}
+		
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectID': projectID,
+			
+			'autofill-HVAC': autofill_HVAC
+		        
+			   }, complete: function (data){
+				console.log(data);
+				projectID = data.responseJSON;
+				
+				alert('Autofill HVAC Complete');				
+		}
+			
+	});
+}
+
+
+
+function autofillRefrigeration() {
+
+	var autofill_Refrigeration = $('#projectData').find("#autofill-Refrigeration").val();
+	var action = 'autofillRefrigeration';
+				
+	if(!projectID)
+	{
+		alert("Server Error! (Project ID)");
+		return;
+	}
+		
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectID': projectID,
+			
+			'autofill-Refrigeration': autofill_Refrigeration
+		        
+			   }, complete: function (data){
+				console.log(data);
+				projectID = data.responseJSON;
+				
+				alert('Autofill Refrigeration Complete');				
+		}
+			
+	});
+}
+
+function autofillProjectClass() {
+
+	var projectClass = $('#projectData').find('#class').val();
+	var action = 'autofillProjectClass';
+				
+	if(!projectID)
+	{
+		alert("Server Error! (Project ID)");
+		return;
+	}
+		
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectID': projectID,
+			
+			'class': projectClass
+		        
+			   }, complete: function (data){
+				console.log(data);
+				projectID = data.responseJSON;
+				
+				alert('Autofill Project Complete');				
+		}
+			
+	});
+}
+
+
+
 /**
  * This function saves a project to the database
  * INNER FUNCTION CALLS: updateFrontEnd()
  * @returns
  */
 function saveProject_PROJECT_DATA() {
+	
 	var mcsNumber = $('#projectData').find('#mcsNumber').val();
 	
 	// Required Information
@@ -2442,11 +2574,10 @@ function saveProject_PROJECT_DATA() {
 				}
 				//updateProjectManager();
 				
-				alert('Save Complete!');				
+				alert('Save Complete!');		
 				$('#saveButton > button').prop('disabled', false);
 				
 				/*
-				
 				$('#projectManager').find('.info-tab').removeClass('active');
 				$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
 				$('#projectManager').find('#projectInformation').addClass('active');
@@ -2456,10 +2587,9 @@ function saveProject_PROJECT_DATA() {
 				$(".editProject").hide();
 				$("#projectManager").show();
 				*/
+				
 				goToProjectManager();
-				
-				
-				
+						
 			}
 			
 		});

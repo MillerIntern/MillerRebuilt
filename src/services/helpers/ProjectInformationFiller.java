@@ -109,32 +109,6 @@ public class ProjectInformationFiller {
 			factual = formatter.parse(params.get("actualTurnover"));
 		currentProject.setActualTurnover(factual);
 
-		// Autofill
-
-		if (params.get("autofill-HVAC") != null
-				&& !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
-			AutoFillService.autoFillProject(currentProject, "HVAC", params.get("autofill-HVAC"));
-			currentProject.setAutofillHVAC(params.get("autofill-HVAC"));
-		}
-
-		if (params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1")
-				|| params.get("autofill-Refrigeration").equals(""))) {
-			AutoFillService.autoFillProject(currentProject, "Refrigeration", params.get("autofill-Refrigeration"));
-			currentProject.setAutofillRefrigeration(params.get("autofill-Refrigeration"));
-		}
-
-		if (params.get("autofill-Permits") != null
-				&& !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
-			AutoFillService.autoFillProject(currentProject, "Permits", params.get("autofill-Permits"));
-			currentProject.setAutofillPermits(params.get("autofill-Permits"));
-		}
-
-		if (params.get("class") != null && !(params.get("class").equals("-1") || params.get("class").equals(""))) {
-			AutoFillService.autoFillProject(currentProject, "ProjectClass", params.get("class"));
-			currentProject.setProjectClass(
-					(ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
-		}
-
 	}
 
 	public synchronized static void fillProjectScore(Project currentProject, Map<String, String> params)
@@ -149,6 +123,49 @@ public class ProjectInformationFiller {
 		Date now = new Date();
 
 		currentProject.setScoreLastUpdated(now);
+	}
+
+	public synchronized static void fillPermits(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		
+		if (params.get("autofill-Permits") != null
+				&& !(params.get("autofill-Permits").equals("-1") || params.get("autofill-Permits").equals(""))) {
+			AutoFillService.autoFillProject(currentProject, "Permits", params.get("autofill-Permits"));
+			currentProject.setAutofillPermits(params.get("autofill-Permits"));
+		}
+	
+	}
+	
+	public synchronized static void fillHVAC(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		
+		if (params.get("autofill-HVAC") != null
+			&& !(params.get("autofill-HVAC").equals("-1") || params.get("autofill-HVAC").equals(""))) {
+		AutoFillService.autoFillProject(currentProject, "HVAC", params.get("autofill-HVAC"));
+		currentProject.setAutofillHVAC(params.get("autofill-HVAC"));
+		}
+	}
+	
+	
+	public synchronized static void fillRefrigeration(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		
+		if (params.get("autofill-Refrigeration") != null && !(params.get("autofill-Refrigeration").equals("-1")
+			|| params.get("autofill-Refrigeration").equals(""))) {
+		AutoFillService.autoFillProject(currentProject, "Refrigeration", params.get("autofill-Refrigeration"));
+		currentProject.setAutofillRefrigeration(params.get("autofill-Refrigeration"));
+		}
+	}
+
+	
+	public synchronized static void fillProjectClass(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		
+		if (params.get("class") != null && !(params.get("class").equals("-1") || params.get("class").equals(""))) {
+		AutoFillService.autoFillProject(currentProject, "ProjectClass", params.get("class"));
+		currentProject.setProjectClass(
+				(ProjectClass) ProjectObjectService.get(Long.parseLong(params.get("class")), "ProjectClass"));
+		}
 	}
 
 }

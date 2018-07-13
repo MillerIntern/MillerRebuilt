@@ -7,14 +7,6 @@ let AUTO_FILL_OBJECT = {
 		AIA : false
 };
 
-//var closeoutDocs = document.getElementById("closeoutDocuments").addEventListener("focus", autofillCloseoutDocs); 
-
-//
-//$(document).ready(function(){$('generalInformationTable').change(function(){
-//	
-//	autofillCloseoutDocs();
-//
-//})});
 
 $(document).ready(function(){$('#autofill-HVAC').change(function(){
 	if($(this).val() == "default") return;

@@ -448,7 +448,7 @@
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        <li id='saveProjectLink' onClick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        <li id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 			
 		</ul>
@@ -493,7 +493,7 @@
 			</td>
 	        <td><b>Project</b></td>
 	       	<td>
-	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Classification? The Classification-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Classification? The Classification-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
 	        	<option value="default">--Please select an option--</option>
 	        </select>
 			</td>
@@ -502,7 +502,7 @@
 			<tr>
 			<td><b>HVAC</b></td>
 			<td>
-			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC? The HVAC-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC? The HVAC-related data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
 				<option value="default">--Does this project require an HVAC unit?--</option>
 				<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -510,7 +510,7 @@
 	        </td>
 	        <td><b>Refrigeration</b></td>
 	        <td>
-	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration? Thr data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration? Thr data in the Closeout tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
 	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -521,7 +521,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }">
+	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be changed.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  

@@ -95,6 +95,98 @@ public class ProjectService extends ProjectObjectService
 		return projID;
 	}
 	
+	
+	public synchronized static long autofillPermits(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillPermits(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+
+	
+	public synchronized static long autofillHVAC(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillHVAC(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
+	
+	public synchronized static long autofillRefrigeration(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillRefrigeration(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
+	
+	public synchronized static long autofillProjectClass(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillProjectClass(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
 	/**
 	 * @param ruleId
 	 * @param parameters
