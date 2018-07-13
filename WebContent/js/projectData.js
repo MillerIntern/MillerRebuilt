@@ -129,6 +129,13 @@ function generateDropdowns(str, className)
 			else
 				sent=false;
 		}
+		if(className == "class")
+		{
+			if(json[i].id == 8)
+				continue;
+			else 
+				option.innerHTML = json[i].name;
+		}
 		if(className == "closeoutstatus")
 		{
 			option.innerHTML=json[i].name;
@@ -209,7 +216,7 @@ function saveProject() {
 	
 	var projectClass = $('#class').val();
 	if(projectClass === 'undefined' || projectClass === 'default')
-		return alert("The Classification field is required. Please give it a value.");
+		return alert("The Project field is required. Please give it a value.");
 
 	var HVAC = $('#autofill-HVAC').val();
 	if(HVAC === 'undefined' || HVAC === 'default')

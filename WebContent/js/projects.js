@@ -2239,6 +2239,7 @@ function generateDropdowns(str, className)
 		json = sortByName(json, className);
 	
 		}
+	
 	for (var i = 0; i < json.length; i++)
 	{
 		sent=true;
@@ -2251,6 +2252,19 @@ function generateDropdowns(str, className)
 			}
 			else
 				sent=false;
+		}
+		if(className == "class")
+		{
+			if(json[i].id == 8)
+			{
+				option.innerHTML=json[i].name;
+				option.value = "default";
+			}
+			else
+			{	
+				option.innerHTML=json[i].name;
+				option.value = json[i].name;
+			}
 		}
 		if(className == "closeoutstatus")
 		{
@@ -2279,7 +2293,9 @@ function generateDropdowns(str, className)
 
 		if(sent)
 		{
-			if(className != "subcontractors") option.setAttribute("value", json[i].id);	
+			if(className != "subcontractors" || className != "class")
+				option.setAttribute("value", json[i].id);	
+			
 			d.appendChild(option);
 		}
 
@@ -2407,6 +2423,7 @@ function autofillRefrigeration() {
 function autofillProjectClass() {
 
 	var projectClass = $('#projectData').find('#class').val();
+	
 	var action = 'autofillProjectClass';
 				
 	if(!projectID)
@@ -2457,7 +2474,6 @@ function saveProject_PROJECT_DATA() {
 	var pType = $('#projectData').find('#pType').val();
 	var scope = $('#projectData').find("#scope").val();
 	
-
 	// scheduling
 	var initiated = $('#projectData').find("#initiatedDate").val();
 	var survey = $('#projectData').find("#surveyDate").val();
@@ -2482,7 +2498,7 @@ function saveProject_PROJECT_DATA() {
 	var autofill_Refrigeration = $('#projectData').find("#autofill-Refrigeration").val();
 	var autofill_Permits = $('#projectData').find("#autofill-Permits").val();
 	
-	var required = [warehouse, projectClass, item, manager, supervisor, status, stage, pType, scope];
+	var required = [warehouse, item, manager, supervisor, status, stage, pType, scope];
 	var dates_PROJECT_DATA = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover];
 	
 	
@@ -2772,9 +2788,10 @@ function isValidInput_PROJECT_DATA(requiredFields, dates)
 	for (var i = 0; i < requiredFields.length; i++)
 	{
 		var field = requiredFields[i];
-		if (field === "default")
+
+		if (field === "default" || field == "" || field == undefined)
 		{
-			alert("You cannot leave any of the values in the 'Required Information' blank!");
+			alert("You cannot leave any of the required information blank!");
 			return false;
 		}
 	}
