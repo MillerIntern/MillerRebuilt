@@ -4460,13 +4460,6 @@ function filterProjects () {
 					let listDetails5 = document.createElement('td'); //High
 					let listDetails6 = document.createElement('td'); //Last Updated
 					
-					listDetails0.style.textAlign = "center"; 
-					listDetails1.style.textAlign = "center"; 
-					listDetails2.style.textAlign = "center"; 
-					listDetails3.style.textAlign = "center";
-					listDetails4.style.textAlign = "center";
-					listDetails5.style.textAlign = "center";
-					listDetails6.style.textAlign = "center"; 
 					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
