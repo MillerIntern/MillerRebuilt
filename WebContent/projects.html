@@ -493,7 +493,7 @@
 			</td>
 	        <td><b>Project</b></td>
 	       	<td>
-	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project? The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
+	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
 	        	<option value="default">--Please specify the project type--</option>
 	        </select>
 			</td>
@@ -502,7 +502,7 @@
 			<tr>
 			<td><b>HVAC</b></td>
 			<td>
-			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC? The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
+			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
 				<option value="default">--Does this project require an HVAC unit?--</option>
 				<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -510,7 +510,7 @@
 	        </td>
 	        <td><b>Refrigeration</b></td>
 	        <td>
-	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration? The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
+	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration?  NOTE: The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
 	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -521,7 +521,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits? All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
+	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  
@@ -663,10 +663,10 @@
 				        <tr id = "taskStatusSelectionRow" style = "display : none">
 				        	<td><label>Status:</label></td>
 				        	<td>
-				        		<select id = "taskStatus">
+				        		<select id = "taskStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.id != 1){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
 	   			       				<option value="Open"> Open </option>
 	   			       				<option value="Completed"> Completed </option>
-	   			       				<option class = "adminContent" value="Closed"> Closed </option>
+	   			       				<option id="closedStatus"  value="Closed"> Closed </option>
 	   			   				</select>
 	   			   			</td>
 				        </tr>

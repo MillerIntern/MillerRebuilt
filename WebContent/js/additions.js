@@ -1278,6 +1278,9 @@ function filterSecondField()
 	
 	console.log("VAL " , val);
 	
+	if(val == "McsNumber")
+		return;
+		
 	var type = getFieldType(val);
 	
 	$('#ruleField2').find('option').each(function(index){
@@ -1333,6 +1336,10 @@ function filterGoalsByDomain()
 				if(! this.value.includes("TASK"))
 					$(this).hide();
 				break;
+			case "General Information":
+				if(! this.value.includes("PROJ"))
+					$(this).hide();
+					break;
 			case "Closeout":
 				if(! this.value.includes("CLOSEOUT"))
 					$(this).hide();
@@ -1945,6 +1952,9 @@ function fillProjectClassesDropdown()
 	
 	for(var i = 0; i < projectClasses.length; i++)
 	{
+		if( projectClasses[i].id == 8 )
+			continue;
+		
 		var option = document.createElement('option');
 		option.value = projectClasses[i].id;
 		option.innerHTML = projectClasses[i].name;

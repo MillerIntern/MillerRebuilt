@@ -164,7 +164,7 @@ public class ProjectRule extends ProjectObject
 		if(_result == null)
 			return false;
 		
-		System.out.println("THIS = " + this.goal + " OTHER = " + _result);
+		System.out.println("THIS = " + this.goal + " / OTHER = " + _result);
 		
 		if(this.goal == _result)
 			return true;

@@ -52,6 +52,9 @@ public class ProjectRuleService
 	
 	public static RuleResult EvaluateNumbers(Double d1 , Double d2)
 	{
+//		if( d1 == null )
+//			return RuleResult.NN_N;
+//		else 
 		if(d1 == null && d2 == null)
 			return RuleResult.NN_NN;
 		else if(d1 == null && d2 != null)
@@ -93,7 +96,10 @@ public class ProjectRuleService
 	
 	public static RuleResult EvaluateStrings(String d1 , String d2)
 	{
-		if(d1 == null && d2 == null)
+//		if(d1 == null || d1 == "")
+//			return RuleResult.SS_N;
+//		else
+			if(d1 == null && d2 == null)
 			return RuleResult.SS_NN;
 		else if(d1 == null && d2 != null)
 			return RuleResult.SS_NV;
@@ -119,16 +125,19 @@ public class ProjectRuleService
 			return RuleResult.TASK_NULL_DUE;
 				
 		if(status == null)
-			return RuleResult.TASK_NULL_STATUS;
-				
-		int result = dueDate.compareTo(today);
+			return RuleResult.TASK_NULL_STATUS;		
 		
-		if(result <= 0)
+		int result = dueDate.compareTo(today);
+		System.out.println(result);
+		
+		if(result <= 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Completed"))
 			return RuleResult.TASK_ONTIME;
-		else if( task.getTaskStatus().getStatus().equalsIgnoreCase("Open"))
+		else if( result > 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Open"))
 			return RuleResult.TASK_LATE;
-		else
-			return RuleResult.TASK_ONTIME;
+		else 
+			return null;
+		
+		
 			
 	}
 	
@@ -170,6 +179,14 @@ public class ProjectRuleService
 		
 		return false;
 		
+	}
+	
+	public static RuleResult EvaluateProjectNumber(String s1, Double d1)
+	{
+		if( s1.equals("0")|| s1.equals("-1") || s1.equalsIgnoreCase("tbd"))
+				return RuleResult.PROJ_S;
+		
+		return RuleResult.PROJ_S;
 	}
 	
 	public static boolean ChangeOrderEvaluate(ProjectRule _rule , ChangeOrder _co)
@@ -275,9 +292,20 @@ public class ProjectRuleService
 		
 		Object field1 = Project.getGeneralInfoFields(f1 , proj);
 		Object field2 = Project.getGeneralInfoFields(f2 , proj);
+		 
+		if(field1 instanceof String && field2 instanceof Double)
+			return _rule.evaluate(EvaluateProjectNumber((String)field1, (Double)field2));
 		
+		if(field1 instanceof Double && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
+		else if(field1 instanceof Double && field2 == null)
+			return _rule.evaluate(EvaluateNumbers((Double) field1 , null));
+		else if(field1 == null && field2 instanceof Double)
+			return _rule.evaluate(EvaluateNumbers(null , (Double) field2));
+	
 		
-		return _rule.evaluate(EvaluateStrings((String)field1, (String)field2));
+		return false;
+		
 	}
 	
 	public static boolean EquipmentEvaluate(ProjectRule _rule , NewEquipment _eq)

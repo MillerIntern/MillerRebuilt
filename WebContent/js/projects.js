@@ -3302,6 +3302,7 @@ function fillChangeOrders (data) {
 		var tableRow = document.createElement('tr');
 		tableRow.setAttribute("value", changeOrder.id);
 		tableRow.onclick = function() {toggleChangeOrder(this)};
+		tableRow.ondblclick = function () {editSelectedChangeOrder(this.value)};
 
 		//var changeType = document.createElement('td');
 		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
@@ -4058,6 +4059,7 @@ function goToTaskForm () {
 	window.location.href = TASK_CREATOR + '?id=' + projectID;
 }
 
+
 /**
  * This function fills the task table with the given tasks
  * INNER FUNCTION CALLS: none
@@ -4079,11 +4081,11 @@ function fillTasksTable(tasks) {
 		taskListing.onclick = function() {
 			toggleTask(this);
 		};
-		taskListing.ondblclick = function () {
-			TASK_ACTION = "updateTask";
-			displayTaskWell();
-			fillTaskWell(this);
+		
+		taskListing.ondblclick = function(){
+			editSelectedTask(this);
 		};
+		
 
 		count++;
 		
@@ -4734,6 +4736,10 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 		
 		if(field == "Manager" || field == "Supervisor") {
 			if(json[i].name == "Bart") continue;
+		}
+		if(field == "Project"){
+			if(json[i].id == 8)
+				continue;
 		}
 		let option = document.createElement('option');
 		if (field == 'Warehouse') {
