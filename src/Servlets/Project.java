@@ -2,17 +2,11 @@ package Servlets;
 
 import java.io.IOException;
 
-
-
-
-
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
-
-
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -781,6 +775,23 @@ public class Project extends HttpServlet
 			
 			response = projects;
 		}
+		else if(action.equals("updateScore"))
+		{
+			projectObjects.Project project = null;
+			try 
+			{
+			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("id")), "Project");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			ProjectObjectService.updateProjectScore(project);
+			response = "SCORES UPDATED";
+			System.out.println("updating score");
+			
+		}
 		else if(action.equals("evaluateProject"))
 		{
 			List<ProjectRule> rules = ProjectObjectService.getAllRules();
@@ -811,52 +822,52 @@ public class Project extends HttpServlet
 			response = gson.toJson(result);
 			
 		}
-		else if(action.equals("TESTevaluateProject"))
-		{
-			ProjectRule rule = new ProjectRule(RuleDomain.Tasks , null , null , RuleResult.TASK_ONTIME , RuleSeverity.MEDIUM , 
-					null , null , "Fail Message" , "Pass Message" , "My Title");
-			ProjectRule rule2 = new ProjectRule(RuleDomain.PermitsAndInspections , "voltagePermitStatus" , "voltageInspectionStatus" , RuleResult.SS_NV, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 2" , "Pass Message 2" , "My Title 2");
-			ProjectRule rule3 = new ProjectRule(RuleDomain.Scheduling , "budgetaryDue" , "budgetarySubmitted" , RuleResult.DD_NV, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 3" , "Pass Message 3" , "My Title 3");
-			ProjectRule rule4 = new ProjectRule(RuleDomain.Financial , "shouldInvoice" , "actualInvoice" , RuleResult.NN_EQUAL, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 4" , "Pass Message 4" , "My Title 4");
-			ProjectRule rule5 = new ProjectRule(RuleDomain.Equipment , "orderedDate" , "deliveryDate" , RuleResult.DD_EARLY, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 5" , "Pass Message 5" , "My Title 5");
-			ProjectRule rule6 = new ProjectRule(RuleDomain.ChangeOrders , "cost" , "sell" , RuleResult.NN_LESS, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 6" , "Pass Message 6" , "My Title 6");
-			ProjectRule rule7 = new ProjectRule(RuleDomain.Closeout , "mechanicalStatus" , null , RuleResult.CLOSEOUT_NULL_STATUS, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 7" , "Pass Message 7" , "My Title 7");
-			
-			
-			projectObjects.Project project = null;
-			try 
-			{
-			 project = (projectObjects.Project) ProjectObjectService.get((long) 2119 , "Project");
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-			
-			List<ProjectRule> list = new ArrayList<ProjectRule>();
-			list = ProjectObjectService.getAllRules();
-			/*
-			list.add(rule);
-			list.add(rule2);
-			list.add(rule3);
-			list.add(rule4);
-			list.add(rule5);
-			list.add(rule6);
-			list.add(rule7);
-			*/
-			
-			Map<String , Object> result = ProjectRuleService.EvaluateProject(list, project);
-			
-			ProjectObjectService.updateProjectScore(project);
-			Gson gson = new Gson();
-			response = gson.toJson(result);
-		}
+//		else if(action.equals("TESTevaluateProject"))
+//		{
+//			ProjectRule rule = new ProjectRule(RuleDomain.Tasks , null , null , RuleResult.TASK_ONTIME , RuleSeverity.MEDIUM , 
+//					null , null , "Fail Message" , "Pass Message" , "My Title");
+//			ProjectRule rule2 = new ProjectRule(RuleDomain.PermitsAndInspections , "voltagePermitStatus" , "voltageInspectionStatus" , RuleResult.SS_NV, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 2" , "Pass Message 2" , "My Title 2");
+//			ProjectRule rule3 = new ProjectRule(RuleDomain.Scheduling , "budgetaryDue" , "budgetarySubmitted" , RuleResult.DD_NV, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 3" , "Pass Message 3" , "My Title 3");
+//			ProjectRule rule4 = new ProjectRule(RuleDomain.Financial , "shouldInvoice" , "actualInvoice" , RuleResult.NN_EQUAL, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 4" , "Pass Message 4" , "My Title 4");
+//			ProjectRule rule5 = new ProjectRule(RuleDomain.Equipment , "orderedDate" , "deliveryDate" , RuleResult.DD_EARLY, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 5" , "Pass Message 5" , "My Title 5");
+//			ProjectRule rule6 = new ProjectRule(RuleDomain.ChangeOrders , "cost" , "sell" , RuleResult.NN_LESS, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 6" , "Pass Message 6" , "My Title 6");
+//			ProjectRule rule7 = new ProjectRule(RuleDomain.Closeout , "mechanicalStatus" , null , RuleResult.CLOSEOUT_NULL_STATUS, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 7" , "Pass Message 7" , "My Title 7");
+//			
+//			
+//			projectObjects.Project project = null;
+//			try 
+//			{
+//			 project = (projectObjects.Project) ProjectObjectService.get((long) 2119 , "Project");
+//			}
+//			catch(Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//			
+//			List<ProjectRule> list = new ArrayList<ProjectRule>();
+//			list = ProjectObjectService.getAllRules();
+//			/*
+//			list.add(rule);
+//			list.add(rule2);
+//			list.add(rule3);
+//			list.add(rule4);
+//			list.add(rule5);
+//			list.add(rule6);
+//			list.add(rule7);
+//			*/
+//			
+//			Map<String , Object> result = ProjectRuleService.EvaluateProject(list, project);
+//			
+//			ProjectObjectService.updateProjectScore(project);
+//			Gson gson = new Gson();
+//			response = gson.toJson(result);
+//		}
 		else if(action.equals("evaluateAllProjects"))
 		{
 			List<ProjectRule> rules = ProjectObjectService.getAllRules();
@@ -880,52 +891,52 @@ public class Project extends HttpServlet
 			Gson gson = new Gson();
 			response = gson.toJson(allResults);
 		}
-		else if(action.equals("TESTevaluateAllProjects"))
-		{
-			ProjectRule rule = new ProjectRule(RuleDomain.Tasks , null , null , RuleResult.TASK_ONTIME , RuleSeverity.MEDIUM , 
-					null , null , "Fail Message" , "Pass Message" , "My Title");
-			ProjectRule rule2 = new ProjectRule(RuleDomain.PermitsAndInspections , "voltagePermitStatus" , "voltageInspectionStatus" , RuleResult.SS_NV, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 2" , "Pass Message 2" , "My Title 2");
-			ProjectRule rule3 = new ProjectRule(RuleDomain.Scheduling , "budgetaryDue" , "budgetarySubmitted" , RuleResult.DD_NV, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 3" , "Pass Message 3" , "My Title 3");
-			ProjectRule rule4 = new ProjectRule(RuleDomain.Financial , "shouldInvoice" , "actualInvoice" , RuleResult.NN_EQUAL, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 4" , "Pass Message 4" , "My Title 4");
-			ProjectRule rule5 = new ProjectRule(RuleDomain.Equipment , "orderedDate" , "deliveryDate" , RuleResult.DD_EARLY, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 5" , "Pass Message 5" , "My Title 5");
-			ProjectRule rule6 = new ProjectRule(RuleDomain.ChangeOrders , "cost" , "sell" , RuleResult.NN_LESS, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 6" , "Pass Message 6" , "My Title 6");
-			ProjectRule rule7 = new ProjectRule(RuleDomain.Closeout , "mechanicalStatus" , null , RuleResult.CLOSEOUT_NULL_STATUS, 
-					RuleSeverity.MEDIUM , null , null , "Fail Message 7" , "Pass Message 7" , "My Title 7");
-			
-			
-			List<ProjectRule> list = new ArrayList<ProjectRule>();
-			list = ProjectObjectService.getAllRules();
-			/*
-			list.add(rule);
-			list.add(rule2);
-			list.add(rule3);
-			list.add(rule4);
-			list.add(rule5);
-			list.add(rule6);
-			list.add(rule7);
-			*/
-			
-			List<projectObjects.Project> projects = ProjectObjectService.getAllRawProjects();
-			
-			Map<String , Object> allResults = new HashMap<String , Object>();
-			for(projectObjects.Project project : projects)
-			{
-				Map<String , Object> result = ProjectRuleService.EvaluateProject(list, project);
-				allResults.put(project.getId().toString() , result);
-			}
-			
-			ProjectObjectService.updateProjectScores(projects);
-
-			
-			
-			Gson gson = new Gson();
-			response = gson.toJson(allResults);
-		}
+//		else if(action.equals("TESTevaluateAllProjects"))
+//		{
+//			ProjectRule rule = new ProjectRule(RuleDomain.Tasks , null , null , RuleResult.TASK_ONTIME , RuleSeverity.MEDIUM , 
+//					null , null , "Fail Message" , "Pass Message" , "My Title");
+//			ProjectRule rule2 = new ProjectRule(RuleDomain.PermitsAndInspections , "voltagePermitStatus" , "voltageInspectionStatus" , RuleResult.SS_NV, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 2" , "Pass Message 2" , "My Title 2");
+//			ProjectRule rule3 = new ProjectRule(RuleDomain.Scheduling , "budgetaryDue" , "budgetarySubmitted" , RuleResult.DD_NV, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 3" , "Pass Message 3" , "My Title 3");
+//			ProjectRule rule4 = new ProjectRule(RuleDomain.Financial , "shouldInvoice" , "actualInvoice" , RuleResult.NN_EQUAL, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 4" , "Pass Message 4" , "My Title 4");
+//			ProjectRule rule5 = new ProjectRule(RuleDomain.Equipment , "orderedDate" , "deliveryDate" , RuleResult.DD_EARLY, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 5" , "Pass Message 5" , "My Title 5");
+//			ProjectRule rule6 = new ProjectRule(RuleDomain.ChangeOrders , "cost" , "sell" , RuleResult.NN_LESS, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 6" , "Pass Message 6" , "My Title 6");
+//			ProjectRule rule7 = new ProjectRule(RuleDomain.Closeout , "mechanicalStatus" , null , RuleResult.CLOSEOUT_NULL_STATUS, 
+//					RuleSeverity.MEDIUM , null , null , "Fail Message 7" , "Pass Message 7" , "My Title 7");
+//			
+//			
+//			List<ProjectRule> list = new ArrayList<ProjectRule>();
+//			list = ProjectObjectService.getAllRules();
+//			/*
+//			list.add(rule);
+//			list.add(rule2);
+//			list.add(rule3);
+//			list.add(rule4);
+//			list.add(rule5);
+//			list.add(rule6);
+//			list.add(rule7);
+//			*/
+//			
+//			List<projectObjects.Project> projects = ProjectObjectService.getAllRawProjects();
+//			
+//			Map<String , Object> allResults = new HashMap<String , Object>();
+//			for(projectObjects.Project project : projects)
+//			{
+//				Map<String , Object> result = ProjectRuleService.EvaluateProject(list, project);
+//				allResults.put(project.getId().toString() , result);
+//			}
+//			
+//			ProjectObjectService.updateProjectScores(projects);
+//
+//			
+//			
+//			Gson gson = new Gson();
+//			response = gson.toJson(allResults);
+//		}
 
 		
 		/*

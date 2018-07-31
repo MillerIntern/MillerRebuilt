@@ -16,7 +16,6 @@ public class ProjectRule extends ProjectObject
 	private String title;
 	private String field1;
 	private String field2;
-	private RuleResult goal;
 	private RuleSeverity severity;
 	private Project project;
 	private ProjectClass projectClass;
@@ -28,7 +27,6 @@ public class ProjectRule extends ProjectObject
 		domain = null;
 		field1 = null;
 		field2 = null;
-		goal = null;
 		severity = null;
 		project = null;
 		projectClass = null;
@@ -37,32 +35,18 @@ public class ProjectRule extends ProjectObject
 		title = null;
 	}
 	
-	public ProjectRule(RuleDomain _domain , String _field1 , String _field2,
-			RuleResult _goal , RuleSeverity _severity , Project _project , ProjectClass _projectClass , String _fail, 
+	public ProjectRule(RuleDomain _domain , String _field1, String _field2, RuleSeverity _severity , Project _project , ProjectClass _projectClass , String _fail, 
 			String _pass , String _title)
 	{
 		domain = _domain;
+		severity = _severity;
 		field1 = _field1;
 		field2 = _field2;
-		goal = _goal;
-		severity = _severity;
 		project = _project;
 		projectClass = _projectClass;
 		failMessage = _fail;
 		passMessage = _pass;
 		title = _title;
-	}
-	
-
-	
-	public RuleDomain getDomain()
-	{
-		return domain;
-	}
-	
-	public void setDomain(RuleDomain dom)
-	{
-		this.domain = dom;
 	}
 	
 	public String getField1()
@@ -85,14 +69,14 @@ public class ProjectRule extends ProjectObject
 		field2 = _field;
 	}
 	
-	public RuleResult getGoal()
+	public RuleDomain getDomain()
 	{
-		return goal;
+		return domain;
 	}
 	
-	public void setGoal(RuleResult _goal)
+	public void setDomain(RuleDomain dom)
 	{
-		goal = _goal;
+		this.domain = dom;
 	}
 	
 	public RuleSeverity getSeverity()
@@ -159,14 +143,12 @@ public class ProjectRule extends ProjectObject
 		title = _title;
 	}
 	
-	public boolean evaluate(RuleResult _result)
+	public boolean evaluate(boolean _result)
 	{
-		if(_result == null)
-			return false;
+			
+		System.out.println("RESULT = " + _result);
 		
-		System.out.println("THIS = " + this.goal + " / OTHER = " + _result);
-		
-		if(this.goal == _result)
+		if(_result)
 			return true;
 		else
 			return false;

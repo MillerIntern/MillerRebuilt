@@ -104,7 +104,6 @@ public class Project extends ProjectObject
 	private String autofillHVAC;
 	private String autofillRefrigeration;
 	private String autofillPermits;
-	
 
 	private int lowScore;
 	private int mediumScore;
@@ -161,11 +160,7 @@ public class Project extends ProjectObject
 		this.lowScore = _low;
 		this.mediumScore = _med;
 		this.highScore = _high;
-		this.scoreLastUpdated = _scoreLast;
-		
-		
-
-		
+		this.scoreLastUpdated = _scoreLast; 
 
 	}
 	

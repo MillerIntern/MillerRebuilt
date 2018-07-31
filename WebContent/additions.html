@@ -92,20 +92,21 @@
 
 <div class="container">
 	<ul class="tabs categoriesToEdit">
-		<li class="tab-link current" data-tab="warehouse">Warehouse</li>
-		<li class="tab-link" data-tab="item">Project Item</li>
-		<li class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
-		<li class="tab-link" data-tab="subcontractor">Subcontractor</li>
-		<li class="tab-link" data-tab="cityTab">City</li>
-		<li class="tab-link" data-tab="personTab">Manager/Supervisor</li>
-		<li class="tab-link" data-tab="userTab">User</li>
-		<li class="tab-link" data-tab="deleteTab">Delete</li>
+		<li style="width: 10.5%" class="tab-link current" data-tab="warehouse">Warehouse</li>
+		<li style="width: 11.4%" class="tab-link" data-tab="item">Project Item</li>
+		<li style="width: 16.6%" class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
+		<li style="width: 12.5%" class="tab-link" data-tab="subcontractor">Subcontractor</li>
+		<li style="width: 5.4%" class="tab-link" data-tab="cityTab">City</li>
+		<li style="width: 16.5%" class="tab-link" data-tab="personTab">Manager/Supervisor</li>
+		<li style="width: 6%" class="tab-link" data-tab="userTab">User</li>
+		<li style="width: 6%" class="tab-link" data-tab="ruleTab">Rule</li>
+		<li style="width: 7.2%" class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
-	<div style="width: 50%" id="warehouse" class="tab-content current">
+	<div style="width: 55%" id="warehouse" class="tab-content current">
 		<table>
 			<tr>
-				<td style="width: 34.6%">Warehouse</td><td></td>
+				<td style="width: 35.55%">Warehouse</td><td></td>
 			</tr>
 				
 			<tr>
@@ -132,10 +133,10 @@
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>		
 	</div>
-	<div style="width: 51%" id="item" class="tab-content editable">
+	<div style="width: 54%" id="item" class="tab-content editable">
 		<table>
 			<tr>
-				<td style="width: 33.9%">Item</td>
+				<td style="width: 36.2%">Item</td>
 				<td class = "projectObjectDropdowns">    
 				    <select class = "projectObjectDropdown" id = "projectItemDropdown">
 					</select>     
@@ -163,10 +164,10 @@
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
 		</div>
 	</div>
-	<div style="width: 51%" id="subcontractor" class="tab-content editable">
+	<div style="width: 52.1%" id="subcontractor" class="tab-content editable">
 		<table>
 			<tr>
-				<td style="width: 33.9%">Subcontractor</td>
+				<td style="width: 37.56%">Subcontractor</td>
 				<td class = "projectObjectDropdowns">    
 					<select id = "subcontractorDropdown" class = "projectObjectDropdown">
 					</select>    
@@ -204,7 +205,7 @@
 	<div style="width: 52.5%" id="equipmentSupplier" class="tab-content editable">
 		<table>
 			<tr>
-			<td style = "width: 32.9%">Equipment Supplier</td>
+			<td style = "width: 37.3%">Equipment Supplier</td>
 			<td class = "projectObjectDropdowns">
 				<select id = "supplierDropdown" class = "projectObjectDropdown">
 			    </select> 
@@ -234,10 +235,10 @@
 		</div>	
 	</div>
 	
-	<div style="width: 56.7%" id="cityTab" class="tab-content editable">
+	<div style="width: 57.85%" id="cityTab" class="tab-content editable">
 		<table>
 			<tr>
-			<td style="width: 30.4%">City</td>
+			<td style="width: 33.6%">City</td>
 			<td class = "projectObjectDropdowns">
 				<select id = "cityDropdown" class = "projectObjectDropdown">
 			    </select> 
@@ -266,10 +267,10 @@
 			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
 		</div>	
 	</div>	
-	<div style="width: 73.7%" id="personTab" class="tab-content">
+	<div style="width: 74.75%" id="personTab" class="tab-content">
 		<table>
 			<tr>
-			<td style="width: 5%" >Manager/Supervisor</td><td></td>
+			<td style="width: 25.75%" >Manager/Supervisor</td><td></td>
 			</tr>
 			<tr>
 			<td>Name:</td>
@@ -278,10 +279,10 @@
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="addPerson()">Add New Manager/Supervisor</button>
 	</div>
-	<div style="width: 79.9%" id="userTab" class="tab-content">
+	<div style="width: 81.15%" id="userTab" class="tab-content">
 		<table>
 		    <tr>
-			<td style="width: 21.2%">User</td><td></td>
+			<td style="width: 24%">User</td><td></td>
 			</tr>
 			<tr>
 			<td>Log-In Name:</td>
@@ -323,11 +324,120 @@
 			</tr>
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="addUser()">Add New User</button>
+		</div>
+		<div style="width: 87.57%" id="ruleTab" class="tab-content editable">
+		<table>
+			<tr>
+			<td style="width: 22.2%">Rule</td>
+			<td class = "projectObjectDropdowns">
+				<select id = "ruleDropdown" class = "projectObjectDropdown">
+					<option value = "default" selected disabled> --- Select a Rule --- </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Category</td>
+			<td>
+				<select id = "ruleDomainDropdown" class = "editingField">
+					<option value = "default" selected disabled> --- Select a Category --- </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Name</td>
+			<td>
+				<input class = "editingField" id = "ruleTitle" type = "text" maxlength = "40" style = "width: 300px">
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>First Field</td>
+			<td>
+				<select id = "ruleField1" class = "editingField">
+					<option value = "default" selected disabled> --- Select a Field --- </option>				
+				</select>
+			</td>
+			</tr>
+			<tr id = "secondFieldRow" class = "editingRow ">
+			<td class="showSecondField"></td>
+			<td class="showSecondField">
+				<button class="btn btn-primary btn-sm" onclick ="showSecondField()">Add Second Field</button>
+			</td>
+			<td style="display: none" id="secondFieldTitle">Second Field</td>
+			<td style="display: none" id="secondFieldSelect">
+				<select id = "ruleField2" class = "editingField">
+					<option value = "default" selected disabled> --- Select a Field --- </option>	
+				</select>
+			</td>
+			<td style="display: none" id="hideSecondField">
+				<button class="btn btn-primary btn-sm" onclick="hideSecondField()">Hide Second Field </button>
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Severity</td>
+			<td>
+				<select id = "ruleSeverityDropdown" class = "editingField">
+					<option value = "default" selected disabled> --- Select a Severity --- </option>	
+			    </select> 
+			</td>
+			</tr>
+			<!-- 
+			<tr>
+			<td>Project</td>
+			<td class = "projectObjectDropdowns">
+				<select id = "cityDropdown" class = "projectObjectDropdown">
+			    </select> 
+			</td>
+			</tr>
+			-->
+			<tr class = "editingRow">
+			<td>Project Class</td>
+			<td>
+				<select id = "ruleProjectClassDropdown" class = "editingField">
+					<option value = "default" selected disabled> --- Select a Project Class --- </option>	
+					<option value = "none"> All Classes </option>
+			    </select> 
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Pass Message</td>
+			<td>
+				<textarea class="scrollTextBoxRule editingField" id = "passMessage" maxlength = "255"></textarea>
+			</td>
+			</tr>
+			<tr class = "editingRow">
+			<td>Fail Message</td>
+			<td>
+				<textarea id = "failMessage" class= "editingField scrollTextBoxRule" maxlength = "255"></textarea>
+			</td>
+			</tr>	
+			<tr class = "ruleRemoval" style = "display : none">
+				<td>Duplicate Rule To Remove</td>
+				<td>    
+				    <select id = "removeRuleDropdown" class = "ruleRemovalDropdown">
+				    	<option selected disabled id = "defaultOption" value = "default">Select rule to remove</option>
+					</select>      
+				</td>
+			</tr>
+			<!-- 
+			<tr class = "editingRow">
+			<td>Name:</td>
+			<td><input id="cityName" type="text" class = "editingField name" style = "width : 300px"></td>
+			</tr>
+			-->
+		</table>
+		
+		<button class = "btn btn-primary makeChanges">Submit Changes</button>		
+		
+		<div class = "btn-group">
+			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
+			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
+			<button type = "button" id = "ruleRemoveButton" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove</button>	
+		</div>	
 	</div>
-	<div style="width: 87.38%" id="deleteTab" class="tab-content">
+	<div style="width: 95.1%" id="deleteTab" class="tab-content">
 		<table>
 		<tr>
-		<td style="width: 18.05%"> Delete </td>
+		<td style="width: 20.05%"> Delete </td>
 		<td></td>
 		</tr>
 		<tr>

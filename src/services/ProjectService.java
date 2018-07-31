@@ -42,7 +42,7 @@ import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
 import services.helpers.CityFiller;
-
+import services.helpers.ProjectRuleFiller;
 
 
 /**
@@ -179,6 +179,29 @@ public class ProjectService extends ProjectObjectService
 
 		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
 
+		return projID;
+	}
+	
+	/**
+	 * @param ruleId
+	 * @param parameters
+	 */
+	public synchronized static long editExistingRule(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		ProjectRule rule = null;
+		
+		try 
+		{
+			rule = (ProjectRule) ProjectObjectService.get(projID,  "ProjectRule");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+ 		ProjectRuleFiller.fillRule(rule, parameters);
+ 		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(rule);
+		tx.commit();
+		
 		return projID;
 	}
 	

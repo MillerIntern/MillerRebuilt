@@ -4513,15 +4513,7 @@ function filterProjects () {
 					let listDetails3 = document.createElement('td'); //Low
 					let listDetails4 = document.createElement('td'); //Medium
 					let listDetails5 = document.createElement('td'); //High
-					let listDetails6 = document.createElement('td'); //Last Updated
-					
-					listDetails0.style.textAlign = "center"; 
-					listDetails1.style.textAlign = "center"; 
-					listDetails2.style.textAlign = "center"; 
-					listDetails3.style.textAlign = "center";
-					listDetails4.style.textAlign = "center";
-					listDetails5.style.textAlign = "center";
-					listDetails6.style.textAlign = "center"; 
+					let listDetails6 = document.createElement('td'); //Last Updated 
 					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
@@ -4725,6 +4717,7 @@ function prepareRuleManager(data)
 	$('#ruleManagerDiv').show();
 }
 
+
 function evaluateSetResults(data)
 {
 	if(data.taskResults)
@@ -4777,7 +4770,8 @@ function displayFailedRules(domain)
 		header = "Permits/Inspections";
 	if(domain == "ChangeOrders")
 		header = "Change Orders";
-	
+	if(domain == "GeneralInfo")
+		header = "General Information";
 	
 	$('#failedRulesHeader').find('span').html(header);
 	
@@ -4829,6 +4823,7 @@ function displayProjectFinder()
 	$('#findProject').show();
 	$('#ruleManagerDiv').hide();
 	$('#failedRulesDiv').hide();
+//	updateScore(PROJECT_DATA);
 }
 
 function displayRuleManager()

@@ -17,7 +17,6 @@ public class ProjectRuleFiller
 		
 		RuleDomain domain = RuleDomain.parseDomain(params.get("domain"));
 		RuleSeverity priority = RuleSeverity.parseSeverity(Integer.parseInt(params.get("severity")));
-		RuleResult result = RuleResult.parseRuleGoal(params.get("goal"));
 		String field1 = params.get("field1");
 		String field2 = params.get("field2");
 		String title = params.get("title");
@@ -26,7 +25,6 @@ public class ProjectRuleFiller
 		
 		rule.setDomain(domain);
 		rule.setSeverity(priority);
-		rule.setGoal(result);
 		rule.setField1(field1);
 		rule.setField2(field2);
 		rule.setTitle(title);

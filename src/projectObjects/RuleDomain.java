@@ -22,6 +22,7 @@ public enum RuleDomain {
 		domain = _domain;
 	}
 	
+	
 	public String getDomain()
 	{
 		return domain;
