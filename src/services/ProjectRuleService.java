@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import projectObjects.ProjectRule;
 import projectObjects.ProjectStage;
+import projectObjects.ProjectStatus;
 import projectObjects.RuleDomain;
 //import projectObjects.RuleResult;
 import projectObjects.Task;
@@ -20,36 +21,13 @@ import projectObjects.CloseoutStatus;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Project;
+import projectObjects.ProjectClass;
 import projectObjects.RuleDomain;
 import projectObjects.RuleSeverity;
 
 public class ProjectRuleService 
 {
 		
-	/**
-	 * 
-	 * @param d1
-	 * @param d2
-	 * @return RuleResult
-	 */
-//	public static RuleResult EvaluateDates(Date d1 , Date d2)
-//	{
-//		if(d1 == null && d2 == null)
-//			return RuleResult.DD_NN;
-//		else if(d1 == null && d2 != null)
-//			return RuleResult.DD_NV;
-//		else if(d1 != null && d2 == null)
-//			return RuleResult.DD_VN;
-//		else
-//		{
-//			int result = d1.compareTo(d2);
-//			
-//			if(result == 0 || result == -1)
-//				return RuleResult.DD_LATE;
-//			else
-//				return RuleResult.DD_EARLY;
-//		}
-//	}
 //	
 //	public static RuleResult EvaluateNumbers(Double d1 , Double d2)
 //	{
@@ -115,33 +93,7 @@ public class ProjectRuleService
 //		else
 //			return RuleResult.SS_VV;
 //	}
-//	
-//	public static RuleResult EvaluateTask(Task task)
-//	{
-//		TaskStatus status = task.getTaskStatus();
-//		Date dueDate = task.getDueDate();
-//		Date today = new Date();
-//
-//		if(dueDate == null)
-//			return RuleResult.TASK_NULL_DUE;
-//				
-//		if(status == null)
-//			return RuleResult.TASK_NULL_STATUS;		
 //		
-//		int result = dueDate.compareTo(today);
-//		System.out.println(result);
-//		
-//		if(result <= 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Completed"))
-//			return RuleResult.TASK_ONTIME;
-//		else if( result > 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Open"))
-//			return RuleResult.TASK_LATE;
-//		else 
-//			return null;
-//		
-//		
-//			
-//	}
-//	
 //	public static RuleResult EvaluateCloseoutStatus(String status)
 //	{
 //		if(status == null)
@@ -220,25 +172,89 @@ public class ProjectRuleService
 //		return false;
 //	}
 //	
-//	public static boolean FinancialEvaluate(ProjectRule _rule , Project _proj)
-//	{
-//		Project proj = _proj;
-//		
-//		if(proj == null)	proj = _rule.getProject();
-//		//Maybe handle it elsewhere if the rule is newly created?
-//		
-//		if(proj == null) return false;
-//		
-//		String f1 , f2;
-//		f1 = _rule.getField1();
-//		f2 = _rule.getField2();
-//		
-//		Double field1 = Project.getFinancialFields(f1 , proj);
-//		Double field2 = Project.getFinancialFields(f2 , proj);
-//		
-//		return _rule.evaluate(EvaluateNumbers(field1 , field2));
-//	}
-//	
+	public static boolean FinancialEvaluate(ProjectRule _rule , Project _proj)
+	{
+		Project proj = _proj;
+		
+		if(proj == null)	proj = _rule.getProject();
+		//Maybe handle it elsewhere if the rule is newly created?
+		
+		if(proj == null) return false;
+		
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		Double field1 = Project.getFinancialFields(f1 , proj);
+		Double field2 = Project.getFinancialFields(f2 , proj);
+		
+		if(f1.equals("cost") && f2.equals("None"))
+		{
+			if(field1 == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("customerNumber") && f2.equals("None"))
+		{
+			if(field1 == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("shouldInvoice") && f2.equals("actualInvoice"))
+		{
+			if(field1 == 0 && field2 == 0)
+			{
+				return true;
+			}
+			else if(field1 != field2)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("shouldInvoice") && f2.equals("None"))
+		{
+			if(field1 == 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("actualInvoice") && f2.equals("None"))
+		{
+			if(field1 == 0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		return true;
+	}
+	
 //	public static boolean TaskEvaluate(ProjectRule _rule , Task _task)
 //	{
 //		Task task = _task;
@@ -251,35 +267,152 @@ public class ProjectRuleService
 //		
 //		Object field1 = Task.getTaskFields(f1 , task);
 //		Object field2 = Task.getTaskFields(f2 , task);
+//		Date today = new Date();
 //		
-//		return _rule.evaluate(EvaluateTask(task));
-//
+//		if(f1.equals("dueDate") && f2.equals("assignedDate"))
+//		{
+//			Date due = task.getDueDate();
+//			Date assigned = task.getAssignedDate();
+//			
+//			if(due == null || assigned == null)
+//			{
+//				return true;
+//			}
+//			
+//			int result = due.compareTo(assigned);
+//			
+//			if(result == -1)
+//				return false;
+//			else
+//				return true;
+//		}
+//		
+//			TaskStatus status = task.getTaskStatus();
+//			Date dueDate = task.getDueDate();
+//			Date today = new Date();
+
+//			if(dueDate == null)
+//				return RuleResult.TASK_NULL_DUE;
+//					
+//			if(status == null)
+//				return RuleResult.TASK_NULL_STATUS;		
+//			
+//			int result = dueDate.compareTo(today);
+//			System.out.println(result);
+//			
+//			if(result <= 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Completed"))
+//				return RuleResult.TASK_ONTIME;
+//			else if( result > 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Open"))
+//				return RuleResult.TASK_LATE;
+//			else 
+//				return null;
+//			
+//			return true;
 //	}
-//	
-//	public static boolean SchedulingEvaluate(ProjectRule _rule , Project _proj)
-//	{
-//		Project proj = _proj;
+
+	public static boolean SchedulingEvaluate(ProjectRule _rule , Project _proj)
+	{
+		Project proj = _proj;
+		
+		if(proj == null)	proj = _rule.getProject();
+		//Maybe handle it elsewhere if the rule is newly created?
+		
+		if(proj == null) return false;
+		
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		System.out.println(f1 + "    " + f2);
+		
+		Date field1 = Project.getSchedulingFields(f1 , proj);
+		Date field2 = Project.getSchedulingFields(f2 , proj);
+		Date today = new Date();
+		
+		if(f1.equals("projectInitiatedDate") && f2.equals("None"))
+		{
+			
+			if(field1 == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	
+//		if(f1.equals("projectInitiatedDate") && f2.equals("siteSurvey"))
+//		{
+//			if(field1 == null || field2 == null)
+//				return true;
+//			
+//			int result = field1.compareTo(today);
+//			
+//			if(result == 1)
+//				return false;
+//			else
+//				return true;
+//		}
 //		
-//		if(proj == null)	proj = _rule.getProject();
-//		//Maybe handle it elsewhere if the rule is newly created?
-//		
-//		if(proj == null) return false;
-//		
-//		String f1 , f2;
-//		f1 = _rule.getField1();
-//		f2 = _rule.getField2();
-//		
-//		Date field1 = Project.getSchedulingFields(f1 , proj);
-//		Date field2 = Project.getSchedulingFields(f2 , proj);
-//		
-//
-//		return _rule.evaluate(EvaluateDates(field1 , field2));
-//				
-//	}
+//		if(f1.equals("scheduledStartDate") && f2.equals("scheduledTurnover"))
+//		{
+//			if(field1 == null || field2 == null)
+//				return true;
+//			
+//			int result = field1.compareTo(today);
+//			
+//			if(result == 1)
+//				return false;
+//			else
+//				return true;
+//		}
+		
+		if(f1.equals("proposalDue") && f2.equals("proposalSubmitted"))
+		{	
+			if(field1 == null)
+				return true;
+	
+			int result = field1.compareTo(today);
+			
+			if((result == 0 || result == -1) && field2 == null)
+				return false;
+			else
+				return true;
+		}
+		
+		if(f1.equals("budgetaryDue") && f2.equals("budgetarySubmitted"))
+		{	
+			if(field1 == null)
+				return true;
+	
+			int result = field1.compareTo(today);
+			
+			if((result == 0 || result == -1) && field2 == null)
+				return false;
+			else
+				return true;
+		}
+		
+		if(f1.equals("scheduledTurnover") && f2.equals("actualTurnover"))
+		{	
+			if(field1 == null)
+				return true;
+	
+			int result = field1.compareTo(today);
+			
+			if((result == 0 || result == -1) && field2 == null)
+				return false;
+			else
+				return true;
+		}
+		
+		System.out.println("missed if");
+		return true;
+	}
 	
 	public static boolean generalInfoEvaluate(ProjectRule _rule, Project _proj)
 	{
-		System.out.println("eval gen info");
 		Project proj = _proj;
 		
 		if(proj == null)	
@@ -292,12 +425,15 @@ public class ProjectRuleService
 		f1 = _rule.getField1();
 		f2 = _rule.getField2();
 		
+		System.out.println(f1 + "  &&  " + f2);
+		
 		Object field1 = Project.getGeneralInfoFields(f1 , proj);
 		Object field2 = Project.getGeneralInfoFields(f2 , proj);
 		
 		
 		if(f1.equals("autofillPermits") && f2.equals("None"))
 		{
+			
 			if(field1 == null || field1.equals("default"))
 			{
 				return false;
@@ -307,6 +443,22 @@ public class ProjectRuleService
 				return true;
 			}
 		}
+		
+		if(f1.equals("autofillPermits"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
 		if(f1.equals("autofillHVAC") && f2.equals("None"))
 		{
 			if(field1 == null || field1.equals("default"))
@@ -318,6 +470,7 @@ public class ProjectRuleService
 				return true;
 			}
 		}
+		
 		if(f1.equals("autofillRefrigeration") && f2.equals("None"))
 		{
 			if(field1 == null || field1.equals("default"))
@@ -329,12 +482,61 @@ public class ProjectRuleService
 				return true;
 			}
 		}
-		else if(f1.equals("McsNumber") && f2.equals("stage"))
+		
+		if(f1.equals("projectClass") && f2.equals("None"))
+		{
+			ProjectClass cl1 = (ProjectClass) field1;
+			String projClass = cl1.getName();
+			if(projClass.equals("--Please specify the project type--"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("McsNumber") && f2.equals("stage"))
 		{	
+			System.out.println(field1);
 			ProjectStage fd2 = (ProjectStage) field2;
-			String stageName = fd2.getName();
+			String stage = fd2.getName();
 			
-			if((int)field1 <= 0 && stageName.equals("Active"))
+			if((int)field1 <= 0 && stage.equals("Active"))
+			{
+				return false;
+			}
+			else
+			{	
+				return true;
+			}
+		}
+		
+		if(f1.equals("stage") && f2.equals("status"))
+		{	
+			ProjectStage fd3 = (ProjectStage) field1;
+			String stageName = fd3.getName();
+			ProjectStatus fd4 = (ProjectStatus) field2;
+			String statusName = fd4.getName();
+			
+			if(stageName.equals("Active") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Closeout") || statusName.equals("Scheduling") || statusName.equals("Scheduled")))			
+			{
+				return false;
+			}
+			else if(stageName.equals("Budgetary") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Preparing Proposal") || statusName.equals("Proposal Submitted")))			
+			{
+				return false;
+			}
+			else if(stageName.equals("Canceled") && !(statusName.equals("Closed") || statusName.equals("Lost")))			
+			{
+				return false;
+			}
+			else if(stageName.equals("On Hold") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings")))			
+			{
+				return false;
+			}
+			else if(stageName.equals("Proposal") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Lost") || statusName.equals("Preparing Proposal") || statusName.equals("Proposal Submitted")))			
 			{
 				return false;
 			}
@@ -345,7 +547,7 @@ public class ProjectRuleService
 		}
 		
 		System.out.println("missed if");
-		return false;
+		return true;
 		
 	}
 	
@@ -378,44 +580,157 @@ public class ProjectRuleService
 //
 //	}
 //	
-//	public static boolean PermitAndInspectionEvaluate(ProjectRule _rule , Project _proj)
-//	{
-//		Project proj = _proj;
-//		
-//		if(proj == null)	proj = _rule.getProject();
-//		//Maybe handle it elsewhere if the rule is newly created?
-//		
-//		Permits perms = proj.getPermits();
-//		if(perms == null)
-//			return true;
-//
-//		String f1 , f2;
-//		f1 = _rule.getField1();
-//		f2 = _rule.getField2();
-//		
-//		Object field1 = Permits.getPermitAndInspectionFields(f1 , perms);
-//		Object field2 = Permits.getPermitAndInspectionFields(f2 , perms);
-//				
-//		
-//
-//
-//		if(field1 instanceof Date && field2 instanceof Date)
-//			return _rule.evaluate(EvaluateDates((Date) field1 , (Date) field2));
-//		else if(field1 instanceof String && field2 instanceof String)
-//			return _rule.evaluate(EvaluateStrings((String) field1 , (String) field2));
-//		else if(field1 instanceof String && field2 == null)
-//			return _rule.evaluate(EvaluateStrings((String) field1 , null));
-//		else if(field1 == null && field2 instanceof String)
-//			return _rule.evaluate(EvaluateStrings( null , (String) field2));
-//		else if(field1 instanceof Date && field2 == null)
-//			return _rule.evaluate(EvaluateDates((Date) field1 , null));
-//		else if(field1 == null && field2 instanceof Date)
-//			return _rule.evaluate(EvaluateDates(null , (Date) field2));
-//		
-//		return false;
-//		
-//	}
-//	
+	public static boolean PermitAndInspectionEvaluate(ProjectRule _rule , Project _proj)
+	{
+		Project proj = _proj;
+		
+		if(proj == null)	proj = _rule.getProject();
+		//Maybe handle it elsewhere if the rule is newly created?
+		
+		Permits perms = proj.getPermits();
+		if(perms == null)
+			return true;
+
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		Object field1 = Permits.getPermitAndInspectionFields(f1 , perms);
+		Object field2 = Permits.getPermitAndInspectionFields(f2 , perms);
+
+		if(f1.equals("buildingPermitRequired") && f2.equals("buildingInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingPermitRequired") && f2.equals("ceilingInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalPermitRequired") && f2.equals("mechanicalInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	
+		
+		if(f1.equals("electricalPermitRequired") && f2.equals("electricalInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		
+		if(f1.equals("plumbingPermitRequired") && f2.equals("plumbingInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	
+		
+		if(f1.equals("gasPermitRequired") && f2.equals("gasInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	
+		
+		if(f1.equals("sprinklePermitRequired") && f2.equals("sprinkleInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		
+		if(f1.equals("fireAlarmPermitRequired") && f2.equals("fireAlarmInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		
+		if(f1.equals("voltagePermitRequired") && f2.equals("voltageInspectionRequired"))
+		{
+			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	public static Map<String , Object> EvaluateProject(List<ProjectRule> rules , Project project)
 	{
 		if(project == null || rules == null) return null;
@@ -443,23 +758,23 @@ public class ProjectRuleService
 				Boolean result = null;
 				switch(rule.getDomain())
 				{
-//					case PermitsAndInspections:
-//					//	result = PermitAndInspectionEvaluate(rule , project);
-//						map.put("type", "PermitsAndInspections");
-//						break;
-//					case Scheduling:
-//					//	result = SchedulingEvaluate(rule , project);
-//						map.put("siteSurvey", project.getSiteSurvey());
-//						map.put("budgetaryDue" , project.getBudgetaryDue());
-//						map.put("budgetarySubmitted", project.getBudgetarySubmitted());
-//						map.put("proposalDue", project.getProposalDue());
-//						map.put("proposalSubmitted", project.getProposalSubmitted());
-//						map.put("scheduledStartDate", project.getScheduledStartDate());
-//						map.put("projectInitiatedDate", project.getProjectInitiatedDate());
-//						map.put("scheduledTurnover", project.getScheduledTurnover());
-//						map.put("actualTurnover", project.getActualTurnover());
-//						map.put("type", "Scheduling");
-//						break;
+					case PermitsAndInspections:
+						result = PermitAndInspectionEvaluate(rule , project);
+						map.put("type", "PermitsAndInspections");
+						break;
+					case Scheduling:
+						result = SchedulingEvaluate(rule , project);
+						map.put("siteSurvey", project.getSiteSurvey());
+						map.put("budgetaryDue" , project.getBudgetaryDue());
+						map.put("budgetarySubmitted", project.getBudgetarySubmitted());
+						map.put("proposalDue", project.getProposalDue());
+						map.put("proposalSubmitted", project.getProposalSubmitted());
+						map.put("scheduledStartDate", project.getScheduledStartDate());
+						map.put("projectInitiatedDate", project.getProjectInitiatedDate());
+						map.put("scheduledTurnover", project.getScheduledTurnover());
+						map.put("actualTurnover", project.getActualTurnover());
+						map.put("type", "Scheduling");
+						break;
 					case GeneralInfo:
 						result = generalInfoEvaluate(rule, project);
 						map.put("McsNumber", project.getMcsNumber());
@@ -478,17 +793,17 @@ public class ProjectRuleService
 						map.put("type", "GeneralInfo");
 						break;
 //					case Tasks:
-//					//	Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);
-//					//	map.put("taskResults", taskMap);
+//						Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);
+//						map.put("taskResults", taskMap);
 //						map.put("type", "Task");
 //						break;
-//					case Financial:
-//					//	result = FinancialEvaluate(rule , project);
-//						map.put("shouldInvoice", project.getShouldInvoice());
-//						map.put("actualInvoice", project.getInvoiced());
-//						map.put("cost", project.getCost());
-//						map.put("type", "Financial");
-//						break;
+					case Financial:
+						result = FinancialEvaluate(rule , project);
+						map.put("shouldInvoice", project.getShouldInvoice());
+						map.put("actualInvoice", project.getInvoiced());
+						map.put("cost", project.getCost());
+						map.put("type", "Financial");
+						break;
 //					case ChangeOrders:
 //					//	Map<String , Object> changeOrderMap = EvaluateProjectChangeOrders(rule , project);
 //					//	map.put("changeOrderResults", changeOrderMap);

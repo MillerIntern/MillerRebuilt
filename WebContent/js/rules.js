@@ -2486,6 +2486,57 @@ function editProjectInfo (source_id) {
 	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
 }
 
+function prepareScorecard(source_id){
+	
+	if(source_id && !(isNaN(source_id))) projectID = source_id;
+	setCurrentDivLocation("scorecard");
+	setProjectHeader(PROJECT_DATA, currentDivLocation);
+
+	
+	$('#scorecard').find(".nav-tabs").find("[class~=active]").removeClass("active");
+	$('#scorecard').find("[class~=active]").removeClass("active");
+
+	if(source_id == "closeout-documents-item")
+	{
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
+		$('#closeoutData').find("#closeoutDocuments").addClass("active");
+
+	}
+	else if(source_id == "final-inspection-item")
+	{
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
+		$('#closeoutData').find("#finalInspections").addClass("active");
+
+	}
+	else if(source_id == "warranty-letters-item")
+	{
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
+		$('#closeoutData').find("#warrantyLetters").addClass("active");
+
+	}
+	else if(source_id == "final-liens-item")
+	{
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalLiens]").addClass("active");
+		$('#closeoutData').find("#finalLiens").addClass("active");
+
+	}
+	else if(source_id == "aia-mg2-item")
+	{
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=otherItems]").addClass("active");
+		$('#closeoutData').find("#otherItems").addClass("active");
+
+	}
+	else if(source_id == "closeout-summary-item")
+	{
+		
+		$('#closeoutData').find(".nav-tabs").find("[data-tab=closeoutSummary]").addClass("active");
+		$('#closeoutData').find("#closeoutSummary").addClass("active");
+		
+
+	}	
+	else console.log("Bad ID in prepareProjectData");
+}
+
 function prepareProjectData(source_id){
 	
 	if(source_id && !(isNaN(source_id))) projectID = source_id;
@@ -4625,7 +4676,7 @@ let HIGH_COLOR = "rgb(255, 92, 51)";
 let NO_COLOR = "rgb(255, 255, 255)";
 
 function reevaluateProject(project_id) {
-	if (project_id !== null) {
+	if (project_id != null) {
 		$.ajax({
 			type: 'POST',
 			url: 'Project',

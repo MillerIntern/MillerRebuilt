@@ -2978,6 +2978,10 @@ $(document).ready(function () {
 	$('.closeout-info-list-item').click(function() {
 		editCloseout(this.id);
 	});
+	
+	$('.scorecard-info-list-item').click(function() {
+		editScorecard(this.id);
+	});
 
 });
 
@@ -3217,6 +3221,78 @@ function editCloseout (source_id) {
 	document.getElementById("closeoutData").style.display = 'inline';
 
 	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
+}
+
+function editScorecard (source_id) {
+	if(source_id) prepareScorecard(source_id);
+	document.getElementById("projectManager").style.display = 'none';
+	//getProjectEnums_PROJECT_DATA(true);
+	currentDivLocation = "scorecardData";
+	document.getElementById("scorecardData").style.display = 'inline';
+	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
+}
+
+
+function prepareScorecard(source_id){
+	
+	if(source_id && !(isNaN(source_id))) projectID = source_id;
+	setCurrentDivLocation("scorecard");
+	setProjectHeader(PROJECT_DATA, currentDivLocation);
+
+	
+	$('#scorecardData').find(".nav-tabs").find("[class~=active]").removeClass("active");
+	$('#scorecardData').find("[class~=active]").removeClass("active");
+
+	if(source_id == "general-info-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=generalInfo]").addClass("active");
+		$('#scorecardData').find("#generalInfo").addClass("active");
+
+	}
+	else if(source_id == "scheduling-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=scheduling]").addClass("active");
+		$('#scorecardData').find("#scheduling").addClass("active");
+
+	}
+	else if(source_id == "permits-and-inspections-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=permitsAndInspections]").addClass("active");
+		$('#scorecardData').find("#permitsAndInspections").addClass("active");
+
+	}
+	else if(source_id == "equipment-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=equipmentScore]").addClass("active");
+		$('#scorecardData').find("#equipmentScore").addClass("active");
+
+	}
+	else if(source_id == "change-orders-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=changeOrdersScore]").addClass("active");
+		$('#scorecardData').find("#changeOrdersScore").addClass("active");
+
+	}
+	else if(source_id == "tasks-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=tasks]").addClass("active");
+		$('#scorecardData').find("#tasks").addClass("active");
+
+	}
+	else if(source_id == "closeout-score-item")
+	{
+		
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=closeoutScore]").addClass("active");
+		$('#scorecardData').find("#closeoutScore").addClass("active");
+		
+	}
+	else if(source_id == "financial-score-item")
+	{
+		$('#scorecardData').find(".nav-tabs").find("[data-tab=financial]").addClass("active");
+		$('#scorecardData').find("#financial").addClass("active");
+
+	}
+	else console.log("Bad ID in prepareProjectData");
 }
 
 function addChangeOrder () {
@@ -6066,6 +6142,21 @@ function toggleTaskAssignee() {
 	}
 }
 
+
+$(document).ready(function()
+		{
+			$('#scorecard').find('.nav-tabs > li').click(function () {
+				$('.info-tab').removeClass('active');
+				$('#' + $(this).attr('data-tab')).addClass('active');
+				
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				$('#scorecard').find('#saveButton > button').prop('disabled', true);
+
+			});
+			
+		});
+
 ///////////////////////////////////////////////////////////////////////
 //////////////////////////Navigational ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -6096,6 +6187,12 @@ function goToFindProject() {
 			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
 			$('#closeoutData').find('#closeout').addClass('active');
 			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			break;
+		case "scorecardData":
+			$('#scorecardData').find('.info-tab').removeClass('active');
+			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
+			$('#scorecardData').find('#scorecard').addClass('active');
+			$('#scorecardData').find('#generalInfo').addClass('active');
 			break;
 		case "projectManager":
 			$('#projectManager').find('.info-tab').removeClass('active');
@@ -6165,6 +6262,15 @@ function goToProjectManager() {
 			$('#projectManager').find('#closeoutTabLink').addClass('active');
 			$('#projectManager').find('#closeout').addClass('active');
 			break;
+		case "scorecardData":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#scorecardData').find('.info-tab').removeClass('active');
+			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
+			$('#scorecardData').find('#scorecard').addClass('active');
+			$('#scorecardData').find('#generalInfo').addClass('active');
+			$('#projectManager').find('#scorecardTabLink').addClass('active');
+			$('#projectManager').find('#scorecard').addClass('active');
+			break;
 		case "changeOrder":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#changeOrder').find('.info-tab').removeClass('active');
@@ -6220,6 +6326,9 @@ function convertCurrentDivLocation (currentDivLocation){
 		case "closeoutData":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
 			break;
+		case "scorecardData":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
+			break;
 		case "changeOrder":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
 			break;
@@ -6242,7 +6351,9 @@ function updateProjectManager() {
 		
 	}else if(currentDivLocation == 'closeoutData'){
 		
-	} else {
+	} else if(currentDivLocation == 'scorecardData'){
+		
+	}else {
 		console.log("Not Prepared for this div location!");
 	}
 }

@@ -188,6 +188,7 @@
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits and Inspections</a></li>
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
+				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
@@ -362,7 +363,7 @@
 				<button id='editEquipment' onclick='editSelectedEquipment()' type="button" class="btn edit-submit" disabled>Edit Equipment</button>
 				<button style = "display : none" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
-			<div class='info-tab info-tab-closeout' id='closeout'>
+			<div style="width: 60%" class='info-tab info-tab-closeout' id='closeout'>
 			   <!-- 
 				<table class='table table-hover table-striped' ondblclick="editCloseout()">
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
@@ -386,10 +387,22 @@
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
 				</ul>
 			</div> <!-- Closeout -->
-			<div class='info-tab' id='tasks'>
+			
+			<div style="width: 77.4%" class='info-tab info-tab-scorecard' id='scorecard'>
 				
+					<ul class="scorecard-information list-group">
+						<li class="list-group-item scorecard-info-list-item" id="general-info-score-item">General Information</li>
+						<li class="list-group-item scorecard-info-list-item" id="scheduling-score-item" >Scheduling</li>
+						<li class="list-group-item scorecard-info-list-item" id="permits-and-inspections-score-item">Permits and Inspections</li>	
+						<li class="list-group-item scorecard-info-list-item" id="equipment-score-item">Equipment</li>
+						<li class="list-group-item scorecard-info-list-item" id="change-orders-score-item">Change Orders</li>
+						<li class="list-group-item scorecard-info-list-item" id="tasks-score-item">Tasks</li>	
+						<li class="list-group-item scorecard-info-list-item" id="closeout-score-item">Closeout</li>
+						<li class="list-group-item scorecard-info-list-item" id="financial-score-item">Financial</li>
+					</ul>
 			</div>
-			<div style="width: 65%" class='info-tab' id='settings'>
+			
+		<div style="width: 86.2%" class='info-tab' id='settings'>
 			<table>	
 				<tr>
 					<td style="text-align: center">
@@ -1863,6 +1876,68 @@
 	<div id="footer"> </div>  
 
 </div> <!-- THIS ENDS THE DIV FOR CLOSEOUT DATA-->
+
+
+<!-- THIS BEGINS THE SCORECARD DIV -->
+
+<div id = 'scorecardData' class ='editProject'>
+	
+	<div class="container">
+	
+	    
+		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+	
+		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+	
+		<ul class="nav nav-tabs">
+			<li id = "scorecard" role='presentation' class="active" data-tab="generalInfo"><a>General Information</a></li>
+			<li role='presentation' data-tab="scheduling"><a>Scheduling</a></li>
+	        <li role='presentation' data-tab="permitsAndInspections"><a>Permits and Inspections</a></li>
+			<li role='presentation' data-tab="equipmentScore"><a>Equipment</a></li>
+			<li role='presentation' data-tab="changeOrdersScore"><a>Change Orders</a></li>
+			<li role='presentation' data-tab="tasks"><a>Tasks</a></li>
+			<li role='presentation' data-tab="closeoutScore"><a>Closeout</a></li>
+			<li role='presentation' data-tab="financial"><a>Financial</a></li>
+		</ul>
+		
+		<div id="generalInfo" class="info-tab active" >
+			
+		</div>
+		
+		<div id="scheduling" class="info-tab">
+		
+		</div>
+		
+		<div id="permitsAndInspections" class="info-tab">
+		
+		</div>
+		
+		<div id="equipmentScore" class="info-tab">
+		
+		</div>
+		
+		<div id="changeOrdersScore" class="info-tab" >
+		
+		</div>
+		
+		<div id="tasks" class="info-tab">
+		
+		</div>
+		
+		<div id="closeoutScore" class="info-tab">
+		
+		</div>
+		
+		<div id="financial" class="info-tab">
+		
+		</div>
+	</div>
+	<div id="footer"> </div>  
+
+</div>
+
+<!-- THIS ENDS THE SCORECARD DIV -->
+
 <!--  
 		LINES 1381 THRU 1528 CORRESPOND TO THE CHANGE ORDER DIV	
  -->
