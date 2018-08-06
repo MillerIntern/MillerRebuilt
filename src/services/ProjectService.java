@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import objects.HibernateUtil;
 import projectObjects.CloseoutDetails;
+import projectObjects.EvaluatedRules;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
@@ -43,6 +44,7 @@ import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
 import services.helpers.CityFiller;
 import services.helpers.ProjectRuleFiller;
+import services.helpers.EvaluatedRuleFiller;
 
 
 /**
@@ -77,6 +79,53 @@ public class ProjectService extends ProjectObjectService
 		}
 
 		ProjectInformationFiller.fillProjectInformation(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
+	
+	public synchronized static long editEvalProject(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ProjectInformationFiller.fillEvalInfo(currentProject, parameters);
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+
+
+		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
+
+		return projID;
+	}
+	
+	
+	public synchronized static long editEvaluatedRules(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+		Project currentProject = null;
+		try {
+			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		EvaluatedRules eval = new EvaluatedRules();
+		EvaluatedRuleFiller.fillEvalRules(eval, parameters);
 
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
@@ -204,6 +253,25 @@ public class ProjectService extends ProjectObjectService
 		
 		return projID;
 	}
+	
+//	public synchronized static long editRuleAfterEval(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
+//		ProjectRule rule = null;
+//		
+//		try 
+//		{
+//			rule = (ProjectRule) ProjectObjectService.get(projID,  "ProjectRule");
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+// 		ProjectRuleFiller.fillRuleAfterEval(rule, parameters);
+// 		Session session = HibernateUtil.getSession();
+//		Transaction tx = session.beginTransaction();
+//		session.clear();
+//		session.update(rule);
+//		tx.commit();
+//		
+//		return projID;
+//	}
 	
 	/**
 	 * @param projID

@@ -21,6 +21,7 @@ public class ProjectRule extends ProjectObject
 	private ProjectClass projectClass;
 	private String failMessage;
 	private String passMessage;
+//	private String passed;
 	
 	public ProjectRule()
 	{
@@ -32,6 +33,7 @@ public class ProjectRule extends ProjectObject
 		projectClass = null;
 		failMessage = null;
 		passMessage = null;
+//		passed = null;
 		title = null;
 	}
 	
@@ -46,6 +48,7 @@ public class ProjectRule extends ProjectObject
 		projectClass = _projectClass;
 		failMessage = _fail;
 		passMessage = _pass;
+//		passed = _passed;
 		title = _title;
 	}
 	
@@ -132,6 +135,7 @@ public class ProjectRule extends ProjectObject
 	{
 		passMessage = message;
 	}
+
 	
 	public String getTitle()
 	{

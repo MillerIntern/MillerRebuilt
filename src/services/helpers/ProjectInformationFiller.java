@@ -108,9 +108,31 @@ public class ProjectInformationFiller {
 		if (!params.get("actualTurnover").isEmpty())
 			factual = formatter.parse(params.get("actualTurnover"));
 		currentProject.setActualTurnover(factual);
+		
+//		currentProject.setMcsNumAndStage(params.get("mcsNumberAndStage"));
+//		currentProject.setPermitsEval(params.get("permitsEval"));
+//		currentProject.setHVAC(params.get("hvac"));
+//		currentProject.setRefrigeration(params.get("refrigeration"));
+//		currentProject.setPermitsTBD(params.get("permitsTBD"));
+//		currentProject.setStageAndStatus(params.get("stageAndStatus"));
+//		currentProject.setProject(params.get("project"));
 
 	}
 
+	
+	public synchronized static void fillEvalInfo(Project currentProject, Map<String, String> params)
+			throws ParseException, NumberFormatException, ClassNotFoundException {
+		
+		currentProject.setMcsNumAndStage(params.get("mcsNumberAndStage"));
+		currentProject.setPermitsEval(params.get("permitsEval"));
+		currentProject.setHVAC(params.get("hvac"));
+		currentProject.setRefrigeration(params.get("refrigeration"));
+		currentProject.setPermitsTBD(params.get("permitsTBD"));
+		currentProject.setStageAndStatus(params.get("stageAndStatus"));
+		currentProject.setProject(params.get("project"));
+
+	}
+	
 	public synchronized static void fillProjectScore(Project currentProject, Map<String, String> params)
 			throws ParseException, NumberFormatException, ClassNotFoundException {
 		if (params.get("lowScore") != null)

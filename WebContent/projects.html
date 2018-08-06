@@ -388,9 +388,19 @@
 				</ul>
 			</div> <!-- Closeout -->
 			
-			<div style="width: 77.4%" class='info-tab info-tab-scorecard' id='scorecard'>
+			<div style="width: 100%" class='info-tab info-tab-scorecard' id='scorecard'>
 				
-					<ul class="scorecard-information list-group">
+			<!-- <ul class = "list-group">
+				<li class = "list-group-item scorecard-info-list-item" id = "GeneralInfoItem">General Info <span id = "generalInfoStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
+			</ul>
+		    <ul class="scorecard-information list-group">
 						<li class="list-group-item scorecard-info-list-item" id="general-info-score-item">General Information</li>
 						<li class="list-group-item scorecard-info-list-item" id="scheduling-score-item" >Scheduling</li>
 						<li class="list-group-item scorecard-info-list-item" id="permits-and-inspections-score-item">Permits and Inspections</li>	
@@ -399,7 +409,27 @@
 						<li class="list-group-item scorecard-info-list-item" id="tasks-score-item">Tasks</li>	
 						<li class="list-group-item scorecard-info-list-item" id="closeout-score-item">Closeout</li>
 						<li class="list-group-item scorecard-info-list-item" id="financial-score-item">Financial</li>
-					</ul>
+					</ul> -->
+				<div id="scoreProjectInfoTable">
+				<table id='scoreInfoTable' class='table'>
+				    <thead>
+					<tr class = "scoreTableHead">
+						<th width = 15% style="text-align: center">Warehouse</th>
+						<th width = 13% style="text-align: center">MCS Number</th>
+						<th width = 20% style="text-align: center">Project Item</th>
+						<th width = 9% style="text-align: center">Manager</th>
+						<th width = 7% style="text-align: center">Low </th>
+						<th width = 9% style="text-align: center">Medium </th>
+						<th width = 7% style="text-align: center">High </th>
+						<th width = 19% style="text-align: center">Scorecard Last Updated</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>	
+				</div>
+				<button id="scoreUpdateButton" class="btn project-edit" >Update Scorecard</button>
+				<button id="scoreViewButton" class="btn project-edit" >View Scorecard</button>
 			</div>
 			
 		<div style="width: 86.2%" class='info-tab' id='settings'>
@@ -1882,56 +1912,47 @@
 
 <div id = 'scorecardData' class ='editProject'>
 	
-	<div class="container">
-	
-	    
+	<div id="scorecardUpperDiv"class="container">
 		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
 	
 		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-	
-		<ul class="nav nav-tabs">
-			<li id = "scorecard" role='presentation' class="active" data-tab="generalInfo"><a>General Information</a></li>
-			<li role='presentation' data-tab="scheduling"><a>Scheduling</a></li>
-	        <li role='presentation' data-tab="permitsAndInspections"><a>Permits and Inspections</a></li>
-			<li role='presentation' data-tab="equipmentScore"><a>Equipment</a></li>
-			<li role='presentation' data-tab="changeOrdersScore"><a>Change Orders</a></li>
-			<li role='presentation' data-tab="tasks"><a>Tasks</a></li>
-			<li role='presentation' data-tab="closeoutScore"><a>Closeout</a></li>
-			<li role='presentation' data-tab="financial"><a>Financial</a></li>
+	    <br>
+	    <div style="width: 70%" id="scorecardFields">
+		<ul class = "list-group">
+				<li class = "list-group-item scorecard-info-list-item" id = "GeneralInfoItem">General Info <span id = "generalInfoStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
+				<li class = "list-group-item scorecard-info-list-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
 		</ul>
-		
-		<div id="generalInfo" class="info-tab active" >
-			
 		</div>
+		<br>
+	</div>	
 		
-		<div id="scheduling" class="info-tab">
-		
+	<div id="failedRulesDiv" style="display: none" >
+		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+	
+		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+		<h3 id = "failedRulesHeader"><span></span> Discrepancies </h3>
+		<div style="width: 100%" id = "failedRulesTable" class = "well param-field" >
+			<table class = "table table-responsive table-striped">
+				<thead>
+					<tr class = "head">
+						<th style="width: 25%">Title</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
 		</div>
-		
-		<div id="permitsAndInspections" class="info-tab">
-		
-		</div>
-		
-		<div id="equipmentScore" class="info-tab">
-		
-		</div>
-		
-		<div id="changeOrdersScore" class="info-tab" >
-		
-		</div>
-		
-		<div id="tasks" class="info-tab">
-		
-		</div>
-		
-		<div id="closeoutScore" class="info-tab">
-		
-		</div>
-		
-		<div id="financial" class="info-tab">
-		
-		</div>
+		<button class = "btn project-edit" onclick = "returnToScorecardOverview();"> Back to Scorecard Overview</button>
 	</div>
+			
 	<div id="footer"> </div>  
 
 </div>

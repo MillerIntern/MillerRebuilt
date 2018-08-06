@@ -76,4 +76,17 @@ public enum RuleSeverity {
 		
 		return null;
 	}
+	
+	public static RuleSeverity parseLevel(String _severity)
+	{
+		RuleSeverity[] rs = RuleSeverity.values();
+		
+		for(int i = 0; i < rs.length; i++)
+		{
+			if(rs[i].level.equals(_severity))
+				return rs[i];
+		}
+		
+		return null;
+	}
 }

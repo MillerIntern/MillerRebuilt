@@ -2486,7 +2486,7 @@ function editProjectInfo (source_id) {
 	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
 }
 
-function prepareScorecard(source_id){
+function prepareCloseout(source_id){
 	
 	if(source_id && !(isNaN(source_id))) projectID = source_id;
 	setCurrentDivLocation("scorecard");

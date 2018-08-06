@@ -581,12 +581,6 @@ public class ProjectObjectService
 
 				criteria.setProjection(projectionList);
 				
-				
-				
-				
-				
-
-				
 				System.out.println("Task id = " + Order.asc("id"));
 			}
 			List<?> list = criteria.list();

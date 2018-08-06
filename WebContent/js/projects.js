@@ -2971,6 +2971,10 @@ $(document).ready(function () {
 		$(this).addClass('active');
 	});	
 	
+	$('#scorecardTabLink').click(function() {
+		getProject_SCORECARD(true);
+	});
+	
 	$('.project-info-list-item').click(function() {
 		editProjectInfo(this.id);
 	});
@@ -2979,8 +2983,15 @@ $(document).ready(function () {
 		editCloseout(this.id);
 	});
 	
-	$('.scorecard-info-list-item').click(function() {
+	$('#scoreViewButton').click(function() {
+		reevaluateProject(projectID);
 		editScorecard(this.id);
+		setProjectHeader(PROJECT_DATA, 'scorecardUpperDiv');
+	});
+	
+	$('#scoreUpdateButton').click(function() {
+		reevaluateProject(projectID);
+		getProject_SCORECARD(projectID);
 	});
 
 });
@@ -3075,6 +3086,7 @@ function fillTabs_PROJECT_MANAGER (data) {
 	fillPermitsAndInspections(data);
 	fillEquipment(data);
 	fillCloseout(data);
+	fillProjectDetails(data);
 }
 
 /**
@@ -3223,77 +3235,6 @@ function editCloseout (source_id) {
 	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
 
-function editScorecard (source_id) {
-	if(source_id) prepareScorecard(source_id);
-	document.getElementById("projectManager").style.display = 'none';
-	//getProjectEnums_PROJECT_DATA(true);
-	currentDivLocation = "scorecardData";
-	document.getElementById("scorecardData").style.display = 'inline';
-	//window.location.href = PROJECTINFO + '?type=edit&id=' + projectID;
-}
-
-
-function prepareScorecard(source_id){
-	
-	if(source_id && !(isNaN(source_id))) projectID = source_id;
-	setCurrentDivLocation("scorecard");
-	setProjectHeader(PROJECT_DATA, currentDivLocation);
-
-	
-	$('#scorecardData').find(".nav-tabs").find("[class~=active]").removeClass("active");
-	$('#scorecardData').find("[class~=active]").removeClass("active");
-
-	if(source_id == "general-info-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=generalInfo]").addClass("active");
-		$('#scorecardData').find("#generalInfo").addClass("active");
-
-	}
-	else if(source_id == "scheduling-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=scheduling]").addClass("active");
-		$('#scorecardData').find("#scheduling").addClass("active");
-
-	}
-	else if(source_id == "permits-and-inspections-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=permitsAndInspections]").addClass("active");
-		$('#scorecardData').find("#permitsAndInspections").addClass("active");
-
-	}
-	else if(source_id == "equipment-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=equipmentScore]").addClass("active");
-		$('#scorecardData').find("#equipmentScore").addClass("active");
-
-	}
-	else if(source_id == "change-orders-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=changeOrdersScore]").addClass("active");
-		$('#scorecardData').find("#changeOrdersScore").addClass("active");
-
-	}
-	else if(source_id == "tasks-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=tasks]").addClass("active");
-		$('#scorecardData').find("#tasks").addClass("active");
-
-	}
-	else if(source_id == "closeout-score-item")
-	{
-		
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=closeoutScore]").addClass("active");
-		$('#scorecardData').find("#closeoutScore").addClass("active");
-		
-	}
-	else if(source_id == "financial-score-item")
-	{
-		$('#scorecardData').find(".nav-tabs").find("[data-tab=financial]").addClass("active");
-		$('#scorecardData').find("#financial").addClass("active");
-
-	}
-	else console.log("Bad ID in prepareProjectData");
-}
 
 function addChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=add&id=' + projectID;
@@ -4289,6 +4230,447 @@ function fillTaskWell(source) {
 		
 }
 
+function editScorecard (source_id)
+{
+	document.getElementById("projectManager").style.display = 'none';
+	currentDivLocation = "scorecardData";
+	document.getElementById("scorecardData").style.display = 'inline';
+}
+
+function returnToScorecardOverview()
+{
+	
+	$('#findProject').hide();
+	$('#scorecardUpperDiv').show();
+	$('#failedRulesDiv').hide();
+	
+}
+
+function getProject_SCORECARD(edit)
+{
+	if (projectID !== null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID
+			}, success: function (data) {
+				//getTheProjects();
+				
+				PROJECT_DATA = data;
+				console.log("proj data", data);
+				setProjectHeader(data, currentDivLocation);
+				fillProjectDetails(data);
+			
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	} 
+	
+}
+
+function clearProjectDetailsTable(){
+	$('#scoreInfoTable > tbody').find('tr').remove();
+}
+
+
+
+function fillProjectDetails(data)
+{
+	console.log("fill Proj details");
+	clearProjectDetailsTable();
+	
+    var tr = document.createElement("tr");
+    var warehouse = document.createElement("td");
+    var MCSnumber = document.createElement("td");
+    var item = document.createElement("td");
+    var manager = document.createElement("td");
+    var low = document.createElement("td");
+    var med = document.createElement("td");
+    var high = document.createElement("td");
+    var lastUpdated = document.createElement("td");
+    
+    warehouse.innerHTML = data.warehouse.city.name;
+    MCSnumber.innerHTML = data.McsNumber;
+    item.innerHTML = data.projectItem.name;
+    manager.innerHTML = data.projectManagers.name;
+    low.innerHTML = data.lowScore;
+    med.innerHTML = data.mediumScore;
+    high.innerHTML = data.highScore;
+    lastUpdated.innerHTML = data.scoreLastUpdated;
+    
+    warehouse.style.textAlign = 'center'; 
+    MCSnumber.style.textAlign = 'center'; 
+    item.style.textAlign = 'center'; 
+    manager.style.textAlign = 'center'; 
+    low.style.textAlign = 'center'; 
+    med.style.textAlign = 'center'; 
+    high.style.textAlign = 'center'; 
+    lastUpdated.style.textAlign = 'center'; 
+    
+    tr.appendChild(warehouse);
+    tr.appendChild(MCSnumber);
+    tr.appendChild(item);
+    tr.appendChild(manager);
+    tr.appendChild(low);
+    tr.appendChild(med);
+    tr.appendChild(high);
+    tr.appendChild(lastUpdated);
+   
+    $('#scoreInfoTable').find('tbody').append(tr);
+    
+}
+
+let RULES;
+let FAILED_RULES;
+let RULE_DATA;
+
+let LOW_COLOR = "rgb(0, 255, 0)";
+let MEDIUM_COLOR = "rgb(255, 255, 0)";
+let HIGH_COLOR = "rgb(255, 92, 51)";
+
+let NO_COLOR = "rgb(255, 255, 255)";
+
+function reevaluateProject(project_id) {
+	if (project_id != null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'evaluateProject',
+				'projectId': project_id
+			}, success: function (data) {
+				console.log("DAT" , data);
+			
+				prepareScorecardForDisplay(data);
+				//saveEvaluatedRules();
+				
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	} else {
+		$('#projectHeader').text('No Project Selected!');
+		if (confirm('No Project Selected. Return to find project?')) {
+			window.location.href = "rules.html";
+		}
+	}
+}
+
+//function saveEvaluatedRules()
+//{
+//	console.log("evalRules" , RULES);
+//	console.log(projectID);
+//	
+//	var numAndStage = RULES[0].passed;
+//	
+//	console.log(numAndStage);
+//	var permits = RULES[1].passed;
+//	var hvac = RULES[2].passed;
+//	var refrigeration = RULES[3].passed;
+//	var permitsTBD = RULES[4].passed;
+//	var stageAndStatus = RULES[5].passed;
+//	var project = RULES[6].passed;
+//	
+//	if(!projectID)
+//	{
+//		alert("Server Error! (Project ID)");
+//		return;
+//	}
+//
+//	var action = 'editExistingProject';
+//	
+//	$.ajax({
+//		type: 'POST',
+//		url: 'Project',
+//		data: {
+//			'domain': 'project',
+//			'action': action,
+//			'projectID': projectID,
+//			
+//			'McsNumberAndStage': numAndStage,
+//			'Permits': permits,
+//			'Hvac': hvac,
+//			'Refrigeration': refrigeration,
+//			'PermitsTBD': permitsTBD,
+//			'StageAndStatus': stageAndStatus,
+//			'Project': project
+//	        
+//	        
+//		}, complete: function (data) {
+//			console.log(data);
+//			projectID = data.responseJSON;	
+//			
+//			alert('Save Complete!');	
+//		}
+//	})
+//}
+
+function prepareScorecardForDisplay(data)
+{
+	var rules = data.applicableRules;
+	RULES = data.applicableRules;
+	console.log("PRM" , data);
+	for(var rule in data)
+	{
+		if(rule == "PROJECT" || rule == "applicableRules")
+			continue;
+		
+		for(var i = 0; i < RULES.length; i++)
+		{
+			if(RULES[i].id == data[rule].RULE_ID) 
+			{
+				if(data[rule].passed != undefined)
+					RULES[i].passed = data[rule].passed;
+				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
+				{
+					if(evaluateSetResults(data[rule]) == true)
+						RULES[i].passed = "true";
+					else
+						RULES[i].passed = "false";
+				}
+
+					
+			}
+		}	
+	}
+	
+		
+	$('#scorecardUpperDiv').find('ul').find('li').each(function(index) {
+		$(this).css("background-color" , NO_COLOR );
+		$(this).click(function(event) {
+			if($(this).css("background-color") == NO_COLOR)
+				return;
+			displayFailedRules(this.id.replace("Item" , ""));
+			setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+		});
+		
+		var worst = getWorstRuleResult(data , rules , this.id.replace("Item" , ""));
+		switch(worst)
+		{
+			case "LOW":
+				$(this).css("background-color" , LOW_COLOR);
+				break;
+			case "MEDIUM":
+				$(this).css("background-color" , MEDIUM_COLOR);
+				break;
+			case "HIGH":
+				$(this).css("background-color" , HIGH_COLOR);
+				break;	 
+		}
+	});
+
+	
+}
+
+function evaluateSetResults(data)
+{
+	if(data.taskResults)
+	{
+		for(var task in data.taskResults)
+		{
+			if(task == "TASKS")
+				continue;
+			
+			if(data.taskResults[task].passed == "false")
+				return false;
+		}
+	}
+	
+	if(data.changeOrderResults)
+	{
+		for(var changeOrder in data.changeOrderResults)
+		{
+			if(changeOrder == "CHANGE ORDER")
+				continue;
+			
+			if(data.changeOrderResults[changeOrder].passed == "false")
+				return false;
+		}
+	}
+	
+	if(data.equipmentResults)
+	{
+		for(var equipment in data.equipmentResults)
+		{
+			if(equipment == "CHANGE ORDER")
+				continue;
+			
+			if(data.equipmentResults[equipment].passed == "false")
+				return false;
+		}
+	}
+
+	return true;
+}
+
+function displayFailedRules(domain)
+{
+	console.log("RULEZZ" , RULES);
+	$('#scorecardUpperDiv').hide();
+	$('#failedRulesDiv').show();
+	
+	var header = domain;
+	if(domain == "PermitsAndInspections")
+		header = "Permits/Inspections";
+	if(domain == "ChangeOrders")
+		header = "Change Orders";
+	if(domain == "GeneralInfo")
+		header = "General Information";
+	
+	$('#failedRulesHeader').find('span').html(header);
+	
+	fillFailedRulesTable(domain);
+}
+
+function fillFailedRulesTable(domain)
+{
+	console.log("RULES" , RULES , domain);
+	if(RULES == undefined)
+		return;
+	
+	$('#failedRulesTable').find('tbody').find('tr').remove();
+	
+	for(var i = 0; i < RULES.length; i++)
+	{
+		//console.log("RULES EYE" , RULES[i] , domain);
+		if(RULES[i].domain != domain)
+			continue;
+		if(RULES[i].passed == "true")
+			continue;
+		
+		
+		var tr = document.createElement('tr');
+		var title = document.createElement('td');
+		var action = document.createElement('td');
+		
+		title.innerHTML = RULES[i].title;
+		action.innerHTML = RULES[i].failMessage;
+		
+		$(tr).append(title);
+		$(tr).append(action);
+		
+		if(RULES[i].severity == "HIGH")
+			$(tr).css("background-color" , HIGH_COLOR);
+		if(RULES[i].severity == "MEDIUM")
+			$(tr).css("background-color" , MEDIUM_COLOR);
+		if(RULES[i].severity == "LOW")
+			$(tr).css("background-color" , LOW_COLOR);
+		
+		$('#failedRulesTable').find('tbody').append(tr);		
+	}
+}
+
+function getWorstRuleResult(data , rules , domain)
+{
+	console.log("GETTING WORST" , data, rules , domain);
+	var worst;
+	for(var i = 0; i < rules.length; i++)
+	{
+
+		if(rules[i].domain != domain)
+			continue;
+		
+		if(data[rules[i].title].passed == undefined)
+		{
+			return getWorstSetResult(data , rules , domain);
+		}	
+		
+		
+		if(data[rules[i].title] && (data[rules[i].title].passed == "false" || data[rules[i].title].passed == undefined))
+		{
+			if(worst == undefined)
+				worst = rules[i].severity;
+			else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+				worst = rules[i].severity;
+			else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+				return "HIGH";
+			else if(worst == "HIGH" && rules[i].severity == "HIGH")
+				return "HIGH";
+		}
+	}
+	
+	return worst;
+}
+
+function getWorstSetResult(data , rules , domain)
+{
+	console.log("GET WORST " , data , rules , domain);
+	//return "LOW";
+	
+	var worst;
+	for(var i = 0; i < rules.length; i++)
+	{
+		if(rules[i].domain != domain)
+			continue;
+		
+		if(data[rules[i].title].taskResults)
+		{
+			console.log("IN TASK");
+			for(var task in data[rules[i].title].taskResults)
+			{
+				console.log("IN TASK" , task);
+				if(data[rules[i].title].taskResults[task].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return"HIGH";
+				}
+			}
+		}
+		
+		if(data[rules[i].title].changeOrderResults)
+		{
+			for(var changeOrder in data[rules[i].title].changeOrderResults)
+			{
+				if(data[rules[i].title].changeOrderResults[changeOrder].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+		if(data[rules[i].title].equipmentResults)
+		{
+			for(var equipment in data[rules[i].title].equipmentResults)
+			{
+				if(data[rules[i].title].equipmentResults[equipment].passed == "false")
+				{
+					if(worst == undefined)
+						worst = rules[i].severity;
+					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+	}
+	
+	return worst;
+	
+}
+
+
 
 /**
  * This function clears and adds a single row to the task table
@@ -4556,9 +4938,12 @@ function updateDisplayableProjects(){
 	}
 	*/
 			
-	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
-		for(var q = 0; q < stagesOfInterest.length; q++){
-			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id) {
+	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++)
+	{
+		for(var q = 0; q < stagesOfInterest.length; q++)
+		{
+			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id)
+			{
 				DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
 			}
 		}
@@ -5137,7 +5522,7 @@ function filterProjects () {
 					
 					$('#results > tbody').append(projectListing);
 				}
-	}
+			}
 		}
 	}
 }
@@ -6188,12 +6573,6 @@ function goToFindProject() {
 			$('#closeoutData').find('#closeout').addClass('active');
 			$('#closeoutData').find('#closeoutDocuments').addClass('active');
 			break;
-		case "scorecardData":
-			$('#scorecardData').find('.info-tab').removeClass('active');
-			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
-			$('#scorecardData').find('#scorecard').addClass('active');
-			$('#scorecardData').find('#generalInfo').addClass('active');
-			break;
 		case "projectManager":
 			$('#projectManager').find('.info-tab').removeClass('active');
 			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
@@ -6326,8 +6705,11 @@ function convertCurrentDivLocation (currentDivLocation){
 		case "closeoutData":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
 			break;
-		case "scorecardData":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
+		case "scorecardUpperDiv":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Scorecard <small id='projectHeader'>---</small></p>");
+			break;
+		case "failedRulesDiv":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Scorecard <small id='projectHeader'>---</small></p>");
 			break;
 		case "changeOrder":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
