@@ -309,7 +309,7 @@ public class Project extends HttpServlet
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
-				ProjectService.editEvalProject(projID, parameters);		
+				ProjectService.editExistingProject(projID, parameters);		
 				response = Long.toString(projID);
 			} catch (NumberFormatException e) {
 				System.out.println("ID retrieval failed");
@@ -317,20 +317,20 @@ public class Project extends HttpServlet
 				System.out.println("Some other error!");
 			}
 		} 
-//			else if(action.equals("saveEvalRules"))
-//		{
-//			System.out.println("saveEvalRules");
-//			
-//			try {
-//				Long projID = Long.parseLong(parameters.get("projectID"));		
-//				ProjectService.editEvaluatedRules(projID, parameters);		
-//				response = Long.toString(projID);
-//			} catch (NumberFormatException e) {
-//				System.out.println("ID retrieval failed");
-//			} catch(ClassNotFoundException | ParseException e) {
-//				System.out.println("Some other error!");
-//			}		
-//		}
+			else if(action.equals("saveEvalRules"))
+		{
+			System.out.println("saveEvalRules");
+			
+			try {
+				Long projID = Long.parseLong(parameters.get("projectID"));		
+				ProjectService.editEvalProject(projID, parameters);		
+				response = Long.toString(projID);
+			} catch (NumberFormatException e) {
+				System.out.println("ID retrieval failed");
+			} catch(ClassNotFoundException | ParseException e) {
+				System.out.println("Some other error!");
+			}		
+		}
 		else if(action.equals("autofillPermits")) 
 		{
 			System.out.println("autofillPermits");

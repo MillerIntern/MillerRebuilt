@@ -2984,7 +2984,7 @@ $(document).ready(function () {
 	});
 	
 	$('#scoreViewButton').click(function() {
-		reevaluateProject(projectID);
+		fillScorecard();
 		editScorecard(this.id);
 		setProjectHeader(PROJECT_DATA, 'scorecardUpperDiv');
 	});
@@ -4347,7 +4347,7 @@ function reevaluateProject(project_id) {
 				console.log("DAT" , data);
 			
 				prepareScorecardForDisplay(data);
-				//saveEvaluatedRules();
+				saveEvaluatedRules();
 				
 			}, error: function (data) {
 				alert('Server Error!');
@@ -4361,54 +4361,57 @@ function reevaluateProject(project_id) {
 	}
 }
 
-//function saveEvaluatedRules()
-//{
-//	console.log("evalRules" , RULES);
-//	console.log(projectID);
-//	
-//	var numAndStage = RULES[0].passed;
-//	
-//	console.log(numAndStage);
-//	var permits = RULES[1].passed;
-//	var hvac = RULES[2].passed;
-//	var refrigeration = RULES[3].passed;
-//	var permitsTBD = RULES[4].passed;
-//	var stageAndStatus = RULES[5].passed;
-//	var project = RULES[6].passed;
-//	
-//	if(!projectID)
-//	{
-//		alert("Server Error! (Project ID)");
-//		return;
-//	}
-//
-//	var action = 'editExistingProject';
-//	
-//	$.ajax({
-//		type: 'POST',
-//		url: 'Project',
-//		data: {
-//			'domain': 'project',
-//			'action': action,
-//			'projectID': projectID,
-//			
-//			'McsNumberAndStage': numAndStage,
-//			'Permits': permits,
-//			'Hvac': hvac,
-//			'Refrigeration': refrigeration,
-//			'PermitsTBD': permitsTBD,
-//			'StageAndStatus': stageAndStatus,
-//			'Project': project
-//	        
-//	        
-//		}, complete: function (data) {
-//			console.log(data);
-//			projectID = data.responseJSON;	
-//			
-//			alert('Save Complete!');	
-//		}
-//	})
-//}
+function saveEvaluatedRules()
+{
+	console.log("evalRules" , RULES);
+	console.log(projectID, PROJECT_DATA);
+	
+	var numAndStage = RULES[0].passed;
+	var permits = RULES[1].passed;
+	var hvac = RULES[2].passed;
+	var refrigeration = RULES[3].passed;
+	var permitsTBD = RULES[4].passed;
+	var stageAndStatus = RULES[5].passed;
+	var project = RULES[6].passed;
+	
+	if(!projectID)
+	{
+		alert("Server Error! (Project ID)");
+		return;
+	}
+
+	var action = 'saveEvalRules';
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectID': projectID,
+			
+			'McsNumberAndStage': numAndStage,
+			'Permits': permits,
+			'Hvac': hvac,
+			'Refrigeration': refrigeration,
+			'PermitsTBD': permitsTBD,
+			'StageAndStatus': stageAndStatus,
+			'Project': project
+	        
+	        
+		}, complete: function (data) {
+			
+			console.log(data);
+			projectID = data.responseJSON;	
+			alert('Save Complete!');	
+		}
+	})
+}
+
+function fillScorecard()
+{
+	console.log(PROJECT_DATA);
+}
 
 function prepareScorecardForDisplay(data)
 {

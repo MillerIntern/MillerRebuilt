@@ -110,13 +110,13 @@ public class Project extends ProjectObject
 	private int highScore;
 	private Date scoreLastUpdated;
 	
-//	private String mcsNumberAndStage;
-//	private String permitsEval;
-//	private String hvac;
-//	private String refrigeration;
-//	private String permitsTBD;
-//	private String stageAndStatus;
-//	private String project;
+	private String mcsNumberAndStage;
+	private String permitsEval;
+	private String hvac;
+	private String refrigeration;
+	private String permitsTBD;
+	private String stageAndStatus;
+	private String project;
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
@@ -128,9 +128,8 @@ public class Project extends ProjectObject
 			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
-            String autofill_Permits, int _low, int _med, int _high, Date _scoreLast
-            //String numAndStage, String permEval,String _hvac, String refrig, String permitsTbd, String stageStatus, String proj
-            )
+            String autofill_Permits, int _low, int _med, int _high, Date _scoreLast, String numAndStage, String permEval,
+            String _hvac, String refrig, String permitsTbd, String stageStatus, String proj)
 
 	{		
 		this.warehouse = warehouse;
@@ -172,13 +171,13 @@ public class Project extends ProjectObject
 		this.highScore = _high;
 		this.scoreLastUpdated = _scoreLast; 
 		
-//		this.mcsNumberAndStage = numAndStage;
-//		this.permitsEval = permEval;
-//		this.hvac = _hvac;
-//		this.refrigeration = refrig;
-//		this.permitsTBD = permitsTbd;
-//		this.stageAndStatus = stageStatus;
-//		this.project = proj;
+		this.mcsNumberAndStage = numAndStage;
+		this.permitsEval = permEval;
+		this.hvac = _hvac;
+		this.refrigeration = refrig;
+		this.permitsTBD = permitsTbd;
+		this.stageAndStatus = stageStatus;
+		this.project = proj;
 
 	}
 	
@@ -226,13 +225,13 @@ public class Project extends ProjectObject
 		this.highScore = 0;
 		this.scoreLastUpdated = null;
 		
-//		this.mcsNumberAndStage = null;
-//		this.permitsEval = null;
-//		this.hvac = null;
-//		this.refrigeration = null;
-//		this.permitsTBD = null;
-//		this.stageAndStatus = null;
-//		this.project = null;
+		this.mcsNumberAndStage = null;
+		this.permitsEval = null;
+		this.hvac = null;
+		this.refrigeration = null;
+		this.permitsTBD = null;
+		this.stageAndStatus = null;
+		this.project = null;
 
 	}
 
@@ -645,75 +644,75 @@ public class Project extends ProjectObject
 		scoreLastUpdated = date;
 	}
 	
-//	public synchronized String getMcsNumAndStage()
-//	{
-//		return mcsNumberAndStage;
-//	}
-//	
-//	public synchronized void setMcsNumAndStage(String numStage)
-//	{
-//	    this.mcsNumberAndStage = numStage;
-//	}
-//	
-//	public synchronized String getPermitsEval()
-//	{
-//		return permitsEval;
-//	}
-//	
-//	public synchronized void setPermitsEval(String permit)
-//	{
-//	    this.permitsEval = permit;
-//	}
-//	
-//	public synchronized String getHVAC()
-//	{
-//		return hvac;
-//	}
-//	
-//	public synchronized void setHVAC(String hva)
-//	{
-//	    this.hvac = hva;
-//	}
-//	
-//	public synchronized String getRefrigeration()
-//	{
-//		return refrigeration;
-//	}
-//	
-//	public synchronized void setRefrigeration(String refrig)
-//	{
-//	    this.refrigeration = refrig;
-//	}
-//	
-//	public synchronized String getPermitsTBD()
-//	{
-//		return permitsTBD;
-//	}
-//	
-//	public synchronized void setPermitsTBD(String permTbd)
-//	{
-//	    this.permitsTBD = permTbd;
-//	}
-//	
-//	public synchronized String getStageAndStatus()
-//	{
-//		return stageAndStatus;
-//	}
-//	
-//	public synchronized void setStageAndStatus(String stageStatus)
-//	{
-//	    this.stageAndStatus = stageStatus;
-//	}
-//	
-//	public synchronized String getProject()
-//	{
-//		return project;
-//	}
-//	
-//	public synchronized void setProject(String proj)
-//	{
-//	    this.project = proj;
-//	}
+	public synchronized String getMcsNumAndStage()
+	{
+		return mcsNumberAndStage;
+	}
+	
+	public synchronized void setMcsNumAndStage(String numStage)
+	{
+	    this.mcsNumberAndStage = numStage;
+	}
+	
+	public synchronized String getPermitsEval()
+	{
+		return permitsEval;
+	}
+	
+	public synchronized void setPermitsEval(String permit)
+	{
+	    this.permitsEval = permit;
+	}
+	
+	public synchronized String getHVAC()
+	{
+		return hvac;
+	}
+	
+	public synchronized void setHVAC(String hva)
+	{
+	    this.hvac = hva;
+	}
+	
+	public synchronized String getRefrigeration()
+	{
+		return refrigeration;
+	}
+	
+	public synchronized void setRefrigeration(String refrig)
+	{
+	    this.refrigeration = refrig;
+	}
+	
+	public synchronized String getPermitsTBD()
+	{
+		return permitsTBD;
+	}
+	
+	public synchronized void setPermitsTBD(String permTbd)
+	{
+	    this.permitsTBD = permTbd;
+	}
+	
+	public synchronized String getStageAndStatus()
+	{
+		return stageAndStatus;
+	}
+	
+	public synchronized void setStageAndStatus(String stageStatus)
+	{
+	    this.stageAndStatus = stageStatus;
+	}
+	
+	public synchronized String getProject()
+	{
+		return project;
+	}
+	
+	public synchronized void setProject(String proj)
+	{
+	    this.project = proj;
+	}
 	
 	
 	public static Date getSchedulingFields(String name , Project project)
