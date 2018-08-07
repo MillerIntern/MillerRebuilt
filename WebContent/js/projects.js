@@ -4260,6 +4260,7 @@ function getProject_SCORECARD(edit)
 				//getTheProjects();
 				
 				PROJECT_DATA = data;
+				projectID = data.id;
 				console.log("proj data", data);
 				setProjectHeader(data, currentDivLocation);
 				fillProjectDetails(data);
@@ -4327,6 +4328,7 @@ function fillProjectDetails(data)
 let RULES;
 let FAILED_RULES;
 let RULE_DATA;
+let SCORE;
 
 let LOW_COLOR = "rgb(0, 255, 0)";
 let MEDIUM_COLOR = "rgb(255, 255, 0)";
@@ -4344,8 +4346,9 @@ function reevaluateProject(project_id) {
 				'action': 'evaluateProject',
 				'projectId': project_id
 			}, success: function (data) {
+				
 				console.log("DAT" , data);
-			
+				RULES = data.applicableRules;
 				prepareScorecardForDisplay(data);
 				saveEvaluatedRules();
 				
@@ -4403,20 +4406,59 @@ function saveEvaluatedRules()
 			
 			console.log(data);
 			projectID = data.responseJSON;	
-			alert('Save Complete!');	
+			alert("Scorecard Updated");
 		}
-	})
+	});
 }
 
 function fillScorecard()
 {
 	console.log(PROJECT_DATA);
+	
+	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
+    var permits = PROJECT_DATA.permitsEval;
+    var hvac = PROJECT_DATA.hvac;
+    var refrigeration = PROJECT_DATA.refrigeration;
+    var permitsTBD = PROJECT_DATA.refrigeration;
+    var stageAndStatus = PROJECT_DATA.refrigeration;
+    var project = PROJECT_DATA.project;
+    
+    var action = 'getRules';
+	
+    var scores = [mcsNumAndStage, permits, hvac, refrigeration, permitsTBD, stageAndStatus, project];
+    console.log("scores", scores);
+    
+    
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': action,
+			'projectId': projectID
+    
+		}, complete: function (data) {
+			
+			SCORE = JSON.parse(data.responseText);
+			console.log("getRules", SCORE);
+			
+			for(var i = 0; i < scores.length; i++)
+			{
+				console.log(scores[i]);
+				SCORE[i].passed = scores[i];
+			}
+			console.log(SCORE);
+			prepareScorecardForDisplay(SCORE);
+			 
+		}
+	});
+	   
 }
 
 function prepareScorecardForDisplay(data)
 {
-	var rules = data.applicableRules;
-	RULES = data.applicableRules;
+	var rules = data;
+	RULES = data;
 	console.log("PRM" , data);
 	for(var rule in data)
 	{
@@ -4429,13 +4471,13 @@ function prepareScorecardForDisplay(data)
 			{
 				if(data[rule].passed != undefined)
 					RULES[i].passed = data[rule].passed;
-				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
-				{
-					if(evaluateSetResults(data[rule]) == true)
-						RULES[i].passed = "true";
-					else
-						RULES[i].passed = "false";
-				}
+//				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
+//				{
+//					if(evaluateSetResults(data[rule]) == true)
+//						RULES[i].passed = "true";
+//					else
+//						RULES[i].passed = "false";
+//				}
 
 					
 			}
@@ -4469,6 +4511,8 @@ function prepareScorecardForDisplay(data)
 
 	
 }
+
+
 
 function evaluateSetResults(data)
 {
@@ -4578,7 +4622,7 @@ function getWorstRuleResult(data , rules , domain)
 		if(rules[i].domain != domain)
 			continue;
 		
-		if(data[rules[i].title].passed == undefined)
+		if(rules[i].passed == undefined)
 		{
 			return getWorstSetResult(data , rules , domain);
 		}	
@@ -4611,13 +4655,13 @@ function getWorstSetResult(data , rules , domain)
 		if(rules[i].domain != domain)
 			continue;
 		
-		if(data[rules[i].title].taskResults)
+		if(rules[i].taskResults)
 		{
 			console.log("IN TASK");
-			for(var task in data[rules[i].title].taskResults)
+			for(var task in rules[i].taskResults)
 			{
 				console.log("IN TASK" , task);
-				if(data[rules[i].title].taskResults[task].passed == "false")
+				if(rules[i].taskResults[task].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
@@ -4631,11 +4675,11 @@ function getWorstSetResult(data , rules , domain)
 			}
 		}
 		
-		if(data[rules[i].title].changeOrderResults)
+		if(rules[i].changeOrderResults)
 		{
-			for(var changeOrder in data[rules[i].title].changeOrderResults)
+			for(var changeOrder in rules[i].changeOrderResults)
 			{
-				if(data[rules[i].title].changeOrderResults[changeOrder].passed == "false")
+				if(rules[i].changeOrderResults[changeOrder].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
@@ -4649,11 +4693,11 @@ function getWorstSetResult(data , rules , domain)
 			}
 		}
 		
-		if(data[rules[i].title].equipmentResults)
+		if(rules[i].equipmentResults)
 		{
-			for(var equipment in data[rules[i].title].equipmentResults)
+			for(var equipment in rules[i].equipmentResults)
 			{
-				if(data[rules[i].title].equipmentResults[equipment].passed == "false")
+				if(rules[i].equipmentResults[equipment].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;

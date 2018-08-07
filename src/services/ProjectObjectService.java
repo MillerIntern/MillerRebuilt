@@ -179,8 +179,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("mediumScore"));
 				projectionList.add(Projections.property("highScore"));
 				projectionList.add(Projections.property("scoreLastUpdated"));
-//				projectionList.add(Projections.property("domain"));
-//				projectionList.add(Projections.property("severity"));
+
 
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 

@@ -838,6 +838,35 @@ public class Project extends HttpServlet
 			response = gson.toJson(result);
 			
 		}
+		else if(action.equals("getRules"))
+		{
+			List<ProjectRule> rules = ProjectObjectService.getAllRules();
+			projectObjects.Project project = null;
+			try 
+			{
+			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("projectId")), "Project");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			List<ProjectRule> applicableRules = new ArrayList<ProjectRule>();
+			for(ProjectRule rule : rules)
+			{
+				if(rule.getProjectClass() == null || rule.getProjectClass().getName().equalsIgnoreCase(project.getProjectClass().getName()))
+					applicableRules.add(rule);
+			}
+			
+			Map<String , Object> result = new HashMap<String, Object>();
+			result.put("applicableRules", applicableRules);
+			
+			
+			Gson gson = new Gson();
+			response = gson.toJson(rules);
+			System.out.println(response);
+			
+		}
 //		else if(action.equals("TESTevaluateProject"))
 //		{
 //			ProjectRule rule = new ProjectRule(RuleDomain.Tasks , null , null , RuleResult.TASK_ONTIME , RuleSeverity.MEDIUM , 

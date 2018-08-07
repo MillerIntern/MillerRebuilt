@@ -854,6 +854,9 @@ public class ProjectRuleService
 		
 	}
 	
+	
+	
+	
 //	public static Map<String , Object> EvaluateProjectTasks(ProjectRule rule , Project project)
 //	{
 //		if(rule == null || project == null)
