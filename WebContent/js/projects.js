@@ -4279,7 +4279,6 @@ function clearProjectDetailsTable(){
 }
 
 
-
 function fillProjectDetails(data)
 {
 	console.log("fill Proj details");
@@ -4331,9 +4330,10 @@ let FAILED_RULES;
 let RULE_DATA;
 let SCORE;
 
-let LOW_COLOR = "rgb(0, 255, 0)";
-let MEDIUM_COLOR = "rgb(255, 255, 0)";
-let HIGH_COLOR = "rgb(255, 92, 51)";
+let LOW_COLOR = "rgb(255, 255, 0)";
+let MEDIUM_COLOR = "rgb(255, 161, 0)";
+let HIGH_COLOR = "rgb(255, 51, 15)";
+let PASSED_COLOR = "rgb(0, 240, 0)";
 
 let NO_COLOR = "rgb(255, 255, 255)";
 
@@ -4618,12 +4618,18 @@ function prepareScorecardUpdate(data)
 	
 		
 	$('#scorecardUpperDiv').find('ul').find('li').each(function(index) {
-		$(this).css("background-color" , NO_COLOR );
+		$(this).css("background-color" , PASSED_COLOR );
 		$(this).click(function(event) {
-			if($(this).css("background-color") == NO_COLOR)
-				return;
-			displayScoresUpdate(this.id.replace("Item" , ""));
-			setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			if($(this).css("background-color") == PASSED_COLOR)
+			{
+				displayScoresPassed(this.id.replace("Item", ""));
+				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			}
+			else
+			{	
+				displayScoresUpdate(this.id.replace("Item" , ""));
+				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			}
 		});
 		
 		var worst = getWorstScoreUpdate(data , rules , this.id.replace("Item" , ""));
@@ -4674,12 +4680,18 @@ function prepareScorecardView(data)
 	
 		
 	$('#scorecardUpperDiv').find('ul').find('li').each(function(index) {
-		$(this).css("background-color" , NO_COLOR );
+		$(this).css("background-color" , PASSED_COLOR );
 		$(this).click(function(event) {
-			if($(this).css("background-color") == NO_COLOR)
-				return;
-			displayScoresView(this.id.replace("Item" , ""));
-			setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			if($(this).css("background-color") == PASSED_COLOR)
+			{	
+				displayScoresPassedView(this.id.replace("Item", ""));
+				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			}
+			else
+			{	
+				displayScoresView(this.id.replace("Item" , ""));
+				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+			}
 		});
 		
 		var worst = getWorstScoreView(data , scores , this.id.replace("Item" , ""));
@@ -4696,6 +4708,25 @@ function prepareScorecardView(data)
 				break;	 
 		}
 	});
+	
+}
+
+function fillScoreTablePassed(domain)
+{
+	console.log("fillPassedView" , domain);
+	
+	$('#failedRulesTable').find('tbody').find('tr').remove();
+		
+	var tr = document.createElement('tr');
+	var action = document.createElement('td');
+	
+	action.innerHTML = "No discrepancies to display";
+	
+	$(tr).append(action);
+	
+	$(tr).css("background-color" , PASSED_COLOR);
+	
+	$('#failedRulesTable').find('tbody').append(tr);		
 	
 }
 
@@ -4779,6 +4810,25 @@ function displayScoresView(domain)
 	fillScoreTableView(domain);
 }
 
+function displayScoresPassed(domain)
+{
+	console.log("Scores" , SCORE);
+	$('#scorecardUpperDiv').hide();
+	$('#failedRulesDiv').show();
+	
+	var header = domain;
+	if(domain == "PermitsAndInspections")
+		header = "Permits/Inspections";
+	if(domain == "ChangeOrders")
+		header = "Change Orders";
+	if(domain == "GeneralInfo")
+		header = "General Information";
+	
+	$('#failedRulesHeader').find('span').html(header);
+	
+	fillScoreTablePassed(domain);
+}
+
 function fillScoreTableUpdate(domain)
 {
 	console.log("RULES" , RULES , domain);
@@ -4797,13 +4847,10 @@ function fillScoreTableUpdate(domain)
 		
 		
 		var tr = document.createElement('tr');
-		var title = document.createElement('td');
 		var action = document.createElement('td');
 		
-		title.innerHTML = RULES[i].title;
 		action.innerHTML = RULES[i].failMessage;
 		
-		$(tr).append(title);
 		$(tr).append(action);
 		
 		if(RULES[i].severity == "HIGH")
@@ -4835,13 +4882,10 @@ function fillScoreTableView(domain)
 		
 		
 		var tr = document.createElement('tr');
-		var title = document.createElement('td');
 		var action = document.createElement('td');
 		
-		title.innerHTML = SCORE[i].title;
 		action.innerHTML = SCORE[i].failMessage;
 		
-		$(tr).append(title);
 		$(tr).append(action);
 		
 		if(SCORE[i].severity == "HIGH")
