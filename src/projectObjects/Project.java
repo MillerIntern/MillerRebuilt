@@ -117,6 +117,28 @@ public class Project extends ProjectObject
 	private String permitsTBD;
 	private String stageAndStatus;
 	private String project;
+	private String lateProposal;
+	private String lateBudgetary;
+	private String lateTurnover;
+	private String emptyInitiation;
+	private String earlierSchedTurnover;
+	private String emptyCost;
+	private String emptyCustNum;
+	private String actualAndShouldInvoice;
+	private String zeroShouldInvoice;
+	private String zeroActualInvoice;
+	private String earlierSiteSurvey;
+	private String earlierDueDate;
+	private String buildingReq;
+	private String ceilingReq;
+	private String mechanicalReq;
+	private String electricalReq;
+	private String plumbingReq;
+	private String buildingPermitReqTBD;
+	private String gasReq;
+	private String sprinklerReq;
+	private String fireAlarmReq;
+	private String lowVoltageReq;
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
@@ -129,7 +151,12 @@ public class Project extends ProjectObject
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
             String autofill_Permits, int _low, int _med, int _high, Date _scoreLast, String numAndStage, String permEval,
-            String _hvac, String refrig, String permitsTbd, String stageStatus, String proj)
+            String _hvac, String refrig, String permitsTbd, String stageStatus, String proj, String _lateProposal, 
+            String _lateBudgetary, String _lateTurnover, String _emptyInitiation, String _earlierSchedTurnover,
+            String _emptyCost, String _emptyCustNum, String _actualAndShouldInvoice, String _zeroShouldInvoice,
+            String _zeroActualInvoice, String _earlierSiteSurvey, String _earlierDueDate, String _buildingReq,
+            String _ceilingReq, String _mechanicalReq, String _electricalReq, String _plumbingReq, String _buildingPermitReqTBD,
+            String _gasReq, String _sprinklerReq, String _fireAlarmReq,  String _lowVoltageReq)
 
 	{		
 		this.warehouse = warehouse;
@@ -178,6 +205,28 @@ public class Project extends ProjectObject
 		this.permitsTBD = permitsTbd;
 		this.stageAndStatus = stageStatus;
 		this.project = proj;
+		this.lateProposal = _lateProposal;
+		this.lateBudgetary = _lateBudgetary;
+		this.lateTurnover = _lateTurnover;
+		this.emptyInitiation = _emptyInitiation;
+		this.earlierSchedTurnover = _earlierSchedTurnover;
+		this.emptyCost = _emptyCost;
+		this.emptyCustNum = _emptyCustNum;
+		this.actualAndShouldInvoice = _actualAndShouldInvoice;
+		this.zeroShouldInvoice = _zeroShouldInvoice;
+		this.zeroActualInvoice = _zeroActualInvoice;
+		this.earlierSiteSurvey = _earlierSiteSurvey;
+		this.earlierDueDate = _earlierDueDate;
+		this.buildingReq = _buildingReq;
+		this.ceilingReq = _ceilingReq;
+		this.mechanicalReq = _mechanicalReq;
+		this.electricalReq = _electricalReq;
+		this.plumbingReq = _plumbingReq;
+		this.buildingPermitReqTBD = _buildingPermitReqTBD;
+		this.gasReq = _gasReq;
+		this.sprinklerReq = _sprinklerReq;
+		this.fireAlarmReq = _fireAlarmReq;
+		this.lowVoltageReq = _lowVoltageReq;
 
 	}
 	
@@ -232,6 +281,28 @@ public class Project extends ProjectObject
 		this.permitsTBD = null;
 		this.stageAndStatus = null;
 		this.project = null;
+		this.lateProposal = null;
+		this.lateBudgetary = null;
+		this.lateTurnover = null;
+		this.emptyInitiation = null;
+		this.earlierSchedTurnover = null;
+		this.emptyCost = null;
+		this.emptyCustNum = null;
+		this.actualAndShouldInvoice = null;
+		this.zeroShouldInvoice = null;
+		this.zeroActualInvoice = null;
+		this.earlierSiteSurvey = null;
+		this.earlierDueDate = null;
+		this.buildingReq = null;
+		this.ceilingReq = null;
+		this.mechanicalReq = null;
+		this.electricalReq = null;
+		this.plumbingReq = null;
+		this.buildingPermitReqTBD = null;
+		this.gasReq = null;
+		this.sprinklerReq = null;
+		this.fireAlarmReq = null;
+		this.lowVoltageReq = null;
 
 	}
 
@@ -712,6 +783,226 @@ public class Project extends ProjectObject
 	public synchronized void setProject(String proj)
 	{
 	    this.project = proj;
+	}
+	
+	public synchronized String getLateProposal()
+	{
+		return lateProposal;
+	}
+	
+	public synchronized void setLateProposal(String prop)
+	{
+	    this.lateProposal = prop;
+	}
+	
+	public synchronized String getLateBudgetary()
+	{
+		return lateBudgetary;
+	}
+	
+	public synchronized void setLateBudgetary(String bud)
+	{
+	    this.lateBudgetary = bud;
+	}
+	
+	public synchronized String getLateTurnover()
+	{
+		return lateTurnover;
+	}
+	
+	public synchronized void setLateTurnover(String turn)
+	{
+	    this.lateTurnover = turn;
+	}
+	
+	public synchronized String getEmptyInitiation()
+	{
+		return emptyInitiation;
+	}
+	
+	public synchronized void setEmptyInitiation(String init)
+	{
+	    this.emptyInitiation = init;
+	}
+	
+	public synchronized String getEarlierSchedTurnover()
+	{
+		return earlierSchedTurnover;
+	}
+	
+	public synchronized void setEarlierSchedTurnover(String sched)
+	{
+	    this.earlierSchedTurnover = sched;
+	}
+	
+	public synchronized String getEmptyCost()
+	{
+		return emptyCost;
+	}
+	
+	public synchronized void setEmptyCost(String cost)
+	{
+	    this.emptyCost = cost;
+	}
+	
+	public synchronized String getEmptyCustNum()
+	{
+		return emptyCustNum;
+	}
+	
+	public synchronized void setEmptyCustNum(String num)
+	{
+	    this.emptyCustNum = num;
+	}
+	
+	public synchronized String getActualAndShouldInv()
+	{
+		return actualAndShouldInvoice;
+	}
+	
+	public synchronized void setActualAndShouldInv(String inv)
+	{
+	    this.actualAndShouldInvoice = inv;
+	}
+	
+	public synchronized String getZeroShouldInv()
+	{
+		return zeroShouldInvoice;
+	}
+	
+	public synchronized void setZeroShouldInv(String inv)
+	{
+	    this.zeroShouldInvoice = inv;
+	}
+	
+	public synchronized String getZeroActualInv()
+	{
+		return zeroActualInvoice;
+	}
+	
+	public synchronized void setZeroActualInv(String inv)
+	{
+	    this.zeroActualInvoice = inv;
+	}
+	
+	public synchronized String getEarlierSiteSurvey()
+	{
+		return earlierSiteSurvey;
+	}
+	
+	public synchronized void setEarlierSiteSurvey(String surv)
+	{
+	    this.earlierSiteSurvey = surv;
+	}
+	
+	public synchronized String getEarlierDueDate()
+	{
+		return earlierDueDate;
+	}
+	
+	public synchronized void setEarlierDueDate(String date)
+	{
+	    this.earlierDueDate = date;
+	}
+	
+	public synchronized String getBuildingRequired()
+	{
+		return buildingReq;
+	}
+	
+	public synchronized void setBuildingRequired(String req)
+	{
+	    this.buildingReq = req;
+	}
+	
+	public synchronized String getCeilingRequired()
+	{
+		return ceilingReq;
+	}
+	
+	public synchronized void setCeilingRequired(String req)
+	{
+	    this.ceilingReq = req;
+	}
+	
+	public synchronized String getMechanicalRequired()
+	{
+		return mechanicalReq;
+	}
+	
+	public synchronized void setMechanicalRequired(String req)
+	{
+	    this.mechanicalReq = req;
+	}
+	
+	public synchronized String getElectricalReq()
+	{
+		return electricalReq;
+	}
+	
+	public synchronized void setElectricalReq(String req)
+	{
+	    this.electricalReq = req;
+	}
+	
+	public synchronized String getPlumbingReq()
+	{
+		return plumbingReq;
+	}
+	
+	public synchronized void setPlumbingReq(String req)
+	{
+	    this.plumbingReq = req;
+	}
+	
+	public synchronized String getBuildingPermitReqTBD()
+	{
+		return buildingPermitReqTBD;
+	}
+	
+	public synchronized void setBuildingPermitReqTBD(String tbd)
+	{
+	    this.buildingPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getGasReq()
+	{
+		return gasReq;
+	}
+	
+	public synchronized void setGasReq(String req)
+	{
+	    this.gasReq = req;
+	}
+	
+	public synchronized String getSprinklerReq()
+	{
+		return sprinklerReq;
+	}
+	
+	public synchronized void setSprinklerReq(String req)
+	{
+	    this.sprinklerReq = req;
+	}
+	
+	public synchronized String getFireAlarmReq()
+	{
+		return fireAlarmReq;
+	}
+	
+	public synchronized void setFireAlarmReq(String req)
+	{
+	    this.fireAlarmReq = req;
+	}
+	
+	public synchronized String getLowVoltageReq()
+	{
+		return lowVoltageReq;
+	}
+	
+	public synchronized void setLowVoltageReq(String req)
+	{
+	    this.lowVoltageReq = req;
 	}
 	
 	

@@ -4234,6 +4234,7 @@ function editScorecard (source_id)
 {
 	document.getElementById("projectManager").style.display = 'none';
 	currentDivLocation = "scorecardData";
+	setProjectHeader(PROJECT_DATA, 'scorecardData');
 	document.getElementById("scorecardData").style.display = 'inline';
 }
 
@@ -4348,9 +4349,9 @@ function reevaluateProject(project_id) {
 			}, success: function (data) {
 				
 				console.log("DAT" , data);
-				RULES = data.applicableRules;
-				prepareScorecardForDisplay(data);
+				prepareScorecardUpdate(data);
 				saveEvaluatedRules();
+				
 				
 			}, error: function (data) {
 				alert('Server Error!');
@@ -4376,58 +4377,94 @@ function saveEvaluatedRules()
 	var permitsTBD = RULES[4].passed;
 	var stageAndStatus = RULES[5].passed;
 	var project = RULES[6].passed;
+	var lateProposal = RULES[7].passed;
+	var lateBudgetary = RULES[8].passed;
+	var lateTurnover = RULES[9].passed;
+	var emptyInitiation = RULES[10].passed;
+	var earlierSchedTurnover = RULES[11].passed;
+	var emptyCost = RULES[12].passed;
+	var emptyCustNum = RULES[13].passed;
+	var actualAndShouldInvoice = RULES[14].passed;
+	var zeroShouldInvoice = RULES[15].passed;
+	var zeroActualInvoice = RULES[16].passed;
+	var earlierSiteSurvey = RULES[17].passed;
+	var earlierDueDate = RULES[18].passed;
+	var buildingReq = RULES[19].passed;
+	var ceilingReq = RULES[20].passed;
+	var mechanicalReq = RULES[21].passed;
+	var electricalReq = RULES[22].passed;
+	var plumbingReq = RULES[23].passed;
+	var buildingPermitReqTBD = RULES[24].passed;
+	var gasReq = RULES[25].passed;
+	var sprinklerReq = RULES[26].passed;
+	var fireAlarmReq = RULES[27].passed;
+	var lowVoltageReq = RULES[28].passed;
 	
 	if(!projectID)
 	{
 		alert("Server Error! (Project ID)");
 		return;
 	}
-
+	
+	var domain = 'project';
 	var action = 'saveEvalRules';
 	
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
 		data: {
-			'domain': 'project',
+			'domain': domain,
 			'action': action,
 			'projectID': projectID,
 			
-			'McsNumberAndStage': numAndStage,
-			'Permits': permits,
-			'Hvac': hvac,
-			'Refrigeration': refrigeration,
-			'PermitsTBD': permitsTBD,
-			'StageAndStatus': stageAndStatus,
-			'Project': project
-	        
-	        
-		}, complete: function (data) {
+			'mcsNumberAndStage': numAndStage,
+			'permits': permits,
+			'hvac': hvac,
+			'refrigeration': refrigeration,
+			'permitsTBD': permitsTBD,
+			'stageAndStatus': stageAndStatus,
+			'project': project,
+			
+			'lateProposal': lateProposal,
+		    'lateBudgetary': lateBudgetary,
+			'lateTurnover': lateTurnover,
+			'emptyInitiation': emptyInitiation,
+			'earlierScheduledTurnover': earlierSchedTurnover,
+			'earlierSiteSurvey': earlierSiteSurvey,
+			
+			'emptyCost': emptyCost,
+			'emptyCustomerNumber': emptyCustNum,
+			'actualAndShouldInvoice': actualAndShouldInvoice,
+			'zeroShouldInvoice': zeroShouldInvoice,
+			'zeroActualInvoice': zeroActualInvoice,
+
+//			'earlierDueDate': earlierDueDate,
+			
+			'buildingRequired': buildingReq,
+			'ceilingRequired': ceilingReq,
+			'mechanicalRequired': mechanicalReq,
+			'electricalRequired': electricalReq,
+			'plumbingRequired': plumbingReq,
+			'buildingPermitReqTBD': buildingPermitReqTBD,
+			'gasRequired': gasReq,
+			'sprinklerRequired': sprinklerReq,
+			'fireAlarmRequired': fireAlarmReq,
+			'lowVoltageRequired': lowVoltageReq
+			
+		},
+		complete: function (data) {
 			
 			console.log(data);
 			projectID = data.responseJSON;	
 			alert("Scorecard Updated");
+			editScorecard(this.id);
 		}
 	});
 }
 
 function fillScorecard()
 {
-	console.log(PROJECT_DATA);
-	
-	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
-    var permits = PROJECT_DATA.permitsEval;
-    var hvac = PROJECT_DATA.hvac;
-    var refrigeration = PROJECT_DATA.refrigeration;
-    var permitsTBD = PROJECT_DATA.refrigeration;
-    var stageAndStatus = PROJECT_DATA.refrigeration;
-    var project = PROJECT_DATA.project;
-    
     var action = 'getRules';
-	
-    var scores = [mcsNumAndStage, permits, hvac, refrigeration, permitsTBD, stageAndStatus, project];
-    console.log("scores", scores);
-    
     
 	$.ajax({
 		type: 'POST',
@@ -4441,25 +4478,120 @@ function fillScorecard()
 			
 			SCORE = JSON.parse(data.responseText);
 			console.log("getRules", SCORE);
-			
-			for(var i = 0; i < scores.length; i++)
-			{
-				console.log(scores[i]);
-				SCORE[i].passed = scores[i];
-			}
-			console.log(SCORE);
-			prepareScorecardForDisplay(SCORE);
+			adjustScore(SCORE);
 			 
 		}
 	});
 	   
 }
 
-function prepareScorecardForDisplay(data)
+function adjustScore(data)
 {
-	var rules = data;
-	RULES = data;
-	console.log("PRM" , data);
+	console.log("adjustScore", PROJECT_DATA);
+	 
+	
+	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
+    var permits = PROJECT_DATA.permitsEval;
+    var hvac = PROJECT_DATA.hvac;
+    var refrigeration = PROJECT_DATA.refrigeration;
+    var permitsTBD = PROJECT_DATA.permitsTBD;
+    var stageAndStatus = PROJECT_DATA.stageAndStatus;
+    var project = PROJECT_DATA.project;
+    
+    var lateProposal = PROJECT_DATA.lateProposal;
+    var lateBudgetary = PROJECT_DATA.lateBudgetary;
+    var lateTurnover = PROJECT_DATA.lateTurnover;
+    var emptyInitiation = PROJECT_DATA.emptyInitiation;
+    var earlierSchedTurnover = PROJECT_DATA.earlierSchedTurnover;
+    var emptyCost = PROJECT_DATA.emptyCost;
+	var emptyCustNum = PROJECT_DATA.emptyCustNum;
+	var actualAndShouldInvoice = PROJECT_DATA.actualAndShouldInvoice;
+    var zeroShouldInvoice = PROJECT_DATA.zeroShouldInvoice;
+    var zeroActualInvoice = PROJECT_DATA.zeroActualInvoice;
+    var earlierSiteSurvey = PROJECT_DATA.earlierSiteSurvey;
+    var earlierDueDate = PROJECT_DATA.earlierDueDate;
+    var buildingRequired = PROJECT_DATA.buildingReq;
+    var ceilingRequired = PROJECT_DATA.ceilingReq;
+    var mechanicalRequired = PROJECT_DATA.mechanicalReq;
+    var electricalRequired = PROJECT_DATA.electricalReq;
+    var plumbingRequired = PROJECT_DATA.plumbingReq;
+    var buildingPermitReqTBD = PROJECT_DATA.buildingPermitReqTBD;
+    var gasRequired = PROJECT_DATA.gasReq;
+    var sprinklerRequired = PROJECT_DATA.sprinklerReq;
+    var fireAlarmRequired = PROJECT_DATA.fireAlarmReq;
+    var lowVoltageRequired = PROJECT_DATA.lowVoltageReq;
+	
+	SCORE.McsNumberAndStage.passed = mcsNumAndStage;
+	SCORE.Permits.passed = permits;
+	SCORE.HVAC.passed = hvac;
+	SCORE.Refrigeration.passed = refrigeration;
+	SCORE.PermitsTBD.passed = permitsTBD;
+	SCORE.StageAndStatus.passed = stageAndStatus;
+	SCORE.Project.passed = project;
+	SCORE.LateProposal.passed = lateProposal;
+	SCORE.LateBudgetary.passed = lateBudgetary;
+	SCORE.LateTurnover.passed = lateTurnover;
+	SCORE.EmptyInitiation.passed = emptyInitiation;
+	SCORE.EarlierScheduledTurnover.passed = earlierSchedTurnover;
+	SCORE.EmptyCost.passed = emptyCost;
+	SCORE.EmptyCustomerNumber.passed = emptyCustNum;
+	SCORE.ActualAndShouldInvoice.passed = actualAndShouldInvoice;
+	SCORE.ZeroShouldInvoice.passed = zeroShouldInvoice;
+	SCORE.ZeroActualInvoice.passed = zeroActualInvoice;
+	SCORE.EarlierSiteSurvey.passed = earlierSiteSurvey;
+//	SCORE.EarlierDueDate.passed = earlierDueDate;
+	SCORE.EarlierDueDate.passed = "true";
+	SCORE.BuildingRequired.passed = buildingRequired;
+	SCORE.CeilingRequired.passed = ceilingRequired;
+	SCORE.MechanicalRequired.passed = mechanicalRequired;
+	SCORE.ElectricalRequired.passed = electricalRequired;
+	SCORE.PlumbingRequired.passed = plumbingRequired;
+	SCORE.BuildingPermitReqTBD.passed = buildingPermitReqTBD;
+	SCORE.GasRequired.passed = gasRequired;
+	SCORE.SprinklerRequired.passed = sprinklerRequired;
+	SCORE.FireAlarmRequired.passed = fireAlarmRequired;
+	SCORE.LowVoltageRequired.passed = lowVoltageRequired;
+	
+	SCORE.applicableRules[0].passed = mcsNumAndStage;
+	SCORE.applicableRules[1].passed = permits;
+	SCORE.applicableRules[2].passed = hvac;
+	SCORE.applicableRules[3].passed = refrigeration;
+	SCORE.applicableRules[4].passed = permitsTBD;
+	SCORE.applicableRules[5].passed = stageAndStatus;
+	SCORE.applicableRules[6].passed = project;
+	SCORE.applicableRules[7].passed = lateProposal;
+	SCORE.applicableRules[8].passed = lateBudgetary;
+	SCORE.applicableRules[9].passed = lateTurnover;
+	SCORE.applicableRules[10].passed = emptyInitiation;
+	SCORE.applicableRules[11].passed = earlierSchedTurnover;
+	SCORE.applicableRules[12].passed = emptyCost;
+	SCORE.applicableRules[13].passed = emptyCustNum;
+	SCORE.applicableRules[14].passed = actualAndShouldInvoice;
+	SCORE.applicableRules[15].passed = zeroShouldInvoice;
+	SCORE.applicableRules[16].passed = zeroActualInvoice;
+	SCORE.applicableRules[17].passed = earlierSiteSurvey;
+	SCORE.applicableRules[18].passed = "true";
+	SCORE.applicableRules[19].passed = buildingRequired;
+	SCORE.applicableRules[20].passed = ceilingRequired;
+	SCORE.applicableRules[21].passed = mechanicalRequired;
+	SCORE.applicableRules[22].passed = electricalRequired;
+	SCORE.applicableRules[23].passed = plumbingRequired;
+	SCORE.applicableRules[24].passed = buildingPermitReqTBD;
+	SCORE.applicableRules[25].passed = gasRequired;
+	SCORE.applicableRules[26].passed = sprinklerRequired;
+	SCORE.applicableRules[27].passed = fireAlarmRequired;
+	SCORE.applicableRules[28].passed = lowVoltageRequired;
+	
+	
+	console.log("add Passed", SCORE);
+	prepareScorecardView(SCORE);
+}
+
+function prepareScorecardUpdate(data)
+{
+	var rules = data.applicableRules;
+	RULES = data.applicableRules;
+	console.log("PSU" , data);
 	for(var rule in data)
 	{
 		if(rule == "PROJECT" || rule == "applicableRules")
@@ -4471,13 +4603,13 @@ function prepareScorecardForDisplay(data)
 			{
 				if(data[rule].passed != undefined)
 					RULES[i].passed = data[rule].passed;
-//				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
-//				{
-//					if(evaluateSetResults(data[rule]) == true)
-//						RULES[i].passed = "true";
-//					else
-//						RULES[i].passed = "false";
-//				}
+				else if(data[rule].taskResults || data[rule].equipmentResult || data[rule].changeOrderResults)
+				{
+					if(evaluateSetResults(data[rule]) == true)
+						RULES[i].passed = "true";
+					else
+						RULES[i].passed = "false";
+				}
 
 					
 			}
@@ -4490,11 +4622,11 @@ function prepareScorecardForDisplay(data)
 		$(this).click(function(event) {
 			if($(this).css("background-color") == NO_COLOR)
 				return;
-			displayFailedRules(this.id.replace("Item" , ""));
+			displayScoresUpdate(this.id.replace("Item" , ""));
 			setProjectHeader(PROJECT_DATA, "failedRulesDiv");
 		});
 		
-		var worst = getWorstRuleResult(data , rules , this.id.replace("Item" , ""));
+		var worst = getWorstScoreUpdate(data , rules , this.id.replace("Item" , ""));
 		switch(worst)
 		{
 			case "LOW":
@@ -4508,10 +4640,64 @@ function prepareScorecardForDisplay(data)
 				break;	 
 		}
 	});
-
-	
 }
 
+
+function prepareScorecardView(data)
+{
+	var scores = data.applicableRules;
+	SCORE = data.applicableRules;
+	console.log("PSV" , data);
+	for(var score in data)
+	{
+		if(score == "PROJECT" || score == "applicableRules")
+			continue;
+		
+		for(var i = 0; i < SCORE.length; i++)
+		{
+			if(SCORE[i].id == data[score].RULE_ID) 
+			{
+				if(data[score].passed != undefined)
+					SCORE[i].passed = data[score].passed;
+				else if(data[score].taskResults || data[score].equipmentResult || data[score].changeOrderResults)
+				{
+					if(evaluateSetResults(data[score]) == true)
+						SCORE[i].passed = "true";
+					else
+						SCORE[i].passed = "false";
+				}
+
+					
+			}
+		}	
+	}
+	
+		
+	$('#scorecardUpperDiv').find('ul').find('li').each(function(index) {
+		$(this).css("background-color" , NO_COLOR );
+		$(this).click(function(event) {
+			if($(this).css("background-color") == NO_COLOR)
+				return;
+			displayScoresView(this.id.replace("Item" , ""));
+			setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+		});
+		
+		var worst = getWorstScoreView(data , scores , this.id.replace("Item" , ""));
+		switch(worst)
+		{
+			case "LOW":
+				$(this).css("background-color" , LOW_COLOR);
+				break;
+			case "MEDIUM":
+				$(this).css("background-color" , MEDIUM_COLOR);
+				break;
+			case "HIGH":
+				$(this).css("background-color" , HIGH_COLOR);
+				break;	 
+		}
+	});
+	
+}
 
 
 function evaluateSetResults(data)
@@ -4555,7 +4741,7 @@ function evaluateSetResults(data)
 	return true;
 }
 
-function displayFailedRules(domain)
+function displayScoresUpdate(domain)
 {
 	console.log("RULEZZ" , RULES);
 	$('#scorecardUpperDiv').hide();
@@ -4571,10 +4757,29 @@ function displayFailedRules(domain)
 	
 	$('#failedRulesHeader').find('span').html(header);
 	
-	fillFailedRulesTable(domain);
+	fillScoreTableUpdate(domain);
 }
 
-function fillFailedRulesTable(domain)
+function displayScoresView(domain)
+{
+	console.log("Scores" , SCORE);
+	$('#scorecardUpperDiv').hide();
+	$('#failedRulesDiv').show();
+	
+	var header = domain;
+	if(domain == "PermitsAndInspections")
+		header = "Permits/Inspections";
+	if(domain == "ChangeOrders")
+		header = "Change Orders";
+	if(domain == "GeneralInfo")
+		header = "General Information";
+	
+	$('#failedRulesHeader').find('span').html(header);
+	
+	fillScoreTableView(domain);
+}
+
+function fillScoreTableUpdate(domain)
 {
 	console.log("RULES" , RULES , domain);
 	if(RULES == undefined)
@@ -4612,7 +4817,46 @@ function fillFailedRulesTable(domain)
 	}
 }
 
-function getWorstRuleResult(data , rules , domain)
+function fillScoreTableView(domain)
+{
+	console.log("SCORES" , SCORE , domain);
+	if(SCORE == undefined)
+		return;
+	
+	$('#failedRulesTable').find('tbody').find('tr').remove();
+	
+	for(var i = 0; i < SCORE.length; i++)
+	{
+		//console.log("RULES EYE" , RULES[i] , domain);
+		if(SCORE[i].domain != domain)
+			continue;
+		if(SCORE[i].passed == "true")
+			continue;
+		
+		
+		var tr = document.createElement('tr');
+		var title = document.createElement('td');
+		var action = document.createElement('td');
+		
+		title.innerHTML = SCORE[i].title;
+		action.innerHTML = SCORE[i].failMessage;
+		
+		$(tr).append(title);
+		$(tr).append(action);
+		
+		if(SCORE[i].severity == "HIGH")
+			$(tr).css("background-color" , HIGH_COLOR);
+		if(SCORE[i].severity == "MEDIUM")
+			$(tr).css("background-color" , MEDIUM_COLOR);
+		if(SCORE[i].severity == "LOW")
+			$(tr).css("background-color" , LOW_COLOR);
+		
+		$('#failedRulesTable').find('tbody').append(tr);		
+	}
+}
+
+
+function getWorstScoreUpdate(data , rules , domain)
 {
 	console.log("GETTING WORST" , data, rules , domain);
 	var worst;
@@ -4622,9 +4866,9 @@ function getWorstRuleResult(data , rules , domain)
 		if(rules[i].domain != domain)
 			continue;
 		
-		if(rules[i].passed == undefined)
+		if(data[rules[i].title].passed == undefined)
 		{
-			return getWorstSetResult(data , rules , domain);
+			return getWorstSetUpdate(data , rules , domain);
 		}	
 		
 		
@@ -4644,7 +4888,41 @@ function getWorstRuleResult(data , rules , domain)
 	return worst;
 }
 
-function getWorstSetResult(data , rules , domain)
+
+function getWorstScoreView(data , scores , domain)
+{
+	console.log("GETTING WORST" , data, scores , domain);
+	var worst;
+	for(var i = 0; i < scores.length; i++)
+	{
+
+		if(scores[i].domain != domain)
+			continue;
+		
+		if(data[scores[i].title].passed == undefined)
+		{
+			return getWorstSetView(data , scores , domain);
+		}	
+		
+		
+		if(data[scores[i].title] && (data[scores[i].title].passed == "false" || data[scores[i].title].passed == undefined))
+		{
+			if(worst == undefined)
+				worst = scores[i].severity;
+			else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+				worst = scores[i].severity;
+			else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
+				return "HIGH";
+			else if(worst == "HIGH" && scores[i].severity == "HIGH")
+				return "HIGH";
+		}
+	}
+	
+	return worst;
+}
+
+
+function getWorstSetUpdate(data , rules , domain)
 {
 	console.log("GET WORST " , data , rules , domain);
 	//return "LOW";
@@ -4655,13 +4933,13 @@ function getWorstSetResult(data , rules , domain)
 		if(rules[i].domain != domain)
 			continue;
 		
-		if(rules[i].taskResults)
+		if(data[rules[i].title].taskResults)
 		{
 			console.log("IN TASK");
-			for(var task in rules[i].taskResults)
+			for(var task in data[rules[i].title].taskResults)
 			{
 				console.log("IN TASK" , task);
-				if(rules[i].taskResults[task].passed == "false")
+				if(data[rules[i].title].taskResults[task].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
@@ -4675,11 +4953,11 @@ function getWorstSetResult(data , rules , domain)
 			}
 		}
 		
-		if(rules[i].changeOrderResults)
+		if(data[rules[i].title].changeOrderResults)
 		{
-			for(var changeOrder in rules[i].changeOrderResults)
+			for(var changeOrder in data[rules[i].title].changeOrderResults)
 			{
-				if(rules[i].changeOrderResults[changeOrder].passed == "false")
+				if(data[rules[i].title].changeOrderResults[changeOrder].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
@@ -4693,11 +4971,11 @@ function getWorstSetResult(data , rules , domain)
 			}
 		}
 		
-		if(rules[i].equipmentResults)
+		if(data[rules[i].title].equipmentResults)
 		{
-			for(var equipment in rules[i].equipmentResults)
+			for(var equipment in data[rules[i].title].equipmentResults)
 			{
-				if(rules[i].equipmentResults[equipment].passed == "false")
+				if(data[rules[i].title].equipmentResults[equipment].passed == "false")
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
@@ -4706,6 +4984,80 @@ function getWorstSetResult(data , rules , domain)
 					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
 						return "HIGH";
 					else if(worst == "HIGH" && rules[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+	}
+	
+	return worst;
+	
+}
+
+
+function getWorstSetView(data , scores , domain)
+{
+	console.log("GET WORST " , data , scores , domain);
+	//return "LOW";
+	
+	var worst;
+	for(var i = 0; i < scores.length; i++)
+	{
+		if(scores[i].domain != domain)
+			continue;
+		
+		if(scores[i].taskResults)
+		{
+			console.log("IN TASK");
+			for(var task in data[scores[i].title].taskResults)
+			{
+				console.log("IN TASK" , task);
+				if(data[scores[i].title].taskResults[task].passed == "false")
+				{
+					if(worst == undefined)
+						worst = scores[i].severity;
+					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+						worst = scores[i].severity;
+					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && scores[i].severity == "HIGH")
+						return"HIGH";
+				}
+			}
+		}
+		
+		if(scores[i].changeOrderResults)
+		{
+			for(var changeOrder in data[scores[i].title].changeOrderResults)
+			{
+				if(data[scores[i].title].changeOrderResults[changeOrder].passed == "false")
+				{
+					if(worst == undefined)
+						worst = scores[i].severity;
+					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && scores[i].severity == "HIGH")
+						return "HIGH";
+				}
+			}
+		}
+		
+		if(scores[i].equipmentResults)
+		{
+			for(var equipment in data[scores[i].title].equipmentResults)
+			{
+				if(data[scores[i].title].equipmentResults[equipment].passed == "false")
+				{
+					if(worst == undefined)
+						worst = scores[i].severity;
+					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+						worst = rules[i].severity;
+					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
+						return "HIGH";
+					else if(worst == "HIGH" && scores[i].severity == "HIGH")
 						return "HIGH";
 				}
 			}

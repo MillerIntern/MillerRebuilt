@@ -114,15 +114,40 @@ public class ProjectInformationFiller {
 	
 	public synchronized static void fillEvalInfo(Project currentProject, Map<String, String> params)
 			throws ParseException, NumberFormatException, ClassNotFoundException {
-		
 	
-		currentProject.setMcsNumAndStage((params.get("McsNumberAndStage")));
-		currentProject.setPermitsEval(params.get("Permits"));
-		currentProject.setHVAC(params.get("Hvac"));
-		currentProject.setRefrigeration(params.get("Refrigeration"));
-		currentProject.setPermitsTBD(params.get("PermitsTBD"));
-		currentProject.setStageAndStatus(params.get("StageAndStatus"));
-		currentProject.setProject(params.get("Project"));
+		currentProject.setMcsNumAndStage((params.get("mcsNumberAndStage")));
+		currentProject.setPermitsEval(params.get("permits"));
+		currentProject.setHVAC(params.get("hvac"));
+		currentProject.setRefrigeration(params.get("refrigeration"));
+		currentProject.setPermitsTBD(params.get("permitsTBD"));
+		currentProject.setStageAndStatus(params.get("stageAndStatus"));
+		currentProject.setProject(params.get("project"));
+		
+		currentProject.setLateProposal(params.get("lateProposal"));
+		currentProject.setLateBudgetary(params.get("lateBudgetary"));
+		currentProject.setLateTurnover(params.get("lateTurnover"));
+		currentProject.setEmptyInitiation(params.get("emptyInitiation"));
+		currentProject.setEarlierSchedTurnover(params.get("earlierScheduledTurnover"));
+		currentProject.setEarlierSiteSurvey(params.get("earlierSiteSurvey"));
+	
+		currentProject.setEmptyCost(params.get("emptyCost"));
+		currentProject.setEmptyCustNum(params.get("emptyCustomerNumber"));
+		currentProject.setActualAndShouldInv(params.get("actualAndShouldInvoice"));
+		currentProject.setZeroShouldInv(params.get("zeroShouldInvoice"));
+		currentProject.setZeroActualInv(params.get("zeroActualInvoice"));
+		
+		currentProject.setEarlierDueDate(params.get("earlierDueDate"));
+		
+		currentProject.setBuildingRequired(params.get("buildingRequired"));
+		currentProject.setCeilingRequired(params.get("ceilingRequired"));
+		currentProject.setMechanicalRequired(params.get("mechanicalRequired"));
+		currentProject.setElectricalReq(params.get("electricalRequired"));
+		currentProject.setPlumbingReq(params.get("plumbingRequired"));
+		currentProject.setBuildingPermitReqTBD(params.get("buildingPermitReqTBD"));
+		currentProject.setGasReq(params.get("gasRequired"));
+		currentProject.setSprinklerReq(params.get("sprinklerRequired"));
+		currentProject.setFireAlarmReq(params.get("fireAlarmRequired"));
+		currentProject.setLowVoltageReq(params.get("lowVoltageRequired"));
 	}
 	
 	public synchronized static void fillProjectScore(Project currentProject, Map<String, String> params)

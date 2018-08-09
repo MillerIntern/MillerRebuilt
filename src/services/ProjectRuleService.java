@@ -855,7 +855,104 @@ public class ProjectRuleService
 	}
 	
 	
-	
+	public static Map<String , Object> getScores(List<ProjectRule> rules , Project project)
+	{
+		if(project == null || rules == null) return null;
+		
+		Map<String , Object> evaluation = new HashMap<String , Object>();
+		evaluation.put("PROJECT", project);
+		project.setLowScore(0);
+		project.setMediumScore(0);
+		project.setHighScore(0);
+		
+		System.out.println("eval project");
+		
+		for(ProjectRule rule : rules)
+		{
+			Map<String , Object> map = new HashMap<String , Object>();
+			evaluation.put(rule.getTitle() , map);
+			map.put("RULE_ID", rule.getId());
+			map.put("RULE_TITLE", rule.getTitle());
+			map.put("RULE_DOMAIN", rule.getDomain());
+			map.put("failMessage", rule.getFailMessage());
+			map.put("passMessage", rule.getPassMessage());
+			//map.put("passed", "false");
+			
+			if(rule.getProjectClass() == null || 
+				 (rule.getProjectClass() != null && rule.getProjectClass().getName().equalsIgnoreCase(project.getProjectClass().getName())))
+			{
+				switch(rule.getDomain())
+				{
+					case PermitsAndInspections:
+					//	result = PermitAndInspectionEvaluate(rule , project);
+						map.put("type", "PermitsAndInspections");
+						break;
+					case Scheduling:
+					//	result = SchedulingEvaluate(rule , project);
+						map.put("siteSurvey", project.getSiteSurvey());
+						map.put("budgetaryDue" , project.getBudgetaryDue());
+						map.put("budgetarySubmitted", project.getBudgetarySubmitted());
+						map.put("proposalDue", project.getProposalDue());
+						map.put("proposalSubmitted", project.getProposalSubmitted());
+						map.put("scheduledStartDate", project.getScheduledStartDate());
+						map.put("projectInitiatedDate", project.getProjectInitiatedDate());
+						map.put("scheduledTurnover", project.getScheduledTurnover());
+						map.put("actualTurnover", project.getActualTurnover());
+						map.put("type", "Scheduling");
+						break;
+					case GeneralInfo:
+					//	result = generalInfoEvaluate(rule, project);
+						map.put("McsNumber", project.getMcsNumber());
+						map.put("warehouse", project.getWarehouse());
+						map.put("projectItem", project.getProjectItem());
+						map.put("projectManagers", project.getProjectManagers());
+						map.put("supervisors", project.getSupervisors());
+						map.put("stage", project.getStage());
+						map.put("status", project.getStatus());
+						map.put("projectType", project.getProjectType());
+						map.put("projectClass", project.getProjectClass());
+						map.put("autofillHVAC", project.getAutofillHVAC());
+						map.put("autofillPermits", project.getAutofillPermits());
+						map.put("autofillRefrigeration", project.getAutofillRefrigeration());
+						map.put("scope", project.getScope());
+						map.put("type", "GeneralInfo");
+						break;
+//					case Tasks:
+//					//	Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);
+//						map.put("taskResults", taskMap);
+//						map.put("type", "Task");
+//						break;
+					case Financial:
+					//	result = FinancialEvaluate(rule , project);
+						map.put("shouldInvoice", project.getShouldInvoice());
+						map.put("actualInvoice", project.getInvoiced());
+						map.put("cost", project.getCost());
+						map.put("type", "Financial");
+						break;
+//					case ChangeOrders:
+//					//	Map<String , Object> changeOrderMap = EvaluateProjectChangeOrders(rule , project);
+//					//	map.put("changeOrderResults", changeOrderMap);
+//						map.put("type", "ChangeOrders");
+//						break;
+//					case Closeout:
+//					//	result = CloseoutEvaluate(rule , project.getCloseoutDetails());
+//						map.put("closeoutDetails", project.getCloseoutDetails());
+//						map.put("type", "Closeout");
+//						break;
+//					case Equipment:
+//					//	Map<String , Object> equipmentMap = EvaluateProjectChangeOrders(rule , project);
+//					//	map.put("equipmentResults", equipmentMap);
+//						map.put("type", "Equipment");
+//						break;
+					default:
+						break;
+				}	
+			}
+		}
+		
+		return evaluation;
+		
+	}
 	
 //	public static Map<String , Object> EvaluateProjectTasks(ProjectRule rule , Project project)
 //	{

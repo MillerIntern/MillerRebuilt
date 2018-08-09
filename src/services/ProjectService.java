@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 import objects.HibernateUtil;
 import projectObjects.CloseoutDetails;
-import projectObjects.EvaluatedRules;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
@@ -44,7 +43,6 @@ import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
 import services.helpers.CityFiller;
 import services.helpers.ProjectRuleFiller;
-import services.helpers.EvaluatedRuleFiller;
 
 
 /**
@@ -102,30 +100,6 @@ public class ProjectService extends ProjectObjectService
 		}
 
 		ProjectInformationFiller.fillEvalInfo(currentProject, parameters);
-
-		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
-		session.clear();
-		session.update(currentProject);
-		tx.commit();
-
-
-		//ProjectObjectService.editObject("Project",projID,currentProject, 1);
-
-		return projID;
-	}
-	
-	
-	public synchronized static long editEvaluatedRules(Long projID, Map<String, String> parameters)  throws ClassNotFoundException, ParseException, NumberFormatException{
-		Project currentProject = null;
-		try {
-			currentProject = (Project) ProjectObjectService.get(projID,  "Project");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		EvaluatedRules eval = new EvaluatedRules();
-		EvaluatedRuleFiller.fillEvalRules(eval, parameters);
 
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
@@ -521,6 +495,9 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("cities") != null && !parameters.get("cities").isEmpty())
 			if(parameters.get("cities").equals("true"))
 				map.put("cities",ProjectObjectService.getAllAsJsonString("City"));
+		if(parameters.get("project") != null && !parameters.get("project").isEmpty())
+			if(parameters.get("project").equals("true"))
+				map.put("project",ProjectObjectService.getAllAsJsonString("project"));
 		
 		if(parameters.get("task_status") != null && !parameters.get("task_status").isEmpty())
 			if(parameters.get("task_status").equals("true"))

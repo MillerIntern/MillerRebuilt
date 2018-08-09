@@ -322,6 +322,7 @@ public class Project extends HttpServlet
 			System.out.println("saveEvalRules");
 			
 			try {
+				System.out.println(parameters);
 				Long projID = Long.parseLong(parameters.get("projectID"));		
 				ProjectService.editEvalProject(projID, parameters);		
 				response = Long.toString(projID);
@@ -858,12 +859,11 @@ public class Project extends HttpServlet
 					applicableRules.add(rule);
 			}
 			
-			Map<String , Object> result = new HashMap<String, Object>();
+			Map<String , Object> result = ProjectRuleService.getScores(rules, project);
 			result.put("applicableRules", applicableRules);
 			
-			
 			Gson gson = new Gson();
-			response = gson.toJson(rules);
+			response = gson.toJson(result);
 			System.out.println(response);
 			
 		}
