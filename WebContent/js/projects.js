@@ -4233,9 +4233,10 @@ function fillTaskWell(source) {
 function editScorecard (source_id)
 {
 	document.getElementById("projectManager").style.display = 'none';
-	currentDivLocation = "scorecardData";
-	setProjectHeader(PROJECT_DATA, 'scorecardData');
+	currentDivLocation = "scorecardUpperDiv";
+	setProjectHeader(PROJECT_DATA, 'scorecardUpperDiv');
 	document.getElementById("scorecardData").style.display = 'inline';
+	document.getElementById("scorecardUpperDiv").style.display = 'inline';
 }
 
 function returnToScorecardOverview()
@@ -4244,7 +4245,6 @@ function returnToScorecardOverview()
 	$('#findProject').hide();
 	$('#scorecardUpperDiv').show();
 	$('#failedRulesDiv').hide();
-	
 }
 
 function getProject_SCORECARD(edit)
@@ -4290,7 +4290,6 @@ function fillProjectDetails(data)
     var item = document.createElement("td");
     var manager = document.createElement("td");
     var low = document.createElement("td");
-    var med = document.createElement("td");
     var high = document.createElement("td");
     var lastUpdated = document.createElement("td");
     
@@ -4299,7 +4298,6 @@ function fillProjectDetails(data)
     item.innerHTML = data.projectItem.name;
     manager.innerHTML = data.projectManagers.name;
     low.innerHTML = data.lowScore;
-    med.innerHTML = data.mediumScore;
     high.innerHTML = data.highScore;
     lastUpdated.innerHTML = data.scoreLastUpdated;
     
@@ -4307,8 +4305,7 @@ function fillProjectDetails(data)
     MCSnumber.style.textAlign = 'center'; 
     item.style.textAlign = 'center'; 
     manager.style.textAlign = 'center'; 
-    low.style.textAlign = 'center'; 
-    med.style.textAlign = 'center'; 
+    low.style.textAlign = 'center';  
     high.style.textAlign = 'center'; 
     lastUpdated.style.textAlign = 'center'; 
     
@@ -4317,7 +4314,6 @@ function fillProjectDetails(data)
     tr.appendChild(item);
     tr.appendChild(manager);
     tr.appendChild(low);
-    tr.appendChild(med);
     tr.appendChild(high);
     tr.appendChild(lastUpdated);
    
@@ -4331,9 +4327,8 @@ let RULE_DATA;
 let SCORE;
 
 let LOW_COLOR = "rgb(255, 255, 0)";
-let MEDIUM_COLOR = "rgb(255, 161, 0)";
-let HIGH_COLOR = "rgb(255, 51, 15)";
-let PASSED_COLOR = "rgb(0, 240, 0)";
+let HIGH_COLOR = "rgb(255, 26, 26)";
+let PASSED_COLOR = "rgb(0, 230, 0)";
 
 let NO_COLOR = "rgb(255, 255, 255)";
 
@@ -4624,11 +4619,13 @@ function prepareScorecardUpdate(data)
 			{
 				displayScoresPassed(this.id.replace("Item", ""));
 				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+				setCurrentDivLocation("failedRulesDiv");
 			}
 			else
 			{	
 				displayScoresUpdate(this.id.replace("Item" , ""));
 				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+				setCurrentDivLocation("failedRulesDiv")
 			}
 		});
 		
@@ -4645,6 +4642,8 @@ function prepareScorecardUpdate(data)
 				$(this).css("background-color" , HIGH_COLOR);
 				break;	 
 		}
+		
+		convertCurrentDivLocation("scorecardUpperDiv");
 	});
 }
 
@@ -4684,13 +4683,15 @@ function prepareScorecardView(data)
 		$(this).click(function(event) {
 			if($(this).css("background-color") == PASSED_COLOR)
 			{	
-				displayScoresPassedView(this.id.replace("Item", ""));
+				displayScoresPassed(this.id.replace("Item", ""));
 				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+				setCurrentDivLocation("failedRulesDiv");
 			}
 			else
 			{	
 				displayScoresView(this.id.replace("Item" , ""));
 				setProjectHeader(PROJECT_DATA, "failedRulesDiv");
+				setCurrentDivLocation("failedRulesDiv");
 			}
 		});
 		
@@ -4720,7 +4721,7 @@ function fillScoreTablePassed(domain)
 	var tr = document.createElement('tr');
 	var action = document.createElement('td');
 	
-	action.innerHTML = "No discrepancies to display";
+	action.innerHTML = "None. There are discrepancies to display.";
 	
 	$(tr).append(action);
 	
@@ -4777,10 +4778,11 @@ function displayScoresUpdate(domain)
 	console.log("RULEZZ" , RULES);
 	$('#scorecardUpperDiv').hide();
 	$('#failedRulesDiv').show();
+	$('#scorecardData').find('#failedRulesDiv').css("display", "inline");
 	
 	var header = domain;
 	if(domain == "PermitsAndInspections")
-		header = "Permits/Inspections";
+		header = "Permits and Inspections";
 	if(domain == "ChangeOrders")
 		header = "Change Orders";
 	if(domain == "GeneralInfo")
@@ -4796,10 +4798,11 @@ function displayScoresView(domain)
 	console.log("Scores" , SCORE);
 	$('#scorecardUpperDiv').hide();
 	$('#failedRulesDiv').show();
+	$('#scorecardData').find('#failedRulesDiv').css("display", "inline");
 	
 	var header = domain;
 	if(domain == "PermitsAndInspections")
-		header = "Permits/Inspections";
+		header = "Permits and Inspections";
 	if(domain == "ChangeOrders")
 		header = "Change Orders";
 	if(domain == "GeneralInfo")
@@ -4815,10 +4818,11 @@ function displayScoresPassed(domain)
 	console.log("Scores" , SCORE);
 	$('#scorecardUpperDiv').hide();
 	$('#failedRulesDiv').show();
+	$('#scorecardData').find('#failedRulesDiv').css("display", "inline");
 	
 	var header = domain;
 	if(domain == "PermitsAndInspections")
-		header = "Permits/Inspections";
+		header = "Permits and Inspections";
 	if(domain == "ChangeOrders")
 		header = "Change Orders";
 	if(domain == "GeneralInfo")
@@ -4855,8 +4859,6 @@ function fillScoreTableUpdate(domain)
 		
 		if(RULES[i].severity == "HIGH")
 			$(tr).css("background-color" , HIGH_COLOR);
-		if(RULES[i].severity == "MEDIUM")
-			$(tr).css("background-color" , MEDIUM_COLOR);
 		if(RULES[i].severity == "LOW")
 			$(tr).css("background-color" , LOW_COLOR);
 		
@@ -4890,8 +4892,6 @@ function fillScoreTableView(domain)
 		
 		if(SCORE[i].severity == "HIGH")
 			$(tr).css("background-color" , HIGH_COLOR);
-		if(SCORE[i].severity == "MEDIUM")
-			$(tr).css("background-color" , MEDIUM_COLOR);
 		if(SCORE[i].severity == "LOW")
 			$(tr).css("background-color" , LOW_COLOR);
 		
@@ -4920,10 +4920,8 @@ function getWorstScoreUpdate(data , rules , domain)
 		{
 			if(worst == undefined)
 				worst = rules[i].severity;
-			else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+			else if(worst == "LOW" && ( rules[i].severity == "HIGH"))
 				worst = rules[i].severity;
-			else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
-				return "HIGH";
 			else if(worst == "HIGH" && rules[i].severity == "HIGH")
 				return "HIGH";
 		}
@@ -4953,10 +4951,8 @@ function getWorstScoreView(data , scores , domain)
 		{
 			if(worst == undefined)
 				worst = scores[i].severity;
-			else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+			else if(worst == "LOW" && (scores[i].severity == "HIGH"))
 				worst = scores[i].severity;
-			else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
-				return "HIGH";
 			else if(worst == "HIGH" && scores[i].severity == "HIGH")
 				return "HIGH";
 		}
@@ -4987,10 +4983,8 @@ function getWorstSetUpdate(data , rules , domain)
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
-					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+					else if(worst == "LOW" && (rules[i].severity == "HIGH"))
 						worst = rules[i].severity;
-					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && rules[i].severity == "HIGH")
 						return"HIGH";
 				}
@@ -5005,10 +4999,8 @@ function getWorstSetUpdate(data , rules , domain)
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
-					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+					else if(worst == "LOW" && (rules[i].severity == "HIGH"))
 						worst = rules[i].severity;
-					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && rules[i].severity == "HIGH")
 						return "HIGH";
 				}
@@ -5023,10 +5015,8 @@ function getWorstSetUpdate(data , rules , domain)
 				{
 					if(worst == undefined)
 						worst = rules[i].severity;
-					else if(worst == "LOW" && (rules[i].severity == "MEDIUM" || rules[i].severity == "HIGH"))
+					else if(worst == "LOW" && (rules[i].severity == "HIGH"))
 						worst = rules[i].severity;
-					else if(worst == "MEDIUM" && rules[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && rules[i].severity == "HIGH")
 						return "HIGH";
 				}
@@ -5061,10 +5051,8 @@ function getWorstSetView(data , scores , domain)
 				{
 					if(worst == undefined)
 						worst = scores[i].severity;
-					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+					else if(worst == "LOW" && (scores[i].severity == "HIGH"))
 						worst = scores[i].severity;
-					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && scores[i].severity == "HIGH")
 						return"HIGH";
 				}
@@ -5079,10 +5067,8 @@ function getWorstSetView(data , scores , domain)
 				{
 					if(worst == undefined)
 						worst = scores[i].severity;
-					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+					else if(worst == "LOW" && (scores[i].severity == "HIGH"))
 						worst = rules[i].severity;
-					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && scores[i].severity == "HIGH")
 						return "HIGH";
 				}
@@ -5097,10 +5083,8 @@ function getWorstSetView(data , scores , domain)
 				{
 					if(worst == undefined)
 						worst = scores[i].severity;
-					else if(worst == "LOW" && (scores[i].severity == "MEDIUM" || scores[i].severity == "HIGH"))
+					else if(worst == "LOW" && (scores[i].severity == "HIGH"))
 						worst = rules[i].severity;
-					else if(worst == "MEDIUM" && scores[i].severity == "HIGH")
-						return "HIGH";
 					else if(worst == "HIGH" && scores[i].severity == "HIGH")
 						return "HIGH";
 				}
@@ -6971,19 +6955,6 @@ function toggleTaskAssignee() {
 }
 
 
-$(document).ready(function()
-		{
-			$('#scorecard').find('.nav-tabs > li').click(function () {
-				$('.info-tab').removeClass('active');
-				$('#' + $(this).attr('data-tab')).addClass('active');
-				
-				$(this).siblings().removeClass('active');
-				$(this).addClass('active');
-				$('#scorecard').find('#saveButton > button').prop('disabled', true);
-
-			});
-			
-		});
 
 ///////////////////////////////////////////////////////////////////////
 //////////////////////////Navigational ////////////////////////////////
@@ -7084,12 +7055,25 @@ function goToProjectManager() {
 			$('#projectManager').find('#closeoutTabLink').addClass('active');
 			$('#projectManager').find('#closeout').addClass('active');
 			break;
-		case "scorecardData":
+		case "scorecardUpperDiv":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#scorecardData').find('.info-tab').removeClass('active');
 			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
 			$('#scorecardData').find('#scorecard').addClass('active');
 			$('#scorecardData').find('#generalInfo').addClass('active');
+			$('#scorecardData').find('#scorecardUpperDiv').css("display", "none");
+			$('#projectManager').find('#scorecardTabLink').addClass('active');
+			$('#projectManager').find('#scorecard').addClass('active');
+			break;
+		case "failedRulesDiv":
+			console.log("failedRules");
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#scorecardData').find('.info-tab').removeClass('active');
+			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
+			$('#failedRulesDiv').removeClass('active');
+			$('#scorecardData').find('#failedRulesDiv').css("display", "none");
+			$('#failedRulesDiv').find('#scorecard').addClass('active');
+			$('#failedRulesDiv').find('#generalInfo').addClass('active');
 			$('#projectManager').find('#scorecardTabLink').addClass('active');
 			$('#projectManager').find('#scorecard').addClass('active');
 			break;

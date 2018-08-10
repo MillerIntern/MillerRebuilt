@@ -1940,6 +1940,9 @@ function fillRuleSeverityDropdown()
 	
 	for(var severity in ruleSeverity)
 	{
+		if(ruleSeverity[severity].severityName == "Medium")
+			continue;
+		
 		var option = document.createElement('option');
 		option.value = ruleSeverity[severity].severity;
 		option.innerHTML = ruleSeverity[severity].severityName;
