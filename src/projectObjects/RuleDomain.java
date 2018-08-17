@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 
 public enum RuleDomain {
 
-	PermitsAndInspections("Permits/Inspections") , Scheduling("Scheduling") ,
+	PermitsAndInspections("Permits and Inspections") , Scheduling("Scheduling") ,
 	Tasks("Tasks") , Financial("Financial") , ChangeOrders("Change Orders") ,
 	Closeout("Closeout") , Equipment("Equipment"), GeneralInfo("General Information");
 	

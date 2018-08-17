@@ -111,28 +111,56 @@ public class ProjectRuleService
 //		return null;
 //	}
 //	
-//	public static boolean CloseoutEvaluate(ProjectRule _rule , CloseoutDetails _co )
-//	{
-//		CloseoutDetails co = _co;
-//		
-//		String f1 , f2;
-//		f1 = _rule.getField1();
-//		f2 = _rule.getField2();
-//		
-//		Object field1 = CloseoutDetails.getCloseoutFields(f1 , co);
-//		Object field2 = CloseoutDetails.getCloseoutFields(f2 , co);
-//		
-//		if(field1 instanceof String || field1 == null)
-//			return _rule.evaluate(EvaluateCloseoutStatus((String) field1));
-//		
-//		
-//		if(field1 instanceof Double && field2 instanceof Double)
-//			return _rule.evaluate(EvaluateNumbers((Double) field1 , (Double) field2));
-//		
-//		
-//		return false;
-//		
-//	}
+	public static boolean CloseoutEvaluate(ProjectRule _rule , CloseoutDetails _co )
+	{
+		CloseoutDetails co = _co;
+		
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		Object field1 = CloseoutDetails.getCloseoutFields(f1 , co);
+		Object field2 = CloseoutDetails.getCloseoutFields(f2 , co);
+		
+		if(f1.equals("punchListStatus") && f2.equals("None"))
+		{
+			if(field1 == null || field1.equals("default"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("asBuiltDrawingsStatus") && f2.equals("None"))
+		{
+			if(field1 == null || field1.equals("default"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("closeOutPhotosStatus") && f2.equals("None"))
+		{
+			if(field1 == null || field1.equals("default"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		return true;
+		
+	}
 //	
 //	public static RuleResult EvaluateProjectNumber(String s1, Double d1)
 //	{
@@ -218,7 +246,7 @@ public class ProjectRuleService
 			{
 				return true;
 			}
-			else if(field1 != field2)
+			else if(!(field1.equals(field2)))
 			{
 				return false;
 			}
@@ -522,22 +550,31 @@ public class ProjectRuleService
 			
 			if(stageName.equals("Active") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Closeout") || statusName.equals("Scheduling") || statusName.equals("Scheduled")))			
 			{
+				_rule.setFailMessage("Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Closeout, Scheduled, or Scheduling if Stage is Active");
 				return false;
 			}
 			else if(stageName.equals("Budgetary") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Preparing Proposal") || statusName.equals("Proposal Submitted")))			
 			{
+				_rule.setFailMessage("Status must be either Awaiting Direction, Awaiting Drawings, Preparing Proposal, or Proposal Submitted if Stage is Budgetary");
 				return false;
 			}
 			else if(stageName.equals("Canceled") && !(statusName.equals("Closed") || statusName.equals("Lost")))			
 			{
+				_rule.setFailMessage("Status must be either Closed or Lost if Stage is Cancelled");
 				return false;
+			}
+			else if(stageName.equals("Closed") && !(statusName.equals("Closed")))
+			{
+				_rule.setFailMessage("Status must be Closed if Stage is Closed");
 			}
 			else if(stageName.equals("On Hold") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings")))			
 			{
+				_rule.setFailMessage("Status must be either Awaiting Direction or Awaiting Drawings if Stage is On Hold");
 				return false;
 			}
 			else if(stageName.equals("Proposal") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Lost") || statusName.equals("Preparing Proposal") || statusName.equals("Proposal Submitted")))			
 			{
+				_rule.setFailMessage("Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Lost, Preparing Proposal, or Proposal Submitted if Stage is Proposal");
 				return false;
 			}
 			else
@@ -597,9 +634,14 @@ public class ProjectRuleService
 		
 		Object field1 = Permits.getPermitAndInspectionFields(f1 , perms);
 		Object field2 = Permits.getPermitAndInspectionFields(f2 , perms);
+		
+		System.out.println(f1 + "   " + f2 + "   " + field1 + "   " + field2);
 
 		if(f1.equals("buildingPermitRequired") && f2.equals("buildingInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -612,6 +654,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("ceilingPermitRequired") && f2.equals("ceilingInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -624,6 +669,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("mechanicalPermitRequired") && f2.equals("mechanicalInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -637,6 +685,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("electricalPermitRequired") && f2.equals("electricalInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -650,6 +701,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("plumbingPermitRequired") && f2.equals("plumbingInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -663,6 +717,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("gasPermitRequired") && f2.equals("gasInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -674,8 +731,11 @@ public class ProjectRuleService
 		}
 	
 		
-		if(f1.equals("sprinklePermitRequired") && f2.equals("sprinkleInspectionRequired"))
+		if(f1.equals("sprinklerPermitRequired") && f2.equals("sprinklerInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -689,6 +749,9 @@ public class ProjectRuleService
 		
 		if(f1.equals("fireAlarmPermitRequired") && f2.equals("fireAlarmInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
 			{
 				return false;
@@ -702,7 +765,280 @@ public class ProjectRuleService
 		
 		if(f1.equals("voltagePermitRequired") && f2.equals("voltageInspectionRequired"))
 		{
+			if(field1 == null || field2 == null)
+				return true;
+			
 			if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+					
+		if(f1.equals("buildingPermitRequired") && f2.equals("buildingPermitStatus"))
+		{			
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingPermitRequired") && f2.equals("ceilingPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalPermitRequired") && f2.equals("mechanicalPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalPermitRequired") && f2.equals("electricalPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingPermitRequired") && f2.equals("plumbingPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasPermitRequired") && f2.equals("gasPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerPermitRequired") && f2.equals("sprinklerPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmPermitRequired") && f2.equals("fireAlarmPermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltagePermitRequired") && f2.equals("voltagePermitStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingInspectionRequired") && f2.equals("buildingInspectionStatus"))
+		{			
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingInspectionRequired") && f2.equals("ceilingInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalInspectionRequired") && f2.equals("mechanicalInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalInspectionRequired") && f2.equals("electricalInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingInspectionRequired") && f2.equals("plumbingInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasInspectionRequired") && f2.equals("gasInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerInspectionRequired") && f2.equals("sprinklerInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmInspectionRequired") && f2.equals("fireAlarmInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltageInspectionRequired") && f2.equals("voltageInspectionStatus"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(field1.equals("1") && field2.equals("N/A"))
 			{
 				return false;
 			}
@@ -727,7 +1063,532 @@ public class ProjectRuleService
 			}
 		}
 		
-		return false;
+		if(f1.equals("ceilingPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmPermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltagePermitRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltageInspectionRequired"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("0"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmPermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltagePermitStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltageInspectionStatus"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("TBD"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		return true;
 		
 	}
 	
@@ -809,11 +1670,11 @@ public class ProjectRuleService
 //					//	map.put("changeOrderResults", changeOrderMap);
 //						map.put("type", "ChangeOrders");
 //						break;
-//					case Closeout:
-//					//	result = CloseoutEvaluate(rule , project.getCloseoutDetails());
-//						map.put("closeoutDetails", project.getCloseoutDetails());
-//						map.put("type", "Closeout");
-//						break;
+					case Closeout:
+						result = CloseoutEvaluate(rule , project.getCloseoutDetails());
+						map.put("closeoutDetails", project.getCloseoutDetails());
+						map.put("type", "Closeout");
+						break;
 //					case Equipment:
 //					//	Map<String , Object> equipmentMap = EvaluateProjectChangeOrders(rule , project);
 //					//	map.put("equipmentResults", equipmentMap);

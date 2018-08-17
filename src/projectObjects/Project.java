@@ -32,72 +32,43 @@ import projectObjects.ChangeOrder;
 public class Project extends ProjectObject
 {
 	private Warehouse warehouse;
-	
 	private int McsNumber;
-	
 	private String scope;
-	
 	private ProjectClass projectClass;
-	
 	private ProjectItem projectItem;
-
 	private Person projectManagers;
-	
 	private Set<Person> supervisors;
-
 	private ProjectStatus status;
-	
 	private Date projectInitiatedDate;
-	
 	private Date siteSurvey;
-	
 	private Date budgetaryDue;
-	
 	private Date budgetarySubmitted;
-	
 	private Date proposalDue;
-	
 	private Date proposalSubmitted;
-	
 	private CloseoutDetails closeoutDetails;
 		
 	//private Set<ChangeOrder> changeOrders;
 	
 	private int shouldInvoice;
-	
 	private int invoiced;
-	
 	private String projectNotes;
-	
 	private String managerNotes;
-	
 	private Date scheduledStartDate;
-	
 	private Date scheduledTurnover;
 	
 	private Date actualTurnover;
-	
 	private ProjectStage stage;
-	
 	private ProjectType projectType;
-	
 	private String zachUpdates;
-	
 	private String cost;
-	
 	private String customerNumber;
-	
 	
 	//private Equipment equipmentData;
 
 	private String DrawingsDue;
-
 	private Inspections inspections;
-	
 	private Permits permits;
-	
 	private Set<ChangeOrder> changeOrders;
-	
 	private Set<Equipment> equipment;
 	private Set<NewEquipment> projEquipment;
 	
@@ -139,6 +110,62 @@ public class Project extends ProjectObject
 	private String sprinklerReq;
 	private String fireAlarmReq;
 	private String lowVoltageReq;
+	private String ceilingPermitReqTBD;
+	private String mechanicalPermitReqTBD;
+	private String electricalPermitReqTBD;
+	private String plumbingPermitReqTBD;
+	private String gasPermitReqTBD;
+	private String sprinklerPermitReqTBD;
+	private String fireAlarmPermitReqTBD;
+	private String lowVoltagePermitReqTBD;
+	private String buildingInspReqTBD;
+	private String ceilingInspReqTBD;
+	private String mechanicalInspReqTBD;
+	private String electricalInspReqTBD;
+	private String plumbingInspReqTBD;
+	private String gasInspReqTBD;
+	private String sprinklerInspReqTBD;
+	private String fireAlarmInspReqTBD;
+	private String lowVoltageInspReqTBD;
+	private String buildingPermitStatusTBD;
+	private String ceilingPermitStatusTBD;
+	private String mechanicalPermitStatusTBD;
+	private String electricalPermitStatusTBD;
+	private String plumbingPermitStatusTBD;
+	private String gasPermitStatusTBD;
+	private String sprinklerPermitStatusTBD;
+	private String fireAlarmPermitStatusTBD;
+	private String lowVoltagePermitStatusTBD;
+	private String buildingInspStatusTBD;
+	private String ceilingInspStatusTBD;
+	private String mechanicalInspStatusTBD;
+	private String electricalInspStatusTBD;
+	private String plumbingInspStatusTBD;
+	private String gasInspStatusTBD;
+	private String sprinklerInspStatusTBD;
+	private String fireAlarmInspStatusTBD;
+	private String lowVoltageInspStatusTBD;
+	private String buildingPermitYesNa;
+	private String ceilingPermitYesNa;
+	private String mechanicalPermitYesNa;
+	private String electricalPermitYesNa;
+	private String plumbingPermitYesNa;
+	private String gasPermitYesNa;
+	private String sprinklerPermitYesNa;
+	private String fireAlarmPermitYesNa;
+	private String lowVoltagePermitYesNa;
+	private String buildingInspYesNa;
+	private String ceilingInspYesNa;
+	private String mechanicalInspYesNa;
+	private String electricalInspYesNa;
+	private String plumbingInspYesNa;
+//	private String gasInspYesNa;
+//	private String sprinklerInspYesNa;
+//	private String fireAlarmInspYesNa;
+//	private String lowVoltageInspYesNa;
+//	private String punchList;
+//	private String asBuilt;
+//	private String closeoutPhotos;
 	
 	public Project(Warehouse warehouse, String scope,
 			Person projectManagers, Set<Person> supervisors,
@@ -156,7 +183,20 @@ public class Project extends ProjectObject
             String _emptyCost, String _emptyCustNum, String _actualAndShouldInvoice, String _zeroShouldInvoice,
             String _zeroActualInvoice, String _earlierSiteSurvey, String _earlierDueDate, String _buildingReq,
             String _ceilingReq, String _mechanicalReq, String _electricalReq, String _plumbingReq, String _buildingPermitReqTBD,
-            String _gasReq, String _sprinklerReq, String _fireAlarmReq,  String _lowVoltageReq)
+            String _gasReq, String _sprinklerReq, String _fireAlarmReq,  String _lowVoltageReq, String _ceilingPermitReqTBD,
+            String _mechanicalPermitReqTBD, String _electricalPermitReqTBD, String _plumbingPermitReqTBD, String _gasPermitReqTBD,
+            String _sprinklerPermitReqTBD, String _fireAlarmPermitReqTBD, String _lowVoltagePermitReqTBD, String _buildingInspReqTBD,
+            String _ceilingInspReqTBD, String _mechanicalInspReqTBD, String _electricalInspReqTBD, String _plumbingInspReqTBD,
+            String _gasInspReqTBD, String _sprinklerInspReqTBD, String _fireAlarmInspReqTBD, String _lowVoltageInspReqTBD,
+            String _buildingPermitStatusTBD, String _ceilingPermitStatusTBD, String _mechanicalPermitStatusTBD, 
+            String _electricalPermitStatusTBD, String _plumbingPermitStatusTBD, String _gasPermitStatusTBD, String _sprinklerPermitStatusTBD,
+            String _fireAlarmPermitStatusTBD, String _lowVoltagePermitStatusTBD, String _buildingInspStatusTBD, String _ceilingInspStatusTBD,
+            String _mechanicalInspStatusTBD, String _electricalInspStatusTBD, String _plumbingInspStatusTBD, String _gasInspStatusTBD, 
+            String _sprinklerInspStatusTBD, String _fireAlarmInspStatusTBD, String _lowVoltageInspStatusTBD, String _buildingPermitYesNa,
+            String _ceilingPermitYesNa, String _mechanicalPermitYesNa,  String _electricalPermitYesNa, String _plumbingPermitYesNa, 
+            String _gasPermitYesNa, String _sprinklerPermitYesNa, String _fireAlarmPermitYesNa, String _lowVoltagePermitYesNa,
+            String _buildingInspYesNa, String _ceilingInspYesNa, String _mechanicalInspYesNa, String _electricalInspYesNa, 
+            String _plumbingInspYesNa)
 
 	{		
 		this.warehouse = warehouse;
@@ -227,7 +267,58 @@ public class Project extends ProjectObject
 		this.sprinklerReq = _sprinklerReq;
 		this.fireAlarmReq = _fireAlarmReq;
 		this.lowVoltageReq = _lowVoltageReq;
-
+		this.ceilingPermitReqTBD = _ceilingPermitReqTBD;
+		this.mechanicalPermitReqTBD = _mechanicalPermitReqTBD;
+		this.electricalPermitReqTBD = _electricalPermitReqTBD;
+		this.plumbingPermitReqTBD = _plumbingPermitReqTBD;
+		this.gasPermitReqTBD = _gasPermitReqTBD;
+		this.sprinklerPermitReqTBD = _sprinklerPermitReqTBD;
+		this.fireAlarmPermitReqTBD = _fireAlarmPermitReqTBD;
+		this.lowVoltagePermitReqTBD = _lowVoltagePermitReqTBD;
+		this.buildingInspReqTBD = _buildingInspReqTBD;
+		this.ceilingInspReqTBD = _ceilingInspReqTBD;
+		this.mechanicalInspReqTBD = _mechanicalInspReqTBD;
+		this.electricalInspReqTBD = _electricalInspReqTBD;
+		this.plumbingInspReqTBD = _plumbingInspReqTBD;
+		this.gasInspReqTBD = _gasInspReqTBD;
+		this.sprinklerInspReqTBD = _sprinklerInspReqTBD;
+		this.fireAlarmInspReqTBD = _fireAlarmInspReqTBD;
+		this.lowVoltageInspReqTBD = _lowVoltageInspReqTBD;
+		this.buildingPermitStatusTBD = _buildingPermitStatusTBD;
+		this.ceilingPermitStatusTBD = _ceilingPermitStatusTBD;
+		this.mechanicalPermitStatusTBD = _mechanicalPermitStatusTBD;
+		this.electricalPermitStatusTBD = _electricalPermitStatusTBD;
+		this.plumbingPermitStatusTBD = _plumbingPermitStatusTBD;
+		this.gasPermitStatusTBD = _gasPermitStatusTBD;
+		this.sprinklerPermitStatusTBD = _sprinklerPermitStatusTBD;
+		this.fireAlarmPermitStatusTBD = _fireAlarmPermitStatusTBD;
+		this.lowVoltagePermitStatusTBD = _lowVoltagePermitStatusTBD;
+		this.buildingInspStatusTBD = _buildingInspStatusTBD;
+		this.ceilingInspStatusTBD = _ceilingInspStatusTBD;
+		this.mechanicalInspStatusTBD = _mechanicalInspStatusTBD;
+		this.electricalInspStatusTBD = _electricalInspStatusTBD;
+		this.plumbingInspStatusTBD = _plumbingInspStatusTBD;
+		this.gasInspStatusTBD = _gasInspStatusTBD;
+		this.sprinklerInspStatusTBD = _sprinklerInspStatusTBD;
+		this.fireAlarmInspStatusTBD = _fireAlarmInspStatusTBD;
+		this.lowVoltageInspStatusTBD = _lowVoltageInspStatusTBD;
+		this.buildingPermitYesNa = _buildingPermitYesNa;
+		this.ceilingPermitYesNa = _ceilingPermitYesNa;
+		this.mechanicalPermitYesNa = _mechanicalPermitYesNa;
+		this.electricalPermitYesNa = _electricalPermitYesNa;
+		this.plumbingPermitYesNa = _plumbingPermitYesNa;
+		this.gasPermitYesNa = _gasPermitYesNa;
+		this.sprinklerPermitYesNa = _sprinklerPermitYesNa;
+		this.fireAlarmPermitYesNa = _fireAlarmPermitYesNa;
+		this.lowVoltagePermitYesNa = _lowVoltagePermitYesNa;
+		this.buildingInspYesNa = _buildingInspYesNa;
+		this.ceilingInspYesNa = _ceilingInspYesNa;
+		this.mechanicalInspYesNa = _mechanicalInspYesNa;
+		this.electricalInspYesNa = _electricalInspYesNa;
+		this.plumbingInspYesNa = _plumbingInspYesNa;
+//		this.punchList = _punchList;
+//		this.asBuilt = _asBuilt;
+//		this.closeoutPhotos = _closeoutPhotos;
 	}
 	
 	public Project() 
@@ -303,6 +394,59 @@ public class Project extends ProjectObject
 		this.sprinklerReq = null;
 		this.fireAlarmReq = null;
 		this.lowVoltageReq = null;
+		this.ceilingPermitReqTBD = null;
+		this.mechanicalPermitReqTBD = null;
+		this.electricalPermitReqTBD = null;
+		this.plumbingPermitReqTBD = null;
+		this.gasPermitReqTBD = null;
+		this.sprinklerPermitReqTBD = null;
+		this.fireAlarmPermitReqTBD = null;
+		this.lowVoltagePermitReqTBD = null;
+		this.buildingInspReqTBD = null;
+		this.ceilingInspReqTBD = null;
+		this.mechanicalInspReqTBD = null;
+		this.electricalInspReqTBD = null;
+		this.plumbingInspReqTBD = null;
+		this.gasInspReqTBD = null;
+		this.sprinklerInspReqTBD = null;
+		this.fireAlarmInspReqTBD = null;
+		this.lowVoltageInspReqTBD = null;
+		this.buildingPermitStatusTBD = null;
+		this.ceilingPermitStatusTBD = null;
+		this.mechanicalPermitStatusTBD = null;
+		this.electricalPermitStatusTBD = null;
+		this.plumbingPermitStatusTBD = null;
+		this.gasPermitStatusTBD = null;
+		this.sprinklerPermitStatusTBD = null;
+		this.fireAlarmPermitStatusTBD = null;
+		this.lowVoltagePermitStatusTBD = null;
+		this.buildingInspStatusTBD = null;
+		this.ceilingInspStatusTBD = null;
+		this.mechanicalInspStatusTBD = null;
+		this.electricalInspStatusTBD = null;
+		this.plumbingInspStatusTBD = null;
+		this.gasInspStatusTBD = null;
+		this.sprinklerInspStatusTBD = null;
+		this.fireAlarmInspStatusTBD = null;
+		this.lowVoltageInspStatusTBD = null;
+		this.buildingPermitYesNa = null;
+		this.ceilingPermitYesNa = null;
+		this.mechanicalPermitYesNa = null;
+		this.electricalPermitYesNa = null;
+		this.plumbingPermitYesNa = null;
+		this.gasPermitYesNa = null;
+		this.sprinklerPermitYesNa = null;
+		this.fireAlarmPermitYesNa = null;
+		this.lowVoltagePermitYesNa = null;
+		this.buildingInspYesNa = null;
+		this.ceilingInspYesNa = null;
+		this.mechanicalInspYesNa = null;
+		this.electricalInspYesNa = null;
+		this.plumbingInspYesNa = null;
+		
+//		this.punchList = null;
+//		this.asBuilt = null;
+//		this.closeoutPhotos = null;
 
 	}
 
@@ -1005,6 +1149,528 @@ public class Project extends ProjectObject
 	    this.lowVoltageReq = req;
 	}
 	
+	public synchronized String getCeilingPermitReqTBD()
+	{
+		return ceilingPermitReqTBD;
+	}
+	
+	public synchronized void setCeilingPermitReqTBD(String tbd)
+	{
+	    this.ceilingPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getMechanicalPermitReqTBD()
+	{
+		return mechanicalPermitReqTBD;
+	}
+	
+	public synchronized void setMechanicalPermitReqTBD(String tbd)
+	{
+	    this.mechanicalPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getElectricalPermitReqTBD()
+	{
+		return electricalPermitReqTBD;
+	}
+	
+	public synchronized void setElectricalPermitReqTBD(String tbd)
+	{
+	    this.electricalPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getPlumbingPermitReqTBD()
+	{
+		return plumbingPermitReqTBD;
+	}
+	
+	public synchronized void setPlumbingPermitReqTBD(String tbd)
+	{
+	    this.plumbingPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getGasPermitReqTBD()
+	{
+		return gasPermitReqTBD;
+	}
+	
+	public synchronized void setGasPermitReqTBD(String tbd)
+	{
+	    this.gasPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getSprinklerPermitReqTBD()
+	{
+		return sprinklerPermitReqTBD;
+	}
+	
+	public synchronized void setSprinklerPermitReqTBD(String tbd)
+	{
+	    this.sprinklerPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getFireAlarmPermitReqTBD()
+	{
+		return fireAlarmPermitReqTBD;
+	}
+	
+	public synchronized void setFireAlarmPermitReqTBD(String tbd)
+	{
+	    this.fireAlarmPermitReqTBD = tbd;
+	}
+	
+	public synchronized String getLowVolPermitReqTBD()
+	{
+		return lowVoltagePermitReqTBD;
+	}
+	
+	public synchronized void setLowVolPermitReqTBD(String tbd)
+	{
+	    this.lowVoltagePermitReqTBD = tbd;
+	}
+	
+	public synchronized String getBuildingInspReqTBD()
+	{
+		return buildingInspReqTBD;
+	}
+	
+	public synchronized void setBuildingInspReqTBD(String tbd)
+	{
+	    this.buildingInspReqTBD = tbd;
+	}
+	
+	public synchronized String getCeilingInspReqTBD()
+	{
+		return ceilingInspReqTBD;
+	}
+	
+	public synchronized void setCeilingInspReqTBD(String tbd)
+	{
+	    this.ceilingInspReqTBD = tbd;
+	}
+	
+	public synchronized String getMechanicalInspReqTBD()
+	{
+		return mechanicalInspReqTBD;
+	}
+	
+	public synchronized void setMechanicalInspReqTBD(String tbd)
+	{
+	    this.mechanicalInspReqTBD = tbd;
+	}
+	
+	public synchronized String getElectricalInspReqTBD()
+	{
+		return electricalInspReqTBD;
+	}
+	
+	public synchronized void setElectricalInspReqTBD(String tbd)
+	{
+	    this.electricalInspReqTBD = tbd;
+	}
+	
+	public synchronized String getPlumbingInspReqTBD()
+	{
+		return plumbingInspReqTBD;
+	}
+	
+	public synchronized void setPlumbingInspReqTBD(String tbd)
+	{
+	    this.plumbingInspReqTBD = tbd;
+	}
+	
+	public synchronized String getGasInspReqTBD()
+	{
+		return gasInspReqTBD;
+	}
+	
+	public synchronized void setGasInspReqTBD(String tbd)
+	{
+	    this.gasInspReqTBD = tbd;
+	}
+	
+	public synchronized String getSprinklerInspReqTBD()
+	{
+		return sprinklerInspReqTBD;
+	}
+	
+	public synchronized void setSprinklerInspReqTBD(String tbd)
+	{
+	    this.sprinklerInspReqTBD = tbd;
+	}
+	
+	public synchronized String getFireAlarmInspReqTBD()
+	{
+		return fireAlarmInspReqTBD;
+	}
+	
+	public synchronized void setFireAlarmInspReqTBD(String tbd)
+	{
+	    this.fireAlarmInspReqTBD = tbd;
+	}
+	
+	public synchronized String getLowVolInspReqTBD()
+	{
+		return lowVoltageInspReqTBD;
+	}
+	
+	public synchronized void setLowVolInspReqTBD(String tbd)
+	{
+	    this.lowVoltageInspReqTBD = tbd;
+	}
+	
+	public synchronized String getbuildingPermitStatusTBD()
+	{
+		return buildingPermitStatusTBD;
+	}
+	
+	public synchronized void setbuildingPermitStatusTBD(String tbd)
+	{
+	    this.buildingPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getCeilingPermitStatusTBD()
+	{
+		return ceilingPermitStatusTBD;
+	}
+	
+	public synchronized void setCeilingPermitStatusTBD(String tbd)
+	{
+	    this.ceilingPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getMechanicalPermitStatusTBD()
+	{
+		return mechanicalPermitStatusTBD;
+	}
+	
+	public synchronized void setMechanicalPermitStatusTBD(String tbd)
+	{
+	    this.mechanicalPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getElectricalPermitStatusTBD()
+	{
+		return electricalPermitStatusTBD;
+	}
+	
+	public synchronized void setElectricalPermitStatusTBD(String tbd)
+	{
+	    this.electricalPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getPlumbingPermitStatusTBD()
+	{
+		return plumbingPermitStatusTBD;
+	}
+	
+	public synchronized void setPlumbingPermitStatusTBD(String tbd)
+	{
+	    this.plumbingPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getGasPermitStatusTBD()
+	{
+		return gasPermitStatusTBD;
+	}
+	
+	public synchronized void setGasPermitStatusTBD(String tbd)
+	{
+	    this.gasPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getSprinklerPermitStatusTBD()
+	{
+		return sprinklerPermitStatusTBD;
+	}
+	
+	public synchronized void setSprinklerPermitStatusTBD(String tbd)
+	{
+	    this.sprinklerPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getFireAlarmPermitStatusTBD()
+	{
+		return fireAlarmPermitStatusTBD;
+	}
+	
+	public synchronized void setFireAlarmPermitStatusTBD(String tbd)
+	{
+	    this.fireAlarmPermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getLowVolPermitStatusTBD()
+	{
+		return lowVoltagePermitStatusTBD;
+	}
+	
+	public synchronized void setLowVolPermitStatusTBD(String tbd)
+	{
+	    this.lowVoltagePermitStatusTBD = tbd;
+	}
+	
+	public synchronized String getBuildingInspStatusTBD()
+	{
+		return buildingInspStatusTBD;
+	}
+	
+	public synchronized void setBuildingInspStatusTBD(String tbd)
+	{
+	    this.buildingInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getCeilingInspStatusTBD()
+	{
+		return ceilingInspStatusTBD;
+	}
+	
+	public synchronized void setCeilingInspStatusTBD(String tbd)
+	{
+	    this.ceilingInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getMechanicalInspStatusTBD()
+	{
+		return mechanicalInspStatusTBD;
+	}
+	
+	public synchronized void setMechanicalInspStatusTBD(String tbd)
+	{
+	    this.mechanicalInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getElectricalInspStatusTBD()
+	{
+		return electricalInspStatusTBD;
+	}
+	
+	public synchronized void setElectricalInspStatusTBD(String tbd)
+	{
+	    this.electricalInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getPlumbingInspStatusTBD()
+	{
+		return plumbingInspStatusTBD;
+	}
+	
+	public synchronized void setPlumbingInspStatusTBD(String tbd)
+	{
+	    this.plumbingInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getGasInspStatusTBD()
+	{
+		return gasInspStatusTBD;
+	}
+	
+	public synchronized void setGasInspStatusTBD(String tbd)
+	{
+	    this.gasInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getSprinklerInspStatusTBD()
+	{
+		return sprinklerInspStatusTBD;
+	}
+	
+	public synchronized void setSprinklerInspStatusTBD(String tbd)
+	{
+	    this.sprinklerInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getFireAlarmInspStatusTBD()
+	{
+		return fireAlarmInspStatusTBD;
+	}
+	
+	public synchronized void setFireAlarmInspStatusTBD(String tbd)
+	{
+	    this.fireAlarmInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getLowVolInspStatusTBD()
+	{
+		return lowVoltageInspStatusTBD;
+	}
+	
+	public synchronized void setLowVolInspStatusTBD(String tbd)
+	{
+	    this.lowVoltageInspStatusTBD = tbd;
+	}
+	
+	public synchronized String getBuildingPermitYesNa()
+	{
+		return buildingPermitYesNa;
+	}
+	
+	public synchronized void setBuildingPermitYesNa(String tbd)
+	{
+	    this.buildingPermitYesNa = tbd;
+	}
+	
+	public synchronized String getCeilingPermitYesNa()
+	{
+		return ceilingPermitYesNa;
+	}
+	
+	public synchronized void setCeilingPermitYesNa(String tbd)
+	{
+	    this.ceilingPermitYesNa = tbd;
+	}
+	
+	public synchronized String getMechanicalPermitYesNa()
+	{
+		return mechanicalPermitYesNa;
+	}
+	
+	public synchronized void setMechanicalPermitYesNa(String tbd)
+	{
+	    this.mechanicalPermitYesNa = tbd;
+	}
+	
+	public synchronized String getElectricalPermitYesNa()
+	{
+		return electricalPermitYesNa;
+	}
+	
+	public synchronized void setElectricalPermitYesNa(String tbd)
+	{
+	    this.electricalPermitYesNa = tbd;
+	}
+	
+	public synchronized String getPlumbingPermitYesNa()
+	{
+		return plumbingPermitYesNa;
+	}
+	
+	public synchronized void setPlumbingPermitYesNa(String tbd)
+	{
+	    this.plumbingPermitYesNa = tbd;
+	}
+	
+	public synchronized String getGasPermitYesNa()
+	{
+		return gasPermitYesNa;
+	}
+	
+	public synchronized void setGasPermitYesNa(String tbd)
+	{
+	    this.gasPermitYesNa = tbd;
+	}
+	
+	public synchronized String getSprinklerPermitYesNa()
+	{
+		return sprinklerPermitYesNa;
+	}
+	
+	public synchronized void setSprinklerPermitYesNa(String tbd)
+	{
+	    this.sprinklerPermitYesNa = tbd;
+	}
+	
+	public synchronized String getFireAlarmPermitYesNa()
+	{
+		return fireAlarmPermitYesNa;
+	}
+	
+	public synchronized void setFireAlarmPermitYesNa(String tbd)
+	{
+	    this.fireAlarmPermitYesNa = tbd;
+	}
+	
+	public synchronized String getLowVolPermitYesNa()
+	{
+		return lowVoltagePermitYesNa;
+	}
+	
+	public synchronized void setLowVolPermitYesNa(String tbd)
+	{
+	    this.lowVoltagePermitYesNa = tbd;
+	}
+
+	public synchronized String getBuildingInspYesNa()
+	{
+		return buildingInspYesNa;
+	}
+	
+	public synchronized void setBuildingInspYesNa(String tbd)
+	{
+	    this.buildingInspYesNa = tbd;
+	}
+	
+	public synchronized String getCeilingInspYesNa()
+	{
+		return ceilingInspYesNa;
+	}
+	
+	public synchronized void setCeilingInspYesNa(String tbd)
+	{
+	    this.ceilingInspYesNa = tbd;
+	}
+	
+	public synchronized String getMechanicalInspYesNa()
+	{
+		return mechanicalInspYesNa;
+	}
+	
+	public synchronized void setMechanicalInspYesNa(String tbd)
+	{
+	    this.mechanicalInspYesNa = tbd;
+	}
+	
+	public synchronized String getElectricalInspYesNa()
+	{
+		return electricalInspYesNa;
+	}
+	
+	public synchronized void setElectricalInspYesNa(String tbd)
+	{
+	    this.electricalInspYesNa = tbd;
+	}
+	
+	public synchronized String getPlumbingInspYesNa()
+	{
+		return plumbingInspYesNa;
+	}
+	
+	public synchronized void setPlumbingInspYesNa(String tbd)
+	{
+	    this.plumbingInspYesNa = tbd;
+	}
+	
+	
+//	
+//	public synchronized String getPunchList()
+//	{
+//		return punchList;
+//	}
+//	
+//	public synchronized void setPunchList(String pl)
+//	{
+//	    this.punchList = pl;
+//	}
+//	
+//	public synchronized String getAsBuilt()
+//	{
+//		return asBuilt;
+//	}
+//	
+//	public synchronized void setAsBuilt(String as)
+//	{
+//	    this.asBuilt = as;
+//	}
+//	
+//	public synchronized String getCloseoutPhotos()
+//	{
+//		return closeoutPhotos;
+//	}
+//	
+//	public synchronized void setCloseoutPhotos(String cp)
+//	{
+//	    this.closeoutPhotos = cp;
+//	}
+//	
 	
 	public static Date getSchedulingFields(String name , Project project)
 	{

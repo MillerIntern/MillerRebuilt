@@ -1366,7 +1366,7 @@ function getFieldType(val)
 	{
 		case "General Information":
 			return generalInfoFields[val];
-		case "Permits/Inspections":
+		case "Permits and Inspections":
 			return permitAndInspectionFields[val];
 		case "Change Orders":
 			return changeOrderFields[val];
@@ -1398,7 +1398,7 @@ function filterFieldsByDomain()
 			fillField1(generalInfoFields);
 			fillField2(generalInfoFields);
 			break;
-		case "Permits/Inspections":
+		case "Permits and Inspections":
 			fillField1(permitAndInspectionFields);
 			fillField2(permitAndInspectionFields);
 			break;
@@ -1608,17 +1608,17 @@ function humanize(str)
 	else if( str == "type")
 		result = "Customer";	
 	// Permits and Inspections
-	else if( str == "mechancialPermitRequired")
+	else if( str == "mechanicalPermitRequired")
 		result = "Mechanical Permit Required";
-	else if( str == "mechancialPermitStatus")
+	else if( str == "mechanicalPermitStatus")
 		result = "Mechanical Permit Status";
-	else if( str == "mechancialPermitLastUpdated")
+	else if( str == "mechanicalPermitLastUpdated")
 		result = "Mechanical Permit Last Updated";
-	else if( str == "mechancialInspectionRequired")
+	else if( str == "mechanicalInspectionRequired")
 		result = "Mechanical Inspection Required";
-	else if( str == "mechancialInspectionStatus")
+	else if( str == "mechanicalInspectionStatus")
 		result = "Mechanical Inspection Status";
-	else if( str == "mechancialInspectionLastUpdated")
+	else if( str == "mechanicalInspectionLastUpdated")
 		result = "Mechanical Inspection Last Updated";
 	else if( str == "buildingPermitRequired")
 		result = "Building Permit Required";
@@ -2194,7 +2194,7 @@ function fillTabForEdit(projectObject , tabId)
 		if(projectObject.domain == "ChangeOrders")
 			$('#ruleDomainDropdown').val("Change Orders");
 		else if(projectObject.domain == "PermitsAndInspections")
-			$('#ruleDomainDropdown').val("Permits/Inspections");
+			$('#ruleDomainDropdown').val("Permits and Inspections");
 		else if(projectObject.domain == "GeneralInfo")
 			$('#ruleDomainDropdown').val("General Information");
 		else

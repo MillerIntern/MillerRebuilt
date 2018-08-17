@@ -860,7 +860,7 @@ public class Permits extends ProjectObject
 	{
 		Map<String , String> fields = new HashMap<String , String>();
 		allRelationsFromStub("building" , fields);
-		allRelationsFromStub("mechancial" , fields);
+		allRelationsFromStub("mechanical" , fields);
 		allRelationsFromStub("electrical" , fields);
 		allRelationsFromStub("plumbing" , fields);
 		allRelationsFromStub("gas" , fields);

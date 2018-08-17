@@ -148,6 +148,58 @@ public class ProjectInformationFiller {
 		currentProject.setSprinklerReq(params.get("sprinklerRequired"));
 		currentProject.setFireAlarmReq(params.get("fireAlarmRequired"));
 		currentProject.setLowVoltageReq(params.get("lowVoltageRequired"));
+		currentProject.setCeilingPermitReqTBD(params.get("ceilingPermitReqTBD"));
+		currentProject.setMechanicalPermitReqTBD(params.get("mechanicalPermitReqTBD"));
+		currentProject.setElectricalPermitReqTBD(params.get("electricalPermitReqTBD"));
+		currentProject.setPlumbingPermitReqTBD(params.get("plumbingPermitReqTBD"));
+		currentProject.setGasPermitReqTBD(params.get("gasPermitReqTBD"));
+		currentProject.setSprinklerPermitReqTBD(params.get("sprinklerPermitReqTBD"));
+		currentProject.setFireAlarmPermitReqTBD(params.get("fireAlarmPermitReqTBD"));
+		currentProject.setLowVolPermitReqTBD(params.get("lowVoltagePermitReqTBD"));
+		currentProject.setBuildingInspReqTBD(params.get("buildingInspReqTBD"));
+		currentProject.setCeilingInspReqTBD(params.get("ceilingInspReqTBD"));
+		currentProject.setMechanicalInspReqTBD(params.get("mechanicalInspReqTBD"));
+		currentProject.setElectricalInspReqTBD(params.get("electricalInspReqTBD"));
+		currentProject.setPlumbingInspReqTBD(params.get("plumbingInspReqTBD"));
+		currentProject.setGasInspReqTBD(params.get("gasInspReqTBD"));
+		currentProject.setSprinklerInspReqTBD(params.get("sprinklerInspReqTBD"));
+		currentProject.setFireAlarmInspReqTBD(params.get("fireAlarmInspReqTBD"));
+		currentProject.setLowVolInspReqTBD(params.get("lowVoltageInspReqTBD"));
+		currentProject.setbuildingPermitStatusTBD(params.get("buildingPermitStatusTBD"));
+		currentProject.setCeilingPermitStatusTBD(params.get("ceilingPermitStatusTBD"));
+		currentProject.setMechanicalPermitStatusTBD(params.get("mechanicalPermitStatusTBD"));
+		currentProject.setElectricalPermitStatusTBD(params.get("electricalPermitStatusTBD"));
+		currentProject.setPlumbingPermitStatusTBD(params.get("plumbingPermitStatusTBD"));
+		currentProject.setGasPermitStatusTBD(params.get("gasPermitStatusTBD"));
+		currentProject.setSprinklerPermitStatusTBD(params.get("sprinklerPermitStatusTBD"));
+		currentProject.setFireAlarmPermitStatusTBD(params.get("fireAlarmPermitStatusTBD"));
+		currentProject.setLowVolPermitStatusTBD(params.get("lowVoltagePermitStatusTBD"));
+		currentProject.setBuildingInspStatusTBD(params.get("buildingInspStatusTBD"));
+		currentProject.setCeilingInspStatusTBD(params.get("ceilingInspStatusTBD"));
+		currentProject.setMechanicalInspStatusTBD(params.get("mechanicalInspStatusTBD"));
+		currentProject.setElectricalInspStatusTBD(params.get("electricalInspStatusTBD"));
+		currentProject.setPlumbingInspStatusTBD(params.get("plumbingInspStatusTBD"));
+		currentProject.setGasInspStatusTBD(params.get("gasInspStatusTBD"));
+		currentProject.setSprinklerInspStatusTBD(params.get("sprinklerInspStatusTBD"));
+		currentProject.setFireAlarmInspStatusTBD(params.get("fireAlarmInspStatusTBD"));
+		currentProject.setLowVolInspStatusTBD(params.get("lowVoltageInspStatusTBD"));
+		currentProject.setBuildingPermitYesNa(params.get("buildingPermitYesNa"));
+		currentProject.setCeilingPermitYesNa(params.get("ceilingPermitYesNa"));
+		currentProject.setMechanicalPermitYesNa(params.get("mechanicalPermitYesNa"));
+		currentProject.setElectricalPermitYesNa(params.get("electricalPermitYesNa"));
+		currentProject.setPlumbingPermitYesNa(params.get("plumbingPermitYesNa"));
+		currentProject.setGasPermitYesNa(params.get("gasPermitYesNa"));
+		currentProject.setSprinklerPermitYesNa(params.get("sprinklerPermitYesNa"));
+		currentProject.setFireAlarmPermitYesNa(params.get("fireAlarmPermitYesNa"));
+		currentProject.setLowVolPermitYesNa(params.get("lowVoltagePermitYesNa"));
+		currentProject.setBuildingInspYesNa(params.get("buildingInspYesNa"));
+		currentProject.setCeilingInspYesNa(params.get("ceilingInspYesNa"));
+		currentProject.setMechanicalInspYesNa(params.get("mechanicalInspYesNa"));
+		currentProject.setElectricalInspYesNa(params.get("electricalInspYesNa"));
+		currentProject.setPlumbingInspYesNa(params.get("plumbingInspYesNa"));
+		
+//		currentProject.setPunchList(params.get("punchList"));
+//		currentProject.setCloseoutPhotos(params.get("closeoutPhotos"));
 	}
 	
 	public synchronized static void fillProjectScore(Project currentProject, Map<String, String> params)
