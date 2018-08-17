@@ -197,6 +197,10 @@ public class ProjectInformationFiller {
 		currentProject.setMechanicalInspYesNa(params.get("mechanicalInspYesNa"));
 		currentProject.setElectricalInspYesNa(params.get("electricalInspYesNa"));
 		currentProject.setPlumbingInspYesNa(params.get("plumbingInspYesNa"));
+		currentProject.setGasInspYesNa(params.get("gasInspYesNa"));
+		currentProject.setSprinklerInspYesNa(params.get("sprinklerInspYesNa"));
+		currentProject.setFireAlarmInspYesNa(params.get("fireAlarmInspYesNa"));
+		currentProject.setLowVolInspYesNa(params.get("lowVoltageInspYesNa"));
 		
 //		currentProject.setPunchList(params.get("punchList"));
 //		currentProject.setCloseoutPhotos(params.get("closeoutPhotos"));

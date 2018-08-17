@@ -1048,6 +1048,276 @@ public class ProjectRuleService
 			}
 		}
 		
+		if(f1.equals("buildingPermitStatus") && f2.equals("buildingPermitRequired"))
+		{			
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingPermitStatus") && f2.equals("ceilingPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalPermitStatus") && f2.equals("mechanicalPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalPermitStatus") && f2.equals("electricalPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingPermitStatus") && f2.equals("plumbingPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasPermitStatus") && f2.equals("gasPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerPermitStatus") && f2.equals("sprinklerPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmPermitStatus") && f2.equals("fireAlarmPermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltagePermitStatus") && f2.equals("voltagePermitRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingInspectionStatus") && f2.equals("buildingInspectionRequired"))
+		{			
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingInspectionStatus") && f2.equals("ceilingInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechanicalInspectionStatus") && f2.equals("mechanicalInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("electricalInspectionStatus") && f2.equals("electricalInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingInspectionStatus") && f2.equals("plumbingInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasInspectionStatus") && f2.equals("gasInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinklerInspectionStatus") && f2.equals("sprinklerInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmInspectionStatus") && f2.equals("fireAlarmInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("voltageInspectionStatus") && f2.equals("voltageInspectionRequired"))
+		{
+			if(field1 == null || field2 == null)
+				return true;
+			
+			if(!(field1.equals("N/A")) && field2.equals("2"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
 		if(f1.equals("buildingPermitRequired"))
 		{
 			if(field1 == null)

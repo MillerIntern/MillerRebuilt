@@ -4448,6 +4448,11 @@ function saveEvaluatedRules()
 	var mechInspYesNa = RULES[75].passed;
 	var elecInspYesNa = RULES[76].passed;
 	var plumbingInspYesNa = RULES[77].passed;
+	var gasInspYesNa = RULES[78].passed;
+	var sprinklerInspYesNa = RULES[79].passed;
+	var fireInspYesNa = RULES[80].passed;
+	var lowVolInspYesNa = RULES[81].passed;
+	
 //	var punchList = RULES[].passed;
 //	var asBuilt = RULES[].passed;
 //	var closeoutPhotos = RULES[].passed;
@@ -4550,7 +4555,11 @@ function saveEvaluatedRules()
 			'ceilingInspYesNa' : ceilingInspYesNa,
 			'mechanicalInspYesNa' : mechInspYesNa,
 			'electricalInspYesNa' : elecInspYesNa,
-			'plumbingInspYesNa' : plumbingInspYesNa
+			'plumbingInspYesNa' : plumbingInspYesNa,
+			'gasInspYesNa' : gasInspYesNa,
+			'sprinklerInspYesNa' : sprinklerInspYesNa,
+			'fireAlarmInspYesNa' : fireInspYesNa,
+			'lowVoltageInspYesNa' : lowVolInspYesNa
 			
 //			'punchList' : punchList,
 //			'asBuilt' : asBuilt,
@@ -4668,7 +4677,7 @@ function adjustScore(data)
 	var elecPermitYesNa = PROJECT_DATA.electricalPermitYesNa;
 	var plumbingPermitYesNa = PROJECT_DATA.plumbingPermitYesNa;
 	var gasPermitYesNa = PROJECT_DATA.gasPermitYesNa;
-	var sprinklerYesNa = PROJECT_DATA.sprinklerPermitYesNa;
+	var sprinklerPermitYesNa = PROJECT_DATA.sprinklerPermitYesNa;
 	var firePermitYesNa = PROJECT_DATA.fireAlarmPermitYesNa;
 	var lowVolPermitYesNa = PROJECT_DATA.lowVoltagePermitYesNa;
 	var buildingInspYesNa = PROJECT_DATA.buildingInspYesNa;
@@ -4676,6 +4685,10 @@ function adjustScore(data)
 	var mechInspYesNa = PROJECT_DATA.mechanicalInspYesNa;
 	var elecInspYesNa = PROJECT_DATA.electricalInspYesNa;
 	var plumbingInspYesNa = PROJECT_DATA.plumbingInspYesNa;
+	var gasInspYesNa = PROJECT_DATA.gasInspYesNa;
+	var sprinklerInspYesNa = PROJECT_DATA.sprinklerInspYesNa;
+	var fireInspYesNa = PROJECT_DATA.fireAlarmInspYesNa;
+	var lowVolInspYesNa = PROJECT_DATA.lowVoltageInspYesNa;
 	
 	//	var punchList = PROJECT_DATA.punchList;
 //	var asBuilt = PROJECT_DATA.asBuilt;
@@ -4752,7 +4765,7 @@ function adjustScore(data)
 	SCORE.ElectricalPermitYesNa.passed = elecPermitYesNa;
 	SCORE.PlumbingPermitYesNa.passed = plumbingPermitYesNa;
 	SCORE.GasPermitYesNa.passed = gasPermitYesNa;
-	SCORE.SprinklerPermitYesNa.passed = sprinklerYesNa;
+	SCORE.SprinklerPermitYesNa.passed = sprinklerPermitYesNa;
 	SCORE.FirePermitYesNa.passed = firePermitYesNa; 
 	SCORE.LowVolPermitYesNa.passed = lowVolPermitYesNa;
 	SCORE.BuildingInspYesNa.passed = buildingInspYesNa;
@@ -4760,6 +4773,11 @@ function adjustScore(data)
 	SCORE.MechInspYesNa.passed = mechInspYesNa;
 	SCORE.ElecInspYesNa.passed = elecInspYesNa;
 	SCORE.PlumbingInspYesNa.passed = plumbingInspYesNa;
+	SCORE.GasInspYesNa.passed = gasInspYesNa;
+	SCORE.SprinklerInspYesNa.passed = sprinklerInspYesNa;
+	SCORE.FireInspYesNa.passed = fireInspYesNa;
+	SCORE.LowVolInspYesNa.passed = lowVolInspYesNa;
+	
 	
 //	SCORE.PunchList.passed = punchList;
 //	SCORE.AsBuilt.passed = asBuilt;
@@ -4835,7 +4853,7 @@ function adjustScore(data)
 	SCORE.applicableRules[67].passed = elecPermitYesNa;
 	SCORE.applicableRules[68].passed = plumbingPermitYesNa;
 	SCORE.applicableRules[69].passed = gasPermitYesNa;
-	SCORE.applicableRules[70].passed = sprinklerYesNa;
+	SCORE.applicableRules[70].passed = sprinklerPermitYesNa;
 	SCORE.applicableRules[71].passed = firePermitYesNa;
 	SCORE.applicableRules[72].passed = lowVolPermitYesNa;
 	SCORE.applicableRules[73].passed = buildingInspYesNa;
@@ -4843,6 +4861,10 @@ function adjustScore(data)
 	SCORE.applicableRules[75].passed = mechInspYesNa;
 	SCORE.applicableRules[76].passed = elecInspYesNa;
 	SCORE.applicableRules[77].passed = plumbingInspYesNa;	
+	SCORE.applicableRules[78].passed = gasInspYesNa;
+	SCORE.applicableRules[79].passed = sprinklerYesNa;
+	SCORE.applicableRules[80].passed = fireInspYesNa;
+	SCORE.applicableRules[81].passed = lowVolInspYesNa;
 	
 //	SCORE.applicableRules[64].passed = punchList;
 //	SCORE.applicableRules[65].passed = asBuilt;

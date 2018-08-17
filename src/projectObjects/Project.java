@@ -159,10 +159,10 @@ public class Project extends ProjectObject
 	private String mechanicalInspYesNa;
 	private String electricalInspYesNa;
 	private String plumbingInspYesNa;
-//	private String gasInspYesNa;
-//	private String sprinklerInspYesNa;
-//	private String fireAlarmInspYesNa;
-//	private String lowVoltageInspYesNa;
+	private String gasInspYesNa;
+	private String sprinklerInspYesNa;
+	private String fireAlarmInspYesNa;
+	private String lowVoltageInspYesNa;
 //	private String punchList;
 //	private String asBuilt;
 //	private String closeoutPhotos;
@@ -196,7 +196,8 @@ public class Project extends ProjectObject
             String _ceilingPermitYesNa, String _mechanicalPermitYesNa,  String _electricalPermitYesNa, String _plumbingPermitYesNa, 
             String _gasPermitYesNa, String _sprinklerPermitYesNa, String _fireAlarmPermitYesNa, String _lowVoltagePermitYesNa,
             String _buildingInspYesNa, String _ceilingInspYesNa, String _mechanicalInspYesNa, String _electricalInspYesNa, 
-            String _plumbingInspYesNa)
+            String _plumbingInspYesNa, String _gasInspYesNa, String _sprinklerInspYesNa, String _fireAlarmInspYesNa, 
+            String _lowVoltageInspYesNa)
 
 	{		
 		this.warehouse = warehouse;
@@ -316,6 +317,11 @@ public class Project extends ProjectObject
 		this.mechanicalInspYesNa = _mechanicalInspYesNa;
 		this.electricalInspYesNa = _electricalInspYesNa;
 		this.plumbingInspYesNa = _plumbingInspYesNa;
+		this.gasInspYesNa = _gasInspYesNa;
+		this.sprinklerInspYesNa = _sprinklerInspYesNa;
+		this.fireAlarmInspYesNa = _fireAlarmInspYesNa;
+		this.lowVoltageInspYesNa = _lowVoltageInspYesNa;
+		
 //		this.punchList = _punchList;
 //		this.asBuilt = _asBuilt;
 //		this.closeoutPhotos = _closeoutPhotos;
@@ -443,6 +449,10 @@ public class Project extends ProjectObject
 		this.mechanicalInspYesNa = null;
 		this.electricalInspYesNa = null;
 		this.plumbingInspYesNa = null;
+		this.gasInspYesNa = null;
+		this.sprinklerInspYesNa = null;
+		this.fireAlarmInspYesNa = null;
+		this.lowVoltageInspYesNa = null;
 		
 //		this.punchList = null;
 //		this.asBuilt = null;
@@ -1637,6 +1647,46 @@ public class Project extends ProjectObject
 	public synchronized void setPlumbingInspYesNa(String tbd)
 	{
 	    this.plumbingInspYesNa = tbd;
+	}
+	
+	public synchronized String getGasInspYesNa()
+	{
+		return gasInspYesNa;
+	}
+	
+	public synchronized void setGasInspYesNa(String tbd)
+	{
+	    this.gasInspYesNa = tbd;
+	}
+	
+	public synchronized String getSprinklerInspYesNa()
+	{
+		return sprinklerInspYesNa;
+	}
+	
+	public synchronized void setSprinklerInspYesNa(String tbd)
+	{
+	    this.sprinklerInspYesNa = tbd;
+	}
+	
+	public synchronized String getFireAlarmInspYesNa()
+	{
+		return fireAlarmInspYesNa;
+	}
+	
+	public synchronized void setFireAlarmInspYesNa(String tbd)
+	{
+	    this.fireAlarmInspYesNa = tbd;
+	}
+	
+	public synchronized String getLowVolInspYesNa()
+	{
+		return lowVoltageInspYesNa;
+	}
+	
+	public synchronized void setLowVolInspYesNa(String tbd)
+	{
+	    this.lowVoltageInspYesNa = tbd;
 	}
 	
 	
