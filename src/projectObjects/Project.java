@@ -163,7 +163,26 @@ public class Project extends ProjectObject
 	private String sprinklerInspYesNa;
 	private String fireAlarmInspYesNa;
 	private String lowVoltageInspYesNa;
-//	private String punchList;
+	private String buildingPermitNoYes;
+	private String ceilingPermitNoYes;
+	private String mechanicalPermitNoYes;
+	private String electricalPermitNoYes;
+	private String plumbingPermitNoYes;
+	private String gasPermitNoYes;
+	private String sprinklerPermitNoYes;
+	private String fireAlarmPermitNoYes;
+	private String lowVoltagePermitNoYes;
+	private String buildingInspNoYes;
+	private String ceilingInspNoYes;
+	private String mechanicalInspNoYes;
+	private String electricalInspNoYes;
+	private String plumbingInspNoYes;
+	private String gasInspNoYes;
+	private String sprinklerInspNoYes;
+	private String fireAlarmInspNoYes;
+	private String lowVoltageInspNoYes;
+	
+	//	private String punchList;
 //	private String asBuilt;
 //	private String closeoutPhotos;
 	
@@ -197,7 +216,11 @@ public class Project extends ProjectObject
             String _gasPermitYesNa, String _sprinklerPermitYesNa, String _fireAlarmPermitYesNa, String _lowVoltagePermitYesNa,
             String _buildingInspYesNa, String _ceilingInspYesNa, String _mechanicalInspYesNa, String _electricalInspYesNa, 
             String _plumbingInspYesNa, String _gasInspYesNa, String _sprinklerInspYesNa, String _fireAlarmInspYesNa, 
-            String _lowVoltageInspYesNa)
+            String _lowVoltageInspYesNa, String _buildingPermitNoYes, String _ceilingPermitNoYes, String _mechanicalPermitNoYes,
+            String _electricalPermitNoYes, String _plumbingPermitNoYes, String _gasPermitNoYes, String _sprinklerPermitNoYes,
+            String _fireAlarmPermitNoYes, String _lowVoltagePermitNoYes, String _buildingInspNoYes, String _ceilingInspNoYes,
+            String _mechanicalInspNoYes, String _electricalInspNoYes, String _plumbingInspNoYes, String _gasInspNoYes,
+            String _sprinklerInspNoYes, String _fireAlarmInspNoYes, String _lowVoltageInspNoYes)
 
 	{		
 		this.warehouse = warehouse;
@@ -321,6 +344,24 @@ public class Project extends ProjectObject
 		this.sprinklerInspYesNa = _sprinklerInspYesNa;
 		this.fireAlarmInspYesNa = _fireAlarmInspYesNa;
 		this.lowVoltageInspYesNa = _lowVoltageInspYesNa;
+		this.buildingPermitNoYes = _buildingPermitNoYes;
+		this.ceilingPermitNoYes = _ceilingPermitNoYes;
+		this.mechanicalPermitNoYes = _mechanicalPermitNoYes;
+		this.electricalPermitNoYes = _electricalPermitNoYes;
+		this.plumbingPermitNoYes = _plumbingPermitNoYes;
+		this.gasPermitNoYes = _gasPermitNoYes;
+		this.sprinklerPermitNoYes = _sprinklerPermitNoYes;
+		this.fireAlarmPermitNoYes = _fireAlarmPermitNoYes;
+		this.lowVoltagePermitNoYes = _lowVoltagePermitNoYes;
+		this.buildingInspNoYes = _buildingInspNoYes;
+		this.ceilingInspNoYes = _ceilingInspNoYes;
+		this.mechanicalInspNoYes = _mechanicalInspNoYes;
+		this.electricalInspNoYes = _electricalInspNoYes;
+		this.plumbingInspNoYes = _plumbingInspNoYes;
+		this.gasInspNoYes = _gasInspNoYes;
+		this.sprinklerInspNoYes = _sprinklerInspNoYes;
+		this.fireAlarmInspNoYes = _fireAlarmInspNoYes;
+		this.lowVoltageInspNoYes = _lowVoltageInspNoYes;
 		
 //		this.punchList = _punchList;
 //		this.asBuilt = _asBuilt;
@@ -453,6 +494,24 @@ public class Project extends ProjectObject
 		this.sprinklerInspYesNa = null;
 		this.fireAlarmInspYesNa = null;
 		this.lowVoltageInspYesNa = null;
+		this.buildingPermitNoYes = null;
+		this.ceilingPermitNoYes = null;
+		this.mechanicalPermitNoYes = null;
+		this.electricalPermitNoYes = null;
+		this.plumbingPermitNoYes = null;
+		this.gasPermitNoYes = null;
+		this.sprinklerPermitNoYes = null;
+		this.fireAlarmPermitNoYes = null;
+		this.lowVoltagePermitNoYes = null;
+		this.buildingInspNoYes = null;
+		this.ceilingInspNoYes = null;
+		this.mechanicalInspNoYes = null;
+		this.electricalInspNoYes = null;
+		this.plumbingInspNoYes = null;
+		this.gasInspNoYes = null;
+		this.sprinklerInspNoYes = null;
+		this.fireAlarmInspNoYes = null;
+		this.lowVoltageInspNoYes = null;
 		
 //		this.punchList = null;
 //		this.asBuilt = null;
@@ -1689,6 +1748,185 @@ public class Project extends ProjectObject
 	    this.lowVoltageInspYesNa = tbd;
 	}
 	
+	public synchronized String getBuildingPermitNoYes()
+	{
+		return buildingPermitNoYes;
+	}
+	
+	public synchronized void setBuildingPermitNoYes(String tbd)
+	{
+	    this.buildingPermitNoYes = tbd;
+	}
+	
+	public synchronized String getCeilingPermitNoYes()
+	{
+		return ceilingPermitNoYes;
+	}
+	
+	public synchronized void setCeilingPermitNoYes(String tbd)
+	{
+	    this.ceilingPermitNoYes = tbd;
+	}
+	
+	public synchronized String getMechanicalPermitNoYes()
+	{
+		return mechanicalPermitNoYes;
+	}
+	
+	public synchronized void setMechanicalPermitNoYes(String tbd)
+	{
+	    this.mechanicalPermitNoYes = tbd;
+	}
+	
+	public synchronized String getElectricalPermitNoYes()
+	{
+		return electricalPermitNoYes;
+	}
+	
+	public synchronized void setElectricalPermitNoYes(String tbd)
+	{
+	    this.electricalPermitNoYes = tbd;
+	}
+	
+	public synchronized String getPlumbingPermitNoYes()
+	{
+		return plumbingPermitNoYes;
+	}
+	
+	public synchronized void setPlumbingPermitNoYes(String tbd)
+	{
+	    this.plumbingPermitNoYes = tbd;
+	}
+	
+	public synchronized String getGasPermitNoYes()
+	{
+		return gasPermitNoYes;
+	}
+	
+	public synchronized void setGasPermitNoYes(String tbd)
+	{
+	    this.gasPermitNoYes = tbd;
+	}
+	
+	public synchronized String getSprinklerPermitNoYes()
+	{
+		return sprinklerPermitNoYes;
+	}
+	
+	public synchronized void setSprinklerPermitNoYes(String tbd)
+	{
+	    this.sprinklerPermitNoYes = tbd;
+	}
+	
+	public synchronized String getFireAlarmPermitNoYes()
+	{
+		return fireAlarmPermitNoYes;
+	}
+	
+	public synchronized void setFireAlarmPermitNoYes(String tbd)
+	{
+	    this.fireAlarmPermitNoYes = tbd;
+	}
+	
+	public synchronized String getLowVolPermitNoYes()
+	{
+		return lowVoltagePermitNoYes;
+	}
+	
+	public synchronized void setLowVolPermitNoYes(String tbd)
+	{
+	    this.lowVoltagePermitNoYes = tbd;
+	}
+
+	public synchronized String getBuildingInspNoYes()
+	{
+		return buildingInspNoYes;
+	}
+	
+	public synchronized void setBuildingInspNoYes(String tbd)
+	{
+	    this.buildingInspNoYes = tbd;
+	}
+	
+	public synchronized String getCeilingInspNoYes()
+	{
+		return ceilingInspNoYes;
+	}
+	
+	public synchronized void setCeilingInspNoYes(String tbd)
+	{
+	    this.ceilingInspNoYes = tbd;
+	}
+	
+	public synchronized String getMechanicalInspNoYes()
+	{
+		return mechanicalInspNoYes;
+	}
+	
+	public synchronized void setMechanicalInspNoYes(String tbd)
+	{
+	    this.mechanicalInspNoYes = tbd;
+	}
+	
+	public synchronized String getElectricalInspNoYes()
+	{
+		return electricalInspNoYes;
+	}
+	
+	public synchronized void setElectricalInspNoYes(String tbd)
+	{
+	    this.electricalInspNoYes = tbd;
+	}
+	
+	public synchronized String getPlumbingInspNoYes()
+	{
+		return plumbingInspNoYes;
+	}
+	
+	public synchronized void setPlumbingInspNoYes(String tbd)
+	{
+	    this.plumbingInspNoYes = tbd;
+	}
+	
+	public synchronized String getGasInspNoYes()
+	{
+		return gasInspNoYes;
+	}
+	
+	public synchronized void setGasInspNoYes(String tbd)
+	{
+	    this.gasInspNoYes = tbd;
+	}
+	
+	public synchronized String getSprinklerInspNoYes()
+	{
+		return sprinklerInspNoYes;
+	}
+	
+	public synchronized void setSprinklerInspNoYes(String tbd)
+	{
+	    this.sprinklerInspNoYes = tbd;
+	}
+	
+	public synchronized String getFireAlarmInspNoYes()
+	{
+		return fireAlarmInspNoYes;
+	}
+	
+	public synchronized void setFireAlarmInspNoYes(String tbd)
+	{
+	    this.fireAlarmInspNoYes = tbd;
+	}
+	
+	public synchronized String getLowVolInspNoYes()
+	{
+		return lowVoltageInspNoYes;
+	}
+	
+	public synchronized void setLowVolInspNoYes(String tbd)
+	{
+	    this.lowVoltageInspNoYes = tbd;
+	}
 	
 //	
 //	public synchronized String getPunchList()

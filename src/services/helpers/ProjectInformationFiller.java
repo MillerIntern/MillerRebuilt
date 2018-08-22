@@ -201,6 +201,24 @@ public class ProjectInformationFiller {
 		currentProject.setSprinklerInspYesNa(params.get("sprinklerInspYesNa"));
 		currentProject.setFireAlarmInspYesNa(params.get("fireAlarmInspYesNa"));
 		currentProject.setLowVolInspYesNa(params.get("lowVoltageInspYesNa"));
+		currentProject.setBuildingPermitNoYes(params.get("buildingPermitNoYes"));
+		currentProject.setCeilingPermitNoYes(params.get("ceilingPermitNoYes"));
+		currentProject.setMechanicalPermitNoYes(params.get("mechanicalPermitNoYes"));
+		currentProject.setElectricalPermitNoYes(params.get("electricalPermitNoYes"));
+		currentProject.setPlumbingPermitNoYes(params.get("plumbingPermitNoYes"));
+		currentProject.setGasPermitNoYes(params.get("gasPermitNoYes"));
+		currentProject.setSprinklerPermitNoYes(params.get("sprinklerPermitNoYes"));
+		currentProject.setFireAlarmPermitNoYes(params.get("fireAlarmPermitNoYes"));
+		currentProject.setLowVolPermitNoYes(params.get("lowVoltagePermitNoYes"));
+		currentProject.setBuildingInspNoYes(params.get("buildingInspNoYes"));
+		currentProject.setCeilingInspNoYes(params.get("ceilingInspNoYes"));
+		currentProject.setMechanicalInspNoYes(params.get("mechanicalInspNoYes"));
+		currentProject.setElectricalInspNoYes(params.get("electricalInspNoYes"));
+		currentProject.setPlumbingInspNoYes(params.get("plumbingInspNoYes"));
+		currentProject.setGasInspNoYes(params.get("gasInspNoYes"));
+		currentProject.setSprinklerInspNoYes(params.get("sprinklerInspNoYes"));
+		currentProject.setFireAlarmInspNoYes(params.get("fireAlarmInspNoYes"));
+		currentProject.setLowVolInspNoYes(params.get("lowVoltageInspNoYes"));
 		
 //		currentProject.setPunchList(params.get("punchList"));
 //		currentProject.setCloseoutPhotos(params.get("closeoutPhotos"));
