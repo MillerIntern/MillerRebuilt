@@ -351,6 +351,11 @@ function fillTabs_CLOSEOUT(data)
 			$('#closeoutData').find("#mechFinalDate").val(getToday());
 	    	$('#closeoutData').find("#mechFinalStatus").val(4);
 		}
+		else if(json.permits.mechanicalPermitRequired == 2)
+		{
+			$('#closeoutData').find("#mechFinalDate").val(getToday());
+	    	$('#closeoutData').find("#mechFinalStatus").val(3);
+		}
 		else
 		{
 			$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
@@ -361,6 +366,11 @@ function fillTabs_CLOSEOUT(data)
 		{
 			$('#closeoutData').find("#elecFinalDate").val(getToday());
 	    	$('#closeoutData').find("#elecFinalStatus").val(4);
+		}
+		else if(json.permits.electricalPermitRequired == 2)
+		{
+			$('#closeoutData').find("#elecFinalDate").val(getToday());
+	    	$('#closeoutData').find("#elecFinalStatus").val(3);
 		}
 		else
 		{
@@ -373,6 +383,11 @@ function fillTabs_CLOSEOUT(data)
 			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
 	    	$('#closeoutData').find("#plumbingFinalStatus").val(4);
 		}
+		else if(json.permits.plumbingPermitRequired == 2)
+		{
+			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
+	    	$('#closeoutData').find("#plumbingFinalStatus").val(3);
+		}
 		else
 		{
 			$('#closeoutData').find("#plumbingFinalStatus").val(convertDefault(json.closeoutDetails.plumbingFinalStatus));
@@ -383,6 +398,11 @@ function fillTabs_CLOSEOUT(data)
 		{
 			$('#closeoutData').find("#gasFinalDate").val(getToday());
 	    	$('#closeoutData').find("#gasFinalStatus").val(4);
+		}
+		else if(json.permits.gasPermitRequired == 2)
+		{
+			$('#closeoutData').find("#gasFinalDate").val(getToday());
+	    	$('#closeoutData').find("#gasFinalStatus").val(3);
 		}
 		else
 		{
@@ -395,6 +415,11 @@ function fillTabs_CLOSEOUT(data)
 			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
 	    	$('#closeoutData').find("#ceilingFinalStatus").val(4);
 		}
+		else if(json.permits.ceilingPermitRequired == 2)
+		{
+			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
+	    	$('#closeoutData').find("#ceilingFinalStatus").val(3);
+		}
 	    else
 	    {
 	    	$('#closeoutData').find("#ceilingFinalStatus").val(convertDefault(json.closeoutDetails.ceilingFinalStatus));
@@ -405,6 +430,11 @@ function fillTabs_CLOSEOUT(data)
 		{
 			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
 	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(4);
+		}
+		else if(json.permits.fireAlarmPermitRequired == 2)
+		{
+			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
+	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(3);
 		}
 	    else
 	    {
@@ -417,6 +447,11 @@ function fillTabs_CLOSEOUT(data)
 			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
 	    	$('#closeoutData').find("#lowVolFinalStatus").val(4);
 		}
+		else if(json.permits.voltagePermitRequired == 2)
+		{
+			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
+	    	$('#closeoutData').find("#lowVolFinalStatus").val(3);
+		}
 	    else
 	    {
 	    	$('#closeoutData').find("#lowVolFinalStatus").val(convertDefault(json.closeoutDetails.lowVolFinalStatus));
@@ -427,6 +462,11 @@ function fillTabs_CLOSEOUT(data)
 		{
 			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
 	    	$('#closeoutData').find("#sprinkleFinalStatus").val(4);
+		}
+		else if(json.permits.sprinklerPermitRequired == 2)
+		{
+			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
+	    	$('#closeoutData').find("#sprinkleFinalStatus").val(3);
 		}
 	    else
 	    {
@@ -439,10 +479,15 @@ function fillTabs_CLOSEOUT(data)
 			$('#closeoutData').find("#buildPermitCL").val(getToday());
 	    	$('#closeoutData').find("#buildFinalStatus").val(4);
 		}
+		else if(json.permits.buildingPermitRequired == 2)
+		{
+			$('#closeoutData').find("#buildPermitCL").val(getToday());
+	    	$('#closeoutData').find("#buildFinalStatus").val(3);
+		}
 	    else
 	    {
 	    	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
-	    	$('#closeoutData').find("#buildingPermitCL").val(convertDefault(json.closeoutDetails.buildingPermitCL));
+	    	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
 	    }
 		
 		$('#closeoutData').find("#equipmentSubmittalStatus").val(convertDefault(json.closeoutDetails.equipmentSubmittalStatus));
@@ -1314,10 +1359,10 @@ function fillDropdowns_PERMIT(json)
 	defaultOption.value = "default";
 	defaultOption.innerHTML = "---Status---";
 
+	
 	$('#permitData').find('.permitStatus').find('option').remove();
 	$('#permitData').find('.permitStatus').append(defaultOption);
 	$('#permitData').find('.permitStatus').append(d);
-
 	
 	var dd = document.createDocumentFragment();
 	for (var i = 0; i < inspectionStage.length; i++) {
@@ -1381,6 +1426,15 @@ function fillPermitsAndInspectionsWithNA()
 
 
 
+function convertUndefined( value )
+{
+	if(value == undefined || value == "default")
+		return "default";
+	
+	return value;
+}
+
+
 /**
  * This function fills all of the tabs in the permitData div
  * INNER FUNCTION CALLS: none
@@ -1397,82 +1451,82 @@ function fillTabs_PERMIT(data)
 	console.log(json);
 	if (json.permits != null)
 	{	
-		
 		$('#permitData').find("#buildingPermitLastUpdated").val(json.permits.building);
-		$('#permitData').find("#buildingPermitStatus").val(json.permits.buildingPermitStatus);
-		$('#permitData').find("#buildingPermitReq").val(json.permits.buildingPermitRequired);
-		$('#permitData').find("#buildingInspectionReq").val(json.permits.buildingInspectionRequired);
-		$('#permitData').find("#buildingInspectionStatus").val(json.permits.buildingInspectionStatus);
+		$('#permitData').find("#buildingPermitStatus").val(convertUndefined(json.permits.buildingPermitStatus));
+		$('#permitData').find("#buildingPermitReq").val(convertUndefined(json.permits.buildingPermitRequired));
+		$('#permitData').find("#buildingInspectionReq").val(convertUndefined(json.permits.buildingInspectionRequired));
+		$('#permitData').find("#buildingInspectionStatus").val(convertUndefined(json.permits.buildingInspectionStatus));
 		$('#permitData').find("#buildingInspectionLastUpdated").val(json.permits.buildingInspectionLastUpdated);
 		
 		$('#permitData').find("#ceilingPermitLastUpdated").val(json.permits.ceiling);
-		$('#permitData').find("#ceilingPermitStatus").val(json.permits.ceilingPermitStatus);
-		$('#permitData').find("#ceilingPermitReq").val(json.permits.ceilingPermitRequired);
-		$('#permitData').find("#ceilingInspectionReq").val(json.permits.ceilingInspectionRequired);
-		$('#permitData').find("#ceilingInspectionStatus").val(json.permits.ceilingInspectionStatus);
+		$('#permitData').find("#ceilingPermitStatus").val(convertUndefined(json.permits.ceilingPermitStatus));
+		$('#permitData').find("#ceilingPermitReq").val(convertUndefined(json.permits.ceilingPermitRequired));
+		$('#permitData').find("#ceilingInspectionReq").val(convertUndefined(json.permits.ceilingInspectionRequired));
+		$('#permitData').find("#ceilingInspectionStatus").val(convertUndefined(json.permits.ceilingInspectionStatus));
 		$('#permitData').find("#ceilingInspectionLastUpdated").val(json.permits.ceilingInspectionLastUpdated);
 		
 		$('#permitData').find("#mechanicalPermitLastUpdated").val(json.permits.mechanical);
-		$('#permitData').find("#mechanicalPermitStatus").val(json.permits.mechanicalPermitStatus);
-		$('#permitData').find("#mechanicalPermitReq").val(json.permits.mechanicalPermitRequired);
-		$('#permitData').find("#mechanicalInspectionReq").val(json.permits.mechanicalInspectionRequired);
-		$('#permitData').find("#mechanicalInspectionStatus").val(json.permits.mechanicalInspectionStatus);
+		$('#permitData').find("#mechanicalPermitStatus").val(convertUndefined(json.permits.mechanicalPermitStatus));
+		$('#permitData').find("#mechanicalPermitReq").val(convertUndefined(json.permits.mechanicalPermitRequired));
+		$('#permitData').find("#mechanicalInspectionReq").val(convertUndefined(json.permits.mechanicalInspectionRequired));
+		$('#permitData').find("#mechanicalInspectionStatus").val(convertUndefined(json.permits.mechanicalInspectionStatus));
 		$('#permitData').find("#mechanicalInspectionLastUpdated").val(json.permits.mechanicalInspectionLastUpdated);
 		
 		$('#permitData').find("#electricalPermitLastUpdated").val(json.permits.electrical);
-		$('#permitData').find("#electricalPermitStatus").val(json.permits.electricalPermitStatus);
-		$('#permitData').find("#electricalPermitReq").val(json.permits.electricalPermitRequired);
-		$('#permitData').find("#electricalInspectionReq").val(json.permits.electricalInspectionRequired);
-		$('#permitData').find("#electricalInspectionStatus").val(json.permits.electricalInspectionStatus);
+		$('#permitData').find("#electricalPermitStatus").val(convertUndefined(json.permits.electricalPermitStatus));
+		$('#permitData').find("#electricalPermitReq").val(convertUndefined(json.permits.electricalPermitRequired));
+		$('#permitData').find("#electricalInspectionReq").val(convertUndefined(json.permits.electricalInspectionRequired));
+		$('#permitData').find("#electricalInspectionStatus").val(convertUndefined(json.permits.electricalInspectionStatus));
 		$('#permitData').find("#electricalInspectionLastUpdated").val(json.permits.electricalInspectionLastUpdated);
 		
 		$('#permitData').find("#plumbingPermitLastUpdated").val(json.permits.plumbing);
-		$('#permitData').find("#plumbingPermitStatus").val(json.permits.plumbingPermitStatus);
-		$('#permitData').find("#plumbingPermitReq").val(json.permits.plumbingPermitRequired);
-		$('#permitData').find("#plumbingInspectionReq").val(json.permits.plumbingInspectionRequired);
-		$('#permitData').find("#plumbingInspectionStatus").val(json.permits.plumbingInspectionStatus);
+		$('#permitData').find("#plumbingPermitStatus").val(convertUndefined(json.permits.plumbingPermitStatus));
+		$('#permitData').find("#plumbingPermitReq").val(convertUndefined(json.permits.plumbingPermitRequired));
+		$('#permitData').find("#plumbingInspectionReq").val(convertUndefined(json.permits.plumbingInspectionRequired));
+		$('#permitData').find("#plumbingInspectionStatus").val(convertUndefined(json.permits.plumbingInspectionStatus));
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(json.permits.plumbingInspectionLastUpdated);
 		
 		$('#permitData').find("#gasPermitLastUpdated").val(json.permits.gas);
-		$('#permitData').find("#gasPermitStatus").val(json.permits.gasPermitStatus);
-		$('#permitData').find("#gasPermitReq").val(json.permits.gasPermitRequired);
-		$('#permitData').find("#gasInspectionReq").val(json.permits.gasInspectionRequired);
-		$('#permitData').find("#gasInspectionStatus").val(json.permits.gasInspectionStatus);
+		$('#permitData').find("#gasPermitStatus").val(convertUndefined(json.permits.gasPermitStatus));
+		$('#permitData').find("#gasPermitReq").val(convertUndefined(json.permits.gasPermitRequired));
+		$('#permitData').find("#gasInspectionReq").val(convertUndefined(json.permits.gasInspectionRequired));
+		$('#permitData').find("#gasInspectionStatus").val(convertUndefined(json.permits.gasInspectionStatus));
 		$('#permitData').find("#gasInspectionLastUpdated").val(json.permits.gasInspectionLastUpdated);
 		
 		$('#permitData').find("#sprinklerPermitLastUpdated").val(json.permits.fire_sprinkler);
-		$('#permitData').find("#sprinklerPermitStatus").val(json.permits.sprinklerPermitStatus);
-		$('#permitData').find("#sprinklerPermitReq").val(json.permits.sprinklerPermitRequired);
-		$('#permitData').find("#sprinklerInspectionReq").val(json.permits.sprinklerInspectionRequired);
-		$('#permitData').find("#sprinklerInspectionStatus").val(json.permits.sprinklerInspectionStatus);
+		$('#permitData').find("#sprinklerPermitStatus").val(convertUndefined(json.permits.sprinklerPermitStatus));
+		$('#permitData').find("#sprinklerPermitReq").val(convertUndefined(json.permits.sprinklerPermitRequired));
+		$('#permitData').find("#sprinklerInspectionReq").val(convertUndefined(json.permits.sprinklerInspectionRequired));
+		$('#permitData').find("#sprinklerInspectionStatus").val(convertUndefined(json.permits.sprinklerInspectionStatus));
 		$('#permitData').find("#sprinklerInspectionLastUpdated").val(json.permits.sprinklerInspectionLastUpdated);
 		
 		$('#permitData').find("#fireAlarmPermitLastUpdated").val(json.permits.fire_alarm);
-		$('#permitData').find("#fireAlarmPermitStatus").val(json.permits.fireAlarmPermitStatus);
-		$('#permitData').find("#fireAlarmPermitReq").val(json.permits.fireAlarmPermitRequired);
-		$('#permitData').find("#fireAlarmInspectionReq").val(json.permits.fireAlarmInspectionRequired);
-		$('#permitData').find("#fireAlarmInspectionStatus").val(json.permits.fireAlarmInspectionStatus);
+		$('#permitData').find("#fireAlarmPermitStatus").val(convertUndefined(json.permits.fireAlarmPermitStatus));
+		$('#permitData').find("#fireAlarmPermitReq").val(convertUndefined(json.permits.fireAlarmPermitRequired));
+		$('#permitData').find("#fireAlarmInspectionReq").val(convertUndefined(json.permits.fireAlarmInspectionRequired));
+		$('#permitData').find("#fireAlarmInspectionStatus").val(convertUndefined(json.permits.fireAlarmInspectionStatus));
 		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(json.permits.fireAlarmInspectionLastUpdated);
 		
 		$('#permitData').find("#voltagePermitLastUpdated").val(json.permits.low_voltage);
-		$('#permitData').find("#voltagePermitStatus").val(json.permits.voltagePermitStatus);
-		$('#permitData').find("#voltagePermitReq").val(json.permits.voltagePermitRequired);
-		$('#permitData').find("#voltageInspectionReq").val(json.permits.voltageInspectionRequired);
-		$('#permitData').find("#voltageInspectionStatus").val(json.permits.voltageInspectionStatus);
+		$('#permitData').find("#voltagePermitStatus").val(convertUndefined(json.permits.voltagePermitStatus));
+		$('#permitData').find("#voltagePermitReq").val(convertUndefined(json.permits.voltagePermitRequired));
+		$('#permitData').find("#voltageInspectionReq").val(convertUndefined(json.permits.voltageInspectionRequired));
+		$('#permitData').find("#voltageInspectionStatus").val(convertUndefined(json.permits.voltageInspectionStatus));
 		$('#permitData').find("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
 		
-	    $('#permitData').find("#otherAPermitStatus").val(convertDefault(json.permits.otherAPermitStatus));
+	    $('#permitData').find("#otherAPermitStatus").val(convertUndefined(json.permits.otherAPermitStatus));
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
 //	    $('#permitData').find("#otherAPermitReq").val(json.permits.otherAPermitRequired);
 //	    $('#permitData').find("#otherAInspectionReq").val(json.permits.otherAInspectionRequired);
-	    $('#permitData').find("#otherAInspectionStatus").val(convertDefault(json.permits.otherAInspectionStatus));
+	    $('#permitData').find("#otherAInspectionStatus").val(convertUndefined(json.permits.otherAInspectionStatus));
 	    $('#permitData').find("#otherAInspectionLastUpdated").val(json.permits.otherAInspectionLastUpdated);
 	    
-	    $('#permitData').find("#otherBPermitStatus").val(json.permits.otherBPermitStatus);
+	    $('#permitData').find("#otherBPermitStatus").val(convertUndefined(json.permits.otherBPermitStatus));
 	    $('#permitData').find("#otherBPermitLastUpdated").val(json.permits.otherBPermit);
 //	    $('#permitData').find("#otherBPermitReq").val(json.permits.otherBPermitRequired);
 //	    $('#permitData').find("#otherBInspectionReq").val(json.permits.otherBInspectionRequired);
-	    $('#permitData').find("#otherBInspectionStatus").val(json.permits.otherBInspectionStatus);
+	    console.log(json.permits.otherBInspectionStatus);
+	    $('#permitData').find("#otherBInspectionStatus").val(convertUndefined(json.permits.otherBInspectionStatus));
 	    $('#permitData').find("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
 	    
 	    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData");
@@ -1483,17 +1537,13 @@ function fillTabs_PERMIT(data)
 	    
 }
 
-function convert(param)
-{
-	
-}
-
 
 function fillBuilding()
 {	
 	if($('#permitData').find("#buildingPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#buildingPermitStatus").val("TBD");
+		$('#permitData').find("#buildingPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#buildingInspectionReq").val(1);
         $('#permitData').find("#buildingInspectionStatus").val("TBD");
         $('#permitData').find("#buildingInspectionLastUpdated").val(getToday());
@@ -1501,6 +1551,7 @@ function fillBuilding()
     else if($('#permitData').find("#buildingPermitReq").val() == 2)
     {	
     	$('#permitData').find("#buildingPermitStatus").val("N/A");
+    	$('#permitData').find("#buildingPermitLastUpdated").val(getToday());
 		$('#permitData').find("#buildingInspectionReq").val(2);
 		$('#permitData').find("#buildingInspectionStatus").val("N/A");
 		$('#permitData').find("#buildingInspectionLastUpdated").val(getToday());    
@@ -1508,6 +1559,7 @@ function fillBuilding()
     else if($('#permitData').find("#buildingPermitReq").val() == 0)
     {	
     	$('#permitData').find("#buildingPermitStatus").val("TBD");
+    	$('#permitData').find("#buildingPermitLastUpdated").val(getToday());
 		$('#permitData').find("#buildingInspectionReq").val(0);
 		$('#permitData').find("#buildingInspectionStatus").val("TBD");
 		$('#permitData').find("#buildingInspectionLastUpdated").val(getToday());    
@@ -1521,6 +1573,7 @@ function fillCeiling()
 	if($('#permitData').find("#ceilingPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#ceilingPermitStatus").val("TBD");
+		$('#permitData').find("#ceilingPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#ceilingInspectionReq").val(1);
         $('#permitData').find("#ceilingInspectionStatus").val("TBD");
         $('#permitData').find("#ceilingInspectionLastUpdated").val(getToday());
@@ -1528,14 +1581,16 @@ function fillCeiling()
     else if($('#permitData').find("#ceilingPermitReq").val() == 2)
     {	
     	$('#permitData').find("#ceilingPermitStatus").val("N/A");
-		$('#permitData').find("#ceilingInspectionReq").val(2);
+		$('#permitData').find("#ceilingPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#ceilingInspectionReq").val(2);
 		$('#permitData').find("#ceilingInspectionStatus").val("N/A");
 		$('#permitData').find("#ceilingInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#ceilingPermitReq").val() == 0)
     {	
     	$('#permitData').find("#ceilingPermitStatus").val("TBD");
-		$('#permitData').find("#ceilingInspectionReq").val(0);
+		$('#permitData').find("#ceilingPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#ceilingInspectionReq").val(0);
 		$('#permitData').find("#ceilingInspectionStatus").val("TBD");
 		$('#permitData').find("#ceilingInspectionLastUpdated").val(getToday());    
     }   
@@ -1546,6 +1601,7 @@ function fillMechanical()
 	if($('#permitData').find("#mechanicalPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#mechanicalPermitStatus").val("TBD");
+		$('#permitData').find("#mechanicalPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#mechanicalInspectionReq").val(1);
         $('#permitData').find("#mechanicalInspectionStatus").val("TBD");
         $('#permitData').find("#mechanicalInspectionLastUpdated").val(getToday());
@@ -1553,14 +1609,16 @@ function fillMechanical()
     else if($('#permitData').find("#mechanicalPermitReq").val() == 2)
     {	
     	$('#permitData').find("#mechanicalPermitStatus").val("N/A");
-		$('#permitData').find("#mechanicalInspectionReq").val(2);
+		$('#permitData').find("#mechanicalPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#mechanicalInspectionReq").val(2);
 		$('#permitData').find("#mechanicalInspectionStatus").val("N/A");
 		$('#permitData').find("#mechanicalInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#mechanicalPermitReq").val() == 0)
     {	
     	$('#permitData').find("#mechanicalPermitStatus").val("TBD");
-		$('#permitData').find("#mechanicalInspectionReq").val(0);
+		$('#permitData').find("#mechanicalPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#mechanicalInspectionReq").val(0);
 		$('#permitData').find("#mechanicalInspectionStatus").val("TBD");
 		$('#permitData').find("#mechanicalInspectionLastUpdated").val(getToday());    
     }    
@@ -1571,6 +1629,7 @@ function fillElectrical()
 	if($('#permitData').find("#electricalPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#electricalPermitStatus").val("TBD");
+		$('#permitData').find("#electricalPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#electricalInspectionReq").val(1);
         $('#permitData').find("#electricalInspectionStatus").val("TBD");
         $('#permitData').find("#electricalInspectionLastUpdated").val(getToday());
@@ -1578,13 +1637,15 @@ function fillElectrical()
     else if($('#permitData').find("#electricalPermitReq").val() == 2)
     {	
     	$('#permitData').find("#electricalPermitStatus").val("N/A");
-		$('#permitData').find("#electricalInspectionReq").val(2);
+    	$('#permitData').find("#electricalPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#electricalInspectionReq").val(2);
 		$('#permitData').find("#electricalInspectionStatus").val("N/A");
 		$('#permitData').find("#electricalInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#electricalPermitReq").val() == 0)
     {	
     	$('#permitData').find("#electricalPermitStatus").val("TBD");
+    	$('#permitData').find("#electricalPermitLastUpdated").val(getToday());
 		$('#permitData').find("#electricalInspectionReq").val(0);
 		$('#permitData').find("#electricalInspectionStatus").val("TBD");
 		$('#permitData').find("#electricalInspectionLastUpdated").val(getToday());    
@@ -1596,6 +1657,7 @@ function fillPlumbing()
 	if($('#permitData').find("#plumbingPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#plumbingPermitStatus").val("TBD");
+		$('#permitData').find("#plumbingPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#plumbingInspectionReq").val(1);
         $('#permitData').find("#plumbingInspectionStatus").val("TBD");
         $('#permitData').find("#plumbingInspectionLastUpdated").val(getToday());
@@ -1603,6 +1665,7 @@ function fillPlumbing()
     else if($('#permitData').find("#plumbingPermitReq").val() == 2)
     {	
     	$('#permitData').find("#plumbingPermitStatus").val("N/A");
+		$('#permitData').find("#plumbingPermitLastUpdated").val(getToday());
 		$('#permitData').find("#plumbingInspectionReq").val(2);
 		$('#permitData').find("#plumbingInspectionStatus").val("N/A");
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(getToday());    
@@ -1610,6 +1673,7 @@ function fillPlumbing()
     else if($('#permitData').find("#plumbingPermitReq").val() == 0)
     {	
     	$('#permitData').find("#plumbingPermitStatus").val("TBD");
+		$('#permitData').find("#plumbingPermitLastUpdated").val(getToday());
 		$('#permitData').find("#plumbingInspectionReq").val(0);
 		$('#permitData').find("#plumbingInspectionStatus").val("TBD");
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(getToday());    
@@ -1621,6 +1685,7 @@ function fillGas()
 	if($('#permitData').find("#gasPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#gasPermitStatus").val("TBD");
+		$('#permitData').find("#gasPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#gasInspectionReq").val(1);
         $('#permitData').find("#gasInspectionStatus").val("TBD");
         $('#permitData').find("#gasInspectionLastUpdated").val(getToday());
@@ -1628,13 +1693,15 @@ function fillGas()
     else if($('#permitData').find("#gasPermitReq").val() == 2)
     {	
     	$('#permitData').find("#gasPermitStatus").val("N/A");
-		$('#permitData').find("#gasInspectionReq").val(2);
+		$('#permitData').find("#gasPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#gasInspectionReq").val(2);
 		$('#permitData').find("#gasInspectionStatus").val("N/A");
 		$('#permitData').find("#gasInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#gasPermitReq").val() == 0)
     {	
     	$('#permitData').find("#gasPermitStatus").val("TBD");
+		$('#permitData').find("#gasPermitLastUpdated").val(getToday());
 		$('#permitData').find("#gasInspectionReq").val(0);
 		$('#permitData').find("#gasInspectionStatus").val("TBD");
 		$('#permitData').find("#gasInspectionLastUpdated").val(getToday());    
@@ -1646,6 +1713,7 @@ function fillSprinkler()
 	if($('#permitData').find("#sprinklerPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#sprinklerPermitStatus").val("TBD");
+		$('#permitData').find("#sprinklerPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#sprinklerInspectionReq").val(1);
         $('#permitData').find("#sprinklerInspectionStatus").val("TBD");
         $('#permitData').find("#sprinklerInspectionLastUpdated").val(getToday());
@@ -1653,13 +1721,15 @@ function fillSprinkler()
     else if($('#permitData').find("#sprinklerPermitReq").val() == 2)
     {	
     	$('#permitData').find("#sprinklerPermitStatus").val("N/A");
-		$('#permitData').find("#sprinklerInspectionReq").val(2);
+		$('#permitData').find("#sprinklerPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#sprinklerInspectionReq").val(2);
 		$('#permitData').find("#sprinklerInspectionStatus").val("N/A");
 		$('#permitData').find("#sprinklerInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#sprinklerPermitReq").val() == 0)
     {	
     	$('#permitData').find("#sprinklerPermitStatus").val("TBD");
+		$('#permitData').find("#sprinklerPermitLastUpdated").val(getToday());
 		$('#permitData').find("#sprinklerInspectionReq").val(0);
 		$('#permitData').find("#sprinklerInspectionStatus").val("TBD");
 		$('#permitData').find("#sprinklerInspectionLastUpdated").val(getToday());    
@@ -1671,6 +1741,7 @@ function fillFireAlarm()
 	if($('#permitData').find("#fireAlarmPermitReq").val() == 1)
 	{	
 		$('#permitData').find("#fireAlarmPermitStatus").val("TBD");
+		$('#permitData').find("#fireAlarmPermitLastUpdated").val(getToday());
 	    $('#permitData').find("#fireAlarmInspectionReq").val(1);
         $('#permitData').find("#fireAlarmInspectionStatus").val("TBD");
         $('#permitData').find("#fireAlarmInspectionLastUpdated").val(getToday());
@@ -1678,6 +1749,7 @@ function fillFireAlarm()
     else if($('#permitData').find("#fireAlarmPermitReq").val() == 2)
     {	
     	$('#permitData').find("#fireAlarmPermitStatus").val("N/A");
+		$('#permitData').find("#fireAlarmPermitLastUpdated").val(getToday());
 		$('#permitData').find("#fireAlarmInspectionReq").val(2);
 		$('#permitData').find("#fireAlarmInspectionStatus").val("N/A");
 		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(getToday());    
@@ -1685,7 +1757,8 @@ function fillFireAlarm()
     else if($('#permitData').find("#fireAlarmPermitReq").val() == 0)
     {	
     	$('#permitData').find("#fireAlarmPermitStatus").val("TBD");
-		$('#permitData').find("#fireAlarmInspectionReq").val(0);
+		$('#permitData').find("#fireAlarmPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#fireAlarmInspectionReq").val(0);
 		$('#permitData').find("#fireAlarmInspectionStatus").val("TBD");
 		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(getToday());    
     }  
@@ -1696,6 +1769,7 @@ function fillLowVoltage()
 	if($('#permitData').find("#voltagePermitReq").val() == 1)
 	{	
 		$('#permitData').find("#voltagePermitStatus").val("TBD");
+		$('#permitData').find("#voltagePermitLastUpdated").val(getToday());
 	    $('#permitData').find("#voltageInspectionReq").val(1);
         $('#permitData').find("#voltageInspectionStatus").val("TBD");
         $('#permitData').find("#voltageInspectionLastUpdated").val(getToday());
@@ -1703,13 +1777,15 @@ function fillLowVoltage()
     else if($('#permitData').find("#voltagePermitReq").val() == 2)
     {	
     	$('#permitData').find("#voltagePermitStatus").val("N/A");
-		$('#permitData').find("#voltageInspectionReq").val(2);
+		$('#permitData').find("#voltagePermitLastUpdated").val(getToday());
+    	$('#permitData').find("#voltageInspectionReq").val(2);
 		$('#permitData').find("#voltageInspectionStatus").val("N/A");
 		$('#permitData').find("#voltageInspectionLastUpdated").val(getToday());    
     }
     else if($('#permitData').find("#voltagePermitReq").val() == 0)
     {	
     	$('#permitData').find("#voltagePermitStatus").val("TBD");
+		$('#permitData').find("#voltagePermitLastUpdated").val(getToday());
 		$('#permitData').find("#voltageInspectionReq").val(0);
 		$('#permitData').find("#voltageInspectionStatus").val("TBD");
 		$('#permitData').find("#voltageInspectionLastUpdated").val(getToday());    
@@ -3425,6 +3501,14 @@ function convertRequired(req)
 		return;
 }
 
+function convertStatus( status )
+{
+	if(status == "default" || status == undefined)
+		return "";
+	
+	return status;
+}
+
 /**
  * This function fills out the information on the page for the permits and inspections
  * INNER FUNCTION CALLS: none
@@ -3437,76 +3521,76 @@ function fillPermitsAndInspections (data) {
 	// permits 
 	$('#projectManager').find('#buildingPermitRequired').text(convertRequired(tabData.buildingPermitRequired));
 	$('#projectManager').find('#buildingPermitDate').text(tabData.building);
-	$('#projectManager').find('#buildingPermit').text(tabData.buildingPermitStatus);
+	$('#projectManager').find('#buildingPermit').text(convertStatus(tabData.buildingPermitStatus));
 	
 	$('#projectManager').find('#ceilingPermitRequired').text(convertRequired(tabData.ceilingPermitRequired));
 	$('#projectManager').find('#ceilingPermitDate').text(tabData.ceiling);
-	$('#projectManager').find('#ceilingPermit').text(tabData.ceilingPermitStatus);
+	$('#projectManager').find('#ceilingPermit').text(convertStatus(tabData.ceilingPermitStatus));
 	
 	$('#projectManager').find('#mechanicalPermitRequired').text(convertRequired(tabData.mechanicalPermitRequired));
 	$('#projectManager').find('#mechanicalPermitDate').text(tabData.mechanical);
-	$('#projectManager').find('#mechanicalPermit').text(tabData.mechanicalPermitStatus);
+	$('#projectManager').find('#mechanicalPermit').text(convertStatus(tabData.mechanicalPermitStatus));
 	
 	$('#projectManager').find('#electricalPermitRequired').text(convertRequired(tabData.electricalPermitRequired));
 	$('#projectManager').find('#electricalPermitDate').text(tabData.electrical);
-	$('#projectManager').find('#electricalPermit').text(tabData.electricalPermitStatus);
+	$('#projectManager').find('#electricalPermit').text(convertStatus(tabData.electricalPermitStatus));
 	
 	$('#projectManager').find('#plumbingPermitRequired').text(convertRequired(tabData.plumbingPermitRequired));
 	$('#projectManager').find('#plumbingPermitDate').text(tabData.plumbing);
-	$('#projectManager').find('#plumbingPermit').text(tabData.plumbingPermitStatus);
+	$('#projectManager').find('#plumbingPermit').text(convertStatus(tabData.plumbingPermitStatus));
 	
 	$('#projectManager').find('#gasPermitRequired').text(convertRequired(tabData.gasPermitRequired));
 	$('#projectManager').find('#gasPermitDate').text(tabData.gas);
-	$('#projectManager').find('#gasPermit').text(tabData.gasPermitStatus);
+	$('#projectManager').find('#gasPermit').text(convertStatus(tabData.gasPermitStatus));
 	
 	$('#projectManager').find('#sprinklerPermitRequired').text(convertRequired(tabData.sprinklerPermitRequired));
 	$('#projectManager').find('#sprinklerPermitDate').text(tabData.fire_sprinkler);
-	$('#projectManager').find('#sprinklerPermit').text(tabData.sprinklerPermitStatus);
+	$('#projectManager').find('#sprinklerPermit').text(convertStatus(tabData.sprinklerPermitStatus));
 	
 	$('#projectManager').find('#fireAlarmPermitRequired').text(convertRequired(tabData.fireAlarmPermitRequired));
 	$('#projectManager').find('#fireAlarmPermitDate').text(tabData.fire_alarm);
-	$('#projectManager').find('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
+	$('#projectManager').find('#fireAlarmPermit').text(convertStatus(tabData.fireAlarmPermitStatus));
 	
 	$('#projectManager').find('#lowVoltagePermitRequired').text(convertRequired(tabData.voltagePermitRequired));
 	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
-	$('#projectManager').find('#lowVoltagePermit').text(tabData.voltagePermitStatus);
+	$('#projectManager').find('#lowVoltagePermit').text(convertStatus(tabData.voltagePermitStatus));
 	
 	// inspections
 	$('#projectManager').find('#buildingInspectionRequired').text(convertRequired(tabData.buildingInspectionRequired));
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
-	$('#projectManager').find('#buildingInspection').text(tabData.buildingInspectionStatus);
+	$('#projectManager').find('#buildingInspection').text(convertStatus(tabData.buildingInspectionStatus));
 	
 	$('#projectManager').find('#ceilingInspectionRequired').text(convertRequired(tabData.ceilingInspectionRequired));
 	$('#projectManager').find('#ceilingInspectionDate').text(tabData.ceilingInspectionLastUpdated);
-	$('#projectManager').find('#ceilingInspection').text(tabData.ceilingInspectionStatus);
+	$('#projectManager').find('#ceilingInspection').text(convertStatus(tabData.ceilingInspectionStatus));
 	
 	$('#projectManager').find('#mechanicalInspectionRequired').text(convertRequired(tabData.mechanicalInspectionRequired));
 	$('#projectManager').find('#mechanicalInspectionDate').text(tabData.mechanicalInspectionLastUpdated);
-	$('#projectManager').find('#mechanicalInspection').text(tabData.mechanicalInspectionStatus);
+	$('#projectManager').find('#mechanicalInspection').text(convertStatus(tabData.mechanicalInspectionStatus));
 	
 	$('#projectManager').find('#electricalInspectionRequired').text(convertRequired(tabData.electricalInspectionRequired));
 	$('#projectManager').find('#electricalInspectionDate').text(tabData.electricalInspectionLastUpdated);
-	$('#projectManager').find('#electricalInspection').text(tabData.electricalInspectionStatus);
+	$('#projectManager').find('#electricalInspection').text(convertStatus(tabData.electricalInspectionStatus));
 	
 	$('#projectManager').find('#plumbingInspectionRequired').text(convertRequired(tabData.plumbingInspectionRequired));
 	$('#projectManager').find('#plumbingInspectionDate').text(tabData.plumbingInspectionLastUpdated);
-	$('#projectManager').find('#plumbingInspection').text(tabData.plumbingInspectionStatus);
+	$('#projectManager').find('#plumbingInspection').text(convertStatus(tabData.plumbingInspectionStatus));
 	
 	$('#projectManager').find('#gasInspectionRequired').text(convertRequired(tabData.gasInspectionRequired));
 	$('#projectManager').find('#gasInspectionDate').text(tabData.gasInspectionLastUpdated);
-	$('#projectManager').find('#gasInspection').text(tabData.gasInspectionStatus);
+	$('#projectManager').find('#gasInspection').text(convertStatus(tabData.gasInspectionStatus));
 	
 	$('#projectManager').find('#sprinklerInspectionRequired').text(convertRequired(tabData.sprinklerInspectionRequired));
 	$('#projectManager').find('#sprinklerInspectionDate').text(tabData.sprinklerInspectionLastUpdated);
-	$('#projectManager').find('#sprinklerInspection').text(tabData.sprinklerInspectionStatus);
+	$('#projectManager').find('#sprinklerInspection').text(convertStatus(tabData.sprinklerInspectionStatus));
 	
 	$('#projectManager').find('#fireAlarmInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#fireAlarmInspectionDate').text(tabData.fireAlarmInspectionLastUpdated);
-	$('#projectManager').find('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
+	$('#projectManager').find('#fireAlarmInspection').text(convertStatus(tabData.fireAlarmInspectionStatus));
 	
 	$('#projectManager').find('#lowVoltageInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
-	$('#projectManager').find('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
+	$('#projectManager').find('#lowVoltageInspection').text(convertStatus(tabData.voltageInspectionStatus));
 }
 
 function clearPermitsAndInspectionsOverview () {

@@ -155,9 +155,9 @@ public class PermitsFiller
 		if(!params.get("otherBInspectionLastUpdated").isEmpty())
 			bInspection = formatter.parse(params.get("otherBInspectionLastUpdated"));
 		permits.setOtherBInspectionLastUpdated(bInspection);
-		permits.setOtherBInspectionStatus(params.get("otherBInspectionStatus"));
 		permits.setOtherBPermitStatus(params.get("otherBPermitStatus"));
-
+		permits.setOtherBInspectionStatus(params.get("otherBInspectionStatus"));
+		
 		permits.setPermitNotes(params.get("permitNotes"));
 		permits.setInspectionNotes(params.get("inspectionNotes"));
 
