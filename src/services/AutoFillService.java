@@ -108,8 +108,6 @@ public class AutoFillService {
 		
 		if(_value.equals("2"))
 			value = "6";
-		if(_value.equals("8"))
-			value = "6";
 		else
 			value = "3";
 		
@@ -152,8 +150,6 @@ public class AutoFillService {
 		
 		if(_value.equals("2"))
 			value = "4";
-		if(_value.equals("8"))
-			value = "6";
 		else
 			value = "3";
 		
@@ -204,8 +200,6 @@ public class AutoFillService {
 		
 		if(_value.equals("2") || _value.equals("5"))
 			value = "4";
-		else if(_value.equals("8"))
-			value = "6";
 		else
 			value = "3";
 		

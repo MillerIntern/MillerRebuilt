@@ -58,7 +58,10 @@ public class ProjectService extends ProjectObjectService
 	public synchronized static long addNewProject(Map<String, String> parameters) throws ClassNotFoundException, ParseException, NumberFormatException {
 		Project project = new Project();
 		ProjectInformationFiller.fillProjectInformation(project, parameters);
-
+		ProjectInformationFiller.fillPermits(project, parameters);
+		ProjectInformationFiller.fillHVAC(project, parameters);
+		ProjectInformationFiller.fillRefrigeration(project, parameters);
+		ProjectInformationFiller.fillProjectClass(project, parameters);
 		long projectID = ProjectObjectService.addObject("Project", project);
 
 		return projectID;

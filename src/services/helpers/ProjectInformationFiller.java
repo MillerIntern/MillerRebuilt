@@ -41,6 +41,10 @@ public class ProjectInformationFiller {
 		currentProject.setProjectType(
 				(ProjectType) ProjectObjectService.get(Long.parseLong(params.get("pType")), "ProjectType"));
 
+		currentProject.setAutofillPermits(params.get("autofill-Permits"));
+		currentProject.setAutofillHVAC(params.get("autofill-HVAC"));
+		currentProject.setAutofillRefrigeration(params.get("autofill-Refrigeration"));
+		
 		String mcsNumberString = params.get("mcsNumber");
 		try {
 			int mcsNum = Integer.parseInt(mcsNumberString);

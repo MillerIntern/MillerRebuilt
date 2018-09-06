@@ -217,6 +217,7 @@ function saveProject() {
 	var projectClass = $('#class').val();
 	if(projectClass === 'undefined' || projectClass === 'default')
 		return alert("The Project field is required. Please give it a value.");
+	projectClass = determineAutofillValue(projectClass);
 
 	var HVAC = $('#autofill-HVAC').val();
 	if(HVAC === 'undefined' || HVAC === 'default')
@@ -322,7 +323,6 @@ function saveProject() {
 				projectID = data.responseJSON;
 				alert('Save Complete!');
 				$('#saveButton > button').prop('disabled', false);
-
 			}
 			
 		});
@@ -400,6 +400,7 @@ function getProject()
 		});
 	}
 }
+
 
 ////This function fills out the page with project data. This is so the user can edit the project information
 ////Input: JSON object representing a project
