@@ -5938,6 +5938,7 @@ function checkInitFilter () {
 				'action': 'getUserInfo'
 			}, success: function (data) {
 				user = data;
+				console.log(user);
 				 if(user.permission.id != "admin") hideAdminContent();	
 				 if(user.firstName == "Sandy") {
 					 $('#paramID1').val('Warehouse');
@@ -5994,6 +5995,7 @@ function checkInitFilter () {
 				'action': 'getUserInfo'
 			}, success: function (data) {
 				user = data;
+				console.log(user);
 				 if(user.permission.id != 1) hideAdminContent();	 
 				 if(user.firstName == "Sandy") {
 					 $('.stage').each(function(i, obj) {
@@ -6008,12 +6010,19 @@ function checkInitFilter () {
 				 $('#paramID2').val('Manager');
 			     $('#paramVal2').empty();
 				 $('#paramVal2').append(managerOptions.cloneNode(true));
-				 matchUsernameToPersonID(user.firstName, 2);
+				 matchUsernameToPerson(user.firstName);
 				 
 				 //$('#stageSelector').trigger('chosen:updated');
-
-				
-				filterProjects();
+				 
+				var parent = document.getElementById('param2')
+				var child1 = document.getElementById('paramID2');
+				var child2 = document.getElementById('paramVal2');
+				if(parent != null && child1 != null && child2 != null)
+				{
+					child1.remove(child2);
+					parent.remove(child1);
+				}
+					filterProjects();
 			}
 		});		
 	}
@@ -6033,7 +6042,9 @@ function matchUsernameToPersonID(userFirstName, paramNum){
 	{
 		if(PERSONS[i].name.toLowerCase() == userFirstName.toLowerCase())
 		{
-			document.getElementById("paramVal" + paramNum).value = PERSONS[i].id;
+			console.log(PERSONS[i].name, PERSONS[i].id);
+			var param = document.getElementById("paramVal" + paramNum);
+			param.value = PERSONS[i].id;
 			removeParam(document.getElementById('paramID2'));
 			return PERSONS[i].id;
 		}
@@ -6082,7 +6093,7 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 	for (var i = 0; i < json.length; i++) {
 		
 		if(field == "Manager" || field == "Supervisor") {
-			if(json[i].name == "Bart") continue;
+			if(json[i].name == "Bart" || json[i].name == "Lillian") continue;
 		}
 		if(field == "Project"){
 			if(json[i].id == 8)
@@ -6228,6 +6239,7 @@ function addParameter() {
 	$(selectVal).css('margin-right', '4px');
 	
 	let optionObject2 = document.createElement('option');
+	optionObject2.value = 'default';
 	optionObject2.innerHTML = '---';
 	
 	selectID.appendChild(optionObject);
@@ -6270,7 +6282,6 @@ function filterProjects () {
 	//let json = JSON.parse(projects['projects']);
 	let json = DISPLAYABLE_PROJECTS;
 	console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS.length);
-
 	let parameters = $('.paramHolder').children('select');
 	
 	let remaining = json.length;
@@ -6281,6 +6292,7 @@ function filterProjects () {
 		console.log("VAL = ", val , id);
 		
 		for (var j = 0; j < json.length; j++) {
+			//console.log(json[j]);
 			if(id === 'Warehouse') { 
 				if(json[j] != null && json[j].warehouse.id != val) {
 					json[j] = null;
@@ -6302,7 +6314,7 @@ function filterProjects () {
 					remaining = remaining -1;
 				} 
 			} else if (id === 'Supervisor') {
-				console.log("ID VAL: ", json[j].supervisors);
+				//console.log("ID VAL: ", json[j].supervisors);
 				if (json[j] != null && json[j].supervisors != null && json[j].supervisors[0].id != val) {
 					json[j] = null
 					remaining = remaining - 1;
