@@ -1632,7 +1632,7 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("numOfChangeOrdersCompleted" , "Number");
 		fields.put("numOfMCSChangeOrders" , "Number");
 		fields.put("numOfMCSChangeOrdersCompleted" , "Number");
-	
+	    fields.put("salvageValue", "Number");
 		fields.put("MCSStatus" , "String");
 		fields.put("MCSDate" , "Date");
 		fields.put("GCStatus" , "String");

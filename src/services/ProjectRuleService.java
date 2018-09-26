@@ -27,93 +27,13 @@ import projectObjects.RuleSeverity;
 
 public class ProjectRuleService 
 {
-		
-//	
-//	public static RuleResult EvaluateNumbers(Double d1 , Double d2)
-//	{
-////		if( d1 == null )
-////			return RuleResult.NN_N;
-////		else 
-//		if(d1 == null && d2 == null)
-//			return RuleResult.NN_NN;
-//		else if(d1 == null && d2 != null)
-//			return RuleResult.NN_NV;
-//		else if(d1 != null && d2 == null)
-//			return RuleResult.NN_VN;
-//		else
-//		{
-//			int result = d1.compareTo(d2);
-//			
-//			if(result == 0)
-//				return RuleResult.NN_EQUAL;
-//			else if(result == -1)
-//				return RuleResult.NN_LESS;
-//			else
-//				return RuleResult.NN_GREATER;
-//		}
-//	}
-//	
-//	public static RuleResult EvaluateDateNumber(Date d1 , Double d2)
-//	{
-//		if(d1 == null && d2 == null)
-//			return RuleResult.DN_NN;
-//		else if(d1 == null && d2 != null)
-//			return RuleResult.DN_NV;
-//		else
-//			return RuleResult.DN_VN;
-//	}
-//	
-//	public static RuleResult EvaluateNumberDate(Double d1 , Date d2)
-//	{
-//		if(d1 == null && d2 == null)
-//			return RuleResult.ND_NN;
-//		else if(d1 == null && d2 != null)
-//			return RuleResult.ND_NV;
-//		else
-//			return RuleResult.ND_VN;
-//	}
-//	
-//	public static RuleResult EvaluateStrings(String d1 , String d2)
-//	{
-////		if(d1 == null || d1 == "")
-////			return RuleResult.SS_N;
-////		else
-//			if(d1 == null && d2 == null)
-//			return RuleResult.SS_NN;
-//		else if(d1 == null && d2 != null)
-//			return RuleResult.SS_NV;
-//		else if(d1 != null && d2 == null)
-//			return RuleResult.SS_VN;
-//		else if(d1.isEmpty() && d2.isEmpty())
-//			return RuleResult.SS_NN;
-//		else if(d1.isEmpty() && !(d2.isEmpty()))
-//			return RuleResult.SS_NV;
-//		else if(!(d1.isEmpty()) && !(d2.isEmpty()))
-//			return RuleResult.SS_VN;
-//		else
-//			return RuleResult.SS_VV;
-//	}
-//		
-//	public static RuleResult EvaluateCloseoutStatus(String status)
-//	{
-//		if(status == null)
-//			return RuleResult.CLOSEOUT_NULL_STATUS;
-//		if(status.isEmpty())
-//			return RuleResult.CLOSEOUT_NULL_STATUS;
-//		
-//		if(status.equalsIgnoreCase("complete"))
-//			return RuleResult.CLOSEOUT_COMPLETE;
-//		else if(status.equalsIgnoreCase("incomplete"))
-//			return RuleResult.CLOSEOUT_INCOMPLETE;
-//		else if(status.equalsIgnoreCase("N/A"))
-//			return RuleResult.CLOSEOUT_NA;
-//		
-//		return null;
-//	}
-//	
-	public static boolean CloseoutEvaluate(ProjectRule _rule , CloseoutDetails _co )
+	public static boolean CloseoutEvaluate(ProjectRule _rule , Project proj )
 	{
-		CloseoutDetails co = _co;
+		CloseoutDetails co = proj.getCloseoutDetails();
+		if(co == null)
+			return true;
+		
+		ProjectClass project = proj.getProjectClass();
 		
 		String f1 , f2;
 		f1 = _rule.getField1();
@@ -124,7 +44,10 @@ public class ProjectRuleService
 		
 		if(f1.equals("punchListStatus") && f2.equals("None"))
 		{
-			if(field1 == null || field1.equals("default"))
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6") || field1.equals("3"))
 			{
 				return false;
 			}
@@ -133,10 +56,13 @@ public class ProjectRuleService
 				return true;
 			}
 		}
-		
+				
 		if(f1.equals("asBuiltDrawingsStatus") && f2.equals("None"))
 		{
-			if(field1 == null || field1.equals("default"))
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6") || field1.equals("3"))
 			{
 				return false;
 			}
@@ -148,7 +74,254 @@ public class ProjectRuleService
 		
 		if(f1.equals("closeOutPhotosStatus") && f2.equals("None"))
 		{
-			if(field1 == null || field1.equals("default"))
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6") || field1.equals("3"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("HVACstartupFormStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("verisaeReportStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("alarmFormStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("salvageValue") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("numOfMCSChangeOrders") && f2.equals("numOfMCSChangeOrdersCompleted"))
+		{
+			if(field1 == null || field2 == null )
+				return true;
+			
+			if(field1.equals("0") && field2.equals("0"))
+			{
+				return true;
+			}
+			else if(!(field1.equals(field2)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("buildingFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("ceilingFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("mechFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("elecFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("plumbingFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("gasFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("sprinkleFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("fireAlarmFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("lowVolFinalStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("tmpCertificateStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("certificateStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
 			{
 				return false;
 			}
@@ -161,15 +334,8 @@ public class ProjectRuleService
 		return true;
 		
 	}
-//	
-//	public static RuleResult EvaluateProjectNumber(String s1, Double d1)
-//	{
-//		if( s1.equals("0")|| s1.equals("-1") || s1.equalsIgnoreCase("tbd"))
-//				return RuleResult.PROJ_S;
-//		
-//		return RuleResult.PROJ_S;
-//	}
-//	
+
+	
 //	public static boolean ChangeOrderEvaluate(ProjectRule _rule , ChangeOrder _co)
 //	{
 //		ChangeOrder co = _co;
@@ -624,6 +790,8 @@ public class ProjectRuleService
 		if(proj == null)	proj = _rule.getProject();
 		//Maybe handle it elsewhere if the rule is newly created?
 		
+		String permitReq = proj.getAutofillPermits();
+		
 		Permits perms = proj.getPermits();
 		if(perms == null)
 			return true;
@@ -634,8 +802,6 @@ public class ProjectRuleService
 		
 		Object field1 = Permits.getPermitAndInspectionFields(f1 , perms);
 		Object field2 = Permits.getPermitAndInspectionFields(f2 , perms);
-		
-		System.out.println(f1 + "   " + f2 + "   " + field1 + "   " + field2);
 
 		if(f1.equals("buildingPermitRequired") && f2.equals("buildingInspectionRequired"))
 		{
@@ -1941,7 +2107,7 @@ public class ProjectRuleService
 //						map.put("type", "ChangeOrders");
 //						break;
 					case Closeout:
-						result = CloseoutEvaluate(rule , project.getCloseoutDetails());
+						result = CloseoutEvaluate(rule , project);
 						map.put("closeoutDetails", project.getCloseoutDetails());
 						map.put("type", "Closeout");
 						break;
@@ -2065,11 +2231,11 @@ public class ProjectRuleService
 //					//	map.put("changeOrderResults", changeOrderMap);
 //						map.put("type", "ChangeOrders");
 //						break;
-//					case Closeout:
-//					//	result = CloseoutEvaluate(rule , project.getCloseoutDetails());
-//						map.put("closeoutDetails", project.getCloseoutDetails());
-//						map.put("type", "Closeout");
-//						break;
+					case Closeout:
+					//	result = CloseoutEvaluate(rule , project.getCloseoutDetails());
+						map.put("closeoutDetails", project.getCloseoutDetails());
+						map.put("type", "Closeout");
+						break;
 //					case Equipment:
 //					//	Map<String , Object> equipmentMap = EvaluateProjectChangeOrders(rule , project);
 //					//	map.put("equipmentResults", equipmentMap);
@@ -2124,7 +2290,8 @@ public class ProjectRuleService
 //		return map;
 //		
 //	}
-//	
+
+	
 //	public static Map<String , Object> EvaluateProjectChangeOrders(ProjectRule rule , Project project)
 //	{
 //		if(rule == null || project == null)
@@ -2166,7 +2333,8 @@ public class ProjectRuleService
 //		return map;
 //		
 //	}
-//	
+
+	
 //	public static Map<String , Object> EvaluateProjectEquipment(ProjectRule rule , Project project)
 //	{
 //		if(rule == null || project == null)

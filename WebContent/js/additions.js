@@ -1741,6 +1741,8 @@ function humanize(str)
 	else if( str == "otherBInspectionLastUpdated")
 		result = "Other Inspection Last Updated B";
 	// Closeout
+	else if( str == "salvageValue")
+		result = "Salvage Value";
 	else if( str == "buildingFinalStatus")
 		result = "Building Final Inspection Status";
 	else if( str == "ceilingFinalStatus")

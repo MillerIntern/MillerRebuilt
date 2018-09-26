@@ -2308,7 +2308,6 @@ function generateDropdowns(str, className)
 	var json = JSON.parse(str);
 	var d = document.createDocumentFragment();
 	var sent=true;
-	
 
 	if (className == "warehouse" || className=="projecteq" || className == "subcontractors")
 		{
@@ -2357,6 +2356,17 @@ function generateDropdowns(str, className)
 				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
 			}
 		}
+		else if(className == "manager" || className == "supervisor")
+		{	
+			if(json[i].name == "Bart" || json[i].name == "Lillian")
+			{
+				continue;
+			}
+			else
+			{
+				option.innerHTML = json[i].name;
+			}
+		} 
 		else if(className == "subcontractors") {
 			option.innerHTML = json[i].name;
 			option.value = json[i].name;
@@ -6007,9 +6017,7 @@ function checkInitFilter () {
 						//document.getElementById('NoStages').checked = false;
 				 }
 				 
-				 $('#paramID2').val('Manager');
-			     $('#paramVal2').empty();
-				 $('#paramVal2').append(managerOptions.cloneNode(true));
+
 				 matchUsernameToPerson(user.firstName);
 				 
 				 //$('#stageSelector').trigger('chosen:updated');
@@ -6289,6 +6297,10 @@ function filterProjects () {
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
 		let val = $(parameters[i + 1]).val();
+		if((id == undefined || id == "default") || (val == undefined || val == "default"))
+		{
+			break;
+		}
 		console.log("VAL = ", val , id);
 		
 		for (var j = 0; j < json.length; j++) {
