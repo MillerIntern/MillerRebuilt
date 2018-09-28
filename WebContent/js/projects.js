@@ -1262,7 +1262,7 @@ function getProject_PERMIT()
 				if(!autofilled)
 					fillTabs_PERMIT(PROJECT_DATA);
 				else
-					fillPermitsAndInspectionsWithNA();
+					fillPermitsAndInspectionsWithNA(PROJECT_DATA);
 				//getTasks();
 			}
 		});
@@ -1379,11 +1379,10 @@ function fillDropdowns_PERMIT(json)
 }
 
 
-function fillPermitsAndInspectionsWithNA()
+function fillPermitsAndInspectionsWithNA(data)
 {
+	var json = data;
 	let today = getToday();
-	
-	
 	
 	$('.permitTableData').each(function(index){
 		
@@ -1420,10 +1419,12 @@ function fillPermitsAndInspectionsWithNA()
 	$('.inspectionStatus').each(function(index){
 		$(this).val('N/A');
 	});
+	
+    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData");
+    $('#permitData').find('#permitNotes').text(json.permits.permitNotes);
+    formatRelativeTextAreas(json.permits.permitNotes , "inspectionNotes", "permitData");
+    $('#permitData').find('#inspectionNotes').text(json.permits.inspectionNotes);
 }
-
-
-
 
 
 function convertUndefined( value )
@@ -1529,10 +1530,13 @@ function fillTabs_PERMIT(data)
 	    $('#permitData').find("#otherBInspectionStatus").val(convertUndefined(json.permits.otherBInspectionStatus));
 	    $('#permitData').find("#otherBInspectionLastUpdated").val(json.permits.otherBInspectionLastUpdated);
 	    
+	    
+	    console.log(json.permits.permitNotes);
+	    console.log(json.permits.inspectionNotes);
 	    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData");
-	    $('#permitData').find('#permitNotes').text(json.permits.permitNotes);
+	    $('#permitData').find('#permitNotes').val(json.permits.permitNotes);
 	    formatRelativeTextAreas(json.permits.permitNotes , "inspectionNotes", "permitData");
-	    $('#permitData').find('#inspectionNotes').text(json.permits.inspectionNotes);
+	    $('#permitData').find('#inspectionNotes').val(json.permits.inspectionNotes);
 	}
 	    
 }
@@ -2097,7 +2101,7 @@ function saveProject_PERMIT()
 				'otherBInspectionLastUpdated': otherBInspectionLastUpdated,
 
 				'permitNotes': permitNotes,
-				'inspectionNotes': inspectionNotes,
+				'inspectionNotes': inspectionNotes
 			},
 			success:function(data){
 				console.log(data);

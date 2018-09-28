@@ -843,7 +843,7 @@ public class Permits extends ProjectObject
 		}
 		else if(name.contains("otherB"))
 		{
-			if(name.equals("otherA"))
+			if(name.equals("otherB"))
 				return perms.getOtherBPermit();
 			else if(name.contains("PermitStatus"))
 				return perms.getOtherBPermitStatus();
@@ -851,6 +851,13 @@ public class Permits extends ProjectObject
 				return perms.getOtherBInspectionStatus();
 			else if(name.contains("InspectionLastUpdated"))
 				return perms.getOtherBInspectionLastUpdated();
+		}
+		else if(name.contains("Notes"))
+		{
+			if(name.equals("permitNotes"))
+				return perms.permitNotes;
+			else if(name.equals("inspectionNotes"))
+				return perms.inspectionNotes;
 		}
 		
 		return null;
