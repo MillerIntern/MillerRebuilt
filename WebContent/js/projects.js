@@ -1420,10 +1420,6 @@ function fillPermitsAndInspectionsWithNA(data)
 		$(this).val('N/A');
 	});
 	
-    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData");
-    $('#permitData').find('#permitNotes').text(json.permits.permitNotes);
-    formatRelativeTextAreas(json.permits.permitNotes , "inspectionNotes", "permitData");
-    $('#permitData').find('#inspectionNotes').text(json.permits.inspectionNotes);
 }
 
 
