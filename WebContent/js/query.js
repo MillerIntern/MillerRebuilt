@@ -18,7 +18,7 @@ const BOOL_COMPARATORS = {"and":"AND", "or":"OR"};
 
 const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "warehouse": "Warehouse", "item": "Project Item", 
 			"scope": "Project Scope", "class": "Project Classification", "manager": "Project Manager", "supervisor": "Project Supervisor",
-			"region": "Region", "status": "Project Status", "scheduledStartDate": "Scheduled Start Date", 
+			"region": "Region", "status": "Project Status","scheduledStartDate": "Scheduled Start Date", 
 			"scheduledTurnover" : "Scheduled Turn Over", "actualTurnover" : "Actual Turn Over", "initiated": "Project Initiated Date", 
 			"siteSurvey" : "Site Survey", "budgetarySubmitted" : "Budgetary Submitted" , "budgetaryDue" : "Budgetary Due" , "costcoDueDate" : "Costco Due Date", "proposalSubmitted" : "Proposal Submitted", "type" : "Type", 
 			"asBuilts" : "As-Builts", "punchList":"Punch List", "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", 
@@ -1284,6 +1284,7 @@ function generateReport(reportType)
 	var pType = new Array();
 	var stage = new Array();
     var manager = new Array();
+    var closeoutStatus = new Array();
 	var title = undefined;
 	var type = undefined;
 	
@@ -1499,6 +1500,9 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_RX);
 			pType.push(PROJECT_TYPE_H);
+			status.push(PROJECT_STATUS_CLOSEOUT);
+			status.push(PROJECT_STATUS_CLOSED);
+			status.push(PROJECT_STATUS_LOST);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
@@ -2052,6 +2056,7 @@ function generateReport(reportType)
                 'projectManagers.id':JSON.stringify(manager),
     			'title':title,
     			'type': type,
+    			'closeoutStatus' : JSON.stringify(closeoutStatus)
         };
         
         console.log(data);
