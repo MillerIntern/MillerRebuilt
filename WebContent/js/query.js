@@ -1501,8 +1501,6 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_RX);
 			pType.push(PROJECT_TYPE_H);
 			status.push(PROJECT_STATUS_CLOSEOUT);
-			status.push(PROJECT_STATUS_CLOSED);
-			status.push(PROJECT_STATUS_LOST);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
