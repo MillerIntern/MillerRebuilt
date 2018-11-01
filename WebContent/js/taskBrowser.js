@@ -74,7 +74,7 @@ function getUserData () {
 			if(data.responseJSON) {
 			  user = data.responseJSON;
 			  console.log("USER = ", data.responseJSON);
-			  if(data.responseJSON.permission.name != "admin") hideAdminContent();	
+			  if(data.responseJSON.permission.id != 1) hideAdminContent();	
 		      getUsers();		 
 				
 			} else {
@@ -271,6 +271,7 @@ function preparePageForUserStatus(){
 	 	$('#formFor').html('Tasks for: ' + user.firstName);
 	 	$("#projectManagerDropdown").hide()
 	 	$(".advancedSortingOptions").hide();
+	 	console.log(user.firstName);
 	}	
 	
 	createTaskTable();

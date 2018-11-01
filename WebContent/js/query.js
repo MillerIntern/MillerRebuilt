@@ -475,6 +475,7 @@ $(document).ready(function()
 	$(".remove").click(function(){
 		$(this).parent().remove();
 	});
+	getUserInfo();
 });	
 
 $(document).on('change', '.reportTypePicker',function(){
@@ -519,6 +520,23 @@ $(document).on('change', '.reportTypePicker',function(){
 		$('.notCO').show(); 
 	}
 });
+
+function getUserInfo(){
+	let user;
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, success: function (data) {
+			user = data;
+			console.log(user);
+			 if(user.permission.id != 1)
+				 hideAdminContent();	
+			}
+		});
+}
 
 function toggleChangeOrderStatus(status)
 {
@@ -1505,7 +1523,6 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_SCHEDULED);
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
-			//status.push(PROJECT_STATUS_CLOSEOUT);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
 			break;
 

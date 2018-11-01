@@ -5949,7 +5949,7 @@ function checkInitFilter () {
 			}, success: function (data) {
 				user = data;
 				console.log(user);
-				 if(user.permission.id != "admin") hideAdminContent();	
+				 if(user.permission.id != 1) hideAdminContent();	
 				 if(user.firstName == "Sandy") {
 					 $('#paramID1').val('Warehouse');
 						$('#paramVal1').empty(); 

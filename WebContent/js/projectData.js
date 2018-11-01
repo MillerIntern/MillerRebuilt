@@ -44,7 +44,25 @@ $(document).ready(function()
 	$("#scheduledTurnover").datepicker();
 	$("#actualTurnover").datepicker();
 	$("#initiatedDate").val(getToday());
+	getUserInfo();
 });
+
+function getUserInfo(){
+	let user;
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, success: function (data) {
+			user = data;
+			console.log(user);
+			 if(user.permission.id != 1)
+				 hideAdminContent();	
+			}
+		});
+}
 
 //This function retrieves all of the enumerated data (warehouses, statuses, etc) from the database
 //Input: none

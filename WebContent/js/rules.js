@@ -4071,7 +4071,7 @@ function checkInitFilter () {
 				'action': 'getUserInfo'
 			}, success: function (data) {
 				user = data;
-				 if(user.permission.id.name != "admin") hideAdminContent();	
+				 if(user.permission.id != 1) hideAdminContent();	
 				 if(user.firstName == "Sandy") {
 					 $('#paramID1').val('Warehouse');
 						$('#paramVal1').empty(); 
