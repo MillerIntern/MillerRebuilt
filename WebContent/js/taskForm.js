@@ -76,11 +76,14 @@ function getUserData () {
 			else if(a.firstName > b.firstName) return 1;
 			return 0;
 		});
+		
 		var assigneeVal;
 		for (var i = 0; i < json.length; i++) {
 			let option = document.createElement('option');
-			if(user.firstName == json[i].firstName) assigneeVal = json[i].firstName;
+			if(user.firstName == json[i].firstName) 
+				assigneeVal = json[i].firstName;
 			// when users store both username and name, access the user's name and username fields
+			console.log(json[i].firstName);
 			option.innerHTML = json[i].firstName;
 			option.setAttribute("value", json[i].firstName);
 			d.appendChild(option);

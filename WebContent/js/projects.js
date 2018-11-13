@@ -334,6 +334,8 @@ function fillTabs_CLOSEOUT(data)
 			var changeOrder = cos[i];
 			if(changeOrder.status === "5")
 				completed = completed + 1;
+			else if(changeOrder.status === "4")
+				completed = completed + 1;
 		}	
 		
 		$('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val(completed);

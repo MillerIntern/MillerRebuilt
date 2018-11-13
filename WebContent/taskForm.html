@@ -143,13 +143,22 @@
 			return 0;
 		});
 		var assigneeVal;
-		for (var i = 0; i < json.length; i++) {
+		for (var i = 0; i < json.length; i++)
+		{
+			if(json[i].name == "bua2" || json[i].name == "bart")
+			{
+				continue;
+			}
+			
 			let option = document.createElement('option');
-			if(user.firstName == json[i].firstName) assigneeVal = json[i].firstName;
+			if(user.firstName == json[i].firstName) 
+				assigneeVal = json[i].firstName;
 			// when users store both username and name, access the user's name and username fields
+			console.log(json[i].name);
 			option.innerHTML = json[i].firstName;
 			option.setAttribute("value", json[i].firstName);
 			d.appendChild(option);
+		
 		}
 		$('#assigneeEntry').append(d);
 		$('#assigneeEntry').val(assigneeVal);
@@ -373,7 +382,7 @@
 				</tr>
 				<tr>
 					<td><label for='descriptionEntry'>Description:</label>
-					<td><input  maxlength="254" type='text' id='descriptionEntry' placeholder='Task Description'/>
+					<td><textarea  maxlength="999" type='text' class="scrollTextBoxTaskForm" id='descriptionEntry' placeholder='Task Description'></textarea>
 				</tr>
 				<tr>
 					<td><label>Assignee:</label></td>
@@ -412,7 +421,7 @@
 		        <tr>
 		        	<td><label>Notes:</label></td>
 		        	<td>
-		        	<textarea maxlength="999" class="scrollTextBoxTaskForm" id='notes'></textarea>
+		        	<textarea maxlength="999" class="scrollTextBoxTaskForm" id='notes' placeholder='Notes'></textarea>
 		        	</td>
 		        </tr>
 			</table>

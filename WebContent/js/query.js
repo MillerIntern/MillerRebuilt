@@ -710,6 +710,17 @@ function generateDropdown(str, className)
 			else
 				sent=false;
 		}
+		else if(className == "person")
+		{
+			console.log(json[i]);
+			if(json[i].name == "Bart") // || json[i].name == "bua2")
+				continue;
+			else
+			{
+				option.innerHTML = json[i].name;
+				option.setAttribute("value", json[i].id);
+			}
+		}	
 		else
 		{
 			option.innerHTML = json[i].name;
@@ -824,7 +835,10 @@ function populateParameters()
 {
 	var option ='';
 	for(var i = 0; i < ITEM_TYPES.length; i++)
+	{	
+		console.log(ITEM_TYPES[i] + " : " + FIELDS_TO_SHOW[ITEM_TYPES[i]]);
 		option += '<option value="'+ ITEM_TYPES[i] + '">' + FIELDS_TO_SHOW[ITEM_TYPES[i]] + '</option>';
+	}
 	$('#param'+paramNum).append(option);
 	//populateBoolComparators();
 	paramNum++;
@@ -1210,6 +1224,7 @@ function generateTaskReport(reportType){
 	console.log("report type == ", reportType);
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
+	console.log(selectedFields);
 	var title = undefined;
 	
 	

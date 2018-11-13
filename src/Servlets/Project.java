@@ -1012,6 +1012,8 @@ public class Project extends HttpServlet
 			username = "Andy";
 		else if(username.equals("joe"))
 			username = "Joe";
+		else if(username.equals("bua"))
+			username = "Bua";
 		else if(username.equals("bart"))
 			username ="Bart";
 		else if(username.equals("dwgregory1"))

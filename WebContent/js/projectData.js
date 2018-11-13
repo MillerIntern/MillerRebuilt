@@ -170,6 +170,17 @@ function generateDropdowns(str, className)
 				option.innerHTML = json[i].city.name + ", " + toTitleCase(json[i].state.replace('_', ' '));
 			}
 		}
+		else if(className == "manager" || className == "supervisor")
+		{	
+			if(json[i].name == "Bart" || json[i].name == "Lillian")
+			{
+				continue;
+			}
+			else
+			{
+				option.innerHTML = json[i].name;
+			}
+		} 
 		else
 		{
 			option.innerHTML=json[i].name;
