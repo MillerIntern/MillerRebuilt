@@ -1344,7 +1344,7 @@ function generateTaskReport(reportType){
 	  
 	  if(assignee == "default")
 	  {
-		  alert("Please select an assignee or remove the assignee field using the X");
+		  alert("Please select an assignee or remove the default assignee field using the X");
 		  return;
 	  }	  
 	  

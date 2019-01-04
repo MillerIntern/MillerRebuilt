@@ -196,7 +196,7 @@ public class Report extends HttpServlet
             String[] assigneeNums = assignees.split(" ");
             
             tasks = acquireProperTasks(req);
-            System.out.println("Tasks size = " + tasks.size());
+//            System.out.println("Tasks size = " + tasks.size());
             
             for(int i = 0; i < assigneeNums.length; i++)
             {	
