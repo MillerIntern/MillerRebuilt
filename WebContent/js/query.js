@@ -445,6 +445,7 @@ var managerOptions;
 var closeoutOptions;
 
 //Keeps track of what values go with which parameter
+var assigneeNum = 0
 var paramNum = 0;
 let changeOrderStatuses = {
 		"6" : false,
@@ -462,6 +463,8 @@ let taskStatuses = {
 		"3" : false,
 		"All" : false
 };
+
+
 
 $(document).on('change', 'select.params',function(){
 	setVals($(this));
@@ -558,6 +561,71 @@ function toggleChangeOrderStatus(status)
 	}
 	
 	
+}
+
+
+$(document).on('change', '#assignee' + assigneeNum, function(){
+	   console.log(this.value);	
+	   console.log(this.childNodes);
+	})
+
+function addAssignee()
+{
+	var data = managerOptions;
+//	console.log(data);
+		
+	var div = document.getElementById("assignees");
+	var cell = document.createElement("div");
+	cell.className = 'assigneeCell';
+	
+	var title = document.createElement("p");
+	title.innerHTML = "Assignee: ";
+	
+	var select = document.createElement("select");
+	select.id = ('assignee' + assigneeNum);
+
+	
+	var def = document.createElement("option");
+	def.value = 'default';
+	def.className = 'default';
+	def.innerHTML = "Select an Assignee";
+	select.appendChild(def);
+	
+	var all = document.createElement("option");
+	all.value = 'all';
+	all.innerHTML = 'All';
+	select.appendChild(all)
+	
+	var person = data.childNodes;
+    
+    for(var i = 0; i < person.length; i++)
+    {
+    	if(person[i] == "Bart")
+    		continue;
+    	select.appendChild(person[i].cloneNode(true));
+    }
+    
+//    var spaceTag = document.createElement("span");
+//	spaceTag.className = "tab";
+	
+	//create the remove tag for the param cell
+	var removeTag = document.createElement("span");
+	removeTag.className = 'glyphicon glyphicon-remove';
+	removeTag.onclick = function() {removeAssignee(this)};
+    
+	div.appendChild(cell)
+    cell.appendChild(title);
+    title.appendChild(select);
+//    title.appendChild(spaceTag);
+    title.appendChild(removeTag);
+    
+    assigneeNum++;
+}
+
+function removeAssignee(elem)
+{
+	elem.parentNode.remove();
+	assigneeNum--;
 }
 
 function toggleTaskStatus(status)
@@ -712,7 +780,7 @@ function generateDropdown(str, className)
 		}
 		else if(className == "person")
 		{
-			console.log(json[i]);
+			//console.log(json[i]);
 			if(json[i].name == "Bart") // || json[i].name == "bua2")
 				continue;
 			else
@@ -1221,18 +1289,21 @@ function reportCreator(elem)
 }
 
 function generateTaskReport(reportType){
+    
 	console.log("report type == ", reportType);
 	var genType = getAllSpecifiedFields(reportType);
 	var selectedFields = JSON.stringify(genType);
 	console.log(selectedFields);
 	var title = undefined;
+	var managers = new Array();
+	var div = document.getElementById("assignees");
+	var assignees = div.childNodes;
+	console.log(assignees.length);
 	
-	
-	
+
 	switch(reportType){
 		case TASK:
 			title = 'Tasks for All Projects';
-			//stage.push(ACTIVE_STAGE);
 			break;
 		default:
 			alert("Invalid report type");
@@ -1243,8 +1314,9 @@ function generateTaskReport(reportType){
 
 	if($('#reportTitle').val() != null && $('#reportTitle').val() != '')
 	{
-	title = $('#reportTitle').val();
+	  title = $('#reportTitle').val();
 	}
+	
 	
 	let taskStatusString = '';
 	
@@ -1259,14 +1331,43 @@ function generateTaskReport(reportType){
 		alert("Must select at least one status in order to generate a task report");
 		return;
 	}
+	console.log(taskStatusString);
 
+	
+	let assigneeString = '';
+	var assignee;
+	
+	for(var i = 0; i < assigneeNum; i++)
+	{
+	  assignee = ( $('#assignee' + i).val());
+	  console.log(assignee);
+	  
+	  if(assignee == "default")
+	  {
+		  alert("Please select an assignee or remove the assignee field using the X");
+		  return;
+	  }	  
+	  
+	  assigneeString += (assignee + " ");
+	  
+	}
+	
+	if(assigneeString == '')
+	{
+		assigneeString = 'all';
+	}	
+	
+	if(assigneeString != 'all')
+		title = "Tasks for Specific Assignees";
+		
 	
 	// 'mcsNum','task_title','task_assignee','task_description','task_created_date',
 	// 'task_due_date','task_priority','task_notes'
 	var data = {
 			'domain': 'task',
 			'action': 'query', 
-			'task_title':title,
+			'task_title': title,
+			'task_assignee': assigneeString,
 			'task_statuses' : taskStatusString
 	};
 	
@@ -1283,8 +1384,14 @@ function generateTaskReport(reportType){
 	$('.taskStatusGroup').find('input').each(function(){
 	    this.checked = false;;
 	})
+	
+//    $('#assignees').find('select').each(function(){
+//    	this.value = "default";
+//    })
+//	
 
 	document.location.href = REPORT_URL+"?"+params;
+
 }
 
 	
@@ -2008,10 +2115,12 @@ function generateReport(reportType)
 			title = 'Change Orders';
 			type = 'ChangeOrderStatuses';
 			break;
+			
 		case TASK:
 			title = 'Tasks for All Projects';
 			//stage.push(ACTIVE_STAGE);
 			break;
+			
 		case DAVID_HAC_ACTIVE:
 			title = "Hearing Center Report";
 			stage.push(ACTIVE_STAGE);
