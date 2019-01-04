@@ -200,24 +200,25 @@ public class Report extends HttpServlet
             
             for(int i = 0; i < assigneeNums.length; i++)
             {	
-       		     System.out.println("Assignee: " + assigneeNums[i]);
+       		   //  System.out.println("Assignee: " + assigneeNums[i]);
             	 for(int j = 0; j < tasks.size(); j++)
                  {   
-            		 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
+            	//	 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
             		 if(assigneeNums[i].equals(getValueFromTask("task_assignee_num", tasks.get(j))))
             		 {
-            			 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
+            		//	 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
             			 assigneeTasks.add(tasks.get(j));
             		 } 
                  }	 
             }
             
-            for(int i = 0; i < assigneeTasks.size(); i++)
-            {	
-            	System.out.println(getValueFromTask("task_assignee_num", tasks.get(i))); 
-            }
+//            for(int i = 0; i < assigneeTasks.size(); i++)
+//            {	
+//            	System.out.println(getValueFromTask("task_assignee_num", tasks.get(i))); 
+//            }
             
             System.out.println("Tasks size = " + assigneeTasks.size());
+            System.out.println("Tasks size = " + tasks.size());
 			
 					
 	       //System.out.println(req.getParameter("onGoing"));

@@ -1348,7 +1348,10 @@ function generateTaskReport(reportType){
 		  return;
 	  }	  
 	  
-	  assigneeString += (assignee + " ");
+	  if(assignee == "all")
+		  assigneeString = 'all';
+	  else
+		  assigneeString += (assignee + " ");
 	  
 	}
 	
