@@ -1750,22 +1750,22 @@ public class ReportHelper
 			else
 				returnVal = t.getSubAssignee().getName();
 		}else if(value.equals("task_assignee_num")) {
-			if(t.getSubAssignee() == null)
-				returnVal = t.getAssignee().getId().toString();
-			else
-				returnVal = t.getSubAssignee().getName();
-//			String us;
-//			String per;
-//			if(t.getSubAssignee() != null)
-//			{	
-//				returnVal = t.getSubAssignee().getName();
-//			}
+//			if(t.getSubAssignee() == null)
+//				returnVal = t.getAssignee().getId().toString();
 //			else
-//			{	
-//				us = t.getAssignee().toString();
-//				per = convertUserToPerson(us);
-//				returnVal = per;
-//			}	
+//				returnVal = t.getSubAssignee().getName();
+			String us;
+			String per;
+			if(t.getSubAssignee() != null)
+			{	
+				returnVal = t.getSubAssignee().getName();
+			}
+			else
+			{	
+				us = t.getAssignee().getId().toString();
+				per = convertUserToPerson(us);
+				returnVal = per;
+			}	
 		} else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
 		} else if(value.equals("task_created_date")) {
