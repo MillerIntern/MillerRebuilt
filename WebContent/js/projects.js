@@ -6088,6 +6088,7 @@ function fillDropdowns_FIND_PROJECT(data) {
 	typeOptions = generateDropdowns_FIND_PROJECTS(data['type'], parameterFields[5]);
 	statusOptions = generateDropdowns_FIND_PROJECTS(data['status'], parameterFields[6]);
 	//stageOptions = generateDropdowns_FIND_PROJECTS(data['stage'], parameterFields[7]);
+	console.log(parameterFields[6]);
 }
 
 /**
@@ -6154,6 +6155,7 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 			}	
 		} else {
 			option.innerHTML = json[i].name;
+			console.log(json[i].name);
 		}
 		
 		if(field == 'Stage') continue;

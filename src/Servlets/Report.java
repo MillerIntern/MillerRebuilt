@@ -115,7 +115,7 @@ public class Report extends HttpServlet
 				List<projectObjects.Task> tasks = null;
 	            
 	            type = "Task Report";
-	            tasks = acquireSpecificTasks(req);
+	            tasks = acquireProperTasks(req);
 								
 	            String[] taskFields = {"warehouse","task_item","task_title","task_assignee","task_description","task_created_date",
                 "task_due_date", "task_status", "task_priority","task_notes"};
@@ -189,11 +189,35 @@ public class Report extends HttpServlet
 		else 
 		{
 			List<projectObjects.Task> tasks = null;
-            title = req.getParameter("task_title");
+			List<projectObjects.Task> assigneeTasks = new ArrayList<projectObjects.Task>();
+			title = req.getParameter("task_title");
+            
+            String assignees = req.getParameter("task_assignee");
+            String[] assigneeNums = assignees.split(" ");
             
             tasks = acquireProperTasks(req);
-			
-            System.out.println("Tasks size = " +tasks.size());
+            System.out.println("Tasks size = " + tasks.size());
+            
+            for(int i = 0; i < assigneeNums.length; i++)
+            {	
+       		     System.out.println("Assignee: " + assigneeNums[i]);
+            	 for(int j = 0; j < tasks.size(); j++)
+                 {   
+            		 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
+            		 if(assigneeNums[i].equals(getValueFromTask("task_assignee_num", tasks.get(j))))
+            		 {
+            			 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
+            			 assigneeTasks.add(tasks.get(j));
+            		 } 
+                 }	 
+            }
+            
+            for(int i = 0; i < assigneeTasks.size(); i++)
+            {	
+            	System.out.println(getValueFromTask("task_assignee_num", tasks.get(i))); 
+            }
+            
+            System.out.println("Tasks size = " + assigneeTasks.size());
 			
 					
 	       //System.out.println(req.getParameter("onGoing"));
@@ -204,9 +228,15 @@ public class Report extends HttpServlet
 			List<String> shownFields = convertStringToList(req.getParameter("shownFields"));
 			shownFields.toString();
 			
+			if(assignees.equals("all"))
+			{
+				out.println(generateTaskReport(tasks, title, shownFields ));
+			}
+			else
+			{
+				out.println(generateTaskReport(assigneeTasks, title, shownFields ));
+			}
 			//Send HTML table of projects to front end
-		   
-			out.println(generateTaskReport(tasks, title, shownFields ));
 		}
 	}
 	
@@ -218,14 +248,20 @@ public class Report extends HttpServlet
 	 */
 	public synchronized List<projectObjects.Task> acquireProperTasks(HttpServletRequest req){
 		String assignee_id = req.getParameter("task_assignee");
-		String status = req.getParameter("task_status");
 		String statuses = req.getParameter("task_statuses");
 		List<projectObjects.Task> tasks = null;
 		
-		if(statuses != null) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksByStatus(statuses);
-		else if(assignee_id == null) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
-		else if(assignee_id.equals("all") && status.equals("all")) tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
-		else tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, status);
+		System.out.println(assignee_id);
+		System.out.println(statuses);
+		
+		if(statuses != null) 
+			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksByStatus(statuses);
+//		else if(!assignee_id.equals("all")) 
+//			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, status);
+		else if(assignee_id.equals("all") && statuses.equals("all")) 
+			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
+		else 
+			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		
 		return tasks;
 	}

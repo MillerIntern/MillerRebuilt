@@ -340,7 +340,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get all objects of type "domain"
-        Query q = session.createQuery("from Task");
+        Query q = session.createQuery("from task");
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
    
@@ -360,7 +360,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get all objects of type "domain"
-        Query q = session.createQuery("from Task where project_id = " + projectId);
+        Query q = session.createQuery("from task where project_id = " + projectId);
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
    
@@ -423,19 +423,32 @@ public class ProjectObjectService
 		
 		//Get all objects of type "domain"
 		Query q = null;
-        if(status_id.equals("all")) q = session.createQuery("from Task where assignee_id = " + assignee_id);
-        else if(assignee_id.equals("all")) {
-        	if(status_id.equals("1")) q = session.createQuery("from Task where taskStatus_id = 1");
-        	else if(status_id.equals("2")) q = session.createQuery("from Task where taskStatus_id = 2");
-        	else if(status_id.equals("3")) q = session.createQuery("from Task where taskStatus_id = 3");
-        	else if(status_id.equals("12")) q = session.createQuery("from Task where taskStatus_id != 3");
+		
+        if(status_id.equals("all")) 
+        	q = session.createQuery("from task where assignee_id = " + assignee_id);
+        if(assignee_id.equals("all"))
+        {
+        	if(status_id.equals("1")) 
+        		q = session.createQuery("from task where taskStatus_id = 1");
+        	else if(status_id.equals("2")) 
+        		q = session.createQuery("from task where taskStatus_id = 2");
+        	else if(status_id.equals("3")) 
+        		q = session.createQuery("from task where taskStatus_id = 3");
+        	else if(status_id.equals("12")) 
+        		q = session.createQuery("from task where taskStatus_id != 3");
         }
-        else if(!assignee_id.equals("all")) {
-        	if(status_id.equals("1")) q = session.createQuery("from Task where taskStatus_id = 1 and assignee_id = " +assignee_id);
-        	else if(status_id.equals("2")) q = session.createQuery("from Task where taskStatus_id = 2 and assignee_id = " +assignee_id);
-        	else if(status_id.equals("3")) q = session.createQuery("from Task where taskStatus_id = 3 and assignee_id = " +assignee_id);
-        	else if(status_id.equals("12")) q = session.createQuery("from Task where taskStatus_id != 3 and assignee_id = " +assignee_id);
+        else if(!assignee_id.equals("all"))
+        {
+        	if(status_id.equals("1")) 
+        		q = session.createQuery("from task where taskStatus_id = 1 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("2")) 
+        		q = session.createQuery("from task where taskStatus_id = 2 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("3")) 
+        		q = session.createQuery("from task where taskStatus_id = 3 and assignee_id = " +assignee_id);
+        	else if(status_id.equals("12")) 
+        		q = session.createQuery("from task where taskStatus_id != 3 and assignee_id = " +assignee_id);
         }
+        
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
         tx.commit();
@@ -464,7 +477,8 @@ public class ProjectObjectService
 		{
 			taskQuery += status_ids[i] + " ";
 			
-			if(i != status_ids.length - 1) taskQuery += " or taskStatus_id = ";
+			if(i != status_ids.length - 1) 
+				taskQuery += " or taskStatus_id = ";
 		}
 		
 		

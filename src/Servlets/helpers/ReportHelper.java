@@ -22,6 +22,7 @@ import projectObjects.Task;
 import services.ProjectObjectService;
 import projectObjects.ChangeOrder;
 import projectObjects.ChangeOrderType;
+import projectObjects.User;
 
 /**
  * Helper Classes will be statically called to do perform actions.
@@ -1748,6 +1749,23 @@ public class ReportHelper
 				returnVal = t.getAssignee().getFirstName();
 			else
 				returnVal = t.getSubAssignee().getName();
+		}else if(value.equals("task_assignee_num")) {
+			if(t.getSubAssignee() == null)
+				returnVal = t.getAssignee().getId().toString();
+			else
+				returnVal = t.getSubAssignee().getName();
+//			String us;
+//			String per;
+//			if(t.getSubAssignee() != null)
+//			{	
+//				returnVal = t.getSubAssignee().getName();
+//			}
+//			else
+//			{	
+//				us = t.getAssignee().toString();
+//				per = convertUserToPerson(us);
+//				returnVal = per;
+//			}	
 		} else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
 		} else if(value.equals("task_created_date")) {
@@ -1768,6 +1786,33 @@ public class ReportHelper
 		
 		return returnVal;
 		
+	}
+	
+	private static String convertUserToPerson(String user)
+	{
+		if(user.equals("4"))
+			return "2";
+		else if(user.equals("5"))
+			return user;
+		else if(user.equals("7"))
+			return "1";
+		else if(user.equals("8"))
+			return "7";
+		else if(user.equals("9"))
+			return "8";
+		else if(user.equals("21"))
+			return "17";
+		else if(user.equals("22"))
+			return "3";
+		else if(user.equals("23"))
+			return "18";
+		else if(user.equals("24"))
+			return "15";
+		else if(user.equals("25"))
+			return "20";
+		else if(user.equals("26"))
+			return "21";
+		return "";
 	}
 	
 	private static String convertStatusNumber(String retVal) {

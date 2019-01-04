@@ -142,6 +142,11 @@
                 	 <input type = "checkbox" value="2" onclick="toggleTaskStatus('2')"> Completed &nbsp;&nbsp;</input>
                 	 <input type = "checkbox" value="3" onclick="toggleTaskStatus('3')"> Closed &nbsp;&nbsp;</input>
 	                 <br><br>
+	                 <button id="addAssignee" onclick="addAssignee()" >Add Assignee</button>
+	                 <br><br>
+	                 <div id="assignees" class="assigneeTable">
+	                 
+	                 </div>
 	                 <button id="taskStatusButton" class = "btn btn-success btn-block" onclick="generateTaskReport('TASK')">Generate Task Report </button>	
 	                                 
                 </div> 
