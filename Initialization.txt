@@ -1,0 +1,74 @@
+This file contains information on Softwares needed, file informations, passwords information and  just information about starting out. 
+Version Updates and any other updates in passwords should be added to this file. 
+
+Access Websites: 96.83.121.17:8081/MillerRebuilt
+Log-in: Add in SQL; but for now use: 
+username: zqkazmi
+password: yaabbas12
+
+Software: 
+Apache Tomcat (Verison 8.0.22)
+Bitnami WAMP Stack (TO run MySQL Server) 
+MySQL Workbench 6.3 
+GITHUB Account - New Intern Added by previous 
+
+User log-in Information: 
+remote/desktop: 
+IP:96.83.121.17
+Username: administrator 
+password: admin_chc1975 
+
+Apache Tomcat: 
+Html: 96.83.121.17:8081
+Username: mcsRefrig 
+Password: 81043600
+
+Miller Intern GitHub Login
+username: MillerIntern
+password: mcsIntern1
+
+Miller Email:
+username: mcstaskalert@millerconstructionservices.com
+password: Tjm@1234
+
+
+Upload to server:
+username: millerAdmin
+password: constructionSQL3600
+
+
+deploy changes to site:
+1) Change hibernate file to proper username (millerAdmin) and password (constructionSQL3600) for server
+2) Copy hibernate file to MillerRebuilt/target/classes and replace old hibernate file
+3) Refresh MillerRebuilt project in Eclipse
+4) Export as WAR file
+5) Upload WAR to google drive
+6) Log onto remote desktop and download from google drive
+7) Navigate to C:\\apache_tomcat\webapps
+7) Remove existing MillerRebuilt.war
+8) Place newly downloaded WAR file into webapps folder
+9) Successful if Apache Tomcat says "Info Server Startup in time_took ms"
+
+
+restart Apache Tomcat server:
+1. Login to the Remote Desktop using the following credentials
+	IP:96.83.121.17
+	Username: administrator 
+	password: admin_chc1975 
+2. Open the File Explorer and go to C:\Users\Administrator\Desktop\MCS Website\MCSPMDBBat
+3. To stop the server, run the serverCleanUp.bat file
+4. To start the server, run the serverStarter.bat file
+
+
+
+File Information: 
+Main files: In Servlets: Project.java, ProjectService.java, ProjectObjectService.java 
+MySQL: Testdb -> published website data 
+       employee_db -> testing website data 
+       Add to both data sets because eventually testing must be intigrated with real data 
+Apache Tomcat: Autofile from Apache Tomcat into webApp in drive 
+               Check logs if issues occur that do not make sense 
+               
+**UPDATE FREQUENTLY TO GITHUB 
+**DOCUMEMT AND COMMENT EVERYTHING 
+
