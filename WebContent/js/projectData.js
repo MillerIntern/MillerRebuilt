@@ -184,7 +184,7 @@ function generateDropdowns(str, className)
 		else
 		{
 			option.innerHTML=json[i].name;
-			
+			console.log(json[i].name);
 		}
 
 		if(sent)

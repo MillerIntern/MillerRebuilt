@@ -2376,7 +2376,7 @@ function generateDropdowns(str, className)
 		else
 		{
 			option.innerHTML=json[i].name;
-			
+			console.log(json[i].name);
 		}
 
 		if(sent)
@@ -4239,9 +4239,6 @@ function fillTasksTable(tasks) {
 		taskListing.appendChild(status);
 		taskListing.appendChild(notes);
 		
-
-
-		
 		$('#taskTable > tbody').append(taskListing);
 		
 	}
@@ -4249,6 +4246,8 @@ function fillTasksTable(tasks) {
 	if (count === 0) {
 		clearAndAddSingleRowTask("No Tasks to Show");
 	}
+	
+	// $('#taskSelector2').val(selector);
 	
 }
 
@@ -6283,13 +6282,25 @@ function removeParam(param) {
 	filterProjects();
 }
 
+
+function sortProjectsBy(column)
+{
+  var value = column.value;
+  console.log(value);
+  filterProjects(value);
+}
+
+
 /**
  * This function filters through the projects based off of the given
  * search criteria and then displays the appropriate projects
  * INNER FUNCTION CALLS: updateDisplayableProjects(), clearAndAddSingleRow()
  */
-function filterProjects () {
+function filterProjects (filter) {
 
+	if(filter != undefined)
+		console.log(filter);
+	
 	updateDisplayableProjects();
 	//let json = JSON.parse(projects['projects']);
 	let json = DISPLAYABLE_PROJECTS;
@@ -6353,6 +6364,26 @@ function filterProjects () {
 			}
 		}
 
+	//	var i = 0;
+		
+		for(var i = 0; i < json.length; i++)
+		{
+			if(json[i] == null)
+			{
+				json.shift();
+			}	
+		}	
+			
+		
+		if(filter == "mcsNumber")
+		{
+			json.sort(function(a,b){
+				return parseInt(a.McsNumber) - parseInt(b.McsNumber);
+			});
+			
+			console.log(json[0].McsNumber);
+		}	
+		
 		$('#results > tbody').children('tr:not(.head)').remove();
 		if (remaining == 0) {
 			clearAndAddSingleRow('No Results Found!');

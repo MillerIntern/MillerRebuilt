@@ -153,10 +153,12 @@
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
-	   			<tr class='head'><th>Warehouse</th>
-	   			<th>MCS Number</th>
-	   			<th>Item</th>
-	   			<th>Manager</th></tr>
+	   			<tr class='head'>
+	   			<th><input type="radio" name="projects" value="warehouse" onchange="sortProjectsBy(this);">Warehouse</th>
+	   			<th><input type="radio" name="projects" value="mcsNumber" onchange="sortProjectsBy(this);">MCS Number</th>
+	   			<th><input type="radio" name="projects" value="item" onchange="sortProjectsBy(this);">Item</th>
+	   			<th><input type="radio" name="projects" value="manager" onchange="sortProjectsBy(this);">Manager</th>
+	   			</tr>
 	   			<!-- ex row:<tr onclick=function(){navigateTo(this)}><td>Baltimore, MD</td><td>Site Redesign</td><td>Josh</td></tr> -->
 	   		
 	   		</table>

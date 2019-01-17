@@ -180,6 +180,7 @@ function getProjectManagers () {
 	});
 	*/
 	projectManagers = TASK_OBJECT.PERSONS;
+	console.log(projectManagers);
 	getSubcontractors();
 	
 }
