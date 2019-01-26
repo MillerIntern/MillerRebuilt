@@ -160,12 +160,12 @@
 	   				<select class='assignedTo' id= "employeeDropdown">
 	   					
 	   				</select>
-					<select id='subcontractorsDropdown' style = "display : none">
+	   			</span>
+	   			<span>	
+	   				<span><b>Subcontractor: </b></span>
+					<select id='subcontractorsDropdown' >
 								
-					</select>
-					
-					<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button>
-					
+					</select>				
 	   			</span>
 	   			<span>
 	   			   <span><b>Status:</b></span>
@@ -180,7 +180,7 @@
 	   			<textarea  style="width: 30%" maxlength="999" class='notes scrollTextBoxTask'></textarea>
 	   			</div>
 	   			<span>
-	   			<button class='btn btn-success' onclick='saveTaskChanges()'>Update Task</button>
+	   			<button id="updateTask" class='btn btn-success'>Update Task</button>
 	   			<button class='btn btn-primary' onclick='navigateToSelectedProject()'>Navigate to Project</button>
 	   			<button class='btn btn-danger' onclick='collapseWell()'>Close Task Editor</button>
 	   			</span>
