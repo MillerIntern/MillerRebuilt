@@ -189,6 +189,7 @@
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits and Inspections</a></li>
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
+				<li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Scope and Cost Analysis</a></li>
 				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
@@ -431,7 +432,13 @@
 				<button id="scoreUpdateButton" class="btn project-edit" >Update Scorecard</button>
 				<button id="scoreViewButton" class="btn project-edit" >View Scorecard</button>
 			</div>
-			
+		<div class='info-tab info-tab-smartSystem' id='smartSystem'>
+				<ul class="smart-system list-group">
+					<li class="list-group-item smart-system-list-item" id="scope-form-item">Scope</li>
+					<li class="list-group-item smart-system-list-item" id="cost-form-item">Proposal Costs</li>
+					<li class="list-group-item smart-system-list-item" id="smart-system-item">Project Comparison</li>					
+				</ul>
+			</div> <!-- Project Information -->	
 		<div style="width: 86.2%" class='info-tab' id='settings'>
 			<table>	
 				<tr>
@@ -1958,6 +1965,26 @@
 
 <!-- THIS ENDS THE SCORECARD DIV -->
 
+<div id = 'smartSystemData' class ='editProject'>
+	
+	<div class="container">
+		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+	    
+	    <div style="width: 47%" id="scopeForm" class="info-tab active info-tab-scope">
+	     <p>scope form </p>
+	    </div>
+	    
+	     <div style="width: 47%" id="costForm" class="info-tab info-tab-costs">
+	      <p>cost form </p>
+	    </div>
+	    
+	     <div style="width: 47%" id="smartSystemComparison" class="info-tab info-tab-smart-system">
+	       <p>smart system comparison</p>
+	    </div>
+	    
+	 </div>
+</div>
 <!--  
 		LINES 1381 THRU 1528 CORRESPOND TO THE CHANGE ORDER DIV	
  -->

@@ -3071,6 +3071,10 @@ $(document).ready(function () {
 		editCloseout(this.id);
 	});
 	
+	$('.smart-system-list-item').click(function() {
+		editSmartSystem(this.id);
+	});	
+
 	$('#scoreViewButton').click(function() {
 		fillScorecard();
 		editScorecard(this.id);
@@ -3285,7 +3289,7 @@ function prepareCloseout(source_id){
 		
 
 	}	
-	else console.log("Bad ID in prepareProjectData");
+	else console.log("Bad ID in prepareCloseout");
 }
 
 /**
@@ -3324,6 +3328,46 @@ function editCloseout (source_id) {
 	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
 
+
+function editSmartSystem (source_id) {
+	if(source_id) prepareSmartSystem(source_id);
+	document.getElementById("projectManager").style.display = 'none';
+	EDIT_INTENTION = true;
+	currentDivLocation = "smartSystemData";
+	document.getElementById("smartSystemData").style.display = 'inline';
+
+}
+
+function prepareSmartSystem(source_id){
+	
+	if(source_id && !(isNaN(source_id))) projectID = source_id;
+	setCurrentDivLocation("smartSystemData");
+	setProjectHeader(PROJECT_DATA, currentDivLocation);
+
+	
+	$('#smartSystemData').find(".nav-tabs").find("[class~=active]").removeClass("active");
+	$('#smartSystemData').find("[class~=active]").removeClass("active");
+
+	if(source_id == "scope-form-item")
+	{
+		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
+		$('#smartSystemData').find("#scopeForm").addClass("active");
+
+	}
+	else if(source_id == "cost-form-item")
+	{
+		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
+		$('#smartSystemData').find("#costForm").addClass("active");
+
+	}
+	else if(source_id == "smart-system-item")
+	{
+		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
+		$('#smartSystemData').find("#smartSystemComparison").addClass("active");
+
+	}
+	else console.log("Bad ID in prepareSmartSystem");
+}
 
 function addChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=add&id=' + projectID;
@@ -7573,6 +7617,15 @@ function goToProjectManager() {
 			$('#projectManager').find('#closeoutTabLink').addClass('active');
 			$('#projectManager').find('#closeout').addClass('active');
 			break;
+		case "smartSystemData":
+			getProject_PROJECT_MANAGER(projectID, 1);
+			$('#smartSystemData').find('.info-tab').removeClass('active');
+		//	$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#smartSystemData').find('#closeout').addClass('active');
+			$('#smartSystemData').find('#scopeForm').addClass('active');
+			$('#projectManager').find('#smartSystemTabLink').addClass('active');
+			$('#projectManager').find('#smartSystem').addClass('active');
+			break;	
 		case "scorecardUpperDiv":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#scorecardData').find('.info-tab').removeClass('active');
