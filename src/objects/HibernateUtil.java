@@ -31,6 +31,7 @@ public class HibernateUtil {
 			// configures settings from hibernate.cfg.xml
 			Configuration configuration= new Configuration().configure("hibernate.cfg.xml"); 
 			
+			 
 			StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
 			
 			// If you miss the below line then it will complaing about a missing dialect setting

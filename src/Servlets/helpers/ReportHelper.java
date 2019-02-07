@@ -1735,7 +1735,7 @@ public class ReportHelper
 	 */
 	public synchronized static String getReportVal(String value, Task t){
 		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
-		String returnVal;
+		String returnVal = "";
 		if(value.equals("warehouse")){
 		     returnVal = t.getProject().getWarehouse().getCity().getName() + " #" + t.getProject().getWarehouse().getWarehouseID();
 		} else if(value.equals("task_item")){
@@ -1745,10 +1745,11 @@ public class ReportHelper
 		} else if(value.equals("task_title")){
 			returnVal = t.getTitle();
 		} else if(value.equals("task_assignee")) {
-			if(t.getSubAssignee() == null)
-				returnVal = t.getAssignee().getFirstName();
-			else
-				returnVal = t.getSubAssignee().getName();
+			 if(t.getType() == "EMPLOYEE")
+				return t.getAssignee().getFirstName();
+			else if(t.getType() == "SUBCONTRACTOR")
+				return t.getSubAssignee().getName();
+			 
 		}else if(value.equals("task_assignee_num")) {
 //			if(t.getSubAssignee() == null)
 //				returnVal = t.getAssignee().getId().toString();
@@ -1756,15 +1757,18 @@ public class ReportHelper
 //				returnVal = t.getSubAssignee().getName();
 			String us;
 			String per;
-			if(t.getSubAssignee() != null)
-			{	
-				returnVal = t.getSubAssignee().getName();
-			}
-			else
+			if(t.getType() == "EMPLOYEE")
 			{	
 				us = t.getAssignee().getId().toString();
+				System.out.println("user = "+ us);
 				per = convertUserToPerson(us);
-				returnVal = per;
+				System.out.println(per);
+				return per;
+			}
+		   
+			if(t.getType() == "SUBCONTRACTOR")
+			{	
+				return t.getSubAssignee().getName();	
 			}	
 		} else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
@@ -1800,6 +1804,8 @@ public class ReportHelper
 			return "7";
 		else if(user.equals("9"))
 			return "8";
+		else if(user.equals("19"))
+			return "14";
 		else if(user.equals("21"))
 			return "17";
 		else if(user.equals("22"))

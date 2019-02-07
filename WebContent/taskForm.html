@@ -204,8 +204,15 @@
 	function submitTask () {
 		let title = $('#titleEntry').val();
 		let description = $('#descriptionEntry').val();
-		let assignee = $('#assigneeEntry').val();
-		let subassignee = $('#subcontractorsDropdown').val();
+		let assignee;
+		
+		if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE)
+			assignee = $('#assigneeEntry').val();
+		else 
+			assignee = $('#subcontractorsDropdown').val();
+		
+//		assignee = $('#assigneeEntry').val();
+//		let subassignee = $('#subcontractorsDropdown').val();
 
 		let initiatedDate = $('#initDate').val();
 		let dueDate = $('#dueDate').val();
@@ -220,7 +227,7 @@
 		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
 		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
-		if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Subcontractor');
+	//	if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Subcontractor');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
 		
@@ -230,7 +237,7 @@
 			'project': projectID,
 			'description': description,
 			'assignee': assignee,
-			'subassignee': subassignee,
+		//	'subassignee': subassignee,
 			'initiatedDate': initiatedDate,
 			'dueDate': dueDate,
 			'severity': severity,
@@ -249,7 +256,7 @@
 				'project': projectID,
 				'description': description,
 				'assignee': assignee,
-				'subassignee': subassignee,
+			//	'subassignee': subassignee,
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
 				'severity': severity,
@@ -389,11 +396,17 @@
 						
 						</select>
 					</td>
-					<td><label>Subcontractor:</label></td>
-					<td class='subcontractorEntry'  id = "subcontractorAssigneeTableElement">
+					<td class='subcontractorEntry' style = "display : none" id = "subcontractorAssigneeTableElement">
+					
+			<!-- 		<td><label>Subcontractor:</label></td>
+					<td class='subcontractorEntry'  id = "subcontractorAssigneeTableElement"> -->
+					
 						<select id='subcontractorsDropdown'>
 								
 						</select>
+					</td>
+					<td>
+						<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button>
 					</td>
 				</tr>
 				<tr>

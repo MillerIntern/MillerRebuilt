@@ -282,6 +282,13 @@ public class Project extends HttpServlet
 			//String inspections= (parameters.get("inspections"));
 			response = QueryService.getProjectToEdit(warehouse, stage, classID, itemID, projectID);
 		}
+		else if(action.equals("getAllProjects"))
+		{
+			System.out.println("getting the projectsssss!");
+			response = ProjectService.getAllProjectsAsJson();
+			
+			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
+		}
 		else if (action.equals("getEditableProject"))
 		{
 			System.out.println("getEditableProject");
@@ -533,13 +540,6 @@ public class Project extends HttpServlet
 			response = ProjectObjectService.getAllAsJsonString("Subcontractor");
 		}
 		// Very aggressive request TODO: Would be great to somehow minify this request
-		else if(action.equals("getAllProjects"))
-		{
-			System.out.println("getting the projectsssss!");
-			response = ProjectService.getAllProjectsAsJson();
-			
-			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
-		}
 		else if(action.equals("getManager"))
 		{
 			response = getManager(req);

@@ -218,24 +218,24 @@ function getSubcontractors() {
 		createSubDropdown(TASK_OBJECT.SUBS);
 }
 
-//function toggleTaskAssignee() {
-//	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
-//		taskAssigneeType = TASK_SUB_ASSIGNEE;
-//		$('#employeeDropdown').hide();
-//		$('#subcontractorsDropdown').show();
-//		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
-//		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
-//
-//	}
-//	else {
-//		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
-//		$('#employeeDropdown').show();
-//		$('#subcontractorsDropdown').hide();
-//		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
-//		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
-//
-//	}
-//}
+function toggleTaskAssignee() {
+	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		$('#employeeDropdown').hide();
+		$('#subcontractorsDropdown').show();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
+		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+
+	}
+	else {
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		$('#employeeDropdown').show();
+		$('#subcontractorsDropdown').hide();
+		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+
+	}
+}
 
 function createSubDropdown (json) {
 	let d = document.createDocumentFragment();
@@ -646,8 +646,19 @@ function expandTaskInfo(param) {
 	} else dueDate = task.dueDate;
 	$('#taskWell > span > .dueDate').val(dueDate);							
 	if(task.assigner) $('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
-	if(task.assignee) $('#taskWell > span > .assignedTo').val(task.assignee.firstName);
-	if(task.subassignee) $('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
+	if(task.assignee) {
+		$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
+		taskAssigneeType = TASK_SUB_ASSIGNEE;
+		toggleTaskAssignee();
+	}
+	else {
+		$('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
+		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+		toggleTaskAssignee();
+	}
+	
+//	if(task.assignee) $('#taskWell > span > .assignedTo').val(task.assignee.firstName);
+//	if(task.subassignee) $('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
 		
 
 	$('#taskWell > span > .taskStatus').val(task.status.status);

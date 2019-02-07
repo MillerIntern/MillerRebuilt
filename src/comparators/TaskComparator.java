@@ -9,14 +9,17 @@ public class TaskComparator implements Comparator<Task>
 	
 	public int compare(Task t1, Task t2) 
 	{
-		if(t1.getSubAssignee() == null && t2.getSubAssignee() == null)
+		//System.out.println(t1.getType()+ ",  " + t2.getType());
+			
+		if(t1.getType() == "EMPLOYEE" && t2.getType() == "EMPLOYEE")
 			return t1.getAssignee().getFirstName().compareToIgnoreCase(t2.getAssignee().getFirstName());
-		else if(t1.getSubAssignee() == null && t2.getAssignee() == null)
+		else if(t1.getType() == "EMPLOYEE" && t2.getType() == "SUBCONTRACTOR")
 			return t1.getAssignee().getFirstName().compareToIgnoreCase(t2.getSubAssignee().getName());
-		else if(t1.getAssignee() == null && t2.getSubAssignee() == null)
+		else if(t1.getType() == "SUBCONTRACTOR" && t2.getType() == "EMPLOYEE")
 			return t1.getSubAssignee().getName().compareToIgnoreCase(t2.getAssignee().getFirstName());
-		else
+		else if(t1.getType() == "SUBCONTRACTOR" && t2.getType() == "SUBCONTRACTOR")
 			return t1.getSubAssignee().getName().compareToIgnoreCase(t2.getSubAssignee().getName());
-		
+		else 
+			return 0;
 	}
 }

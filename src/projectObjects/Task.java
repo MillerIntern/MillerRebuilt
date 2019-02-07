@@ -13,13 +13,22 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import projectObjects.Task.Table;
+
 /**
  * @author jmackin
  * @author Andrew Serensits (JMJ)
  *
  */
 @Entity
+@Table (name = "task")
 public class Task extends ProjectObject implements Comparable<Task> {
+	public @interface Table {
+
+		String name();
+
+	}
+
 	private String title;
 	private String description;
 	private Project project;

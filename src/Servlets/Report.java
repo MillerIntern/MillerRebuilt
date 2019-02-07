@@ -196,17 +196,17 @@ public class Report extends HttpServlet
             String[] assigneeNums = assignees.split(" ");
             
             tasks = acquireProperTasks(req);
-//            System.out.println("Tasks size = " + tasks.size());
+            System.out.println("Tasks size = " + tasks.size());
             
             for(int i = 0; i < assigneeNums.length; i++)
             {	
-       		   //  System.out.println("Assignee: " + assigneeNums[i]);
+       		     System.out.println("Assignee: " + assigneeNums[i]);
             	 for(int j = 0; j < tasks.size(); j++)
                  {   
-            	//	 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
+            		 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
             		 if(assigneeNums[i].equals(getValueFromTask("task_assignee_num", tasks.get(j))))
             		 {
-            		//	 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
+            			 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
             			 assigneeTasks.add(tasks.get(j));
             		 } 
                  }	 
@@ -258,9 +258,9 @@ public class Report extends HttpServlet
 		if(statuses != null) 
 			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksByStatus(statuses);
 //		else if(!assignee_id.equals("all")) 
-//			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, status);
-		else if(assignee_id.equals("all") && statuses.equals("all")) 
-			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
+//			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, statuses);
+//		if(assignee_id.equals("all") && statuses.equals("all")) 
+//			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		else 
 			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		
@@ -584,7 +584,8 @@ public class Report extends HttpServlet
 	
 	public synchronized void sortTasks(List<projectObjects.Task> tasks)
 	{
-		Collections.sort(tasks, new TaskComparator());
+		if(tasks.size() > 1)
+			Collections.sort(tasks, new TaskComparator());
 		
 	}
 	

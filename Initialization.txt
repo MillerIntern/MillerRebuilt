@@ -1,7 +1,7 @@
 This file contains information on Softwares needed, file informations, passwords information and  just information about starting out. 
 Version Updates and any other updates in passwords should be added to this file. 
 
-Access Websites: 96.83.121.17:8081/MillerRebuilt
+Access Websites: 192.168.0.210:8081/MillerRebuilt
 Log-in: Add in SQL; but for now use: 
 username: zqkazmi
 password: yaabbas12
@@ -13,13 +13,13 @@ MySQL Workbench 6.3
 GITHUB Account - New Intern Added by previous 
 
 User log-in Information: 
-remote/desktop: 
-IP:96.83.121.17
+remote/administrator 
+IP: 192.168.0.210
 Username: administrator 
 password: admin_chc1975 
 
 Apache Tomcat: 
-Html: 96.83.121.17:8081
+Html: 192.168.0.210:8081
 Username: mcsRefrig 
 Password: 81043600
 
@@ -52,7 +52,7 @@ deploy changes to site:
 
 restart Apache Tomcat server:
 1. Login to the Remote Desktop using the following credentials
-	IP:96.83.121.17
+	IP:192.168.0.210
 	Username: administrator 
 	password: admin_chc1975 
 2. Open the File Explorer and go to C:\Users\Administrator\Desktop\MCS Website\MCSPMDBBat

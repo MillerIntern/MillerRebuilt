@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -563,8 +564,15 @@ public class ProjectService extends ProjectObjectService
 
 		return g.toJson(map);
 	}
-	
-	
+
+//	public synchronized static String getAllProjects()
+//	{
+//		List<projectObjects.Project> projects = ProjectObjectService.getAllProjects();
+//		String proj = projects.toString();
+//		System.out.println("projects = " + proj);
+//		return proj;
+//	}
+//	
 	/**
 	 * This method gets all of the tasks
 	 * @return A string representing a JSON array containing this information

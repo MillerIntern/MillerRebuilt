@@ -340,7 +340,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get all objects of type "domain"
-        Query q = session.createQuery("from task");
+        Query q = session.createQuery("from Task");
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
    
