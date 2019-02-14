@@ -73,6 +73,7 @@
 	      	</ul>
 	      </li>
 		      <li><a href="query.html">Reports</a></li>
+		      <li><a href="masterScope.html">Scope</a></li>
 		      <li class="adminContent"><a href="additions.html">Tools</a></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
@@ -194,8 +195,10 @@
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits and Inspections</a></li>
+				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
+				<li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> 
+				<li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Cost Comparison</a></li> 
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
-			<!-- <li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Scope and Cost Analysis</a></li> -->
 				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
 			</ul>	
@@ -397,27 +400,6 @@
 			</div> <!-- Closeout -->
 			
 			<div style="width: 100%" class='info-tab info-tab-scorecard' id='scorecard'>
-				
-			<!-- <ul class = "list-group">
-				<li class = "list-group-item scorecard-info-list-item" id = "GeneralInfoItem">General Info <span id = "generalInfoStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
-			</ul>
-		    <ul class="scorecard-information list-group">
-						<li class="list-group-item scorecard-info-list-item" id="general-info-score-item">General Information</li>
-						<li class="list-group-item scorecard-info-list-item" id="scheduling-score-item" >Scheduling</li>
-						<li class="list-group-item scorecard-info-list-item" id="permits-and-inspections-score-item">Permits and Inspections</li>	
-						<li class="list-group-item scorecard-info-list-item" id="equipment-score-item">Equipment</li>
-						<li class="list-group-item scorecard-info-list-item" id="change-orders-score-item">Change Orders</li>
-						<li class="list-group-item scorecard-info-list-item" id="tasks-score-item">Tasks</li>	
-						<li class="list-group-item scorecard-info-list-item" id="closeout-score-item">Closeout</li>
-						<li class="list-group-item scorecard-info-list-item" id="financial-score-item">Financial</li>
-					</ul> -->
 				<div id="scoreProjectInfoTable">
 				<table id='scoreInfoTable' class='table'>
 				    <thead>
@@ -439,13 +421,160 @@
 				<button id="scoreViewButton" class="btn project-edit" >View Scorecard</button>
 			</div>
 		
-		<!-- <div class='info-tab info-tab-smartSystem' id='smartSystem'>
-				<ul class="smart-system list-group">
-					<li class="list-group-item smart-system-list-item" id="scope-form-item">Scope</li>
-					<li class="list-group-item smart-system-list-item" id="cost-form-item">Proposal Costs</li>
-					<li class="list-group-item smart-system-list-item" id="smart-system-item">Project Comparison</li>					
-				</ul>
-		</div> -->	
+	    <div class='info-tab info-tab-smart-system' id='smartSystem'>
+	       <div id="smartProjectComparison">
+                <p>smart project comparison</p>
+			</div>				
+		</div> 	
+		
+		<div class='info-tab info-tab-project-scope' id='projectScope'>
+	       <div id="projectMasterScope">
+                <p>project scope</p>
+			</div>				
+		</div> 	
+		
+		<div class='info-tab info-tab-cost-estimate' id='costEstimate'>
+	       <div id="costEstimateOverview">
+	       		<table class='table table-hover table-striped' ondblclick="editCostEstimate()">
+					<tr>
+						<th style="width: 7%; text-align: center"><button onclick='editCostEstimate()' type="button" class="project-edit btn btn-primary">Edit</button></th>
+						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
+						<th style="width: 10%; text-align: center">Proposal Required</th>
+						<th style="width: 10%; text-align: center">Sub Name</th>
+						<th style="width: 12%; text-align: center">Cost</th>
+						<th style="width: 12%; text-align: center">Submit Date</th>
+						<th style="width: 12%; text-align: center">Scope Description</th>
+						<th style="width: 15%; text-align: center">Notes</th>
+					</tr>
+				    <tr>
+						<td class = "bold">General Construction</td>
+						<td align="center" id='genConProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='genConSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='genConCost' class ="italics costEstTableData"></td>
+						<td align="center" id='genConSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='genConScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='genConNotes' class ="italics costEstTableData"></td>
+					</tr>
+				    <tr>
+						<td class = "bold">Refrigeration</td>
+						<td align="center" id='refrigProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='refrigSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigCost' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='refrigScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Mechanical</td>
+						<td align="center" id='mechanicalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Electrical</td>
+						<td align="center" id='electricalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='electricalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='electricalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Plumbing</td>
+						<td align="center" id='plumbingProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingCost' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Gas</td>
+						<td align="center" id='gasProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='gasSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='gasCost' class ="italics costEstTableData"></td>
+						<td align="center" id='gasSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='gasScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='gasNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Sprinkler</td>
+						<td align="center" id='sprinklerProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerCost' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Fire Alarm</td>
+						<td align="center" id='fireAlarmProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmCost' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Carpenter</td>
+						<td align="center" id='carpenterProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterCost' class ="italics costEstTableData"></td>	
+						<td align="center" id='carpenterSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Equipment</td>
+						<td align="center" id='equipmentProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentCost' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Supervision</td>
+						<td align="center" id='supervisionProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionCost' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Profit</td>
+						<td align="center" id='profitProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='profitSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='profitCost' class ="italics costEstTableData"></td>
+						<td align="center" id='profitSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='profitScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='profitNotes' class ="italics costEstTableData"></td>
+					</tr>
+						<tr>
+						<td class = "bold">Taxes</td>
+						<td align="center" id='taxesProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='taxesSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesCost' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='taxesScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesNotes' class ="italics costEstTableData"></td>
+					</tr>
+						<tr>
+						<td style="font-size:18px" class = "bold">Total</td>
+						<td align="center" id='totalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='totalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='totalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='totalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='totalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='totalNotes' class ="italics costEstTableData"></td>
+					</tr>
+				</table>	
+			</div>				
+		</div> 	
 		
 		<div style="width: 86.2%" class='info-tab' id='settings'>
 			<table>	
@@ -1973,26 +2102,184 @@
 
 <!-- THIS ENDS THE SCORECARD DIV -->
 
-<!-- <div id = 'smartSystemData' class ='editProject'>
+<div id = 'costEstimateData' class ='editProject'>
+	   <div class="container">
+			<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+		   
+		    <button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+			
+			<ul class="nav nav-tabs">
+				<li id="costEstDetails" role='presentation' class='active' data-tab="costEstDetails"><a>Cost Estimate</a></li>
+		        <li role='presentation' onClick="saveCostEstimate()" id='save-cost-estimate' class='save-tab'>
+		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+			</ul>
+
+
+		<div id="costEstimateDetails" class="info-tab active">
+			<table style="background-color:white" class='manager table table-hover'>
+					<tr>
+						<th style="width: 7%; text-align: center">Sub Type</th>
+						<th style="width: 10%; text-align: center">Proposal Required</th>
+						<th style="width: 10%; text-align: center">Sub Name</th>
+						<th style="width: 10%; text-align: center">Status</th>
+						<th style="width: 12%; text-align: center">Submit Date</th>
+						<th style="width: 12%; text-align: center">Cost</th>
+						<th style="width: 12%; text-align: center">Scope Description</th>
+						<th style="width: 15%; text-align: center">Notes</th>
+					</tr>
+				    <tr>
+						<td class = "bold">General Construction</td>
+						<td align="center" id='genConProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='genConSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='genConStatus' class="italics costEstTableData"></td>
+						<td align="center" id='genConSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='genConCost' class ="italics costEstTableData"></td>
+						<td align="center" id='genConScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='genConNotes' class ="italics costEstTableData"></td>
+					</tr>
+				    <tr>
+						<td class = "bold">Refrigeration</td>
+						<td align="center" id='refrigProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='refrigSubName' class ="italics costEstTableData"></td>
+					    <td align="center" id='refrigStatus' class="italics costEstTableData"></td>
+						<td align="center" id='refrigSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='refrigCost' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Mechanical</td>
+						<td align="center" id='mechanicalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalStatus' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Electrical</td>
+						<td align="center" id='electricalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='electricalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalStatus' class="italics costEstTableData"></td>
+					    <td align="center" id='electricalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='electricalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Plumbing</td>
+						<td align="center" id='plumbingProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingStatus' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingCost' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Gas</td>
+						<td align="center" id='gasProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='gasSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='gasStatus' class="italics costEstTableData"></td>
+						<td align="center" id='gasSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='gasCost' class ="italics costEstTableData"></td>
+						<td align="center" id='gasScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='gasNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Sprinkler</td>
+						<td align="center" id='sprinklerProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerStatus' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerCost' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Fire Alarm</td>
+						<td align="center" id='fireAlarmProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmStatus' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmCost' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Carpenter</td>
+						<td align="center" id='carpenterProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterStatus' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterCost' class ="italics costEstTableData"></td>	
+						<td align="center" id='carpenterScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Equipment</td>
+						<td align="center" id='equipmentProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentStatus' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentCost' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Supervision</td>
+						<td align="center" id='supervisionProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionStatus' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionCost' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionNotes' class ="italics costEstTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Profit</td>
+						<td align="center" id='profitProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='profitSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='profitStatus' class="italics costEstTableData"></td>
+						<td align="center" id='profitSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='profitCost' class ="italics costEstTableData"></td>
+						<td align="center" id='profitScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='profitNotes' class ="italics costEstTableData"></td>
+					</tr>
+						<tr>
+						<td class = "bold">Taxes</td>
+						<td align="center" id='taxesProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='taxesSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesStatus' class="italics costEstTableData"></td>
+						<td align="center" id='taxesSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='taxesCost' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesNotes' class ="italics costEstTableData"></td>
+					</tr>
+						<tr>
+						<td style="font-size:18px" class = "bold">Total</td>
+						<td align="center" id='totalProposalRequired' class="italics costEstTableData"></td>
+						<td align="center" id='totalSubName' class ="italics costEstTableData"></td>
+						<td align="center" id='totalStatus' class="italics costEstTableData"></td>
+						<td align="center" id='totalSubmitDate' class="italics costEstTableData"></td>
+						<td align="center" id='totalCost' class ="italics costEstTableData"></td>
+						<td align="center" id='totalScopeDes' class ="italics costEstTableData"></td>
+						<td align="center" id='totalNotes' class ="italics costEstTableData"></td>
+					</tr>
+				</table>
+			</div>		
+		</div>
+</div>
+
+
+<div id = 'smartSystemData' class ='editProject'>
 	
 	<div class="container">
-		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
-		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-	    
-	    <div style="width: 47%" id="scopeForm" class="info-tab active info-tab-scope">
-	     <p>scope form </p>
-	    </div>
-	    
-	     <div style="width: 47%" id="costForm" class="info-tab info-tab-costs">
-	      <p>cost form </p>
-	    </div>
-	    
-	     <div style="width: 47%" id="smartSystemComparison" class="info-tab info-tab-smart-system">
-	       <p>smart system comparison</p>
-	    </div>
+		
 	    
 	 </div>
-</div> -->
+</div>
 
 
 <!--  

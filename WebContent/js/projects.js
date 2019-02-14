@@ -3071,9 +3071,6 @@ $(document).ready(function () {
 		editCloseout(this.id);
 	});
 	
-	$('.smart-system-list-item').click(function() {
-		editSmartSystem(this.id);
-	});	
 
 	$('#scoreViewButton').click(function() {
 		fillScorecard();
@@ -3312,6 +3309,17 @@ function editPermitsAndInspections () {
 }
 
 
+function editCostEstimate () {
+	document.getElementById("projectManager").style.display = 'none';
+	EDIT_INTENTION = true;
+	//getProjectEnums_PERMIT(true);
+	currentDivLocation = "costEstimateData";
+	setProjectHeader(PROJECT_DATA, 'costEstimateData');
+	document.getElementById("costEstimateData").style.display = 'inline';
+	$('#costEstimateData').find('#costEstDetails').addClass('active');
+	$('#costEstimateData').find('#costEstimateDetails').addClass('active');
+}
+
 /**
  * This function makes the closeoutData div visible and projectManager div invisible
  * INNER FUNCTION CALLS: getProjectEnums_CLOSEOUT()
@@ -3328,46 +3336,46 @@ function editCloseout (source_id) {
 	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
 
-
-function editSmartSystem (source_id) {
-	if(source_id) prepareSmartSystem(source_id);
-	document.getElementById("projectManager").style.display = 'none';
-	EDIT_INTENTION = true;
-	currentDivLocation = "smartSystemData";
-	document.getElementById("smartSystemData").style.display = 'inline';
-
-}
-
-function prepareSmartSystem(source_id){
-	
-	if(source_id && !(isNaN(source_id))) projectID = source_id;
-	setCurrentDivLocation("smartSystemData");
-	setProjectHeader(PROJECT_DATA, currentDivLocation);
-
-	
-	$('#smartSystemData').find(".nav-tabs").find("[class~=active]").removeClass("active");
-	$('#smartSystemData').find("[class~=active]").removeClass("active");
-
-	if(source_id == "scope-form-item")
-	{
-		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
-		$('#smartSystemData').find("#scopeForm").addClass("active");
-
-	}
-	else if(source_id == "cost-form-item")
-	{
-		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
-		$('#smartSystemData').find("#costForm").addClass("active");
-
-	}
-	else if(source_id == "smart-system-item")
-	{
-		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
-		$('#smartSystemData').find("#smartSystemComparison").addClass("active");
-
-	}
-	else console.log("Bad ID in prepareSmartSystem");
-}
+//
+//function editSmartSystem (source_id) {
+//	if(source_id) prepareSmartSystem(source_id);
+//	document.getElementById("projectManager").style.display = 'none';
+//	EDIT_INTENTION = true;
+//	currentDivLocation = "smartSystemData";
+//	document.getElementById("smartSystemData").style.display = 'inline';
+//
+//}
+//
+//function prepareSmartSystem(source_id){
+//	
+//	if(source_id && !(isNaN(source_id))) projectID = source_id;
+//	setCurrentDivLocation("smartSystemData");
+//	setProjectHeader(PROJECT_DATA, currentDivLocation);
+//
+//	
+//	$('#smartSystemData').find(".nav-tabs").find("[class~=active]").removeClass("active");
+//	$('#smartSystemData').find("[class~=active]").removeClass("active");
+//
+//	if(source_id == "scope-form-item")
+//	{
+//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
+//		$('#smartSystemData').find("#scopeForm").addClass("active");
+//
+//	}
+//	else if(source_id == "cost-form-item")
+//	{
+//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
+//		$('#smartSystemData').find("#costForm").addClass("active");
+//
+//	}
+//	else if(source_id == "smart-system-item")
+//	{
+//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
+//		$('#smartSystemData').find("#smartSystemComparison").addClass("active");
+//
+//	}
+//	else console.log("Bad ID in prepareSmartSystem");
+//}
 
 function addChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=add&id=' + projectID;
@@ -7700,6 +7708,9 @@ function convertCurrentDivLocation (currentDivLocation){
 		case "permitData":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Permit & Inspection Editor <small id='projectHeader'>---</small></p>");
 			break;
+		case "costEstimateData":
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Cost Estimate Editor <small id='projectHeader'>---</small></p>");
+			break;	
 		case "closeoutData":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Closeout Editor <small id='projectHeader'>---</small></p>");
 			break;

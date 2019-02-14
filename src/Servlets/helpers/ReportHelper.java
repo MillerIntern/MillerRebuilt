@@ -1738,56 +1738,67 @@ public class ReportHelper
 		String returnVal = "";
 		if(value.equals("warehouse")){
 		     returnVal = t.getProject().getWarehouse().getCity().getName() + " #" + t.getProject().getWarehouse().getWarehouseID();
-		} else if(value.equals("task_item")){
+		} 
+		else if(value.equals("task_item")){
 			if(t.getProject().getProjectItem() == null || t.getProject().getProjectItem().getName() == null)
 				returnVal = "---";
 			else returnVal = t.getProject().getProjectItem().getName();
-		} else if(value.equals("task_title")){
+		}
+		else if(value.equals("task_title")){
 			returnVal = t.getTitle();
-		} else if(value.equals("task_assignee")) {
-			 if(t.getType() == "EMPLOYEE")
-				return t.getAssignee().getFirstName();
-			else if(t.getType() == "SUBCONTRACTOR")
-				return t.getSubAssignee().getName();
-			 
-		}else if(value.equals("task_assignee_num")) {
-//			if(t.getSubAssignee() == null)
-//				returnVal = t.getAssignee().getId().toString();
-//			else
-//				returnVal = t.getSubAssignee().getName();
+		}
+		else if(value.equals("task_assignee")) { 
+			//System.out.println(t.getType());
+			if(t.getType().equals("EMPLOYEE"))
+				returnVal = t.getAssignee().getFirstName();
+			else if(t.getType().equals("SUBCONTRACTOR"))
+				returnVal = t.getSubAssignee().getName();
+			else
+				returnVal = "---";
+		}
+		else if(value.equals("task_assignee_num")) {
+			//System.out.println("assignee num");
 			String us;
 			String per;
-			if(t.getType() == "EMPLOYEE")
+		    if(t.getType().equals("EMPLOYEE"))
 			{	
 				us = t.getAssignee().getId().toString();
-				System.out.println("user = "+ us);
+				//System.out.println("user = "+ us);
 				per = convertUserToPerson(us);
-				System.out.println(per);
-				return per;
+				//System.out.println("person = " + per);
+				returnVal = per;
 			}
-		   
-			if(t.getType() == "SUBCONTRACTOR")
+			else if(t.getType().equals("SUBCONTRACTOR"))
 			{	
-				return t.getSubAssignee().getName();	
+				returnVal = t.getSubAssignee().getName();	
 			}	
-		} else if(value.equals("task_description")) {
+		}
+		else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
-		} else if(value.equals("task_created_date")) {
+		}
+		else if(value.equals("task_created_date")) {
 			if(t.getAssignedDate() != null) returnVal = dForm.format(t.getAssignedDate()).toString();
 			else returnVal = "---";
-		} else if(value.equals("task_due_date")) {
+		}
+		else if(value.equals("task_due_date")) {
 			if(t.getDueDate() != null) returnVal = dForm.format(t.getDueDate()).toString();
 			else returnVal = "---";
-		} else if(value.equals("task_priority")) {
+		}
+		else if(value.equals("task_priority")) {
 			returnVal = Integer.toString(t.getSeverity());
-		} else if(value.equals("task_notes")) {
+		}
+		else if(value.equals("task_notes")) {
 			returnVal = t.getNotes();
-		} else if(value.equals("task_status")){
+		}
+		else if(value.equals("task_status")){
 			returnVal = t.getTaskStatus().getStatus();
-		} else {
-			return "---";
+		}
+		else
+		{
+			returnVal = "---";
 		}
 		
+		//System.out.println(returnVal);
 		return returnVal;
 		
 	}
@@ -1818,7 +1829,8 @@ public class ReportHelper
 			return "20";
 		else if(user.equals("26"))
 			return "21";
-		return "";
+		else 
+			return "";
 	}
 	
 	private static String convertStatusNumber(String retVal) {

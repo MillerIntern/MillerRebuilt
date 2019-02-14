@@ -198,20 +198,25 @@ public class Report extends HttpServlet
             tasks = acquireProperTasks(req);
             System.out.println("Tasks size = " + tasks.size());
             
-            for(int i = 0; i < assigneeNums.length; i++)
+            if(!assignees.equals("all"))
             {	
-       		     System.out.println("Assignee: " + assigneeNums[i]);
-            	 for(int j = 0; j < tasks.size(); j++)
-                 {   
-            		 System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
-            		 if(assigneeNums[i].equals(getValueFromTask("task_assignee_num", tasks.get(j))))
-            		 {
-            			 System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
-            			 assigneeTasks.add(tasks.get(j));
-            		 } 
-                 }	 
+	            for(int i = 0; i < assigneeNums.length; i++)
+	            {	
+	       		     System.out.println("Assignee: " + assigneeNums[i]);
+	            	 for(int j = 0; j < tasks.size(); j++)
+	                 {   
+	            		 if(tasks.get(j).getType().equals("EMPLOYEE"))
+	            		 {	 
+		            		 //System.out.println(getValueFromTask("task_assignee_num", tasks.get(j)));
+		            		 if(assigneeNums[i].equals(getValueFromTask("task_assignee_num", tasks.get(j))))
+		            		 {
+		            			 //System.out.println(getValueFromTask("task_assignee", tasks.get(j)));
+		            			 assigneeTasks.add(tasks.get(j));
+		            		 }
+	            		 }
+	                 }	 
+	            }
             }
-            
 //            for(int i = 0; i < assigneeTasks.size(); i++)
 //            {	
 //            	System.out.println(getValueFromTask("task_assignee_num", tasks.get(i))); 
@@ -497,12 +502,11 @@ public class Report extends HttpServlet
 				sb.append("<tr>");
 				sb.append("<td>"+(i+1)+"</td>");
 				for (int j = 0; j < shownFields.size(); j++)
-				{	
+				{					
 					sb.append("<td>");
 					String value = getValueFromTask(shownFields.get(j), t);
 					sb.append(value);
 					sb.append("</td>");		
-					
 				}
 				
 				sb.append("</tr>");
