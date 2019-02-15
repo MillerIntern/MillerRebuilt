@@ -1355,7 +1355,7 @@ function generateTaskReport(reportType){
 	  
 	}
 	
-	if(assigneeString == '')
+	if(assigneeString == '' || assigneeString == null)
 	{
 		assigneeString = 'all';
 	}	

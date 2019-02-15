@@ -1749,9 +1749,9 @@ public class ReportHelper
 		}
 		else if(value.equals("task_assignee")) { 
 			//System.out.println(t.getType());
-			if(t.getType().equals("EMPLOYEE"))
+			if(t.getType().equals("EMPLOYEE") && !t.getAssignee().getFirstName().equals(null))
 				returnVal = t.getAssignee().getFirstName();
-			else if(t.getType().equals("SUBCONTRACTOR"))
+			else if(t.getType().equals("SUBCONTRACTOR") && !t.getSubAssignee().getName().equals(null))
 				returnVal = t.getSubAssignee().getName();
 			else
 				returnVal = "---";

@@ -81,6 +81,11 @@ function printPage()
 	window.print();	
 }
 
+function deleteRow()
+{
+	
+}
+
 function backPage()
 {
 	document.location.href = "query.html";

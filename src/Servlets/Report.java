@@ -194,6 +194,7 @@ public class Report extends HttpServlet
             
             String assignees = req.getParameter("task_assignee");
             String[] assigneeNums = assignees.split(" ");
+            System.out.println("assignee " + assignees);
             
             tasks = acquireProperTasks(req);
             System.out.println("Tasks size = " + tasks.size());
@@ -262,8 +263,8 @@ public class Report extends HttpServlet
 		
 		if(statuses != null) 
 			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksByStatus(statuses);
-//		else if(!assignee_id.equals("all")) 
-//			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, statuses);
+		else if(assignee_id != null && !assignee_id.equals("all")) 
+			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasksForAssignee(assignee_id, statuses);
 //		if(assignee_id.equals("all") && statuses.equals("all")) 
 //			tasks = (List<projectObjects.Task>) ProjectObjectService.getAllTasks();
 		else 
@@ -602,6 +603,12 @@ public class Report extends HttpServlet
 	{
 		//double timestamp = System.currentTimeMillis();
 		return "<input type='button' id='backButton' onclick='backPage()' value='Go Back' />";
+	}
+	
+	public synchronized static String makeDeleteButton()
+	{
+		//double timestamp = System.currentTimeMillis();
+		return "<input type='button' id='deleteButton' onclick='deleteRow()' value='Delete Row' />";
 	}
 
 }

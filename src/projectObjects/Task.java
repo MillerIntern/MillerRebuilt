@@ -132,7 +132,8 @@ public class Task extends ProjectObject implements Comparable<Task> {
 		return assignee;
 	}
 	public synchronized void setAssignee(User assignee) {
-		if(assignee == null) System.out.println("IT WAS NULLLLL");
+		if(assignee == null)
+			System.out.println("IT WAS NULLLLL");
 		this.assignee = assignee;
 	}
 	public synchronized boolean isCompleted() {
