@@ -5869,6 +5869,7 @@ function updateFrontEnd() {
  */
 function updateDisplayableProjects(){
 	if(!RETRIEVED_PROJECTS) {console.log("Should have projects by now!"); return;}
+	
 
 	DISPLAYABLE_PROJECTS = new Array();
 	
@@ -5889,16 +5890,17 @@ function updateDisplayableProjects(){
 			
 	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++)
 	{
+		
 		for(var q = 0; q < stagesOfInterest.length; q++)
 		{
 			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id)
 			{
 				DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
+				break;
 			}
 		}
 	}	
 	
-	//console.log("DISPL" , RETRIEVED_PROJECTS);
 	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
 	
 }
@@ -6342,6 +6344,7 @@ function sortProjectsBy(column)
   filterProjects(value);
 }
 
+let FILT_COUNT = 0;
 
 /**
  * This function filters through the projects based off of the given
@@ -6355,11 +6358,15 @@ function filterProjects (filter) {
 	
 	updateDisplayableProjects();
 	//let json = JSON.parse(projects['projects']);
-	let json = DISPLAYABLE_PROJECTS;
-	console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS.length);
+	let json = DISPLAYABLE_PROJECTS.slice(0);
+	let outputs = new Array();
+	//console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS , DISPLAYABLE_PROJECTS.length);
+	//console.log("Debug Retrieved: " , RETRIEVED_PROJECTS , RETRIEVED_PROJECTS.length);
 	let parameters = $('.paramHolder').children('select');
 	
+	
 	let remaining = json.length;
+
 	if(paramNum != 0){
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
@@ -6372,6 +6379,7 @@ function filterProjects (filter) {
 		
 		for (var j = 0; j < json.length; j++) {
 			//console.log(json[j]);
+
 			if(id === 'Warehouse') { 
 				if(json[j] != null && json[j].warehouse.id != val) {
 					json[j] = null;
@@ -6410,22 +6418,26 @@ function filterProjects (filter) {
 				}
 			} else if(id === 'Stage') {
 				if(json[j] != null && json[j].stage.id != val) {
+					if(json[j] != null && json[j].McsNumber == 15257){console.log("Filter: " , id , json[j]);}
 					json[j] = null;
 					remaining = remaining - 1;
 				}
 			}
 		}
+		
+
 
 	//	var i = 0;
 		
+		/*
 		for(var i = 0; i < json.length; i++)
 		{
 			if(json[i] == null)
 			{
 				json.shift();
-			}	
+			}
 		}	
-			
+		*/			
 		
 		if(filter == "mcsNumber")
 		{
