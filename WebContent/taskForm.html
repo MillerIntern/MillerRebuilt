@@ -211,8 +211,7 @@
 		else 
 			assignee = $('#subcontractorsDropdown').val();
 		
-//		assignee = $('#assigneeEntry').val();
-//		let subassignee = $('#subcontractorsDropdown').val();
+		console.log("Assignee: ", assignee);
 
 		let initiatedDate = $('#initDate').val();
 		let dueDate = $('#dueDate').val();
@@ -247,6 +246,7 @@
 		};
 	
 		console.log("PROJECT == ", project);
+
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -397,11 +397,7 @@
 						
 						</select>
 					</td>
-					<td class='subcontractorEntry' style = "display : none" id = "subcontractorAssigneeTableElement">
-					
-			<!-- 		<td><label>Subcontractor:</label></td>
-					<td class='subcontractorEntry'  id = "subcontractorAssigneeTableElement"> -->
-					
+					<td class='subcontractorEntry' style = "display : none" id = "subcontractorAssigneeTableElement">			
 						<select id='subcontractorsDropdown'>
 								
 						</select>
