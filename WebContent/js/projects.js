@@ -37,6 +37,30 @@ $(document).ready(function(){$('.autofill_NA').click(function(){
 })});
 
 
+$(document).ready(function(){
+	
+	console.log("date picker for cost est");
+	 $('.cost-est-date').each(function(){
+		$(this).datepicker(); 
+	 });
+});
+
+function goToProjSpecScope() {
+	console.log("go to proj spec scope");
+	$('#projectMasterScope').removeClass("active");
+	$('#projectSpecificScope').addClass("active");
+	$('#projectMasterScope').hide();
+	$('#projectSpecificScope').show();
+}
+
+function goToProjMasterScope() {
+	console.log("go to proj master scope");
+	$('#projectSpecificScope').removeClass("active");
+	$('#projectMasterScope').addClass("active");
+	$('#projectSpecificScope').hide();
+	$('#projectMasterScope').show();
+}
+
 //NEXT 3 FUNCTIONS CORRESPOND TO CHOSEN STUFF
 /*
 $(document).ready(function(){
@@ -6208,7 +6232,7 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 			}	
 		} else {
 			option.innerHTML = json[i].name;
-			console.log(json[i].name);
+			//console.log(json[i].name);
 		}
 		
 		if(field == 'Stage') continue;

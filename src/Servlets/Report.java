@@ -499,6 +499,8 @@ public class Report extends HttpServlet
 		{
 			projectObjects.Task t = (projectObjects.Task) tasks.get(i);
 
+			if(getValueFromTask("task_assignee", t).equals("Bart"))
+				continue;
 			
 				sb.append("<tr>");
 				sb.append("<td>"+(i+1)+"</td>");

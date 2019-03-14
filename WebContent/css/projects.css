@@ -204,6 +204,12 @@
 	resize: vertical;
 }
 
+.scrollTextBoxCostEst {
+	height: 40px;
+	width: 270px;
+	resize: vertical;
+}
+
 .scrollTextBoxCloseout {
 	height: 40px;
 	width: 350px;

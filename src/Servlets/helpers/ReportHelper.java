@@ -1825,9 +1825,9 @@ public class ReportHelper
 			return "18";
 		else if(user.equals("24"))
 			return "15";
-		else if(user.equals("25"))
-			return "20";
 		else if(user.equals("26"))
+			return "20";
+		else if(user.equals("3"))
 			return "21";
 		else 
 			return "";

@@ -429,8 +429,28 @@
 		
 		<div class='info-tab info-tab-project-scope' id='projectScope'>
 	       <div id="projectMasterScope">
-                <p>project scope</p>
+	            <button id="printMasterScope" type="button" class="btn project-edit">Print Master Scope </button>
+                <button id="goToProjSpecScope" type="button" class="btn edit-submit" onclick="goToProjSpecScope()">Go to Project Specific Scope </button>
 			</div>				
+			
+			<div id="projectSpecificScope" style="display: none" class="active">
+	   			<table id='projectScopeTable' class='table'>
+				    <thead>
+					<tr class = "equipmentTableHead">
+						<th width = 8%>Item #</th>
+						<th width = 16%>Title</th>
+						<th width = 9% >Description</th>
+						<th width = 13%>Scope Notes</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+                <button id="addProjSpecScope" type="button" class="btn edit-submit" >Add new Project Specific Scope</button>
+                <button id="editProjSpecScope" type="button" class="btn edit-submit" >Edit Project Specific Scope</button>
+                <button id="printBothScopes" type="button" class="btn project-edit">Print All Scopes </button>
+                <button id="goToProjMasterScope" type="button" class="btn edit-submit" onclick="goToProjMasterScope()">Go to Project Master Scope </button>
+			</div>
 		</div> 	
 		
 		<div class='info-tab info-tab-cost-estimate' id='costEstimate'>
@@ -2122,10 +2142,10 @@
 						<th style="width: 10%; text-align: center">Proposal Required</th>
 						<th style="width: 10%; text-align: center">Sub Name</th>
 						<th style="width: 10%; text-align: center">Status</th>
-						<th style="width: 12%; text-align: center">Submit Date</th>
-						<th style="width: 12%; text-align: center">Cost</th>
+						<th style="width: 8%; text-align: center">Submit Date</th>
+						<th style="width: 8%; text-align: center">Cost</th>
 						<th style="width: 12%; text-align: center">Scope Description</th>
-						<th style="width: 15%; text-align: center">Notes</th>
+						<th style="width: 10%; text-align: center">Notes</th>
 					</tr>
 				    <tr>
 						<td class = "bold">General Construction</td>
@@ -2147,10 +2167,19 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>	
-						<td align="center" id='genConSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='genConCost' class ="italics costEstTableData"></td>
-						<td align="center" id='genConScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='genConNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="genConSubmitDate" class="cost-est-date" />
+						</td>
+
+						<td align="center">
+							<input type='text' id='genConCost' style="width:100px"/>
+						</td>
+						<td align="center">
+							<textarea id='genConScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center">
+							<textarea id='genConNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 				    <tr>
 						<td class = "bold">Refrigeration</td>
@@ -2172,10 +2201,18 @@
 							<option value="default">--Status--</option>
 							</select>
 					    </td>
-						<td align="center" id='refrigSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='refrigCost' class ="italics costEstTableData"></td>
-						<td align="center" id='refrigScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='refrigNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="refrigSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='refrigCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='refrigScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='refrigNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500" ></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Mechanical</td>
@@ -2197,10 +2234,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='mechanicalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='mechanicalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='mechanicalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='mechanicalNotes' class ="italics costEstTableData"></td>
+						<td align="center" >
+							<input type="text" placeholder="Select a Date" id="mechanicalSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='mechanicalCost' style="width:100px"/>
+					    </td>
+						<td align="center">
+							<textarea id='mechanicalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center">
+							<textarea id='mechanicalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Electrical</td>
@@ -2221,10 +2266,18 @@
 						    <select id="electricalStatus">
 							<option value="default">--Status--</option>
 							</select></td>
-					    <td align="center" id='electricalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='electricalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='electricalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='electricalNotes' class ="italics costEstTableData"></td>
+					    <td align="center" >
+					    	<input type="text" placeholder="Select a Date" id="electricalSubmitDate" class="cost-est-date" />
+					    </td>
+						<td align="center" >
+							<input type='text' id='electricalCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='electricalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center">
+							<textarea id='electricalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Plumbing</td>
@@ -2246,10 +2299,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='plumbingSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='plumbingCost' class ="italics costEstTableData"></td>
-						<td align="center" id='plumbingScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='plumbingNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="plumbingSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='plumbingCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='plumbingScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='plumbingNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Gas</td>
@@ -2271,10 +2332,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='gasSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='gasCost' class ="italics costEstTableData"></td>
-						<td align="center" id='gasScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='gasNotes' class ="italics costEstTableData"></td>
+						<td align="center" >
+							<input type="text" placeholder="Select a Date" id="gasSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='gasCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='gasScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='gasNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Sprinkler</td>
@@ -2296,10 +2365,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='sprinklerSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='sprinklerCost' class ="italics costEstTableData"></td>
-						<td align="center" id='sprinklerScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='sprinklerNotes' class ="italics costEstTableData"></td>
+						<td align="center" >
+							<input type="text" placeholder="Select a Date" id="sprinklerSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center" >
+							<input type='text' id='sprinklerCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='sprinklerScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='sprinklerNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Fire Alarm</td>
@@ -2321,10 +2398,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='fireAlarmSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmCost' class ="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="fireAlarmSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='fireAlarmCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='fireAlarmScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='fireAlarmNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Carpenter</td>
@@ -2346,10 +2431,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='carpenterSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='carpenterCost' class ="italics costEstTableData"></td>	
-						<td align="center" id='carpenterScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='carpenterNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="carpenterSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center" >
+							<input type='text' id='carpenterCost' style="width:100px"/>
+						</td>	
+						<td align="center" >
+							<textarea id='carpenterScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center">
+							<textarea id='carpenterNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Equipment</td>
@@ -2371,10 +2464,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='equipmentSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='equipmentCost' class ="italics costEstTableData"></td>
-						<td align="center" id='equipmentScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='equipmentNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="equipmentSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center" >
+							<input type='text' id='equipmentCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='equipmentScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='equipmentNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Supervision</td>
@@ -2396,10 +2497,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='supervisionSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='supervisionCost' class ="italics costEstTableData"></td>
-						<td align="center" id='supervisionScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='supervisionNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="supervisionSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center" >
+							<input type='text' id='supervisionCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='supervisionScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='supervisionNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>	
+						</td>
 					</tr>
 					<tr>
 						<td class = "bold">Profit</td>
@@ -2421,10 +2530,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='profitSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='profitCost' class ="italics costEstTableData"></td>
-						<td align="center" id='profitScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='profitNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="profitSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='profitCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='profitScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='profitNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 						<tr>
 						<td class = "bold">Taxes</td>
@@ -2446,10 +2563,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='taxesSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='taxesCost' class ="italics costEstTableData"></td>
-						<td align="center" id='taxesScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='taxesNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="taxesSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center">
+							<input type='text' id='taxesCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='taxesScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='taxesNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 						<tr>
 						<td style="font-size:18px" class = "bold">Total</td>
@@ -2471,10 +2596,18 @@
 							<option value="default">--Status--</option>
 							</select>
 						</td>
-						<td align="center" id='totalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='totalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='totalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='totalNotes' class ="italics costEstTableData"></td>
+						<td align="center">
+							<input type="text" placeholder="Select a Date" id="totalSubmitDate" class="cost-est-date" />
+						</td>
+						<td align="center" >
+							<input type='text' id='totalCost' style="width:100px"/>
+						</td>
+						<td align="center" >
+							<textarea id='totalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+						</td>
+						<td align="center" >
+							<textarea id='totalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+						</td>
 					</tr>
 				</table>
 			</div>		
