@@ -544,7 +544,10 @@ public class ReportHelper
 		} else if(value.equals("task_title")) {
 			sb.append("<th>");
 			sb.append("Title");
-		} else if(value.equals("task_assignee")) {
+		} else if(value.equals("project_item")) {
+			sb.append("<th>");
+			sb.append("Project");						
+	    }else if(value.equals("task_assignee")) {
 			sb.append("<th>");
 			sb.append("Assignee");
 		} else if(value.equals("task_description")) {
@@ -1792,6 +1795,10 @@ public class ReportHelper
 		}
 		else if(value.equals("task_status")){
 			returnVal = t.getTaskStatus().getStatus();
+		}
+		else if(value.equals("project_item"))
+		{
+			returnVal = t.getProject().getProjectItem().getName();
 		}
 		else
 		{

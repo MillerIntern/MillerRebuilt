@@ -27,7 +27,8 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
 			"task_title":"Task Title", "task_assignee":"Task Assignee", "task_description":"Task Description", "task_created_date":"Task Created Date", "task_due_date":"Task Due Date",
-			"task_priority":"Task Priority", "task_notes":"Task Notes" , "task_status":"Task Status", 'warehouse_and_id':'Warehouse ID', 'invoice_number':'Invoice Number'};
+			"task_priority":"Task Priority", "task_notes":"Task Notes" , "task_status":"Task Status", 'warehouse_and_id':'Warehouse ID', 'invoice_number':'Invoice Number',
+			"project_item":"Project Item"};
 
 var REPORT_VALS = {"All":"WEEKLY","Steve Meyer":"STEVE_MEYER","South East Refrigeration":"SE","North East Refrigeration":"NE",
 					"J Dempsey":"J_DEMPSEY","Invoice":"INVOICED", "Completed":"COMPLETED", "Construction":"CONSTRUCTION", 
@@ -423,7 +424,7 @@ const CO_KEYS = new Array('changeOrder');
 
 const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
 
-const TASK_KEYS = new Array('warehouse','task_title','task_assignee','task_description','task_created_date',
+const TASK_KEYS = new Array('warehouse', 'project_item', 'task_title','task_assignee','task_description','task_created_date',
 		                  'task_due_date', 'task_status', 'task_priority','task_notes');
 
 const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
