@@ -191,10 +191,10 @@
 	    	<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectFinder project-edit" onclick="goToFindProject();">Find Another Project</button>
 	    	               
 			<ul class='nav nav-tabs'>
-				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Information</a></li>
+				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
-				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits and Inspections</a></li>
+				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li>
 				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
 				<li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> 
 				<li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Cost Comparison</a></li> 
@@ -429,11 +429,15 @@
 		
 		<div class='info-tab info-tab-project-scope' id='projectScope'>
 	       <div id="projectMasterScope">
+	            <span id="masterScopeProjectTitle">: Master Scope</span>
+	            <br>
+	            <p>Item  (Check where applicable)</p>
 	            <button id="printMasterScope" type="button" class="btn project-edit">Print Master Scope </button>
                 <button id="goToProjSpecScope" type="button" class="btn edit-submit" onclick="goToProjSpecScope()">Go to Project Specific Scope </button>
 			</div>				
 			
 			<div id="projectSpecificScope" style="display: none" class="active">
+			    <span id="specificScopeProjectTitle">: Master Scope</span>
 	   			<table id='projectScopeTable' class='table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
@@ -468,129 +472,129 @@
 					</tr>
 				    <tr>
 						<td class = "bold">General Construction</td>
-						<td align="center" id='genConProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='genConSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='genConCost' class ="italics costEstTableData"></td>
-						<td align="center" id='genConSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='genConScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='genConNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='genConProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='genConSub' class ="italics costEstTableData"></td>
+						<td align="center" id='genConCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='genConSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='genConScope' class ="italics costEstTableData"></td>
+						<td align="center" id='genConNotesO' class ="italics costEstTableData"></td>
 					</tr>
 				    <tr>
 						<td class = "bold">Refrigeration</td>
-						<td align="center" id='refrigProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='refrigSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='refrigCost' class ="italics costEstTableData"></td>
-						<td align="center" id='refrigSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='refrigScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='refrigNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='refrigSub' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='refrigScope' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Mechanical</td>
-						<td align="center" id='mechanicalProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='mechanicalSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='mechanicalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='mechanicalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='mechanicalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='mechanicalNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Electrical</td>
-						<td align="center" id='electricalProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='electricalSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='electricalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='electricalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='electricalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='electricalNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='electricalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='electricalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Plumbing</td>
-						<td align="center" id='plumbingProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='plumbingSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='plumbingCost' class ="italics costEstTableData"></td>
-						<td align="center" id='plumbingSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='plumbingScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='plumbingNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingSub' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingScope' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Gas</td>
-						<td align="center" id='gasProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='gasSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='gasCost' class ="italics costEstTableData"></td>
-						<td align="center" id='gasSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='gasScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='gasNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='gasProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='gasSub' class ="italics costEstTableData"></td>
+						<td align="center" id='gasCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='gasSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='gasScope' class ="italics costEstTableData"></td>
+						<td align="center" id='gasNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Sprinkler</td>
-						<td align="center" id='sprinklerProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='sprinklerSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='sprinklerCost' class ="italics costEstTableData"></td>
-						<td align="center" id='sprinklerSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='sprinklerScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='sprinklerNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSub' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerScope' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Fire Alarm</td>
-						<td align="center" id='fireAlarmProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmCost' class ="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='fireAlarmNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSub' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmScope' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Carpenter</td>
-						<td align="center" id='carpenterProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='carpenterSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='carpenterCost' class ="italics costEstTableData"></td>	
-						<td align="center" id='carpenterSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='carpenterScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='carpenterNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterSub' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterCostO' class ="italics costEstTableData"></td>	
+						<td align="center" id='carpenterSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterScope' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Equipment</td>
-						<td align="center" id='equipmentProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='equipmentSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='equipmentCost' class ="italics costEstTableData"></td>
-						<td align="center" id='equipmentSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='equipmentScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='equipmentNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentSub' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentScope' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Supervision</td>
-						<td align="center" id='supervisionProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='supervisionSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='supervisionCost' class ="italics costEstTableData"></td>
-						<td align="center" id='supervisionSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='supervisionScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='supervisionNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionSub' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='supervisionScope' class ="italics costEstTableData"></td>
+						<td align="center" id='supervisionNotesO' class ="italics costEstTableData"></td>
 					</tr>
 					<tr>
 						<td class = "bold">Profit</td>
-						<td align="center" id='profitProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='profitSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='profitCost' class ="italics costEstTableData"></td>
-						<td align="center" id='profitSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='profitScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='profitNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='profitProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='profitSub' class ="italics costEstTableData"></td>
+						<td align="center" id='profitCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='profitSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='profitScope' class ="italics costEstTableData"></td>
+						<td align="center" id='profitNotesO' class ="italics costEstTableData"></td>
 					</tr>
 						<tr>
 						<td class = "bold">Taxes</td>
-						<td align="center" id='taxesProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='taxesSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='taxesCost' class ="italics costEstTableData"></td>
-						<td align="center" id='taxesSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='taxesScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='taxesNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='taxesSub' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='taxesScope' class ="italics costEstTableData"></td>
+						<td align="center" id='taxesNotesO' class ="italics costEstTableData"></td>
 					</tr>
 						<tr>
 						<td style="font-size:18px" class = "bold">Total</td>
-						<td align="center" id='totalProposalRequired' class="italics costEstTableData"></td>
-						<td align="center" id='totalSubName' class ="italics costEstTableData"></td>
-						<td align="center" id='totalCost' class ="italics costEstTableData"></td>
-						<td align="center" id='totalSubmitDate' class="italics costEstTableData"></td>
-						<td align="center" id='totalScopeDes' class ="italics costEstTableData"></td>
-						<td align="center" id='totalNotes' class ="italics costEstTableData"></td>
+						<td align="center" id='totalProposalReq' class="italics costEstTableData"></td>
+						<td align="center" id='totalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='totalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='totalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='totalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='totalNotesO' class ="italics costEstTableData"></td>
 					</tr>
 				</table>	
 			</div>				
@@ -2144,7 +2148,7 @@
 						<th style="width: 10%; text-align: center">Status</th>
 						<th style="width: 8%; text-align: center">Submit Date</th>
 						<th style="width: 8%; text-align: center">Cost</th>
-						<th style="width: 12%; text-align: center">Scope Description</th>
+						<th style="width: 12%; text-align: center">Scope</th>
 						<th style="width: 10%; text-align: center">Notes</th>
 					</tr>
 				    <tr>
@@ -2158,27 +2162,27 @@
 					    	</select>
 					    </td>
 						<td align="center">
-							<select id="genConSubNames">
+							<select id="genConSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>	
 						<td align="center">
-							<select id="genConStatus">
+							<select id="genConStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>	
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="genConSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" value='' id="genConSubmitDate" class="cost-est-date" />
 						</td>
 
 						<td align="center">
-							<input type='text' id='genConCost' style="width:100px"/>
+							<input type='text' id='genConCost' style="width:90px"/>
 						</td>
 						<td align="center">
-							<textarea id='genConScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='genConScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center">
-							<textarea id='genConNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='genConNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 				    <tr>
@@ -2192,26 +2196,26 @@
 					        </select>
 					    </td>
 						<td align="center">
-					     	<select id="refrigSubName">
+					     	<select id="refrigSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 					    <td align="center">
-					    	<select id="refrigStatus">
+					    	<select id="refrigStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 					    </td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="refrigSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="refrigSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='refrigCost' style="width:100px"/>
+							<input type='text' id='refrigCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='refrigScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='refrigScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='refrigNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500" ></textarea>
+							<textarea id='refrigNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500" ></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2225,26 +2229,26 @@
 					        </select>
 					     </td>
 						<td align="center">
-							<select id="mechanicalSubName">
+							<select id="mechanicalSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="mechanicalStatus">
+							<select id="mechanicalStatusCE" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center" >
-							<input type="text" placeholder="Select a Date" id="mechanicalSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="mechanicalSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='mechanicalCost' style="width:100px"/>
+							<input type='text' id='mechanicalCost' style="width:90px"/>
 					    </td>
 						<td align="center">
-							<textarea id='mechanicalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='mechanicalScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center">
-							<textarea id='mechanicalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='mechanicalNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2258,25 +2262,25 @@
 					        </select>
 					    </td>
 						<td align="center">
-							<select id="electricalSubName">
+							<select id="electricalSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-						    <select id="electricalStatus">
+						    <select id="electricalStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select></td>
 					    <td align="center" >
-					    	<input type="text" placeholder="Select a Date" id="electricalSubmitDate" class="cost-est-date" />
+					    	<input type="text" style="width: 90px" placeholder="Select a Date" id="electricalSubmitDate" class="cost-est-date" />
 					    </td>
 						<td align="center" >
-							<input type='text' id='electricalCost' style="width:100px"/>
+							<input type='text' id='electricalCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='electricalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='electricalScopeDes' style="width: 200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center">
-							<textarea id='electricalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='electricalNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2290,26 +2294,26 @@
 					        </select>
 					    </td>
 						<td align="center">
-							<select id="plumbingSubName">
+							<select id="plumbingSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="plumbingStatus">
+							<select id="plumbingStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="plumbingSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="plumbingSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='plumbingCost' style="width:100px"/>
+							<input type='text' id='plumbingCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='plumbingScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='plumbingScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='plumbingNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='plumbingNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2323,26 +2327,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="gasSubName">
+							<select id="gasSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="gasStatus">
+							<select id="gasStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center" >
-							<input type="text" placeholder="Select a Date" id="gasSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="gasSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='gasCost' style="width:100px"/>
+							<input type='text' id='gasCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='gasScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='gasScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='gasNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='gasNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2356,26 +2360,26 @@
 					        </select>
 					    </td>
 						<td align="center">
-							<select id="sprinklerSubName">
+							<select id="sprinklerSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="sprinklerStatus">
+							<select id="sprinklerStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center" >
-							<input type="text" placeholder="Select a Date" id="sprinklerSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="sprinklerSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='sprinklerCost' style="width:100px"/>
+							<input type='text' id='sprinklerCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='sprinklerScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='sprinklerScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='sprinklerNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='sprinklerNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2389,26 +2393,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="fireAlarmSubName">
+							<select id="fireAlarmSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="fireAlarmStatus">
+							<select id="fireAlarmStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="fireAlarmSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="fireAlarmSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='fireAlarmCost' style="width:100px"/>
+							<input type='text' id='fireAlarmCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='fireAlarmScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='fireAlarmScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='fireAlarmNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='fireAlarmNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2422,26 +2426,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="carpenterSubName">
+							<select id="carpenterSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="carpenterStatus">
+							<select id="carpenterStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="carpenterSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="carpenterSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='carpenterCost' style="width:100px"/>
+							<input type='text' id='carpenterCost' style="width:90px"/>
 						</td>	
 						<td align="center" >
-							<textarea id='carpenterScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='carpenterScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center">
-							<textarea id='carpenterNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='carpenterNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2455,26 +2459,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="equipmentSubName">
+							<select id="equipmentSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>	
 						</td>
 						<td align="center">
-							<select id="equipmentStatus">
+							<select id="equipmentStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="equipmentSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="equipmentSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='equipmentCost' style="width:100px"/>
+							<input type='text' id='equipmentCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='equipmentScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='equipmentScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='equipmentNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='equipmentNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -2488,26 +2492,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="supervisionSubName">
+							<select id="supervisionSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="supervisionStatus">
+							<select id="supervisionStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="supervisionSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="supervisionSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='supervisionCost' style="width:100px"/>
+							<input type='text' id='supervisionCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='supervisionScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='supervisionScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='supervisionNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>	
+							<textarea id='supervisionNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>	
 						</td>
 					</tr>
 					<tr>
@@ -2521,26 +2525,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="profitSubName">
+							<select id="profitSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center" >
-							<select id="profitStatus">
+							<select id="profitStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="profitSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="profitSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='profitCost' style="width:100px"/>
+							<input type='text' id='profitCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='profitScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='profitScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='profitNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='profitNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 						<tr>
@@ -2554,26 +2558,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="taxesSubName">
+							<select id="taxesSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="taxesStatus">
+							<select id="taxesStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="taxesSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="taxesSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='taxesCost' style="width:100px"/>
+							<input type='text' id='taxesCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='taxesScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='taxesScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='taxesNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='taxesNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 						<tr>
@@ -2587,26 +2591,26 @@
 					        </select>
 						</td>
 						<td align="center">
-							<select id="totalSubName">
+							<select id="totalSubName" class="ceSubName">
 							<option value="default">--Sub Name--</option>
 							</select>
 						</td>
 						<td align="center">
-							<select id="totalStatus">
+							<select id="totalStatus" class="ceStatus">
 							<option value="default">--Status--</option>
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" placeholder="Select a Date" id="totalSubmitDate" class="cost-est-date" />
+							<input type="text" style="width: 90px" placeholder="Select a Date" id="totalSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='totalCost' style="width:100px"/>
+							<input type='text' id='totalCost' style="width:90px"/>
 						</td>
 						<td align="center" >
-							<textarea id='totalScopeDes' class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
+							<textarea id='totalScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
 						</td>
 						<td align="center" >
-							<textarea id='totalNotes' class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
+							<textarea id='totalNotes' style="width:180px" class="scrollTextBoxCostEst" rows="1" cols="12" maxlength="500"></textarea>
 						</td>
 					</tr>
 				</table>

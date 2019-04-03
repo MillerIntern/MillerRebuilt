@@ -532,6 +532,7 @@ public class ProjectObjectService
 				!domain.equals("Permits")  && 
 				!domain.equals("Equipment")&& 
 				!domain.equals("EquipmentStatus") && 
+				!domain.equals("ChangeOrderStatus") &&
 				!domain.equals("Proposal") && 
 				!domain.equals("Task") &&
 				!domain.equals("Subcontractor") &&
@@ -542,6 +543,8 @@ public class ProjectObjectService
 				criteria.addOrder(Order.asc("id"));
 			} else if(domain.equals("Proposal")) {
 				criteria.addOrder(Order.asc("id"));
+			} else if(domain.equals("ChangeOrderStatus")) {
+				criteria.addOrder(Order.asc("id"));	
 			} else if(domain.equals("Permits")) {
 				criteria.addOrder(Order.asc("id"));
 			} else if(domain.equals("Equipment")) {
