@@ -427,7 +427,7 @@
 			</div>				
 		</div> 	
 		
-		<div class='info-tab info-tab-project-scope' id='projectScope'>
+		<div class='info-tab info-tab-project-scope' style="width: 80%" id='projectScope'>
 	       <div id="projectMasterScope">
 	            <span id="masterScopeProjectTitle">: Master Scope</span>
 	            <br>
@@ -441,19 +441,51 @@
 	   			<table id='projectScopeTable' class='table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
-						<th width = 8%>Item #</th>
-						<th width = 16%>Title</th>
-						<th width = 9% >Description</th>
+						<th width = 7%>Item #</th>
+						<th width = 12%>Title</th>
+						<th width = 13% >Description</th>
 						<th width = 13%>Scope Notes</th>
 					</tr>
 					</thead>
 					<tbody>
 					</tbody>
 				</table>
-                <button id="addProjSpecScope" type="button" class="btn edit-submit" >Add new Project Specific Scope</button>
+                <button id="addProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope()">Add new Project Specific Scope</button>
                 <button id="editProjSpecScope" type="button" class="btn edit-submit" >Edit Project Specific Scope</button>
                 <button id="printBothScopes" type="button" class="btn project-edit">Print All Scopes </button>
                 <button id="goToProjMasterScope" type="button" class="btn edit-submit" onclick="goToProjMasterScope()">Go to Project Master Scope </button>
+			</div>
+			
+			<div id="newProjSpecScope" style="display: none" class="active"> 
+			    <p style="font-size: 14pt">New Project Specific Scope Form</p>
+			    
+				<table id="projSpecScopeForm" class='table table-hover'>
+				<tbody>
+				<tr>
+					<td style="width: 20%"><b>Scope Item #</b></td>
+					<td><input type="text" id="scopeItemNum"></td>
+				</tr>
+				<tr>
+					<td><b>Title</b></td>
+					<td><input type="text" id="scopeTitle"></td>
+				</tr>
+				<tr>
+					<td><b>Description</b></td>
+					<td><textarea id='scopeDes' rows="4" cols="22" maxlength="700"></textarea></td>
+			    </tr>
+			    <tr>
+			    	<td><b>Sub Name(s)</b></td>
+			    	<td><input type="text" id="scopeSubNames"></td>
+			    </tr>
+			    <tr>
+			    	<td><b>Scope Notes</b></td>
+			    	<td><textarea id='scopeNotes' rows="4" cols="22" maxlength="700"></textarea></td>
+			    </tr>
+				</tbody>
+				</table>
+				<br>
+				<button id="saveProjSpecScope" type="button" class="btn btn-success" >Save Scope</button>
+                <button id="goToProjectSpecScope" type="button" class="btn btn-danger" onclick="goToProjectSpecScope()">Go Back to Project Specific Scope View </button>
 			</div>
 		</div> 	
 		

@@ -3125,21 +3125,6 @@ function viewTasks() {
 
 }
 
-function goToProjSpecScope() {
-	console.log("go to proj spec scope");
-	$('#projectMasterScope').removeClass("active");
-	$('#projectSpecificScope').addClass("active");
-	$('#projectMasterScope').hide();
-	$('#projectSpecificScope').show();
-}
-
-function goToProjMasterScope() {
-	console.log("go to proj master scope");
-	$('#projectSpecificScope').removeClass("active");
-	$('#projectMasterScope').addClass("active");
-	$('#projectSpecificScope').hide();
-	$('#projectMasterScope').show();
-}
 
 /**
  * This function retrieves a specific project from the database
@@ -4450,8 +4435,6 @@ function fillDropdownsCostEst(json)
 	var changeorderStatus = JSON.parse(json["changeorderstatus"]);
 	changeorderStatus = sortChangeOrderStatus(changeorderStatus);
 	var d = document.createDocumentFragment();
-	//$('#costEstimateData').find('#genConStatus').empty();
-	//$('#costEstimateData').find('#genConSubName').empty();
 	
 	for(var i = 0; i < changeorderStatus.length; i++)
 	{
@@ -4772,6 +4755,40 @@ function saveCostEstimate()
 			}
 		});
     }  
+}
+
+function goToProjSpecScope() {
+	console.log("go to proj spec scope");
+	$('#projectMasterScope').removeClass("active");
+	$('#projectSpecificScope').addClass("active");
+	$('#projectMasterScope').hide();
+	$('#projectSpecificScope').show();
+}
+
+function goToProjMasterScope() {
+	console.log("go to proj master scope");
+	$('#projectSpecificScope').removeClass("active");
+	$('#projectMasterScope').addClass("active");
+	$('#projectSpecificScope').hide();
+	$('#projectMasterScope').show();
+}
+
+function goToNewProjScope()
+{
+	console.log("go to new proj spec scope");
+	$('#projectSpecificScope').removeClass("active");
+	$('#newProjSpecScope').addClass("active");
+	$('#projectSpecificScope').hide();
+	$('#newProjSpecScope').show();
+}
+
+function goToProjectSpecScope()
+{
+	console.log("go to proj spec scope");
+	$('#newProjSpecScope').removeClass("active");
+	$('#projectSpecificScope').addClass("active");
+	$('#newProjSpecScope').hide();
+	$('#projectSpecificScope').show();
 }
 
 function editScorecard (source_id)
