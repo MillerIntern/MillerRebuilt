@@ -3311,19 +3311,6 @@ function editPermitsAndInspections () {
 }
 
 
-function editCostEstimate () {
-	document.getElementById("projectManager").style.display = 'none';
-	EDIT_INTENTION = true;
-	//getProjectEnums_PERMIT(true);
-	currentDivLocation = "costEstimateData";
-	setProjectHeader(PROJECT_DATA, 'costEstimateData');
-	document.getElementById("costEstimateData").style.display = 'inline';
-	$('#costEstimateData').find('#costEstDetails').addClass('active');
-	$('#costEstimateData').find('#costEstimateDetails').addClass('active');
-	
-	getDropdownInfoCostEst();
-}
-
 /**
  * This function makes the closeoutData div visible and projectManager div invisible
  * INNER FUNCTION CALLS: getProjectEnums_CLOSEOUT()
@@ -4476,7 +4463,18 @@ function fillDropdownsCostEst(json)
 	$('#costEstimateData').find('.ceSubName').append(d);
 	
 }
-	
+
+
+function editCostEstimate () {
+	document.getElementById("projectManager").style.display = 'none';
+	EDIT_INTENTION = true;
+	currentDivLocation = "costEstimateData";
+	setProjectHeader(PROJECT_DATA, 'costEstimateData');
+	document.getElementById("costEstimateData").style.display = 'inline';
+	$('#costEstimateData').find('#costEstDetails').addClass('active');
+	$('#costEstimateData').find('#costEstimateDetails').addClass('active');
+	getDropdownInfoCostEst();
+}
 
 function saveCostEstimate()
 {
@@ -4530,93 +4528,100 @@ function saveCostEstimate()
     var gasScope = $('#costEstimateData').find("#gasScopeDes").val();
     var gasNotes = $('#costEstimateData').find("#gasNotes").val();
     
-    var mechanicalProposalReq = $('#costEstimateData').find("#mechanicalProposalReq").val();
-    var mechanicalSubName = $('#costEstimateData').find("#mechanicalSubName").val();
-    var mechanicalStatus = $('#costEstimateData').find("#mechanicalStatus").val();
-    var mechanicalSubmitDate = $('#costEstimateData').find("#mechanicalSubmitDate").val();
-    var mechanicalCost = $('#costEstimateData').find("#mechanicalCost").val();
-    var mechanicalScope = $('#costEstimateData').find("#mechanicalScopeDes").val();
-    var mechanicalNotes = $('#costEstimateData').find("#mechanicalNotes").val();
+    var sprinklerProposalReq = $('#costEstimateData').find("#sprinklerProposalReq").val();
+    var sprinklerSubName = $('#costEstimateData').find("#sprinklerSubName").val();
+    var sprinklerStatus = $('#costEstimateData').find("#sprinklerStatus").val();
+    var sprinklerSubmitDate = $('#costEstimateData').find("#sprinklerSubmitDate").val();
+    var sprinklerCost = $('#costEstimateData').find("#sprinklerCost").val();
+    var sprinklerScope = $('#costEstimateData').find("#sprinklerScopeDes").val();
+    var sprinklerNotes = $('#costEstimateData').find("#sprinklerNotes").val();
     
-    var sprinklerPermitReq = $('#permitData').find("#sprinklerPermitReq").val();
-    var sprinklerPermitStatus = $('#permitData').find("#sprinklerPermitStatus").val();
-    var sprinklerPermitLastUpdated = $('#permitData').find("#sprinklerPermitLastUpdated").val();
-    var sprinklerInspectionReq = $('#permitData').find("#sprinklerInspectionReq").val();
-    var sprinklerInspectionStatus = $('#permitData').find("#sprinklerInspectionStatus").val();
-    var sprinklerInspectionLastUpdated = $('#permitData').find("#sprinklerInspectionLastUpdated").val();
+    var fireAlarmProposalReq = $('#costEstimateData').find("#fireAlarmProposalReq").val();
+    var fireAlarmSubName = $('#costEstimateData').find("#fireAlarmSubName").val();
+    var fireAlarmStatus = $('#costEstimateData').find("#fireAlarmStatus").val();
+    var fireAlarmSubmitDate = $('#costEstimateData').find("#fireAlarmSubmitDate").val();
+    var fireAlarmCost = $('#costEstimateData').find("#fireAlarmCost").val();
+    var fireAlarmScope = $('#costEstimateData').find("#fireAlarmScopeDes").val();
+    var fireAlarmNotes = $('#costEstimateData').find("#fireAlarmNotes").val();
     
-    var fireAlarmPermitReq = $('#permitData').find("#fireAlarmPermitReq").val();
-    var fireAlarmPermitStatus = $('#permitData').find("#fireAlarmPermitStatus").val();
-    var fireAlarmPermitLastUpdated = $('#permitData').find("#fireAlarmPermitLastUpdated").val();
-    var fireAlarmInspectionReq = $('#permitData').find("#fireAlarmInspectionReq").val();
-    var fireAlarmInspectionStatus = $('#permitData').find("#fireAlarmInspectionStatus").val();
-    var fireAlarmInspectionLastUpdated = $('#permitData').find("#fireAlarmInspectionLastUpdated").val();
+    var carpenterProposalReq = $('#costEstimateData').find("#carpenterProposalReq").val();
+    var carpenterSubName = $('#costEstimateData').find("#carpenterSubName").val();
+    var carpenterStatus = $('#costEstimateData').find("#carpenterStatus").val();
+    var carpenterSubmitDate = $('#costEstimateData').find("#carpenterSubmitDate").val();
+    var carpenterCost = $('#costEstimateData').find("#carpenterCost").val();
+    var carpenterScope = $('#costEstimateData').find("#carpenterScopeDes").val();
+    var carpenterNotes = $('#costEstimateData').find("#carpenterNotes").val();
     
-    console.log(permitNotes);
-    console.log(inspectionNotes);
+    var equipmentProposalReq = $('#costEstimateData').find("#equipmentProposalReq").val();
+    var equipmentSubName = $('#costEstimateData').find("#equipmentSubName").val();
+    var equipmentStatus = $('#costEstimateData').find("#equipmentStatus").val();
+    var equipmentSubmitDate = $('#costEstimateData').find("#equipmentSubmitDate").val();
+    var equipmentCost = $('#costEstimateData').find("#equipmentCost").val();
+    var equipmentScope = $('#costEstimateData').find("#equipmentScopeDes").val();
+    var equipmentNotes = $('#costEstimateData').find("#equipmentNotes").val();
     
-    var dates_PERMIT =[
-				buildingPermitLastUpdated, buildingInspectionLastUpdated,
-				ceilingPermitLastUpdated, ceilingInspectionLastUpdated,
-				mechanicalPermitLastUpdated, mechanicalInspectionLastUpdated, 
-				electricalPermitLastUpdated, electricalInspectionLastUpdated,
-				plumbingPermitLastUpdated, plumbingInspectionLastUpdated,
-				gasPermitLastUpdated, gasInspectionLastUpdated,
-				sprinklerPermitLastUpdated, sprinklerInspectionLastUpdated,
-				fireAlarmPermitLastUpdated, fireAlarmInspectionLastUpdated,
-				voltagePermitLastUpdated, voltageInspectionLastUpdated,
-				otherAPermitLastUpdated, otherAInspectionLastUpdated,
-				otherBPermitLastUpdated, otherBInspectionLastUpdated,
-                ];
+    var supervisionProposalReq = $('#costEstimateData').find("#supervisionProposalReq").val();
+    var supervisionSubName = $('#costEstimateData').find("#supervisionSubName").val();
+    var supervisionStatus = $('#costEstimateData').find("#supervisionStatus").val();
+    var supervisionSubmitDate = $('#costEstimateData').find("#supervisionSubmitDate").val();
+    var supervisionCost = $('#costEstimateData').find("#supervisionCost").val();
+    var supervisionScope = $('#costEstimateData').find("#supervisionScopeDes").val();
+    var supervisionNotes = $('#costEstimateData').find("#supervisionNotes").val();
+    
+    var profitProposalReq = $('#costEstimateData').find("#profitProposalReq").val();
+    var profitSubName = $('#costEstimateData').find("#profitSubName").val();
+    var profitStatus = $('#costEstimateData').find("#profitStatus").val();
+    var profitSubmitDate = $('#costEstimateData').find("#profitSubmitDate").val();
+    var profitCost = $('#costEstimateData').find("#profitCost").val();
+    var profitScope = $('#costEstimateData').find("#profitScopeDes").val();
+    var profitNotes = $('#costEstimateData').find("#profitNotes").val();
+    
+    var taxesProposalReq = $('#costEstimateData').find("#taxesProposalReq").val();
+    var taxesSubName = $('#costEstimateData').find("#taxesSubName").val();
+    var taxesStatus = $('#costEstimateData').find("#taxesStatus").val();
+    var taxesSubmitDate = $('#costEstimateData').find("#taxesSubmitDate").val();
+    var taxesCost = $('#costEstimateData').find("#taxesCost").val();
+    var taxesScope = $('#costEstimateData').find("#taxesScopeDes").val();
+    var taxesNotes = $('#costEstimateData').find("#taxesNotes").val();
+    
+    var totalProposalReq = $('#costEstimateData').find("#totalProposalReq").val();
+    var totalSubName = $('#costEstimateData').find("#totalSubName").val();
+    var totalStatus = $('#costEstimateData').find("#totalStatus").val();
+    var totalSubmitDate = $('#costEstimateData').find("#totalSubmitDate").val();
+    var totalCost = $('#costEstimateData').find("#totalCost").val();
+    var totalScope = $('#costEstimateData').find("#totalScopeDes").val();
+    var totalNotes = $('#costEstimateData').find("#totalNotes").val();
     
     
-    if(isValidInput_PERMIT(dates_PERMIT))
+    var dates_CostEst =[ genConSubmitDate, refrigSubmitDate, mechanicalSubmitDate, electricalSubmitDate, plumbingSubmitDate,
+    					gasSubmitDate, sprinklerSubmitDate, fireAlarmSubmitDate, carpenterSubmitDate, equipmentSubmitDate,
+    					supervisionSubmitDate, profitSubmitDate, taxesSubmitDate, totalSubmitDate];
+    
+    
+    if(isValidInput_PERMIT(dates_CostEst))
     {
     	console.log("we got valid data now");
     	
-    	for(var i = 0; i < dates_PERMIT.length; i++) {
-    		if(dates_PERMIT[i]) dates_PERMIT[i] = dateCleaner(dates_PERMIT[i]);
-    		if(i == 0) buildingPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 1) buildingInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 2) ceilingPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 3) ceilingInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 4) mechanicalPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 5) mechanicalInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 6) electricalPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 7) electricalInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 8) plumbingPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 9) plumbingInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 10) gasPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 11) gasInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 12) sprinklerPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 13) sprinklerInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 14) fireAlarmPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 15) fireAlarmInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 16) voltagePermitLastUpdated = dates_PERMIT[i];
-    		if(i == 17) voltageInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 18) otherAPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 19) otherAInspectionLastUpdated = dates_PERMIT[i];
-    		if(i == 20) otherBPermitLastUpdated = dates_PERMIT[i];
-    		if(i == 21) otherBInspectionLastUpdated = dates_PERMIT[i];
+    	for(var i = 0; i < dates_CostEst.length; i++) {
+    		if(dates_CostEst[i]) 
+    			dates_CostEst[i] = dateCleaner(dates_CostEst[i]);
+    		if(i == 0) genConSubmitDate = dates_CostEst[i];
+    		if(i == 1) refrigSubmitDate = dates_CostEst[i];
+    		if(i == 2) mechanicalSubmitDate = dates_CostEst[i];
+    		if(i == 3) electricalSubmitDate = dates_CostEst[i];
+    		if(i == 4) plumbingSubmitDate = dates_CostEst[i];
+    		if(i == 5) gasSubmitDate = dates_CostEst[i];
+    		if(i == 6) sprinklerSubmitDate = dates_CostEst[i];
+    		if(i == 7) fireAlarmSubmitDate = dates_CostEst[i];
+    		if(i == 8) carpenterSubmitDate = dates_CostEst[i];
+    		if(i == 9) equipmentSubmitDate = dates_CostEst[i];
+    		if(i == 10) supervisionSubmitDate = CostEst[i];
+    		if(i == 11) profitSubmitDate = dates_CostEst[i];
+    		if(i == 12) taxesSubmitDate = dates_CostEst[i];
+    		if(i == 13) totalSubmitdate = dates_CostEst[i];
     	}
-		var action = "editPermits";
-		var PERMIT_ID = 0;
-		if(PROJECT_DATA.permits != null)
-			PERMIT_ID = PROJECT_DATA.permits.id;
-		else
-			PERMIT_ID = 0;
-		
-		if(!PROJECT_DATA || !PROJECT_DATA.id)
-		{
-			alert("Server Error! (Project ID)");
-			return;
-		}
-		if(!PERMIT_ID)
-		{
-			alert("Server Error! (Permit ID)");
-			return;
-		}
-		
+    	
+		var action = "editCostEstimate";
 		
 		$.ajax({
 			type: 'POST',
@@ -4626,93 +4631,123 @@ function saveCostEstimate()
 			{
 				'domain': 'project',
 				'action': action,
-				'projectID':PROJECT_DATA.id,
+				'projectID': projectID,
+						
+				'genConProposalReq': genConProposalReq, 
+				'genConSubName': genConSubName,
+				'genConStatus': genConStatus,
+				'genConSubmitDate': genConSubmitDate,
+				'genConCost': genConCost,
+				'genConScope': genConScope,
+				'genConNotes': genConNotes,
 				
-				'permitsID':PERMIT_ID,
+				'refrigProposalReq': refrigProposalReq,
+				'refrigSubName': refrigSubName,
+				'refrigStatus': refrigStatus,
+				'refrigSubmitDate': refrigSubmitDate,
+				'refrigCost': refrigCost,
+				'refrigScope': refrigScope,
+				'refrigNotes': refrigNotes,
 				
-				'building_p':buildingPermitLastUpdated, 
-				'buildingPermitStatus': buildingPermitStatus,
-				'buildingPermitReq': buildingPermitReq,
-				'buildingInspectionReq': buildingInspectionReq,
-				'buildingInspectionStatus': buildingInspectionStatus,
-				'buildingInspectionLastUpdated': buildingInspectionLastUpdated,
+				'mechanicalProposalReq': mechanicalProposalReq,
+				'mechanicalSubName': mechanicalSubName,
+				'mechanicalStatus': mechanicalStatus,
+				'mechanicalSubmitDate': mechanicalSubmitDate,
+				'mechanicalCost': mechanicalCost,
+				'mechanicalScope': mechanicalScope,
+				'mechanicalNotes': mechanicalNotes,
 				
-				'mechanical_p' :mechanicalPermitLastUpdated,
-				'mechanicalPermitStatus': mechanicalPermitStatus,
-				'mechanicalPermitReq': mechanicalPermitReq,
-				'mechanicalInspectionReq': mechanicalInspectionReq,
-				'mechanicalInspectionStatus': mechanicalInspectionStatus,
-				'mechanicalInspectionLastUpdated': mechanicalInspectionLastUpdated,
+				'electricalProposalReq':electricalProposalReq,
+				'electricalSubName': electricalSubName,
+				'electricalStatus': electricalStatus,
+				'electricalSubmitDate': electricalSubmitDate,
+				'electricalCost': electricalCost,
+				'electricalScope': electricalScope,
+				'electricalNotes': electricalNotes,
 				
-				'electrical_p':electricalPermitLastUpdated,
-				'electricalPermitStatus': electricalPermitStatus,
-				'electricalPermitReq': electricalPermitReq,
-				'electricalInspectionReq': electricalInspectionReq,
-				'electricalInspectionStatus': electricalInspectionStatus,
-				'electricalInspectionLastUpdated': electricalInspectionLastUpdated,
+				'plumbingProposalReq':plumbingProposalReq,
+				'plumbingSubName': plumbingSubName,
+				'plumbingStatus': plumbingStatus,
+				'plumbingSubmitDate': plumbingSubmitDate,
+				'plumbingCost': plumbingCost,
+				'plumbingScope': plumbingScope,
+				'plumbingNotes': plumbingNotes,
 				
-				'plumbing_p':plumbingPermitLastUpdated,
-				'plumbingPermitStatus': plumbingPermitStatus,
-				'plumbingPermitReq': plumbingPermitReq,
-				'plumbingInspectionReq': plumbingInspectionReq,
-				'plumbingInspectionStatus': plumbingInspectionStatus,
-				'plumbingInspectionLastUpdated': plumbingInspectionLastUpdated,
+				'gasProposalReq': gasProposalReq,
+				'gasSubName': gasSubName,
+				'gasStatus': gasStatus,
+				'gasSubmitDate': gasSubmitDate,
+				'gasCost': gasCost,
+				'gasScope': gasScope,
+				'gasNotes': gasNotes,
 				
-				'fireSprinkler_p':sprinklerPermitLastUpdated,
-				'sprinklerPermitStatus': sprinklerPermitStatus,
-				'sprinklerPermitReq': sprinklerPermitReq,
-				'sprinklerInspectionReq': sprinklerInspectionReq,
-				'sprinklerInspectionStatus': sprinklerInspectionStatus,
-				'sprinklerInspectionLastUpdated': sprinklerInspectionLastUpdated,
+				'sprinklerProposalReq':sprinklerProposalReq,
+				'sprinklerSubName': sprinklerSubName,
+				'sprinklerStatus': sprinklerStatus,
+				'sprinklerSubmitDate': sprinklerSubmitDate,
+				'sprinklerCost': sprinklerCost,
+				'sprinklerScope': sprinklerScope,
+				'sprinklerNotes': sprinklerNotes,
 				
-				'fireAlarm_p':fireAlarmPermitLastUpdated, 
-				'fireAlarmPermitStatus': fireAlarmPermitStatus,
-				'fireAlarmPermitReq': fireAlarmPermitReq,
-				'fireAlarmInspectionReq': fireAlarmInspectionReq,
-				'fireAlarmInspectionStatus': fireAlarmInspectionStatus,
-				'fireAlarmInspectionLastUpdated': fireAlarmInspectionLastUpdated,
+				'fireAlarmProposalReq':fireAlarmProposalReq, 
+				'fireAlarmSubName': fireAlarmSubName,
+				'fireAlarmStatus': fireAlarmStatus,
+				'fireAlarmSubmitDate': fireAlarmSubmitDate,
+				'fireAlarmCost': fireAlarmCost,
+				'fireAlarmScope': fireAlarmScope,
+				'fireAlarmNotes': fireAlarmNotes,
 				
-				'lowVoltage_p':voltagePermitLastUpdated,
-				'voltagePermitStatus': voltagePermitStatus,
-				'voltagePermitReq': voltagePermitReq,
-				'voltageInspectionReq': voltageInspectionReq,
-				'voltageInspectionStatus': voltageInspectionStatus,
-				'voltageInspectionLastUpdated': voltageInspectionLastUpdated,
+				'carpenterProposalReq': carpenterProposalReq,
+				'carpenterSubName': carpenterSubName,
+				'carpenterStatus': carpenterStatus,
+				'carpenterSubmitDate': carpenterSubmitDate,
+				'carpenterCost': carpenterCost,
+				'carpenterScope': carpenterScope,
+				'carpenterNotes': carpenterNotes,
 				
-				'ceilingPermit': ceilingPermitLastUpdated,
-				'ceilingPermitStatus': ceilingPermitStatus,
-				'ceilingPermitReq': ceilingPermitReq,
-				'ceilingInspectionReq': ceilingInspectionReq,
-				'ceilingInspectionStatus': ceilingInspectionStatus,
-				'ceilingInspectionLastUpdated': ceilingInspectionLastUpdated,
+				'equipmentProposalReq': equipmentProposalReq,
+				'equipmentSubName': equipmentSubName,
+				'equipmentStatus': equipmentStatus,
+				'equipmentSubmitDate': equipmentSubmitDate,
+				'equipmentCost': equipmentCost,
+				'equipmentScope': equipmentScope,
+				'equipmentNotes': equipmentNotes,
 				
-				'gasPermit': gasPermitLastUpdated,
-				'gasPermitStatus': gasPermitStatus,
-				'gasPermitReq': gasPermitReq,
-				'gasInspectionReq': gasInspectionReq,
-				'gasInspectionStatus': gasInspectionStatus,
-				'gasInspectionLastUpdated': gasInspectionLastUpdated,
+				'supervisionProposalReq': supervisionProposalReq,
+				'supervisionSubName': supervisionSubName,
+				'supervisionStatus': suprvisionStatus,
+				'supervisionSubmitDate': supervisionSubmitDate,
+				'supervisionCost': supervisionCost,
+				'supervisionScope': supervisionScope,
+				'supervisionNotes': supervisionNotes,
 				
-				'otherPermitA': otherAPermitLastUpdated,
-				'otherAPermitStatus': otherAPermitStatus,
-	//			'otherAPermitReq': otherAPermitReq,
-	//			'otherAInspectionReq': otherAInspectionReq,
-				'otherAInspectionStatus': otherAInspectionStatus,
-				'otherAInspectionLastUpdated': otherAInspectionLastUpdated,
+				'profitProposalReq': profitProposalReq,
+				'profitSubName': profitSubName,
+				'profitStatus': profitStatus,
+				'profitSubmitDate': profitSubmitDate,
+				'profitCost': profitCost,
+				'profitScope': profitScope,
+				'profitNotes': profitNotes,
 				
-				'otherBPermit': otherBPermitLastUpdated,
-				'otherBPermitStatus': otherBPermitStatus,
-	//			'otherBPermitReq': otherBPermitReq,
-	//			'otherBInspectionReq': otherBInspectionReq,
-				'otherBInspectionStatus': otherBInspectionStatus,
-				'otherBInspectionLastUpdated': otherBInspectionLastUpdated,
-
-				'permitNotes': permitNotes,
-				'inspectionNotes': inspectionNotes
+				'taxesProposalReq': taxesProposalReq,
+				'taxesSubName': taxesSubName,
+				'taxesStatus': taxesStatus,
+				'taxesSubmitDate': taxesSubmitDate,
+				'taxesCost': taxesCost,
+				'taxesScope': taxesScope,
+				'taxesNotes': taxesNotes,
+				
+				'totalProposalReq': totalProposalReq,
+				'totalSubName': totalSubName,
+				'totalStatus': totalStatus,
+				'totalSubmitDate': totalSubmitDate,
+				'totalCost': totalCost,
+				'totalScope': totalScope,
+				'totalNotes': totalNotes
 			},
 			success:function(data){
 				console.log(data);
-				updateFrontEnd();
+				//updateFrontEnd();
 				alert('Save Complete!');
 				
 				
@@ -4730,17 +4765,12 @@ function saveCostEstimate()
 				goToProjectManager();
 
 			},
-			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
-			 * Code works perfectly with error statement 
-			  Need to figure out how to fix this error to work 100 percent correctly*/
-			
-			 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			error: function(data)
 			{
 				console.log(data);
-				updateFrontEnd();
+				//updateFrontEnd();
 				//getProject_PROJECT_MANAGER(projectID , 1);
-				alert('Save Complete!');
+				alert('error!');
 				/*
 				$('#permitData').find('#saveButton > button').prop('disabled', false);
 				$('#permitData').find('.active').removeClass('active');
@@ -4789,6 +4819,48 @@ function goToProjectSpecScope()
 	$('#projectSpecificScope').addClass("active");
 	$('#newProjSpecScope').hide();
 	$('#projectSpecificScope').show();
+}
+
+
+function saveProjSpecScope()
+{
+   console.log('save proj spec scope')
+   
+   var scopeItemNum = $('#newProjSpecScope').find('#scopeItemNum').val();
+   console.log(scopeItemNum);
+   var title = $('#newProjSpecScope').find('#scopeTitle').val();
+   var description = $('#newProjSpecScope').find('#scopeDes').val();	
+   var subNames = $('#newProjSpecScope').find('#scopeSubNames').val();
+   var notes = $('#newProjSpecScope').find('#scopeNotes').val();
+   
+   var action = 'addProjSpecScope';
+  
+	$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data:
+			{
+				'domain': 'project',
+				'projectID': projectID,
+				'action': action,
+				'itemNum': scopeItemNum,
+				'title': title,
+				'description': description,
+				'subNames': subNames,
+				'notes': notes
+				
+			},
+			success:function(data){
+				alert('Saved Project Specific Scope');
+				console.log(data);
+				goToProjectSpecScope();
+			},
+			error: function()
+			{
+				alert('error');
+				goToProjectSpecScope();
+			}
+		});
 }
 
 function editScorecard (source_id)

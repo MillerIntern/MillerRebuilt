@@ -73,7 +73,15 @@
 	      	</ul>
 	      </li>
 		      <li><a href="query.html">Reports</a></li>
-		      <li><a href="masterScope.html">Scope</a></li>
+		      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Scope
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='masterScope.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">New Master Scope</a></li>
+	      	</ul>
+	      </li>
 		      <li class="adminContent"><a href="additions.html">Tools</a></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
@@ -484,7 +492,7 @@
 				</tbody>
 				</table>
 				<br>
-				<button id="saveProjSpecScope" type="button" class="btn btn-success" >Save Scope</button>
+				<button id="saveProjSpecScope" type="button" onclick="saveProjSpecScope()" class="btn btn-success" >Save Scope</button>
                 <button id="goToProjectSpecScope" type="button" class="btn btn-danger" onclick="goToProjectSpecScope()">Go Back to Project Specific Scope View </button>
 			</div>
 		</div> 	

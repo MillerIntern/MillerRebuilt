@@ -411,6 +411,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("editCostEstimate"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+			ProjectService.editCostEstimate(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("editInspections"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
@@ -465,6 +477,18 @@ public class Project extends HttpServlet
 			try
 			{
 				ProjectService.addEquipment(projectID,  parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("addProjSpecScope"))
+		{
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				ProjectService.addProjectSpecScope(projectID,  parameters);
 			}
 			catch(ClassNotFoundException | ParseException e)
 			{

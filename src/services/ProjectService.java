@@ -24,6 +24,7 @@ import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectObject;
 import projectObjects.ProjectRule;
+import projectObjects.ProjectSpecScope;
 import projectObjects.Region;
 import projectObjects.RuleDomain;
 import projectObjects.RuleResult;
@@ -44,6 +45,7 @@ import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
 import services.helpers.CityFiller;
 import services.helpers.ProjectRuleFiller;
+import services.helpers.ProjectSpecScopeFiller;
 
 
 /**
@@ -700,6 +702,16 @@ public class ProjectService extends ProjectObjectService
 
 	}
 
+	
+	public synchronized static void editCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit cost est:");
+
+		Permits permits = new Permits();
+		PermitsFiller.fillPermits(permits, params);
+
+	}
+	
 	public synchronized static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Permits:");
@@ -955,6 +967,16 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.deleteNullSetObjects();
 	}
 
+	public synchronized static String addProjectSpecScope(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		ProjectSpecScope sp  = new ProjectSpecScope();
+		ProjectSpecScopeFiller.fillProjectSpecScopeInfo(sp, params);
+		ProjectObjectService.addObject("ProjectSpecScope", sp);
+		
+		return "ProjectSpecScope ADDED";
+	
+	}
+	
 	public synchronized static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit Equipment:");
