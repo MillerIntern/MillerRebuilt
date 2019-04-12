@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import objects.HibernateUtil;
 import projectObjects.CloseoutDetails;
+import projectObjects.CostEstimate;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
@@ -36,6 +37,7 @@ import projectObjects.Subcontractor;
 import projectObjects.City;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
+import services.helpers.CostEstimateFiller;
 import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
@@ -707,9 +709,8 @@ public class ProjectService extends ProjectObjectService
 	{
 		System.out.println("In Edit cost est:");
 
-		Permits permits = new Permits();
-		PermitsFiller.fillPermits(permits, params);
-
+		CostEstimate ce = new CostEstimate();
+		CostEstimateFiller.fillCostEstimate(ce, params);
 	}
 	
 	public synchronized static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException

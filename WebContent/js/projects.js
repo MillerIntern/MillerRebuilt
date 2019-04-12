@@ -4855,12 +4855,126 @@ function saveProjSpecScope()
 				console.log(data);
 				goToProjectSpecScope();
 			},
-			error: function()
+			error: function(data)
 			{
-				alert('error');
+				alert('Saved Project Specific Scope');
+				console.log(data);
 				goToProjectSpecScope();
 			}
 		});
+}
+
+function clearProjSpecScopeTable(){
+	$('#projectScopeTable > tbody').find('tr').remove();
+}
+
+function fillProjSpecScopeTable (data) {
+	clearProjSpecScopeTable();
+	console.log("CALLED FILL proj spec scope" , data);
+	if(data) CHANGE_ORDERS = data.changeOrders;
+	let changeOrders = CHANGE_ORDERS;
+	
+	changeOrders.sort(function(a, b){
+		if(!a.id) return -1;
+		if(!b.id) return 1;
+		
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id) return 1;
+		else return 0;
+		
+	});
+	console.log("CO's = ", changeOrders);
+		
+	
+	for (var i = 0; i < changeOrders.length; i++) {
+		let changeOrder = changeOrders[i];
+		
+		if($('#changeOrderSelector').val() == "preparing" && changeOrders[i].status != "1") continue;
+		else if($('#changeOrderSelector').val() == "submitted" && changeOrders[i].status != "2") continue;
+		else if($('#changeOrderSelector').val() == "approved" && changeOrders[i].status != "3") continue;
+		else if($('#changeOrderSelector').val() == "rejected" && changeOrders[i].status != "4") continue;
+		else if($('#changeOrderSelector').val() == "complete" && changeOrders[i].status != "5") continue;
+		else if($('#changeOrderSelector').val() == "review" && changeOrders[i].status != "6") continue;
+		
+		var tableRow = document.createElement('tr');
+		tableRow.setAttribute("value", changeOrder.id);
+		tableRow.onclick = function() {toggleChangeOrder(this)};
+		tableRow.ondblclick = function () {editSelectedChangeOrder(this.value)};
+
+		//var changeType = document.createElement('td');
+		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
+		
+		var coNumber = document.createElement('td');
+		coNumber.className = 'coNumber';
+		coNumber.width = "5%";
+		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
+		
+		var title = document.createElement('td');
+		title.width = "10%";
+		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
+		else  title.appendChild(document.createTextNode("---"));
+		
+		var briefDescription = document.createElement('td');
+		briefDescription.width = "20%";
+		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
+		
+		var status = document.createElement('td');
+		status.width = "9%";
+		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
+		
+		var subNames = document.createElement('td');
+		subNames.width = "12%";
+		subNames.appendChild(document.createTextNode(changeOrder.subNames));
+		
+		var type = document.createElement('td');
+		type.width = "10%";
+		type.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
+		
+		var submittedDate = document.createElement('td');
+		submittedDate.width = "8%";
+		if(changeOrder.submittedDate)
+			submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
+		else submittedDate.appendChild(document.createTextNode("---"));
+		
+		var cost = document.createElement('td');
+		cost.width = "5%";
+		if(changeOrder.cost)
+			cost.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.cost)));
+		else 
+			cost.appendChild(document.createTextNode("---"));
+
+		
+		var sell = document.createElement('td');
+		sell.width = "5%";
+		if(changeOrder.sell)
+			sell.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.sell)));
+		else 
+			sell.appendChild(document.createTextNode("---"));		
+		
+		var notes = document.createElement('td');
+		notes.appendChild(document.createTextNode(changeOrder.notes));
+		
+		//var approvedDate = document.createElement('td');
+		//if (changeOrder.approvedDate === undefined)
+		//	approvedDate.appendChild(document.createTextNode("---"))
+		//else
+		//	approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
+		
+		tableRow.appendChild(coNumber);
+		tableRow.appendChild(title);
+		tableRow.appendChild(briefDescription);
+		tableRow.appendChild(status);
+		tableRow.appendChild(subNames);
+		tableRow.appendChild(type);
+		tableRow.appendChild(submittedDate);
+		tableRow.appendChild(cost);
+		tableRow.appendChild(sell);
+		tableRow.appendChild(notes);
+		tableRow.ondblclick = function() {
+			goToChangeOrder(1);
+		};
+		$('#projectManager').find("#changeOrderTable").append(tableRow);
+	}
 }
 
 function editScorecard (source_id)
