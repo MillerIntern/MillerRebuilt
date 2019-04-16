@@ -4476,6 +4476,81 @@ function editCostEstimate () {
 	getDropdownInfoCostEst();
 }
 
+function calculateTotalEdit()
+{
+   var total = 0.0;
+   
+   var genConCost = $('#costEstimateData').find("#genConCost").val();
+   genConCost = parseFloat(genConCost);
+   if(!isNaN(genConCost))
+	   total += genConCost;
+   
+   var refrigCost = $('#costEstimateData').find("#refrigCost").val();
+   refrigCost = parseFloat(refrigCost);
+   if(!isNaN(refrigCost))
+	   total += refrigCost;
+   
+   var mechanicalCost = $('#costEstimateData').find("#mechanicalCost").val();
+   mechanicalCost = parseFloat(mechanicalCost);
+   if(!isNaN(mechanicalCost))
+	   total += mechanicalCost;
+   
+   var electricalCost = $('#costEstimateData').find("#electricalCost").val();
+   electricalCost = parseFloat(electricalCost);
+   if(!isNaN(electricalCost))
+	   total += electricalCost;
+   
+   var plumbingCost = $('#costEstimateData').find("#plumbingCost").val();
+   plumbingCost = parseFloat(plumbingCost);
+   if(!isNaN(plumbingCost))
+	   total += plumbingCost;
+   
+   var gasCost = $('#costEstimateData').find("#gasCost").val();
+   gasCost = parseFloat(gasCost);
+   if(!isNaN(gasCost))
+	   total += gasCost;
+   
+   var sprinklerCost = $('#costEstimateData').find("#sprinklerCost").val();
+   sprinklerCost = parseFloat(sprinklerCost);
+   if(!isNaN(sprinklerCost))
+	   total += sprinklerCost;
+   
+   var fireAlarmCost = $('#costEstimateData').find("#fireAlarmCost").val();
+   fireAlarmCost = parseFloat(fireAlarmCost);
+   if(!isNaN(fireAlarmCost))
+	   total += fireAlarmCost;
+   
+   var carpenterCost = $('#costEstimateData').find("#carpenterCost").val();
+   carpenterCost = parseFloat(carpenterCost);
+   if(!isNaN(carpenterCost))
+	   total += carpenterCost;
+   
+   var equipmentCost = $('#costEstimateData').find("#equipmentCost").val();
+   equipmentCost = parseFloat(equipmentCost);
+   if(!isNaN(equipmentCost))
+	   total += equipmentCost;
+   
+   var supervisionCost = $('#costEstimateData').find("#supervisionCost").val();
+   supervisionCost = parseFloat(supervisionCost);
+   if(!isNaN(supervisionCost))
+	   total += supervisionCost;
+   
+   var profitCost = $('#costEstimateData').find("#profitCost").val();
+   profitCost = parseFloat(profitCost);
+   if(!isNaN(profitCost))
+	   total += profitCost;
+   
+   var taxesCost = $('#costEstimateData').find("#taxesCost").val();
+   taxesCost = parseFloat(taxesCost);
+   if(!isNaN(taxesCost))
+	   total += taxesCost;
+   
+   total = total.toFixed(2);
+   console.log(total);
+   
+   $('#costEstimateData').find('#totalCost').val(total);
+}
+
 function saveCostEstimate()
 {
     console.log("Saving cost estimate Information");

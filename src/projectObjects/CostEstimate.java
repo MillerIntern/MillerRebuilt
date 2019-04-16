@@ -1319,6 +1319,6 @@ public class CostEstimate {
 	
 	public synchronized void setTotalNotes(String notes)
 	{
-		this.taxesNotes = notes;
+		this.totalNotes = notes;
 	}
 }

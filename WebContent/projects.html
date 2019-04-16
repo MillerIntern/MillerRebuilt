@@ -2216,7 +2216,7 @@
 						</td>
 
 						<td align="center">
-							<input type='text' id='genConCost' style="width:90px"/>
+							<input type='text' id='genConCost' onchange="calculateTotalEdit()"  style="width:90px"/>
 						</td>
 						<td align="center">
 							<textarea id='genConScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2249,7 +2249,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="refrigSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='refrigCost' style="width:90px"/>
+							<input type='text' id='refrigCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='refrigScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2282,7 +2282,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="mechanicalSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='mechanicalCost' style="width:90px"/>
+							<input type='text' id='mechanicalCost' onchange="calculateTotalEdit()" style="width:90px"/>
 					    </td>
 						<td align="center">
 							<textarea id='mechanicalScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2314,7 +2314,7 @@
 					    	<input type="text" style="width: 90px" placeholder="Select a Date" id="electricalSubmitDate" class="cost-est-date" />
 					    </td>
 						<td align="center" >
-							<input type='text' id='electricalCost' style="width:90px"/>
+							<input type='text' id='electricalCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='electricalScopeDes' style="width: 200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2347,7 +2347,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="plumbingSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='plumbingCost' style="width:90px"/>
+							<input type='text' id='plumbingCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='plumbingScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2380,7 +2380,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="gasSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='gasCost' style="width:90px"/>
+							<input type='text' id='gasCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='gasScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2413,7 +2413,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="sprinklerSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='sprinklerCost' style="width:90px"/>
+							<input type='text' id='sprinklerCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='sprinklerScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2446,7 +2446,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="fireAlarmSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='fireAlarmCost' style="width:90px"/>
+							<input type='text' id='fireAlarmCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='fireAlarmScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2479,7 +2479,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="carpenterSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='carpenterCost' style="width:90px"/>
+							<input type='text' id='carpenterCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>	
 						<td align="center" >
 							<textarea id='carpenterScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2512,7 +2512,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="equipmentSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='equipmentCost' style="width:90px"/>
+							<input type='text' id='equipmentCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='equipmentScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2545,7 +2545,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="supervisionSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center" >
-							<input type='text' id='supervisionCost' style="width:90px"/>
+							<input type='text' id='supervisionCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='supervisionScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2578,7 +2578,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="profitSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='profitCost' style="width:90px"/>
+							<input type='text' id='profitCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='profitScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
@@ -2611,7 +2611,7 @@
 							<input type="text" style="width: 90px" placeholder="Select a Date" id="taxesSubmitDate" class="cost-est-date" />
 						</td>
 						<td align="center">
-							<input type='text' id='taxesCost' style="width:90px"/>
+							<input type='text' id='taxesCost' onchange="calculateTotalEdit()" style="width:90px"/>
 						</td>
 						<td align="center" >
 							<textarea id='taxesScopeDes' style="width:200px" class="scrollTextBoxCostEst" rows="1" cols="16" maxlength="500"></textarea>
