@@ -711,6 +711,8 @@ public class ProjectService extends ProjectObjectService
 
 		CostEstimate ce = new CostEstimate();
 		CostEstimateFiller.fillCostEstimate(ce, params);
+		ProjectObjectService.addObject("CostEstimate", ce);
+		
 	}
 	
 	public synchronized static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException

@@ -3,10 +3,16 @@ package projectObjects;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class CostEstimate {
    
+
+	@Id
+	@GeneratedValue
+	
 	private Long proj;
 	private int genConProposalReq;
 	private int genConSubName;

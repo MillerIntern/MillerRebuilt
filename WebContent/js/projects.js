@@ -4690,10 +4690,10 @@ function saveCostEstimate()
     		if(i == 7) fireAlarmSubmitDate = dates_CostEst[i];
     		if(i == 8) carpenterSubmitDate = dates_CostEst[i];
     		if(i == 9) equipmentSubmitDate = dates_CostEst[i];
-    		if(i == 10) supervisionSubmitDate = CostEst[i];
+    		if(i == 10) supervisionSubmitDate = dates_CostEst[i];
     		if(i == 11) profitSubmitDate = dates_CostEst[i];
     		if(i == 12) taxesSubmitDate = dates_CostEst[i];
-    		if(i == 13) totalSubmitdate = dates_CostEst[i];
+    		if(i == 13) totalSubmitDate = dates_CostEst[i];
     	}
     	
 		var action = "editCostEstimate";
@@ -4701,7 +4701,7 @@ function saveCostEstimate()
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
-	//		dataType: 'json',
+			dataType: 'json',
 			data: 
 			{
 				'domain': 'project',
@@ -4790,7 +4790,7 @@ function saveCostEstimate()
 				
 				'supervisionProposalReq': supervisionProposalReq,
 				'supervisionSubName': supervisionSubName,
-				'supervisionStatus': suprvisionStatus,
+				'supervisionStatus': supervisionStatus,
 				'supervisionSubmitDate': supervisionSubmitDate,
 				'supervisionCost': supervisionCost,
 				'supervisionScope': supervisionScope,
@@ -4820,22 +4820,11 @@ function saveCostEstimate()
 				'totalScope': totalScope,
 				'totalNotes': totalNotes
 			},
-			success:function(data){
+			success:function(data)
+			{
 				console.log(data);
 				//updateFrontEnd();
 				alert('Save Complete!');
-				
-				
-				//getProject_PROJECT_MANAGER(projectID , 1);
-				/*
-				$('#permitData').find('#saveButton > button').prop('disabled', false);
-				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active');
-
-				$(".editProject").hide();
-				$("#projectManager").show();
-				*/
-				
 				
 				goToProjectManager();
 
@@ -4846,21 +4835,15 @@ function saveCostEstimate()
 				//updateFrontEnd();
 				//getProject_PROJECT_MANAGER(projectID , 1);
 				alert('error!');
-				/*
-				$('#permitData').find('#saveButton > button').prop('disabled', false);
-				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active');
-
-				$(".editProject").hide();
-				$("#projectManager").show();
-				*/
+			
 				goToProjectManager();
 			
 				
 			}
 		});
-    }  
+    }	
 }
+    
 
 function goToProjSpecScope() {
 	console.log("go to proj spec scope");
