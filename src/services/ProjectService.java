@@ -67,7 +67,7 @@ public class ProjectService extends ProjectObjectService
 		ProjectInformationFiller.fillHVAC(project, parameters);
 		ProjectInformationFiller.fillRefrigeration(project, parameters);
 		ProjectInformationFiller.fillProjectClass(project, parameters);
-		long projectID = ProjectObjectService.addObject("Project", project);
+		long projectID = (long) ProjectObjectService.addObject("Project", project);
 
 		return projectID;
 	}
@@ -705,13 +705,15 @@ public class ProjectService extends ProjectObjectService
 	}
 
 	
-	public synchronized static void editCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static String editCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit cost est:");
 
 		CostEstimate ce = new CostEstimate();
 		CostEstimateFiller.fillCostEstimate(ce, params);
 		ProjectObjectService.addObject("CostEstimate", ce);
+		
+		return "edit Cost Estimate";
 		
 	}
 	

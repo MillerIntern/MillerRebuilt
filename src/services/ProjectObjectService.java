@@ -1,5 +1,6 @@
 package services;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -779,14 +780,14 @@ public class ProjectObjectService
 	 * @param o the object to be added
 	 * @return the id of the transaction
 	 */
-	public synchronized static long addObject(String domain, Object o)
+	public synchronized static Serializable addObject(String domain, Object o)
 	{
 		System.out.println("add Object");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		//session.save(o);
 		
-		Long txID = (Long)session.save(o);
+		Serializable txID = session.save(o);
         System.out.println("ID OF TRANSACTION: " + txID);
         tx.commit();
         HibernateUtil.closeDownSession();
@@ -1085,6 +1086,20 @@ public class ProjectObjectService
 	}
 	
 	
-
+	public synchronized static String getProjSpecScopesAsJSON(long projectID) {
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ProjectSpecScope where proj = " + projectID);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.ProjectSpecScope> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+        
+	}
 	
 }

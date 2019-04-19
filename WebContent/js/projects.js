@@ -3153,6 +3153,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				
 				
 				getTasks(stopServerCalls);
+				getProjSpecScopes(stopServerCalls);
 			}, error: function (data) {
 				alert('Server Error!');
 				console.log(data);
@@ -4554,6 +4555,7 @@ function calculateTotalEdit()
 function saveCostEstimate()
 {
     console.log("Saving cost estimate Information");
+    console.log(projectID);
 
     var genConProposalReq = $('#costEstimateData').find("#genConProposalReq").val();
     var genConSubName = $('#costEstimateData').find("#genConSubName").val();
@@ -4677,9 +4679,11 @@ function saveCostEstimate()
     {
     	console.log("we got valid data now");
     	
-    	for(var i = 0; i < dates_CostEst.length; i++) {
+    	for(var i = 0; i < dates_CostEst.length; i++)
+    	{
     		if(dates_CostEst[i]) 
     			dates_CostEst[i] = dateCleaner(dates_CostEst[i]);
+    		
     		if(i == 0) genConSubmitDate = dates_CostEst[i];
     		if(i == 1) refrigSubmitDate = dates_CostEst[i];
     		if(i == 2) mechanicalSubmitDate = dates_CostEst[i];
@@ -4696,16 +4700,17 @@ function saveCostEstimate()
     		if(i == 13) totalSubmitDate = dates_CostEst[i];
     	}
     	
-		var action = "editCostEstimate";
 		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
 			dataType: 'json',
+			cache: false,
+			traditional: true,
 			data: 
 			{
 				'domain': 'project',
-				'action': action,
+				'action': 'editCostEstimate',
 				'projectID': projectID,
 						
 				'genConProposalReq': genConProposalReq, 
@@ -4818,7 +4823,7 @@ function saveCostEstimate()
 				'totalSubmitDate': totalSubmitDate,
 				'totalCost': totalCost,
 				'totalScope': totalScope,
-				'totalNotes': totalNotes
+				'totalNotes': totalNotes,
 			},
 			success:function(data)
 			{
@@ -4833,17 +4838,16 @@ function saveCostEstimate()
 			{
 				console.log(data);
 				//updateFrontEnd();
-				//getProject_PROJECT_MANAGER(projectID , 1);
 				alert('error!');
 			
 				goToProjectManager();
-			
-				
 			}
 		});
     }	
 }
-    
+
+var SCOPE_ID;
+var edit_PROJ_SCOPE;
 
 function goToProjSpecScope() {
 	console.log("go to proj spec scope");
@@ -4861,13 +4865,22 @@ function goToProjMasterScope() {
 	$('#projectMasterScope').show();
 }
 
-function goToNewProjScope()
+function goToNewProjScope(edit)
 {
 	console.log("go to new proj spec scope");
 	$('#projectSpecificScope').removeClass("active");
 	$('#newProjSpecScope').addClass("active");
 	$('#projectSpecificScope').hide();
 	$('#newProjSpecScope').show();
+	
+	console.log("EDIT = ", edit);
+	if(edit == 0) {
+		edit_PROJ_SCOPE = 'false';		
+	}
+	else {
+		edit_PROJ_SCOPE = 'true';
+		getProjSpecScopes();
+	}
 }
 
 function goToProjectSpecScope()
@@ -4884,14 +4897,23 @@ function saveProjSpecScope()
 {
    console.log('save proj spec scope')
    
-   var scopeItemNum = $('#newProjSpecScope').find('#scopeItemNum').val();
-   console.log(scopeItemNum);
+   var itemNum = $('#newProjSpecScope').find('#scopeItemNum').val();
+   console.log(itemNum);
    var title = $('#newProjSpecScope').find('#scopeTitle').val();
    var description = $('#newProjSpecScope').find('#scopeDes').val();	
    var subNames = $('#newProjSpecScope').find('#scopeSubNames').val();
    var notes = $('#newProjSpecScope').find('#scopeNotes').val();
    
    var action = 'addProjSpecScope';
+   if(edit_PROJ_SCOPE == 'true')
+	   action = "editProjSpecScope";
+	
+   if(action == "editProjSpecScope" && (!projectID)) 
+   {
+	   console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
+	   alert("Server Error! (Edit Change Order)");
+	   return;
+	}
   
 	$.ajax({
 			type: 'POST',
@@ -4901,7 +4923,7 @@ function saveProjSpecScope()
 				'domain': 'project',
 				'projectID': projectID,
 				'action': action,
-				'itemNum': scopeItemNum,
+				'itemNum': itemNum,
 				'title': title,
 				'description': description,
 				'subNames': subNames,
@@ -4911,12 +4933,14 @@ function saveProjSpecScope()
 			success:function(data){
 				alert('Saved Project Specific Scope');
 				console.log(data);
+				getProjSpecScopes(1);
 				goToProjectSpecScope();
 			},
 			error: function(data)
 			{
 				alert('Saved Project Specific Scope');
 				console.log(data);
+				getProjSpecScopes(1);
 				goToProjectSpecScope();
 			}
 		});
@@ -4926,112 +4950,127 @@ function clearProjSpecScopeTable(){
 	$('#projectScopeTable > tbody').find('tr').remove();
 }
 
-function fillProjSpecScopeTable (data) {
-	clearProjSpecScopeTable();
-	console.log("CALLED FILL proj spec scope" , data);
-	if(data) CHANGE_ORDERS = data.changeOrders;
-	let changeOrders = CHANGE_ORDERS;
+function getProjSpecScopes(stopServerCalls) {
+	console.log(projectID);
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjSpecScopes',
+			'id': projectID
+		}, success: function (data) {
+			console.log(data);
+
+			if(edit_PROJ_SCOPE == 'true') 
+			{	
+				fillProjSpecScopeForm(data);
+			}		
+			else
+			{
+				clearProjSpecScopeTable();
+				fillProjSpecScopeTable(data);
+			}
+			
+			if(!stopServerCalls)
+				getUserData();
+			
+		}, error: function (data) {
+			alert('Server Error!');
+		}
+	});
+}
+
+
+
+function toggleProjSpecScope (source) {
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editProjSpecScope').prop('disabled', false);
+	var selectedScope = $(source).attr('value');
+	console.log(selectedScope);
+	SCOPE_ID = selectedScope;
+}
+
+function editProjSpecScope(source) {
+	console.log(source);
+
+	fillProjSpecScopeForm();
+}
+
+function fillProjSpecScopeForm(data)
+{
+	console.log("EDIT == ", edit_PROJ_SCOPE);
+	console.log(data[0].item);
 	
-	changeOrders.sort(function(a, b){
-		if(!a.id) return -1;
-		if(!b.id) return 1;
+	$('#newProjSpecScope').find("#scopeItemNum").val(data[0].item);
+	$('#newProjSpecScope').find("#scopeTitle").val(data[0].title);
+	$('#newProjSpecScope').find("#scopeDes").val(data[0].description);
+	$('#newProjSpecScope').find("#scopeSubNames").val(data[0].subNames);
+	$('#newProjSpecScope').find("#scopeNotes").val(data[0].notes);
+}
+
+function fillProjSpecScopeTable (data) {
+
+	console.log("CALLED FILL proj spec scope" , data);
+	
+	
+	data.sort(function(a, b){
+		if(!a.item || a.item == null) return -1;
+		if(!b.item) return 1;
 		
-		if(a.id < b.id) return -1;
-		else if(a.id > b.id) return 1;
+		if(a.item < b.item) return -1;
+		else if(a.item > b.item) return 1;
 		else return 0;
 		
 	});
-	console.log("CO's = ", changeOrders);
+	console.log( data);
 		
 	
-	for (var i = 0; i < changeOrders.length; i++) {
-		let changeOrder = changeOrders[i];
-		
-		if($('#changeOrderSelector').val() == "preparing" && changeOrders[i].status != "1") continue;
-		else if($('#changeOrderSelector').val() == "submitted" && changeOrders[i].status != "2") continue;
-		else if($('#changeOrderSelector').val() == "approved" && changeOrders[i].status != "3") continue;
-		else if($('#changeOrderSelector').val() == "rejected" && changeOrders[i].status != "4") continue;
-		else if($('#changeOrderSelector').val() == "complete" && changeOrders[i].status != "5") continue;
-		else if($('#changeOrderSelector').val() == "review" && changeOrders[i].status != "6") continue;
-		
+	for (var i = 0; i < data.length; i++)
+	{
+		let row = data[i];
+		console.log(row);
+				
 		var tableRow = document.createElement('tr');
-		tableRow.setAttribute("value", changeOrder.id);
-		tableRow.onclick = function() {toggleChangeOrder(this)};
-		tableRow.ondblclick = function () {editSelectedChangeOrder(this.value)};
-
-		//var changeType = document.createElement('td');
-		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
+		tableRow.setAttribute("value", row.item);
+		tableRow.onclick = function() {toggleProjSpecScope(this)};
+		tableRow.ondblclick = function () {goToNewProjScope(1)};
 		
-		var coNumber = document.createElement('td');
-		coNumber.className = 'coNumber';
-		coNumber.width = "5%";
-		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
+		var itemNum = document.createElement('td');
+		if(row.item)
+			itemNum.appendChild(document.createTextNode(row.item));
+		else
+			itemNum.appendChild(document.createTextNode("---"));
+		
 		
 		var title = document.createElement('td');
-		title.width = "10%";
-		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
-		else  title.appendChild(document.createTextNode("---"));
-		
-		var briefDescription = document.createElement('td');
-		briefDescription.width = "20%";
-		briefDescription.appendChild(document.createTextNode(changeOrder.briefDescription))
-		
-		var status = document.createElement('td');
-		status.width = "9%";
-		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
-		
-		var subNames = document.createElement('td');
-		subNames.width = "12%";
-		subNames.appendChild(document.createTextNode(changeOrder.subNames));
-		
-		var type = document.createElement('td');
-		type.width = "10%";
-		type.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
-		
-		var submittedDate = document.createElement('td');
-		submittedDate.width = "8%";
-		if(changeOrder.submittedDate)
-			submittedDate.appendChild(document.createTextNode(changeOrder.submittedDate));
-		else submittedDate.appendChild(document.createTextNode("---"));
-		
-		var cost = document.createElement('td');
-		cost.width = "5%";
-		if(changeOrder.cost)
-			cost.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.cost)));
-		else 
-			cost.appendChild(document.createTextNode("---"));
 
-		
-		var sell = document.createElement('td');
-		sell.width = "5%";
-		if(changeOrder.sell)
-			sell.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.sell)));
+		if(row.title)
+			title.appendChild(document.createTextNode(row.title));
 		else 
-			sell.appendChild(document.createTextNode("---"));		
+			title.appendChild(document.createTextNode("---"));
+		
+		
+		var description = document.createElement('td');
+		description.appendChild(document.createTextNode(row.description))
+		
 		
 		var notes = document.createElement('td');
-		notes.appendChild(document.createTextNode(changeOrder.notes));
+		if(row.notes)
+			notes.appendChild(document.createTextNode(row.notes));
+		else
+			notes.appendChild(document.createTextNode("---"));
 		
-		//var approvedDate = document.createElement('td');
-		//if (changeOrder.approvedDate === undefined)
-		//	approvedDate.appendChild(document.createTextNode("---"))
-		//else
-		//	approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
-		
-		tableRow.appendChild(coNumber);
+		tableRow.appendChild(itemNum);
 		tableRow.appendChild(title);
-		tableRow.appendChild(briefDescription);
-		tableRow.appendChild(status);
-		tableRow.appendChild(subNames);
-		tableRow.appendChild(type);
-		tableRow.appendChild(submittedDate);
-		tableRow.appendChild(cost);
-		tableRow.appendChild(sell);
+		tableRow.appendChild(description);
 		tableRow.appendChild(notes);
+		
 		tableRow.ondblclick = function() {
-			goToChangeOrder(1);
+			goToNewProjScope(1);
 		};
-		$('#projectManager').find("#changeOrderTable").append(tableRow);
+		$('#projectManager').find("#projectScopeTable").append(tableRow);
 	}
 }
 

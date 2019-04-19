@@ -714,6 +714,9 @@ public class Project extends HttpServlet
 		} else if (action.equals("getProjectTasks")) {
 			System.out.println("getting Project tasks");
 			response = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("id")));
+		} else if (action.equals("getProjSpecScopes")) {
+			System.out.println("getting Project spec scopes");
+			response = ProjectObjectService.getProjSpecScopesAsJSON(Long.parseLong(parameters.get("id")));
 		} else if (action.equals("closeTask")) {
 			System.out.println("Closing Task");
 			try {
@@ -731,7 +734,24 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}  else if(action.equals("changePassword")){
+		} else if (action.equals("closeTask")) {
+			System.out.println("Closing Task");
+			try {
+				Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
+				
+				task.setCompleted(true);
+				
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(task);
+				tx.commit();
+				response = "TASK_CLOSED";
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(action.equals("changePassword")){
 		
 			System.out.println("Change Password");
 			try {

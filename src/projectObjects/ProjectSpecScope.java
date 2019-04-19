@@ -23,54 +23,45 @@ public class ProjectSpecScope {
 	
 	@Id
 	@GeneratedValue
-
 	
-	private Long item;
-	private Long project_id;
+	
+	private int item;
 	private String title;
 	private String description;
 	private String subNames;
 	private String notes;
+	private Long proj;
 	
-	public ProjectSpecScope(Long itemNum, Long proj, String title, String description, String subNames, String notes)
+	public ProjectSpecScope(int itemNum, String title, String description, String subNames, String notes, Long proj)
 	{
 	  this.item = itemNum;
-	  this.project_id = proj;
 	  this.title = title;
 	  this.description = description;
 	  this.subNames = subNames;
 	  this.notes = notes;
+	  this.proj = proj;
 	}
 	
 	public ProjectSpecScope()
 	{
-	  this.item = null;
+	  this.item = 0;
 	  this.title = null;
-	  this.project_id = null;
 	  this.description = null;
 	  this.subNames = null;
 	  this.notes = null;
+	  this.proj = null;
 	}
 	
-	public synchronized Long getItemNum()
+	public synchronized int getItem()
 	{
 		return this.item;
 	}
 	
-	public synchronized void setItemNum(Long num)
+	public synchronized void setItem(int num)
 	{
 		this.item = num;	
 	}
 	
-	public synchronized Long getProject()
-	{
-		return this.project_id;
-	}
-	
-	public synchronized void setProject(Long project)
-	{
-		this.project_id = project;
-	}
 	
 	public synchronized String getTitle()
 	{
@@ -109,6 +100,14 @@ public class ProjectSpecScope {
 	{
 		this.notes = notes;	
 	}
+
+	public synchronized Long getProj()
+	{
+		return proj;
+	}
 	
-	
+	public synchronized void setProj(Long project)
+	{
+		this.proj = project;
+	}
 }

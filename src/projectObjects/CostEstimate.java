@@ -13,7 +13,7 @@ public class CostEstimate {
 	@Id
 	@GeneratedValue
 	
-	private Long proj;
+	private Long project_id;
 	private int genConProposalReq;
 	private int genConSubName;
 	private int genConStatus;
@@ -133,7 +133,7 @@ public class CostEstimate {
 						String taxesNotes, int totalProposalReq, int totalSubName, int totalStatus, Date totalSubmitDate, double totalCost,
 						String totalScope, String totalNotes)
 	{
-		this.proj = proj;
+		this.project_id = proj;
 		this.genConProposalReq = genConProposalReq;
 		this.genConSubName = genConSubName;
 		this.genConStatus = genConStatus;
@@ -236,7 +236,7 @@ public class CostEstimate {
 	
 	public CostEstimate()
 	{
-		this.proj = null;
+		this.project_id = null;
 		this.genConProposalReq = 0;
 		this.genConSubName = 0;
 		this.genConStatus = 0;
@@ -338,14 +338,14 @@ public class CostEstimate {
 	}
 
 
-	public synchronized long getProject()
+	public synchronized Long getProject()
 	{
-		return proj;
+		return project_id;
 	}
 	
-	public synchronized void setProject(long project)
+	public synchronized void setProject(Long project)
 	{
-		this.proj = project;
+		this.project_id = project;
 	}
 	
 	public synchronized int getGenConProposalReq()

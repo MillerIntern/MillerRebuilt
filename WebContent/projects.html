@@ -458,8 +458,8 @@
 					<tbody>
 					</tbody>
 				</table>
-                <button id="addProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope()">Add new Project Specific Scope</button>
-                <button id="editProjSpecScope" type="button" class="btn edit-submit" >Edit Project Specific Scope</button>
+                <button id="addProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope(0)">Add new Project Specific Scope</button>
+                <button id="editProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope(1)"  disabled>Edit Project Specific Scope</button>
                 <button id="printBothScopes" type="button" class="btn project-edit">Print All Scopes </button>
                 <button id="goToProjMasterScope" type="button" class="btn edit-submit" onclick="goToProjMasterScope()">Go to Project Master Scope </button>
 			</div>
@@ -2194,7 +2194,7 @@
 				    <tr>
 						<td class = "bold">General Construction</td>
 						<td align="center">
-							<select id="GenConProposalReq">
+							<select id="genConProposalReq">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>

@@ -20,13 +20,34 @@ public class ProjectSpecScopeFiller {
 	public synchronized static void fillProjectSpecScopeInfo(ProjectSpecScope sp, Map<String, String> params) throws ParseException, ClassNotFoundException 
 	{
 		System.out.println("fill Project spec scope");
-		System.out.println(Long.parseLong(params.get("itemNum")));
-		sp.setItemNum(Long.parseLong(params.get("itemNum")));
+		
+		System.out.println(Long.parseLong(params.get("projectID")));
+		
+		int item;
+		try {
+			item = Integer.parseInt(params.get("itemNum"));
+			sp.setItem(item);
+		} catch (NumberFormatException e) {
+			sp.setItem(0);
+		}
+		
+		Long projs;
+		try {
+			projs = Long.parseLong(params.get("projectID"));
+			sp.setProj(projs);
+		} catch(NumberFormatException e) {
+			sp.setProj(null);
+		}
+		
+		
+	//	sp.setProj((Project)ProjectObjectService.get(Long.parseLong(params.get("projectID")), "Project"));
+		
 		sp.setDescription(params.get("description"));
 		sp.setTitle(params.get("title"));
 		sp.setSubNames(params.get("subNames"));
 		sp.setNotes(params.get("notes"));
-		sp.setProject(Long.parseLong(params.get("projectID")));
+		//sp.setItem(params.get("itemNum"));
+		//System.out.println(params.get("itemNum"));
 	}
 }
 
