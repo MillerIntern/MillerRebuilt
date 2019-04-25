@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+		<script type="text/javascript" src="js/contentControl.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="js/global.js"></script>
+		<script type="text/javascript" src="js/newMasterScope.js"></script>
+		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+ 	    <link href="css/style.css" rel="stylesheet">
+ 	    <link href="css/home.css" rel="stylesheet">
+ 	    <link href="css/projects.css" rel="stylesheet">
+ 	    <link href="css/theme/currentTheme/queryRevamped.css" type="text/css" rel="stylesheet" />
+         
+         
+         
+                
+		<title>Miller Construction Site</title>
+		<meta charset="UTF-8">
+	</head>
+	
+<body>
+
+<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Miller Construction Services</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="homepage.html">Home</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+	        <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Add Project</a></li>
+	          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
+	        </ul>
+	      </li>
+	      <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a href='projects.html?type=findTaskProject'
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      <li><a href="query.html">Reports</a></li>
+	       <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Scope
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      		<li><a href='newMasterScope.html' onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">New Master Scope</a></li>
+	      	</ul>
+	      </li>
+	      <li class="adminContent"><a href="additions.html">Tools</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	
+
+<br>
+  <div id="newMasterScopeForm">
+     <div class="container"> 
+        <div class="param-field">
+        	<span>
+        		New Master Scope
+        	</span>
+            <div class="reportGenTable">
+            	<table class="table">
+                <tbody>
+                	<tr>
+                		<td  style="width: 14%" ><b>Project Item</b></td>
+                		<td style="width: 48%">
+                			<select id="projectItem">
+                				<option value="default">---Project Item--- </option>
+                			</select>
+                		</td>
+                	</tr>	
+                	<tr>
+                		<td><b>Scope item 1</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem1" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td style="width:15%"><b>Quantity required</b></td>
+                		<td style="width:15%">
+                			<select id="quantity1">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 2</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem2" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                		    <select id="quantity2">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 3</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem3" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity3">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 4</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem4" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity4">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 5</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem5" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity5">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 6</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem6" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity6">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 7</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem7" maxlength=200 class="scrollTextBoxNewMaster"></textarea>                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity7">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 8</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem8" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity8">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 9</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem9" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity9">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td><b>Scope item 10</b></td>
+                		<td>
+                			<textarea rows=1 cols=50 id="scopeItem10" maxlength=200 class="scrollTextBoxNewMaster"></textarea>
+                		</td>
+                		<td><b>Quantity required</b></td>
+                		<td>
+                			<select id="quantity10">
+                				<option value="default">---</option>
+                				<option value="1">Yes</option>
+                				<option value="0">No</option>
+                			</select>
+                		</td>
+                	</tr>
+                	
+                </tbody>
+                </table>                     
+             </div><br>
+             <button id="saveMasterScope" class="btn btn-success">Save Master Scope</button>
+		</div>				
+	</div>
+</div>
+</body>
+</html>

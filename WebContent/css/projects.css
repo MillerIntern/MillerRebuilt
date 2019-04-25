@@ -204,6 +204,12 @@
 	resize: vertical;
 }
 
+.scrollTextBoxNewMaster {
+	height: 1;
+	width: 45;
+	resize: vertical;
+}
+
 .scrollTextBoxCostEst {
 	height: 35px;
 	width: 200px;
