@@ -119,4 +119,42 @@ function saveMasterScope()
     {
     	alert("Give scope item 2 a value");
     }
+    
+    $.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'saveMasterScope',
+			'projectID': projectID,
+			'projectItem': projectItem,
+			'item1': item1,
+			'item2': item2,
+			'item3': item3,
+			'item4': item4,
+			'item5': item5,
+			'item6': item6,
+			'item7': item7,
+			'item8': item8,
+			'item9': item9,
+			'item10': item10,
+			'quantity1': quantity1,
+			'quantity2': quantity2,
+			'quantity3': quantity3,
+			'quantity4': quantity4,
+			'quantity5': quantity5,
+			'quantity6': quantity6,
+			'quantity7': quantity7,
+			'quantity8': quantity8,
+			'quantity9': quantity9,
+			'quantity10': quantity10,
+		
+		}, complete: function (data) {
+			console.log(data);
+			projectID = data.responseJSON;
+			alert('Save Complete!');
+			$('#saveButton > button').prop('disabled', false);
+		}
+		
+	});
 }
