@@ -11,6 +11,8 @@ const CHANGE_ORDER_PRINT = 'projectDataPrint.html?type=changeOrders&';
 const PROJECT_EQUIPMENT = 'equipmentData.html';
 const EQUIPMENT_PRINT = 'projectDataPrint.html?type=equipment&';
 const TASK_CREATOR = 'taskForm.html';
+const NEW_MASTER_SCOPE = 'newMasterScope.html'
+const MASTER_SCOPE = 'masterScope.html'
 
 
 jQuery.fn.center = function () {
@@ -314,3 +316,22 @@ function getTodaysDate()
 }
 
 
+//function getMasterScopes()
+//{
+//	ajax({
+//		type: 'POST',
+//		url: 'Project',
+//		data: {
+//			'domain': 'project',
+//			'action': 'getSpecificObjects',
+//			'masterScope': true
+//		
+//		}, complete: function (data) {
+//			console.log(data);
+//			alert('Save Complete!');
+//		}, error: function (data) {
+//			alert("error!");
+//		}
+//	
+//	});
+//}

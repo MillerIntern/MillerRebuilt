@@ -1,7 +1,14 @@
 package projectObjects;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class MasterScope {
 	
+	@Id
+	@GeneratedValue
 	
 	private int projectItem;
 	private String item1;
@@ -24,13 +31,15 @@ public class MasterScope {
 	private int quantity8;
 	private int quantity9;
 	private int quantity10;
+	private int projItem;
 
 	
 	public MasterScope(int projItem, String item1, String item2, String item3, String item4, String item5, String item6, 
 			           String item7, String item8, String item9, String item10, int quantity1, int quantity2, int quantity3,
-			           int quantity4, int quantity5, int quantity6, int quantity7, int quantity8, int quantity9, int quantity10)
+			           int quantity4, int quantity5, int quantity6, int quantity7, int quantity8, int quantity9, int quantity10,
+			           int proj)
 	{
-	   	this.projectItem = projItem;
+		this.projectItem = projItem;
 	   	this.item1 = item1;
 	   	this.item2 = item2;
 	   	this.item3 = item3;
@@ -51,11 +60,12 @@ public class MasterScope {
 	   	this.quantity8 = quantity8;
 	   	this.quantity9 = quantity9;
 	   	this.quantity10 = quantity10;
+	   	this.projItem = proj;
 	}
 	
 	public MasterScope()
 	{
-	   	this.projectItem = 0;
+	 	this.projectItem = 0;
 	   	this.item1 = null;
 	   	this.item2 = null;
 	   	this.item3 = null;
@@ -75,7 +85,8 @@ public class MasterScope {
 	   	this.quantity7 = 0;
 	   	this.quantity8 = 0;
 	   	this.quantity9 = 0;
-	   	this.quantity10 = 0;	
+	   	this.quantity10 = 0;
+	   	this.projItem = 0;
 	}
 	
 	public synchronized int getProjItem()
@@ -86,6 +97,16 @@ public class MasterScope {
 	public synchronized void setProjItem(int item)
 	{	
 		this.projectItem = item;
+	}
+	
+	public synchronized int getItem()
+	{
+		return projItem;
+	}
+	
+	public synchronized void setItem(int item)
+	{	
+		this.projItem = item;
 	}
 	
 	public synchronized String getItem1()

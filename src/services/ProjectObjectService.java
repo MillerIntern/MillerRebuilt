@@ -552,6 +552,8 @@ public class ProjectObjectService
 				criteria.addOrder(Order.asc("id"));
 			} else if(domain.equals("EquipmentStatus")) {
 				criteria.addOrder(Order.asc("id"));
+			} else if(domain.equals("MasterScope")) {
+				criteria.addOrder(Order.asc("id"));
 			} else if (domain.equals("Warehouse")){
 				criteria.createAlias("city", "c");
 				criteria.addOrder(Order.asc("c.name"));
@@ -1102,4 +1104,82 @@ public class ProjectObjectService
         
 	}
 	
+	
+	public synchronized static String getMasterScopesAsJSON()
+	{
+		System.out.println("getting master scopes");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		Class<?> c;
+		try 
+		{
+			c = Class.forName("projectObjects.MasterScope");
+			
+			Criteria criteria = session.createCriteria(c);
+			
+			ProjectionList projectionList = Projections.projectionList();
+
+		    projectionList.add(Projections.distinct(Projections.property("projItem")));
+			projectionList.add(Projections.property("id"));
+			projectionList.add(Projections.property("item1"));
+			projectionList.add(Projections.property("item2"));
+			projectionList.add(Projections.property("item3"));
+			projectionList.add(Projections.property("item4"));
+			projectionList.add(Projections.property("item5"));
+			projectionList.add(Projections.property("item6"));
+			projectionList.add(Projections.property("item7"));
+			projectionList.add(Projections.property("item8"));
+			projectionList.add(Projections.property("item9"));
+			projectionList.add(Projections.property("item10"));
+			projectionList.add(Projections.property("quantity1"));
+			projectionList.add(Projections.property("quantity2"));
+			projectionList.add(Projections.property("quantity3"));
+			projectionList.add(Projections.property("quantity4"));
+			projectionList.add(Projections.property("quantity5"));
+			projectionList.add(Projections.property("quantity6"));
+			projectionList.add(Projections.property("quantity7"));
+			projectionList.add(Projections.property("quantity8"));
+			projectionList.add(Projections.property("quantity9"));
+			projectionList.add(Projections.property("quantity10"));
+		    
+		    criteria.setProjection(projectionList);
+		//Get all objects of type "domain"
+       // Query q = session.createQuery("from MasterScope");
+       // q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.ProjectSpecScope> list = criteria.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        
+		return null;
+		
+        
+	}
+
+	
+	public synchronized static String getProjItemAsJSON(Long id)
+	{
+		System.out.println("getting proj item");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+	
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ProjectItem where id = " + id );
+        @SuppressWarnings("unchecked")
+		
+		List<projectObjects.ProjectSpecScope> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+		
+	}
 }

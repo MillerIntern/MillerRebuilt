@@ -35,6 +35,8 @@ import projectObjects.Task;
 import projectObjects.ChangeOrder;
 import projectObjects.Subcontractor;
 import projectObjects.City;
+import projectObjects.MasterScope;
+import services.helpers.MasterScopeFiller;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.CostEstimateFiller;
@@ -68,7 +70,6 @@ public class ProjectService extends ProjectObjectService
 		ProjectInformationFiller.fillRefrigeration(project, parameters);
 		ProjectInformationFiller.fillProjectClass(project, parameters);
 		long projectID = (long) ProjectObjectService.addObject("Project", project);
-
 		return projectID;
 	}
 
@@ -506,6 +507,10 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("project") != null && !parameters.get("project").isEmpty())
 			if(parameters.get("project").equals("true"))
 				map.put("project",ProjectObjectService.getAllAsJsonString("project"));
+		
+		if(parameters.get("masterScope") != null && !parameters.get("masterScope").isEmpty())
+			if(parameters.get("masterScope").equals("true"))
+				map.put("masterScope",ProjectObjectService.getAllAsJsonString("MasterScope"));
 		
 		if(parameters.get("task_status") != null && !parameters.get("task_status").isEmpty())
 			if(parameters.get("task_status").equals("true"))
@@ -979,6 +984,16 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.addObject("ProjectSpecScope", sp);
 		
 		return "ProjectSpecScope ADDED";
+	
+	}
+	
+	public synchronized static String addMasterScope( Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		MasterScope sp  = new MasterScope();
+		MasterScopeFiller.fillMasterScope(sp, params);
+		ProjectObjectService.addObject("MasterScope", sp);
+		
+		return "masterScope ADDED";
 	
 	}
 	

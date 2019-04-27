@@ -3,8 +3,78 @@ $(document).ready(function()
 {
    getUserInfo();	
    getProjectItems();
+   getMasterScopes();
 });
 
+
+function getMasterScopes()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getMasterScopes',
+			'id': 0
+		
+		}, complete: function (data) {
+			console.log("data", data.responseJSON);
+			var dat = data.responseJSON;
+			for(var i = 0; i < dat.length; i++)
+			{
+				var json = dat[i];
+				console.log(json[0]);
+			    getProjItem(json[0]);				
+			}
+		}, error: function (data) {
+			alert("error!");
+			console.log("data", data);
+		}
+	
+	});
+}
+
+function fillNavScopeDropdowns(data)
+{		
+	console.log(data);
+	var d = document.createDocumentFragment();
+	
+	for(var i = 0; i < data.length; i++)
+	{
+		var li = document.createElement("li");
+		var a = document.createElement("a");
+		a.innerHTML = data[i].name;
+		a.setAttribute("value", data[i].id);
+		a.setAttribute("href", "masterScope.html")
+		li.appendChild(a);
+		d.appendChild(li);
+	}
+
+	$('#dropdown').append(d);
+	
+}
+
+function getProjItem(id)
+{
+	console.log("get proj item", id);
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjectItem',
+			'id': id
+		
+		}, complete: function (data) {
+			console.log("projItem: ", data.responseJSON);
+			fillNavScopeDropdowns(data.responseJSON);
+		}, error: function (data) {
+			alert("error!");
+			console.log("data", data);
+		}
+	
+	});
+}
 
 function getUserInfo(){
 	let user;
@@ -77,6 +147,7 @@ function fillDropdowns(data)
 function saveMasterScope()
 {
     var projectItem = $('#newMasterScopeForm').find('#projectItem').val();
+    console.log(projectItem);
     
     var item1 = $('#newMasterScopeForm').find('#scopeItem1').val();
     var item2 = $('#newMasterScopeForm').find('#scopeItem2').val();
@@ -100,34 +171,34 @@ function saveMasterScope()
     var quantity9 = $('#newMasterScopeForm').find('#quantity9').val();
     var quantity10 = $('#newMasterScopeForm').find('#quantity10').val();
     
-    if(item1 != undefined && quantity1 == "default")
-    {
-    	alert("Select a value for Quantity Required for scope item 1");
-    }
-    
-    if(item1 == undefined && quantity1 != "default")
-    {
-    	alert("Give scope item 1 a value");
-    }
-    
-    if(item2 != undefined && quantity2 == "default")
-    {
-    	alert("Select a value for Quantity Required for scope item 2");
-    }
-    
-    if(item2 == undefined && quantity2 != "default")
-    {
-    	alert("Give scope item 2 a value");
-    }
+//    if(item1 != undefined && quantity1 == "default")
+//    {
+//    	alert("Select a value for Quantity Required for scope item 1");
+//    }
+//    
+//    if(item1 == undefined && quantity1 != "default")
+//    {
+//    	alert("Give scope item 1 a value");
+//    }
+//    
+//    if(item2 != undefined && quantity2 == "default")
+//    {
+//    	alert("Select a value for Quantity Required for scope item 2");
+//    }
+//    
+//    if(item2 == undefined && quantity2 != "default")
+//    {
+//    	alert("Give scope item 2 a value");
+//    }
     
     $.ajax({
 		type: 'POST',
 		url: 'Project',
 		data: {
 			'domain': 'project',
-			'action': 'saveMasterScope',
-			'projectID': projectID,
+			'action': 'addMasterScope',
 			'projectItem': projectItem,
+			'item': 0,
 			'item1': item1,
 			'item2': item2,
 			'item3': item3,
@@ -151,9 +222,9 @@ function saveMasterScope()
 		
 		}, complete: function (data) {
 			console.log(data);
-			projectID = data.responseJSON;
 			alert('Save Complete!');
-			$('#saveButton > button').prop('disabled', false);
+		}, error: function (data) {
+			alert("error!");
 		}
 		
 	});

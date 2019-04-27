@@ -14,10 +14,20 @@ public class MasterScopeFiller
 		
 		int projItem;
 		try {
-			projItem = Integer.parseInt(params.get("projectItem"));
+			projItem = Integer.parseInt(params.get("item"));
 			ms.setProjItem(projItem);
+			System.out.println(projItem);
 		} catch (NumberFormatException e) {
 			ms.setProjItem(0);
+		}
+		
+		int item;
+		try {
+			item = Integer.parseInt(params.get("projectItem"));
+			ms.setItem(item);
+			System.out.println(item);
+		} catch (NumberFormatException e) {
+			ms.setItem(0);
 		}
 		
 		ms.setItem1(params.get("item1"));

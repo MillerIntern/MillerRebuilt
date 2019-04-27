@@ -495,6 +495,17 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("addMasterScope"))
+		{
+			try
+			{
+				ProjectService.addMasterScope(parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("editEquipment"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
@@ -543,6 +554,30 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		} 
+		else if(action.equals("getMasterScopes")) 
+		{
+			System.out.println("GET master scopes");
+			try 
+			{
+				response = ProjectObjectService.getMasterScopesAsJSON();
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("getProjectItem")) 
+		{
+			System.out.println("GET spec projectItem");
+			try 
+			{
+				response = ProjectObjectService.getProjItemAsJSON(Long.parseLong(parameters.get("id")));
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 		else if (action.equals("getQueryEnums"))
 		{
 			response = ProjectService.getQueryEnumsAsJSON();
