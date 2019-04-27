@@ -1,6 +1,8 @@
 $(document).ready(function()
 {
    getMasterScopes();
+   var id = location.search.substring(10);
+   console.log(id);
 });
 
 function getMasterScopes()
@@ -41,7 +43,9 @@ function fillNavScopeDropdowns(data)
 		var a = document.createElement("a");
 		a.innerHTML = data[i].name;
 		a.setAttribute("value", data[i].id);
-		a.setAttribute("href", "masterScope.html")
+		a.setAttribute("href", "masterScope.html?projItem=" + data[i].id);
+		a.setAttribute("onmouseover", "style='background-color: rgb(42, 112, 224); color: white'");
+		a.setAttribute("onmouseout", "style='background-color: none;'");
 		li.appendChild(a);
 		d.appendChild(li);
 	}
