@@ -101,53 +101,64 @@
   <div id="masterScopeEditor">
      <div class="container"> 
         <div class="param-field">
-        	<span>
+        	<span style="text-align: center" id="itemMasterScope">
         	 	: Master Scope
         	</span>
             <div class="masterScopeTable">
                 <table>
                 	<tbody>
                 		<tr>
-                			<th>Item</th>
-                			<th></th>
+                			<th style= "width: 3%; font-size: 15px">Item</th>
+                			<th style= "width: 97%"></th>
                 		</tr>
                 		<tr>
                 			<td>1.</td>
+                			<td id="item1"></td>
                   		</tr>
                 		<tr>
                 			<td>2.</td>
+                			<td id="item2"></td>
                 		</tr>
                 		<tr>
                 			<td>3.</td>
+                			<td id="item3"></td>
                 		</tr>
                 		<tr>
                 			<td>4.</td>
+                			<td id="item4"></td>
                 		</tr>
                 		<tr>
                 			<td>5.</td>
+                			<td id="item5"></td>
                 		</tr>
                 		<tr>
                 			<td>6.</td>
+                			<td id="item6"></td>
                 		</tr>
                 		<tr>
                 			<td>7.</td>
+                			<td id="item7"></td>
                 		</tr>
                 		<tr>
                 			<td>8.</td>
+                			<td id="item8"></td>
                 		</tr>
                 		<tr>
                 			<td>9.</td>
+                			<td id="item9"></td>
                 		</tr>
                 		<tr>
                 			<td>10.</td>
+                			<td id="item10"></td>
                 		</tr>
                 	</tbody>
                 </table>         
              </div>
+             <br>
              <button id="addNewItem" class="btn btn-success" onclick="">Add New Scope Item</button>
              <button id="editItem" class="btn btn-primary" onclick="">Edit Scope Item</button>
              <button id="printScope" class="btn btn-success" onclick="">Print Scope</button>
-             <button id="deleteScope" class="btn btn-danger" onclick="">Delete Scope</button>
+             <button id="deleteScope" class="btn btn-danger" onclick="deleteMasterScope()">Delete Scope</button>
              
 		</div>				
 	</div>
