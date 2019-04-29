@@ -1,0 +1,64 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.connection.password">Harley42</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tester</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.connection.autocommit">true</property>
+       
+
+        <mapping class="projectObjects.Project"/>
+        <mapping class="projectObjects.ProjectItem" />
+        <mapping class="projectObjects.ProjectClass" />
+        <mapping class="projectObjects.ProjectItem" />
+        <mapping class="projectObjects.ChangeOrder" />
+        <mapping class="projectObjects.City" />
+        <mapping class="projectObjects.CloseoutDetails" />
+        <mapping class="projectObjects.Person" />
+        <mapping class="projectObjects.ProjectStatus" />
+        <mapping class="projectObjects.SalvageValue" />
+        <mapping class="projectObjects.Warehouse" />
+        <mapping class="projectObjects.ProjectClass" />
+        <mapping class="projectObjects.ProjectStage" />
+        <mapping class="projectObjects.ChangeOrderStatus" />
+        <mapping class="projectObjects.Status"/>
+        <mapping class="projectObjects.Permission"/>
+        <mapping class="projectObjects.User" />
+        <mapping class="projectObjects.ProjectType" />
+        <mapping class="projectObjects.VendorStorage" />
+        <mapping class="projectObjects.EquipmentStorage" />
+		<mapping class="projectObjects.Inspections" />
+		<mapping class="projectObjects.Permits" />
+		<mapping class="projectObjects.Equipment" />
+		<mapping class="projectObjects.EquipmentType" />
+		<mapping class="projectObjects.EquipmentVendor" />
+		<mapping class="projectObjects.EquipmentStatus" />
+        
+        <mapping class ="projectObjects.CloseoutStatus" />
+        <mapping class="projectObjects.ChangeOrderType" />
+        <mapping class="projectObjects.PermitStage" />
+        <mapping class="projectObjects.InspectionStatus" />
+        <mapping class="projectObjects.NewEquipment"/>
+        <mapping class="projectObjects.Task"/>
+        <mapping class="projectObjects.TaskStatus"/>
+        <mapping class="projectObjects.Subcontractor"/>
+        <mapping class="projectObjects.Trade"/>  
+        <mapping class="projectObjects.RuleDomain"/>
+        <mapping class="projectObjects.RuleResult"/>
+        <mapping class="projectObjects.RuleSeverity"/>
+        <mapping class="projectObjects.ProjectRule"/>
+        <mapping class="projectObjects.ProjectSpecScope"/>     
+        <mapping class="projectObjects.CostEstimate"/> 
+        <mapping class="projectObjects.MasterScope"/>
+
+    </session-factory>
+
+</hibernate-configuration>
