@@ -445,7 +445,7 @@
 			</div>				
 			
 			<div id="projectSpecificScope" style="display: none" class="active">
-			    <span id="specificScopeProjectTitle">: Master Scope</span>
+			    <span id="specificScopeProjectTitle">: Project Specific Scope</span>
 	   			<table id='projectScopeTable' class='table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
@@ -499,8 +499,8 @@
 		
 		<div class='info-tab info-tab-cost-estimate' id='costEstimate'>
 	       <div id="costEstimateOverview">
-	       		<table class='table table-hover table-striped' ondblclick="editCostEstimate()">
-					<tr>
+	       		<table id="costEstTableO" border="1" style="border-color:#d1cec5; border-left-color: transparent; border-right-color: transparent; border-bottom-color:#fcfaf5" class='table table-hover table-striped' ondblclick="editCostEstimate()">
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th style="width: 7%; text-align: center"><button onclick='editCostEstimate()' type="button" class="project-edit btn btn-primary">Edit</button></th>
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Proposal Required</th>
@@ -510,126 +510,126 @@
 						<th style="width: 12%; text-align: center">Scope Description</th>
 						<th style="width: 15%; text-align: center">Notes</th>
 					</tr>
-				    <tr>
-						<td class = "bold">General Construction</td>
-						<td align="center" id='genConProposalReq' class="italics costEstTableData"></td>
+				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">General Construction</th>
+						<td align="center" id='genConProposal' class="italics costEstTableData"></td>
 						<td align="center" id='genConSub' class ="italics costEstTableData"></td>
 						<td align="center" id='genConCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='genConSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='genConScope' class ="italics costEstTableData"></td>
 						<td align="center" id='genConNotesO' class ="italics costEstTableData"></td>
 					</tr>
-				    <tr>
-						<td class = "bold">Refrigeration</td>
-						<td align="center" id='refrigProposalReq' class="italics costEstTableData"></td>
+				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Refrigeration</th>
+						<td align="center" id='refrigProposal' class="italics costEstTableData"></td>
 						<td align="center" id='refrigSub' class ="italics costEstTableData"></td>
 						<td align="center" id='refrigCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='refrigSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='refrigScope' class ="italics costEstTableData"></td>
 						<td align="center" id='refrigNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Mechanical</td>
-						<td align="center" id='mechanicalProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Mechanical</th>
+						<td align="center" id='mechanicalProposal' class="italics costEstTableData"></td>
 						<td align="center" id='mechanicalSub' class ="italics costEstTableData"></td>
 						<td align="center" id='mechanicalCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='mechanicalSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='mechanicalScope' class ="italics costEstTableData"></td>
 						<td align="center" id='mechanicalNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Electrical</td>
-						<td align="center" id='electricalProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Electrical</th>
+						<td align="center" id='electricalProposal' class="italics costEstTableData"></td>
 						<td align="center" id='electricalSub' class ="italics costEstTableData"></td>
 						<td align="center" id='electricalCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='electricalSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='electricalScope' class ="italics costEstTableData"></td>
 						<td align="center" id='electricalNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Plumbing</td>
-						<td align="center" id='plumbingProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Plumbing</th>
+						<td align="center" id='plumbingProposal' class="italics costEstTableData"></td>
 						<td align="center" id='plumbingSub' class ="italics costEstTableData"></td>
 						<td align="center" id='plumbingCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='plumbingSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='plumbingScope' class ="italics costEstTableData"></td>
 						<td align="center" id='plumbingNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Gas</td>
-						<td align="center" id='gasProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Gas</th>
+						<td align="center" id='gasProposal' class="italics costEstTableData"></td>
 						<td align="center" id='gasSub' class ="italics costEstTableData"></td>
 						<td align="center" id='gasCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='gasSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='gasScope' class ="italics costEstTableData"></td>
 						<td align="center" id='gasNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Sprinkler</td>
-						<td align="center" id='sprinklerProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Sprinkler</th>
+						<td align="center" id='sprinklerProposal' class="italics costEstTableData"></td>
 						<td align="center" id='sprinklerSub' class ="italics costEstTableData"></td>
 						<td align="center" id='sprinklerCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='sprinklerSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='sprinklerScope' class ="italics costEstTableData"></td>
 						<td align="center" id='sprinklerNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Fire Alarm</td>
-						<td align="center" id='fireAlarmProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Fire Alarm</th>
+						<td align="center" id='fireAlarmProposal' class="italics costEstTableData"></td>
 						<td align="center" id='fireAlarmSub' class ="italics costEstTableData"></td>
 						<td align="center" id='fireAlarmCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='fireAlarmSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='fireAlarmScope' class ="italics costEstTableData"></td>
 						<td align="center" id='fireAlarmNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Carpenter</td>
-						<td align="center" id='carpenterProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Carpenter</th>
+						<td align="center" id='carpenterProposal' class="italics costEstTableData"></td>
 						<td align="center" id='carpenterSub' class ="italics costEstTableData"></td>
 						<td align="center" id='carpenterCostO' class ="italics costEstTableData"></td>	
 						<td align="center" id='carpenterSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='carpenterScope' class ="italics costEstTableData"></td>
 						<td align="center" id='carpenterNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Equipment</td>
-						<td align="center" id='equipmentProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Equipment</th>
+						<td align="center" id='equipmentProposal' class="italics costEstTableData"></td>
 						<td align="center" id='equipmentSub' class ="italics costEstTableData"></td>
 						<td align="center" id='equipmentCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='equipmentSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='equipmentScope' class ="italics costEstTableData"></td>
 						<td align="center" id='equipmentNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Supervision</td>
-						<td align="center" id='supervisionProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Supervision</th>
+						<td align="center" id='supervisionProposal' class="italics costEstTableData"></td>
 						<td align="center" id='supervisionSub' class ="italics costEstTableData"></td>
 						<td align="center" id='supervisionCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='supervisionSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='supervisionScope' class ="italics costEstTableData"></td>
 						<td align="center" id='supervisionNotesO' class ="italics costEstTableData"></td>
 					</tr>
-					<tr>
-						<td class = "bold">Profit</td>
-						<td align="center" id='profitProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Profit</th>
+						<td align="center" id='profitProposal' class="italics costEstTableData"></td>
 						<td align="center" id='profitSub' class ="italics costEstTableData"></td>
 						<td align="center" id='profitCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='profitSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='profitScope' class ="italics costEstTableData"></td>
 						<td align="center" id='profitNotesO' class ="italics costEstTableData"></td>
 					</tr>
-						<tr>
-						<td class = "bold">Taxes</td>
-						<td align="center" id='taxesProposalReq' class="italics costEstTableData"></td>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Taxes</th>
+						<td align="center" id='taxesProposal' class="italics costEstTableData"></td>
 						<td align="center" id='taxesSub' class ="italics costEstTableData"></td>
 						<td align="center" id='taxesCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='taxesSubmit' class="italics costEstTableData"></td>
 						<td align="center" id='taxesScope' class ="italics costEstTableData"></td>
 						<td align="center" id='taxesNotesO' class ="italics costEstTableData"></td>
 					</tr>
-						<tr>
-						<td style="font-size:18px" class = "bold">Total</td>
-						<td align="center" id='totalProposalReq' class="italics costEstTableData"></td>
+						<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th style="font-size:18px" class = "bold">Total</th>
+						<td align="center" id='totalProposal' class="italics costEstTableData"></td>
 						<td align="center" id='totalSub' class ="italics costEstTableData"></td>
 						<td align="center" id='totalCostO' class ="italics costEstTableData"></td>
 						<td align="center" id='totalSubmit' class="italics costEstTableData"></td>
@@ -2198,7 +2198,7 @@
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
-                            <option value="0">TBD</option>
+                            <option value="3">TBD</option>
 					    	</select>
 					    </td>
 						<td align="center">
@@ -2232,7 +2232,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 					    </td>
 						<td align="center">
@@ -2265,7 +2265,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 					     </td>
 						<td align="center">
@@ -2298,7 +2298,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 					    </td>
 						<td align="center">
@@ -2330,7 +2330,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 					    </td>
 						<td align="center">
@@ -2363,7 +2363,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2396,7 +2396,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 					    </td>
 						<td align="center">
@@ -2429,7 +2429,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2462,7 +2462,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2495,7 +2495,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2528,7 +2528,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2561,7 +2561,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2594,7 +2594,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">
@@ -2627,7 +2627,7 @@
 					          <option value="default">--Required--</option>
 					          <option value="1">Yes</option>
                               <option value="2">No</option>
-                              <option value="0">TBD</option>
+                              <option value="3">TBD</option>
 					        </select>
 						</td>
 						<td align="center">

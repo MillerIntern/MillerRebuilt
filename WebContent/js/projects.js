@@ -3153,6 +3153,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				
 				
 				getTasks(stopServerCalls);
+				getProjCostEstimate(stopServerCalls)
 				getProjSpecScopes(stopServerCalls);
 			}, error: function (data) {
 				alert('Server Error!');
@@ -4832,18 +4833,205 @@ function saveCostEstimate()
 				alert('Save Complete!');
 				
 				goToProjectManager();
+				$('#costEstimateTabLink').addClass('active');
+				getProjCostEstimate(1);
 
 			},
 			error: function(data)
 			{
 				console.log(data);
 				//updateFrontEnd();
-				alert('error!');
+				alert('Save Complete!');
 			
 				goToProjectManager();
+				$('#costEstimateTabLink').addClass('active');
+				getProjCostEstimate(1);
 			}
 		});
     }	
+}
+
+
+function getProjCostEstimate(stopServerCalls)
+{
+	console.log("get proj cost Est: ", projectID);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjCostEst',
+			'id': projectID
+		}, success: function (data) {
+			console.log("cost est:", data);
+            if(data.length > 0)
+            	fillCostEstOverview(data);
+            else
+            	clearCostEstOverview();
+			
+            if(!stopServerCalls)
+				getUserData();
+			
+		}, error: function (data) {
+			alert('Server Error!');
+		}
+	});
+	
+}
+
+
+function convertProposalReq(data)
+{
+   	if(data == '1')
+   		return "Yes";
+   	else if(data == '2')
+   		return "No";
+   	else (data == '3')
+    	return "TBD";
+}
+
+function convertSubName(data)
+{
+  console.log(data);	
+  if(data == '2')
+	  return "Expert Mechanical";
+  else if(data == '4')
+	  return "Heritage";
+  else if(data == '5')
+	  return "Harrisonburg Construction";
+  else if(data == '6')
+	  return "Maser Consulting";
+  else if(data == '7')
+	  return "MG2";
+  else if(data == '8')
+	  return "The Darcy Company";
+  else if(data == '9')
+	  return "TEI";
+  else if(data == '10')
+	  return "Blauch Brothers";
+  else if(data == '11')
+	  return "Costco";
+  else if(data == '12')
+	  return "Sciarretti";
+  else if(data == '13')
+	  return "GES";
+  else 
+	  return "N/A";
+  
+}
+
+function clearCostEstOverview()
+{
+	console.log("clear cost est");
+	$('#costEstTableO > tbody').find('td').html("");	
+}
+
+function fillCostEstOverview(data)
+{
+	console.log("filling cost est overview");
+	data = data[0];
+	console.log(data.genConScope, data.genConNotes);
+	
+	$('#costEstimateOverview').find('#genConProposal').text(convertProposalReq(data.genConProposalReq));
+	$('#costEstimateOverview').find('#genConSub').text(convertSubName(data.genConSubName));
+	$('#costEstimateOverview').find('#genConCostO').text("$" + data.genConCost);
+	$('#costEstimateOverview').find('#genConSubmit').text(data.genConSubmitDate);
+	$('#costEstimateOverview').find('#genConScope').text(data.genConScope);
+	$('#costEstimateOverview').find('#genConNotesO').text(data.genConNotes);
+	
+	$('#costEstimateOverview').find('#refrigProposal').text(convertProposalReq(data.refrigProposalReq));
+	$('#costEstimateOverview').find('#refrigSub').text(convertSubName(data.refrigSubName));
+	$('#costEstimateOverview').find('#refrigCostO').text("$" + data.refrigCost);
+	$('#costEstimateOverview').find('#refrigSubmit').text(data.refrigSubmitDate);
+	$('#costEstimateOverview').find('#refrigScope').text(data.refrigScope);
+	$('#costEstimateOverview').find('#refrigNotesO').text(data.refrigNotes);
+	
+	$('#costEstimateOverview').find('#mechanicalProposal').text(convertProposalReq(data.mechanicalProposalReq));
+	$('#costEstimateOverview').find('#mechanicalSub').text(convertSubName(data.mechanicalSubName));
+	$('#costEstimateOverview').find('#mechanicalCostO').text("$" + data.mechanicalCost);
+	$('#costEstimateOverview').find('#mechanicalSubmit').text(data.mechanicalSubmitDate);
+	$('#costEstimateOverview').find('#mechanicalScope').text(data.mechanicalScope);
+	$('#costEstimateOverview').find('#mechanicalNotesO').text(data.mechanicalNotes);
+	
+	$('#costEstimateOverview').find('#electricalProposal').text(convertProposalReq(data.electricalProposalReq));
+	$('#costEstimateOverview').find('#electricalSub').text(convertSubName(data.electricalSubName));
+	$('#costEstimateOverview').find('#electricalCostO').text("$" + data.electricalCost);
+	$('#costEstimateOverview').find('#electricalSubmit').text(data.electricalSubmitDate);
+	$('#costEstimateOverview').find('#electricalScope').text(data.electricalScope);
+	$('#costEstimateOverview').find('#electricalNotesO').text(data.electricalNotes);
+	
+	$('#costEstimateOverview').find('#plumbingProposal').text(convertProposalReq(data.plumbingProposalReq));
+	$('#costEstimateOverview').find('#plumbingSub').text(convertSubName(data.plumbingSubName));
+	$('#costEstimateOverview').find('#plumbingCostO').text("$" + data.plumbingCost);
+	$('#costEstimateOverview').find('#plumbingSubmit').text(data.plumbingSubmitDate);
+	$('#costEstimateOverview').find('#plumbingScope').text(data.plumbingScope);
+	$('#costEstimateOverview').find('#plumbingNotesO').text(data.plumbingNotes);
+	
+	$('#costEstimateOverview').find('#gasProposal').text(convertProposalReq(data.gasProposalReq));
+	$('#costEstimateOverview').find('#gasSub').text(convertSubName(data.gasSubName));
+	$('#costEstimateOverview').find('#gasCostO').text("$" + data.gasCost);
+	$('#costEstimateOverview').find('#gasSubmit').text(data.gasSubmitDate);
+	$('#costEstimateOverview').find('#gasScope').text(data.gasScope);
+	$('#costEstimateOverview').find('#gasNotesO').text(data.gasNotes);
+
+	$('#costEstimateOverview').find('#sprinklerProposal').text(convertProposalReq(data.sprinklerProposalReq));
+	$('#costEstimateOverview').find('#sprinklerSub').text(convertSubName(data.sprinklerSubName));
+	$('#costEstimateOverview').find('#sprinklerCostO').text("$" + data.sprinklerCost);
+	$('#costEstimateOverview').find('#sprinklerSubmit').text(data.sprinklerSubmitDate);
+	$('#costEstimateOverview').find('#sprinklerScope').text(data.sprinklerScope);
+	$('#costEstimateOverview').find('#sprinklerNotesO').text(data.sprinklerNotes);
+	
+	$('#costEstimateOverview').find('#fireAlarmProposal').text(convertProposalReq(data.fireAlarmProposalReq));
+	$('#costEstimateOverview').find('#fireAlarmSub').text(convertSubName(data.fireAlarmSubName));
+	$('#costEstimateOverview').find('#fireAlarmCostO').text("$" + data.fireAlarmCost);
+	$('#costEstimateOverview').find('#fireAlarmSubmit').text(data.fireAlarmSubmitDate);
+	$('#costEstimateOverview').find('#fireAlarmScope').text(data.fireAlarmScope);
+	$('#costEstimateOverview').find('#fireAlarmNotesO').text(data.fireAlarmNotes);
+	
+	$('#costEstimateOverview').find('#carpenterProposal').text(convertProposalReq(data.carpenterProposalReq));
+	$('#costEstimateOverview').find('#carpenterSub').text(convertSubName(data.carpenterSubName));
+	$('#costEstimateOverview').find('#carpenterCostO').text("$" + data.carpenterCost);
+	$('#costEstimateOverview').find('#carpenterSubmit').text(data.carpenterSubmitDate);
+	$('#costEstimateOverview').find('#carpenterScope').text(data.carpenterScope);
+	$('#costEstimateOverview').find('#carpenterNotesO').text(data.carpenterNotes);
+	
+	$('#costEstimateOverview').find('#equipmentProposal').text(convertProposalReq(data.equipmentProposalReq));
+	$('#costEstimateOverview').find('#equipmentSub').text(convertSubName(data.equipmentSubName));
+	$('#costEstimateOverview').find('#equipmentCostO').text("$" + data.equipmentCost);
+	$('#costEstimateOverview').find('#equipmentSubmit').text(data.equipmentSubmitDate);
+	$('#costEstimateOverview').find('#equipmentScope').text(data.equipmentScope);
+	$('#costEstimateOverview').find('#equipmentNotesO').text(data.equipmentNotes);
+	
+	$('#costEstimateOverview').find('#supervisionProposal').text(convertProposalReq(data.supervisionProposalReq));
+	$('#costEstimateOverview').find('#supervisionSub').text(convertSubName(data.supervisionSubName));
+	$('#costEstimateOverview').find('#supervisionCostO').text("$" + data.supervisionCost);
+	$('#costEstimateOverview').find('#supervisionSubmit').text(data.supervisionSubmitDate);
+	$('#costEstimateOverview').find('#supervisionScope').text(data.supervisionScope);
+	$('#costEstimateOverview').find('#supervisionNotesO').text(data.supervisionNotes);
+	
+	$('#costEstimateOverview').find('#profitProposal').text(convertProposalReq(data.profitProposalReq));
+	$('#costEstimateOverview').find('#profitSub').text(convertSubName(data.profitSubName));
+	$('#costEstimateOverview').find('#profitCostO').text("$" + data.profitCost);
+	$('#costEstimateOverview').find('#profitSubmit').text(data.profitSubmitDate);
+	$('#costEstimateOverview').find('#profitScope').text(data.profitScope);
+	$('#costEstimateOverview').find('#profitNotesO').text(data.profitNotes);
+	
+	$('#costEstimateOverview').find('#taxesProposal').text(convertProposalReq(data.taxesProposalReq));
+	$('#costEstimateOverview').find('#taxesSub').text(convertSubName(data.taxesSubName));
+	$('#costEstimateOverview').find('#taxesCostO').text("$" + data.taxesCost);
+	$('#costEstimateOverview').find('#taxesSubmit').text(data.taxesSubmitDate);
+	$('#costEstimateOverview').find('#taxesScope').text(data.taxesScope);
+	$('#costEstimateOverview').find('#taxesNotesO').text(data.taxesNotes);
+	
+	$('#costEstimateOverview').find('#totalProposal').text(convertProposalReq(data.totalProposalReq));
+	$('#costEstimateOverview').find('#totalSub').text(convertSubName(data.totalSubName));
+	$('#costEstimateOverview').find('#totalCostO').text("$" + data.totalCost);
+	$('#costEstimateOverview').find('#totalSubmit').text(data.totalSubmitDate);
+	$('#costEstimateOverview').find('#totalScope').text(data.totalScope);
+	$('#costEstimateOverview').find('#totalNotesO').text(data.totalNotes);
+	
+	
 }
 
 var SCOPE_ID;
@@ -4960,7 +5148,7 @@ function getProjSpecScopes(stopServerCalls) {
 			'action': 'getProjSpecScopes',
 			'id': projectID
 		}, success: function (data) {
-			console.log(data);
+			console.log("scopes:", data);
 
 			if(edit_PROJ_SCOPE == 'true') 
 			{	
@@ -5016,14 +5204,15 @@ function fillProjSpecScopeTable (data) {
 	
 	
 	data.sort(function(a, b){
-		if(!a.item || a.item == null) return -1;
-		if(!b.item) return 1;
+		if(!a[7] || a[7] == null) return -1;
+		if(!b[7]) return 1;
 		
-		if(a.item < b.item) return -1;
-		else if(a.item > b.item) return 1;
+		if(a[7] < b[7]) return -1;
+		else if(a[7] > b[7]) return 1;
 		else return 0;
 		
 	});
+	
 	console.log( data);
 		
 	
@@ -5033,32 +5222,33 @@ function fillProjSpecScopeTable (data) {
 		console.log(row);
 				
 		var tableRow = document.createElement('tr');
-		tableRow.setAttribute("value", row.item);
+		tableRow.setAttribute("value", row[7]);
 		tableRow.onclick = function() {toggleProjSpecScope(this)};
 		tableRow.ondblclick = function () {goToNewProjScope(1)};
 		
 		var itemNum = document.createElement('td');
-		if(row.item)
-			itemNum.appendChild(document.createTextNode(row.item));
+		console.log(row[7]);
+		if(row[7])
+			itemNum.appendChild(document.createTextNode(row[7]));
 		else
 			itemNum.appendChild(document.createTextNode("---"));
 		
 		
 		var title = document.createElement('td');
 
-		if(row.title)
-			title.appendChild(document.createTextNode(row.title));
+		if(row[1])
+			title.appendChild(document.createTextNode(row[1]));
 		else 
 			title.appendChild(document.createTextNode("---"));
 		
 		
 		var description = document.createElement('td');
-		description.appendChild(document.createTextNode(row.description))
+		description.appendChild(document.createTextNode(row[2]))
 		
 		
 		var notes = document.createElement('td');
-		if(row.notes)
-			notes.appendChild(document.createTextNode(row.notes));
+		if(row[4])
+			notes.appendChild(document.createTextNode(row[4]));
 		else
 			notes.appendChild(document.createTextNode("---"));
 		

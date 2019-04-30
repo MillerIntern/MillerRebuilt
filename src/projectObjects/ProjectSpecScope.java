@@ -31,8 +31,9 @@ public class ProjectSpecScope {
 	private String subNames;
 	private String notes;
 	private Long proj;
+	private int itemNum;
 	
-	public ProjectSpecScope(int itemNum, String title, String description, String subNames, String notes, Long proj)
+	public ProjectSpecScope(int itemNum, String title, String description, String subNames, String notes, Long proj, int item)
 	{
 	  this.item = itemNum;
 	  this.title = title;
@@ -40,6 +41,7 @@ public class ProjectSpecScope {
 	  this.subNames = subNames;
 	  this.notes = notes;
 	  this.proj = proj;
+	  this.itemNum = item;
 	}
 	
 	public ProjectSpecScope()
@@ -50,6 +52,7 @@ public class ProjectSpecScope {
 	  this.subNames = null;
 	  this.notes = null;
 	  this.proj = null;
+	  this.itemNum = 0;
 	}
 	
 	public synchronized int getItem()
@@ -60,6 +63,16 @@ public class ProjectSpecScope {
 	public synchronized void setItem(int num)
 	{
 		this.item = num;	
+	}
+	
+	public synchronized int getItemNum()
+	{
+		return this.itemNum;
+	}
+	
+	public synchronized void setItemNum(int item)
+	{
+		this.itemNum = item;	
 	}
 	
 	

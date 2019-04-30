@@ -506,12 +506,7 @@ public class ProjectService extends ProjectObjectService
 				map.put("cities",ProjectObjectService.getAllAsJsonString("City"));
 		if(parameters.get("project") != null && !parameters.get("project").isEmpty())
 			if(parameters.get("project").equals("true"))
-				map.put("project",ProjectObjectService.getAllAsJsonString("project"));
-		
-		if(parameters.get("masterScope") != null && !parameters.get("masterScope").isEmpty())
-			if(parameters.get("masterScope").equals("true"))
-				map.put("masterScope",ProjectObjectService.getAllAsJsonString("MasterScope"));
-		
+				map.put("project",ProjectObjectService.getAllAsJsonString("project"));		
 		if(parameters.get("task_status") != null && !parameters.get("task_status").isEmpty())
 			if(parameters.get("task_status").equals("true"))
 				map.put("taskStatus",ProjectObjectService.getAllAsJsonString("TaskStatus"));

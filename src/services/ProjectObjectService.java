@@ -1094,7 +1094,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get all objects of type "domain"
-        Query q = session.createQuery("from ProjectSpecScope where proj = " + projectID);
+        Query q = session.createSQLQuery("select * from ProjectSpecScope where proj = " + projectID);
         @SuppressWarnings("unchecked")
 		List<projectObjects.ProjectSpecScope> list = q.list();
    
@@ -1194,13 +1194,32 @@ public class ProjectObjectService
         Query q = session.createQuery("from MasterScope where projItem = " + id );
         @SuppressWarnings("unchecked")
 		
-		List<projectObjects.ProjectSpecScope> list = q.list();
+		List<projectObjects.MasterScope> list = q.list();
    
         tx.commit();
         
         return gson.toJson(list);
 		
 	}
+	
+	public synchronized static String getSpecCostEst(int id)
+	{
+		System.out.println("getting cost est");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+	
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from CostEstimate where proj = " + id );
+        @SuppressWarnings("unchecked")
+		
+		List<Object> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+	}
+	
 	
 	public synchronized static String deleteMasterScope(int projItem, String domain) throws ClassNotFoundException
 	{

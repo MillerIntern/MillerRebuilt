@@ -31,6 +31,14 @@ public class ProjectSpecScopeFiller {
 			sp.setItem(0);
 		}
 		
+		int itemNum;
+		try {
+			itemNum = Integer.parseInt(params.get("itemNum"));
+			sp.setItemNum(itemNum);
+		} catch (NumberFormatException e) {
+			sp.setItemNum(0);
+		}
+		
 		Long projs;
 		try {
 			projs = Long.parseLong(params.get("projectID"));

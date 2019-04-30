@@ -112,6 +112,7 @@ public class CostEstimate {
 	private double totalCost;
 	private String totalScope;
 	private String totalNotes;
+	private int proj;
 	
 	public CostEstimate(Long proj, int genConProposalReq, int genConSubName, int genConStatus, Date genConSubmitDate, double genConCost,
 						String genConScope, String genConNotes, int refrigProposalReq, int refrigSubName, int refrigStatus, Date refrigSubmitDate,
@@ -131,7 +132,7 @@ public class CostEstimate {
 						int profitSubName, int profitStatus, Date profitSubmitDate, double profitCost, String profitScope, String profitNotes,
 						int taxesProposalReq, int taxesSubName, int taxesStatus, Date taxesSubmitDate, double taxesCost, String taxesScope,
 						String taxesNotes, int totalProposalReq, int totalSubName, int totalStatus, Date totalSubmitDate, double totalCost,
-						String totalScope, String totalNotes)
+						String totalScope, String totalNotes, int project)
 	{
 		this.project_id = proj;
 		this.genConProposalReq = genConProposalReq;
@@ -232,6 +233,7 @@ public class CostEstimate {
 		this.totalCost = totalCost;
 		this.totalScope = totalScope;
 		this.totalNotes = totalNotes;			
+		this.proj = project;
 	}
 	
 	public CostEstimate()
@@ -335,6 +337,7 @@ public class CostEstimate {
 		this.totalCost = 0.0;
 		this.totalScope = null;
 		this.totalNotes = null;		
+		this.proj = 0;
 	}
 
 
@@ -346,6 +349,18 @@ public class CostEstimate {
 	public synchronized void setProject(Long project)
 	{
 		this.project_id = project;
+	}
+
+	
+
+	public synchronized int getProj()
+	{
+		return proj;
+	}
+	
+	public synchronized void setProj(int project)
+	{
+		this.proj = project;
 	}
 	
 	public synchronized int getGenConProposalReq()

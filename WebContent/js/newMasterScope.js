@@ -20,6 +20,8 @@ function getMasterScopes()
 		}, complete: function (data) {
 			console.log("data", data.responseJSON);
 			var dat = data.responseJSON;
+			clearScopeTab();
+			addNewScopeDropdown();
 			for(var i = 0; i < dat.length; i++)
 			{
 				var json = dat[i];
@@ -32,6 +34,28 @@ function getMasterScopes()
 		}
 	
 	});
+}
+
+function addNewScopeDropdown()
+{
+	var d = document.createDocumentFragment();
+	
+	var newli = document.createElement("li");
+	var newa = document.createElement("a");
+	newa.innerHTML = "New Master Scope";
+	newa.setAttribute("href", "newMasterScope.html");
+	newa.setAttribute("onmouseover", "style='background-color: rgb(42, 112, 224); color: white'");
+	newa.setAttribute("onmouseout", "style='background-color: none;'");
+	
+	newli.appendChild(newa);
+	d.appendChild(newli);
+
+	$('#dropdown').append(d);
+}
+
+function clearScopeTab()
+{
+	$('#dropdown').find('li').remove();
 }
 
 function fillNavScopeDropdowns(data)
@@ -48,10 +72,12 @@ function fillNavScopeDropdowns(data)
 		a.setAttribute("href", "masterScope.html?projItem=" + data[i].id);
 		a.setAttribute("onmouseover", "style='background-color: rgb(42, 112, 224); color: white'");
 		a.setAttribute("onmouseout", "style='background-color: none;'");
+		
 		li.appendChild(a);
 		d.appendChild(li);
 	}
-
+	
+	
 	$('#dropdown').append(d);
 	
 }
@@ -225,6 +251,7 @@ function saveMasterScope()
 		}, complete: function (data) {
 			console.log(data);
 			alert('Save Complete!');
+			getMasterScopes();
 		}, error: function (data) {
 			alert("error!");
 		}

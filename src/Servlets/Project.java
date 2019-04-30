@@ -578,6 +578,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("getProjCostEst")) 
+		{
+			System.out.println("GET cost est");
+			try 
+			{
+				response = ProjectObjectService.getSpecCostEst(Integer.parseInt(parameters.get("id")));
+				System.out.println("project: " + response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("getProjectItem")) 
 		{
 			System.out.println("GET spec projectItem");
