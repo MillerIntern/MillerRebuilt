@@ -1228,6 +1228,24 @@ public class ProjectObjectService
 		
 	}
 	
+	public synchronized static String getSpecProjMasterScope(Long id)
+	{
+		System.out.println("getting proj item");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+	
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ProjectMasterScope where projId = " + id );
+        @SuppressWarnings("unchecked")
+		
+		List<Object> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+	}
+	
 	public synchronized static String getSpecCostEst(int id)
 	{
 		System.out.println("getting cost est");

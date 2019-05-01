@@ -3157,6 +3157,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				getProjCostEstimate(stopServerCalls)
 				getProjSpecScopes(stopServerCalls);
 				getSpecMasterScope(item);
+				getSpecProjMasterScope(stopServerCalls);
 			}, error: function (data) {
 				alert('Server Error!');
 				console.log(data);
@@ -4374,6 +4375,8 @@ function fillTaskWell(source) {
 }
 
 
+// js for cost estimate tab
+
 let costEstData;
 
 $(document).ready(function(){
@@ -5316,6 +5319,8 @@ function fillCostEstOverview(data)
 	
 }
 
+// js for proj spec scope
+
 var SCOPE_ID;
 var edit_PROJ_SCOPE;
 
@@ -5553,6 +5558,8 @@ function setProjSpecScopeTitle()
 	span.innerHTML = '' + PROJECT_DATA.projectItem.name + ' : Project Specific Scope';
 }
 
+// js for Master Scope 
+
 
 let masterScopeData;
 
@@ -5611,6 +5618,7 @@ function removeQuantityDropdowns()
 	$("#projectMasterScope").find("#quantity8").hide();
 	$("#projectMasterScope").find("#quantity9").hide();
 	$("#projectMasterScope").find("#quantity10").hide();
+	$("#projectMasterScope").find(".quan").hide();
 }
 
 function addQuantityDropdowns(data)
@@ -5619,54 +5627,113 @@ function addQuantityDropdowns(data)
 	console.log("fix quantity dropdowns", data);
 	
 	if(data.quantity1 == "1")
-		$("#projectMasterScope").find("#quantity1").show();
+	{	$("#projectMasterScope").find("#quantity1").show();
+	    $("#projectMasterScope").find("#quan1").show();
+	}    
 	else
+	{	
 		$("#projectMasterScope").find("#quantity1").hide();
+		$("#projectMasterScope").find("#quan1").hide();
+	}
 	
 	if(data.quantity2 == "1")
+	{	
 		$("#projectMasterScope").find("#quantity2").show();
+		$("#projectMasterScope").find("#quan2").show();
+	}
 	else
+	{	
 		$("#projectMasterScope").find("#quantity2").hide();
+		$("#projectMasterScope").find("#quan2").hide();
+	}
 	
 	if(data.quantity3 == "1")
+	{
 		$("#projectMasterScope").find("#quantity3").show();
+		$("#projectMasterScope").find("#quan3").show();
+	}
 	else
+	{	
 		$("#projectMasterScope").find("#quantity3").hide();
+		$("#projectMasterScope").find("#quan3").hide();
+	}
 	
 	if(data.quantity4 == "1")
+	{	
 		$("#projectMasterScope").find("#quantity4").show();
+		$("#projectMasterScope").find("#quan4").show();
+	}
 	else 
+	{
 		$("#projectMasterScope").find("#quantity4").hide();
+		$("#projectMasterScope").find("#quan4").hide();
+	}
 	
 	if(data.quantity5 == "1")
+	{	
 		$("#projectMasterScope").find("#quantity5").show();
+		$("#projectMasterScope").find("#quan5").show();
+	}
 	else
+	{	
 		$("#projectMasterScope").find("#quantity5").hide();
+		$("#projectMasterScope").find("#quan5").hide();
+	}
 	
 	if(data.quantity6 == "1")
+	{
 		$("#projectMasterScope").find("#quantity6").show();
+		$("#projectMasterScope").find("#quan6").show();
+	}
 	else
+	{	
 		$("#projectMasterScope").find("#quantity6").hide();
+		$("#projectMasterScope").find("#quan6").hide();
+	}
 	
 	if(data.quantity7 == "1")
+	{	
 		$("#projectMasterScope").find("#quantity7").show();
+		$("#projectMasterScope").find("#quan7").show();
+	}
 	else
+	{	
 		$("#projectMasterScope").find("#quantity7").hide();
+		$("#projectMasterScope").find("#quan7").hide();
+	}
 	
 	if(data.quantity8 == "1")
+	{
 		$("#projectMasterScope").find("#quantity8").show();
+		$("#projectMasterScope").find("#quan8").show();
+	}
 	else
+    {
 		$("#projectMasterScope").find("#quantity8").hide();
+		$("#projectMasterScope").find("#quan8").hide();
+    }	
 	
 	if(data.quantity9 == "1")
+	{
 		$("#projectMasterScope").find("#quantity9").show();
+		$("#projectMasterScope").find("#quan9").show();
+	}
 	else
+	{
 		$("#projectMasterScope").find("#quantity9").hide();
+		$("#projectMasterScope").find("#quan9").hide();
+	}	
 	
 	if(data.quantity10 == "1")
+	{
 		$("#projectMasterScope").find("#quantity10").show();
+		$("#projectMasterScope").find("#quan10").show();
+	}
 	else 
+	{
 		$("#projectMasterScope").find("#quantity10").hide();
+		$("#projectMasterScope").find("#quan10").hide();
+	}	
 }
 
 function clearProjMasterScope()
@@ -5832,7 +5899,6 @@ function saveProjMasterScope()
 	var q8 = $("#projectMasterScope").find("#quantity8").val();
 	var q9 = $("#projectMasterScope").find("#quantity9").val();
 	var q10 = $("#projectMasterScope").find("#quantity10").val();
-	console.log(q1,q5,q8);
 	
 	$.ajax({
 		type: 'POST',
@@ -5878,6 +5944,110 @@ function saveProjMasterScope()
 	});
 }
 
+
+function convertItems(data)
+{
+	if(data == "true")
+		return true;
+	else 
+		return false;
+}
+
+function convertNA(data)
+{
+	if(data == "0")
+		return "default"
+	else
+		return data;
+}
+
+function fillChecksAndDropdowns(data)
+{
+	data = data[0];
+	console.log("fix checks and dropdowns", data.item1);
+	
+	$("#projectMasterScope").find("#item1check").prop('checked', convertItems(data.item1));
+	$("#projectMasterScope").find("#item2check").prop('checked', convertItems(data.item2));
+	$("#projectMasterScope").find("#item3check").prop('checked', convertItems(data.item3));
+	$("#projectMasterScope").find("#item4check").prop('checked', convertItems(data.item4));
+	$("#projectMasterScope").find("#item5check").prop('checked', convertItems(data.item5));
+	$("#projectMasterScope").find("#item6check").prop('checked', convertItems(data.item6));
+	$("#projectMasterScope").find("#item7check").prop('checked', convertItems(data.item7));
+	$("#projectMasterScope").find("#item8check").prop('checked', convertItems(data.item8));
+	$("#projectMasterScope").find("#item9check").prop('checked', convertItems(data.item9));
+	$("#projectMasterScope").find("#item10check").prop('checked', convertItems(data.item10));
+	
+	$("#projectMasterScope").find("#quantity1").val(convertNA(data.quantity1));
+	$("#projectMasterScope").find("#quantity2").val(convertNA(data.quantity2));
+	$("#projectMasterScope").find("#quantity3").val(convertNA(data.quantity3));
+	$("#projectMasterScope").find("#quantity4").val(convertNA(data.quantity4));
+	$("#projectMasterScope").find("#quantity5").val(convertNA(data.quantity5));
+	$("#projectMasterScope").find("#quantity6").val(convertNA(data.quantity6));
+	$("#projectMasterScope").find("#quantity7").val(convertNA(data.quantity7));
+	$("#projectMasterScope").find("#quantity8").val(convertNA(data.quantity8));
+	$("#projectMasterScope").find("#quantity9").val(convertNA(data.quantity9));
+	$("#projectMasterScope").find("#quantity10").val(convertNA(data.quantity10));
+}
+
+function clearChecksAndDropdowns()
+{	
+	$("#projectMasterScope").find("#item1check").prop('checked', false);
+	$("#projectMasterScope").find("#item2check").prop('checked', false);
+	$("#projectMasterScope").find("#item3check").prop('checked', false);
+	$("#projectMasterScope").find("#item4check").prop('checked', false);
+	$("#projectMasterScope").find("#item5check").prop('checked', false);
+	$("#projectMasterScope").find("#item6check").prop('checked', false);
+	$("#projectMasterScope").find("#item7check").prop('checked', false);
+	$("#projectMasterScope").find("#item8check").prop('checked', false);
+	$("#projectMasterScope").find("#item9check").prop('checked', false);
+	$("#projectMasterScope").find("#item10check").prop('checked', false);
+	
+	$("#projectMasterScope").find("#quantity1").val("default");
+	$("#projectMasterScope").find("#quantity2").val("default");
+	$("#projectMasterScope").find("#quantity3").val("default");
+	$("#projectMasterScope").find("#quantity4").val("default");
+	$("#projectMasterScope").find("#quantity5").val("default");
+	$("#projectMasterScope").find("#quantity6").val("default");
+	$("#projectMasterScope").find("#quantity7").val("default");
+	$("#projectMasterScope").find("#quantity8").val("default");
+	$("#projectMasterScope").find("#quantity9").val("default");
+	$("#projectMasterScope").find("#quantity10").val("default");
+}
+
+function getSpecProjMasterScope(stopServerCalls)
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSpecProjMasterScope',
+			'id': projectID
+		
+		}, complete: function (data) {
+			console.log("proj master scope: ", data.responseJSON);
+			
+			if(data.responseJSON.length > 0)
+			{
+				fillChecksAndDropdowns(data.responseJSON);
+			}
+			else
+			{
+				clearChecksAndDropdowns();
+			}
+			
+			if(!stopServerCalls)
+				getUserData();
+			
+		}, error: function (data) {
+			alert("error!");
+			console.log("data", data);
+		}
+	
+	});
+}
+
+// javascript for Scorecard tab
 
 function editScorecard (source_id)
 {
@@ -7306,6 +7476,7 @@ function getMasterScopes()
 		}, complete: function (data) {
 			console.log("data", data.responseJSON);
 			var dat = data.responseJSON;
+			
 			for(var i = 0; i < dat.length; i++)
 			{
 				var json = dat[i];

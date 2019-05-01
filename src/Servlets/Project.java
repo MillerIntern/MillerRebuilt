@@ -589,6 +589,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("getSpecProjMasterScope")) 
+		{
+			System.out.println("GET spec proj master scopes");
+			try 
+			{
+				response = ProjectObjectService.getSpecProjMasterScope(Long.parseLong(parameters.get("id")));
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("getProjCostEst")) 
 		{
 			System.out.println("GET cost est");
