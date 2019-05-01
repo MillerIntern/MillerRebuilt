@@ -1228,6 +1228,25 @@ public class ProjectObjectService
 		
 	}
 	
+	public synchronized static String getSpecProjScope(Long id)
+	{
+		System.out.println("getting proj item");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+	
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ProjectSpecScope where itemNum = " + id );
+        @SuppressWarnings("unchecked")
+		
+		List<Object> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+		
+	}
+	
 	public synchronized static String getSpecProjMasterScope(Long id)
 	{
 		System.out.println("getting proj item");
@@ -1265,37 +1284,54 @@ public class ProjectObjectService
 	}
 	
 	
-	public synchronized static String deleteMasterScope(int projItem, String domain) throws ClassNotFoundException
+	public synchronized static String deleteMasterScope(int projItem) throws ClassNotFoundException
 	{
 		String success = "DELETED";
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-		Class<?> c = Class.forName("projectObjects."+domain);
-	//	session.createQuery("delete from " + domain + " where projItem =" + projItem);
-	   System.out.println("ATTEMPTING TO DELETE " + projItem);
-		
-		//Attempt to delete the object
-		try
-		{
-			ProjectObject oldObject2 = (ProjectObject) session.get(c, projItem);
-			//System.out.println("ID = " + oldObject2.getId());
-
-		    Object o = session.get(c, projItem); 
-		    session.delete(oldObject2); 
-		    System.out.println("hi");
-		    tx.commit();
-		    System.out.println("hello");
-		    success = "PROJECT_OBJECT_DELETED";
-		}
-		catch (Exception e) 
-		{
-			System.out.println(e.getMessage());
-			if (tx!=null) tx.rollback();
-			System.out.println("NOTHING WENT WRONG - kind of");
-		}
+	//	Class<?> c = Class.forName("projectObjects."+domain);
+	    Query q = session.createQuery("delete from MasterScope where projItem =" + projItem);
+	    q.executeUpdate();
+	    System.out.println("ATTEMPTING TO DELETE " + projItem);
+		tx.commit();
+//		//Attempt to delete the object
+//		try
+//		{
+//			ProjectObject oldObject2 = (ProjectObject) session.get(c, projItem);
+//			//System.out.println("ID = " + oldObject2.getId());
+//
+//		    Object o = session.get(c, projItem); 
+//		    session.delete(oldObject2); 
+//		    System.out.println("hi");
+//		    tx.commit();
+//		    System.out.println("hello");
+//		    success = "PROJECT_OBJECT_DELETED";
+//		}
+//		catch (Exception e) 
+//		{
+//			System.out.println(e.getMessage());
+//			if (tx!=null) tx.rollback();
+//			System.out.println("NOTHING WENT WRONG - kind of");
+//		}
 		
 		
 		return success;
 	}
 	
+
+	public synchronized static String deleteProjSpecScope(int item) throws ClassNotFoundException
+	{
+		String success = "DELETED";
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+	
+	    Query q = session.createQuery("delete from ProjectSpecScope where itemNum =" + item);
+	    q.executeUpdate();
+	    System.out.println("ATTEMPTING TO DELETE " + item);
+		tx.commit();
+		
+		return success;
+	}
+
 }
+

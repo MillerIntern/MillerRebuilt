@@ -431,19 +431,128 @@
 		
 	  <div class='info-tab info-tab-smart-system' id='smartSystem'>
 	       <div id="smartProjectComparison">
-                <p>smart project comparison</p>
+                <table id="costEstTableO" border="1" style="border-color:#d1cec5; border-left-color: transparent; border-right-color: transparent; border-bottom-color:#fcfaf5" class='table table-hover table-striped' ondblclick="editCostEstimate()">
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th style="width: 15%; text-align: center"></th>
+						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
+						<th style="width: 17%; text-align: center" id="currentProj"></th>
+						<th style="width: 17%; text-align: center" id="comp1"></th>
+						<th style="width: 17%; text-align: center" id="comp2"></th>
+						<th style="width: 17%; text-align: center" id="comp3"></th>
+						<th style="width: 17%; text-align: center" id="comp4"></th>
+					</tr>
+				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">General Construction</th>
+						<td align="center" id='genConProposal' class="italics costEstTableData"></td>
+						<td align="center" id='genConSub' class ="italics costEstTableData"></td>
+						<td align="center" id='genConCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='genConSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='genConScope' class ="italics costEstTableData"></td>
+						<td align="center" id='genConNotesO' class ="italics costEstTableData"></td>
+					</tr>
+				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Refrigeration</th>
+						<td align="center" id='refrigProposal' class="italics costEstTableData"></td>
+						<td align="center" id='refrigSub' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='refrigScope' class ="italics costEstTableData"></td>
+						<td align="center" id='refrigNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Mechanical</th>
+						<td align="center" id='mechanicalProposal' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='mechanicalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='mechanicalNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Electrical</th>
+						<td align="center" id='electricalProposal' class="italics costEstTableData"></td>
+						<td align="center" id='electricalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='electricalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='electricalNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Plumbing</th>
+						<td align="center" id='plumbingProposal' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingSub' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='plumbingScope' class ="italics costEstTableData"></td>
+						<td align="center" id='plumbingNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Gas</th>
+						<td align="center" id='gasProposal' class="italics costEstTableData"></td>
+						<td align="center" id='gasSub' class ="italics costEstTableData"></td>
+						<td align="center" id='gasCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='gasSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='gasScope' class ="italics costEstTableData"></td>
+						<td align="center" id='gasNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Sprinkler</th>
+						<td align="center" id='sprinklerProposal' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSub' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='sprinklerScope' class ="italics costEstTableData"></td>
+						<td align="center" id='sprinklerNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Fire Alarm</th>
+						<td align="center" id='fireAlarmProposal' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSub' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmScope' class ="italics costEstTableData"></td>
+						<td align="center" id='fireAlarmNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Carpenter</th>
+						<td align="center" id='carpenterProposal' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterSub' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterCostO' class ="italics costEstTableData"></td>	
+						<td align="center" id='carpenterSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='carpenterScope' class ="italics costEstTableData"></td>
+						<td align="center" id='carpenterNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th class = "bold">Equipment</th>
+						<td align="center" id='equipmentProposal' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentSub' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='equipmentScope' class ="italics costEstTableData"></td>
+						<td align="center" id='equipmentNotesO' class ="italics costEstTableData"></td>
+					</tr>
+					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
+						<th style="font-size:18px" class = "bold">Total</th>
+						<td align="center" id='totalProposal' class="italics costEstTableData"></td>
+						<td align="center" id='totalSub' class ="italics costEstTableData"></td>
+						<td align="center" id='totalCostO' class ="italics costEstTableData"></td>
+						<td align="center" id='totalSubmit' class="italics costEstTableData"></td>
+						<td align="center" id='totalScope' class ="italics costEstTableData"></td>
+						<td align="center" id='totalNotesO' class ="italics costEstTableData"></td>
+					</tr>
+				</table>	
 			</div>				
 		</div> 	
 		
-		<div class='info-tab info-tab-project-scope' style="width: 80%" id='projectScope'>
-	       <div id="projectMasterScope">
+		<div class='info-tab info-tab-project-scope' style="width: 88%" id='projectScope'>
+	       <div id="projectMasterScope" style="width:100%">
 	          <div style="text-align: center">
 	            <span style="font-size:20px" id="masterScopeProjectTitle">: Master Scope</span>
 	            </div>
 	            <br>
-	            <p style="font-size: 14px">Item  (Check where applicable)</p>
+	            <p style="font-size: 14.5px">Item  (Check where applicable)</p>
 	            <div class="masterScopeTable">
-                <table style="font-size: 14px">
+                <table style="font-size: 14.5px">
                 	<tbody>
      
                 		<tr>
@@ -664,7 +773,7 @@
                 <button id="goToProjSpecScope" type="button" class="btn edit-submit" onclick="goToProjSpecScope()">Go to Project Specific Scope </button>
 			</div>				
 			
-			<div id="projectSpecificScope" style="display: none" class="active">
+			<div id="projectSpecificScope" style="display: none; width:100%" class="active">
 			   <div style="text-align:center">
 			    <span style="font-size:20px"  id="specificScopeProjectTitle">: Project Specific Scope</span>
 			    </div>
@@ -683,6 +792,7 @@
 				</table>
                 <button id="addProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope(0)">Add new Project Specific Scope</button>
                 <button id="editProjSpecScope" type="button" class="btn edit-submit" onclick="goToNewProjScope(1)"  disabled>Edit Project Specific Scope</button>
+                <button id="deleteProjSpecScope" type="button" class="btn btn-danger" onclick="removeProjScope()" disabled>Delete Project Specific Scope</button>
                 <button id="printBothScopes" type="button" class="btn project-edit">Print All Scopes </button>
                 <button id="goToProjMasterScope" type="button" class="btn edit-submit" onclick="goToProjMasterScope()">Go to Project Master Scope </button>
 			</div>
@@ -2882,13 +2992,7 @@
 </div>
 
 
-<div id = 'smartSystemData' class ='editProject'>
-	
-	<div class="container">
-		
-	    
-	 </div>
-</div>
+
 
 
 <!--  

@@ -589,6 +589,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("getSpecProjScope")) 
+		{
+			System.out.println("GET spec proj scopes");
+			try 
+			{
+				response = ProjectObjectService.getSpecProjScope(Long.parseLong(parameters.get("id")));
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("getSpecProjMasterScope")) 
 		{
 			System.out.println("GET spec proj master scopes");
@@ -668,7 +680,19 @@ public class Project extends HttpServlet
 			
 			try {
 				Gson gson = new Gson();
-				response = ProjectObjectService.deleteMasterScope(Integer.parseInt(parameters.get("id")), "MasterScope");
+				response = ProjectObjectService.deleteMasterScope(Integer.parseInt(parameters.get("id")));
+				response = gson.toJson(response);
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(action.equals("deleteProjSpecScope"))
+		{
+			System.out.println("deleting a proj spec scope");
+			
+			try {
+				Gson gson = new Gson();
+				response = ProjectObjectService.deleteProjSpecScope(Integer.parseInt(parameters.get("id")));
 				response = gson.toJson(response);
 			} catch (NumberFormatException | ClassNotFoundException e) {
 				e.printStackTrace();

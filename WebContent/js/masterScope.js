@@ -182,9 +182,9 @@ function deleteMasterScope()
 			'id': scopeID
 		
 		}, complete: function (data) {
-			alert("scope deleted");
+			alert("Master Scope deleted");
 			console.log("projItem: ", data.responseJSON);
-			//getMasterScopes();
+			window.location.href = "newMasterScope.html";
 		}, error: function (data) {
 			alert("error!");
 			console.log("data", data);

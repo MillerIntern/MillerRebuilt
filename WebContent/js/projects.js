@@ -4374,8 +4374,9 @@ function fillTaskWell(source) {
 		
 }
 
-
+////////////////////////////////////////////////////////////////////
 // js for cost estimate tab
+////////////////////////////////////////////////////////////////////
 
 let costEstData;
 
@@ -5319,10 +5320,17 @@ function fillCostEstOverview(data)
 	
 }
 
-// js for proj spec scope
+////////////////////////////////////////////////////////////////////////////
+// js for cost comparison 
+///////////////////////////////////////////////////////////////////////////////
 
-var SCOPE_ID;
-var edit_PROJ_SCOPE;
+
+//////////////////////////////////////////////////////////////////////////////
+// js for proj spec scope
+//////////////////////////////////////////////////////////////////////////////
+
+let SCOPE_ID;
+let edit_PROJ_SCOPE;
 
 function goToProjSpecScope() {
 	console.log("go to proj spec scope");
@@ -5349,13 +5357,13 @@ function goToNewProjScope(edit)
 	$('#newProjSpecScope').show();
 	
 	console.log("EDIT = ", edit);
-	if(edit == 0) {
+	if(edit == 0 && SCOPE_ID == undefined) {
 		edit_PROJ_SCOPE = 'false';		
 	}
 	else {
 		edit_PROJ_SCOPE = 'true';
-		getProjSpecScopes();
 	}
+	console.log(edit_PROJ_SCOPE);
 }
 
 function goToProjectSpecScope()
@@ -5463,23 +5471,74 @@ function toggleProjSpecScope (source) {
 	$(source).siblings().css('background-color', 'white');
 	$(source).css('background-color', '#dddddd');
 	$('#editProjSpecScope').prop('disabled', false);
+	$('#deleteProjSpecScope').prop('disabled', false);
 	var selectedScope = $(source).attr('value');
 	console.log(selectedScope);
 	SCOPE_ID = selectedScope;
+	editProjSpecScope(SCOPE_ID);
 }
 
 function editProjSpecScope(source) {
 	console.log(source);
+    getSpecProjScope(source);
+}
 
-	fillProjSpecScopeForm();
+function removeProjScope( )
+{
+	deleteProjScope(SCOPE_ID);
+}
+
+function deleteProjScope(source)
+{
+	console.log(source);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'deleteProjSpecScope',
+			'id': source
+		
+		}, complete: function (data) {
+			alert("Project Specific Scope deleted!");
+			console.log("projspecscope: ", data.responseJSON);
+			getProjSpecScopes(1)
+		}, error: function (data) {
+			alert("error!");
+			console.log("data", data);
+		}
+	
+	});
+}
+
+function getSpecProjScope(item)
+{
+	console.log("get scope", item);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSpecProjScope',
+			'id': item
+		}, success: function (data) {
+			console.log("scope:", data);
+
+			fillProjSpecScopeForm(data);
+			
+		}, error: function (data) {
+			alert('Server Error!');
+		}
+	});
 }
 
 function fillProjSpecScopeForm(data)
 {
-	console.log("EDIT == ", edit_PROJ_SCOPE);
-	console.log(data[0].item);
+	console.log(data[0].itemNum);
 	
-	$('#newProjSpecScope').find("#scopeItemNum").val(data[0].item);
+	$('#newProjSpecScope').find("#scopeItemNum").val(data[0].itemNum);
 	$('#newProjSpecScope').find("#scopeTitle").val(data[0].title);
 	$('#newProjSpecScope').find("#scopeDes").val(data[0].description);
 	$('#newProjSpecScope').find("#scopeSubNames").val(data[0].subNames);
@@ -5558,8 +5617,9 @@ function setProjSpecScopeTitle()
 	span.innerHTML = '' + PROJECT_DATA.projectItem.name + ' : Project Specific Scope';
 }
 
+////////////////////////////////////////////////////////////////////
 // js for Master Scope 
-
+/////////////////////////////////////////////////////////////////////
 
 let masterScopeData;
 
@@ -6047,8 +6107,9 @@ function getSpecProjMasterScope(stopServerCalls)
 	});
 }
 
+////////////////////////////////////////////////////////////////////
 // javascript for Scorecard tab
-
+////////////////////////////////////////////////////////////////////
 function editScorecard (source_id)
 {
 	document.getElementById("projectManager").style.display = 'none';
