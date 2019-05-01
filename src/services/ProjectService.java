@@ -705,13 +705,13 @@ public class ProjectService extends ProjectObjectService
 	}
 
 	
-	public synchronized static String editCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	public synchronized static String addCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
 		System.out.println("In Edit cost est:");
-
+		
 		CostEstimate ce = new CostEstimate();
 		CostEstimateFiller.fillCostEstimate(ce, params);
-		ProjectObjectService.addObject("CostEstimate", ce);
+        ProjectObjectService.addObject("CostEstimate", ce);
 		
 		return "edit Cost Estimate";
 		

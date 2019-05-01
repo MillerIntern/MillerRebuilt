@@ -411,12 +411,12 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
-		else if(action.equals("editCostEstimate"))
+		else if(action.equals("addCostEstimate"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
 			try
 			{
-			ProjectService.editCostEstimate(projectID, parameters);
+			ProjectService.addCostEstimate(projectID, parameters);
 			}
 			catch(ClassNotFoundException | ParseException e) 
 			{

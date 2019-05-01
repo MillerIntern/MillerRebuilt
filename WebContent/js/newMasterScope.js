@@ -252,9 +252,12 @@ function saveMasterScope()
 			console.log(data);
 			alert('Save Complete!');
 			getMasterScopes();
+			var loc = "masterScope.html?projItem=" + projectItem;
+			console.log(loc);
+			window.location.href = loc;
 		}, error: function (data) {
-			alert("error!");
 		}
 		
 	});
 }
+

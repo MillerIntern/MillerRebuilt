@@ -44,6 +44,7 @@ import projectObjects.ProjectObject;
 import projectObjects.Status;
 import projectObjects.Task;
 import projectObjects.ChangeOrder;
+import projectObjects.CostEstimate;
 
 import java.util.Set;
 
@@ -856,6 +857,29 @@ public class ProjectObjectService
 		return id;
 	}
 	
+	public synchronized static long editCostEst(String domain, Long id, CostEstimate newObject,  int i2) throws ClassNotFoundException, NonUniqueObjectException
+	{
+		
+		//Get session and start transaction
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+				
+		//Get object from database
+		Class<?> c = Class.forName("projectObjects."+domain);
+		
+		ProjectObject oldObject2 = (ProjectObject) session.get(c, id);
+		
+		//Copy fields of new object into old object, but keep the id
+		//newObject.setId(id);
+		//System.out.println(newObject + " " + oldObject2);
+		copyFieldByField(newObject, oldObject2, i2);
+				
+		session.saveOrUpdate(oldObject2);
+		tx.commit();
+
+		return id;
+	}
+	
 	public synchronized static void editProjectScores(List<Project> newObjects,  int i2) throws ClassNotFoundException, NonUniqueObjectException
 	{
 		
@@ -1000,6 +1024,7 @@ public class ProjectObjectService
 		Field[] fields = klass.getDeclaredFields();
 		for (Field f : fields) 
 		{
+			System.out.println(f.toString());
 			/*
 			 * I Don't know what this does, but it works...
 			 */
@@ -1010,7 +1035,7 @@ public class ProjectObjectService
 			{
 				if(i2!=2 || !f.toString().contains("SalvageV"))
 				{
-					//System.out.println("class: " + " " + src.getClass() +" Field: "  + f);
+					System.out.println("class: " + " " + src.getClass() +" Field: "  + f);
 					f.setAccessible(true);
 					copyFieldValue(src, dest, f);
 				}
@@ -1040,7 +1065,8 @@ public class ProjectObjectService
 		{
 			//if src is of the Inspection object slip
 			Object value = f.get(src);
-			//System.out.println(f);
+			System.out.println(value.toString());
+			System.out.println(dest.toString());
 			f.set(dest, value);
 			
 				
@@ -1194,7 +1220,7 @@ public class ProjectObjectService
         Query q = session.createQuery("from MasterScope where projItem = " + id );
         @SuppressWarnings("unchecked")
 		
-		List<projectObjects.MasterScope> list = q.list();
+		List<Object> list = q.list();
    
         tx.commit();
         
