@@ -5383,7 +5383,7 @@ function saveProjSpecScope()
 	   console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
 	   alert("Server Error! (Edit Change Order)");
 	   return;
-	}
+   }
   
 	$.ajax({
 			type: 'POST',
@@ -5553,6 +5553,9 @@ function setProjSpecScopeTitle()
 	span.innerHTML = '' + PROJECT_DATA.projectItem.name + ' : Project Specific Scope';
 }
 
+
+let masterScopeData;
+
 function setMasterScopeTitle()
 {
 	var span = document.getElementById('masterScopeProjectTitle');
@@ -5571,17 +5574,21 @@ function getSpecMasterScope(id)
 		
 		}, complete: function (data) {
 			console.log("master scope: ", data.responseJSON);
+			masterScopeData = data.responseJSON;
 			clearProjMasterScope();
 			setMasterScopeTitle();
 			
 			if(data.responseJSON.length > 0)
 			{
-				addCheckBoxes();
+				addCheckBoxes(data.responseJSON);
 				fillProjMasterScope(data.responseJSON);
+				addQuantityDropdowns(data.responseJSON);
 			}
 			else 
+			{	
 				removeCheckBoxes();	
-			
+				removeQuantityDropdowns();
+			}
 		}, error: function (data) {
 			alert("error!");
 			console.log("data", data);
@@ -5591,6 +5598,76 @@ function getSpecMasterScope(id)
 
 }
 
+
+function removeQuantityDropdowns()
+{
+	$("#projectMasterScope").find("#quantity1").hide();
+	$("#projectMasterScope").find("#quantity2").hide();
+	$("#projectMasterScope").find("#quantity3").hide();
+	$("#projectMasterScope").find("#quantity4").hide();
+	$("#projectMasterScope").find("#quantity5").hide();
+	$("#projectMasterScope").find("#quantity6").hide();
+	$("#projectMasterScope").find("#quantity7").hide();
+	$("#projectMasterScope").find("#quantity8").hide();
+	$("#projectMasterScope").find("#quantity9").hide();
+	$("#projectMasterScope").find("#quantity10").hide();
+}
+
+function addQuantityDropdowns(data)
+{
+	data = data[0];
+	console.log("fix quantity dropdowns", data);
+	
+	if(data.quantity1 == "1")
+		$("#projectMasterScope").find("#quantity1").show();
+	else
+		$("#projectMasterScope").find("#quantity1").hide();
+	
+	if(data.quantity2 == "1")
+		$("#projectMasterScope").find("#quantity2").show();
+	else
+		$("#projectMasterScope").find("#quantity2").hide();
+	
+	if(data.quantity3 == "1")
+		$("#projectMasterScope").find("#quantity3").show();
+	else
+		$("#projectMasterScope").find("#quantity3").hide();
+	
+	if(data.quantity4 == "1")
+		$("#projectMasterScope").find("#quantity4").show();
+	else 
+		$("#projectMasterScope").find("#quantity4").hide();
+	
+	if(data.quantity5 == "1")
+		$("#projectMasterScope").find("#quantity5").show();
+	else
+		$("#projectMasterScope").find("#quantity5").hide();
+	
+	if(data.quantity6 == "1")
+		$("#projectMasterScope").find("#quantity6").show();
+	else
+		$("#projectMasterScope").find("#quantity6").hide();
+	
+	if(data.quantity7 == "1")
+		$("#projectMasterScope").find("#quantity7").show();
+	else
+		$("#projectMasterScope").find("#quantity7").hide();
+	
+	if(data.quantity8 == "1")
+		$("#projectMasterScope").find("#quantity8").show();
+	else
+		$("#projectMasterScope").find("#quantity8").hide();
+	
+	if(data.quantity9 == "1")
+		$("#projectMasterScope").find("#quantity9").show();
+	else
+		$("#projectMasterScope").find("#quantity9").hide();
+	
+	if(data.quantity10 == "1")
+		$("#projectMasterScope").find("#quantity10").show();
+	else 
+		$("#projectMasterScope").find("#quantity10").hide();
+}
 
 function clearProjMasterScope()
 {
@@ -5626,18 +5703,60 @@ function clearProjMasterScope()
 }
 
 
-function addCheckBoxes()
+function addCheckBoxes(data)
 {
-	$("#projectMasterScope").find("#item1check").show();
-	$("#projectMasterScope").find("#item2check").show();
-	$("#projectMasterScope").find("#item3check").show();
-	$("#projectMasterScope").find("#item4check").show();
-	$("#projectMasterScope").find("#item5check").show();
-	$("#projectMasterScope").find("#item6check").show();
-	$("#projectMasterScope").find("#item7check").show();
-	$("#projectMasterScope").find("#item8check").show();
-	$("#projectMasterScope").find("#item9check").show();
-	$("#projectMasterScope").find("#item10check").show();
+	data = data[0];
+	console.log("fix check boxes", data);
+	
+	if(data.item1 != "")
+		$("#projectMasterScope").find("#item1check").show();
+	else
+		$("#projectMasterScope").find("#item1check").hide();
+	
+	if(data.item2 != "")
+		$("#projectMasterScope").find("#item2check").show();
+	else
+		$("#projectMasterScope").find("#item2check").hide();
+	
+	if(data.item3 != "")
+		$("#projectMasterScope").find("#item3check").show();
+	else
+		$("#projectMasterScope").find("#item3check").hide();
+	
+	if(data.item4 != "")
+		$("#projectMasterScope").find("#item4check").show();
+	else 
+		$("#projectMasterScope").find("#item4check").hide();
+	
+	if(data.item5 != "")
+		$("#projectMasterScope").find("#item5check").show();
+	else
+		$("#projectMasterScope").find("#item5check").hide();
+	
+	if(data.item6 != "")
+		$("#projectMasterScope").find("#item6check").show();
+	else
+		$("#projectMasterScope").find("#item6check").hide();
+	
+	if(data.item7 != "")
+		$("#projectMasterScope").find("#item7check").show();
+	else
+		$("#projectMasterScope").find("#item7check").hide();
+	
+	if(data.item8 != "")
+		$("#projectMasterScope").find("#item8check").show();
+	else
+		$("#projectMasterScope").find("#item8check").hide();
+	
+	if(data.item9 != "")
+		$("#projectMasterScope").find("#item9check").show();
+	else
+		$("#projectMasterScope").find("#item9check").hide();
+	
+	if(data.item10 != "")
+		$("#projectMasterScope").find("#item10check").show();
+	else 
+		$("#projectMasterScope").find("#item10check").hide();
 }
 
 function removeCheckBoxes()
@@ -5686,6 +5805,77 @@ function fillProjMasterScope(data)
 	var item10 = document.getElementById('item10');
 	item10.innerHTML = data[0].item10;
 		
+}
+
+function saveProjMasterScope()
+{
+   console.log("save master scope", masterScopeData);
+   
+    var i1 = $("#projectMasterScope").find("#item1check").prop('checked');
+	var i2 = $("#projectMasterScope").find("#item2check").prop('checked');
+	var i3 = $("#projectMasterScope").find("#item3check").prop('checked');
+	var i4 = $("#projectMasterScope").find("#item4check").prop('checked');
+	var i5 = $("#projectMasterScope").find("#item5check").prop('checked');
+	var i6 = $("#projectMasterScope").find("#item6check").prop('checked');
+	var i7 = $("#projectMasterScope").find("#item7check").prop('checked');
+	var i8 = $("#projectMasterScope").find("#item8check").prop('checked');
+	var i9 = $("#projectMasterScope").find("#item9check").prop('checked');
+	var i10 = $("#projectMasterScope").find("#item10check").prop('checked');
+	
+	var q1 = $("#projectMasterScope").find("#quantity1").val();
+	var q2 = $("#projectMasterScope").find("#quantity2").val();
+	var q3 = $("#projectMasterScope").find("#quantity3").val();
+	var q4 = $("#projectMasterScope").find("#quantity4").val();
+	var q5 = $("#projectMasterScope").find("#quantity5").val();
+	var q6 = $("#projectMasterScope").find("#quantity6").val();
+	var q7 = $("#projectMasterScope").find("#quantity7").val();
+	var q8 = $("#projectMasterScope").find("#quantity8").val();
+	var q9 = $("#projectMasterScope").find("#quantity9").val();
+	var q10 = $("#projectMasterScope").find("#quantity10").val();
+	console.log(q1,q5,q8);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data:
+		{
+			'domain': 'project',
+			'action': 'addProjMasterScope',
+			'projectID': projectID,
+			'proj': 0,
+			'projItem': masterScopeData[0].projItem,
+			'i1': i1,
+			'i2': i2,
+			'i3': i3,
+			'i4': i4,
+			'i5': i5,
+			'i6': i6,
+			'i7': i7,
+			'i8': i8,
+			'i9': i9,
+			'i10': i10,
+			'q1': q1,
+			'q2': q2,
+			'q3': q3,
+			'q4': q4,
+			'q5': q5,
+			'q6': q6,
+			'q7': q7,
+			'q8': q8,
+			'q9': q9,
+			'q10': q10,
+			
+		},
+		success:function(data){
+			alert('Saved Project Master Scope');
+			console.log(data);
+		},
+		error: function(data)
+		{
+			alert('Saved Project Master Scope');
+			console.log(data);
+		}
+	});
 }
 
 

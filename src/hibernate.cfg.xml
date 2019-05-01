@@ -58,6 +58,7 @@
         <mapping class="projectObjects.ProjectSpecScope"/>     
         <mapping class="projectObjects.CostEstimate"/> 
         <mapping class="projectObjects.MasterScope"/>
+        <mapping class="projectObjects.ProjectMasterScope"/>
 
     </session-factory>
 

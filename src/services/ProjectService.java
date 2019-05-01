@@ -23,6 +23,7 @@ import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.Permits;
 import projectObjects.Project;
+import projectObjects.ProjectMasterScope;
 import projectObjects.ProjectObject;
 import projectObjects.ProjectRule;
 import projectObjects.ProjectSpecScope;
@@ -44,6 +45,7 @@ import services.helpers.EquipmentFiller;
 import services.helpers.InspectionsFiller;
 import services.helpers.PermitsFiller;
 import services.helpers.ProjectInformationFiller;
+import services.helpers.ProjectMasterScopeFiller;
 import services.helpers.SalvageValueFiller;
 import services.helpers.TaskFiller;
 import services.helpers.SubcontractorFiller;
@@ -989,7 +991,15 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.addObject("MasterScope", sp);
 		
 		return "masterScope ADDED";
+	}
 	
+	public synchronized static String addProjMasterScope( Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		ProjectMasterScope ms  = new ProjectMasterScope();
+		ProjectMasterScopeFiller.fillProjectMasterScope(ms, params);
+		ProjectObjectService.addObject("ProjectMasterScope", ms);
+		
+		return "ProjectMasterScope ADDED";
 	}
 	
 	public synchronized static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException

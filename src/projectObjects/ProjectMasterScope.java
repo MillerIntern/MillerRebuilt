@@ -12,16 +12,16 @@ public class ProjectMasterScope {
 	
 	private int projItem;
 	private Long projId;
-	private boolean item1;
-	private boolean item2;
-	private boolean item3;
-	private boolean item4;
-	private boolean item5;
-	private boolean item6;
-	private boolean item7;
-	private boolean item8;
-	private boolean item9;
-	private boolean item10;
+	private String item1;
+	private String item2;
+	private String item3;
+	private String item4;
+	private String item5;
+	private String item6;
+	private String item7;
+	private String item8;
+	private String item9;
+	private String item10;
 	private int quantity1;
 	private int quantity2;
 	private int quantity3;
@@ -32,10 +32,12 @@ public class ProjectMasterScope {
 	private int quantity8;
 	private int quantity9;
 	private int quantity10;
+	private int proj;
+	private int item;
 
-	public ProjectMasterScope(int item, Long id, boolean i1, boolean i2, boolean i3, boolean i4, boolean i5, boolean i6,
-			                  boolean i7, boolean i8, boolean i9, boolean i10, int q1, int q2, int q3, int q4, int q5,
-			                  int q6, int q7, int q8, int q9, int q10)
+	public ProjectMasterScope(int item, Long id, String i1, String i2, String i3, String i4, String i5, String i6,
+			                  String i7, String i8, String i9, String i10, int q1, int q2, int q3, int q4, int q5,
+			                  int q6, int q7, int q8, int q9, int q10, int proj, int i)
 	{
 		this.projItem = item;
 		this.projId = id;
@@ -59,22 +61,24 @@ public class ProjectMasterScope {
 		this.quantity8 = q8;
 		this.quantity9 = q9;
 		this.quantity10 = q10;
+		this.proj = proj;
+		this.item = i;
 	}
 	
 	public ProjectMasterScope()
 	{
 		this.projItem = 0;
 		this.projId = null;
-		this.item1 = false;
-		this.item2 = false;
-		this.item3 = false;
-		this.item4 = false;
-		this.item5 = false;
-		this.item6 = false;
-		this.item7 = false;
-	    this.item8 = false;
-	    this.item9 = false;
-	    this.item10 = false;
+		this.item1 = null;
+		this.item2 = null;
+		this.item3 = null;
+		this.item4 = null;
+		this.item5 = null;
+		this.item6 = null;
+		this.item7 = null;
+	    this.item8 = null;
+	    this.item9 = null;
+	    this.item10 = null;
 		this.quantity1 = 0;
 		this.quantity2 = 0;
 		this.quantity3 = 0;
@@ -85,6 +89,8 @@ public class ProjectMasterScope {
 		this.quantity8 = 0;
 		this.quantity9 = 0;
 		this.quantity10 = 0;
+		this.proj = 0;
+		this.item = 0;
 	}
 	
 	public synchronized int getProjItem()
@@ -97,6 +103,16 @@ public class ProjectMasterScope {
 		this.projItem = item;
 	}
 	
+	public synchronized int getItem()
+	{
+		return item;
+	}
+	
+	public synchronized void setItem(int item)
+	{
+		this.item = item;
+	}
+	
 	public synchronized Long getProjId()
 	{
 		return projId;
@@ -107,102 +123,113 @@ public class ProjectMasterScope {
 		this.projId = id;
 	}
 	
-	public synchronized boolean getItem1()
+	
+	public synchronized int getProj()
+	{
+		return proj;
+	}
+	
+	public synchronized void setProj(int id)
+	{
+		this.proj = id;
+	}
+	
+	public synchronized String getItem1()
 	{
 		return item1;
 	}
 	
-	public synchronized void setItem1(boolean item)
+	public synchronized void setItem1(String item)
 	{
 		this.item1 = item;
 	}
 	
-	public synchronized boolean getItem2()
+	public synchronized String getItem2()
 	{
 		return item2;
 	}
 	
-	public synchronized void setItem2(boolean item)
+	public synchronized void setItem2(String item)
 	{
 		this.item2 = item;
 	}
 	
-	public synchronized boolean getItem3()
+	public synchronized String getItem3()
 	{
 		return item3;
 	}
 	
-	public synchronized void setItem3(boolean item)
+	public synchronized void setItem3(String item)
 	{
 		this.item3 = item;
 	}
 	
-	public synchronized boolean getItem4()
+	public synchronized String getItem4()
 	{
 		return item4;
 	}
 	
-	public synchronized void setItem4(boolean item)
+	public synchronized void setItem4(String item)
 	{
 		this.item4 = item;
 	}
 	
-	public synchronized boolean getItem5()
+	public synchronized String getItem5()
 	{
 		return item5;
 	}
 	
-	public synchronized void setItem5(boolean item)
+	public synchronized void setItem5(String item)
 	{
 		this.item5 = item;
 	}
 	
-	public synchronized boolean getItem6()
+	public synchronized String getItem6()
 	{
 		return item6;
 	}
 	
-	public synchronized void setItem6(boolean item)
+	public synchronized void setItem6(String item)
 	{
 		this.item6 = item;
 	}
 	
-	public synchronized boolean getItem7()
+	public synchronized String getItem7()
 	{
 		return item7;
 	}
 	
-	public synchronized void setItem7(boolean item)
+	public synchronized void setItem7(String item)
 	{
 		this.item7 = item;
 	}
 	
-	public synchronized boolean getItem8()
+	public synchronized String getItem8()
 	{
 		return item8;
 	}
 	
-	public synchronized void setItem8(boolean item)
+	public synchronized void setItem8(String item)
 	{
 		this.item8 = item;
 	}
 	
-	public synchronized boolean getItem9()
+	public synchronized String getItem9()
 	{
 		return item9;
 	}
 	
-	public synchronized void setItem9(boolean item)
+	public synchronized void setItem9(String item)
 	{
 		this.item9 = item;
 	}
 	
-	public synchronized boolean getItem10()
+	public synchronized String getItem10()
 	{
 		return item10;
 	}
 	
-	public synchronized void setItem10(boolean item)
+	public synchronized void setItem10(String item)
 	{
 		this.item10 = item;
 	}
@@ -284,7 +311,7 @@ public class ProjectMasterScope {
 	
 	public synchronized void setQuantity8(int q)
 	{
-		this.quantity1 = 8;
+		this.quantity8 = q;
 	}
 	
 	public synchronized int getQuantity9()

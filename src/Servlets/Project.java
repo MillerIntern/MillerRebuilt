@@ -506,6 +506,17 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("addProjMasterScope"))
+		{
+			try
+			{
+				ProjectService.addProjMasterScope(parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("editEquipment"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
