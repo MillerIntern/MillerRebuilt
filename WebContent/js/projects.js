@@ -3158,6 +3158,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				getProjSpecScopes(stopServerCalls);
 				getSpecMasterScope(item);
 				getSpecProjMasterScope(stopServerCalls);
+				setCostCompTitle();
 			}, error: function (data) {
 				alert('Server Error!');
 				console.log(data);
@@ -4980,6 +4981,7 @@ function saveCostEstimate()
 				'domain': 'project',
 				'action': 'addCostEstimate',
 				'projectID': projectID,
+				'projItem': PROJECT_DATA.projectItem.id,
 						
 				'genConProposalReq': genConProposalReq, 
 				'genConSubName': genConSubName,
@@ -5134,10 +5136,17 @@ function getProjCostEstimate(stopServerCalls)
 			console.log("cost est:", data);
 			costEstData = data;
             if(data.length > 0)
+            {	
             	fillCostEstOverview(data);
+            	fillCostComparison(data);
+            	getComparableCostEsts();
+            }
             else
+            {	
             	clearCostEstOverview();
-			
+            	clearCompDropdowns();
+            }
+            
             if(!stopServerCalls)
 				getUserData();
 			
@@ -5324,7 +5333,186 @@ function fillCostEstOverview(data)
 // js for cost comparison 
 ///////////////////////////////////////////////////////////////////////////////
 
+function setCostCompTitle()
+{
+	console.log(PROJECT_DATA);
+	if(PROJECT_DATA.warehouse.state && (PROJECT_DATA.warehouse.state == "UNKNOWN" || PROJECT_DATA.warehouse.state == "Unknown")) 
+	{
+		$("#smartProjectComparison").find("#currentProj").text(PROJECT_DATA.warehouse.city.name + ", " + PROJECT_DATA.warehouse.region);
+	}
+	else
+	{	
+		$("#smartProjectComparison").find("#currentProj").text(PROJECT_DATA.warehouse.city.name + ", " + toTitleCase(PROJECT_DATA.warehouse.state.replace('_', ' ')));
+	}
+}
 
+function fixCost(data)
+{
+  	if(data == "0")
+  		return "N/A";
+  	else
+  		return "$" + data;
+}
+
+function fillCostComparison(data)
+{
+   data = data[0];
+   console.log("curr proj cost est", data);
+   
+   $("#smartProjectComparison").find("#projGenConCost").text(fixCost(data.genConCost));
+   $("#smartProjectComparison").find("#projRefrigCost").text(fixCost(data.refrigCost));
+   $("#smartProjectComparison").find("#projMechanicalCost").text(fixCost(data.mechanicalCost));
+   $("#smartProjectComparison").find("#projElectricalCost").text(fixCost(data.electricalCost));
+   $("#smartProjectComparison").find("#projPlumbingCost").text(fixCost(data.plumbingCost));
+   $("#smartProjectComparison").find("#projGasCost").text(fixCost(data.gasCost));
+   $("#smartProjectComparison").find("#projSprinklerCost").text(fixCost(data.sprinklerCost));
+   $("#smartProjectComparison").find("#projFireAlarmCost").text(fixCost(data.fireAlarmCost));
+   $("#smartProjectComparison").find("#projTotalCost").text(fixCost(data.totalCost));
+}
+
+function getComparableCostEsts()
+{
+   console.log("get comp cost ests", projectID);	
+   
+   
+   $.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getCompCostEst',
+			'id': PROJECT_DATA.projectItem.id
+		}, success: function (data) {
+			console.log("comparable cost ests:", data);
+			
+			for(var i = 0; i < data.length; i++)
+			{
+				var dat = data[i];
+				console.log(dat[101]);
+				if(projectID != dat[100])
+				{
+					fillCompDropdown(dat);
+				}
+			}	
+			
+		}, error: function (data) {
+			alert('Server Error!');
+			console.log(data);
+		}
+	});
+}
+
+
+function getSpecProject(id)
+{
+	  console.log(id);
+	   $.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getSpecProject',
+				'id': id[100]
+			}, success: function (data) {
+				console.log("project:", data);
+				fillComp(id, data);
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+}
+
+
+function fillComp(cost, proj)
+{
+   proj = proj[0];	
+   console.log(cost, proj);
+   
+	var d = document.createDocumentFragment();
+	
+	var op = document.createElement("option");
+	if(proj.warehouse.state && (proj.warehouse.state == "UNKNOWN" || proj.warehouse.state == "Unknown")) 
+	{
+		op.innerHTML = proj.warehouse.city.name + ", " + proj.warehouse.region;
+	}
+	else
+	{	
+		op.innerHTML = proj.warehouse.city.name + ", " + toTitleCase(proj.warehouse.state.replace('_', ' '));
+	}
+	
+	op.setAttribute("value", proj.id);
+	d.appendChild(op);
+	
+	$('.compCostEsts').append(d);
+    addSelectFunction();		
+}
+
+function clearCompDropdowns()
+{
+	$("#smartProjectComparison").find("#projs1").val("default");
+	$("#smartProjectComparison").find("#projs2").val("default");
+	$("#smartProjectComparison").find("#projs3").val("default");
+	$("#smartProjectComparison").find("#projs4").val("default");
+}
+
+function addSelectFunction()
+{
+	var sel1 = document.getElementById("projs1");
+	sel1.onchange = function() { getSpecCostEst( this.value, "comp1") }
+	
+	var sel2 = document.getElementById("projs2");
+	sel2.onchange = function() { getSpecCostEst( this.value, "comp2") }
+	
+	var sel3 = document.getElementById("projs3");
+	sel3.onchange = function() { getSpecCostEst( this.value, "comp3") }
+
+	var sel4 = document.getElementById("projs4");
+	sel4.onchange = function() { getSpecCostEst( this.value, "comp4") }
+}
+
+function getSpecCostEst(id, select)
+{
+	console.log(id, select);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjCostEst',
+			'id': id
+		}, success: function (data) {
+			console.log("spec cost est:", data);
+			fillColumn(data, select);
+		}, error: function (data) {
+			alert('Server Error!');
+			console.log(data);
+		}
+	});
+}
+
+function fillColumn(data, col)
+{ 
+   data = data[0];
+   console.log(col, data);
+	
+   $("#smartProjectComparison").find("#" + col + "GenConCost").text(fixCost(data.genConCost));
+   $("#smartProjectComparison").find("#" + col + "RefrigCost").text(fixCost(data.refrigCost));
+   $("#smartProjectComparison").find("#" + col + "MechanicalCost").text(fixCost(data.mechanicalCost));
+   $("#smartProjectComparison").find("#" + col + "ElectricalCost").text(fixCost(data.electricalCost));
+   $("#smartProjectComparison").find("#" + col + "PlumbingCost").text(fixCost(data.plumbingCost));
+   $("#smartProjectComparison").find("#" + col + "GasCost").text(fixCost(data.gasCost));
+   $("#smartProjectComparison").find("#" + col + "SprinklerCost").text(fixCost(data.sprinklerCost));
+   $("#smartProjectComparison").find("#" + col + "FireAlarmCost").text(fixCost(data.fireAlarmCost));
+   $("#smartProjectComparison").find("#" + col + "TotalCost").text(fixCost(data.totalCost));
+}
+
+function fillCompDropdown(data)
+{
+	console.log("fill comp dropdown", data);
+	getSpecProject(data);
+	
+}
 //////////////////////////////////////////////////////////////////////////////
 // js for proj spec scope
 //////////////////////////////////////////////////////////////////////////////
@@ -8405,7 +8593,7 @@ function getTasks(stopServerCalls) {
 			'action': 'getProjectTasks',
 			'id': projectID
 		}, success: function (data) {
-			console.log(data);
+			console.log("proj tasks", data);
 			let type = getParameterByName("from");
 			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
 			tasks = data;

@@ -601,6 +601,18 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("getSpecProject")) 
+		{
+			System.out.println("GET spec project");
+			try 
+			{
+				response = ProjectObjectService.getSpecProject(Long.parseLong(parameters.get("id")));
+				System.out.println("project: "+response);
+			} 
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("getSpecProjMasterScope")) 
 		{
 			System.out.println("GET spec proj master scopes");
@@ -832,6 +844,9 @@ public class Project extends HttpServlet
 		} else if (action.equals("getProjectTasks")) {
 			System.out.println("getting Project tasks");
 			response = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("id")));
+		} else if (action.equals("getCompCostEst")) {
+			System.out.println("getting comparable cost ests");
+			response = ProjectObjectService.getComparableCostEst(Integer.parseInt(parameters.get("id")));
 		} else if (action.equals("getProjSpecScopes")) {
 			System.out.println("getting Project spec scopes");
 			response = ProjectObjectService.getProjSpecScopesAsJSON(Long.parseLong(parameters.get("id")));

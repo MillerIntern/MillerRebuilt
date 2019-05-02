@@ -1113,6 +1113,21 @@ public class ProjectObjectService
 		return "";
 	}
 	
+
+	public synchronized static String getComparableCostEst(int id) {
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createSQLQuery("select * from CostEstimate where projItem = " + id);
+        @SuppressWarnings("unchecked")
+		List<?> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+	}
 	
 	public synchronized static String getProjSpecScopesAsJSON(long projectID) {
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
@@ -1211,7 +1226,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecMasterScope(Long id)
 	{
-		System.out.println("getting proj item");
+		System.out.println("getting master Scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1230,7 +1245,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecProjScope(Long id)
 	{
-		System.out.println("getting proj item");
+		System.out.println("getting proj scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1249,13 +1264,31 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecProjMasterScope(Long id)
 	{
-		System.out.println("getting proj item");
+		System.out.println("getting proj master Scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 	
 		//Get all objects of type "domain"
         Query q = session.createQuery("from ProjectMasterScope where projId = " + id );
+        @SuppressWarnings("unchecked")
+		
+		List<Object> list = q.list();
+   
+        tx.commit();
+        
+        return gson.toJson(list);
+	}
+	
+	public synchronized static String getSpecProject(Long id)
+	{
+		System.out.println("getting proj item");
+		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+	
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Project where id = " + id );
         @SuppressWarnings("unchecked")
 		
 		List<Object> list = q.list();
@@ -1289,31 +1322,11 @@ public class ProjectObjectService
 		String success = "DELETED";
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
-	//	Class<?> c = Class.forName("projectObjects."+domain);
+
 	    Query q = session.createQuery("delete from MasterScope where projItem =" + projItem);
 	    q.executeUpdate();
 	    System.out.println("ATTEMPTING TO DELETE " + projItem);
 		tx.commit();
-//		//Attempt to delete the object
-//		try
-//		{
-//			ProjectObject oldObject2 = (ProjectObject) session.get(c, projItem);
-//			//System.out.println("ID = " + oldObject2.getId());
-//
-//		    Object o = session.get(c, projItem); 
-//		    session.delete(oldObject2); 
-//		    System.out.println("hi");
-//		    tx.commit();
-//		    System.out.println("hello");
-//		    success = "PROJECT_OBJECT_DELETED";
-//		}
-//		catch (Exception e) 
-//		{
-//			System.out.println(e.getMessage());
-//			if (tx!=null) tx.rollback();
-//			System.out.println("NOTHING WENT WRONG - kind of");
-//		}
-		
 		
 		return success;
 	}

@@ -37,6 +37,14 @@ public class CostEstimateFiller
 			ce.setProj(0);
 		}
 		
+		int projItem;
+		try {
+		    projItem = Integer.parseInt(params.get("projItem"));
+			ce.setProjItem(projItem);
+		} catch (NumberFormatException e) {
+			ce.setProjItem(0);
+		}
+		
 		
 		int genConProposalReq;
 		try {

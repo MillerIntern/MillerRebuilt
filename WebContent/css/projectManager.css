@@ -23,6 +23,13 @@
 }
 
 
+.totalRow
+{
+	border-style: solid;
+	border-color: #000000;
+	border-width: 5px;
+}
+
 .scrollTextBox {
 	height: 50px;
 	width: 330px;
