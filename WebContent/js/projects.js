@@ -5385,6 +5385,7 @@ function getComparableCostEsts()
 			'id': PROJECT_DATA.projectItem.id
 		}, success: function (data) {
 			console.log("comparable cost ests:", data);
+			clearCostCompTable();
 			clearDropdownItems();
 			
 			for(var i = 0; i < data.length; i++)
@@ -5515,6 +5516,49 @@ function fillColumn(data, col)
    $("#smartProjectComparison").find("#" + col + "TotalCost").text(fixCost(data.totalCost));
 }
 
+function clearCostCompTable()
+{
+   $("#smartProjectComparison").find("#comp1GenConCost").text("");
+   $("#smartProjectComparison").find("#comp1RefrigCost").text("");
+   $("#smartProjectComparison").find("#comp1MechanicalCost").text("");
+   $("#smartProjectComparison").find("#comp1ElectricalCost").text("");
+   $("#smartProjectComparison").find("#comp1PlumbingCost").text("");
+   $("#smartProjectComparison").find("#comp1GasCost").text("");
+   $("#smartProjectComparison").find("#comp1SprinklerCost").text("");
+   $("#smartProjectComparison").find("#comp1FireAlarmCost").text("");
+   $("#smartProjectComparison").find("#comp1TotalCost").text("");
+   
+   $("#smartProjectComparison").find("#comp2GenConCost").text("");
+   $("#smartProjectComparison").find("#comp2RefrigCost").text("");
+   $("#smartProjectComparison").find("#comp2MechanicalCost").text("");
+   $("#smartProjectComparison").find("#comp2ElectricalCost").text("");
+   $("#smartProjectComparison").find("#comp2PlumbingCost").text("");
+   $("#smartProjectComparison").find("#comp2GasCost").text("");
+   $("#smartProjectComparison").find("#comp2SprinklerCost").text("");
+   $("#smartProjectComparison").find("#comp2FireAlarmCost").text("");
+   $("#smartProjectComparison").find("#comp2TotalCost").text("");
+   
+   $("#smartProjectComparison").find("#comp3GenConCost").text("");
+   $("#smartProjectComparison").find("#comp3RefrigCost").text("");
+   $("#smartProjectComparison").find("#comp3MechanicalCost").text("");
+   $("#smartProjectComparison").find("#comp3ElectricalCost").text("");
+   $("#smartProjectComparison").find("#comp3PlumbingCost").text("");
+   $("#smartProjectComparison").find("#comp3GasCost").text("");
+   $("#smartProjectComparison").find("#comp3SprinklerCost").text("");
+   $("#smartProjectComparison").find("#comp3FireAlarmCost").text("");
+   $("#smartProjectComparison").find("#comp3TotalCost").text("");
+   
+   $("#smartProjectComparison").find("#comp4GenConCost").text("");
+   $("#smartProjectComparison").find("#comp4RefrigCost").text("");
+   $("#smartProjectComparison").find("#comp4MechanicalCost").text("");
+   $("#smartProjectComparison").find("#comp4ElectricalCost").text("");
+   $("#smartProjectComparison").find("#comp4PlumbingCost").text("");
+   $("#smartProjectComparison").find("#comp4GasCost").text("");
+   $("#smartProjectComparison").find("#comp4SprinklerCost").text("");
+   $("#smartProjectComparison").find("#comp4FireAlarmCost").text("");
+   $("#smartProjectComparison").find("#comp4TotalCost").text("");
+}
+
 function fillCompDropdown(data)
 {
 	console.log("fill comp dropdown", data);
@@ -5537,9 +5581,41 @@ function getSpecificMasterScope(id)
 			console.log("MASTER scope: ", data.responseJSON);
 			
 			if(data.responseJSON.length > 0)
-				fillCostCompScope(data.responseJSON);
+				getProjMasterScope(1, data.responseJSON);
 			else
 				clearCostCompScope();
+			
+		}, error: function (data) {
+			alert("error!");
+			console.log("data", data);
+		}
+	
+	});
+}
+
+
+function getProjMasterScope(stopServerCalls, masterScope)
+{
+	console.log(masterScope);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSpecProjMasterScope',
+			'id': projectID
+		
+		}, complete: function (data) {
+			console.log("proj master scope: ", data.responseJSON);
+			
+			if(data.responseJSON.length > 0)
+			{
+				fillCostCompScope(masterScope, data.responseJSON);
+			}
+			
+			if(!stopServerCalls)
+				getUserData();
 			
 		}, error: function (data) {
 			alert("error!");
@@ -5571,22 +5647,61 @@ function checkNull(data)
 		return "- " + data;
 }
 
-function fillCostCompScope(data)
+function fillCostCompScope(data, masterScope)
 {
 	data = data[0];
-	console.log("fill comp scope", data);
+	masterScope = masterScope[0];
+	console.log("fill comp scope", data, masterScope);
 	
-	$("#smartProjectComparison").find("#i1").text(checkNull(data.item1));
-	$("#smartProjectComparison").find("#i2").text(checkNull(data.item2));
-	$("#smartProjectComparison").find("#i3").text(checkNull(data.item3));
-	$("#smartProjectComparison").find("#i4").text(checkNull(data.item4));
-	$("#smartProjectComparison").find("#i5").text(checkNull(data.item5));
-	$("#smartProjectComparison").find("#i6").text(checkNull(data.item6));
-	$("#smartProjectComparison").find("#i7").text(checkNull(data.item7));
-	$("#smartProjectComparison").find("#i8").text(checkNull(data.item8));
-	$("#smartProjectComparison").find("#i9").text(checkNull(data.item9));
-	$("#smartProjectComparison").find("#i10").text(checkNull(data.item10));
+	if(data.quantity1 == "0")
+		$("#smartProjectComparison").find("#i1").text(checkNull(data.item1));
+	else
+		$("#smartProjectComparison").find("#i1").text(checkNull(data.item1) + " (" + masterScope.quantity1 + ")");
+		
+	if(data.quantity2 == "0")
+		$("#smartProjectComparison").find("#i2").text(checkNull(data.item2));
+	else
+		$("#smartProjectComparison").find("#i2").text(checkNull(data.item2) + " (" + masterScope.quantity2 + ")");
 	
+	if(data.quantity3 == "0")
+		$("#smartProjectComparison").find("#i3").text(checkNull(data.item3));
+	else
+		$("#smartProjectComparison").find("#i3").text(checkNull(data.item3) + " (" + masterScope.quantity3 + ")");
+	
+	if(data.quantity4 == "0")
+		$("#smartProjectComparison").find("#i4").text(checkNull(data.item4));
+	else
+		$("#smartProjectComparison").find("#i4").text(checkNull(data.item4) + " (" + masterScope.quantity4 + ")");
+	
+	if(data.quantity5 == "0")
+		$("#smartProjectComparison").find("#i5").text(checkNull(data.item5));
+	else
+		$("#smartProjectComparison").find("#i5").text(checkNull(data.item5) + " (" + masterScope.quantity5 + ")");
+	
+	if(data.quantity6 == "0")
+		$("#smartProjectComparison").find("#i6").text(checkNull(data.item6));
+	else
+		$("#smartProjectComparison").find("#i6").text(checkNull(data.item6) + " (" + masterScope.quantity6 + ")");
+	
+	if(data.quantity7 == "0")
+		$("#smartProjectComparison").find("#i7").text(checkNull(data.item7));
+	else
+		$("#smartProjectComparison").find("#i7").text(checkNull(data.item7) + " (" + masterScope.quantity7 + ")");
+	
+	if(data.quantity8 == "0")
+		$("#smartProjectComparison").find("#i8").text(checkNull(data.item8));
+	else
+		$("#smartProjectComparison").find("#i8").text(checkNull(data.item8) + " (" + masterScope.quantity8 + ")");
+
+	if(data.quantity9 == "0")
+		$("#smartProjectComparison").find("#i9").text(checkNull(data.item9));
+	else
+		$("#smartProjectComparison").find("#i9").text(checkNull(data.item9) + " (" + masterScope.quantity9 + ")");
+	
+	if(data.quantity10 == "0")
+		$("#smartProjectComparison").find("#i10").text(checkNull(data.item10));
+	else
+		$("#smartProjectComparison").find("#i10").text(checkNull(data.item10) + " (" + masterScope.quantity10 + ")");
 }
 
 //////////////////////////////////////////////////////////////////////////////
