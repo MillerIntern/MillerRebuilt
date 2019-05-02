@@ -431,11 +431,11 @@
 		
 	  <div class='info-tab info-tab-smart-system' id='smartSystem'>
 	       <div id="smartProjectComparison">
-                <table id="costEstTableO" border="1" style="border-color:#d1cec5; border-left-color: transparent; border-right-color: transparent; border-bottom-color:#fcfaf5" class='table table-hover table-striped' ondblclick="editCostEstimate()">
+                <table id="costEstTableO" border="1" style="border-color:#d1cec5; border-left-color: transparent; border-right-color: transparent; border-bottom-color:#fcfaf5" class='table table-hover table-striped'>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th style="width: 15%; text-align: center"></th>
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
-						<th style="width: 17%; text-align: center" id="currentProj"></th>
+						<th style="width: 17%; text-align: center; color:IndianRed" id="currentProj"></th>
 						<th style="width: 17%; text-align: center" id="comp1">
 							<select id="projs1" class="compCostEsts" >
 								<option value="default">--Select Project--</option>
@@ -459,7 +459,7 @@
 					</tr>
 				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">General Construction</th>
-						<td align="center" id='projGenConCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projGenConCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1GenConCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2GenConCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3GenConCost' class="italics costEstTableData"></td>
@@ -467,7 +467,7 @@
 					</tr>
 				    <tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Refrigeration</th>
-						<td align="center" id='projRefrigCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projRefrigCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1RefrigCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2RefrigCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3RefrigCost' class="italics costEstTableData"></td>
@@ -475,7 +475,7 @@
 					</tr>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Mechanical</th>
-						<td align="center" id='projMechanicalCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projMechanicalCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1MechanicalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2MechanicalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3MechanicalCost' class="italics costEstTableData"></td>
@@ -483,7 +483,7 @@
 					</tr>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Electrical</th>
-						<td align="center" id='projElectricalCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projElectricalCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1ElectricalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2ElectricalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3ElectricalCost' class="italics costEstTableData"></td>
@@ -491,7 +491,7 @@
 					</tr>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Plumbing</th>
-						<td align="center" id='projPlumbingCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projPlumbingCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1PlumbingCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2PlumbingCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3PlumbingCost' class="italics costEstTableData"></td>
@@ -499,7 +499,7 @@
 					</tr>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Gas</th>
-						<td align="center" id='projGasCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projGasCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1GasCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2GasCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3GasCost' class="italics costEstTableData"></td>
@@ -507,7 +507,7 @@
 					</tr>
 					<tr border="1" style="border-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5">
 						<th class = "bold">Sprinkler</th>
-						<td align="center" id='projSprinklerCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projSprinklerCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1SprinklerCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2SprinklerCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3SprinklerCost' class="italics costEstTableData"></td>
@@ -515,7 +515,7 @@
 					</tr>
 					<tr border="1" style="border-top-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5; border-bottom-color:#000000">
 						<th class = "bold">Fire Alarm</th>
-						<td align="center" id='projFireAlarmCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projFireAlarmCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1FireAlarmCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2FireAlarmCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3FireAlarmCost' class="italics costEstTableData"></td>
@@ -523,13 +523,38 @@
 					</tr>
 					<tr  class="bold totalRow" style="font-size:16px; border-top-color:#d1cec5; border-left-color: #d1cec5; border-right-color: #d1cec5; border-bottom-color:#000000">
 						<th class = "bold">Total</th>
-						<td align="center" id='projTotalCost' class="italics costEstTableData"></td>
+						<td align="center" style="color:IndianRed" id='projTotalCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp1TotalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp2TotalCost' class ="italics costEstTableData"></td>
 						<td align="center" id='comp3TotalCost' class="italics costEstTableData"></td>
 						<td align="center" id='comp4TotalCost' class ="italics costEstTableData"></td>
 					</tr>
 				</table>	
+				<p style="font-size:16px" class="bold">Scope of Work:</p>
+				<table>
+				    <tbody>
+					<tr>
+						<td style="width:50%" id="i1"></td>
+						<td style="width:50%" id="i6"></td>
+					</tr>
+					<tr>
+						<td id="i2">-</td>
+						<td id="i7">-</td>
+					</tr>
+					<tr>
+						<td id="i3">-</td>
+						<td id="i8">-</td>
+					</tr>
+					<tr>
+						<td id="i4">-</td>
+						<td id="i9">-</td>
+					</tr>
+					<tr>
+						<td id="i5">-</td>
+						<td id="i10">-</td>
+					</tr>
+					</tbody>
+				</table>
 			</div>				
 		</div> 	
 		
