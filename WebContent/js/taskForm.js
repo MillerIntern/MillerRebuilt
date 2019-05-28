@@ -40,7 +40,8 @@ function getUserData () {
 				if (data.responseJSON) {
 					createDropdown(data.responseJSON);
 				}
-				/////////////////////
+				getSubcontractors();
+		
 				let id = getParameterByName("id");
 				let from = getParameterByName("from");
 				let type = getParameterByName("type");
@@ -67,6 +68,44 @@ function getUserData () {
 			
 		});
 	}
+	
+	function getSubcontractors() {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getSubcontractors',
+			}, complete: function (data) {
+				console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
+				if (data.responseJSON) {
+					createSubDropdown(data.responseJSON);
+				}
+
+				else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
+			}
+			
+		});
+	}
+	
+	function createSubDropdown (json) {
+		let d = document.createDocumentFragment();
+		
+		json.sort(function(a,b){
+			if(a.name < b.name) return -1;
+			else if(a.name > b.name) return 1;
+			return 0;
+		});
+		for (var i = 0; i < json.length; i++) {
+			let option = document.createElement('option');
+			// when users store both username and name, access the user's name and username fields
+			option.innerHTML = json[i].name;
+			option.setAttribute("value", json[i].name);
+			d.appendChild(option);
+		}
+		$('#subcontractorsDropdown').append(d);
+	}
+	
 	
 	function createDropdown (json) {
 		$('#assigneeEntry').find('option').remove();

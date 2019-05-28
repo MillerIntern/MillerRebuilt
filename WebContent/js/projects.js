@@ -2370,7 +2370,8 @@ function generateDropdowns(str, className)
 				option.innerHTML = json[i].name;
 			}
 		} 
-		else if(className == "subcontractors") {
+		else if(className == "subcontractors")
+		{
 			option.innerHTML = json[i].name;
 			option.value = json[i].name;
 		}
@@ -2382,8 +2383,10 @@ function generateDropdowns(str, className)
 
 		if(sent)
 		{
-			if(className != "subcontractors" || className != "class")
+			if(className == "manager" || className == "supervisor" || className == "warehouse" || className == "projecteq" || className == "closeoutStatus" || className == "stage")
+			{	
 				option.setAttribute("value", json[i].id);	
+			}
 			
 			d.appendChild(option);
 		}

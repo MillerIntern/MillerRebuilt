@@ -42,6 +42,11 @@
     max-height:500px;
 }
 
+h3 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 28px;
+}
+
 .headBorder {
 	font-size: 15px;
 	border-bottom: 3px solid #555;
@@ -50,6 +55,29 @@
 .table > tbody > tr > td {
 	font-size: 16px;
 	border-bottom: 2px solid #555;
+}
+
+.taskReport > tbody > tr > td {
+	padding-left: 7px;
+	font-size: 15px;
+	font-family: "Times New Roman", Times, serif;
+	border: 1.35px solid black;
+}
+
+.taskReport > tbody > tr > th {
+	font-size: 16px;
+	padding-bottom: 7px;
+	font-family: "Times New Roman", Times, serif;
+	border-bottom: 1.35 solid black
+}	
+
+.taskReport {
+	padding-left: 3px;
+}
+
+.taskReport > tbody > tr:hover {
+	background-color: #d7e1f7;
+	transition-duration: .5s;
 }
 
 .table > tbody > tr:hover {
@@ -84,6 +112,16 @@
 	color: white;
 }
 		
+		
+#backButton {
+    font-family: "Times New Roman", Times, serif;
+	margin-left: 7px;
+	margin-right: 1134px;
+}		
+
+#printTaskReport {
+    font-family: "Times New Roman", Times, serif;
+}
 		
 #taskTable {
    table-layout: fixed;

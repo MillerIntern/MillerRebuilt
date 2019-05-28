@@ -1836,6 +1836,14 @@ public class ReportHelper
 			return "20";
 		else if(user.equals("3"))
 			return "21";
+		else if(user.equals("27"))
+			return "22";
+		else if(user.equals("28"))
+			return "23";
+		else if(user.equals("29"))
+			return "24";
+		else if(user.equals("25"))
+			return "25";
 		else 
 			return "";
 	}

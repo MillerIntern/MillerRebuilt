@@ -930,6 +930,7 @@ function printButton(){
 		else reportURL += projectsOfInterest[i].id;
 	}
 	
+	alert(reportURL);
 	console.log("REPORT URL = ", reportURL);
 	
 	window.location.href = reportURL;

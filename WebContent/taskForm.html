@@ -299,7 +299,6 @@
 		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
 		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
-	//	if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Subcontractor');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
 		
@@ -309,7 +308,6 @@
 			'project': projectID,
 			'description': description,
 			'assignee': assignee,
-		//	'subassignee': subassignee,
 			'initiatedDate': initiatedDate,
 			'dueDate': dueDate,
 			'severity': severity,
@@ -329,7 +327,6 @@
 				'project': projectID,
 				'description': description,
 				'assignee': assignee,
-			//	'subassignee': subassignee,
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
 				'severity': severity,
@@ -512,7 +509,7 @@
 		        	</td>
 		        </tr>
 			</table>
-			<button onclick='submitTask()' class='btn btn-success'>Submit Task</button>
+			<button onclick='submitTask()' class='btn btn-success'>Save Task</button>
 		</div>
 	</div>
   
