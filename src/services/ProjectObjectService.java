@@ -88,13 +88,13 @@ public class ProjectObjectService
 		Query q = null;
 		try
 		{
-		tx = session.beginTransaction();
+			tx = session.beginTransaction();
 		}
 		catch(TransactionException ex)
-		{
-		
+		{		
 			tx.commit();
 		}
+		
 		Class<?> c;
 		
 		try 
