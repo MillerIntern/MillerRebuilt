@@ -1262,6 +1262,7 @@ function getEquipmentSuppliers () {
 			}
 			if (data.responseJSON.taskFields) {
 				taskFields = JSON.parse(data.responseJSON.taskFields);
+				console.log(taskFields);
 			}
 			if (data.responseJSON.closeoutFields) {
 				closeoutFields = JSON.parse(data.responseJSON.closeoutFields);
@@ -1416,20 +1417,25 @@ function fillRuleDomainsDropdown()
 function filterSecondField()
 {
 	var val = $('#ruleField1').val();
+	var dropVal = $('#ruleDomainDropdown').val();
 	
 	console.log("VAL " , val);
+	console.log(dropVal);
 	
 	var type = getFieldType(val);
 	
-	$('#ruleField2').find('option').each(function(index){
-		if(this.type != type && this.type != undefined) {
-			$(this).hide();
-		}
-		else {
-			$(this).show();
-			console.log("NOT EQUAL");
-		}
-	});
+	if(dropVal != "Tasks")
+	{	
+		$('#ruleField2').find('option').each(function(index){
+			if(this.type != type && this.type != undefined) {
+				$(this).hide();
+			}
+			else {
+				$(this).show();
+				console.log("NOT EQUAL");
+			}
+		});
+	}
 	
 	$('#ruleField2').trigger('chosen:updated');
 	
