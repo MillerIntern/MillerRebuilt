@@ -280,15 +280,25 @@ public class ProjectObjectService
 	{
 		//Begin transaction
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
+		List<Object> listNew = null;
 		
-		//Get all objects of type "domain"
-        Query q = session.createQuery("from "+domain);
-        @SuppressWarnings("unchecked")
-		List<Object> list = q.list();
-        tx.commit();
-        
-        return list;
+		try
+		{
+			tx = session.beginTransaction();
+			//Get all objects of type "domain"
+	        Query q = session.createQuery("from "+domain);
+	        @SuppressWarnings("unchecked")
+	        List<Object> list = q.list();
+	        tx.commit();
+	        listNew = list;
+		}
+		catch(TransactionException e)
+		{
+		   System.out.println("trans excep " + e);
+		}
+		
+		return listNew;
 	}
 	
 	/**
@@ -362,7 +372,7 @@ public class ProjectObjectService
 		Transaction tx = session.beginTransaction();
 		
 		//Get all objects of type "domain"
-        Query q = session.createQuery("from task where project_id = " + projectId);
+        Query q = session.createQuery("from Task where project_id = " + projectId);
         @SuppressWarnings("unchecked")
 		List<projectObjects.Task> list = q.list();
    
@@ -1124,7 +1134,14 @@ public class ProjectObjectService
         @SuppressWarnings("unchecked")
 		List<?> list = q.list();
    
-        tx.commit();
+        try
+        {
+        	tx.commit();
+        }
+        catch(TransactionException e)
+        {
+        	System.out.println("transaction exception");
+        }
         
         return gson.toJson(list);
 	}
@@ -1285,17 +1302,26 @@ public class ProjectObjectService
 		System.out.println("getting proj item");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-	
-		//Get all objects of type "domain"
-        Query q = session.createQuery("from Project where id = " + id );
-        @SuppressWarnings("unchecked")
+		Transaction tx;
+		List<Object> listNew = null;
 		
-		List<Object> list = q.list();
-   
-        tx.commit();
-        
-        return gson.toJson(list);
+		try
+		{
+		  tx = session.beginTransaction();
+		//Get all objects of type "domain"
+	        Query q = session.createQuery("from Project where id = " + id );
+	        @SuppressWarnings("unchecked")
+			
+			List<Object> list = q.list();
+	        tx.commit();
+	        listNew = list;
+		}
+		catch(TransactionException e)
+		{
+			System.out.println("transaction exception" + e);
+		}
+		
+        return gson.toJson(listNew);
 	}
 	
 	public synchronized static String getSpecCostEst(int id)

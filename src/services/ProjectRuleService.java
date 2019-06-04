@@ -449,60 +449,117 @@ public class ProjectRuleService
 		return true;
 	}
 	
-//	public static boolean TaskEvaluate(ProjectRule _rule , Task _task)
-//	{
-//		Task task = _task;
-//		if(task == null)
-//			return false;
-//		
-//		String f1 , f2;
-//		f1 = _rule.getField1();
-//		f2 = _rule.getField2();
-//		
-//		Object field1 = Task.getTaskFields(f1 , task);
-//		Object field2 = Task.getTaskFields(f2 , task);
-//		Date today = new Date();
-//		
-//		if(f1.equals("dueDate") && f2.equals("assignedDate"))
-//		{
-//			Date due = task.getDueDate();
-//			Date assigned = task.getAssignedDate();
-//			
-//			if(due == null || assigned == null)
-//			{
-//				return true;
-//			}
-//			
-//			int result = due.compareTo(assigned);
-//			
-//			if(result == -1)
-//				return false;
-//			else
-//				return true;
-//		}
-//		
-//			TaskStatus status = task.getTaskStatus();
-//			Date dueDate = task.getDueDate();
-//			Date today = new Date();
-
-//			if(dueDate == null)
-//				return RuleResult.TASK_NULL_DUE;
-//					
-//			if(status == null)
-//				return RuleResult.TASK_NULL_STATUS;		
-//			
-//			int result = dueDate.compareTo(today);
-//			System.out.println(result);
-//			
-//			if(result <= 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Completed"))
-//				return RuleResult.TASK_ONTIME;
-//			else if( result > 0 || task.getTaskStatus().getStatus().equalsIgnoreCase("Open"))
-//				return RuleResult.TASK_LATE;
-//			else 
-//				return null;
-//			
-//			return true;
-//	}
+	
+	public static Map<String , Object> EvaluateProjectTasks(ProjectRule rule , Project project)
+	{
+		if(rule == null || project == null)
+			return null;
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		List<Task> tasks = ProjectObjectService.getAllTasks(project.getId());
+		map.put("TASKS", tasks);
+		for(Task task : tasks)
+		{
+			boolean result;
+			Map<String , Object> results = new HashMap<String , Object>();
+			map.put(task.getId().toString(), results);
+			
+			result = TaskEvaluate(rule , task);
+			
+			results.put("title" , task.getTitle());
+			if(task.getAssignee() == null)
+				results.put("assignee", task.getSubAssignee());
+			else
+				results.put("assignee", task.getAssignee());
+			results.put("dueDate", task.getDueDate());
+			results.put("description", task.getDescription());
+			results.put("notes", task.getNotes());
+			results.put("status", task.getTaskStatus());
+										
+			if(result == true) {
+				results.put("message" , rule.getPassMessage());
+				results.put("passed", "true");
+			}
+			else {
+				results.put("message" , rule.getFailMessage());
+				results.put("passed", "false");
+			}
+		}
+		
+		return map;
+		
+	}	
+	
+	
+	public static boolean TaskEvaluate(ProjectRule _rule , Task _task)
+	{
+		Task task = _task;
+		if(task == null)
+			return false;
+		
+		String f1 , f2;
+		f1 = _rule.getField1();
+		f2 = _rule.getField2();
+		
+		Object field1 = Task.getTaskFields(f1 , task);
+		Object field2 = Task.getTaskFields(f2 , task);
+		Date today = new Date();
+		
+		if(f1.equals("dueDate") && f2.equals("assignedDate"))
+		{			
+			if(field1 == null || field2 == null)
+			{
+				return true;
+			}
+			
+			int result = ((Date) field1).compareTo((Date)field2);
+			
+			if(result == -1)
+				return false;
+			else
+				return true;
+		}
+		
+		if(f1.equals("dueDate") && f2.equals("status"))
+		{
+			if(field1 == null || field2 == null)
+			{
+				return true;
+			}
+			
+			int result = ((Date) field1).compareTo(today);
+			
+			if(result == -1 && field2.equals("1"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			
+		}
+		
+		if(f1.equals("status") && f2.equals("none"))
+		{
+			if(field1 == null)
+			{
+				return true;
+			}
+			
+			if(field1.equals("1"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			
+		}
+		
+			return true;
+	}
 
 	public static boolean SchedulingEvaluate(ProjectRule _rule , Project _proj)
 	{
@@ -2090,7 +2147,7 @@ public class ProjectRuleService
 						map.put("type", "GeneralInfo");
 						break;
 //					case Tasks:
-//						Map<String , Object> taskMap = EvaluateProjectTasks(rule , project);
+//						Map<String, Object> taskMap = EvaluateProjectTasks(rule , project);
 //						map.put("taskResults", taskMap);
 //						map.put("type", "Task");
 //						break;
@@ -2251,45 +2308,7 @@ public class ProjectRuleService
 		
 	}
 	
-//	public static Map<String , Object> EvaluateProjectTasks(ProjectRule rule , Project project)
-//	{
-//		if(rule == null || project == null)
-//			return null;
-//		
-//		Map<String , Object> map = new HashMap<String , Object>();
-//		List<Task> tasks = ProjectObjectService.getAllTasks(project.getId());
-//		map.put("TASKS", tasks);
-//		for(Task task : tasks)
-//		{
-//			boolean result;
-//			Map<String , Object> results = new HashMap<String , Object>();
-//			map.put(task.getId().toString(), results);
-//			
-//			result = TaskEvaluate(rule , task);
-//			
-//			results.put("title" , task.getTitle());
-//			if(task.getAssignee() == null)
-//				results.put("assignee", task.getSubAssignee());
-//			else
-//				results.put("assignee", task.getAssignee());
-//			results.put("dueDate", task.getDueDate());
-//			results.put("description", task.getDescription());
-//			results.put("notes", task.getNotes());
-//			results.put("status", task.getTaskStatus());
-//										
-//			if(result == true) {
-//				results.put("message" , rule.getPassMessage());
-//				results.put("passed", "true");
-//			}
-//			else {
-//				results.put("message" , rule.getFailMessage());
-//				results.put("passed", "false");
-//			}
-//		}
-//		
-//		return map;
-//		
-//	}
+
 
 	
 //	public static Map<String , Object> EvaluateProjectChangeOrders(ProjectRule rule , Project project)

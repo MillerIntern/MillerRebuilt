@@ -31,9 +31,10 @@
 	$(document).ready(function () {
 	 	$("#dueDate").datepicker();   
 		$('#initDate').datepicker();
-		
 		$('#initDate').val(getToday());
+		
 		getMasterScopes();
+		getSubcontractors();
 	});	
 
 			function getMasterScopes()
@@ -182,7 +183,6 @@
 				if (data.responseJSON) {
 					createDropdown(data.responseJSON);
 				}
-				getSubcontractors();
 			}
 			
 		});

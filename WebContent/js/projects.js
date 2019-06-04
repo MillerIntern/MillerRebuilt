@@ -4214,9 +4214,12 @@ function permissionCheck(){
 			user = data;
 			console.log(user);
 			console.log("IT WORKED");
-			if(user.permission.id == 1){
-				deleteConfirm();}
-			else {
+			if(user.permission.id == 1)
+			{
+				deleteConfirm();
+			}
+			else
+			{
 				alert("You don't have the permission to delete a project");
 			}
 		}
@@ -6661,110 +6664,110 @@ function saveEvaluatedRules()
 	console.log("evalRules" , RULES);
 	console.log(projectID, PROJECT_DATA);
 	
-	var numAndStage = RULES[0].passed;
-	var permits = RULES[1].passed;
-	var hvac = RULES[2].passed;
-	var refrigeration = RULES[3].passed;
-	var permitsTBD = RULES[4].passed;
-	var stageAndStatus = RULES[5].passed;
-	var project = RULES[6].passed;
-	
-	var lateProposal = RULES[7].passed;
-	var lateBudgetary = RULES[8].passed;
-	var lateTurnover = RULES[9].passed;
-	var emptyInitiation = RULES[10].passed;
-	var earlierSchedTurnover = RULES[11].passed;
-	var emptyCost = RULES[12].passed;
-	var emptyCustNum = RULES[13].passed;
-	var actualAndShouldInvoice = RULES[14].passed;
-	var zeroShouldInvoice = RULES[15].passed;
-	var zeroActualInvoice = RULES[16].passed;
-	var earlierSiteSurvey = RULES[17].passed;
-	
-	var earlierDueDate = RULES[18].passed;
-	
-	var buildingReq = RULES[19].passed;
-	var ceilingReq = RULES[20].passed;
-	var mechanicalReq = RULES[21].passed;
-	var electricalReq = RULES[22].passed;
-	var plumbingReq = RULES[23].passed;
-	var buildingPermitReqTBD = RULES[24].passed;
-	var gasReq = RULES[25].passed;
-	var sprinklerReq = RULES[26].passed;
-	var fireAlarmReq = RULES[27].passed;
-	var lowVoltageReq = RULES[28].passed;
-	var ceilingPermitReqTBD = RULES[29].passed;
-	var mechPermitReqTBD = RULES[30].passed;
-	var elecPermitReqTBD = RULES[31].passed;
-	var plumbingPermitReqTBD = RULES[32].passed;
-	var gasPermitReqTBD = RULES[33].passed;
-	var sprinklerPermitReqTBD = RULES[34].passed;
-	var firePermitReqTBD = RULES[35].passed;
-	var lowVolPermitReqTBD = RULES[36].passed;
-	var buildingInspReqTBD = RULES[37].passed;
-	var ceilingInspReqTBD = RULES[38].passed;
-	var mechInspReqTBD = RULES[39].passed;
-	var elecInspReqTBD = RULES[40].passed;
-	var plumbingInspReqTBD = RULES[41].passed;
-	var gasInspReqTBD = RULES[42].passed;
-	var sprinklerInspReqTBD = RULES[43].passed;
-	var fireInspReqTBD = RULES[44].passed;
-	var lowVolInspReqTBD = RULES[45].passed;
-	var buildingPermitStatTBD = RULES[46].passed;
-	var ceilingPermitStatTBD = RULES[47].passed;
-	var mechPermitStatTBD = RULES[48].passed;
-	var elecPermitStatTBD = RULES[49].passed;
-	var plumbingPermitStatTBD = RULES[50].passed;
-	var gasPermitStatTBD = RULES[51].passed;
-	var sprinklerPermitStatTBD = RULES[52].passed;
-	var firePermitStatTBD = RULES[53].passed;
-	var lowVolPermitStatTBD = RULES[54].passed;
-	var buildingInspStatTBD = RULES[55].passed;
-	var ceilingInspStatTBD = RULES[56].passed;
-	var mechInspStatTBD = RULES[58].passed;
-	var elecInspStatTBD = RULES[57].passed;
-	var plumbingInspStatTBD = RULES[59].passed;
-	var gasInspStatTBD = RULES[60].passed;
-	var sprinklerInspStatTBD = RULES[61].passed;
-	var fireInspStatTBD = RULES[62].passed;
-	var lowVolInspStatTBD = RULES[63].passed;
-
-	var buildingPermitYesNa = RULES[64].passed;
-	var ceilingPermitYesNa = RULES[65].passed;
-	var mechPermitYesNa = RULES[66].passed;
-	var elecPermitYesNa = RULES[67].passed;
-	var plumbingPermitYesNa = RULES[68].passed;
-	var gasPermitYesNa = RULES[69].passed;
-	var sprinklerPermitYesNa = RULES[70].passed;
-	var firePermitYesNa = RULES[71].passed;
-	var lowVolPermitYesNa = RULES[72].passed;
-	var buildingInspYesNa = RULES[73].passed;
-	var ceilingInspYesNa = RULES[74].passed;
-	var mechInspYesNa = RULES[75].passed;
-	var elecInspYesNa = RULES[76].passed;
-	var plumbingInspYesNa = RULES[77].passed;
-	var gasInspYesNa = RULES[78].passed;
-	var sprinklerInspYesNa = RULES[79].passed;
-	var fireInspYesNa = RULES[80].passed;
-	var lowVolInspYesNa = RULES[81].passed;
-	var buildingPermitNoYes = RULES[82].passed;
-	var ceilingPermitNoYes = RULES[83].passed;
-	var mechPermitNoYes = RULES[84].passed;
-	var elecPermitNoYes = RULES[85].passed;
-	var plumbingPermitNoYes = RULES[86].passed;
-	var gasPermitNoYes = RULES[87].passed;
-	var sprinklerPermitNoYes = RULES[88].passed;
-	var firePermitNoYes = RULES[89].passed;
-	var lowVolPermitNoYes = RULES[90].passed;
-	var buildingInspNoYes = RULES[91].passed;
-	var ceilingInspNoYes = RULES[92].passed;
-	var mechInspNoYes = RULES[93].passed;
-	var elecInspNoYes = RULES[94].passed;
-	var plumbingInspNoYes = RULES[95].passed;
-	var gasInspNoYes = RULES[96].passed;
-	var sprinklerInspNoYes = RULES[97].passed;
-	var fireInspNoYes = RULES[98].passed;
-	var lowVolInspNoYes = RULES[99].passed;
+//	var numAndStage = RULES[0].passed;
+//	var permits = RULES[1].passed;
+//	var hvac = RULES[2].passed;
+//	var refrigeration = RULES[3].passed;
+//	var permitsTBD = RULES[4].passed;
+//	var stageAndStatus = RULES[5].passed;
+//	var project = RULES[6].passed;
+//	
+//	var lateProposal = RULES[7].passed;
+//	var lateBudgetary = RULES[8].passed;
+//	var lateTurnover = RULES[9].passed;
+//	var emptyInitiation = RULES[10].passed;
+//	var earlierSchedTurnover = RULES[11].passed;
+//	var emptyCost = RULES[12].passed;
+//	var emptyCustNum = RULES[13].passed;
+//	var actualAndShouldInvoice = RULES[14].passed;
+//	var zeroShouldInvoice = RULES[15].passed;
+//	var zeroActualInvoice = RULES[16].passed;
+//	var earlierSiteSurvey = RULES[17].passed;
+//	
+//	var earlierDueDate = RULES[18].passed;
+//	
+//	var buildingReq = RULES[19].passed;
+//	var ceilingReq = RULES[20].passed;
+//	var mechanicalReq = RULES[21].passed;
+//	var electricalReq = RULES[22].passed;
+//	var plumbingReq = RULES[23].passed;
+//	var buildingPermitReqTBD = RULES[24].passed;
+//	var gasReq = RULES[25].passed;
+//	var sprinklerReq = RULES[26].passed;
+//	var fireAlarmReq = RULES[27].passed;
+//	var lowVoltageReq = RULES[28].passed;
+//	var ceilingPermitReqTBD = RULES[29].passed;
+//	var mechPermitReqTBD = RULES[30].passed;
+//	var elecPermitReqTBD = RULES[31].passed;
+//	var plumbingPermitReqTBD = RULES[32].passed;
+//	var gasPermitReqTBD = RULES[33].passed;
+//	var sprinklerPermitReqTBD = RULES[34].passed;
+//	var firePermitReqTBD = RULES[35].passed;
+//	var lowVolPermitReqTBD = RULES[36].passed;
+//	var buildingInspReqTBD = RULES[37].passed;
+//	var ceilingInspReqTBD = RULES[38].passed;
+//	var mechInspReqTBD = RULES[39].passed;
+//	var elecInspReqTBD = RULES[40].passed;
+//	var plumbingInspReqTBD = RULES[41].passed;
+//	var gasInspReqTBD = RULES[42].passed;
+//	var sprinklerInspReqTBD = RULES[43].passed;
+//	var fireInspReqTBD = RULES[44].passed;
+//	var lowVolInspReqTBD = RULES[45].passed;
+//	var buildingPermitStatTBD = RULES[46].passed;
+//	var ceilingPermitStatTBD = RULES[47].passed;
+//	var mechPermitStatTBD = RULES[48].passed;
+//	var elecPermitStatTBD = RULES[49].passed;
+//	var plumbingPermitStatTBD = RULES[50].passed;
+//	var gasPermitStatTBD = RULES[51].passed;
+//	var sprinklerPermitStatTBD = RULES[52].passed;
+//	var firePermitStatTBD = RULES[53].passed;
+//	var lowVolPermitStatTBD = RULES[54].passed;
+//	var buildingInspStatTBD = RULES[55].passed;
+//	var ceilingInspStatTBD = RULES[56].passed;
+//	var mechInspStatTBD = RULES[58].passed;
+//	var elecInspStatTBD = RULES[57].passed;
+//	var plumbingInspStatTBD = RULES[59].passed;
+//	var gasInspStatTBD = RULES[60].passed;
+//	var sprinklerInspStatTBD = RULES[61].passed;
+//	var fireInspStatTBD = RULES[62].passed;
+//	var lowVolInspStatTBD = RULES[63].passed;
+//
+//	var buildingPermitYesNa = RULES[64].passed;
+//	var ceilingPermitYesNa = RULES[65].passed;
+//	var mechPermitYesNa = RULES[66].passed;
+//	var elecPermitYesNa = RULES[67].passed;
+//	var plumbingPermitYesNa = RULES[68].passed;
+//	var gasPermitYesNa = RULES[69].passed;
+//	var sprinklerPermitYesNa = RULES[70].passed;
+//	var firePermitYesNa = RULES[71].passed;
+//	var lowVolPermitYesNa = RULES[72].passed;
+//	var buildingInspYesNa = RULES[73].passed;
+//	var ceilingInspYesNa = RULES[74].passed;
+//	var mechInspYesNa = RULES[75].passed;
+//	var elecInspYesNa = RULES[76].passed;
+//	var plumbingInspYesNa = RULES[77].passed;
+//	var gasInspYesNa = RULES[78].passed;
+//	var sprinklerInspYesNa = RULES[79].passed;
+//	var fireInspYesNa = RULES[80].passed;
+//	var lowVolInspYesNa = RULES[81].passed;
+//	var buildingPermitNoYes = RULES[82].passed;
+//	var ceilingPermitNoYes = RULES[83].passed;
+//	var mechPermitNoYes = RULES[84].passed;
+//	var elecPermitNoYes = RULES[85].passed;
+//	var plumbingPermitNoYes = RULES[86].passed;
+//	var gasPermitNoYes = RULES[87].passed;
+//	var sprinklerPermitNoYes = RULES[88].passed;
+//	var firePermitNoYes = RULES[89].passed;
+//	var lowVolPermitNoYes = RULES[90].passed;
+//	var buildingInspNoYes = RULES[91].passed;
+//	var ceilingInspNoYes = RULES[92].passed;
+//	var mechInspNoYes = RULES[93].passed;
+//	var elecInspNoYes = RULES[94].passed;
+//	var plumbingInspNoYes = RULES[95].passed;
+//	var gasInspNoYes = RULES[96].passed;
+//	var sprinklerInspNoYes = RULES[97].passed;
+//	var fireInspNoYes = RULES[98].passed;
+//	var lowVolInspNoYes = RULES[99].passed;
 	
 	//var OpenStatus = RULES[119].passed;
 	//var PassedDueDate = RULES[120].passed;
@@ -6773,143 +6776,143 @@ function saveEvaluatedRules()
 ////	var asBuilt = RULES[].passed;
 ////	var closeoutPhotos = RULES[].passed;
 //		
-	if(!projectID)
-	{
-		alert("Server Error! (Project ID)");
-		return;
-	}
-	
-	var domain = 'project';
-	var action = 'saveEvalRules';
-	
-	$.ajax({
-		type: 'POST',
-		url: 'Project',
-		data: {
-			'domain': domain,
-			'action': action,
-			'projectID': projectID,
-			
-			'mcsNumberAndStage': numAndStage,
-			'permits': permits,
-			'hvac': hvac,
-			'refrigeration': refrigeration,
-			'permitsTBD': permitsTBD,
-			'stageAndStatus': stageAndStatus,
-			'project': project,
-			
-			'lateProposal': lateProposal,
-		    'lateBudgetary': lateBudgetary,
-			'lateTurnover': lateTurnover,
-			'emptyInitiation': emptyInitiation,
-			'earlierScheduledTurnover': earlierSchedTurnover,
-			'earlierSiteSurvey': earlierSiteSurvey,
-			
-			'emptyCost': emptyCost,
-			'emptyCustomerNumber': emptyCustNum,
-			'actualAndShouldInvoice': actualAndShouldInvoice,
-			'zeroShouldInvoice': zeroShouldInvoice,
-			'zeroActualInvoice': zeroActualInvoice,
-
-			//'earlierDueDate': earlierDueDate,
-			
-			'buildingRequired': buildingReq,
-			'ceilingRequired': ceilingReq,
-			'mechanicalRequired': mechanicalReq,
-			'electricalRequired': electricalReq,
-			'plumbingRequired': plumbingReq,
-			'buildingPermitReqTBD': buildingPermitReqTBD,
-			'gasRequired': gasReq,
-			'sprinklerRequired': sprinklerReq,
-			'fireAlarmRequired': fireAlarmReq,
-			'lowVoltageRequired': lowVoltageReq,
-			'ceilingPermitReqTBD' : ceilingPermitReqTBD,
-			'mechanicalPermitReqTBD' : mechPermitReqTBD,
-			'electricalPermitReqTBD' : elecPermitReqTBD, 
-			'plumbingPermitReqTBD' : plumbingPermitReqTBD,
-			'gasPermitReqTBD' : gasPermitReqTBD,
-			'sprinklerPermitReqTBD' : sprinklerPermitReqTBD,
-			'fireAlarmPermitReqTBD' : firePermitReqTBD,
-			'lowVoltagePermitReqTBD' : lowVolPermitReqTBD,
-			'buildingInspReqTBD' : buildingInspReqTBD,
-			'ceilingInspReqTBD' : ceilingInspReqTBD,
-			'mechanicalInspReqTBD' : mechInspReqTBD,
-			'electricalInspReqTBD' :elecInspReqTBD,
-			'plumbingInspReqTBD' : plumbingInspReqTBD,
-			'gasInspReqTBD' : gasInspReqTBD,
-			'sprinklerInspReqTBD' : sprinklerInspReqTBD,
-			'fireAlarmInspReqTBD' : fireInspReqTBD,
-			'lowVoltageInspReqTBD' : lowVolInspReqTBD,
-			'buildingPermitStatusTBD' : buildingPermitStatTBD,
-			'ceilingPermitStatusTBD' : ceilingPermitStatTBD,
-			'mechanicalPermitStatusTBD' : mechPermitStatTBD,
-			'electricalPermitStatusTBD' : elecPermitStatTBD, 
-			'plumbingPermitStatusTBD' : plumbingPermitStatTBD,
-			'gasPermitStatusTBD' : gasPermitStatTBD,
-			'sprinklerPermitStatusTBD' : sprinklerPermitStatTBD,
-			'fireAlarmPermitStatusTBD' : firePermitStatTBD,
-			'lowVoltagePermitStatusTBD' : lowVolPermitStatTBD,
-			'buildingInspStatusTBD' : buildingInspStatTBD,
-			'ceilingInspStatusTBD' : ceilingInspStatTBD,
-			'mechanicalInspStatusTBD' : mechInspStatTBD,
-			'electricalInspStatusTBD' :elecInspStatTBD,
-			'plumbingInspStatusTBD' : plumbingInspStatTBD,
-			'gasInspStatusTBD' : gasInspStatTBD,
-			'sprinklerInspStatusTBD' : sprinklerInspStatTBD,
-			'fireAlarmInspStatusTBD' : fireInspStatTBD,
-			'lowVoltageInspStatusTBD' : lowVolInspStatTBD,
-			'buildingPermitYesNa' : buildingPermitYesNa,
-			'ceilingPermitYesNa' : ceilingPermitYesNa,
-			'mechanicalPermitYesNa' : mechPermitYesNa, 
-			'electricalPermitYesNa' : elecPermitYesNa,
-			'plumbingPermitYesNa' : plumbingPermitYesNa, 
-			'gasPermitYesNa' : gasPermitYesNa, 
-			'sprinklerPermitYesNa' : sprinklerPermitYesNa,
-			'fireAlarmPermitYesNa' : firePermitYesNa,
-			'lowVoltagePermitYesNa' : lowVolPermitYesNa,
-			'buildingInspYesNa' : buildingInspYesNa,
-			'ceilingInspYesNa' : ceilingInspYesNa,
-			'mechanicalInspYesNa' : mechInspYesNa,
-			'electricalInspYesNa' : elecInspYesNa,
-			'plumbingInspYesNa' : plumbingInspYesNa,
-			'gasInspYesNa' : gasInspYesNa,
-			'sprinklerInspYesNa' : sprinklerInspYesNa,
-			'fireAlarmInspYesNa' : fireInspYesNa,
-			'lowVoltageInspYesNa' : lowVolInspYesNa,
-			'buildingPermitNoYes' : buildingPermitNoYes,
-			'ceilingPermitNoYes' : ceilingPermitNoYes,
-			'mechanicalPermitNoYes' : mechPermitNoYes,
-			'electricalPermitNoYes' : elecPermitNoYes,
-			'plumbingPermitNoYes' : plumbingPermitNoYes,
-			'gasPermitNoYes' : gasPermitNoYes,
-			'sprinklerPermitNoYes' : sprinklerPermitNoYes,
-			'fireAlarmPermitNoYes' : firePermitNoYes,
-			'lowVoltagePermitNoYes' : lowVolPermitNoYes,
-			'buildingInspNoYes' : buildingInspNoYes,
-			'ceilingInspNoYes' : ceilingInspNoYes,
-			'mechanicalInspNoYes' : mechInspNoYes,
-			'electricalInspNoYes' : elecInspNoYes,
-			'plumbingInspNoYes' : plumbingInspNoYes,
-			'gasInspNoYes' : gasInspNoYes,
-			'sprinklerInspNoYes' : sprinklerInspNoYes,
-			'fireAlarmInspNoYes' : fireInspNoYes,
-			'lowVoltageInspNoYes' : lowVolInspNoYes,
+//	if(!projectID)
+//	{
+//		alert("Server Error! (Project ID)");
+//		return;
+//	}
+//	
+//	var domain = 'project';
+//	var action = 'saveEvalRules';
+//	
+//	$.ajax({
+//		type: 'POST',
+//		url: 'Project',
+//		data: {
+//			'domain': domain,
+//			'action': action,
+//			'projectID': projectID,
+//			
+//			'mcsNumberAndStage': numAndStage,
+//			'permits': permits,
+//			'hvac': hvac,
+//			'refrigeration': refrigeration,
+//			'permitsTBD': permitsTBD,
+//			'stageAndStatus': stageAndStatus,
+//			'project': project,
+//			
+//			'lateProposal': lateProposal,
+//		    'lateBudgetary': lateBudgetary,
+//			'lateTurnover': lateTurnover,
+//			'emptyInitiation': emptyInitiation,
+//			'earlierScheduledTurnover': earlierSchedTurnover,
+//			'earlierSiteSurvey': earlierSiteSurvey,
+//			
+//			'emptyCost': emptyCost,
+//			'emptyCustomerNumber': emptyCustNum,
+//			'actualAndShouldInvoice': actualAndShouldInvoice,
+//			'zeroShouldInvoice': zeroShouldInvoice,
+//			'zeroActualInvoice': zeroActualInvoice,
+//
+//			//'earlierDueDate': earlierDueDate,
+//			
+//			'buildingRequired': buildingReq,
+//			'ceilingRequired': ceilingReq,
+//			'mechanicalRequired': mechanicalReq,
+//			'electricalRequired': electricalReq,
+//			'plumbingRequired': plumbingReq,
+//			'buildingPermitReqTBD': buildingPermitReqTBD,
+//			'gasRequired': gasReq,
+//			'sprinklerRequired': sprinklerReq,
+//			'fireAlarmRequired': fireAlarmReq,
+//			'lowVoltageRequired': lowVoltageReq,
+//			'ceilingPermitReqTBD' : ceilingPermitReqTBD,
+//			'mechanicalPermitReqTBD' : mechPermitReqTBD,
+//			'electricalPermitReqTBD' : elecPermitReqTBD, 
+//			'plumbingPermitReqTBD' : plumbingPermitReqTBD,
+//			'gasPermitReqTBD' : gasPermitReqTBD,
+//			'sprinklerPermitReqTBD' : sprinklerPermitReqTBD,
+//			'fireAlarmPermitReqTBD' : firePermitReqTBD,
+//			'lowVoltagePermitReqTBD' : lowVolPermitReqTBD,
+//			'buildingInspReqTBD' : buildingInspReqTBD,
+//			'ceilingInspReqTBD' : ceilingInspReqTBD,
+//			'mechanicalInspReqTBD' : mechInspReqTBD,
+//			'electricalInspReqTBD' :elecInspReqTBD,
+//			'plumbingInspReqTBD' : plumbingInspReqTBD,
+//			'gasInspReqTBD' : gasInspReqTBD,
+//			'sprinklerInspReqTBD' : sprinklerInspReqTBD,
+//			'fireAlarmInspReqTBD' : fireInspReqTBD,
+//			'lowVoltageInspReqTBD' : lowVolInspReqTBD,
+//			'buildingPermitStatusTBD' : buildingPermitStatTBD,
+//			'ceilingPermitStatusTBD' : ceilingPermitStatTBD,
+//			'mechanicalPermitStatusTBD' : mechPermitStatTBD,
+//			'electricalPermitStatusTBD' : elecPermitStatTBD, 
+//			'plumbingPermitStatusTBD' : plumbingPermitStatTBD,
+//			'gasPermitStatusTBD' : gasPermitStatTBD,
+//			'sprinklerPermitStatusTBD' : sprinklerPermitStatTBD,
+//			'fireAlarmPermitStatusTBD' : firePermitStatTBD,
+//			'lowVoltagePermitStatusTBD' : lowVolPermitStatTBD,
+//			'buildingInspStatusTBD' : buildingInspStatTBD,
+//			'ceilingInspStatusTBD' : ceilingInspStatTBD,
+//			'mechanicalInspStatusTBD' : mechInspStatTBD,
+//			'electricalInspStatusTBD' :elecInspStatTBD,
+//			'plumbingInspStatusTBD' : plumbingInspStatTBD,
+//			'gasInspStatusTBD' : gasInspStatTBD,
+//			'sprinklerInspStatusTBD' : sprinklerInspStatTBD,
+//			'fireAlarmInspStatusTBD' : fireInspStatTBD,
+//			'lowVoltageInspStatusTBD' : lowVolInspStatTBD,
+//			'buildingPermitYesNa' : buildingPermitYesNa,
+//			'ceilingPermitYesNa' : ceilingPermitYesNa,
+//			'mechanicalPermitYesNa' : mechPermitYesNa, 
+//			'electricalPermitYesNa' : elecPermitYesNa,
+//			'plumbingPermitYesNa' : plumbingPermitYesNa, 
+//			'gasPermitYesNa' : gasPermitYesNa, 
+//			'sprinklerPermitYesNa' : sprinklerPermitYesNa,
+//			'fireAlarmPermitYesNa' : firePermitYesNa,
+//			'lowVoltagePermitYesNa' : lowVolPermitYesNa,
+//			'buildingInspYesNa' : buildingInspYesNa,
+//			'ceilingInspYesNa' : ceilingInspYesNa,
+//			'mechanicalInspYesNa' : mechInspYesNa,
+//			'electricalInspYesNa' : elecInspYesNa,
+//			'plumbingInspYesNa' : plumbingInspYesNa,
+//			'gasInspYesNa' : gasInspYesNa,
+//			'sprinklerInspYesNa' : sprinklerInspYesNa,
+//			'fireAlarmInspYesNa' : fireInspYesNa,
+//			'lowVoltageInspYesNa' : lowVolInspYesNa,
+//			'buildingPermitNoYes' : buildingPermitNoYes,
+//			'ceilingPermitNoYes' : ceilingPermitNoYes,
+//			'mechanicalPermitNoYes' : mechPermitNoYes,
+//			'electricalPermitNoYes' : elecPermitNoYes,
+//			'plumbingPermitNoYes' : plumbingPermitNoYes,
+//			'gasPermitNoYes' : gasPermitNoYes,
+//			'sprinklerPermitNoYes' : sprinklerPermitNoYes,
+//			'fireAlarmPermitNoYes' : firePermitNoYes,
+//			'lowVoltagePermitNoYes' : lowVolPermitNoYes,
+//			'buildingInspNoYes' : buildingInspNoYes,
+//			'ceilingInspNoYes' : ceilingInspNoYes,
+//			'mechanicalInspNoYes' : mechInspNoYes,
+//			'electricalInspNoYes' : elecInspNoYes,
+//			'plumbingInspNoYes' : plumbingInspNoYes,
+//			'gasInspNoYes' : gasInspNoYes,
+//			'sprinklerInspNoYes' : sprinklerInspNoYes,
+//			'fireAlarmInspNoYes' : fireInspNoYes,
+//			'lowVoltageInspNoYes' : lowVolInspNoYes,
 			//'OpenStatus' : OpenStatus,
 			//'PassedDueDate' : PassedDueDate
 //			
 ////			'punchList' : punchList,
 ////			'asBuilt' : asBuilt,
 ////			'closeoutPhotos' : closeoutPhotos
-			
-		},
-		complete: function (data) {
-			
-			console.log(data);
-			projectID = data.responseJSON;	
-			alert("Scorecard Updated");
-			editScorecard(this.id);
-		}
-	});
+//			
+//		},
+//		complete: function (data) {
+//			
+//			console.log(data);
+//			projectID = data.responseJSON;	
+//			alert("Scorecard Updated");
+//			editScorecard(this.id);
+//		}
+//	});
 }
 
 function fillScorecard()
@@ -6939,110 +6942,110 @@ function adjustScore(data)
 {
 	console.log("adjustScore", PROJECT_DATA);
 	 
-	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
-    var permits = PROJECT_DATA.permitsEval;
-    var hvac = PROJECT_DATA.hvac;
-    var refrigeration = PROJECT_DATA.refrigeration;
-    var permitsTBD = PROJECT_DATA.permitsTBD;
-    var stageAndStatus = PROJECT_DATA.stageAndStatus;
-    var project = PROJECT_DATA.project;
-    
-    var lateProposal = PROJECT_DATA.lateProposal;
-    var lateBudgetary = PROJECT_DATA.lateBudgetary;
-    var lateTurnover = PROJECT_DATA.lateTurnover;
-    var emptyInitiation = PROJECT_DATA.emptyInitiation;
-    var earlierSchedTurnover = PROJECT_DATA.earlierSchedTurnover;
-    var earlierSiteSurvey = PROJECT_DATA.earlierSiteSurvey;
-   
-    var emptyCost = PROJECT_DATA.emptyCost;
-	var emptyCustNum = PROJECT_DATA.emptyCustNum;
-	var actualAndShouldInvoice = PROJECT_DATA.actualAndShouldInvoice;
-    var zeroShouldInvoice = PROJECT_DATA.zeroShouldInvoice;
-    var zeroActualInvoice = PROJECT_DATA.zeroActualInvoice;
-    
-    var earlierDueDate = PROJECT_DATA.earlierDueDate;
-    
-    var buildingRequired = PROJECT_DATA.buildingReq;
-    var ceilingRequired = PROJECT_DATA.ceilingReq;
-    var mechanicalRequired = PROJECT_DATA.mechanicalReq;
-    var electricalRequired = PROJECT_DATA.electricalReq;
-    var plumbingRequired = PROJECT_DATA.plumbingReq;
-    var gasRequired = PROJECT_DATA.gasReq;
-    var sprinklerRequired = PROJECT_DATA.sprinklerReq;
-    var fireAlarmRequired = PROJECT_DATA.fireAlarmReq;
-    var lowVoltageRequired = PROJECT_DATA.lowVoltageReq;
-    var buildingPermitReqTBD = PROJECT_DATA.buildingPermitReqTBD;
-	var ceilingPermitReqTBD = PROJECT_DATA.ceilingPermitReqTBD;
-	var mechPermitReqTBD = PROJECT_DATA.mechanicalPermitReqTBD;	
-	var elecPermitReqTBD = PROJECT_DATA.electricalPermitReqTBD; 
-	var plumbingPermitReqTBD = PROJECT_DATA.plumbingPermitReqTBD;
-	var gasPermitReqTBD = PROJECT_DATA.gasPermitReqTBD; 
-	var sprinklerPermitReqTBD = PROJECT_DATA.sprinklerPermitReqTBD; 
-	var firePermitReqTBD = PROJECT_DATA.fireAlarmPermitReqTBD;
-	var lowVolPermitReqTBD = PROJECT_DATA.lowVoltagePermitReqTBD;
-	var buildingInspReqTBD = PROJECT_DATA.buildingInspReqTBD;
-	var ceilingInspReqTBD = PROJECT_DATA.ceilingInspReqTBD;
-	var mechInspReqTBD = PROJECT_DATA.mechanicalInspReqTBD;
-	var elecInspReqTBD = PROJECT_DATA.electricalInspReqTBD;
-	var plumbingInspReqTBD = PROJECT_DATA.plumbingInspReqTBD;
-	var gasInspReqTBD = PROJECT_DATA.gasInspReqTBD;
-	var sprinklerInspReqTBD = PROJECT_DATA.sprinklerInspReqTBD;
-	var fireInspReqTBD = PROJECT_DATA.fireAlarmInspReqTBD; 
-	var lowVolInspReqTBD = PROJECT_DATA.lowVoltageInspReqTBD;
-	var buildingPermitStatTBD = PROJECT_DATA.buildingPermitStatusTBD;
-	var ceilingPermitStatTBD = PROJECT_DATA.ceilingPermitStatusTBD;
-	var mechPermitStatTBD = PROJECT_DATA.mechanicalPermitStatusTBD;
-	var elecPermitStatTBD = PROJECT_DATA.electricalPermitStatusTBD; 
-	var plumbingPermitStatTBD = PROJECT_DATA.plumbingPermitStatusTBD;
-	var gasPermitStatTBD = PROJECT_DATA.gasPermitStatusTBD; 
-	var sprinklerPermitStatTBD = PROJECT_DATA.sprinklerPermitStatusTBD; 
-	var firePermitStatTBD = PROJECT_DATA.fireAlarmPermitStatusTBD;
-	var lowVolPermitStatTBD = PROJECT_DATA.lowVoltagePermitStatusTBD;
-	var buildingInspStatTBD = PROJECT_DATA.buildingInspStatusTBD;
-	var ceilingInspStatTBD = PROJECT_DATA.ceilingInspStatusTBD;
-	var mechInspStatTBD = PROJECT_DATA.mechanicalInspStatusTBD;
-	var elecInspStatTBD = PROJECT_DATA.electricalInspStatusTBD;
-	var plumbingInspStatTBD = PROJECT_DATA.plumbingInspStatusTBD;
-	var gasInspStatTBD = PROJECT_DATA.gasInspStatusTBD;
-	var sprinklerInspStatTBD = PROJECT_DATA.sprinklerInspStatusTBD;
-	var fireInspStatTBD = PROJECT_DATA.fireAlarmInspStatusTBD; 
-	var lowVolInspStatTBD = PROJECT_DATA.lowVoltageInspStatusTBD;
-	var buildingPermitYesNa = PROJECT_DATA.buildingPermitYesNa;
-	var ceilingPermitYesNa = PROJECT_DATA.ceilingPermitYesNa;
-	var mechPermitYesNa = PROJECT_DATA.mechanicalPermitYesNa;
-	var elecPermitYesNa = PROJECT_DATA.electricalPermitYesNa;
-	var plumbingPermitYesNa = PROJECT_DATA.plumbingPermitYesNa;
-	var gasPermitYesNa = PROJECT_DATA.gasPermitYesNa;
-	var sprinklerPermitYesNa = PROJECT_DATA.sprinklerPermitYesNa;
-	var firePermitYesNa = PROJECT_DATA.fireAlarmPermitYesNa;
-	var lowVolPermitYesNa = PROJECT_DATA.lowVoltagePermitYesNa;
-	var buildingInspYesNa = PROJECT_DATA.buildingInspYesNa;
-	var ceilingInspYesNa = PROJECT_DATA.ceilingInspYesNa;
-	var mechInspYesNa = PROJECT_DATA.mechanicalInspYesNa;
-	var elecInspYesNa = PROJECT_DATA.electricalInspYesNa;
-	var plumbingInspYesNa = PROJECT_DATA.plumbingInspYesNa;
-	var gasInspYesNa = PROJECT_DATA.gasInspYesNa;
-	var sprinklerInspYesNa = PROJECT_DATA.sprinklerInspYesNa;
-	var fireInspYesNa = PROJECT_DATA.fireAlarmInspYesNa;
-	var lowVolInspYesNa = PROJECT_DATA.lowVoltageInspYesNa;
-	var buildingPermitNoYes = PROJECT_DATA.buildingPermitNoYes;
-	var ceilingPermitNoYes = PROJECT_DATA.ceilingPermitNoYes;
-	var mechPermitNoYes = PROJECT_DATA.mechanicalPermitNoYes;
-	var elecPermitNoYes = PROJECT_DATA.electricalPermitNoYes;
-	var plumbingPermitNoYes = PROJECT_DATA.plumbingPermitNoYes;
-	var gasPermitNoYes = PROJECT_DATA.gasPermitNoYes;
-	var sprinklerPermitNoYes = PROJECT_DATA.sprinklerPermitNoYes;
-	var firePermitNoYes = PROJECT_DATA.fireAlarmPermitNoYes;
-	var lowVolPermitNoYes = PROJECT_DATA.lowVoltagePermitNoYes;
-	var buildingInspNoYes = PROJECT_DATA.buildingInspNoYes;
-	var ceilingInspNoYes = PROJECT_DATA.ceilingInspNoYes;
-	var mechInspNoYes = PROJECT_DATA.mechanicalInspNoYes;
-	var elecInspNoYes = PROJECT_DATA.electricalInspNoYes;
-	var plumbingInspNoYes = PROJECT_DATA.plumbingInspNoYes;
-	var gasInspNoYes = PROJECT_DATA.gasInspNoYes;
-	var sprinklerInspNoYes = PROJECT_DATA.sprinklerInspNoYes;
-	var fireInspNoYes = PROJECT_DATA.fireAlarmInspNoYes;
-	var lowVolInspNoYes = PROJECT_DATA.lowVoltageInspNoYes;
+//	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
+//    var permits = PROJECT_DATA.permitsEval;
+//    var hvac = PROJECT_DATA.hvac;
+//    var refrigeration = PROJECT_DATA.refrigeration;
+//    var permitsTBD = PROJECT_DATA.permitsTBD;
+//    var stageAndStatus = PROJECT_DATA.stageAndStatus;
+//    var project = PROJECT_DATA.project;
+//    
+//    var lateProposal = PROJECT_DATA.lateProposal;
+//    var lateBudgetary = PROJECT_DATA.lateBudgetary;
+//    var lateTurnover = PROJECT_DATA.lateTurnover;
+//    var emptyInitiation = PROJECT_DATA.emptyInitiation;
+//    var earlierSchedTurnover = PROJECT_DATA.earlierSchedTurnover;
+//    var earlierSiteSurvey = PROJECT_DATA.earlierSiteSurvey;
+//   
+//    var emptyCost = PROJECT_DATA.emptyCost;
+//	var emptyCustNum = PROJECT_DATA.emptyCustNum;
+//	var actualAndShouldInvoice = PROJECT_DATA.actualAndShouldInvoice;
+//    var zeroShouldInvoice = PROJECT_DATA.zeroShouldInvoice;
+//    var zeroActualInvoice = PROJECT_DATA.zeroActualInvoice;
+//    
+//    var earlierDueDate = PROJECT_DATA.earlierDueDate;
+//    
+//    var buildingRequired = PROJECT_DATA.buildingReq;
+//    var ceilingRequired = PROJECT_DATA.ceilingReq;
+//    var mechanicalRequired = PROJECT_DATA.mechanicalReq;
+//    var electricalRequired = PROJECT_DATA.electricalReq;
+//    var plumbingRequired = PROJECT_DATA.plumbingReq;
+//    var gasRequired = PROJECT_DATA.gasReq;
+//    var sprinklerRequired = PROJECT_DATA.sprinklerReq;
+//    var fireAlarmRequired = PROJECT_DATA.fireAlarmReq;
+//    var lowVoltageRequired = PROJECT_DATA.lowVoltageReq;
+//    var buildingPermitReqTBD = PROJECT_DATA.buildingPermitReqTBD;
+//	var ceilingPermitReqTBD = PROJECT_DATA.ceilingPermitReqTBD;
+//	var mechPermitReqTBD = PROJECT_DATA.mechanicalPermitReqTBD;	
+//	var elecPermitReqTBD = PROJECT_DATA.electricalPermitReqTBD; 
+//	var plumbingPermitReqTBD = PROJECT_DATA.plumbingPermitReqTBD;
+//	var gasPermitReqTBD = PROJECT_DATA.gasPermitReqTBD; 
+//	var sprinklerPermitReqTBD = PROJECT_DATA.sprinklerPermitReqTBD; 
+//	var firePermitReqTBD = PROJECT_DATA.fireAlarmPermitReqTBD;
+//	var lowVolPermitReqTBD = PROJECT_DATA.lowVoltagePermitReqTBD;
+//	var buildingInspReqTBD = PROJECT_DATA.buildingInspReqTBD;
+//	var ceilingInspReqTBD = PROJECT_DATA.ceilingInspReqTBD;
+//	var mechInspReqTBD = PROJECT_DATA.mechanicalInspReqTBD;
+//	var elecInspReqTBD = PROJECT_DATA.electricalInspReqTBD;
+//	var plumbingInspReqTBD = PROJECT_DATA.plumbingInspReqTBD;
+//	var gasInspReqTBD = PROJECT_DATA.gasInspReqTBD;
+//	var sprinklerInspReqTBD = PROJECT_DATA.sprinklerInspReqTBD;
+//	var fireInspReqTBD = PROJECT_DATA.fireAlarmInspReqTBD; 
+//	var lowVolInspReqTBD = PROJECT_DATA.lowVoltageInspReqTBD;
+//	var buildingPermitStatTBD = PROJECT_DATA.buildingPermitStatusTBD;
+//	var ceilingPermitStatTBD = PROJECT_DATA.ceilingPermitStatusTBD;
+//	var mechPermitStatTBD = PROJECT_DATA.mechanicalPermitStatusTBD;
+//	var elecPermitStatTBD = PROJECT_DATA.electricalPermitStatusTBD; 
+//	var plumbingPermitStatTBD = PROJECT_DATA.plumbingPermitStatusTBD;
+//	var gasPermitStatTBD = PROJECT_DATA.gasPermitStatusTBD; 
+//	var sprinklerPermitStatTBD = PROJECT_DATA.sprinklerPermitStatusTBD; 
+//	var firePermitStatTBD = PROJECT_DATA.fireAlarmPermitStatusTBD;
+//	var lowVolPermitStatTBD = PROJECT_DATA.lowVoltagePermitStatusTBD;
+//	var buildingInspStatTBD = PROJECT_DATA.buildingInspStatusTBD;
+//	var ceilingInspStatTBD = PROJECT_DATA.ceilingInspStatusTBD;
+//	var mechInspStatTBD = PROJECT_DATA.mechanicalInspStatusTBD;
+//	var elecInspStatTBD = PROJECT_DATA.electricalInspStatusTBD;
+//	var plumbingInspStatTBD = PROJECT_DATA.plumbingInspStatusTBD;
+//	var gasInspStatTBD = PROJECT_DATA.gasInspStatusTBD;
+//	var sprinklerInspStatTBD = PROJECT_DATA.sprinklerInspStatusTBD;
+//	var fireInspStatTBD = PROJECT_DATA.fireAlarmInspStatusTBD; 
+//	var lowVolInspStatTBD = PROJECT_DATA.lowVoltageInspStatusTBD;
+//	var buildingPermitYesNa = PROJECT_DATA.buildingPermitYesNa;
+//	var ceilingPermitYesNa = PROJECT_DATA.ceilingPermitYesNa;
+//	var mechPermitYesNa = PROJECT_DATA.mechanicalPermitYesNa;
+//	var elecPermitYesNa = PROJECT_DATA.electricalPermitYesNa;
+//	var plumbingPermitYesNa = PROJECT_DATA.plumbingPermitYesNa;
+//	var gasPermitYesNa = PROJECT_DATA.gasPermitYesNa;
+//	var sprinklerPermitYesNa = PROJECT_DATA.sprinklerPermitYesNa;
+//	var firePermitYesNa = PROJECT_DATA.fireAlarmPermitYesNa;
+//	var lowVolPermitYesNa = PROJECT_DATA.lowVoltagePermitYesNa;
+//	var buildingInspYesNa = PROJECT_DATA.buildingInspYesNa;
+//	var ceilingInspYesNa = PROJECT_DATA.ceilingInspYesNa;
+//	var mechInspYesNa = PROJECT_DATA.mechanicalInspYesNa;
+//	var elecInspYesNa = PROJECT_DATA.electricalInspYesNa;
+//	var plumbingInspYesNa = PROJECT_DATA.plumbingInspYesNa;
+//	var gasInspYesNa = PROJECT_DATA.gasInspYesNa;
+//	var sprinklerInspYesNa = PROJECT_DATA.sprinklerInspYesNa;
+//	var fireInspYesNa = PROJECT_DATA.fireAlarmInspYesNa;
+//	var lowVolInspYesNa = PROJECT_DATA.lowVoltageInspYesNa;
+//	var buildingPermitNoYes = PROJECT_DATA.buildingPermitNoYes;
+//	var ceilingPermitNoYes = PROJECT_DATA.ceilingPermitNoYes;
+//	var mechPermitNoYes = PROJECT_DATA.mechanicalPermitNoYes;
+//	var elecPermitNoYes = PROJECT_DATA.electricalPermitNoYes;
+//	var plumbingPermitNoYes = PROJECT_DATA.plumbingPermitNoYes;
+//	var gasPermitNoYes = PROJECT_DATA.gasPermitNoYes;
+//	var sprinklerPermitNoYes = PROJECT_DATA.sprinklerPermitNoYes;
+//	var firePermitNoYes = PROJECT_DATA.fireAlarmPermitNoYes;
+//	var lowVolPermitNoYes = PROJECT_DATA.lowVoltagePermitNoYes;
+//	var buildingInspNoYes = PROJECT_DATA.buildingInspNoYes;
+//	var ceilingInspNoYes = PROJECT_DATA.ceilingInspNoYes;
+//	var mechInspNoYes = PROJECT_DATA.mechanicalInspNoYes;
+//	var elecInspNoYes = PROJECT_DATA.electricalInspNoYes;
+//	var plumbingInspNoYes = PROJECT_DATA.plumbingInspNoYes;
+//	var gasInspNoYes = PROJECT_DATA.gasInspNoYes;
+//	var sprinklerInspNoYes = PROJECT_DATA.sprinklerInspNoYes;
+//	var fireInspNoYes = PROJECT_DATA.fireAlarmInspNoYes;
+//	var lowVolInspNoYes = PROJECT_DATA.lowVoltageInspNoYes;
 	
 	//var OpenStatus = PROJECT_DATA.OpenStatus;
 	//var PassedDueDate = PROJECT_DATA.PassedDueDate;
@@ -7051,107 +7054,107 @@ function adjustScore(data)
 ////	var asBuilt = PROJECT_DATA.asBuilt;
 ////	var closeoutPhotos = PROJECT_DATA.closeoutPhotos;
 
-	SCORE.McsNumberAndStage.passed = mcsNumAndStage;
-	SCORE.Permits.passed = permits;
-	SCORE.HVAC.passed = hvac;
-	SCORE.Refrigeration.passed = refrigeration;
-	SCORE.PermitsTBD.passed = permitsTBD;
-	SCORE.StageAndStatus.passed = stageAndStatus;
-	SCORE.Project.passed = project;
-	SCORE.LateProposal.passed = lateProposal;
-	SCORE.LateBudgetary.passed = lateBudgetary;
-	SCORE.LateTurnover.passed = lateTurnover;
-	SCORE.EmptyInitiation.passed = emptyInitiation;
-	SCORE.EarlierScheduledTurnover.passed = earlierSchedTurnover;
-	SCORE.EmptyCost.passed = emptyCost;
-	SCORE.EmptyCustomerNumber.passed = emptyCustNum;
-	SCORE.ActualAndShouldInvoice.passed = actualAndShouldInvoice;
-	SCORE.ZeroShouldInvoice.passed = zeroShouldInvoice;
-	SCORE.ZeroActualInvoice.passed = zeroActualInvoice;
-	SCORE.EarlierSiteSurvey.passed = earlierSiteSurvey;
-	//SCORE.EarlierDueDate.passed = earlierDueDate;
-	SCORE.EarlierDueDate.passed = "true";
-	SCORE.BuildingRequired.passed = buildingRequired;
-	SCORE.CeilingRequired.passed = ceilingRequired;
-	SCORE.MechanicalRequired.passed = mechanicalRequired;
-	SCORE.ElectricalRequired.passed = electricalRequired;
-	SCORE.PlumbingRequired.passed = plumbingRequired;
-	SCORE.BuildingPermitReqTBD.passed = buildingPermitReqTBD;
-	SCORE.GasRequired.passed = gasRequired;
-	SCORE.SprinklerRequired.passed = sprinklerRequired;
-	SCORE.FireAlarmRequired.passed = fireAlarmRequired;
-	SCORE.LowVoltageRequired.passed = lowVoltageRequired;
-	SCORE.CeilingPermitReqTBD.passed = ceilingPermitReqTBD;
-	SCORE.MechPermitReqTBD.passed = mechPermitReqTBD;
-	SCORE.ElecPermitReqTDB.passed = elecPermitReqTBD;
-	SCORE.PlumbingPermitReqTBD.passed = plumbingPermitReqTBD;
-	SCORE.GasPermitReqTBD.passed = gasPermitReqTBD;
-	SCORE.SprinklerPermitReqTBD.passed = sprinklerPermitReqTBD;
-	SCORE.FirePermitReqTBD.passed = firePermitReqTBD;
-	SCORE.LowVolPermitReqTBD.passed = lowVolPermitReqTBD;
-	SCORE.BuildingInspReqTBD.passed = buildingInspReqTBD;
-	SCORE.CeilingInspReqTBD.passed = ceilingInspReqTBD;
-	SCORE.MechInspReqTBD.passed = mechInspReqTBD;
-	SCORE.ElecInspReqTBD.passed = elecInspReqTBD;
-	SCORE.PlumbingInspReqTBD.passed = plumbingInspReqTBD;
-	SCORE.GasInspReqTBD.passed = gasInspReqTBD;
-	SCORE.SprinklerInspReqTBD.passed = sprinklerInspReqTBD;
-	SCORE.FireInspReqTBD.passed = fireInspReqTBD;
-	SCORE.LowVolInspReqTBD.passed = lowVolInspReqTBD;
-	SCORE.BuildingPermitStatusTBD.passed = buildingPermitStatTBD;
-	SCORE.CeilingPermitStatusTBD.passed = ceilingPermitStatTBD;
-	SCORE.MechPermitStatusTBD.passed = mechPermitStatTBD;
-	SCORE.ElecPermitStatusTBD.passed = elecPermitStatTBD;
-	SCORE.PlumbingPermitStatusTBD.passed = plumbingPermitStatTBD;
-	SCORE.GasPermitStatusTBD.passed = gasPermitStatTBD;
-	SCORE.SprinklerPermitStatusTBD.passed = sprinklerPermitStatTBD;
-	SCORE.FirePermitStatusTBD.passed = firePermitStatTBD;
-	SCORE.LowVolPermitStatusTBD.passed = lowVolPermitStatTBD;
-	SCORE.BuildingInspStatusTBD.passed = buildingInspStatTBD;
-	SCORE.CeilingInspStatusTBD.passed = ceilingInspStatTBD;
-	SCORE.MechInspStatusTBD.passed = mechInspStatTBD;
-	SCORE.ElecInspStatusTBD.passed = elecInspStatTBD;
-	SCORE.PlumbingInspStatusTBD.passed = plumbingInspStatTBD;
-	SCORE.GasInspStatusTBD.passed = gasInspStatTBD;
-	SCORE.SprinklerInspStatusTBD.passed = sprinklerInspStatTBD;
-	SCORE.FireInspStatusTBD.passed = fireInspStatTBD;
-	SCORE.LowVolInspStatusTBD.passed = lowVolInspStatTBD;
-	SCORE.BuildingPermitYesNa.passed = buildingPermitYesNa;
-	SCORE.CeilingPermitYesNa.passed = ceilingPermitYesNa;
-	SCORE.MechPermitYesNa.passed = mechPermitYesNa;
-	SCORE.ElecPermitYesNa.passed = elecPermitYesNa;
-	SCORE.PlumbingPermitYesNa.passed = plumbingPermitYesNa;
-	SCORE.GasPermitYesNa.passed = gasPermitYesNa;
-	SCORE.SprinklerPermitYesNa.passed = sprinklerPermitYesNa;
-	SCORE.FirePermitYesNa.passed = firePermitYesNa; 
-	SCORE.LowVolPermitYesNa.passed = lowVolPermitYesNa;
-	SCORE.BuildingInspYesNa.passed = buildingInspYesNa;
-	SCORE.CeilingInspYesNa.passed = ceilingInspYesNa;
-	SCORE.MechInspYesNa.passed = mechInspYesNa;
-	SCORE.ElecInspYesNa.passed = elecInspYesNa;
-	SCORE.PlumbingInspYesNa.passed = plumbingInspYesNa;
-	SCORE.GasInspYesNa.passed = gasInspYesNa;
-	SCORE.SprinklerInspYesNa.passed = sprinklerInspYesNa;
-	SCORE.FireInspYesNa.passed = fireInspYesNa;
-	SCORE.LowVolInspYesNa.passed = lowVolInspYesNa;
-	SCORE.BuildingPermitNoYes.passed = buildingPermitNoYes;
-	SCORE.CeilingPermitNoYes.passed = ceilingPermitNoYes;
-	SCORE.MechPermitNoYes.passed = mechPermitNoYes;
-	SCORE.ElecPermitNoYes.passed = elecPermitNoYes;
-	SCORE.PlumbingPermitNoYes.passed = plumbingPermitNoYes;
-	SCORE.GasPermitNoYes.passed = gasPermitNoYes;
-	SCORE.SprinklerPermitNoYes.passed = sprinklerPermitNoYes;
-	SCORE.FirePermitNoYes.passed = firePermitNoYes;
-	SCORE.LowVolPermitNoYes.passed = lowVolPermitNoYes;
-	SCORE.BuildingInspNoYes.passed = buildingInspNoYes;
-	SCORE.CeilingInspNoYes.passed = ceilingInspNoYes;
-	SCORE.MechInspNoYes.passed = mechInspNoYes;
-	SCORE.ElecInspNoYes.passed = elecInspNoYes;
-	SCORE.PlumbingInspNoYes.passed = plumbingInspNoYes;
-	SCORE.GasInspNoYes.passed = gasInspNoYes;
-	SCORE.SprinklerInspNoYes.passed = sprinklerInspNoYes;
-	SCORE.FireInspNoYes.passed = fireInspNoYes;
-	SCORE.LowVolInspNoYes.passed = lowVolInspNoYes;
+//	SCORE.McsNumberAndStage.passed = mcsNumAndStage;
+//	SCORE.Permits.passed = permits;
+//	SCORE.HVAC.passed = hvac;
+//	SCORE.Refrigeration.passed = refrigeration;
+//	SCORE.PermitsTBD.passed = permitsTBD;
+//	SCORE.StageAndStatus.passed = stageAndStatus;
+//	SCORE.Project.passed = project;
+//	SCORE.LateProposal.passed = lateProposal;
+//	SCORE.LateBudgetary.passed = lateBudgetary;
+//	SCORE.LateTurnover.passed = lateTurnover;
+//	SCORE.EmptyInitiation.passed = emptyInitiation;
+//	SCORE.EarlierScheduledTurnover.passed = earlierSchedTurnover;
+//	SCORE.EmptyCost.passed = emptyCost;
+//	SCORE.EmptyCustomerNumber.passed = emptyCustNum;
+//	SCORE.ActualAndShouldInvoice.passed = actualAndShouldInvoice;
+//	SCORE.ZeroShouldInvoice.passed = zeroShouldInvoice;
+//	SCORE.ZeroActualInvoice.passed = zeroActualInvoice;
+//	SCORE.EarlierSiteSurvey.passed = earlierSiteSurvey;
+//	//SCORE.EarlierDueDate.passed = earlierDueDate;
+//	SCORE.EarlierDueDate.passed = "true";
+//	SCORE.BuildingRequired.passed = buildingRequired;
+//	SCORE.CeilingRequired.passed = ceilingRequired;
+//	SCORE.MechanicalRequired.passed = mechanicalRequired;
+//	SCORE.ElectricalRequired.passed = electricalRequired;
+//	SCORE.PlumbingRequired.passed = plumbingRequired;
+//	SCORE.BuildingPermitReqTBD.passed = buildingPermitReqTBD;
+//	SCORE.GasRequired.passed = gasRequired;
+//	SCORE.SprinklerRequired.passed = sprinklerRequired;
+//	SCORE.FireAlarmRequired.passed = fireAlarmRequired;
+//	SCORE.LowVoltageRequired.passed = lowVoltageRequired;
+//	SCORE.CeilingPermitReqTBD.passed = ceilingPermitReqTBD;
+//	SCORE.MechPermitReqTBD.passed = mechPermitReqTBD;
+//	SCORE.ElecPermitReqTDB.passed = elecPermitReqTBD;
+//	SCORE.PlumbingPermitReqTBD.passed = plumbingPermitReqTBD;
+//	SCORE.GasPermitReqTBD.passed = gasPermitReqTBD;
+//	SCORE.SprinklerPermitReqTBD.passed = sprinklerPermitReqTBD;
+//	SCORE.FirePermitReqTBD.passed = firePermitReqTBD;
+//	SCORE.LowVolPermitReqTBD.passed = lowVolPermitReqTBD;
+//	SCORE.BuildingInspReqTBD.passed = buildingInspReqTBD;
+//	SCORE.CeilingInspReqTBD.passed = ceilingInspReqTBD;
+//	SCORE.MechInspReqTBD.passed = mechInspReqTBD;
+//	SCORE.ElecInspReqTBD.passed = elecInspReqTBD;
+//	SCORE.PlumbingInspReqTBD.passed = plumbingInspReqTBD;
+//	SCORE.GasInspReqTBD.passed = gasInspReqTBD;
+//	SCORE.SprinklerInspReqTBD.passed = sprinklerInspReqTBD;
+//	SCORE.FireInspReqTBD.passed = fireInspReqTBD;
+//	SCORE.LowVolInspReqTBD.passed = lowVolInspReqTBD;
+//	SCORE.BuildingPermitStatusTBD.passed = buildingPermitStatTBD;
+//	SCORE.CeilingPermitStatusTBD.passed = ceilingPermitStatTBD;
+//	SCORE.MechPermitStatusTBD.passed = mechPermitStatTBD;
+//	SCORE.ElecPermitStatusTBD.passed = elecPermitStatTBD;
+//	SCORE.PlumbingPermitStatusTBD.passed = plumbingPermitStatTBD;
+//	SCORE.GasPermitStatusTBD.passed = gasPermitStatTBD;
+//	SCORE.SprinklerPermitStatusTBD.passed = sprinklerPermitStatTBD;
+//	SCORE.FirePermitStatusTBD.passed = firePermitStatTBD;
+//	SCORE.LowVolPermitStatusTBD.passed = lowVolPermitStatTBD;
+//	SCORE.BuildingInspStatusTBD.passed = buildingInspStatTBD;
+//	SCORE.CeilingInspStatusTBD.passed = ceilingInspStatTBD;
+//	SCORE.MechInspStatusTBD.passed = mechInspStatTBD;
+//	SCORE.ElecInspStatusTBD.passed = elecInspStatTBD;
+//	SCORE.PlumbingInspStatusTBD.passed = plumbingInspStatTBD;
+//	SCORE.GasInspStatusTBD.passed = gasInspStatTBD;
+//	SCORE.SprinklerInspStatusTBD.passed = sprinklerInspStatTBD;
+//	SCORE.FireInspStatusTBD.passed = fireInspStatTBD;
+//	SCORE.LowVolInspStatusTBD.passed = lowVolInspStatTBD;
+//	SCORE.BuildingPermitYesNa.passed = buildingPermitYesNa;
+//	SCORE.CeilingPermitYesNa.passed = ceilingPermitYesNa;
+//	SCORE.MechPermitYesNa.passed = mechPermitYesNa;
+//	SCORE.ElecPermitYesNa.passed = elecPermitYesNa;
+//	SCORE.PlumbingPermitYesNa.passed = plumbingPermitYesNa;
+//	SCORE.GasPermitYesNa.passed = gasPermitYesNa;
+//	SCORE.SprinklerPermitYesNa.passed = sprinklerPermitYesNa;
+//	SCORE.FirePermitYesNa.passed = firePermitYesNa; 
+//	SCORE.LowVolPermitYesNa.passed = lowVolPermitYesNa;
+//	SCORE.BuildingInspYesNa.passed = buildingInspYesNa;
+//	SCORE.CeilingInspYesNa.passed = ceilingInspYesNa;
+//	SCORE.MechInspYesNa.passed = mechInspYesNa;
+//	SCORE.ElecInspYesNa.passed = elecInspYesNa;
+//	SCORE.PlumbingInspYesNa.passed = plumbingInspYesNa;
+//	SCORE.GasInspYesNa.passed = gasInspYesNa;
+//	SCORE.SprinklerInspYesNa.passed = sprinklerInspYesNa;
+//	SCORE.FireInspYesNa.passed = fireInspYesNa;
+//	SCORE.LowVolInspYesNa.passed = lowVolInspYesNa;
+//	SCORE.BuildingPermitNoYes.passed = buildingPermitNoYes;
+//	SCORE.CeilingPermitNoYes.passed = ceilingPermitNoYes;
+//	SCORE.MechPermitNoYes.passed = mechPermitNoYes;
+//	SCORE.ElecPermitNoYes.passed = elecPermitNoYes;
+//	SCORE.PlumbingPermitNoYes.passed = plumbingPermitNoYes;
+//	SCORE.GasPermitNoYes.passed = gasPermitNoYes;
+//	SCORE.SprinklerPermitNoYes.passed = sprinklerPermitNoYes;
+//	SCORE.FirePermitNoYes.passed = firePermitNoYes;
+//	SCORE.LowVolPermitNoYes.passed = lowVolPermitNoYes;
+//	SCORE.BuildingInspNoYes.passed = buildingInspNoYes;
+//	SCORE.CeilingInspNoYes.passed = ceilingInspNoYes;
+//	SCORE.MechInspNoYes.passed = mechInspNoYes;
+//	SCORE.ElecInspNoYes.passed = elecInspNoYes;
+//	SCORE.PlumbingInspNoYes.passed = plumbingInspNoYes;
+//	SCORE.GasInspNoYes.passed = gasInspNoYes;
+//	SCORE.SprinklerInspNoYes.passed = sprinklerInspNoYes;
+//	SCORE.FireInspNoYes.passed = fireInspNoYes;
+//	SCORE.LowVolInspNoYes.passed = lowVolInspNoYes;
 	
 //	SCORE.OpenStatus.passed = OpenStatus;
 //	SCORE.PassedDueDate.passed = PassedDueDate;
@@ -7160,106 +7163,106 @@ function adjustScore(data)
 ////	SCORE.AsBuilt.passed = asBuilt;
 ////	SCORE.CloseoutPhotos.passed = closeoutPhotos;
 //	
-	SCORE.applicableRules[0].passed = mcsNumAndStage;
-	SCORE.applicableRules[1].passed = permits;
-	SCORE.applicableRules[2].passed = hvac;
-	SCORE.applicableRules[3].passed = refrigeration;
-	SCORE.applicableRules[4].passed = permitsTBD;
-	SCORE.applicableRules[5].passed = stageAndStatus;
-	SCORE.applicableRules[6].passed = project;
-	SCORE.applicableRules[7].passed = lateProposal;
-	SCORE.applicableRules[8].passed = lateBudgetary;
-	SCORE.applicableRules[9].passed = lateTurnover;
-	SCORE.applicableRules[10].passed = emptyInitiation;
-	SCORE.applicableRules[11].passed = earlierSchedTurnover;
-	SCORE.applicableRules[12].passed = emptyCost;
-	SCORE.applicableRules[13].passed = emptyCustNum;
-	SCORE.applicableRules[14].passed = actualAndShouldInvoice;
-	SCORE.applicableRules[15].passed = zeroShouldInvoice;
-	SCORE.applicableRules[16].passed = zeroActualInvoice;
-	SCORE.applicableRules[17].passed = earlierSiteSurvey;
-	SCORE.applicableRules[18].passed = "true";
-	SCORE.applicableRules[19].passed = buildingRequired;
-	SCORE.applicableRules[20].passed = ceilingRequired;
-	SCORE.applicableRules[21].passed = mechanicalRequired;
-	SCORE.applicableRules[22].passed = electricalRequired;
-	SCORE.applicableRules[23].passed = plumbingRequired;
-	SCORE.applicableRules[24].passed = buildingPermitReqTBD;
-	SCORE.applicableRules[25].passed = gasRequired;
-	SCORE.applicableRules[26].passed = sprinklerRequired;
-	SCORE.applicableRules[27].passed = fireAlarmRequired;
-	SCORE.applicableRules[28].passed = lowVoltageRequired;
-	SCORE.applicableRules[29].passed = ceilingPermitReqTBD;
-	SCORE.applicableRules[30].passed = mechPermitReqTBD;
-	SCORE.applicableRules[31].passed = elecPermitReqTBD; 
-	SCORE.applicableRules[32].passed = plumbingPermitReqTBD;
-	SCORE.applicableRules[33].passed = gasPermitReqTBD; 
-	SCORE.applicableRules[34].passed = sprinklerPermitReqTBD; 
-	SCORE.applicableRules[35].passed = firePermitReqTBD;
-	SCORE.applicableRules[36].passed = lowVolPermitReqTBD;
-	SCORE.applicableRules[37].passed = buildingInspReqTBD;
-	SCORE.applicableRules[38].passed = ceilingInspReqTBD;
-	SCORE.applicableRules[39].passed = mechInspReqTBD;
-	SCORE.applicableRules[40].passed = elecInspReqTBD;
-	SCORE.applicableRules[41].passed = plumbingInspReqTBD;
-	SCORE.applicableRules[42].passed = gasInspReqTBD;
-	SCORE.applicableRules[43].passed = sprinklerInspReqTBD;
-	SCORE.applicableRules[44].passed = firePermitReqTBD;
-	SCORE.applicableRules[45].passed = lowVolInspReqTBD;
-	SCORE.applicableRules[46].passed = buildingPermitStatTBD;
-	SCORE.applicableRules[47].passed = ceilingPermitStatTBD;
-	SCORE.applicableRules[48].passed = mechPermitStatTBD;
-	SCORE.applicableRules[49].passed = elecPermitStatTBD; 
-	SCORE.applicableRules[50].passed = plumbingPermitStatTBD;
-	SCORE.applicableRules[51].passed = gasPermitStatTBD; 
-	SCORE.applicableRules[52].passed = sprinklerPermitStatTBD; 
-	SCORE.applicableRules[53].passed = firePermitStatTBD;
-	SCORE.applicableRules[54].passed = lowVolPermitStatTBD;
-	SCORE.applicableRules[55].passed = buildingInspStatTBD;
-	SCORE.applicableRules[56].passed = ceilingInspStatTBD;
-	SCORE.applicableRules[58].passed = mechInspStatTBD;
-	SCORE.applicableRules[57].passed = elecInspStatTBD;
-	SCORE.applicableRules[59].passed = plumbingInspStatTBD;
-	SCORE.applicableRules[60].passed = gasInspStatTBD;
-	SCORE.applicableRules[61].passed = sprinklerInspStatTBD;
-	SCORE.applicableRules[62].passed = firePermitStatTBD;
-	SCORE.applicableRules[63].passed = lowVolInspStatTBD;
-	SCORE.applicableRules[64].passed = buildingPermitYesNa;
-	SCORE.applicableRules[65].passed = ceilingPermitYesNa;
-	SCORE.applicableRules[66].passed = mechPermitYesNa;
-	SCORE.applicableRules[67].passed = elecPermitYesNa;
-	SCORE.applicableRules[68].passed = plumbingPermitYesNa;
-	SCORE.applicableRules[69].passed = gasPermitYesNa;
-	SCORE.applicableRules[70].passed = sprinklerPermitYesNa;
-	SCORE.applicableRules[71].passed = firePermitYesNa;
-	SCORE.applicableRules[72].passed = lowVolPermitYesNa;
-	SCORE.applicableRules[73].passed = buildingInspYesNa;
-	SCORE.applicableRules[74].passed = ceilingInspYesNa;
-	SCORE.applicableRules[75].passed = mechInspYesNa;
-	SCORE.applicableRules[76].passed = elecInspYesNa;
-	SCORE.applicableRules[77].passed = plumbingInspYesNa;	
-	SCORE.applicableRules[78].passed = gasInspYesNa;
-	SCORE.applicableRules[79].passed = sprinklerInspYesNa;
-	SCORE.applicableRules[80].passed = fireInspYesNa;
-	SCORE.applicableRules[81].passed = lowVolInspYesNa;
-	SCORE.applicableRules[82].passed = buildingPermitNoYes;
-	SCORE.applicableRules[83].passed = ceilingPermitNoYes;
-	SCORE.applicableRules[84].passed = mechPermitNoYes;	
-	SCORE.applicableRules[85].passed = elecPermitNoYes;
-	SCORE.applicableRules[86].passed = plumbingPermitNoYes;	
-	SCORE.applicableRules[87].passed = gasPermitNoYes;
-	SCORE.applicableRules[88].passed = sprinklerPermitNoYes;
-	SCORE.applicableRules[89].passed = firePermitNoYes;
-	SCORE.applicableRules[90].passed = lowVolPermitNoYes;
-	SCORE.applicableRules[91].passed = buildingInspNoYes;
-	SCORE.applicableRules[92].passed = ceilingInspNoYes;
-	SCORE.applicableRules[93].passed = mechInspNoYes;	
-	SCORE.applicableRules[94].passed = elecInspNoYes;
-	SCORE.applicableRules[95].passed = plumbingInspNoYes;	
-	SCORE.applicableRules[96].passed = gasInspNoYes;
-	SCORE.applicableRules[97].passed = sprinklerInspNoYes;
-	SCORE.applicableRules[98].passed = fireInspNoYes;
-	SCORE.applicableRules[99].passed = lowVolInspNoYes;
+//	SCORE.applicableRules[0].passed = mcsNumAndStage;
+//	SCORE.applicableRules[1].passed = permits;
+//	SCORE.applicableRules[2].passed = hvac;
+//	SCORE.applicableRules[3].passed = refrigeration;
+//	SCORE.applicableRules[4].passed = permitsTBD;
+//	SCORE.applicableRules[5].passed = stageAndStatus;
+//	SCORE.applicableRules[6].passed = project;
+//	SCORE.applicableRules[7].passed = lateProposal;
+//	SCORE.applicableRules[8].passed = lateBudgetary;
+//	SCORE.applicableRules[9].passed = lateTurnover;
+//	SCORE.applicableRules[10].passed = emptyInitiation;
+//	SCORE.applicableRules[11].passed = earlierSchedTurnover;
+//	SCORE.applicableRules[12].passed = emptyCost;
+//	SCORE.applicableRules[13].passed = emptyCustNum;
+//	SCORE.applicableRules[14].passed = actualAndShouldInvoice;
+//	SCORE.applicableRules[15].passed = zeroShouldInvoice;
+//	SCORE.applicableRules[16].passed = zeroActualInvoice;
+//	SCORE.applicableRules[17].passed = earlierSiteSurvey;
+//	SCORE.applicableRules[18].passed = "true";
+//	SCORE.applicableRules[19].passed = buildingRequired;
+//	SCORE.applicableRules[20].passed = ceilingRequired;
+//	SCORE.applicableRules[21].passed = mechanicalRequired;
+//	SCORE.applicableRules[22].passed = electricalRequired;
+//	SCORE.applicableRules[23].passed = plumbingRequired;
+//	SCORE.applicableRules[24].passed = buildingPermitReqTBD;
+//	SCORE.applicableRules[25].passed = gasRequired;
+//	SCORE.applicableRules[26].passed = sprinklerRequired;
+//	SCORE.applicableRules[27].passed = fireAlarmRequired;
+//	SCORE.applicableRules[28].passed = lowVoltageRequired;
+//	SCORE.applicableRules[29].passed = ceilingPermitReqTBD;
+//	SCORE.applicableRules[30].passed = mechPermitReqTBD;
+//	SCORE.applicableRules[31].passed = elecPermitReqTBD; 
+//	SCORE.applicableRules[32].passed = plumbingPermitReqTBD;
+//	SCORE.applicableRules[33].passed = gasPermitReqTBD; 
+//	SCORE.applicableRules[34].passed = sprinklerPermitReqTBD; 
+//	SCORE.applicableRules[35].passed = firePermitReqTBD;
+//	SCORE.applicableRules[36].passed = lowVolPermitReqTBD;
+//	SCORE.applicableRules[37].passed = buildingInspReqTBD;
+//	SCORE.applicableRules[38].passed = ceilingInspReqTBD;
+//	SCORE.applicableRules[39].passed = mechInspReqTBD;
+//	SCORE.applicableRules[40].passed = elecInspReqTBD;
+//	SCORE.applicableRules[41].passed = plumbingInspReqTBD;
+//	SCORE.applicableRules[42].passed = gasInspReqTBD;
+//	SCORE.applicableRules[43].passed = sprinklerInspReqTBD;
+//	SCORE.applicableRules[44].passed = firePermitReqTBD;
+//	SCORE.applicableRules[45].passed = lowVolInspReqTBD;
+//	SCORE.applicableRules[46].passed = buildingPermitStatTBD;
+//	SCORE.applicableRules[47].passed = ceilingPermitStatTBD;
+//	SCORE.applicableRules[48].passed = mechPermitStatTBD;
+//	SCORE.applicableRules[49].passed = elecPermitStatTBD; 
+//	SCORE.applicableRules[50].passed = plumbingPermitStatTBD;
+//	SCORE.applicableRules[51].passed = gasPermitStatTBD; 
+//	SCORE.applicableRules[52].passed = sprinklerPermitStatTBD; 
+//	SCORE.applicableRules[53].passed = firePermitStatTBD;
+//	SCORE.applicableRules[54].passed = lowVolPermitStatTBD;
+//	SCORE.applicableRules[55].passed = buildingInspStatTBD;
+//	SCORE.applicableRules[56].passed = ceilingInspStatTBD;
+//	SCORE.applicableRules[58].passed = mechInspStatTBD;
+//	SCORE.applicableRules[57].passed = elecInspStatTBD;
+//	SCORE.applicableRules[59].passed = plumbingInspStatTBD;
+//	SCORE.applicableRules[60].passed = gasInspStatTBD;
+//	SCORE.applicableRules[61].passed = sprinklerInspStatTBD;
+//	SCORE.applicableRules[62].passed = firePermitStatTBD;
+//	SCORE.applicableRules[63].passed = lowVolInspStatTBD;
+//	SCORE.applicableRules[64].passed = buildingPermitYesNa;
+//	SCORE.applicableRules[65].passed = ceilingPermitYesNa;
+//	SCORE.applicableRules[66].passed = mechPermitYesNa;
+//	SCORE.applicableRules[67].passed = elecPermitYesNa;
+//	SCORE.applicableRules[68].passed = plumbingPermitYesNa;
+//	SCORE.applicableRules[69].passed = gasPermitYesNa;
+//	SCORE.applicableRules[70].passed = sprinklerPermitYesNa;
+//	SCORE.applicableRules[71].passed = firePermitYesNa;
+//	SCORE.applicableRules[72].passed = lowVolPermitYesNa;
+//	SCORE.applicableRules[73].passed = buildingInspYesNa;
+//	SCORE.applicableRules[74].passed = ceilingInspYesNa;
+//	SCORE.applicableRules[75].passed = mechInspYesNa;
+//	SCORE.applicableRules[76].passed = elecInspYesNa;
+//	SCORE.applicableRules[77].passed = plumbingInspYesNa;	
+//	SCORE.applicableRules[78].passed = gasInspYesNa;
+//	SCORE.applicableRules[79].passed = sprinklerInspYesNa;
+//	SCORE.applicableRules[80].passed = fireInspYesNa;
+//	SCORE.applicableRules[81].passed = lowVolInspYesNa;
+//	SCORE.applicableRules[82].passed = buildingPermitNoYes;
+//	SCORE.applicableRules[83].passed = ceilingPermitNoYes;
+//	SCORE.applicableRules[84].passed = mechPermitNoYes;	
+//	SCORE.applicableRules[85].passed = elecPermitNoYes;
+//	SCORE.applicableRules[86].passed = plumbingPermitNoYes;	
+//	SCORE.applicableRules[87].passed = gasPermitNoYes;
+//	SCORE.applicableRules[88].passed = sprinklerPermitNoYes;
+//	SCORE.applicableRules[89].passed = firePermitNoYes;
+//	SCORE.applicableRules[90].passed = lowVolPermitNoYes;
+//	SCORE.applicableRules[91].passed = buildingInspNoYes;
+//	SCORE.applicableRules[92].passed = ceilingInspNoYes;
+//	SCORE.applicableRules[93].passed = mechInspNoYes;	
+//	SCORE.applicableRules[94].passed = elecInspNoYes;
+//	SCORE.applicableRules[95].passed = plumbingInspNoYes;	
+//	SCORE.applicableRules[96].passed = gasInspNoYes;
+//	SCORE.applicableRules[97].passed = sprinklerInspNoYes;
+//	SCORE.applicableRules[98].passed = fireInspNoYes;
+//	SCORE.applicableRules[99].passed = lowVolInspNoYes;
 	
 //	SCORE.applicableRules[119].passed = OpenStatus;
 //	SCORE.applicableRules[120].passed = PassedDueDate;
@@ -10118,14 +10121,4 @@ function sortTable(n){
 	  }
 	
 }           
-
-
-
-
-
-
-
-
-
-
 
