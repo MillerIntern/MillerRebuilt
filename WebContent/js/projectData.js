@@ -281,7 +281,8 @@ function generateDropdowns(str, className)
 }
 
 function saveProject() {
-	document.getElementById("saveProjectLink").onclick = "";
+	//document.getElementById("saveProjectLink").onclick = "";
+	//I(Akash) commented the above line and inserted it below after the ajax call. save is now working fine
 	
 	// Required Information
 	var mcsNumber = $('#mcsNumber').val();
@@ -424,6 +425,7 @@ function saveProject() {
 				console.log(data);
 				projectID = data.responseJSON;
 				alert('Save Complete!');
+				document.getElementById("saveProjectLink").onclick = "";// Added it here by removing it at the top
 				$('#saveButton > button').prop('disabled', false);
 			}
 			

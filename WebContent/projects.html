@@ -137,7 +137,7 @@
 				</div>
 				<br>
 				<!--  <button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button> -->
-
+				
 	   			
 			    <div class="paramHolder">
 			        <select class="parameterID" id="paramID1">
@@ -159,6 +159,16 @@
 			   </div>
 			   </div>
 	   		<br>
+	   		
+	   	<!-- This is the drop down to sort -->
+	   		<select onChange="sortTable(this.value)">
+	   			<option value = "default"> Sort by </option>
+	   			<option value = "0">Warehouse</option>
+	   			<option value = "1">MCS Number</option>
+	   			<option value = "2"> Item</option>
+	   			<option value = "3">Manager</option>
+	   		</select>
+	   	<!-- End of the drop down -->	
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
@@ -1008,7 +1018,7 @@
 					&emsp;&emsp;&emsp;&emsp;
 					</td>
 					<td style="text-align: center">
-						<button onclick='deleteConfirm()' type="button" class="btn btn-danger">Delete Project</button>
+						<button onclick='permissionCheck()' type="button" class="btn btn-danger">Delete Project</button>
 					</td>
 				</tr>
 				<tr>

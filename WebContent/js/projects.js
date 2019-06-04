@@ -4200,7 +4200,36 @@ function equipmentReport () {
  * This function warns the user that they are about to permanently delete a project and then deletes
  * it after receiving confirmation
  */
+
+function permissionCheck(){
+	console.log("is it working?");
+	let user;
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, success: function (data) {
+			user = data;
+			console.log(user);
+			console.log("IT WORKED");
+			if(user.permission.id == 1){
+				deleteConfirm();}
+			else {
+				alert("You don't have the permission to delete a project");
+			}
+		}
+	});
+	
+	
+	
+	
+	
+}
+
 function deleteConfirm () {
+	
 	if (confirm("Are you sure you want to delete this project permanently?")) {
 		$.ajax({
 			type: 'POST',
@@ -4209,11 +4238,14 @@ function deleteConfirm () {
 				'domain': 'project',
 				'action': 'deleteProject',
 				'id': projectID,
+				
 			}, complete: function(data) {
 				console.log(data);
-				if(data.responseJSON === "PROJECT_DELETED") {
+				if(data.responseJSON === "PROJECT_OBJECT_DELETED") {
+					//PROJECT_DELETED to PROJECT_OBJECT_DELETED
 					alert("Project Deleted!");
-					window.location.href = 'findProject.html';
+					//window.location.href = 'findProject.html'; // This line was not showing the projects anymore once deleted
+					document.location.reload(true); //Is this a god fix ? I just have to reload this page to get the updated project list
 				} else
 					alert("Could not Delete Project");
 			}
@@ -6734,6 +6766,9 @@ function saveEvaluatedRules()
 	var fireInspNoYes = RULES[98].passed;
 	var lowVolInspNoYes = RULES[99].passed;
 	
+	//var OpenStatus = RULES[119].passed;
+	//var PassedDueDate = RULES[120].passed;
+	
 ////	var punchList = RULES[].passed;
 ////	var asBuilt = RULES[].passed;
 ////	var closeoutPhotos = RULES[].passed;
@@ -6776,7 +6811,7 @@ function saveEvaluatedRules()
 			'zeroShouldInvoice': zeroShouldInvoice,
 			'zeroActualInvoice': zeroActualInvoice,
 
-//			'earlierDueDate': earlierDueDate,
+			//'earlierDueDate': earlierDueDate,
 			
 			'buildingRequired': buildingReq,
 			'ceilingRequired': ceilingReq,
@@ -6858,7 +6893,9 @@ function saveEvaluatedRules()
 			'gasInspNoYes' : gasInspNoYes,
 			'sprinklerInspNoYes' : sprinklerInspNoYes,
 			'fireAlarmInspNoYes' : fireInspNoYes,
-			'lowVoltageInspNoYes' : lowVolInspNoYes
+			'lowVoltageInspNoYes' : lowVolInspNoYes,
+			//'OpenStatus' : OpenStatus,
+			//'PassedDueDate' : PassedDueDate
 //			
 ////			'punchList' : punchList,
 ////			'asBuilt' : asBuilt,
@@ -7007,6 +7044,9 @@ function adjustScore(data)
 	var fireInspNoYes = PROJECT_DATA.fireAlarmInspNoYes;
 	var lowVolInspNoYes = PROJECT_DATA.lowVoltageInspNoYes;
 	
+	//var OpenStatus = PROJECT_DATA.OpenStatus;
+	//var PassedDueDate = PROJECT_DATA.PassedDueDate;
+	
 //	//	var punchList = PROJECT_DATA.punchList;
 ////	var asBuilt = PROJECT_DATA.asBuilt;
 ////	var closeoutPhotos = PROJECT_DATA.closeoutPhotos;
@@ -7029,7 +7069,7 @@ function adjustScore(data)
 	SCORE.ZeroShouldInvoice.passed = zeroShouldInvoice;
 	SCORE.ZeroActualInvoice.passed = zeroActualInvoice;
 	SCORE.EarlierSiteSurvey.passed = earlierSiteSurvey;
-//	SCORE.EarlierDueDate.passed = earlierDueDate;
+	//SCORE.EarlierDueDate.passed = earlierDueDate;
 	SCORE.EarlierDueDate.passed = "true";
 	SCORE.BuildingRequired.passed = buildingRequired;
 	SCORE.CeilingRequired.passed = ceilingRequired;
@@ -7112,6 +7152,9 @@ function adjustScore(data)
 	SCORE.SprinklerInspNoYes.passed = sprinklerInspNoYes;
 	SCORE.FireInspNoYes.passed = fireInspNoYes;
 	SCORE.LowVolInspNoYes.passed = lowVolInspNoYes;
+	
+//	SCORE.OpenStatus.passed = OpenStatus;
+//	SCORE.PassedDueDate.passed = PassedDueDate;
 //	
 ////	SCORE.PunchList.passed = punchList;
 ////	SCORE.AsBuilt.passed = asBuilt;
@@ -7217,6 +7260,10 @@ function adjustScore(data)
 	SCORE.applicableRules[97].passed = sprinklerInspNoYes;
 	SCORE.applicableRules[98].passed = fireInspNoYes;
 	SCORE.applicableRules[99].passed = lowVolInspNoYes;
+	
+//	SCORE.applicableRules[119].passed = OpenStatus;
+//	SCORE.applicableRules[120].passed = PassedDueDate;
+	
 		
 ////	SCORE.applicableRules[64].passed = punchList;
 ////	SCORE.applicableRules[65].passed = asBuilt;
@@ -9742,6 +9789,7 @@ function toggleTaskAssignee() {
  * @returns
  */
 function goToFindProject() {
+	
 	clearPermitsAndInspectionsOverview();
 	updateFrontEnd();
 	switch(currentDivLocation){
@@ -10019,6 +10067,57 @@ function preparePage() {
 		$('#findProject').show();
 	}
 }
+
+
+//This is the function that sorts the table of projects based on some criteria 
+function sortTable(n){
+	var table, rows, switching, i, x, y, shouldSwitch;
+	  table = document.getElementById("results");
+	  switching = true;
+	  /*Make a loop that will continue until
+	  no switching has been done:*/
+	  while (switching) {	
+	    //start by saying: no switching is done:
+	    switching = false;
+	    rows = table.rows;
+	    
+	    /*Loop through all table rows (except the
+	    first, which contains table headers):*/
+	    for (i = 1; i < (rows.length - 1); i++) {
+	      //start by saying there should be no switching:
+	      shouldSwitch = false;
+	      /*Get the two elements you want to compare,
+	      one from current row and one from the next:*/
+	      x = rows[i].getElementsByTagName("TD")[n];
+	      y = rows[i + 1].getElementsByTagName("TD")[n];
+	      //check if the two rows should switch place:
+	      if(n == 1){
+	    	  if (Number(x.innerHTML) > Number(y.innerHTML)) {
+	  	        //if so, mark as a switch and break the loop:
+	  	        shouldSwitch = true;
+	  	        break;
+	  	      }
+	      }
+	      else{
+	    	  if ((x.innerHTML) > (y.innerHTML)) {
+		  	        //if so, mark as a switch and break the loop:
+		  	        shouldSwitch = true;
+		  	        break;
+	      }
+	    
+	    }
+	    }
+	    
+	    
+	    if (shouldSwitch) {
+	      /*If a switch has been marked, make the switch
+	      and mark that a switch has been done:*/
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
+	
+}           
 
 
 
