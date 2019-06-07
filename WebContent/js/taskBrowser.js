@@ -154,7 +154,7 @@ function getUserData () {
 			if(data.responseJSON) {
 			  user = data.responseJSON;
 			  console.log("USER = ", data.responseJSON);
-			  if(data.responseJSON.permission.id != 1) hideAdminContent();	
+			  if(data.responseJSON.permission.canAccessAdminPage == false) hideAdminContent();	
 		      getUsers();		 
 				
 			} else {
@@ -163,7 +163,7 @@ function getUserData () {
 				
 			}
 		}
-	});
+	}); 
 }
 
 /**
@@ -277,7 +277,7 @@ function getSubcontractors() {
 			console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
 			subcontractors = data.responseJSON;
 			if (data.responseJSON) {
-				if(user.permission.id === 1) createManagerQueue();
+				if(user.permission.canAccessAdminPage === true) createManagerQueue();
 				createSubDropdown(data.responseJSON);
 			}
 
@@ -287,7 +287,7 @@ function getSubcontractors() {
 	});
 	*/
 	subcontractors = TASK_OBJECT.SUBS;
-		if(user.permission.id === 1) createManagerQueue();
+		if(user.permission.canAccessAdminPage === true) createManagerQueue();
 		createSubDropdown(TASK_OBJECT.SUBS);
 }
 
@@ -342,7 +342,7 @@ function preparePageForUserStatus(){
 	$('#sortSelector').chosen({ width: "210px" });
 	$('#sortOrder').chosen({ width: "210px" });
 
-	if(user.permission.id === 1) 
+	if(user.permission.canAccessAdminPage === true) 
 	{
 		 $("#projectManagerDropdown").show();
 		 console.log("preparePageForUserStatus() INVOKED");
@@ -431,7 +431,7 @@ function createTaskTable () {
 			if(a.subAssignee.name.toLowerCase() > b.subAssignee.name.toLowerCase()) return 1;
 		}
 		else{
-			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
+			if(user.permission.canAccessAdminPage == false){ //SORTS BY PROJECT IF USER IS NOT ADMIN
 				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
 				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
 				else{
@@ -580,7 +580,7 @@ function createProperTaskTable()
 	$('#projectSearch').val("");
 	$('#descriptionSearch').val("");
 	clearTaskTable();
-	if(user.permission.id != 1){
+	if(user.permission.canAccessAdminPage == false){
 		createTaskTable();
 	} else {
 		establishManagersOfInterest();

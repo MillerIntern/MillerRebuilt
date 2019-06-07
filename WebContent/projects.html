@@ -1270,7 +1270,7 @@
 				        <tr id = "taskStatusSelectionRow" style = "display : none">
 				        	<td><label>Status:</label></td>
 				        	<td>
-				        		<select id = "taskStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.id != 1){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
+				        		<select id = "taskStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
 	   			       				<option value="Open"> Open </option>
 	   			       				<option value="Completed"> Completed </option>
 	   			       				<option id="closedStatus"  value="Closed"> Closed </option>

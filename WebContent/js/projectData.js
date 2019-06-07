@@ -131,7 +131,7 @@ function getUserInfo(){
 		}, success: function (data) {
 			user = data;
 			console.log(user);
-			 if(user.permission.id != 1)
+			 if(user.permission.canAccessAdminPage == false)
 				 hideAdminContent();	
 			}
 		});

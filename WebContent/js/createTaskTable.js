@@ -21,7 +21,7 @@ function createTaskTable () {
 			if(a.subAssignee.name.toLowerCase() > b.subAssignee.name.toLowerCase()) return 1;
 		}
 		else{
-			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
+			if(user.permission.canAccessAdminPage == false){ //SORTS BY PROJECT IF USER IS NOT ADMIN
 				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
 				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
 				else{

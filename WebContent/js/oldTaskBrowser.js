@@ -68,7 +68,7 @@ function getUserData () {
 			if(data.responseJSON) {
 			  user = data.responseJSON;
 			  console.log("USER = ", user);
-			  if(user.permission.id != 1) hideAdminContent();	 
+			  if(user.permission.canAccessAdminPage == false) hideAdminContent();	 
 		      getUsers();		 
 				
 			} else {
@@ -180,7 +180,7 @@ function getProjectManagers () {
  * INNER FUNCTION CALLS: createTaskTable(), tasksByManager() 
  */
 function preparePageForUserStatus(){
-	if (user.permission.id === 1) 
+	if (user.permission.canAccessAdminPage === true) 
 	{
 		 document.getElementById("projectManagerSelection").style.display = 'inline';
 		 console.log("preparePageForUserStatus() INVOKED");
@@ -253,7 +253,7 @@ function createTaskTable () {
 		if(a.assignee.name < b.assignee.name) return -1;
 		if(a.assignee.name > b.assignee.name) return 1;
 		else{
-			if(user.permission.id != 1){ //SORTS BY PROJECT IF USER IS NOT ADMIN
+			if(user.permission.canAccessAdminPage == false){ //SORTS BY PROJECT IF USER IS NOT ADMIN
 				if(a.project.warehouse.city.name < b.project.warehouse.city.name) return -1;
 				if(a.project.warehouse.city.name > b.project.warehouse.city.name) return 1;
 				else{
@@ -427,7 +427,7 @@ function createProperTaskTable()
 	$('#projectSearch').val("");
 	$('#descriptionSearch').val("");
 	clearTaskTable();
-	if(user.permission.id != 1){
+	if(user.permission.canAccessAdminPage == false){
 		createTaskTable();
 	} else {
 		establishManagersOfInterest();

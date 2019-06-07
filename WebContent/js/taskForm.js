@@ -14,7 +14,7 @@ function getUserData () {
 				if(data.responseJSON) {
 				  console.log("data for user = ", data.responseJSON);
 				  user = data.responseJSON;
-				  if(user.permission.id != 1) hideAdminContent();	 
+				  if(user.permission.canAccessAdminPage == false) hideAdminContent();	 
 				  console.log("data for USER = ", user);
 			      getUsers();		  
 

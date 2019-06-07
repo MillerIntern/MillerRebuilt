@@ -26,9 +26,9 @@ public class AdminService
 	 * @param admin indicates if the user can use administrative features
 	 * @param projects indicates if the user can add/edit projects
 	 */
-	public synchronized static void addPermission(String name, boolean query, boolean list, boolean admin, boolean projects)
+	public synchronized static void addPermission(String name, boolean query, boolean list, boolean admin, boolean projects, boolean delprojects)
 	{
-		Permission perm = new Permission(name, query, list, admin, projects);
+		Permission perm = new Permission(name, query, list, admin, projects, delprojects);
         ProjectObjectService.addObject("Permission", perm);
 	}
 	
@@ -52,9 +52,9 @@ public class AdminService
 	 * @param admin indicates if the user can use administrative features
 	 * @param projects indicates if the user can add/edit projects
 	 */
-	public synchronized static void editPermission(Long id, String name, boolean query, boolean list, boolean admin, boolean projects)
+	public synchronized static void editPermission(Long id, String name, boolean query, boolean list, boolean admin, boolean projects, boolean delprojects)
 	{
-		Permission p = new Permission(name, query, list, admin, projects);
+		Permission p = new Permission(name, query, list, admin, projects, delprojects);
 		try 
 		{
 			ProjectObjectService.editObject("Permission", id, p,0);
