@@ -38,8 +38,8 @@ password: constructionSQL3600
 
 
 deploy changes to site:
-1) Change hibernate file to proper username (millerAdmin) and password (constructionSQL3600) for server. change the database 
-name to testdb for the live site and employee for the test site.  
+1) Change hibernate file to proper username (millerAdmin) and password (constructionSQL3600) for server. Change the database 
+name to testdb for the live site and employee for the test site. Also make sure the port number is 3306.
 2) Copy hibernate file to MillerRebuilt/target/classes and replace old hibernate file
 3) Refresh MillerRebuilt project in Eclipse
 4) Export as WAR file
