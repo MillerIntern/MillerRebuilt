@@ -157,18 +157,17 @@
 			        </select>
 			        <span onClick="removeParam(this)">&times;</span>
 			   </div>
-			   </div>
-	   		<br>
-	   		
-	   	<!-- This is the drop down to sort -->
-	   		<select onChange="sortTable(this.value)">
-	   			<option value = "default"> Sort by </option>
+			   <br id="sortSpace">
+			   	<p id="sortProjects">Sort By:
+	       		<select onChange="sortTable(this.value)">
 	   			<option value = "0">Warehouse</option>
 	   			<option value = "1">MCS Number</option>
 	   			<option value = "2"> Item</option>
 	   			<option value = "3">Manager</option>
-	   		</select>
-	   	<!-- End of the drop down -->	
+	   			</select>
+	   			</p>
+			   </div>
+	   		<br>
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">

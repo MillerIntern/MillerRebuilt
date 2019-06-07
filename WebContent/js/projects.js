@@ -8551,11 +8551,17 @@ function addParameter() {
 	optionObject2.value = 'default';
 	optionObject2.innerHTML = '---';
 	
+	$("#sortSpace").remove();
+	
+	let br = document.createElement('BR');
+	br.id = "sortSpace";
+	
 	selectID.appendChild(optionObject);
 	selectVal.appendChild(optionObject2);
 	parameterHolder.appendChild(selectID);
 	parameterHolder.appendChild(selectVal);
 	parameterHolder.appendChild(removeTag);
+	parameterHolder.appendChild(br);
 	
 	let d = document.createDocumentFragment();
 	
@@ -8567,7 +8573,11 @@ function addParameter() {
 	}
 	$(selectID).append(d);
 	
-	$('#param-field').append(parameterHolder);
+	var sort = document.getElementById("sortProjects");
+	var param = document.getElementById("param-field");
+	
+	param.insertBefore(parameterHolder, sort);
+	param.insertBefore(br, sort);
 }
 
 /**
