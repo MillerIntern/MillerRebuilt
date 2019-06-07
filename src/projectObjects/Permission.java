@@ -17,14 +17,17 @@ public class Permission extends ProjectObject
 	boolean canQueryProjects;
 	boolean canListProjects;
 	boolean canAddProjects;
+	boolean canDeleteProjects;
 		
-	public Permission(String name, boolean query, boolean list, boolean admin, boolean projects)
+
+	public Permission(String name, boolean query, boolean list, boolean admin, boolean projects, boolean delprojects)
 	{
 		this.name = name;
 		this.canAccessAdminPage = admin;
 		this.canQueryProjects = query;
 		this.canListProjects = list;
 		this.canAddProjects = projects;
+		this.canDeleteProjects = delprojects;
 	}
 	
 	public Permission()
@@ -34,6 +37,7 @@ public class Permission extends ProjectObject
 		this.canQueryProjects = false;
 		this.canAddProjects = false;
 		this.canListProjects = false;
+		this.canDeleteProjects = false;
 	}
 	
 	public synchronized String getName()
@@ -81,5 +85,14 @@ public class Permission extends ProjectObject
 	public synchronized void setCanAddProjects(boolean canAddProjects) {
 		this.canAddProjects = canAddProjects;
 	}
+	
+	public synchronized boolean isCanDeleteProjects() {
+		return canDeleteProjects;
+	}
+
+	public synchronized void setCanDeleteProjects(boolean canDeleteProjects) {
+		this.canDeleteProjects = canDeleteProjects;
+	}
+
 	
 }

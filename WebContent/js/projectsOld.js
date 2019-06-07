@@ -3207,7 +3207,7 @@ function checkInitFilter () {
 				'action': 'getUserInfo'
 			}, success: function (data) {
 				user = data;
-				 if(user.permission.id != 1) hideAdminContent();	
+				 if(user.permission.canAccessAdminPage == false) hideAdminContent();	
 				 if(user.firstName == "Sandy") {
 					 $('#paramID1').val('Warehouse');
 						$('#paramVal1').empty(); 
@@ -3257,7 +3257,7 @@ function checkInitFilter () {
 				'action': 'getUserInfo'
 			}, success: function (data) {
 				user = data;
-				 if(user.permission.id != 1) hideAdminContent();	 
+				 if(user.permission.canAccessAdminPage == false) hideAdminContent();	 
 				 if(user.firstName == "Sandy") {
 					 $('.stage').each(function(i, obj) {
 							if(obj.value == '2') obj.checked = true;

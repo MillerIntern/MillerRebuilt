@@ -301,8 +301,8 @@ function advancedSortValidation(){
 
 function displaySortingResults(){
 	clearTaskTable();
-    if(user.permission.id != 1) createTaskTableFromFilter();
-    else if(user.permission.id == 1) createTaskTableFromFilter();
+    if(user.permission.canAccessAdminPage == false) createTaskTableFromFilter();
+    else if(user.permission.canAccessAdminPage == true) createTaskTableFromFilter();
     else{
     	console.log("Unprepared for this ELSE condition");
     }

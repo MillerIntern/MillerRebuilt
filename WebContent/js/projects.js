@@ -4214,7 +4214,7 @@ function permissionCheck(){
 			user = data;
 			console.log(user);
 			console.log("IT WORKED");
-			if(user.permission.id == 1)
+			if(user.permission.canDeleteProjects == true)
 			{
 				deleteConfirm();
 			}
@@ -8248,7 +8248,7 @@ function checkInitFilter () {
 			}, success: function (data) {
 				user = data;
 				console.log(user);
-				 if(user.permission.id != 1) hideAdminContent();	
+				 if(user.permission.canAccessAdminPage == false) hideAdminContent();	
 				 if(user.firstName == "Sandy") {
 					 $('#paramID1').val('Warehouse');
 						$('#paramVal1').empty(); 
@@ -8305,7 +8305,7 @@ function checkInitFilter () {
 			}, success: function (data) {
 				user = data;
 				console.log(user);
-				 if(user.permission.id != 1) hideAdminContent();	 
+				 if(user.permission.canAccessAdminPage == false) hideAdminContent();	 
 				 if(user.firstName == "Sandy") {
 					 $('.stage').each(function(i, obj) {
 							if(obj.value == '2') obj.checked = true;

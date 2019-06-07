@@ -173,7 +173,7 @@ function preparePage() {
 			if(data.responseJSON) {
 			 if(data.responseJSON.id == 20) $('#myContent').show();
 			  console.log("USER = ", data.responseJSON);
-		      if(data.responseJSON.permission.name != "admin") {
+		      if(!(data.responseJSON.permission.name == "admin" || data.responseJSON.permission.name == "superadmin")) {
 		    	  alert("Sorry but it looks like you don't have access to this page!");
 		    	  document.location.href = "homepage.html";
 		      }

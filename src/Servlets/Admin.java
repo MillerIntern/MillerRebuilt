@@ -327,10 +327,12 @@ public class Admin extends HttpServlet
 			
 			String permission = parameters.get("permission");
 			if(permission.equals("1")) permission = "admin";
+			else if(permission.equals("3")) permission = "superadmin";
 			else permission = "basic";
 			
 			String status = parameters.get("status");
 			if(status.equals("1")) status = "admin";
+			if(status.equals("3")) status = "superadmin";
 			else status = "basic";
 			
 			String hashedPassword = null;
@@ -346,8 +348,9 @@ public class Admin extends HttpServlet
 			Status statusObject = new Status(status);
 			
 			Permission permissionObject = null;
-			if(permission.equals("1")) permissionObject = new Permission(permission, true, true, true, true);
-			else permissionObject = new Permission(permission, true, true, false, true);
+			if(permission.equals("admin")) permissionObject = new Permission(permission, true, true, true, true, false);
+			else if(permission.equals("superadmin")) permissionObject = new Permission(permission, true, true, true, true, true);
+			else permissionObject = new Permission(permission, true, true, false, true, false);
 			
 			User user = new User(logInName, hashedPassword, statusObject, permissionObject, firstName, email);
 			

@@ -36,7 +36,6 @@
 		getMasterScopes();
 		getSubcontractors();
 	});	
-
 			function getMasterScopes()
 			{
 				$.ajax({
@@ -63,7 +62,6 @@
 				
 				});
 			}
-
 			function fillNavScopeDropdowns(data)
 			{		
 				console.log(data);
@@ -81,11 +79,9 @@
 					li.appendChild(a);
 					d.appendChild(li);
 				}
-
 				$('#dropdown').append(d);
 				
 			}
-
 			function getProjItem(id)
 			{
 				console.log("get proj item", id);
@@ -107,7 +103,6 @@
 				
 				});
 			}
-
 	
 	function getProject () {
 		projectID = getParameterByName('id');
@@ -157,10 +152,9 @@
 				if(data.responseJSON) {
 				  console.log("data for user = ", data.responseJSON);
 				  user = data.responseJSON;
-				  if(user.permission.id != 1) hideAdminContent();	 
+				  if(user.permission.canAccessAdminPage == false) hideAdminContent();	 
 				  console.log("data for USER = ", user);
 			      getUsers();		  
-
 					
 				} else {
 					console.log("user data = ",data);
@@ -200,7 +194,6 @@
 				if (data.responseJSON) {
 					createSubDropdown(data.responseJSON);
 				}
-
 				else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
 			}
 			
@@ -262,7 +255,6 @@
 			$('#subcontractorAssigneeTableElement').show();
 			document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
 			document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
-
 		}
 		else {
 			taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
@@ -270,7 +262,6 @@
 			$('#subcontractorAssigneeTableElement').hide();
 			document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
 			document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
-
 		}
 	}
 	
@@ -285,7 +276,6 @@
 			assignee = $('#subcontractorsDropdown').val();
 		
 		console.log("Assignee: ", assignee);
-
 		let initiatedDate = $('#initDate').val();
 		let dueDate = $('#dueDate').val();
 		let severity = $('#severity').val();
@@ -317,7 +307,6 @@
 		};
 	
 		console.log("PROJECT == ", project);
-
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -379,11 +368,9 @@
 			if (date != "" && !isDate(date))
 			{
 				console.log("----------");
-
 				console.log(date);
 				console.log("----------");
 				console.log(i);
-
 				alert("Dates must be in this format: mm/dd/yyyy");
 				return false
 			}
