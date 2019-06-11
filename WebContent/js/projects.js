@@ -4215,13 +4215,18 @@ function permissionCheck(){
 			user = data;
 			console.log(user);
 			console.log("IT WORKED");
-			console.log(tasks[0].status.status);
+			//console.log(tasks[0].status.status);
 			if(user.permission.canDeleteProjects == true)
 			{	//Delete the project if it does not have any tasks associated with it.
 				if(tasksExist == 0){
 					deleteConfirm();
 				}
-				//If it has any tasks, delete the project if all the tasks are Closed
+				else {
+					alert("This project has Tasks associated with it and hence cannot be deleted");
+				}
+	//If a project has tasks, then it is not being deleted because of foreign key dependency			
+				
+/*				//If it has any tasks, delete the project if all the tasks are Closed
 				else if(tasksExist!=0){
 					var i;
 					var flagOpen = 0;
@@ -4231,13 +4236,16 @@ function permissionCheck(){
 							break;
 						}
 					}
+					console.log("flag open is ",flagOpen);
 					if(flagOpen == 0){
 						deleteConfirm();
 					}
+				
+				
 					else {
-						alert("This project has Open Tasks associated with it. Close them first");
+						alert("This project has Tasks associated with it and hence cannot be deleted");
 					}
-				}
+				}*/
 			}
 			else
 			{
