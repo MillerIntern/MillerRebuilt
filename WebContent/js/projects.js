@@ -8568,15 +8568,23 @@ function addParameter() {
 	let optionObject2 = document.createElement('option');
 	optionObject2.value = 'default';
 	optionObject2.innerHTML = '---';
+
 	$("#sortSpace").remove();
 	let br = document.createElement('BR');
 	br.id = "sortSpace";
+
+	
+
+	
+
 	selectID.appendChild(optionObject);
 	selectVal.appendChild(optionObject2);
 	parameterHolder.appendChild(selectID);
 	parameterHolder.appendChild(selectVal);
 	parameterHolder.appendChild(removeTag);
 	parameterHolder.appendChild(br);
+
+
 
 	
 	let d = document.createDocumentFragment();
@@ -8591,6 +8599,10 @@ function addParameter() {
 	
 	var sort = document.getElementById("sortProjects");
 	var param = document.getElementById("param-field");
+
+
+
+	
 
 	param.insertBefore(parameterHolder, sort);
 	param.insertBefore(br, sort);
