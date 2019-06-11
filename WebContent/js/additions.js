@@ -959,9 +959,38 @@ function addPerson()
 		});
 	}
 }
-
+// This function is getting the currently logged in user data and returning it
+function getUserData() {
+	var result ="";
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		async: false,
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, complete: function (data) {
+			console.log(data);
+			if(data.responseJSON) {
+			  result = data.responseJSON;	
+			  
+			} else {
+				alert('Server Failure!');
+				
+			}
+		}
+	});
+	return result;
+}
 function addUser()
-{
+{	
+	// We are getting the details of the currently logged in user to check Super-Admin status
+	var user = getUserData();
+	if(user.permission.name != "superadmin"){
+		alert("Only Super-Admin can add a user");
+		return;
+	}
+	
 	let logInName = $('#userTab').find('#logInName').val();
 	if(logInName) logInName = logInName.toLowerCase();
 	let firstName = $('#userTab').find('#firstName').val();

@@ -166,14 +166,15 @@
 	   			<span><span style='margin-right: 4px;'><b>Due Date:</b></span><input type='text' class='dueDate taskUpdate'/></span>
 	   			<p class='assignedBy'></p>
 	   			<span>
-	   				<span><b>Assigned To:</b></span>
+	   				<span><b>MCS:</b></span>
 	   				<select class='assignedTo' id= "employeeDropdown">
 	   					
 	   				</select>
-	   				<select id='subcontractorsDropdown' style = "display : none">
+	   				<span><b>Assignee:</b></span>
+	   				<select id='subcontractorsDropdown' >
 	   				
 	   				</select>
-					<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button>
+<!-- 					<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button> -->
 	   		<!-- 	
 	   		</span>
 	   			<span>	
@@ -213,6 +214,7 @@
    			<tr class='head headBorder'>
    				<th style="width: 17%">Project</th>
    				<th style="width: 7%">Task</th>
+   				<th style="width: 11%">MCS</th>
    				<th style="width: 11%">Assignee</th>
    				<th style="width: 17%">Description</th>
    				<th style="width: 10%">Created</th>

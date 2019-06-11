@@ -157,18 +157,17 @@
 			        </select>
 			        <span onClick="removeParam(this)">&times;</span>
 			   </div>
-			   </div>
-	   		<br>
-	   		
-	   	<!-- This is the drop down to sort -->
-	   		<select onChange="sortTable(this.value)">
-	   			<option value = "default"> Sort by </option>
+			    <br id="sortSpace">
+			   	<p id="sortProjects">Sort By:
+	       		<select onChange="sortTable(this.value)">
 	   			<option value = "0">Warehouse</option>
 	   			<option value = "1">MCS Number</option>
 	   			<option value = "2"> Item</option>
 	   			<option value = "3">Manager</option>
-	   		</select>
-	   	<!-- End of the drop down -->	
+	   			</select>
+	   			</p>
+			   </div>
+	   		<br>	
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
@@ -1212,7 +1211,8 @@
 		   			<tr class='head'>
 		   				<th>Task</th>
 		   				<th>Description</th>
-		   				<th>Assigned</th>
+		   				<th>MCS</th>
+		   				<th>Assignee</th>
 		   				<th>Due</th>
 		   				<th>Priority</th>
 		   				<th>Status</th>
@@ -1222,7 +1222,7 @@
 				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
 				<button class ="edit-submit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
 			</div>
-			<div id = 'taskCreationZone' class = 'well'>
+			<div style = "width:100% "id = 'taskCreationZone' class = 'well'>
 				<div class='base-field'>
 					<table class='table taskCreationTable'>
 						<tr>
@@ -1235,20 +1235,21 @@
 							
 						</tr>
 						<tr>
-							<td><label>Assignee:</label></td>
+							<td><label>MCS:</label></td>
 							<td class='userEntry' id = "employeeAssigneeTableElement">
 								<select id='assigneeEntry'>
 								
 								</select>
 							</td>
-							<td class='subcontractorEntry' style = "display : none" id = "subcontractorAssigneeTableElement">
+							<td><label>Assignee:</label></td>
+							<td class='subcontractorEntry'  id = "subcontractorAssigneeTableElement">
 								<select id='subcontractorsDropdown'>
 								
 								</select>
 							</td>
-							<td>
+							<!-- <td>
 								<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button>
-							</td>
+							</td> -->
 						</tr>
 						<tr>
 							<td><label for='initDate'>Assigned Date:</label></td>

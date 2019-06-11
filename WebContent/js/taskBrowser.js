@@ -291,7 +291,7 @@ function getSubcontractors() {
 		createSubDropdown(TASK_OBJECT.SUBS);
 }
 
-function toggleTaskAssignee() {
+/*function toggleTaskAssignee() {
 	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
 		taskAssigneeType = TASK_SUB_ASSIGNEE;
 		$('#employeeDropdown').hide();
@@ -308,7 +308,7 @@ function toggleTaskAssignee() {
 		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
 
 	}
-}
+}*/
 
 function createSubDropdown (json) {
 	let d = document.createDocumentFragment();
@@ -719,16 +719,11 @@ function expandTaskInfo(param) {
 	} else dueDate = task.dueDate;
 	$('#taskWell > span > .dueDate').val(dueDate);							
 	if(task.assigner) $('#taskWell > .assignedBy').html('<b>Assigned By:</b> ' + task.assigner.firstName);
-	if(task.assignee) {
-		$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
-		taskAssigneeType = TASK_SUB_ASSIGNEE;
-		toggleTaskAssignee();
-	}
-	else {
-		$('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
-		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
-		toggleTaskAssignee();
-	}
+	$('#taskWell > span > .assignedTo').val(task.assignee.firstName);
+	
+	$('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
+	taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
+
 	
 //	if(task.assignee) $('#taskWell > span > .assignedTo').val(task.assignee.firstName);
 //	if(task.subassignee) $('#taskWell > span > #subcontractorsDropdown').val(task.subAssignee.name);
@@ -789,11 +784,10 @@ function saveTaskChanges (taskFilter) {
 	}
 	
 	let assignedBy = user.id;	// changes to whoever made the update
-	let assignedTo , assignedToObject;
-	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE)
-		assignedTo = $('#employeeDropdown').val();
-	else
-		assignedTo = $('#subcontractorsDropdown').val();
+	let assignedTo , assignedToObject, MCS;
+
+	MCS = $('#employeeDropdown').val();
+	assignedTo = $('#subcontractorsDropdown').val();
 	
 	for(var i = 0; i < subcontractors.length; i++){
 		  if(subcontractors[i].name.toLowerCase() == assignedTo.toLowerCase())
@@ -811,7 +805,7 @@ function saveTaskChanges (taskFilter) {
 	console.log("project id is defined");
 	
 	for(var i = 0; i < users.length; i++){
-		if(users[i].firstName == assignedTo){ assignedTo = users[i]; break;}
+		if(users[i].firstName == MCS){ MCS = users[i]; break;}
 	}
 	
 	//$('#taskWell > span > .assignedTo').val(assignedTo);
@@ -824,25 +818,28 @@ function saveTaskChanges (taskFilter) {
 		  tasks[i].severity = severity;
 		  tasks[i].dueDate = dueDate;
 		  
+		//  let taskAssignee;
+		  let taskMCS;
 		  let taskAssignee;
 		  
-		  if(assignedTo.firstName) {
+		
 			  for(var i = 0; i < users.length; i++){
-				  if(users[i].firstName.toLowerCase() == assignedTo.firstName.toLowerCase())
-					  taskAssignee = users[i];
+				  if(users[i].firstName.toLowerCase() == MCS.firstName.toLowerCase())
+					  taskMCS = users[i];
 			  }
 				  
-			  tasks[i].assignee = taskAssignee;
-			  tasks[i].subAssignee = undefined;
-		  }
-		  else {
+			  tasks[i].assignee = taskMCS;
+			  //tasks[i].subAssignee = undefined;
+		 
+		  
 			  for(var i = 0; i < subcontractors.length; i++){
+				  console.log("assigned to is ", assignedTo);
 				  if(subcontractors[i].name.toLowerCase() == assignedTo.toLowerCase())
 					  taskAssignee = subcontractors[i];
 			  }
 			  tasks[i].subAssignee = taskAssignee;
-			  tasks[i].assignee = undefined;
-		  }
+			  //tasks[i].assignee = undefined;
+		  
 		  tasks[i].status.id = taskStatus;
 		  if(tasks[i].status.id == 1) tasks[i].status.status = 'Open';
 		  else if(tasks[i].status.id == 2) tasks[i].status.status = 'Completed';
@@ -857,14 +854,14 @@ function saveTaskChanges (taskFilter) {
 			  projectsOfInterest[i].description = description;
 			  projectsOfInterest[i].severity = severity;
 			  projectsOfInterest[i].dueDate = dueDate;
-			  if(assignedTo.firstName) {
-				  projectsOfInterest[i].assignee = assignedTo;
-				  projectsOfInterest[i].subAssignee = undefined;
-			  }
-			  else {
+			  
+				  projectsOfInterest[i].assignee = MCS;
+				  //projectsOfInterest[i].subAssignee = undefined;
+			  
+			  
 				  projectsOfInterest[i].subAssignee = assignedToObject;
-				  projectsOfInterest[i].assignee = undefined;
-			  }
+				//  projectsOfInterest[i].assignee = undefined;
+			  
 			  
 			  projectsOfInterest[i].status.id = taskStatus;
 			  if(projectsOfInterest[i].status.id == 1) projectsOfInterest[i].status.status = 'Open';
@@ -881,14 +878,14 @@ function saveTaskChanges (taskFilter) {
 			 tasksOfInterest[i].description = description;
 			 tasksOfInterest[i].severity = severity;
 			 tasksOfInterest[i].dueDate = dueDate;
-			  if(assignedTo.firstName) {
-				 tasksOfInterest[i].assignee = assignedTo;
-				 tasksOfInterest[i].subAssignee = undefined;
-			  }
-			  else {
+			  
+				 tasksOfInterest[i].assignee = MCS;
+				// tasksOfInterest[i].subAssignee = undefined;
+			  
+			  
 				  tasksOfInterest[i].subAssignee = assignedToObject;
-				  tasksOfInterest[i].assignee = undefined;
-			  }
+				  //tasksOfInterest[i].assignee = undefined;
+			  
 			 tasksOfInterest[i].status.id = taskStatus;
 			 if(tasksOfInterest[i].status.id == 1) tasksOfInterest[i].status.status = 'Open';
 			 else if(tasksOfInterest[i].status.id == 2) tasksOfInterest[i].status.status = 'Completed';
@@ -898,11 +895,11 @@ function saveTaskChanges (taskFilter) {
 		}
 	
 	let assigneeName;
+	let subAssigneeName;
 	
-	if(assignedTo.firstName)
-		assigneeName = assignedTo.firstName;
-	else
-		assigneeName = assignedToObject.name;
+		assigneeName = MCS.firstName;
+	
+		subAssigneeName = assignedToObject.name;
 	
 	console.log("ASSIGNEE NAME = " , assigneeName , "TYPE = " , taskAssigneeType );
 	
@@ -917,6 +914,7 @@ function saveTaskChanges (taskFilter) {
 				'project': projectID,
 				'description': description,
 				'assignee': assigneeName,
+				'subassignee': subAssigneeName,
 				'initiatedDate': assignedDate,
 				'dueDate': dueDate,
 				'severity': severity,
@@ -1094,6 +1092,9 @@ function printTasks(projectsOfInterest) {
 	var taskHead = document.createElement("th");
 	taskHead.innerHTML = "Title";
 	taskHead.style = 'text-align: center; width:11%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+	var MCSHead = document.createElement("th");
+	MCSHead.innerHTML = "MCS";
+	MCSHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
 	var assigneeHead = document.createElement("th");
 	assigneeHead.innerHTML = "Assignee";
 	assigneeHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
@@ -1128,6 +1129,7 @@ function printTasks(projectsOfInterest) {
 	document.getElementById("head").appendChild(warehouseHead);
 	document.getElementById("head").appendChild(projectHead);
 	document.getElementById("head").appendChild(taskHead);
+	document.getElementById("head").appendChild(MCSHead);
 	document.getElementById("head").appendChild(assigneeHead);
 	document.getElementById("head").appendChild(descriptionHead);
 	document.getElementById("head").appendChild(createdHead);
@@ -1151,6 +1153,9 @@ function printTasks(projectsOfInterest) {
 	//	project.align = "center";
 		var task = row.insertCell();
 	//	task.align = 'center';
+		var MCS = row.insertCell();
+		//	task.align = 'center';
+			
 		var assignee = row.insertCell();
 	//	assignee.align = 'center';
 		var description = row.insertCell();
@@ -1170,7 +1175,8 @@ function printTasks(projectsOfInterest) {
 		warehouse.innerHTML = projectsOfInterest[i].project.warehouse.city.name + ' #' + projectsOfInterest[i].project.warehouse.warehouseID;
 		project.innerHTML = projectsOfInterest[i].project.projectItem.name;
 		task.innerHTML =  projectsOfInterest[i].title;
-		assignee.innerHTML = projectsOfInterest[i].assignee.firstName;
+		MCS.innerHTML = projectsOfInterest[i].assignee.firstName;
+		assignee.innerHTML = projectsOfInterest[i].subAssignee.name;
 		description.innerHTML = projectsOfInterest[i].description;
 		created.innerHTML = projectsOfInterest[i].assignedDate;
 		due.innerHTML = projectsOfInterest[i].dueDate;
@@ -1182,6 +1188,7 @@ function printTasks(projectsOfInterest) {
 		row.appendChild(warehouse);
 		row.appendChild(project);
 		row.appendChild(task);
+		row.appendChild(MCS);
 		row.appendChild(assignee);
 		row.appendChild(description);
 		row.appendChild(created);
@@ -1199,6 +1206,8 @@ function printTasks(projectsOfInterest) {
 
 function addTaskToTable(_task)
 {
+	
+
 	if(!_task) return;
 	
 	let taskListing = document.createElement('tr');
@@ -1211,6 +1220,7 @@ function addTaskToTable(_task)
 	
 	let projectDetails = document.createElement('td');
 	let taskTitle = document.createElement('td');
+	let taskMCS = document.createElement('td');
 	let taskAssignee = document.createElement('td');
 	let taskDesc = document.createElement('td');
 	let createdDate = document.createElement('td');
@@ -1225,14 +1235,15 @@ function addTaskToTable(_task)
 	if(!_task.project.projectItem)
 		console.log("NULL TASK " , _task);
 	
+	console.log("task is " , _task);
+
+	
 	projectDetails.innerHTML = _task.project.warehouse.city.name + 
 				' #' + _task.project.warehouse.warehouseID +
 				' - ' + _task.project.projectItem.name;
 	taskTitle.innerHTML = _task.title;
-	if(_task.assignee)
-		taskAssignee.innerHTML = _task.assignee.firstName;
-	else
-		taskAssignee.innerHTML = _task.subAssignee.name;
+	taskMCS.innerHTML = _task.assignee.firstName;
+	taskAssignee.innerHTML = _task.subAssignee.name;
 	
 	taskDesc.innerHTML = _task.description;
 	createdDate.innerHTML = _task.assignedDate;
@@ -1244,6 +1255,7 @@ function addTaskToTable(_task)
 	
 	$(taskListing).append(projectDetails);
 	$(taskListing).append(taskTitle);
+	$(taskListing).append(taskMCS);
 	$(taskListing).append(taskAssignee);
 	$(taskListing).append(taskDesc);
 	$(taskListing).append(createdDate);
