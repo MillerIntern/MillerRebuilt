@@ -460,6 +460,7 @@ function createTaskTable () {
 		}  
 	});
 	var count = 0;
+	console.log("task length", tasks.length);
 	for (var i = 0; i < tasks.length; i++) { 
 		if((selector === 'open' && tasks[i].status.id != 1) || 
 				(selector === 'complete' && tasks[i].status.id != 2) ||
