@@ -1078,12 +1078,11 @@ public class ProjectObjectService
 			System.out.println(value.toString());
 			System.out.println(dest.toString());
 			f.set(dest, value);
-			
-				
 		} 
-		catch (ReflectiveOperationException e) 
+		catch (Exception e) 
 		{
-			throw new RuntimeException(e);
+			//throw new RuntimeException(e);
+			System.out.println("exception = " + e);
 		}
 	}
 
@@ -1212,7 +1211,7 @@ public class ProjectObjectService
         
         return gson.toJson(list);
 		}
-		catch (ClassNotFoundException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
         

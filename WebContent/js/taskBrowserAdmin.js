@@ -82,13 +82,15 @@ function createTaskTableByManager (tasks) {
 	    {
 	    	//console.log("interesr in " + managersOfInterest[q]);
 	    
-		if ((tasks[i].assignee != undefined && tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) ||
+		if ((tasks[i].assignee != undefined && tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) &&
 				(tasks[i].subAssignee != undefined && tasks[i].subAssignee.name.toLowerCase() == managersOfInterest[q].toLowerCase())) {
 			count++;
 			tasksOfInterest.push(tasks[i]);
 			addTaskToTable(tasks[i]);
 		}
+		console.log(tasks[i]);
 	  }
+	    
      } 
 	}
 	projectsOfInterest = tasksOfInterest;
