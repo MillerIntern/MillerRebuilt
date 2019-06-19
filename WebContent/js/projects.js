@@ -4203,6 +4203,7 @@ function equipmentReport () {
 
 function permissionCheck(){
 	console.log("is it working?");
+	var tasksExist = tasks.length;
 	let user;
 	$.ajax({
 		type: 'POST',
@@ -4214,9 +4215,37 @@ function permissionCheck(){
 			user = data;
 			console.log(user);
 			console.log("IT WORKED");
+			//console.log(tasks[0].status.status);
 			if(user.permission.canDeleteProjects == true)
-			{
-				deleteConfirm();
+			{	//Delete the project if it does not have any tasks associated with it.
+				if(tasksExist == 0){
+					deleteConfirm();
+				}
+				else {
+					alert("This project has Tasks associated with it and hence cannot be deleted");
+				}
+	//If a project has tasks, then it is not being deleted because of foreign key dependency			
+				
+/*				//If it has any tasks, delete the project if all the tasks are Closed
+				else if(tasksExist!=0){
+					var i;
+					var flagOpen = 0;
+					for(i=0;i<tasksExist;i++){
+						if(tasks[i].status.status == "Open"){
+							flagOpen+=1;
+							break;
+						}
+					}
+					console.log("flag open is ",flagOpen);
+					if(flagOpen == 0){
+						deleteConfirm();
+					}
+				
+				
+					else {
+						alert("This project has Tasks associated with it and hence cannot be deleted");
+					}
+				}*/
 			}
 			else
 			{
@@ -4224,11 +4253,6 @@ function permissionCheck(){
 			}
 		}
 	});
-	
-	
-	
-	
-	
 }
 
 function deleteConfirm () {
@@ -4301,6 +4325,7 @@ function fillTasksTable(tasks) {
 		
 		let taskTitle = document.createElement('td');
 		let taskDesc = document.createElement('td');
+		let MCS = document.createElement('td');
 		let assignedTo = document.createElement('td');
 		let dueDate = document.createElement('td');
 		let severity = document.createElement('td');
@@ -4311,10 +4336,9 @@ function fillTasksTable(tasks) {
 		
 		taskDesc.innerHTML = tasks[i].description;
 		
-		if(tasks[i].type == TASK_EMPLOYEE_ASSIGNEE)
-			assignedTo.innerHTML = tasks[i].assignee.firstName;
-		else
-			assignedTo.innerHTML = tasks[i].subAssignee.name;
+		
+		MCS.innerHTML = tasks[i].assignee.firstName;
+		assignedTo.innerHTML = tasks[i].subAssignee.name;
 		
 		dueDate.innerHTML = tasks[i].dueDate;
 		
@@ -4326,6 +4350,7 @@ function fillTasksTable(tasks) {
 		
 		taskListing.appendChild(taskTitle);
 		taskListing.appendChild(taskDesc);
+		taskListing.appendChild(MCS);
 		taskListing.appendChild(assignedTo);
 		taskListing.appendChild(dueDate);
 		taskListing.appendChild(severity);
@@ -4368,7 +4393,7 @@ function displayTaskWell() {
 	$('#tasksInformation').find('#taskDisplay').hide();
 	$('#tasksInformation').find('#taskCreationZone').show();
 	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').show();
-	document.getElementById('tasksInformation').style.width = "55%";
+	document.getElementById('tasksInformation').style.width = "75%";
 }
 
 
@@ -4402,11 +4427,12 @@ function fillTaskWell(source) {
 	}
 	else {
 		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
-		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').hide();
-		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
-		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
+		//document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		//document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
 		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
 		$('#taskCreationZone').find('#assigneeEntry').val(selected_task.assignee.firstName);
+		$('#taskCreationZone').find('#subcontractorsDropdown').val(selected_task.subAssignee.name);
 	}
 
 		
@@ -8552,18 +8578,24 @@ function addParameter() {
 	let optionObject2 = document.createElement('option');
 	optionObject2.value = 'default';
 	optionObject2.innerHTML = '---';
-	
+
 	$("#sortSpace").remove();
-	
 	let br = document.createElement('BR');
 	br.id = "sortSpace";
+
 	
+
+	
+
 	selectID.appendChild(optionObject);
 	selectVal.appendChild(optionObject2);
 	parameterHolder.appendChild(selectID);
 	parameterHolder.appendChild(selectVal);
 	parameterHolder.appendChild(removeTag);
 	parameterHolder.appendChild(br);
+
+
+
 	
 	let d = document.createDocumentFragment();
 	
@@ -8577,7 +8609,11 @@ function addParameter() {
 	
 	var sort = document.getElementById("sortProjects");
 	var param = document.getElementById("param-field");
+
+
+
 	
+
 	param.insertBefore(parameterHolder, sort);
 	param.insertBefore(br, sort);
 }

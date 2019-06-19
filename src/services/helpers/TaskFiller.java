@@ -46,7 +46,7 @@ public class TaskFiller {
 		t.setAssignee(User.mapNameToUser(params.get("assignee")));
 		t.setAssigner(User.mapNameToUser(sessionName));
 
-		t.setSubAssignee(Subcontractor.mapNameToSubcontractor(params.get("assignee")));
+		t.setSubAssignee(Subcontractor.mapNameToSubcontractor(params.get("subassignee")));
 		
 		t.setProject((Project)ProjectObjectService.get(Long.parseLong(params.get("project")), "Project"));
 		

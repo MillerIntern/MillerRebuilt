@@ -269,11 +269,12 @@
 		let title = $('#titleEntry').val();
 		let description = $('#descriptionEntry').val();
 		let assignee;
+		let subassignee;
 		
-		if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE)
-			assignee = $('#assigneeEntry').val();
-		else 
-			assignee = $('#subcontractorsDropdown').val();
+		
+		assignee = $('#assigneeEntry').val();
+	 
+		subassignee = $('#subcontractorsDropdown').val();
 		
 		console.log("Assignee: ", assignee);
 		let initiatedDate = $('#initDate').val();
@@ -289,6 +290,7 @@
 		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
 		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
+		if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
 		
@@ -298,6 +300,7 @@
 			'project': projectID,
 			'description': description,
 			'assignee': assignee,
+			'subassignee': subassignee,
 			'initiatedDate': initiatedDate,
 			'dueDate': dueDate,
 			'severity': severity,
@@ -316,6 +319,7 @@
 				'project': projectID,
 				'description': description,
 				'assignee': assignee,
+				'subassignee': subassignee,
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
 				'severity': severity,
@@ -456,20 +460,21 @@
 					<td><textarea  maxlength="999" type='text' class="scrollTextBoxTaskForm" id='descriptionEntry' placeholder='Task Description'></textarea>
 				</tr>
 				<tr>
-					<td><label>Assignee:</label></td>
+					<td><label>MCS:</label></td>
 					<td class='userEntry' id = "employeeAssigneeTableElement">
 						<select id='assigneeEntry'>
 						
 						</select>
 					</td>
-					<td class='subcontractorEntry' style = "display : none" id = "subcontractorAssigneeTableElement">			
+					<td><label>Assignee:</label></td>
+					<td class='subcontractorEntry'  id = "subcontractorAssigneeTableElement">			
 						<select id='subcontractorsDropdown'>
 								
 						</select>
 					</td>
-					<td>
+<!-- 					<td>
 						<button id = "toggleTaskAssignee" onclick = "toggleTaskAssignee()" class = "btn btn-primary btn-sm">Assign to Subcontractor</button>
-					</td>
+					</td> -->
 				</tr>
 				<tr>
 					<td><label for='initDate'>Assigned Date:</label></td>

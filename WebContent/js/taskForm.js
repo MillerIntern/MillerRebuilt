@@ -143,21 +143,20 @@ function getUserData () {
 		let dueDate = $('#taskCreationZone').find('#dueDate').val();
 		let severity = $('#taskCreationZone').find('#severity').val();
 		let notes = $('#taskCreationZone').find('#notes').val();
-		let type = document.getElementById('toggleTaskAssignee').value;
+		let type = "EMPLOYEE";
 		
 		let taskStatus = $('#taskCreationZone').find('#taskStatus').val();
 		if(taskStatus == "Open") taskStatus = 1;
 		else if(taskStatus == "Completed") taskStatus = 2;
 		else taskStatus = 3;
 		
-		console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
+		//console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
 		console.log("TYPE: ", type);
 		
 		let assignee;
-		if(type == "EMPLOYEE")
-			assignee = $('#taskCreationZone').find('#assigneeEntry').val();
-		else
-			assignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
+		let subassignee;
+		assignee = $('#taskCreationZone').find('#assigneeEntry').val();
+		subassignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
 
 		console.log("ASSIGNEE: " , assignee);
 		
@@ -168,6 +167,7 @@ function getUserData () {
 		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
 		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
 		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
+		if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
 		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
 		if (dueDate === 'undefined'|| dueDate === '') return alert('Bad Due Date');
 		
@@ -180,6 +180,7 @@ function getUserData () {
 			'project': projectID,
 			'description': description,
 			'assignee': assignee,
+			'subassignee': subassignee,
 			'initiatedDate': initiatedDate,
 			'dueDate': dueDate,
 			'severity': severity,
@@ -199,6 +200,7 @@ function getUserData () {
 				'project': projectID,
 				'description': description,
 				'assignee': assignee,
+				'subassignee': subassignee,
 				'initiatedDate': initiatedDate,
 				'dueDate': dueDate,
 				'status' : taskStatus,
@@ -279,9 +281,9 @@ function getUserData () {
 		
 		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
 		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
-		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').hide();
-		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
-		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
+		//document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
+		//document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
 	}
 	
 	// TODO: Honestly, this function should probably be in global.js

@@ -41,8 +41,8 @@
     	$(function() {
     	    $("body").keypress(function (e) {
     	        if ((e.which && e.which == ENTER) || (e.keyCode && e.keyCode == ENTER)) {
-    	        	clickedEnter = true;
-    	            login();
+    	        	clickedEnter = true;    	        	    	            	        	
+    	        	login();
     	        }
     	    });
     	});
@@ -58,12 +58,13 @@
     			url: 'Login', 
     			data: {
     				'username': username,
-    				'password': password 
+    				'password': password
     			}, success: function (data) {
     				data = $.trim(data);
     				if(data === 'false') {
     					$('#invalidLogin').slideDown();
-    				} else {
+    				} else {    					
+    					setJavaScriptCookie();
     					document.location.href = HOMEPAGE;
     				}
     				
@@ -76,7 +77,7 @@
     </script>
 
   </head>
-  <body>
+  <body >
     <div class="container">
 
       <form class="form-signin" style="display:none">

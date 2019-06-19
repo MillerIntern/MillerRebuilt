@@ -14,6 +14,50 @@ const TASK_CREATOR = 'taskForm.html';
 const NEW_MASTER_SCOPE = 'newMasterScope.html'
 const MASTER_SCOPE = 'masterScope.html'
 
+loginWork();	
+function setJavaScriptCookie(){
+	document.cookie="millerLoginCookie_Status=loggedIn";
+}
+
+function getJavaScriptCookie(Name){
+	var search = Name + "="
+	  var returnvalue = "";
+	  if (document.cookie.length > 0) {
+	   var offset = document.cookie.indexOf(search)
+	    // if cookie exists
+	    if (offset != -1) { 
+	      offset += search.length
+	      // set index of beginning of value
+	      var end = document.cookie.indexOf(";", offset);
+	      // set index of end of cookie value
+	      if (end == -1) end = document.cookie.length;
+	      returnvalue=unescape(document.cookie.substring(offset, end))
+	      }
+	   }
+	  return returnvalue;
+}
+
+function unSetJavaScriptCookie(){
+	document.cookie="millerLoginCookie_Status=loggedOut";
+}
+
+//This function redirects user to homepage if already logged in and if not, takes him to login page
+function loginWork(){  
+	var cookieStatus = getJavaScriptCookie("millerLoginCookie_Status");
+	if(cookieStatus != "loggedIn"){
+		if(!(window.location.href.indexOf("index.html")>-1))
+		{
+		document.location.href = "index.html";
+		}
+	}
+
+	else if(cookieStatus == "loggedIn"){
+		if((window.location.href.indexOf("index.html")>-1))
+		{		
+		document.location.href = HOMEPAGE;
+		}
+	}
+}
 
 jQuery.fn.center = function () {
     this.css("position","absolute");
@@ -23,6 +67,8 @@ jQuery.fn.center = function () {
                                                 $(window).scrollLeft()) + "px");
     return this;
 }
+
+
 
 
 
