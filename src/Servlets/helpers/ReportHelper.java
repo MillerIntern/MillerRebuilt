@@ -549,8 +549,11 @@ public class ReportHelper
 			sb.append("Project");						
 	    }else if(value.equals("task_assignee")) {
 			sb.append("<th>");
+			sb.append("MCS");
+		}else if(value.equals("task_subassignee")) {
+			sb.append("<th>");
 			sb.append("Assignee");
-		} else if(value.equals("task_description")) {
+		}else if(value.equals("task_description")) {
 			sb.append("<th>");
 			sb.append("Description");
 		} else if(value.equals("task_created_date")) {
@@ -1752,9 +1755,14 @@ public class ReportHelper
 		}
 		else if(value.equals("task_assignee")) { 
 			//System.out.println(t.getType());
-			if(t.getType().equals("EMPLOYEE") && !t.getAssignee().getFirstName().equals(null))
+			if(!t.getAssignee().getFirstName().equals(null))
 				returnVal = t.getAssignee().getFirstName();
-			else if(t.getType().equals("SUBCONTRACTOR") && !t.getSubAssignee().getName().equals(null))
+			else
+				returnVal = "---";
+		}
+		else if(value.equals("task_subassignee")) { 
+			//System.out.println(t.getType());
+			if(!t.getSubAssignee().getName().equals(null))
 				returnVal = t.getSubAssignee().getName();
 			else
 				returnVal = "---";

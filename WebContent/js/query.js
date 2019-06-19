@@ -424,7 +424,7 @@ const CO_KEYS = new Array('changeOrder');
 
 const BART_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'buildingNotes', 'roofingNotes');
 
-const TASK_KEYS = new Array('warehouse', 'project_item', 'task_title','task_assignee','task_description','task_created_date',
+const TASK_KEYS = new Array('warehouse', 'project_item', 'task_title','task_assignee','task_subassignee','task_description','task_created_date',
 		                  'task_due_date', 'task_status', 'task_priority','task_notes');
 
 const DAVID_HAC_KEYS = new Array('warehouse','item', 'scope','region','status',
@@ -1452,6 +1452,8 @@ function generateTaskReport(reportType){
 	data['shownFields'] = selectedFields;
 	console.log("selected fields == ", selectedFields);
 	var params = $.param(data);
+	console.log("data is ", data);
+	console.log("params are ", params);
 	console.log(REPORT_URL+"?"+params);
 	
 	taskStatuses["1"] = false;

@@ -665,7 +665,6 @@ public class ProjectRuleService
 	public static boolean generalInfoEvaluate(ProjectRule _rule, Project _proj)
 	{
 		Project proj = _proj;
-		
 		if(proj == null)	
 			proj = _rule.getProject();
 		

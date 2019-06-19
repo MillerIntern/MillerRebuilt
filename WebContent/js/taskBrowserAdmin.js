@@ -100,74 +100,83 @@ function createTaskTableByManager (tasks) {
 
 function createManagerQueue()
 {
+	let managerDropdown;
 	
-	let managerDropdown = document.getElementById("projectManagerDropdown");
+	managerDropdown = document.getElementById("projectManagerDropdown");
+	console.log("managerDrop is  ",managerDropdown);
+	$("#projectManagerDropdown").empty();
+	console.log("managerDrop isaaa  ",$("#projectManagerDropdown"));
+	let managerAllOption ;
+	let managerNoneOption;
+	let json;
+	let managerOption;
 	
-	let managerAllOption = document.createElement('option');
-	managerAllOption.text = "All";
-	managerAllOption.value = "All";	
-	managerAllOption.id =  "AllTasks";
-	managerAllOption.className = "taskManager";
-	managerDropdown.add(managerAllOption);
-	
-	let managerNoneOption = document.createElement('option');
-	managerNoneOption.text = "None";
-	managerNoneOption.value = "None";	
-	managerNoneOption.id =  "NoneTasks";
-	managerNoneOption.className = "taskManager";
-	managerDropdown.add(managerNoneOption);
-	
-	let json = projectManagers;
-		
-    json.sort(function(a,b){
-    	if(a.name < b.name) return -1;
-    	else if(a.name > b.name) return 1;
-    	return 0;
-    });
-    
-	for (var i = 0; i < json.length; i++) {
-		// when users store both username and name, access the user's name and username fields
-		if(json[i].name == "Bart" || json[i].name == "bart") continue;
-
-		let managerOption = document.createElement('option');
-		managerOption.text = json[i].name;
-		managerOption.value = json[i].name;
-		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()) 
-			managerOption.selected = true;
-		
-		managerOption.id =  json[i].name+"Tasks";
-		managerOption.className = "taskManager";
-		managerDropdown.add(managerOption);
+	if($('#categoryDetails').val() == 'managers'){
+		json = projectManagers ;		
 	}
 	
-	json = subcontractors;
-	
-	for (var i = 0; i < json.length; i++) {
-		// when users store both username and name, access the user's name and username fields
-		if(json[i].name == "Bart" || json[i].name == "bart") continue;
-
-		let managerOption = document.createElement('option');
-		managerOption.text = json[i].name;
-		managerOption.value = json[i].name;
-		if(user.firstName.toLowerCase() == json[i].name.toLowerCase()) 
-			managerOption.selected = true;
+	else{
 		
-		managerOption.id =  json[i].name+"Tasks";
-		managerOption.className = "taskManager";
-		managerDropdown.add(managerOption);
+		json = subcontractors;	
 	}
-	
-    $('.chosenElement').chosen({ width: "400px" });
-    $('.chosenElement').on('change' , function(evt , params) {
-    	
-    	if(params.selected) {
-    		if(params.selected == "All") 
-    			selectAllManagersDropdown();
-    		if(params.selected == "None")
-    			deselectAllManagersDropdown();
-    	}    	
-    });
+		
+		
+		console.log("the value is ",$('#categoryDetails').val());
+		managerAllOption = document.createElement('option');
+		managerAllOption.text = "All";
+		managerAllOption.value = "All";	
+		managerAllOption.id =  "AllTasks";
+		managerAllOption.className = "taskManager";
+		managerDropdown.add(managerAllOption);
+		
+		managerNoneOption = document.createElement('option');
+		managerNoneOption.text = "None";
+		managerNoneOption.value = "None";	
+		managerNoneOption.id =  "NoneTasks";
+		managerNoneOption.className = "taskManager";
+		managerDropdown.add(managerNoneOption);
+		
+		
+			
+	    json.sort(function(a,b){
+	    	if(a.name < b.name) return -1;
+	    	else if(a.name > b.name) return 1;
+	    	return 0;
+	    });
+	    
+		for (var i = 0; i < json.length; i++) {
+			// when users store both username and name, access the user's name and username fields
+			if(json[i].name == "Bart" || json[i].name == "bart") continue;
 
+			managerOption = document.createElement('option');
+			managerOption.text = json[i].name;
+			managerOption.value = json[i].name;
+			if(user.firstName.toLowerCase() == json[i].name.toLowerCase()) 
+				managerOption.selected = true;
+			
+			managerOption.id =  json[i].name+"Tasks";
+			managerOption.className = "taskManager";
+			managerDropdown.add(managerOption);
+		}
+		
+	
+		$('#projectManagerDropdown').trigger('chosen:updated');
+		
+	    $('.chosenElement').chosen({ width: "400px" });
+	    $('.chosenElement').on('change' , function(evt , params) {
+	    	
+	    	if(params.selected) {
+	    		if(params.selected == "All") 
+	    			selectAllManagersDropdown();
+	    		if(params.selected == "None")
+	    			deselectAllManagersDropdown();
+	    	}    	
+	    });
+
+		
+	
+	
+	
     
     
 	document.getElementById("assigneeSort").style.display = 'inline';

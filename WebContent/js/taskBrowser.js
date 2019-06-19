@@ -287,6 +287,7 @@ function getSubcontractors() {
 	});
 	*/
 	subcontractors = TASK_OBJECT.SUBS;
+	
 		if(user.permission.canAccessAdminPage === true) createManagerQueue();
 		createSubDropdown(TASK_OBJECT.SUBS);
 }
@@ -520,6 +521,7 @@ function createTaskTableFromFilter(){
 			
 			let projectDetails = document.createElement('td');
 			let taskTitle = document.createElement('td');
+			let taskMCS = document.createElement('td');
 			let taskAssignee = document.createElement('td');
 			let taskDesc = document.createElement('td');
 			let createdDate = document.createElement('td');
@@ -533,10 +535,8 @@ function createTaskTableFromFilter(){
 						' #' + projectsOfInterest[i].project.warehouse.warehouseID +
 						' - ' + projectsOfInterest[i].project.projectItem.name;
 			taskTitle.innerHTML = projectsOfInterest[i].title;
-			if(projectsOfInterest[i].assignee)
-				taskAssignee.innerHTML = projectsOfInterest[i].assignee.firstName;
-			else
-				taskAssignee.innerHTML = projectsOfInterest[i].subAssignee.name;
+			taskMCS.innerHTML = projectsOfInterest[i].assignee.firstName;
+			taskAssignee.innerHTML = projectsOfInterest[i].subAssignee.name;
 
 			taskDesc.innerHTML = projectsOfInterest[i].description;
 			createdDate.innerHTML = projectsOfInterest[i].assignedDate;
@@ -548,6 +548,7 @@ function createTaskTableFromFilter(){
 			
 			$(taskListing).append(projectDetails);
 			$(taskListing).append(taskTitle);
+			$(taskListing).append(taskMCS);
 			$(taskListing).append(taskAssignee);
 			$(taskListing).append(taskDesc);
 			$(taskListing).append(createdDate);

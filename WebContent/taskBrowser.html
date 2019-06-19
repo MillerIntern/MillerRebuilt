@@ -87,9 +87,14 @@
     <div class="container">
 		
 		<div class="param-field">
-		
+		<h4 id = 'category'>Select a category
+		<select data-placeholder = "Select a category..." id ='categoryDetails' class = "chosenElement taskManager" onchange = "createManagerQueue();">
+			<option value='managers'>Managers</option>
+			<option value='subcontractors'>Subcontractors</option>
+		</select></h4> 
+		<br>
    		<h4 id='formFor'>  </h4>
-   		<select data-placeholder = "Select Managers..." class = "chosenElement taskManager" id = 'projectManagerDropdown' multiple = "multiple">
+   		<select  class = "chosenElement taskManager" id = 'projectManagerDropdown' multiple = "multiple">
    		</select>
    		
    		<select id ='taskSelector'>

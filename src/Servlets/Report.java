@@ -117,7 +117,7 @@ public class Report extends HttpServlet
 	            type = "Task Report";
 	            tasks = acquireProperTasks(req);
 								
-	            String[] taskFields = {"warehouse","task_item","task_title","task_assignee","task_description","task_created_date",
+	            String[] taskFields = {"warehouse","task_item","task_title","task_assignee","task_subassignee","task_description","task_created_date",
                 "task_due_date", "task_status", "task_priority","task_notes"};
 				
 				List<String> shownFields = new ArrayList<>();

@@ -938,9 +938,10 @@ function swapDuplicateCity()
 
 function addPerson()
 {
-	var personName = $('#personName').val();
+	var personName = $('#userDropDown').val();
 	
-	if(personName != '')
+	
+	if(personName != 'default')
 	{
 		$.ajax({
 			type: 'POST',
@@ -953,7 +954,7 @@ function addPerson()
 			success: function(data)
 			{
 				console.log(data);
-				$('#personName').val('');
+				$('#userDropDown').val('default');
 				alert("Person Added Successfully!");
 			}
 		});
@@ -1072,9 +1073,54 @@ function getUsers () {
 				console.log("USERS = ",users);
 			}
 			getStates();
+			var managers = getProjectManagers();
+			console.log("managers are ", managers);
+		    createUserDropDown(users,managers);
 		}
 		
 	});	
+}
+function createUserDropDown(userData, projectManagers){
+	var countFlag = 0;
+	console.log("userData is ",userData);
+	console.log("projectManagers are ",projectManagers);
+	for(var i=0; i<userData.length; i++){
+		for(var j=0; j<projectManagers.length;j++){
+			if(userData[i].firstName == projectManagers[j].name){
+				countFlag++;
+				break;
+			}
+
+		}
+
+		if(countFlag == 0){
+			var select = document.getElementById("userDropDown");
+			var option = document.createElement("option");
+			option.value = userData[i].firstName;
+			option.innerHTML = userData[i].firstName;
+			select.appendChild(option);
+		}
+		countFlag = 0;
+	}
+}
+
+function getProjectManagers () {
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		async: false,
+		data: {
+			'domain': 'project',
+			'action': 'getProjectManagers',
+		}, complete: function (data) {
+			console.log("REPONSE JSON FROM getProjectManagers() = ",data.responseJSON);
+			projectManagers = data.responseJSON;
+		}
+		
+	});
+	
+	return projectManagers;
 }
 
 function removeRule()

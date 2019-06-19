@@ -83,6 +83,7 @@ function addTaskToTable(_task)
 	
 	let projectDetails = document.createElement('td');
 	let taskTitle = document.createElement('td');
+	let taskMCS = document.createElement('td');
 	let taskAssignee = document.createElement('td');
 	let taskDesc = document.createElement('td');
 	let createdDate = document.createElement('td');
@@ -101,10 +102,8 @@ function addTaskToTable(_task)
 				' #' + _task.project.warehouse.warehouseID +
 				' - ' + _task.project.projectItem.name;
 	taskTitle.innerHTML = _task.title;
-	if(_task.assignee)
-		taskAssignee.innerHTML = _task.assignee.firstName;
-	else
-		taskAssignee.innerHTML = _task.subAssignee.name;
+	taskMCS.innerHTML = _task.assignee.firstName;
+	taskAssignee.innerHTML = _task.subAssignee.name;
 	
 	taskDesc.innerHTML = _task.description;
 	createdDate.innerHTML = _task.assignedDate;
@@ -118,6 +117,7 @@ function addTaskToTable(_task)
 	
 	$(taskListing).append(projectDetails);
 	$(taskListing).append(taskTitle);
+	$(taskListing).append(taskMCS);
 	$(taskListing).append(taskAssignee);
 	$(taskListing).append(taskDesc);
 	$(taskListing).append(createdDate);
