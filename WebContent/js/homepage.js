@@ -1,7 +1,7 @@
-$(document).ready(function()
-{
-   getMasterScopes();
-});
+//$(document).ready(function()
+//{
+//   getMasterScopes();
+//});
 
 
 /*

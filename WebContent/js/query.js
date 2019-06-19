@@ -480,7 +480,7 @@ $(document).ready(function()
 		$(this).parent().remove();
 	});
 	getUserInfo();
-	getMasterScopes();
+//	getMasterScopes();
 });	
 
 $(document).on('change', '.reportTypePicker',function(){

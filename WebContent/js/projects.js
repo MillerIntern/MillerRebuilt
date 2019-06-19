@@ -3104,7 +3104,7 @@ function createTask() {
 	
 	$('#taskCreationZone').find('#initDate').val(todaysDate);
 	
-	document.getElementById('tasksInformation').style.width = "55%";
+	document.getElementById('tasksInformation').style.width = "75%";
 	$('#taskDisplay').hide();
 	$('#taskCreationZone').show();
 	
@@ -4281,6 +4281,8 @@ function fillTasksTable(tasks) {
 				(selector === 'closed' && tasks[i].status.id != 3)) 
 				continue; // do nothing
 		var task = tasks[i];
+		console.log(task);
+		
 		var taskListing = document.createElement('tr');
 		taskListing.setAttribute("value", task.id);
 		taskListing.onclick = function() {
@@ -6037,7 +6039,7 @@ function setProjSpecScopeTitle()
 }
 
 ////////////////////////////////////////////////////////////////////
-// js for Master Scope 
+// js for Project Master Scope 
 /////////////////////////////////////////////////////////////////////
 
 let masterScopeData;
@@ -6059,7 +6061,7 @@ function getSpecMasterScope(id)
 			'id': id
 		
 		}, complete: function (data) {
-			console.log("master scope: ", data.responseJSON);
+			console.log("master scope!!!: ", data.responseJSON);
 			masterScopeData = data.responseJSON;
 			clearProjMasterScope();
 			setMasterScopeTitle();
@@ -7953,10 +7955,10 @@ $(document).on('click', '.stageLabel', function(){
 	updateFrontEnd();
 });
 
-$(document).ready(function() 
-{			
-	getMasterScopes();
-});	
+//$(document).ready(function() 
+//{			
+//	getMasterScopes();
+//});	
 
 function getMasterScopes()
 {
@@ -8849,7 +8851,7 @@ function getTasks(stopServerCalls) {
 			'action': 'getProjectTasks',
 			'id': projectID
 		}, success: function (data) {
-			console.log("proj tasks", data);
+			console.log("proj tasks!!!!", data);
 			let type = getParameterByName("from");
 			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
 			tasks = data;

@@ -45,7 +45,8 @@ $(document).ready(function()
 	$("#actualTurnover").datepicker();
 	$("#initiatedDate").val(getToday());
 	getUserInfo();
-	getMasterScopes();
+	
+	//getMasterScopes();
 });
 
 

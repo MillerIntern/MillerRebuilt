@@ -85,10 +85,10 @@ $(document).ready(function()
 		});
 
 
-$(document).ready(function()
-{
-   getMasterScopes();
-});
+//$(document).ready(function()
+//{
+//   getMasterScopes();
+//});
 
 
 function getMasterScopes()

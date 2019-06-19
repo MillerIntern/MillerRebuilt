@@ -24,7 +24,7 @@ $(document).ready(function () {
     if(window.location.href.indexOf("taskReport.html") != -1) return;
 	$('#taskWell > span > .dueDate').datepicker({defaultDate: getToday()});
 	getTheTasks();
-	getMasterScopes();
+//	getMasterScopes();
 	//getUserData(); //Gets the User from the database on page load
 });
 
@@ -472,6 +472,7 @@ function createTaskTable () {
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			addTaskToTable(tasks[i]);
 		}
+		console.log(tasks[i]);
 	}
 	projectsOfInterest = tasksOfInterest;
 	if (count === 0) {
@@ -1220,10 +1221,10 @@ function addTaskToTable(_task)
 	let notes = document.createElement('td');
 
 	
-	
-	
 	if(!_task.project.projectItem)
 		console.log("NULL TASK " , _task);
+	
+	console.log("task" ,_task);
 	
 	projectDetails.innerHTML = _task.project.warehouse.city.name + 
 				' #' + _task.project.warehouse.warehouseID +
