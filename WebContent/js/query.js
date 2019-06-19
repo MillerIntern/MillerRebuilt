@@ -1468,7 +1468,6 @@ function generateTaskReport(reportType){
 //    	this.value = "default";
 //    })
 //	
-
 	document.location.href = REPORT_URL+"?"+params;
 
 }

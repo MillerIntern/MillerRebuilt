@@ -1770,19 +1770,14 @@ public class ReportHelper
 		else if(value.equals("task_assignee_num")) {
 			//System.out.println("assignee num");
 			String us;
-			String per;
-		    if(t.getType().equals("EMPLOYEE"))
-			{	
-				us = t.getAssignee().getId().toString();
+			List<Object> pm = ProjectObjectService.getAll("Person");
+			
+			String per;	
+				us = t.getAssignee().getFirstName();
 				//System.out.println("user = "+ us);
-				per = convertUserToPerson(us);
+				per = convertUserToPerson(us,pm);
 				//System.out.println("person = " + per);
 				returnVal = per;
-			}
-			else if(t.getType().equals("SUBCONTRACTOR"))
-			{	
-				returnVal = t.getSubAssignee().getName();	
-			}	
 		}
 		else if(value.equals("task_description")) {
 			returnVal = t.getDescription();
@@ -1818,44 +1813,15 @@ public class ReportHelper
 		
 	}
 	
-	private static String convertUserToPerson(String user)
+	private static String convertUserToPerson(String user, List<Object> pm)
 	{
-		if(user.equals("4"))
-			return "2";
-		else if(user.equals("5"))
-			return user;
-		else if(user.equals("7"))
-			return "1";
-		else if(user.equals("8"))
-			return "7";
-		else if(user.equals("9"))
-			return "8";
-		else if(user.equals("19"))
-			return "14";
-		else if(user.equals("20"))
-			return "26";
-		else if(user.equals("21"))
-			return "17";
-		else if(user.equals("22"))
-			return "3";
-		else if(user.equals("23"))
-			return "18";
-		else if(user.equals("24"))
-			return "15";
-		else if(user.equals("26"))
-			return "20";
-		else if(user.equals("3"))
-			return "21";
-		else if(user.equals("27"))
-			return "22";
-		else if(user.equals("28"))
-			return "23";
-		else if(user.equals("29"))
-			return "24";
-		else if(user.equals("25"))
-			return user;
-		else 
-			return "";
+		for(int i=0 ; i< pm.size();i++) {
+			Person personpm = (Person) pm.get(i);
+			if(personpm.getName().toLowerCase().equals(user.toLowerCase())){
+				return personpm.getId().toString();	
+			}
+		}
+		return "";
 	}
 	
 	private static String convertStatusNumber(String retVal) {
