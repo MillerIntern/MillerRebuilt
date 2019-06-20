@@ -69,6 +69,26 @@ function getUserData () {
 		});
 	}
 	
+	function getProjectManagers () {
+		var result;
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			async: false,
+			data: {
+				'domain': 'project',
+				'action': 'getProjectManagers',
+			}, complete: function (data) {
+				if (data.responseJSON) {
+					result = data.responseJSON;
+					console.log("project managers are ", result);
+				}
+			}
+			
+		});
+		return result;
+	}
+	
 	function getSubcontractors() {
 		$.ajax({
 			type: 'POST',
@@ -109,7 +129,11 @@ function getUserData () {
 	
 	function createDropdown (json) {
 		$('#assigneeEntry').find('option').remove();
-
+		var projectManagers = getProjectManagers();
+		const setProjectManagers = new Set();
+		for (var i = 0; i < projectManagers.length; i++){
+			setProjectManagers.add(projectManagers[i].name);
+		}
 		let d = document.createDocumentFragment();
 				
 		json.sort(function(a,b){
@@ -120,14 +144,16 @@ function getUserData () {
 		
 		var assigneeVal;
 		for (var i = 0; i < json.length; i++) {
-			let option = document.createElement('option');
-			if(user.firstName == json[i].firstName) 
-				assigneeVal = json[i].firstName;
-			// when users store both username and name, access the user's name and username fields
-			console.log(json[i].firstName);
-			option.innerHTML = json[i].firstName;
-			option.setAttribute("value", json[i].firstName);
-			d.appendChild(option);
+			if(setProjectManagers.has(json[i].firstName)){
+				let option = document.createElement('option');
+				if(user.firstName == json[i].firstName) 
+					assigneeVal = json[i].firstName;
+				// when users store both username and name, access the user's name and username fields
+				console.log(json[i].firstName);
+				option.innerHTML = json[i].firstName;
+				option.setAttribute("value", json[i].firstName);
+				d.appendChild(option);
+			}
 		}
 		$('#assigneeEntry').append(d);
 		$('#assigneeEntry').val(assigneeVal);

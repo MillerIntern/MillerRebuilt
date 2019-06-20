@@ -10127,7 +10127,8 @@ function sortTable(n){
 	  switching = true;
 	  /*Make a loop that will continue until
 	  no switching has been done:*/
-	  while (switching) {	
+	  while (switching) {
+		if(n=="-1") break;
 	    //start by saying: no switching is done:
 	    switching = false;
 	    rows = table.rows;

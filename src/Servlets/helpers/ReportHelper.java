@@ -1812,7 +1812,7 @@ public class ReportHelper
 		return returnVal;
 		
 	}
-	
+	//A.R.G -->This function was initially checking the person manually. Changed it.
 	private static String convertUserToPerson(String user, List<Object> pm)
 	{
 		for(int i=0 ; i< pm.size();i++) {
