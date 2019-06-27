@@ -24,6 +24,7 @@ import objects.RequestHandler;
 import projectObjects.City;
 import projectObjects.ProjectRule;
 import projectObjects.Region;
+import projectObjects.RuleDetails;
 import projectObjects.RuleDomain;
 import projectObjects.RuleResult;
 import projectObjects.RuleSeverity;
@@ -33,6 +34,8 @@ import projectObjects.Task;
 import projectObjects.User;
 import projectObjects.Warehouse;
 import services.LoginService;
+import services.ProjectNewRuleColorService;
+import services.ProjectNewRuleService;
 import services.ProjectObjectService;
 import services.ProjectRuleService;
 import services.ProjectService;
@@ -1014,6 +1017,55 @@ public class Project extends HttpServlet
 			
 			Gson gson = new Gson();
 			response = gson.toJson(result);
+			
+		}
+		
+		else if(action.equals("getScoreRules")) {
+			projectObjects.Project project = null;
+			try 
+			{
+			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("projectId")), "Project");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			//String task = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("projectId")));
+			
+			System.out.println("STAGE NAME IS"+ project.getStage().getName());
+			List<Task> task = ProjectObjectService.getAllTasks(Long.parseLong(parameters.get("projectId")));
+			
+			System.out.println("Projects AGAIN ARE "+ project);
+			System.out.println("TASKS AGAIN ARE "+ task);
+			ArrayList<RuleDetails> result = new ArrayList<>();
+			result.addAll(ProjectNewRuleService.generalInfoEvaluate(project));
+			result.addAll(ProjectNewRuleService.financialInfoEvaluate(project));
+			result.addAll(ProjectNewRuleService.schedulingInfoEvaluate(project));
+			
+			result.addAll(ProjectNewRuleService.tasksInfoEvaluate(task));
+			Gson gson = new Gson();
+			response = gson.toJson(result);
+		}
+		else if(action.equals("getScoreColor")) {
+			
+			 String[] projects = req.getParameterValues("project");
+			 System.out.println("pppprrrooojjjects are "+ projects);
+			 System.out.println(projects[0]);
+			//for(int i=0;i<)
+//			projectObjects.Project project = null;
+//			try 
+//			{
+//			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("projectId")), "Project");
+//			}
+//			catch(Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//			
+//			String color = ProjectNewRuleColorService.generalInfoColor(project);
+//			Gson gson = new Gson();
+//			response = gson.toJson(color);
 			
 		}
 		else if(action.equals("getRules"))

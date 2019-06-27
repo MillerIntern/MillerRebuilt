@@ -2373,6 +2373,12 @@ function generateDropdowns(str, className)
 		} 
 		else if(className == "subcontractors")
 		{
+			//Adding this to sort the subcontractors within a project
+			json.sort(function(a,b){
+				if(a.name < b.name) return -1;
+				else if(a.name > b.name) return 1;
+				return 0;
+			});
 			option.innerHTML = json[i].name;
 			option.value = json[i].name;
 		}
@@ -2408,6 +2414,7 @@ function generateDropdowns(str, className)
 	{
 		$('#taskCreationZone').find("#subcontractorsDropdown").find('option').remove();
 		$('#taskCreationZone').find("#subcontractorsDropdown").append(d);
+		
 	}
 	else
 		{
@@ -3066,7 +3073,23 @@ $(document).ready(function () {
 	});	
 	
 	$('#scorecardTabLink').click(function() {
-		getProject_SCORECARD(true);
+		//getColorForAllProjects();
+		if((PROJECT_DATA.stage.name == "Canceled") || (PROJECT_DATA.stage.name == "On Hold")){
+			$("#scoreCardDiv").show();
+			$("#scoreCardFailedRulesDiv").hide();
+			convertCurrentDivLocation ("scoreCardTopDiv");
+			setProjectHeader(PROJECT_DATA, "scoreCardTopDiv");
+			emptyingLists();
+			scoreBackground(["#59ba63", PROJECT_DATA.stage.name],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""]);
+			issuesNumberSetter(0,0,0,0,0,0,0,0);
+			
+		}
+		else{
+			getScoreRules(projectID);
+			console.log("New button is clicked");
+			//document.location.href="scoreCardNew.html";
+	
+		}
 	});
 	
 	$('.project-info-list-item').click(function() {
@@ -3088,7 +3111,7 @@ $(document).ready(function () {
 		reevaluateProject(projectID);
 		getProject_SCORECARD(projectID);
 	});
-
+	
 });
 
 function createTask() {
@@ -10169,5 +10192,251 @@ function sortTable(n){
 	    }
 	  }
 	
-}           
+} 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//A.R.G SCORECARD//
+function getScoreRules(project_id){
+	$("#scoreCardDiv").show();
+	$("#scoreCardTopDiv").show();
+	$("#scoreCardFailedRulesDiv").hide();
+	convertCurrentDivLocation ("scoreCardTopDiv");
+	setProjectHeader(PROJECT_DATA, "scoreCardTopDiv");
+	emptyingLists();
+	if (project_id != null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getScoreRules',
+				'projectId': project_id
+			}, success: function (data) {
+				
+				console.log("DATA FROM GETSCORERULES IS " , data);
+				//var listDiv = document.getElementById('someData');
+				let ulGeneral = document.getElementById('generalInfoFailedList');
+				let ulFinancial = document.getElementById('financialInfoFailedList');
+				let ulScheduling = document.getElementById('schedulingInfoFailedList');
+				let ulTasks = document.getElementById('tasksInfoFailedList');
+				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder, scoreTasks, scoreCloseout, scoreFinancial ;
+				//GREEN 
+				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrder= scoreTasks= scoreCloseout= scoreFinancial =["#59ba63", ""] ;
+				let generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues;
+				generalIssues=schedulingIssues=permitsIssues = equipmentIssues=changeorderIssues= tasksIssues= closeoutIssues= financialIssues=0;
+				for(var i =0; i<data.length; i++){
+					
+					if(data[i].ruleCategory == "GeneralInfo"){
+						generalIssues++;
+						var li=document.createElement('li');
+					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+					      if(data[i].severity == 0){
+					    	  li.style.color = "Blue";
+					    	  //YELLOW
+					    	  li.style.background = "#cce5ff"
+					    	  if(scoreGeneral[0]!="Red")
+					    		  scoreGeneral = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  li.style.color = "Red";
+					    	  //RED
+					    	  li.style.background = "#ffe5e5"
+					    	  scoreGeneral = ["Red", "HIGH"];
+					      }
+					      ulGeneral.appendChild(li);
+					      
+					      
+					}					
+					else if(data[i].ruleCategory == "FinancialInfo"){
+						financialIssues++;
+						var li=document.createElement('li');
+					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+					      if(data[i].severity == 0){
+					    	  li.style.color = "Blue";
+					    	  li.style.background = "#cce5ff"
+					    	  if(scoreFinancial[0]!="Red")
+					    		  scoreFinancial = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  li.style.color = "Red";
+					    	  li.style.background = "#ffe5e5"
+					    	  scoreFinancial = ["Red", "HIGH"];
+					      }
+					      ulFinancial.appendChild(li);
+					} 
+					else if(data[i].ruleCategory == "SchedulingInfo"){
+						schedulingIssues++;
+						var li=document.createElement('li');
+					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+					      if(data[i].severity == 0){
+					    	  li.style.color = "Blue";
+					    	  li.style.background = "#cce5ff"
+					    	  if(scoreScheduling[0]!="Red")					    		  
+					    		  scoreScheduling = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  li.style.color = "Red";
+					    	  li.style.background = "#ffe5e5"
+					    	  scoreScheduling = ["Red", "HIGH"];
+					      }
+					      ulScheduling.appendChild(li);
+					}  
+					else if(data[i].ruleCategory == "TasksInfo"){
+						tasksIssues++;
+						var li=document.createElement('li');
+					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+					      if(data[i].severity == 0){
+					    	  li.style.color = "Blue";
+					    	  li.style.background = "#cce5ff"
+					    	  if(scoreTasks[0]!="Red")
+					    		  scoreTasks = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  li.style.color = "Red";
+					    	  li.style.background = "#ffe5e5"
+					    	  scoreTasks = ["Red", "HIGH"];
+					      }
+					      ulTasks.appendChild(li);
+					} 
+				}
+				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder,scoreTasks, scoreCloseout, scoreFinancial);
+				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues);
+				//document.getElementById("projectManager").style.display = 'none';  					
+			}, error: function (data) {
+				alert('Server Error!');
+			}
+		});
+	} else {
+		$('#projectHeader').text('No Project Selected!');
+		if (confirm('No Project Selected. Return to find project?')) {
+			window.location.href = "rules.html";
+		}
+	}
+}
 
+function getFailedRules(list_id){  //A.R.G
+	$("#scoreCardTopDiv").hide();
+	$("#scoreCardFailedRulesDiv").show();
+	hidingLists(list_id);
+}
+
+function hidingLists(list_id){
+	$("#failedRulesTable ol").filter(
+		    function() {		   
+		        if(this.id != list_id){
+		        	$(this).hide();
+		        }
+		        else $(this).show();
+		    });
+}
+
+function emptyingLists(){
+	$("#failedRulesTable ol").filter(
+		    function() {
+		        $(this).empty();
+		    });
+}
+
+function returnToScoreCardView()  //A.R.G
+{
+	$('#findProject').hide();
+	$('#scoreCardTopDiv').show();
+	$('#scoreCardFailedRulesDiv').hide();
+}
+function goToProjectManager2() {
+	returnToScoreCardView();
+	goToProjectManager();
+}
+
+
+/*TO-DO A.R.G
+* 
+* When the rule is clicked, take the user to location so that he can update the issue
+* 
+* */
+function fixingGeneralRules(){
+	goToProjectManager2();
+}
+	
+function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder,scoreTasks, scoreCloseout, scoreFinancial){
+	document.getElementById('generalInfoScore').style.background=scoreGeneral[0];
+	document.getElementById('schedulingScore').style.background=scoreScheduling[0];
+	document.getElementById('permitsAndInspectionsScore').style.background=scorePermits[0];
+	document.getElementById('equipmentScore').style.background=scoreEquipment[0];
+	document.getElementById('changeOrdersScore').style.background=scoreChangeOrder[0];
+	document.getElementById('tasksScore').style.background=scoreTasks[0];
+	document.getElementById('closeoutScore').style.background=scoreCloseout[0];
+	document.getElementById('financialScore').style.background=scoreFinancial[0];
+
+	document.getElementById('generalInfoScore').innerHTML=scoreGeneral[1];
+	document.getElementById('schedulingScore').innerHTML=scoreScheduling[1];
+	document.getElementById('permitsAndInspectionsScore').innerHTML=scorePermits[1];
+	document.getElementById('equipmentScore').innerHTML=scoreEquipment[1];
+	document.getElementById('changeOrdersScore').innerHTML=scoreChangeOrder[1];
+	document.getElementById('tasksScore').innerHTML=scoreTasks[1];
+	document.getElementById('closeoutScore').innerHTML=scoreCloseout[1];
+	document.getElementById('financialScore').innerHTML=scoreFinancial[1];
+}
+function issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues){
+	document.getElementById('generalIssues').innerHTML=generalIssues;
+	document.getElementById('schedulingIssues').innerHTML=schedulingIssues;
+	document.getElementById('permitsIssues').innerHTML=permitsIssues;
+	document.getElementById('equipmentIssues').innerHTML=equipmentIssues;
+	document.getElementById('changeorderIssues').innerHTML=changeorderIssues;
+	document.getElementById('tasksIssues').innerHTML=tasksIssues;
+	document.getElementById('closeoutIssues').innerHTML=closeoutIssues;
+	document.getElementById('financialIssues').innerHTML=financialIssues;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+function getColorForAllProjects(){
+	
+	t0 = new Date().getTime();
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getAllProjects'
+		}, success: function (data) {
+			projects = data;
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			t1 = new Date().getTime();
+			console.log('took: ' + (t1 - t0) + 'ms');
+			//console.log("Newly retrieved projects are", RETRIEVED_PROJECTS);
+			evaluateColorBasedOnRules(RETRIEVED_PROJECTS);
+		}
+	});
+}
+
+function evaluateColorBasedOnRules(projects){
+	t0 = new Date().getTime();
+	console.log(projects.length);
+
+	gettingTheFinalColors(projects)
+	
+	t1 = new Date().getTime();
+	console.log('took: ' + (t1 - t0) + 'ms');
+	
+}
+
+function gettingTheFinalColors(project){
+	//listOfProjectColors.push([project,"Red"]);
+	if (project != null) {
+		project = JSON.stringify(project);
+		console.log("stringified project ", project);
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			async : false,
+			data: {
+				'domain': 'project',
+				'action': 'getScoreColor',
+				project: project
+			}, success: function (data) {			
+			}
+		});	
+	}
+	//console.log(listOfProjectColors);
+	
+}

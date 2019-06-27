@@ -423,25 +423,89 @@
 			</div> <!-- Closeout -->
 			
 			<div style="width: 100%" class='info-tab info-tab-scorecard' id='scorecard'>
-				<div id="scoreProjectInfoTable">
-				<table id='scoreInfoTable' class='table'>
-				    <thead>
-					<tr class = "scoreTableHead">
-						<th width = 18% style="text-align: center">Warehouse</th>
-						<th width = 12% style="text-align: center">MCS Number</th>
-						<th width = 21% style="text-align: center">Project Item</th>
-						<th width = 12% style="text-align: center">Manager</th>
-						<th width = 8% style="text-align: center">Low </th>
-						<th width = 8% style="text-align: center">High </th>
-						<th width = 21% style="text-align: center">Scorecard Last Updated</th>
-					</tr>
+				
+		<div id = "scoreCardDiv" class ='editProject' >		
+			<div id="scoreCardTopDiv"class="container active">
+				
+				<table  class = "scoreCardTableHeaderClass table-spacing">
+					<thead>
+						<tr class="topOfScoreBoard">
+							<th colspan="3">&nbsp; &nbsp;Project Scorecard</th>
+						</tr>
+						<tr>
+							<th>CATEGORY</th>					
+		    				<th>SEVERITY</th>
+		    				<th>ISSUES</th>
+						</tr>
 					</thead>
 					<tbody>
-					</tbody>
-				</table>	
-				</div>
-				<button id="scoreUpdateButton" class="btn project-edit" >Update Scorecard</button>
-				<button id="scoreViewButton" class="btn project-edit" >View Scorecard</button>
+					 <tr onclick ="getFailedRules('generalInfoFailedList');">
+	   					<td>General Information</td>	    				
+	    				<td id = "generalInfoScore"> </td>
+	    				<td id = "generalIssues"></td>    				
+	 				 </tr>
+	 				  <tr onclick ="getFailedRules('schedulingInfoFailedList');">
+	   					<td>Scheduling</td>	    				
+	    				<td id = "schedulingScore"> </td>
+	    				<td id ="schedulingIssues"></td>    				
+	 				 </tr>
+	 				  <tr>
+	   					<td>Permits & Inspections</td>	    				
+	    				<td id = "permitsAndInspectionsScore"> </td>
+	    				<td id ="permitsIssues"></td>    				
+	 				 </tr>
+	 				  <tr>
+	   					<td>Equipment</td>
+	    				<td id = "equipmentScore"> </td>
+	    				<td id ="equipmentIssues"></td>   				
+	 				 </tr>
+	 				  <tr>
+	   					<td>Change Order</td>	    			
+	    				<td id = "changeOrdersScore"> </td>
+	    				<td id ="changeorderIssues"></td>   				
+	 				 </tr>
+	 				  <tr onclick ="getFailedRules('tasksInfoFailedList');">
+	   					<td>Tasks</td>	    			
+	    				<td id = "tasksScore"> </td>
+	    				<td id ="tasksIssues"></td>    				
+	 				 </tr>
+	 				  <tr>
+	   					<td>Closeout</td>	    				
+	    				<td id = "closeoutScore"> </td>
+	    				<td id ="closeoutIssues"></td>   				
+	 				 </tr>
+	 				  <tr onclick ="getFailedRules('financialInfoFailedList');">
+	   					<td>Financial</td>	   				
+	    				<td id = "financialScore"> </td>
+	    				<td id ="financialIssues"></td>
+	 				 </tr>
+	 				 </tbody>
+				</table>
+			</div>
+				
+			<div id="scoreCardFailedRulesDiv"  >
+
+					<h3 style="margin-left: 100px" id = "scoreCardFailedRulesHeader"><span></span>  </h3>
+					<div style="width: 80%; margin-left: 100px" id = "failedRulesTable" class ="failRulesAll" >
+						<ol class = "failRules rectangle-list" id = "generalInfoFailedList" onclick = "fixingGeneralRules();">
+						</ol>
+						
+						<ol class = "failRules" id = "financialInfoFailedList" onclick = "fixingGeneralRules();">
+						</ol>
+						
+						<ol class = "failRules" id = "schedulingInfoFailedList" onclick = "fixingGeneralRules();">
+						</ol>
+						
+						<ol class = "failRules" id = "tasksInfoFailedList" onclick = "fixingGeneralRules();">
+						</ol>
+						<br>
+						<button  class = "btn project-edit" onclick = "returnToScoreCardView();"> Back to Scorecard Overview</button>
+					</div>
+					
+				</div>					
+				
+			</div>	
+				
 			</div>
 		
 	  <div class='info-tab info-tab-smart-system' id='smartSystem'>
@@ -1118,7 +1182,8 @@
 			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
 				<option value="default">--Does this project require an HVAC unit?--</option>
 				<option value="1">Yes</option>
-                <option value="0">No</option>  
+                <option value="0">No</option> 
+                <option value="2">TBD</option>   
             </select>
 	        </td>
 	        <td><b>Refrigeration</b></td>
@@ -1127,6 +1192,7 @@
 	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
+                <option value="2">TBD</option>   
             </select>
 	        </td>
 	        </tr>
@@ -3289,8 +3355,7 @@
 
 
 </div>
-	
-	
+
 	
 	</body>
 </html>

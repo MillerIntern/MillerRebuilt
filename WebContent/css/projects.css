@@ -255,4 +255,104 @@
 	width: 255px;
 	resize: vertical;
 }
+/* ////////////////////////SCORE CARD CSS///////////////////////////////////// */
+.scoreTopDivWidth{
+    width:50%;
+}
+.scoreTopDivWidth li{
+    height:50px;
+    margin: 10px;
+    font-size:17px;
+    font-weight: bold;
+    color:white;
+}
+.scoreTopDivWidth li:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
 
+
+.failRulesAll{
+	text-align:center;
+}
+.failRules {	
+	
+	background-color : #F2F2F2;
+	width:70%;
+	display:inline-block;
+
+
+}
+.failRules li{
+	font-size:17px;
+	font-family:Arial;
+	margin: 10px;
+	margin-right: 50px;
+	height:50px;
+	line-height: 50px;
+/* 	list-style-type: none; */
+	text-align: left;
+	padding-left:10px;
+
+}
+.failRules li:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+/* ////////////////////////SCORE CARD TABLE CSS///////////////////////////////////// */
+
+.scoreCardTableHeaderClass th{
+	font-size:17px;
+	font-family:Arial;
+
+  
+}
+.scoreCardTableHeaderClass td{
+	font-size:17px;
+	font-family:Arial;
+	border: 1px solid #dddddd;
+
+
+  	height:40px;
+  
+}
+
+.scoreCardTableHeaderClass tbody tr:hover{
+	 transform: scale(1.05);
+}
+
+table.scoreCardTableHeaderClass{
+	border-collapse:separate;
+	border-spacing:10px 10px;padding: 0px 150px 0px 100px;
+	margin: 0 auto;
+	background:white;
+
+	}
+
+table.scoreCardTableHeaderClass tbody td:nth-child(1){
+	text-align:left;
+	font-weight: bold;
+	padding: 0px 40px 0px 40px;
+	background:#F2F2F2
+	}
+table.scoreCardTableHeaderClass tbody td:nth-child(2){
+	padding: 0px 100px 0px 100px;
+	color:white;
+	text-align:center;
+	font-weight: bold;
+	}		
+table.scoreCardTableHeaderClass tbody td:nth-child(3){
+	text-align:center;
+	font-weight: bold;
+	padding: 0px 100px 0px 100px;
+	}
+table.scoreCardTableHeaderClass thead tr:nth-child(1) th{
+	color:white;
+	background:#9C756E;
+	text-align:left;
+	height:50px;
+	text-align:center;
+}
+table.scoreCardTableHeaderClass thead tr:nth-child(2) th{
+	text-align:center;
+}
