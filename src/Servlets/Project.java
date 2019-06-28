@@ -1033,11 +1033,7 @@ public class Project extends HttpServlet
 			
 			//String task = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("projectId")));
 			
-			System.out.println("STAGE NAME IS"+ project.getStage().getName());
 			List<Task> task = ProjectObjectService.getAllTasks(Long.parseLong(parameters.get("projectId")));
-			
-			System.out.println("Projects AGAIN ARE "+ project);
-			System.out.println("TASKS AGAIN ARE "+ task);
 			ArrayList<RuleDetails> result = new ArrayList<>();
 			result.addAll(ProjectNewRuleService.generalInfoEvaluate(project));
 			result.addAll(ProjectNewRuleService.financialInfoEvaluate(project));

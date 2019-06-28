@@ -10314,9 +10314,13 @@ function getScoreRules(project_id){
 }
 
 function getFailedRules(list_id){  //A.R.G
-	$("#scoreCardTopDiv").hide();
-	$("#scoreCardFailedRulesDiv").show();
-	hidingLists(list_id);
+	
+	if($('#'+list_id).children().length > 0){ //condition where if issues are 0, then user click will not work
+		$("#scoreCardTopDiv").hide();
+		$("#scoreCardFailedRulesDiv").show();
+		hidingLists(list_id);
+	}
+	
 }
 
 function hidingLists(list_id){
@@ -10353,8 +10357,26 @@ function goToProjectManager2() {
 * When the rule is clicked, take the user to location so that he can update the issue
 * 
 * */
-function fixingGeneralRules(){
-	goToProjectManager2();
+
+function fixingRules(category){
+	console.log(typeof(category));
+	if(category == "general"){
+		$('#projectInformationTabLink').trigger('click');
+		$('#general-info-item').trigger('click');
+	}
+	else if(category == "scheduling"){
+		$('#projectInformationTabLink').trigger('click');
+		$('#scheduling-item').trigger('click');
+	} 
+	else if(category == "financial"){
+		$('#projectInformationTabLink').trigger('click');
+		$('#financial-item').trigger('click');
+	} 
+	else if(category == "tasks"){
+		$('#projectInformationTabLink').trigger('click');
+		$('#tasks-item').trigger('click');
+	} 
+	else goToProjectManager2();
 }
 	
 function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder,scoreTasks, scoreCloseout, scoreFinancial){

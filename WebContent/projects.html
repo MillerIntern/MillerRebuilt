@@ -487,16 +487,16 @@
 
 					<h3 style="margin-left: 100px" id = "scoreCardFailedRulesHeader"><span></span>  </h3>
 					<div style="width: 80%; margin-left: 100px" id = "failedRulesTable" class ="failRulesAll" >
-						<ol class = "failRules rectangle-list" id = "generalInfoFailedList" onclick = "fixingGeneralRules();">
+						<ol class = "failRules rectangle-list" id = "generalInfoFailedList" onclick = "fixingRules('general');">
 						</ol>
 						
-						<ol class = "failRules" id = "financialInfoFailedList" onclick = "fixingGeneralRules();">
+						<ol class = "failRules" id = "financialInfoFailedList" onclick = "fixingRules('financial');">
 						</ol>
 						
-						<ol class = "failRules" id = "schedulingInfoFailedList" onclick = "fixingGeneralRules();">
+						<ol class = "failRules" id = "schedulingInfoFailedList" onclick = "fixingRules('scheduling');">
 						</ol>
 						
-						<ol class = "failRules" id = "tasksInfoFailedList" onclick = "fixingGeneralRules();">
+						<ol class = "failRules" id = "tasksInfoFailedList" onclick = "fixingRules('tasks');">
 						</ol>
 						<br>
 						<button  class = "btn project-edit" onclick = "returnToScoreCardView();"> Back to Scorecard Overview</button>

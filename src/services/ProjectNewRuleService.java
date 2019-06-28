@@ -44,17 +44,17 @@ public class ProjectNewRuleService {
 		 * */
 		//1
 		if(permits == null || permits.equals("0")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Please provide a valid input of permits", 0);
+			RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Permits must be either Yes or No", 0);
 			al.add(rd);
 		}
 		//2
 		if(hvac == null|| hvac.equals("2")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "HVAC TBD", "Please provide a valid input of HVAC", 0);
+			RuleDetails rd = new RuleDetails("GeneralInfo", "HVAC TBD", "HVAC must be either Yes or No", 0);
 			al.add(rd);
 		}
 		//3
 		if(refrigeration == null || refrigeration.equals("2")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "Refrigeration TBD", "Please provide a valid input of Refrigeration", 0);
+			RuleDetails rd = new RuleDetails("GeneralInfo", "Refrigeration TBD", "Refrigeration must be either Yes or No", 0);
 			System.out.println("the cost is "+ proj.getCost());
 			al.add(rd);
 		}
@@ -65,37 +65,29 @@ public class ProjectNewRuleService {
 		}
 		//5
 		if(mcsNumber == 0 || mcsNumber == -1) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidMCS#", "MCS Project # needs to be updated", 1);
+			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidMCS#", "MCS Project # needs to be updated", 0);
 			al.add(rd);
 		}
 		//6
 		if((stage.equals("Active")) && !(status == 4 || status == 11 || status == 30 || status == 35 || status == 29 || status == 26)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaActiveStage", "Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Closeout, Scheduled, or Scheduling if the Stage is Active", 1);
+			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaActiveStage", "Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Closeout, Scheduled, or Scheduling if the Stage is Active", 0);
 			al.add(rd);
 		}
 		//7
 		if((stage.equals("Budgetary")) && !(status == 4 || status == 11 || status == 1 || status == 3)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaBudgetaryStage", "Status must be either Awaiting Direction, Awaiting Drawings, Preparing Proposal, or Proposal Submitted if the Stage is Budgetary", 1);
+			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaBudgetaryStage", "Status must be either Awaiting Direction, Awaiting Drawings, Preparing Proposal, or Proposal Submitted if the Stage is Budgetary", 0);
 			al.add(rd);
 		}
 		//8
-		if((stage.equals("Canceled")) && !(status == 35 || status == 34)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaCancelledStage", "Status must be either Closed or Lost if the Stage is Canceled", 1);
-			al.add(rd);
-		}
+		//Stage Cancelled or On Hold
 		//9
 		if((stage.equals("Closed")) && !(status == 35)) {
 			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaClosedStage", "Status must be Closed if the Stage is Closed", 1);
 			al.add(rd);
 		}
 		//10
-		if((stage.equals("On Hold")) && !(status == 4 || status == 11)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaOnHoldStage", "Status must be either Awaiting Direction or Awaiting Drawings if the Stage is On Hold", 1);
-			al.add(rd);
-		}
-		//11
 		if((stage.equals("Proposal")) && !(status == 4 || status == 11 || status == 30 || status == 34 || status == 1 || status == 3)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaProposalStage", "Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Lost, Preparing Proposal, or Proposal Submitted if the Stage is Proposal", 1);
+			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaProposalStage", "Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Lost, Preparing Proposal, or Proposal Submitted if the Stage is Proposal", 0);
 			al.add(rd);
 		}
 		return al;
@@ -111,27 +103,27 @@ public class ProjectNewRuleService {
 		
 		//1
 		if(actualInvoice == 0) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ActiualInvioceZero", "Actual Invoice needs a value other than 0", 1);
+			RuleDetails rd = new RuleDetails("FinancialInfo", "ActiualInvioceZero", "Actual Invoice needs a value other than 0", 0);
 			al.add(rd);
 		}
 		//2
 		if(shouldInvoice == 0) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ShouldInvioceZero", "Should Invoice needs a value other than 0", 1);
+			RuleDetails rd = new RuleDetails("FinancialInfo", "ShouldInvioceZero", "Should Invoice needs a value other than 0", 0);
 			al.add(rd);
 		}
 		//3
 		if(cost.isEmpty()) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "CostEmpty", "Cost needs a value", 1);
+			RuleDetails rd = new RuleDetails("FinancialInfo", "CostEmpty", "Cost needs a value", 0);
 			al.add(rd);
 		}
-		//4
-		if(customerNumber.isEmpty()) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "CustomerNumberEmpty", "Customer Number needs a value", 1);
-			al.add(rd);
-		}
+		//4 Need to review if customerNumber is needed
+//		if(customerNumber.isEmpty()) {
+//			RuleDetails rd = new RuleDetails("FinancialInfo", "CustomerNumberEmpty", "Customer Number needs a value", 1);
+//			al.add(rd);
+//		}
 		//5
 		if(actualInvoice != shouldInvoice) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ActualShouldNotEqual", "Actual Invoice and Should Invoice need to be equal", 1);
+			RuleDetails rd = new RuleDetails("FinancialInfo", "ActualShouldNotEqual", "Actual Invoice and Should Invoice need to be equal", 0);
 			al.add(rd);
 		}
 		return al;
@@ -249,8 +241,6 @@ public class ProjectNewRuleService {
 	}
 	public static ArrayList<RuleDetails> tasksInfoEvaluate(List<Task> task){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
-		System.out.println("Tasssssskkkkssss are "+ task);
-		System.out.println("Tasks Length is " + task.size());
 		if(task.size() != 0) {
 			for(int i=0; i<task.size(); i++) {
 				Date today = new Date();
@@ -258,7 +248,6 @@ public class ProjectNewRuleService {
 				Date dueDate = currentTask.getDueDate();
 				Date initiatedDate = currentTask.getAssignedDate();
 				String taskStatus = currentTask.getTaskStatus().getStatus();
-				System.out.println("task status is "+i+ " "+ taskStatus);
 				if(dueDate.before(initiatedDate)) {
 					RuleDetails rd = new RuleDetails("TasksInfo", "IncorrectDueDate", String.format("TITLE:%s Due date must be later than initiated date ",currentTask.getTitle()), 0);
 					al.add(rd);
