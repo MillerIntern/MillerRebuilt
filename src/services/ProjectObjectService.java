@@ -421,7 +421,44 @@ public class ProjectObjectService
         
         return list;
 	}
-	
+	/**
+	 * This function returns all Change Orders from the database for a given project.
+	 * @return a list of all Change Orders with a specific status in the database.
+	 */
+	public synchronized static List<projectObjects.ChangeOrder> getAllChangeOrders(Long projectId)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from ChangeOrder where changeOrders_id = " + projectId);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.ChangeOrder> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	/**
+	 * This function returns all Equipment from the database for a given project.
+	 * @return a list of all Equipment in the database.
+	 */
+	public synchronized static List<projectObjects.NewEquipment> getAllNewEquipment(Long projectId)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from NewEquipment where projEquipment_id = " + projectId);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.NewEquipment> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
 	/**
 	 * This function returns all Tasks from the database.
 	 * @param task assignee_id
@@ -1370,6 +1407,53 @@ public class ProjectObjectService
 		
 		return success;
 	}
+	public synchronized static String getAllProjectIds(String domain) throws NonUniqueObjectException
+	{
+        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		Query q = null;
+		try
+		{
+		tx = session.beginTransaction();
+		}
+		catch(TransactionException ex)
+		{
+		
+			tx.commit();
+			return "ERROR";
+		}
+		Class<?> c;
+		
+		try 
+		{
+			c = Class.forName("projectObjects."+domain);
+			
+			Criteria criteria = session.createCriteria(c);
+			if (domain.equals("Project")) {
+				
+				
+				ProjectionList projectionList = Projections.projectionList();
 
+				projectionList.add(Projections.property("id").as("id"));
+//				projectionList.add(Projections.property("mcsNumber").as("McsNumber"));
+				criteria.setProjection(projectionList);
+				
+				
+				
+	
+			} 
+			List<?> list = criteria.list();
+	       
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} 
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
 }
 

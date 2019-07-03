@@ -3,12 +3,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import projectObjects.ChangeOrder;
+import projectObjects.NewEquipment;
 import projectObjects.Project;
 import projectObjects.RuleDetails;
 import projectObjects.Task;
 import projectObjects.TaskStatus;
 public class ProjectNewRuleService {
-	
+	static Date today = new Date();
 	
 	
 	public static ArrayList<RuleDetails> generalInfoEvaluate( Project proj) {
@@ -94,7 +96,7 @@ public class ProjectNewRuleService {
 		
 	}
 	
-	public static ArrayList<RuleDetails> financialInfoEvaluate(Project proj){
+	public static ArrayList<RuleDetails> financialEvaluate(Project proj){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
 		int actualInvoice = proj.getInvoiced();
 		int shouldInvoice = proj.getShouldInvoice();
@@ -103,17 +105,17 @@ public class ProjectNewRuleService {
 		
 		//1
 		if(actualInvoice == 0) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ActiualInvioceZero", "Actual Invoice needs a value other than 0", 0);
+			RuleDetails rd = new RuleDetails("Financial", "ActiualInvioceZero", "Actual Invoice needs a value other than 0", 0);
 			al.add(rd);
 		}
 		//2
 		if(shouldInvoice == 0) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ShouldInvioceZero", "Should Invoice needs a value other than 0", 0);
+			RuleDetails rd = new RuleDetails("Financial", "ShouldInvioceZero", "Should Invoice needs a value other than 0", 0);
 			al.add(rd);
 		}
 		//3
 		if(cost.isEmpty()) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "CostEmpty", "Cost needs a value", 0);
+			RuleDetails rd = new RuleDetails("Financial", "CostEmpty", "Cost needs a value", 0);
 			al.add(rd);
 		}
 		//4 Need to review if customerNumber is needed
@@ -123,15 +125,14 @@ public class ProjectNewRuleService {
 //		}
 		//5
 		if(actualInvoice != shouldInvoice) {
-			RuleDetails rd = new RuleDetails("FinancialInfo", "ActualShouldNotEqual", "Actual Invoice and Should Invoice need to be equal", 0);
+			RuleDetails rd = new RuleDetails("Financial", "ActualShouldNotEqual", "Actual Invoice and Should Invoice need to be equal", 0);
 			al.add(rd);
 		}
 		return al;
 	}
 	
-	public static ArrayList<RuleDetails> schedulingInfoEvaluate(Project proj){
+	public static ArrayList<RuleDetails> schedulingEvaluate(Project proj){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
-		Date today = new Date();
 		Date projectInitiatedDate = proj.getProjectInitiatedDate();
 		Date siteSurveyDate = proj.getSiteSurvey();
 		Date budgetaryDueDate = proj.getBudgetaryDue();
@@ -144,102 +145,102 @@ public class ProjectNewRuleService {
 		
 		//1
 		if(siteSurveyDate == null ) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "SiteSuveyDate", "Site Survey Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "SiteSuveyDate", "Site Survey Date needs a value", 0);
 			al.add(rd);
 		}
 		//2
 		if(budgetaryDueDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "BudgetaryDueDate", "Budgetary Due Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "BudgetaryDueDate", "Budgetary Due Date needs a value", 0);
 			al.add(rd);
 		}
 		//3
 		if(budgetarySubmittedDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "BudgetarySubmittedDate", "Budgetary Submitted Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "BudgetarySubmittedDate", "Budgetary Submitted Date needs a value", 0);
 			al.add(rd);
 		}
 		//4
 		if(proposalDueDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "ProposalDueDate", "Proposal Due Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "ProposalDueDate", "Proposal Due Date needs a value", 0);
 			al.add(rd);
 		}
 		//5
 		if(proposalSubmittedDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "ProposalSubmittedDate", "Proposal Submitted Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "ProposalSubmittedDate", "Proposal Submitted Date needs a value", 0);
 			al.add(rd);
 		}
 		//6
 		if(scheduledStartDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "ScheduledStartDate", "Scheduled Start Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledStartDate", "Scheduled Start Date needs a value", 0);
 			al.add(rd);
 		}
 		//7
 		if(scheduledTurnoverDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "ScheduledTurnoverDate", "Scheduled Turnover Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledTurnoverDate", "Scheduled Turnover Date needs a value", 0);
 			al.add(rd);
 		}
 		//8
 		if(actualTurnoverDate == null) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "ActualTurnoverDate", "Actual Turnover Date needs a value", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "ActualTurnoverDate", "Actual Turnover Date needs a value", 0);
 			al.add(rd);
 		}
 		//9
 		if((siteSurveyDate != null) && (projectInitiatedDate != null) && (siteSurveyDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierSiteSurveyDate", "Site Survey Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierSiteSurveyDate", "Site Survey Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//10
 		if((budgetaryDueDate != null) && (projectInitiatedDate != null) && (budgetaryDueDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierBudgetaryDueDate", "Budgetary Due Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierBudgetaryDueDate", "Budgetary Due Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//11
 		if((budgetarySubmittedDate != null) && (projectInitiatedDate != null) && (budgetarySubmittedDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierBudgetarySubmittedDate", "Budgetary Submitted Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierBudgetarySubmittedDate", "Budgetary Submitted Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//12
 		if((proposalDueDate != null) && (projectInitiatedDate != null) && (proposalDueDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierProposalDueDate", "Proposal Due Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierProposalDueDate", "Proposal Due Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//13
 		if((proposalSubmittedDate != null) && (projectInitiatedDate != null) && (proposalSubmittedDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierProposalSubmittedDate", "Proposal Submitted Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierProposalSubmittedDate", "Proposal Submitted Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//14
 		if((scheduledStartDate != null) && (projectInitiatedDate != null) && (scheduledStartDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierScheduledStartDate", "Scheduled Start Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierScheduledStartDate", "Scheduled Start Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//15
 		if((scheduledTurnoverDate != null) && (projectInitiatedDate != null) && (scheduledTurnoverDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierScheduledTurnoverDate", "Scheduled Turnover Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierScheduledTurnoverDate", "Scheduled Turnover Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//16
 		if((actualTurnoverDate != null) && (projectInitiatedDate != null) && (actualTurnoverDate).before(projectInitiatedDate)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "EarlierActualTurnoverDate", "Actual Turnover Date is earlier than Project Initiation Date", 0);
+			RuleDetails rd = new RuleDetails("Scheduling", "EarlierActualTurnoverDate", "Actual Turnover Date is earlier than Project Initiation Date", 0);
 			al.add(rd);
 		}
 		//17
-		if((budgetaryDueDate != null) && ((budgetaryDueDate).after(today)) && (budgetarySubmittedDate == null)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "LateBudgetarySubmittedDate", "Budgetary Submitted date is late", 1);
+		if((budgetaryDueDate != null) && ((budgetaryDueDate).before(today)) && (budgetarySubmittedDate == null)) {
+			RuleDetails rd = new RuleDetails("Scheduling", "LateBudgetarySubmittedDate", "Budgetary Submitted date is late", 1);
 			al.add(rd);
 		}
 		//18
-		if((proposalDueDate != null) && ((proposalDueDate).after(today)) && (proposalSubmittedDate == null)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "LateProposalSubmittedDate", "Proposal Submitted date is late", 1);
+		if((proposalDueDate != null) && ((proposalDueDate).before(today)) && (proposalSubmittedDate == null)) {
+			RuleDetails rd = new RuleDetails("Scheduling", "LateProposalSubmittedDate", "Proposal Submitted date is late", 1);
 			al.add(rd);
 		}
 		//19
-		if((scheduledTurnoverDate != null) && ((scheduledTurnoverDate).after(today)) && (actualTurnoverDate == null)) {
-			RuleDetails rd = new RuleDetails("SchedulingInfo", "LateActualTurnoverdDate", "Actual Turnover date is late", 1);
+		if((scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
+			RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Actual Turnover date is late", 1);
 			al.add(rd);
 		}
 		return al;
 	}
-	public static ArrayList<RuleDetails> tasksInfoEvaluate(List<Task> task){
+	public static ArrayList<RuleDetails> tasksEvaluate(List<Task> task){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
 		if(task.size() != 0) {
 			for(int i=0; i<task.size(); i++) {
@@ -249,15 +250,15 @@ public class ProjectNewRuleService {
 				Date initiatedDate = currentTask.getAssignedDate();
 				String taskStatus = currentTask.getTaskStatus().getStatus();
 				if(dueDate.before(initiatedDate)) {
-					RuleDetails rd = new RuleDetails("TasksInfo", "IncorrectDueDate", String.format("TITLE:%s Due date must be later than initiated date ",currentTask.getTitle()), 0);
+					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("TITLE:%s Due date must be later than initiated date ",currentTask.getTitle()), 0);
 					al.add(rd);
 				}
 				if(dueDate.before(today) && taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("TasksInfo", "PassedDueDate", String.format("TITLE:%s Task is Late", currentTask.getTitle()), 1);
+					RuleDetails rd = new RuleDetails("Tasks", "PassedDueDate", String.format("TITLE:%s Task is Late", currentTask.getTitle()), 1);
 					al.add(rd);
 				}
 				if(taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("TasksInfo", "OpenTask", String.format("TITLE:%s Task Needs to be completed", currentTask.getTitle()), 0);
+					RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("TITLE:%s Task Needs to be completed", currentTask.getTitle()), 0);
 					al.add(rd);
 				}
 			}
@@ -267,6 +268,195 @@ public class ProjectNewRuleService {
 	}
 	
 
+	public static ArrayList<RuleDetails> changeOrdersEvaluate(List<ChangeOrder> changeOrder){
+		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
+		if(changeOrder.size() != 0) {
+			for(int i=0; i<changeOrder.size(); i++) {
+				ChangeOrder currentChangeOrder = changeOrder.get(i);
+				String mcsCoNum = currentChangeOrder.getMcsCO();
+				String title = currentChangeOrder.getTitle();
+				String description = currentChangeOrder.getBriefDescription();
+				String status = currentChangeOrder.getStatus();
+				String subNames = currentChangeOrder.getSubNames();
+				Date subsSubmittedDate = currentChangeOrder.getProposalDate(); //For some reason this was being saved under proposal date
+				String customer = currentChangeOrder.getSubmittedTo(); //This is the Customer Field in ChangeOrder
+				Date submitDate = currentChangeOrder.getSubmittedDate();
+				Date approvedDate = currentChangeOrder.getApprovedDate();
+				double cost = currentChangeOrder.getCost();
+				double sell = currentChangeOrder.getSell();
+				String invoiceNum = currentChangeOrder.getInvoiceNumber();
+				String customerCopNum = currentChangeOrder.getCustomerCOPnum();
+				String subCoNum = currentChangeOrder.getSubCO();
+
+				//1
+				if(mcsCoNum == null || mcsCoNum.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", "MCS CO # needs to be updated", 0);
+					al.add(rd);
+				}
+				//2
+				if(title == null || title.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidTitle", "Title needs to be updated", 0);
+					al.add(rd);
+				}
+				//3
+				if(description == null || description.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidDescription", "Description needs to be updated", 0);
+					al.add(rd);
+				}
+				//4
+				if(status == null || status.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidStatus", "Status needs to be updated", 0);
+					al.add(rd);
+				}
+				//5
+				if(subNames == null || subNames.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubNames", "Sub Name(s) needs to be updated", 0);
+					al.add(rd);
+				}
+				//6
+				if(subsSubmittedDate == null) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", "Subs Submitted Date needs a value", 0);
+					al.add(rd);
+				}
+				//7
+				if(customer == null || customer.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidCustomer", "Customer needs to be updated", 0);
+					al.add(rd);
+				}
+				//8
+				if(submitDate == null) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", "Submit Date needs a value", 0);
+					al.add(rd);
+				}
+				//9
+				if(approvedDate == null) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", "Approved Date needs a value", 0);
+					al.add(rd);
+				}
+				//10
+				if(cost == 0) {
+					RuleDetails rd = new RuleDetails("Financial", "CostZero", "Cost needs a value other than 0", 0);
+					al.add(rd);
+				}
+				//11
+				if(sell == 0) {
+					RuleDetails rd = new RuleDetails("Financial", "SellZero", "Sell needs a value other than 0", 0);
+					al.add(rd);
+				}
+				//12
+				if(invoiceNum == null || invoiceNum.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidInvoiceNum", "Invoice number needs to be updated", 0);
+					al.add(rd);
+				}
+				//13
+				if(customerCopNum == null || customerCopNum.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSustomerCopNum", "Customer COP number needs to be updated", 0);
+					al.add(rd);
+				}
+				//14  
+				if(subCoNum == null || subCoNum.isEmpty()) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubCoNum", "Sub CO number needs to be updated", 0);
+					al.add(rd);
+				}
+				//15
+				if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierSubmitDate", "Submit Date is earlier than Sub Submitted Date", 0);
+					al.add(rd);
+				}
+				//16
+				if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
+					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierApprovedDate", "Approved Date is earlier than Sub Submitted Date", 0);
+					al.add(rd);
+				}
+
+			}
+		}
+
+		return al;
+	}
+	public static ArrayList<RuleDetails> equipmentEvaluate(List<NewEquipment> equipment){
+		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
+		if(equipment.size() != 0) {
+			for(int i=0; i<equipment.size(); i++) {
+				NewEquipment currentEquipment = equipment.get(i);
+				String PoNum = currentEquipment.getPoNum();
+				String equipmentName = currentEquipment.getEquipmentName();
+				String description = currentEquipment.getDescription();
+				String supplier = currentEquipment.getEqSupplier().getName();
+				Date estDeliveryDate = currentEquipment.getEstDeliveryDate();
+				Date orderedDate = currentEquipment.getOrderedDate();
+				Date actDeliveryDate = currentEquipment.getDeliveryDate();
+				String deliveryStatus = currentEquipment.getEqStatus().getName();
+				
+				
+				
+
+				//1
+				if(PoNum == null || PoNum.isEmpty()) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidPo#", "PO # needs to be updated", 0);
+					al.add(rd);
+				}
+				//2
+				if(equipmentName == null || equipmentName.isEmpty()) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidEquipmentName", "Equipment Name needs to be updated", 0);
+					al.add(rd);
+				}
+				//3
+				if(description == null || description.isEmpty()) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidDescription", "Description needs to be updated", 0);
+					al.add(rd);
+				}
+				//4
+				if(supplier == null || supplier.isEmpty()) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidSupplier", "Supplier needs to be updated", 0);
+					al.add(rd);
+				}
+				//5
+				if(estDeliveryDate == null) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidEstDeliveryDate", "Estimated Delivery Date needs a value", 0);
+					al.add(rd);
+				}
+				//6  
+				if(orderedDate == null) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidOrderedDate", "Ordered Date needs a value", 0);
+					al.add(rd);
+				}
+				//7 
+				if(actDeliveryDate == null) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidActualDeliveryDate", "Actual Delivery Date needs a value", 0);
+					al.add(rd);
+				}
+				//8
+				if(deliveryStatus == null || deliveryStatus.isEmpty()) {
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidDeliveryStatus", "Delivery Status must be given a value", 0);
+					al.add(rd);
+				}
+				//9
+				if((estDeliveryDate != null) && (orderedDate != null) && (estDeliveryDate).before(orderedDate)) {
+					RuleDetails rd = new RuleDetails("Equipment", "EarlierEstDeliveryDate", "Estimated Delivery Date is earlier than Ordered Date", 0);
+					al.add(rd);
+				}
+				//10
+				if((actDeliveryDate != null) && (orderedDate != null) && (actDeliveryDate).before(orderedDate)) {
+					RuleDetails rd = new RuleDetails("Equipment", "EarlierActDeliveryDate", "Actual Delivery Date is earlier than Ordered Date", 0);
+					al.add(rd);
+				}
+				//11
+				if((estDeliveryDate != null) && ((estDeliveryDate).before(today)) && (actDeliveryDate == null)) {
+					RuleDetails rd = new RuleDetails("Equipment", "LateActualDeliveryDate", "Actual Delivery date is late", 1);
+					al.add(rd);
+				}
+				//12
+				if((orderedDate != null) && (deliveryStatus == null || deliveryStatus.isEmpty())) {
+					RuleDetails rd = new RuleDetails("Equipment", " UnUpdatedDeliveryStatus", "Delivery Status needs to be updated", 0);
+					al.add(rd);
+				}
+
+			}
+		}
+
+		return al;
+	}
 }
 
 

@@ -356,3 +356,7 @@ table.scoreCardTableHeaderClass thead tr:nth-child(1) th{
 table.scoreCardTableHeaderClass thead tr:nth-child(2) th{
 	text-align:center;
 }
+
+table.permitsAndInspectionsHovering tbody tr:hover{
+		 background:#DDDDDD;
+}

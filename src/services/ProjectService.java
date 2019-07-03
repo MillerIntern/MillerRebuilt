@@ -570,6 +570,17 @@ public class ProjectService extends ProjectObjectService
 
 		return g.toJson(map);
 	}
+	
+	public synchronized static String getAllProjectsIdsAsJson()
+	{
+		Gson g = new Gson();
+		HashMap<String, String> map = new HashMap<String, String>();
+		String projects = ProjectObjectService.getAllProjectIds("Project");
+		map.put("projects", projects);
+
+
+		return g.toJson(map);
+	}
 
 //	public synchronized static String getAllProjects()
 //	{
