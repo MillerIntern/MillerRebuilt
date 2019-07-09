@@ -119,7 +119,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("status.id"));
 				projectionList.add(Projections.property("warehouse.id"));
 				projectionList.add(Projections.property("projectManagers.id"));
-				projectionList.add(Projections.property("projectClass.id"));
+				projectionList.add(Projections.property("projectClass.id"));				
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -651,7 +651,6 @@ public class ProjectObjectService
 				System.out.println("Task id = " + Order.asc("id"));
 			}
 			List<?> list = criteria.list();
-	       
 	        tx.commit();
 
 	        return gson.toJson(list);

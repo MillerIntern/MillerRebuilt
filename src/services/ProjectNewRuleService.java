@@ -250,15 +250,15 @@ public class ProjectNewRuleService {
 				Date initiatedDate = currentTask.getAssignedDate();
 				String taskStatus = currentTask.getTaskStatus().getStatus();
 				if(dueDate.before(initiatedDate)) {
-					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("TITLE:%s Due date must be later than initiated date ",currentTask.getTitle()), 0);
+					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("%s ~ Due date must be later than initiated date ",currentTask.getTitle()), 0);
 					al.add(rd);
 				}
 				if(dueDate.before(today) && taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("Tasks", "PassedDueDate", String.format("TITLE:%s Task is Late", currentTask.getTitle()), 1);
+					RuleDetails rd = new RuleDetails("Tasks", "PassedDueDate", String.format("%s ~ Task is Late", currentTask.getTitle()), 1);
 					al.add(rd);
 				}
 				if(taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("TITLE:%s Task Needs to be completed", currentTask.getTitle()), 0);
+					RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("%s ~ Task Needs to be completed", currentTask.getTitle()), 0);
 					al.add(rd);
 				}
 			}
@@ -290,82 +290,82 @@ public class ProjectNewRuleService {
 
 				//1
 				if(mcsCoNum == null || mcsCoNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", "MCS CO # needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", String.format("%s ~ MCS CO # needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//2
 				if(title == null || title.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidTitle", "Title needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidTitle", String.format("%s ~ Title needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//3
 				if(description == null || description.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidDescription", "Description needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidDescription", String.format("%s ~ Description needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//4
 				if(status == null || status.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidStatus", "Status needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidStatus", String.format("%s ~ Status needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//5
 				if(subNames == null || subNames.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubNames", "Sub Name(s) needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubNames", String.format("%s ~ Sub Name(s) needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//6
 				if(subsSubmittedDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", "Subs Submitted Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", String.format("%s ~ Subs Submitted Date needs a value", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//7
 				if(customer == null || customer.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidCustomer", "Customer needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidCustomer", String.format("%s ~ Customer needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//8
 				if(submitDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", "Submit Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", String.format("%s ~ Submit Date needs a value", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//9
 				if(approvedDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", "Approved Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", String.format("%s ~ Approved Date needs a value", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//10
 				if(cost == 0) {
-					RuleDetails rd = new RuleDetails("Financial", "CostZero", "Cost needs a value other than 0", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", "CostZero", String.format("%s ~ Cost needs a value other than 0", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//11
 				if(sell == 0) {
-					RuleDetails rd = new RuleDetails("Financial", "SellZero", "Sell needs a value other than 0", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", "SellZero", String.format("%s ~ Sell needs a value other than 0", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//12
 				if(invoiceNum == null || invoiceNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidInvoiceNum", "Invoice number needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidInvoiceNum", String.format("%s ~ Invoice number needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//13
 				if(customerCopNum == null || customerCopNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSustomerCopNum", "Customer COP number needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSustomerCopNum", String.format("%s ~ Customer COP number needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//14  
 				if(subCoNum == null || subCoNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubCoNum", "Sub CO number needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubCoNum", String.format("%s ~ Sub CO number needs to be updated", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//15
 				if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierSubmitDate", "Submit Date is earlier than Sub Submitted Date", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierSubmitDate", String.format("%s ~ Submit Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 				//16
 				if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierApprovedDate", "Approved Date is earlier than Sub Submitted Date", 0);
+					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierApprovedDate", String.format("%s ~ Approved Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
 					al.add(rd);
 				}
 
@@ -393,62 +393,62 @@ public class ProjectNewRuleService {
 
 				//1
 				if(PoNum == null || PoNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidPo#", "PO # needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidPo#", String.format("%s ~ PO # needs to be updated", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//2
 				if(equipmentName == null || equipmentName.isEmpty()) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidEquipmentName", "Equipment Name needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidEquipmentName", String.format("%s ~ Equipment Name needs to be updated", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//3
 				if(description == null || description.isEmpty()) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidDescription", "Description needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidDescription", String.format("%s ~ Description needs to be updated",currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//4
 				if(supplier == null || supplier.isEmpty()) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidSupplier", "Supplier needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidSupplier", String.format("%s ~ Supplier needs to be updated", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//5
 				if(estDeliveryDate == null) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidEstDeliveryDate", "Estimated Delivery Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidEstDeliveryDate", String.format("%s ~ Estimated Delivery Date needs a value", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//6  
 				if(orderedDate == null) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidOrderedDate", "Ordered Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidOrderedDate", String.format("%s ~ Ordered Date needs a value", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//7 
 				if(actDeliveryDate == null) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidActualDeliveryDate", "Actual Delivery Date needs a value", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidActualDeliveryDate", String.format("%s ~ Actual Delivery Date needs a value", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//8
 				if(deliveryStatus == null || deliveryStatus.isEmpty()) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidDeliveryStatus", "Delivery Status must be given a value", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " InvalidDeliveryStatus", String.format("%s ~ Delivery Status must be given a value", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//9
 				if((estDeliveryDate != null) && (orderedDate != null) && (estDeliveryDate).before(orderedDate)) {
-					RuleDetails rd = new RuleDetails("Equipment", "EarlierEstDeliveryDate", "Estimated Delivery Date is earlier than Ordered Date", 0);
+					RuleDetails rd = new RuleDetails("Equipment", "EarlierEstDeliveryDate", String.format("%s ~ Estimated Delivery Date is earlier than Ordered Date", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//10
 				if((actDeliveryDate != null) && (orderedDate != null) && (actDeliveryDate).before(orderedDate)) {
-					RuleDetails rd = new RuleDetails("Equipment", "EarlierActDeliveryDate", "Actual Delivery Date is earlier than Ordered Date", 0);
+					RuleDetails rd = new RuleDetails("Equipment", "EarlierActDeliveryDate", String.format("%s ~ Actual Delivery Date is earlier than Ordered Date", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 				//11
 				if((estDeliveryDate != null) && ((estDeliveryDate).before(today)) && (actDeliveryDate == null)) {
-					RuleDetails rd = new RuleDetails("Equipment", "LateActualDeliveryDate", "Actual Delivery date is late", 1);
+					RuleDetails rd = new RuleDetails("Equipment", "LateActualDeliveryDate", String.format("%s ~ Actual Delivery date is late", currentEquipment.getEquipmentName()), 1);
 					al.add(rd);
 				}
 				//12
 				if((orderedDate != null) && (deliveryStatus == null || deliveryStatus.isEmpty())) {
-					RuleDetails rd = new RuleDetails("Equipment", " UnUpdatedDeliveryStatus", "Delivery Status needs to be updated", 0);
+					RuleDetails rd = new RuleDetails("Equipment", " UnUpdatedDeliveryStatus", String.format("%s ~ Delivery Status needs to be updated", currentEquipment.getEquipmentName()), 0);
 					al.add(rd);
 				}
 

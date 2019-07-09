@@ -380,16 +380,6 @@
 					</tr>
 					</tbody>
 				</table>	
-								<table class='table table-hover'>
-					<tr>
-						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500"></textarea></td>
-					</tr>
-					<tr>
-						<td align="left" class = "bold">Inspection Notes</td>
-						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500"></textarea></td>
-					</tr>
-				</table>
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
@@ -453,12 +443,12 @@
 						</tr>
 					</thead>
 					<tbody>
-					 <tr onclick ="getFailedRules('generalInfoFailedList');">
+					 <tr onclick ="getFailedRules('generalInfoFailedTable');">
 	   					<td>General Information</td>	    				
 	    				<td id = "generalInfoScore"> </td>
 	    				<td id = "generalIssues"></td>    				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('schedulingFailedList');">
+	 				  <tr onclick ="getFailedRules('schedulingFailedTable');">
 	   					<td>Scheduling</td>	    				
 	    				<td id = "schedulingScore"> </td>
 	    				<td id ="schedulingIssues"></td>    				
@@ -468,17 +458,17 @@
 	    				<td id = "permitsAndInspectionsScore"> </td>
 	    				<td id ="permitsIssues"></td>    				
 	 				 </tr>
-	 				  <tr onclick = "getFailedRules('equipmentFailedList');">
+	 				  <tr onclick = "getFailedRules('equipmentFailedTable');">
 	   					<td>Equipment</td>
 	    				<td id = "equipmentScore"> </td>
 	    				<td id ="equipmentIssues"></td>   				
 	 				 </tr>
-	 				  <tr onclick = "getFailedRules('changeOrdersFailedList');">
+	 				  <tr onclick = "getFailedRules('changeOrdersFailedTable');">
 	   					<td>Change Order</td>	    			
 	    				<td id = "changeOrdersScore"> </td>
 	    				<td id ="changeordersIssues"></td>   				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('tasksFailedList');">
+	 				  <tr onclick ="getFailedRules('tasksFailedTable');">
 	   					<td>Tasks</td>	    			
 	    				<td id = "tasksScore"> </td>
 	    				<td id ="tasksIssues"></td>    				
@@ -488,7 +478,7 @@
 	    				<td id = "closeoutScore"> </td>
 	    				<td id ="closeoutIssues"></td>   				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('financialFailedList');">
+	 				  <tr onclick ="getFailedRules('financialFailedTable');">
 	   					<td>Financial</td>	   				
 	    				<td id = "financialScore"> </td>
 	    				<td id ="financialIssues"></td>
@@ -501,21 +491,103 @@
 
 					<h3 style="margin-left: 100px" id = "scoreCardFailedRulesHeader"><span></span>  </h3>
 					<div style="width: 80%; margin-left: 100px" id = "failedRulesTable" class ="failRulesAll" >
-						<ol class = "failRules rectangle-list" id = "generalInfoFailedList" onclick = "fixingRules('general');">
-						</ol>
+					<table id = "generalInfoFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr >
+								<th style="text-align: center" colspan = "2">GENERAL DISCREPANCIES</th>
+							</tr>
+							<tr >
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('general');">
 						
-						<ol class = "failRules" id = "financialFailedList" onclick = "fixingRules('financial');">
-						</ol>
 						
-						<ol class = "failRules" id = "schedulingFailedList" onclick = "fixingRules('scheduling');">
-						</ol>
+						</tbody>					
+					</table>
+					<table id = "schedulingFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "2">SCHEDULING DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>							
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('scheduling');">
 						
-						<ol class = "failRules" id = "tasksFailedList" onclick = "fixingRules('tasks');">
-						</ol>
-						<ol class = "failRules" id = "changeOrdersFailedList" onclick = "fixingRules('changeorders');">
-						</ol>
-						<ol class = "failRules" id = "equipmentFailedList" onclick = "fixingRules('equipment');">
-						</ol>
+						
+						</tbody>					
+					</table>
+					<table id = "equipmentFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">EQUIPMENT DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('equipment');">
+						
+						
+						</tbody>					
+					</table>
+					<table id = "changeOrdersFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">CHANGE ORDER DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('changeorders');">
+						
+						
+						</tbody>					
+					</table>
+					<table id = "tasksFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">TASKS DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('tasks');">
+						
+						
+						</tbody>					
+					</table>
+
+					<table id = "financialFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "2">FINANCIAL DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('financial');">
+						
+						
+						</tbody>					
+					</table>
+					
+					
+				
 						<br>
 						<button  class = "btn project-edit" onclick = "returnToScoreCardView();"> Back to Scorecard Overview</button>
 					</div>
@@ -1895,6 +1967,16 @@
 				</tr>
 				</table>
 				
+								<table class='table table-hover'>
+					<tr>
+						<td align="left" class = "bold" width = 13%>Permit Notes</td>
+						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500"></textarea></td>
+					</tr>
+					<tr>
+						<td align="left" class = "bold">Inspection Notes</td>
+						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500"></textarea></td>
+					</tr>
+				</table>
 
 			</div>
 			
