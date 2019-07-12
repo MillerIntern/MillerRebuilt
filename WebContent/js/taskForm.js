@@ -144,6 +144,8 @@ function getUserData () {
 		
 		var assigneeVal;
 		for (var i = 0; i < json.length; i++) {
+			if(json[i].firstName == "Bart")
+				continue;
 			if(setProjectManagers.has(json[i].firstName)){
 				let option = document.createElement('option');
 				if(user.firstName == json[i].firstName) 
