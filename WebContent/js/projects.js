@@ -2555,7 +2555,20 @@ function autofillProjectClass() {
 	});
 }
 
+function dateFillFunction(x){
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	today = mm + '/' + dd + '/' + yyyy;
+	
+	var firstName = ' ('+ user.firstName + ') -  ';
+	var cursorPosition = today.length + firstName.length-1;
+	x.value = today + firstName + x.value;
+	$(x).prop('selectionEnd', cursorPosition);
 
+	
+}
 
 /**
  * This function saves a project to the database
@@ -2591,6 +2604,7 @@ function saveProject_PROJECT_DATA() {
 	// financial
 	var shouldInvoice = $('#projectData').find("#shouldInvoice").val();
 	var actualInvoice = $('#projectData').find("#actualInvoice").val();
+	var prevNotes = PROJECT_DATA.projectNotes;
 	var notes = $('#projectData').find("#notes").val();
 	var refrigNotes = $('#projectData').find("#zUpdates").val();
 	var cost = $('#projectData').find("#projectCost").val();
@@ -5430,6 +5444,8 @@ function fillCostEstOverview(data)
 function setCostCompTitle()
 {
 	console.log(PROJECT_DATA);
+	$('#permitNotes2').val(PROJECT_DATA.permits.permitNotes);		
+	$('#inspectionNotes2').val(PROJECT_DATA.permits.inspectionNotes);
 	if(PROJECT_DATA.warehouse.state && (PROJECT_DATA.warehouse.state == "UNKNOWN" || PROJECT_DATA.warehouse.state == "Unknown")) 
 	{
 		$("#smartProjectComparison").find("#currentProj").text(PROJECT_DATA.warehouse.city.name + ", " + PROJECT_DATA.warehouse.region);
@@ -8777,7 +8793,7 @@ function filterProjects (filter) {
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
-		
+//					let listDetails4 = document.createElement('td');
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -8797,10 +8813,15 @@ function filterProjects (filter) {
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;
+//					listDetails4.innerHTML = json[k].mediumScore;
+//					if(json[k].mediumScore == 0) listDetails4.style.background = "Green";
+//					else if(json[k].mediumScore == 1) listDetails4.style.background = "yellow";
+//					else listDetails4.style.background = "red";
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
+//					$(projectListing).append(listDetails4);
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -8822,6 +8843,7 @@ function filterProjects (filter) {
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
+//					let listDetails4 = document.createElement('td');
 					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
@@ -8838,11 +8860,15 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;			
+//					listDetails3.innerHTML = json[k].projectManagers.name;		
+//					listDetails4.innerHTML = json[k].mediumScore;
+//					if(json[k].mediumScore == 0) listDetails4.style.background = "Green";
+//					else if(json[k].mediumScore == 1) listDetails4.style.background = "Red";
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
-					$(projectListing).append(listDetails3);					
+					$(projectListing).append(listDetails3);	
+//					$(projectListing).append(listDetails4);	
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -10223,6 +10249,7 @@ function getScoreRules(project_id){
 				let tableTasks = document.getElementById('tasksFailedTable').getElementsByTagName('tbody')[0];
 				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
 				let tableFinancial = document.getElementById('financialFailedTable').getElementsByTagName('tbody')[0];
+				let tablePermits = document.getElementById('permitsFailedTable').getElementsByTagName('tbody')[0];
 				
 				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseout, scoreFinancial ;
 				//GREEN 
@@ -10379,6 +10406,28 @@ function getScoreRules(project_id){
 					    	  scoreEquipment = ["Red", "HIGH"];
 					      }
 					} 
+					else if(data[i].ruleCategory == "Permits"){
+						permitsIssues++;
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var text1 = document.createTextNode(permitsIssues);
+						 var text2 = document.createTextNode(data[i].failMessage);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tablePermits.appendChild(tr);
+					      if(data[i].severity == 0){
+					    	  td1.style.background = "#FFD800";
+					    	  if(scorePermits[0]!="Red")					    		  
+					    		  scorePermits = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  td1.style.background = "Red";
+					    	  scorePermits = ["Red", "HIGH"];
+					      }
+					} 
 				}
 				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseout, scoreFinancial);
 				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues);
@@ -10470,6 +10519,9 @@ function fixingRules(category){
 	
 	case "equipment":
 		$('#equipmentTabLink').trigger('click');
+		break;
+	case "permits":
+		$('#permitsTabLink').trigger('click');
 		break;
 	default:
 		goToProjectManager2();
@@ -10575,4 +10627,71 @@ function editSpecificPermitsAndInspections(permitCategory){
 		editPermitsAndInspections();
 		$('#safetyPermit').trigger('click');
 	}
+}
+
+function savePermitInspectionNotes(){
+	
+	  var permitNotes2 = $('#permitNotes2').val();
+	    var inspectionNotes2 = $('#inspectionNotes2').val();
+	    console.log(permitNotes2);
+	    console.log(inspectionNotes2);
+	   
+	    var PERMIT_ID = 0;
+		if(PROJECT_DATA.permits != null)
+			PERMIT_ID = PROJECT_DATA.permits.id;
+		else
+			PERMIT_ID = 0;
+		
+		if(!PROJECT_DATA || !PROJECT_DATA.id)
+		{
+			alert("Server Error! (Project ID)");
+			return;
+		}
+		if(!PERMIT_ID)
+		{
+			alert("Server Error! (Permit ID)");
+			return;
+		}
+	    $.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'editPermitNotes',
+				'projectID':PROJECT_DATA.id,	
+				'permitsID':PERMIT_ID,
+				'permitNotes2': permitNotes2,
+				'inspectionNotes2': inspectionNotes2
+			},
+			success:function(data){
+				console.log(data);
+				//updateFrontEnd();
+				alert('Save Complete!');
+							
+				//goToProjectManager();
+
+			},
+ 
+			error: function(data)
+			{
+				console.log(data);
+				//updateFrontEnd();
+				//getProject_PROJECT_MANAGER(projectID , 1);
+				alert('Save Complete!');
+				/*
+				$('#permitData').find('#saveButton > button').prop('disabled', false);
+				$('#permitData').find('.active').removeClass('active');
+				$('#permitData').find('#buildingPermit').addClass('active');
+
+				$(".editProject").hide();
+				$("#projectManager").show();
+				*/
+				//goToProjectManager();
+			
+				
+			}
+		});
+      
+	
 }

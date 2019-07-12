@@ -119,7 +119,8 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("status.id"));
 				projectionList.add(Projections.property("warehouse.id"));
 				projectionList.add(Projections.property("projectManagers.id"));
-				projectionList.add(Projections.property("projectClass.id"));				
+				projectionList.add(Projections.property("projectClass.id"));	
+//				projectionList.add(Projections.property("mediumScore"));	
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -619,6 +620,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("warehouse").as("warehouse"));
 				projectionList.add(Projections.property("projectManagers").as("projectManagers"));
 				projectionList.add(Projections.property("projectClass").as("projectClass"));
+//				projectionList.add(Projections.property("mediumScore").as("mediumScore"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);

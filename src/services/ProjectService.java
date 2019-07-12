@@ -770,6 +770,46 @@ public class ProjectService extends ProjectObjectService
 		ProjectObjectService.deleteNullSetObjects();
 
 	}
+	public synchronized static void editPermitNotes(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Edit Permits:");
+
+		String permitsIDString = params.get("permitsID");
+		Long permitsID = (long)-1;
+
+		try
+		{
+			permitsID = Long.parseLong(permitsIDString);
+		}catch(Exception e){}
+
+
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		fixSets(currentProject);
+
+		Permits permits = new Permits();
+		PermitsFiller.fillPermitNotes(permits, params);
+
+		currentProject.setPermits(permits);
+
+		int i = 0;
+		int k = 0;
+
+		if(permitsID!=0)
+		{
+			i=0;
+			ProjectObjectService.editObject("Permits",permitsID,permits, i);
+			k = 1;
+		}
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullSetObjects();
+
+	}
 
 	public synchronized static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{

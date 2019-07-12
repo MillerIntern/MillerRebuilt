@@ -182,6 +182,7 @@
 	   			<th>MCS Number</th>
 	   			<th>Item</th>
 	   			<th>Manager</th>
+	 <!--   			<th>Score</th> -->
 	   			</tr>
 	   			
 	   			<!-- <th><input type="radio" name="projects" value="warehouse" onchange="sortProjectsBy(this);">Warehouse</th>
@@ -380,6 +381,19 @@
 					</tr>
 					</tbody>
 				</table>	
+				<table class='table table-hover'>
+					<tr>
+						<td align="left" class = "bold" width = 13%>Permit Notes</td>
+						<td><textarea id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="left" class = "bold">Inspection Notes</td>
+						<td><textarea id='inspectionNotes2' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td><button onclick = "savePermitInspectionNotes()">Save Notes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button></td>
+					</tr>
+					
+				</table>
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
@@ -453,7 +467,7 @@
 	    				<td id = "schedulingScore"> </td>
 	    				<td id ="schedulingIssues"></td>    				
 	 				 </tr>
-	 				  <tr>
+	 				  <tr onclick ="getFailedRules('permitsFailedTable');">
 	   					<td>Permits & Inspections</td>	    				
 	    				<td id = "permitsAndInspectionsScore"> </td>
 	    				<td id ="permitsIssues"></td>    				
@@ -502,6 +516,21 @@
 							</tr>
 						</thead>
 						<tbody onclick = "fixingRules('general');">
+						
+						
+						</tbody>					
+					</table>
+							<table id = "permitsFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr >
+								<th style="text-align: center" colspan = "2">PERMITS & INSPECTIONS DISCREPANCIES</th>
+							</tr>
+							<tr >
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('permits');">
 						
 						
 						</tbody>					
@@ -1305,12 +1334,12 @@
 	        
 	        
 	        <td class="bold">MCS Notes</td>
-	        <td><textarea  class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40"></textarea></td>
+	        <td><textarea  class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
 	        </tr>
 	        
 	        <tr>
 	        <td class="bold">Customer Notes</td>
-	        <td><textarea  class="scrollTextBox" maxlength="999" id="zUpdates" rows="5" cols="40"></textarea></td>
+	        <td><textarea  class="scrollTextBox" maxlength="999" id="zUpdates" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
 	        </tr>	
 	        
 			
@@ -1444,7 +1473,7 @@
 				        <tr>
 				        	<td><label>Notes:</label></td>
 				        	<td>
-				        	<textarea class="scrollTextBoxTask" maxlength="999" id='notes'></textarea>
+				        	<textarea class="scrollTextBoxTask" maxlength="999" id='notes' ondblclick = "dateFillFunction(this)"></textarea>
 				        	</td>
 				        </tr>
 					</table>
@@ -1970,11 +1999,11 @@
 								<table class='table table-hover'>
 					<tr>
 						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500"></textarea></td>
+						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr>
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
-						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500"></textarea></td>
+						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr>
 				</table>
 
@@ -3310,7 +3339,7 @@
 		             <tr>
 		                <td class="coLabel">CO Notes</td>
 		                <td>
-		                    <textarea id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40"> </textarea>
+		                    <textarea id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40" ondblclick = "dateFillFunction(this)"> </textarea>
 		                </td>   
 		            </tr>
 				 </table>
@@ -3409,7 +3438,7 @@
 	            <tr>
 	            	<td class='bold'>Equipment Notes</td>
 	            	<td>
-	            		<textarea id="notes" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999></textarea>
+	            		<textarea id="notes" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999 ondblclick = "dateFillFunction(this)"></textarea>
 	            	</td>
 	            </tr>
 	        </table>

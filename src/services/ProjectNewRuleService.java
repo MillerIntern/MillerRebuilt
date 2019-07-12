@@ -5,6 +5,7 @@ import java.util.List;
 
 import projectObjects.ChangeOrder;
 import projectObjects.NewEquipment;
+import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.RuleDetails;
 import projectObjects.Task;
@@ -456,6 +457,353 @@ public class ProjectNewRuleService {
 		}
 
 		return al;
+	}
+	
+	public static ArrayList<RuleDetails> permitsInfoEvaluate( Project proj) {
+		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
+		Permits permits = proj.getPermits();
+		
+		//Building
+		String buildingPermitRequired = permits.getBuildingPermitRequired();
+		String buildingPermitStatus = permits.getBuildingPermitStatus();
+		Date buildingPermitLastUpdated = permits.getBuilding();
+		String buildingInspectionRequired = permits.getBuildingInspectionRequired();
+		String buildingInspectionStatus = permits.getBuildingInspectionStatus();
+		Date buildingInspectionLastUpdated = permits.getBuildingInspectionLastUpdated();
+		
+		//Ceiling
+		String ceilingPermitRequired = permits.getCeilingPermitRequired();
+		String ceilingPermitStatus = permits.getCeilingPermitStatus();
+		Date ceilingPermitLastUpdated = permits.getCeiling();
+		String ceilingInspectionRequired = permits.getCeilingInspectionRequired();
+		String ceilingInspectionStatus = permits.getCeilingInspectionStatus();
+		Date ceilingInspectionLastUpdated = permits.getCeilingInspectionLastUpdated();
+		
+		//Mechanical
+		String mechanicalPermitRequired = permits.getMechanicalPermitRequired();
+		String mechanicalPermitStatus = permits.getMechanicalPermitStatus();
+		Date mechanicalPermitLastUpdated = permits.getMechanical();
+		String mechanicalInspectionRequired = permits.getMechanicalInspectionRequired();
+		String mechanicalInspectionStatus = permits.getMechanicalInspectionStatus();
+		Date mechanicalInspectionLastUpdated = permits.getMechanicalInspectionLastUpdated();
+		
+		//Electrical
+		String electricalPermitRequired = permits.getElectricalPermitRequired();
+		String electricalPermitStatus = permits.getElectricalPermitStatus();
+		Date electricalPermitLastUpdated = permits.getElectrical();
+		String electricalInspectionRequired = permits.getElectricalInspectionRequired();
+		String electricalInspectionStatus = permits.getElectricalInspectionStatus();
+		Date electricalInspectionLastUpdated = permits.getElectricalInspectionLastUpdated();
+		
+		//Plumbing
+		String plumbingPermitRequired = permits.getPlumbingPermitRequired();
+		String plumbingPermitStatus = permits.getPlumbingPermitStatus();
+		Date plumbingPermitLastUpdated = permits.getPlumbing();
+		String plumbingInspectionRequired = permits.getPlumbingInspectionRequired();
+		String plumbingInspectionStatus = permits.getPlumbingInspectionStatus();
+		Date plumbingInspectionLastUpdated = permits.getPlumbingInspectionLastUpdated();
+	
+		//Gas
+		String gasPermitRequired = permits.getGasPermitRequired();
+		String gasPermitStatus = permits.getGasPermitStatus();
+		Date gasPermitLastUpdated = permits.getGas();
+		String gasInspectionRequired = permits.getGasInspectionRequired();
+		String gasInspectionStatus = permits.getGasInspectionStatus();
+		Date gasInspectionLastUpdated = permits.getGasInspectionLastUpdated();
+		
+		//Sprinkler
+		String sprinklerPermitRequired = permits.getSprinklerPermitRequired();
+		String sprinklerPermitStatus = permits.getSprinklerPermitStatus();
+		Date sprinklerPermitLastUpdated = permits.getFire_sprinkler();
+		String sprinklerInspectionRequired = permits.getSprinklerInspectionRequired();
+		String sprinklerInspectionStatus = permits.getSprinklerInspectionStatus();
+		Date sprinklerInspectionLastUpdated = permits.getSprinklerInspectionLastUpdated();
+		
+		//Fire_alarm
+		String fireAlarmPermitRequired = permits.getFireAlarmPermitRequired();
+		String fireAlarmPermitStatus = permits.getFireAlarmPermitStatus();
+		Date fireAlarmPermitLastUpdated = permits.getFire_alarm();
+		String fireAlarmInspectionRequired = permits.getFireAlarmInspectionRequired();
+		String fireAlarmInspectionStatus = permits.getFireAlarmInspectionStatus();
+		Date fireAlarmInspectionLastUpdated = permits.getFireAlarmInspectionLastUpdated();
+		
+		//Low_voltage	
+		String lowVoltagePermitRequired = permits.getVoltagePermitRequired();
+		String lowVoltagePermitStatus = permits.getVoltagePermitStatus();
+		Date lowVoltagePermitLastUpdated = permits.getLow_voltage();
+		String lowVoltageInspectionRequired = permits.getVoltageInspectionRequired();
+		String lowVoltageInspectionStatus = permits.getVoltageInspectionStatus();
+		Date lowVoltageInspectionLastUpdated = permits.getVoltageInspectionLastUpdated();
+		
+//		//OtherA
+//		String otherAPermitRequired = permits.getOtherAPermit();
+//		String otherAPermitStatus = permits.getOtherAPermitStatus();
+//		Date otherAPermitLastUpdated = permits.getOtherA();
+//		String otherAInspectionRequired = permits.getOtherAInspectionRequired();
+//		String otherAInspectionStatus = permits.getOtherAInspectionStatus();
+//		Date otherAInspectionLastUpdated = permits.getOtherAInspectionLastUpdated();
+//		
+//		//Other
+//		String otherBPermitRequired = permits.getOtherBPermit();
+//		String otherBPermitStatus = permits.getOtherBPermitStatus();
+//		Date otherBPermitLastUpdated = permits.getOtherB();
+//		String otherBInspectionRequired = permits.getOtherBInspectionRequired();
+//		String otherBInspectionStatus = permits.getOtherBInspectionStatus();
+//		Date otherBInspectionLastUpdated = permits.getOtherBInspectionLastUpdated();
+		
+		//1
+		if(!(buildingPermitRequired.equals(buildingInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "BuildReqInspNotEqual", "Building Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//2
+		if(!(ceilingPermitRequired.equals(ceilingInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "CeilReqInspNotEqual", "Ceiling Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//3
+		if(!(mechanicalPermitRequired.equals(mechanicalInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "MechReqInspNotEqual", "Mechanical Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//4
+		if(!(electricalPermitRequired.equals(electricalInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "ElecReqInspNotEqual", "Electrical Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//5
+		if(!(plumbingPermitRequired.equals(plumbingInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "PlumbReqInspNotEqual", "Plumbing Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//6
+		if(!(gasPermitRequired.equals(gasInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "GasReqInspNotEqual", "Gas Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//7
+		if(!(sprinklerPermitRequired.equals(sprinklerInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "SprinklerReqInspNotEqual", "Sprinkler Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//8
+		if(!(fireAlarmPermitRequired.equals(fireAlarmInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "FireReqInspNotEqual", "FireAlarm Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//9
+		if(!(lowVoltagePermitRequired.equals(lowVoltageInspectionRequired))) {
+			RuleDetails rd = new RuleDetails("Permits", "LowVoltReqInspNotEqual", "Low Voltage Permit Required and Inspection need to be equal", 1);
+			al.add(rd);
+		}
+		
+		//10
+		if( (buildingPermitRequired != null) && (buildingPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "BuildPermitReqTBD", "Building Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//11
+		if( (ceilingPermitRequired != null) && (ceilingPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "CeilPermitReqTBD", "Ceiling Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//12
+		if( (mechanicalPermitRequired != null) && (mechanicalPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "MechPermitReqTBD", "Mechanical Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//13
+		if( (electricalPermitRequired != null) && (electricalPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "ElecPermitReqTBD", "Electrical Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//14
+		if( (plumbingPermitRequired != null) && (plumbingPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "PlumbPremitReqTBD", "Plumbing Premit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//15
+		if( (gasPermitRequired != null) && (gasPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "GasPermitReqTBD", "Gas Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//16
+		if( (sprinklerPermitRequired != null) && (sprinklerPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "SprinPermitReqTBD", "Sprinkler Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//17
+		if( (fireAlarmPermitRequired != null) && (fireAlarmPermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "FirePermitReqTBD", "FireAlarm Permit Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//18
+		if( (lowVoltagePermitRequired != null) && (lowVoltagePermitRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "LowVoltPermitReqTBD", "Low Voltage Permit Requiredmust be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		//20
+		if( (buildingInspectionRequired != null) && (buildingInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "BuildInspReqTBD", "Building Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//21
+		if( (ceilingInspectionRequired != null) && (ceilingInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "CeilInspReqTBD", "Ceiling Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//22
+		if( (mechanicalInspectionRequired != null) && (mechanicalInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "MechInspReqTBD", "Mechanical Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//23
+		if( (electricalInspectionRequired != null) && (electricalInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "ElecInspReqTBD", "Electrical Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//24
+		if( (plumbingInspectionRequired != null) && (plumbingInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "PlumbInspReqTBD", "Plumbing Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//25
+		if( (gasInspectionRequired != null) && (gasInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "GasInspReqTBD", "Gas Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//26
+		if( (sprinklerInspectionRequired != null) && (sprinklerInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "SprinkInspReqTBD", "Sprinkler Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//27
+		if( (fireAlarmInspectionRequired != null) && (fireAlarmInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "FireInspReqTBD", "FireAlarm Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//28
+		if( (lowVoltageInspectionRequired != null) && (lowVoltageInspectionRequired.equals("0"))) {
+			RuleDetails rd = new RuleDetails("Permits", "LowVoltInspReqTBD", "Low Voltage Inspection Required must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		
+		//For some reason, the previous developer gave the TBD's below a value "TBD" Which is a string. Woudlve been simple if it stayed 0.
+		
+		//29
+		if( (buildingPermitStatus!= null) && (buildingPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "BuildPermitStatusTBD", "Building Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//30
+		if( (ceilingPermitStatus!= null) && (ceilingPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "CeilPermitStatusTBD", "Ceiling Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//31
+		if( (mechanicalPermitStatus!= null) && (mechanicalPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "MechPermitStatusTBD", "Mechanical Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//32
+		if( (electricalPermitStatus!= null) && (electricalPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "ElecPermitStatusTBD", "Electrical Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//33
+		if( (plumbingPermitStatus!= null) && (plumbingPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "PlumbPermitStatusTBD", "Plumbing Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//34
+		if( (gasPermitStatus!= null) && (gasPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "GasPermitStatusTBD", "Gas Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//35
+		if( (sprinklerPermitStatus!= null) && (sprinklerPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "SprinklerPermitStatusTBD", "Sprinkler Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//36
+		if( (fireAlarmPermitStatus!= null) && (fireAlarmPermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "FirePermitStatusTBD", "FireAlarm Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//37
+		if( (lowVoltagePermitStatus!= null) && (lowVoltagePermitStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "LowVoltPermitStatusTBD", "Low Voltage Permit Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		
+		
+		//38
+		if( (buildingInspectionStatus!= null) && (buildingInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "BuildInspStatusTBD", "Building Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//39
+		if( (ceilingInspectionStatus!= null) && (ceilingInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "CeilInspStatusTBD", "Ceiling Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//40
+		if( (mechanicalInspectionStatus!= null) && (mechanicalInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "MechInspStatusTBD", "Mechanical Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//41
+		if( (electricalInspectionStatus!= null) && (electricalInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "ElecInspStatusTBD", "Electrical Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//42
+		if( (plumbingInspectionStatus!= null) && (plumbingInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "PlumbInspStatusTBD", "Plumbing Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//43
+		if( (gasInspectionStatus!= null) && (gasInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "GasInspStatusTBD", "Gas Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//44
+		if( (sprinklerInspectionStatus!= null) && (sprinklerInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "SprinklerInspStatusTBD", "Sprinkler Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//45
+		if( (fireAlarmInspectionStatus!= null) && (fireAlarmInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "FireInspStatusTBD", "FireAlarm Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		//46
+		if( (lowVoltageInspectionStatus!= null) && (lowVoltageInspectionStatus.equals("TBD"))) {
+			RuleDetails rd = new RuleDetails("Permits", "LowVoltInspStatusTBD", "Low Voltage Inspection Status must be either Yes or No", 0);
+			al.add(rd);
+		}
+		
+		return al;
+		
 	}
 }
 

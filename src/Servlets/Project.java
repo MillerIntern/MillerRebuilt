@@ -421,6 +421,17 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+		else if(action.equals("editPermitNotes")) {
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+			ProjectService.editPermitNotes(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 		else if(action.equals("addCostEstimate"))
 		{
 			Long projectID = Long.parseLong(parameters.get("projectID"));
@@ -1029,6 +1040,7 @@ public class Project extends HttpServlet
 		
 		else if(action.equals("getScoreRules")) {
 			projectObjects.Project project = null;
+			projectObjects.Permits permits = null;
 			try 
 			{
 			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("projectId")), "Project");
@@ -1037,6 +1049,11 @@ public class Project extends HttpServlet
 			{
 				e.printStackTrace();
 			}
+
+			System.out.println(project.getPermits().getPermitNotes());
+			
+			
+			
 			
 			//String task = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("projectId")));
 			
@@ -1051,6 +1068,7 @@ public class Project extends HttpServlet
 			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
 			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(changeOrders));
 			result.addAll(ProjectNewRuleService.equipmentEvaluate(equipment));
+			result.addAll(ProjectNewRuleService.permitsInfoEvaluate(project));
 			Gson gson = new Gson();
 			response = gson.toJson(result);
 		}

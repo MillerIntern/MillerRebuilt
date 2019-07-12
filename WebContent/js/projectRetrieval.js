@@ -46,7 +46,8 @@ let TIME_FINISH;
 					PROJECT_OBJECT.PROJECTS[i].status = response.responseJSON[i][5];
 					PROJECT_OBJECT.PROJECTS[i].warehouse = response.responseJSON[i][6];
 					PROJECT_OBJECT.PROJECTS[i].projectManagers = response.responseJSON[i][7];
-					PROJECT_OBJECT.PROJECTS[i].projectClass = response.responseJSON[i][8];					
+					PROJECT_OBJECT.PROJECTS[i].projectClass = response.responseJSON[i][8];
+//					PROJECT_OBJECT.PROJECTS[i].mediumScore = response.responseJSON[i][9];
 				}
 				console.log(PROJECT_OBJECT.PROJECTS);
 

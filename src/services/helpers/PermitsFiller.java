@@ -162,4 +162,10 @@ public class PermitsFiller
 		permits.setInspectionNotes(params.get("inspectionNotes"));
 
 	}
+	public synchronized static void fillPermitNotes(Permits permits,  Map<String, String>params) throws ParseException
+	{
+		permits.setPermitNotes(params.get("permitNotes2"));
+		permits.setInspectionNotes(params.get("inspectionNotes2"));
+		
+	}
 }
