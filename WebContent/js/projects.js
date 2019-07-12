@@ -129,6 +129,8 @@ var PROJECT_DATA_EQUIP;
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
+
+	
 	$('#closeoutData').find('.nav-tabs > li').click(function () {
 		$('#closeoutData').find('.info-tab').removeClass('active');
 		$('#closeoutData').find('#' + $(this).attr('data-tab')).addClass('active');
@@ -3079,7 +3081,7 @@ $(document).ready(function () {
 			$("#scoreCardFailedRulesDiv").hide();
 			convertCurrentDivLocation ("scoreCardTopDiv");
 			setProjectHeader(PROJECT_DATA, "scoreCardTopDiv");
-			emptyingLists();
+			emptyingTables();
 			scoreBackground(["#59ba63", PROJECT_DATA.stage.name],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""],["#59ba63", ""]);
 			issuesNumberSetter(0,0,0,0,0,0,0,0);
 			
@@ -4444,8 +4446,8 @@ function fillTaskWell(source) {
 		$('#taskCreationZone').find('#employeeAssigneeTableElement').hide();
 		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
 		taskAssigneeType = TASK_SUB_ASSIGNEE;
-		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
-		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+		//document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
+		//document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
 		$('#taskCreationZone').find('#subcontractorsDropdown').val(selected_task.subAssignee.name);
 	}
 	else {
@@ -8775,6 +8777,7 @@ function filterProjects (filter) {
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
+		
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -8794,7 +8797,6 @@ function filterProjects (filter) {
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;
-					
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
@@ -8821,7 +8823,6 @@ function filterProjects (filter) {
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
 					
-					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
@@ -8837,12 +8838,11 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;
-					
+					listDetails3.innerHTML = json[k].projectManagers.name;			
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
-					$(projectListing).append(listDetails3);
+					$(projectListing).append(listDetails3);					
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -9293,6 +9293,7 @@ function fillDropdowns_CHANGE_ORDER(json)
   * This function sorts the change order status drop down into the logical Miller order
  * @param a json containing all of the possible changeorder statuses along with each potential
  * attribute value
+ * The order given to Akash is Preparing, Review, Submitted, Approved, Rejected and Complete
  * INNER FUNCTION CALLS: NONE
  */
 function sortChangeOrderStatus(json)
@@ -9300,12 +9301,12 @@ function sortChangeOrderStatus(json)
 	console.log("JSONNNN == ", json);
 	let tmp = json.slice(0);
 		
-	tmp[0] = json[4];
-	tmp[1] = json[2];
-	tmp[2] = json[5];
-	tmp[3] = json[0];
+	tmp[0] = json[0];
+	tmp[1] = json[5];
+	tmp[2] = json[1];
+	tmp[3] = json[2];
 	tmp[4] = json[3];
-	tmp[5] = json[1];
+	tmp[5] = json[4];
    
 	return tmp;
 	
@@ -10201,7 +10202,7 @@ function getScoreRules(project_id){
 	$("#scoreCardFailedRulesDiv").hide();
 	convertCurrentDivLocation ("scoreCardTopDiv");
 	setProjectHeader(PROJECT_DATA, "scoreCardTopDiv");
-	emptyingLists();
+	emptyingTables();
 	if (project_id != null) {
 		$.ajax({
 			type: 'POST',
@@ -10214,92 +10215,173 @@ function getScoreRules(project_id){
 				
 				console.log("DATA FROM GETSCORERULES IS " , data);
 				//var listDiv = document.getElementById('someData');
-				let ulGeneral = document.getElementById('generalInfoFailedList');
-				let ulFinancial = document.getElementById('financialInfoFailedList');
-				let ulScheduling = document.getElementById('schedulingInfoFailedList');
-				let ulTasks = document.getElementById('tasksInfoFailedList');
-				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder, scoreTasks, scoreCloseout, scoreFinancial ;
+				let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
+				let tableScheduling = document.getElementById('schedulingFailedTable').getElementsByTagName('tbody')[0];
+				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
+				let tableEquipment = document.getElementById('equipmentFailedTable').getElementsByTagName('tbody')[0];
+				let tableChangeOrders = document.getElementById('changeOrdersFailedTable').getElementsByTagName('tbody')[0];
+				let tableTasks = document.getElementById('tasksFailedTable').getElementsByTagName('tbody')[0];
+				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
+				let tableFinancial = document.getElementById('financialFailedTable').getElementsByTagName('tbody')[0];
+				
+				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseout, scoreFinancial ;
 				//GREEN 
-				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrder= scoreTasks= scoreCloseout= scoreFinancial =["#59ba63", ""] ;
-				let generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues;
-				generalIssues=schedulingIssues=permitsIssues = equipmentIssues=changeorderIssues= tasksIssues= closeoutIssues= financialIssues=0;
+				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrders= scoreTasks= scoreCloseout= scoreFinancial =["#59ba63", ""] ;
+				let generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues;
+				generalIssues=schedulingIssues=permitsIssues = equipmentIssues=changeordersIssues= tasksIssues= closeoutIssues= financialIssues=0;
 				for(var i =0; i<data.length; i++){
 					
 					if(data[i].ruleCategory == "GeneralInfo"){
 						generalIssues++;
-						var li=document.createElement('li');
-					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
-					      if(data[i].severity == 0){
-					    	  li.style.color = "Blue";
-					    	  //YELLOW
-					    	  li.style.background = "#cce5ff"
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var text1 = document.createTextNode(generalIssues);
+						var text2 = document.createTextNode(data[i].failMessage);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tableGeneral.appendChild(tr);
+					      if(data[i].severity == 0){					   
+					    	  td1.style.background = "#FFD800";
 					    	  if(scoreGeneral[0]!="Red")
 					    		  scoreGeneral = ["#FFD800", "LOW"];
 					      } 
 					      else{
-					    	  li.style.color = "Red";
-					    	  //RED
-					    	  li.style.background = "#ffe5e5"
+					    	  td1.style.background = "Red";
 					    	  scoreGeneral = ["Red", "HIGH"];
-					      }
-					      ulGeneral.appendChild(li);
-					      
+					      }					    
 					      
 					}					
-					else if(data[i].ruleCategory == "FinancialInfo"){
+					else if(data[i].ruleCategory == "Financial"){
 						financialIssues++;
-						var li=document.createElement('li');
-					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var text1 = document.createTextNode(financialIssues);
+						 var text2 = document.createTextNode(data[i].failMessage);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tableFinancial.appendChild(tr);						
 					      if(data[i].severity == 0){
-					    	  li.style.color = "Blue";
-					    	  li.style.background = "#cce5ff"
+					    	  td1.style.background = "#FFD800";					    	  
 					    	  if(scoreFinancial[0]!="Red")
 					    		  scoreFinancial = ["#FFD800", "LOW"];
 					      } 
 					      else{
-					    	  li.style.color = "Red";
-					    	  li.style.background = "#ffe5e5"
+					    	  td1.style.background = "Red";
 					    	  scoreFinancial = ["Red", "HIGH"];
 					      }
-					      ulFinancial.appendChild(li);
+					     
 					} 
-					else if(data[i].ruleCategory == "SchedulingInfo"){
+					else if(data[i].ruleCategory == "Scheduling"){
 						schedulingIssues++;
-						var li=document.createElement('li');
-					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var text1 = document.createTextNode(schedulingIssues);
+						 var text2 = document.createTextNode(data[i].failMessage);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tableScheduling.appendChild(tr);
 					      if(data[i].severity == 0){
-					    	  li.style.color = "Blue";
-					    	  li.style.background = "#cce5ff"
+					    	  td1.style.background = "#FFD800";
 					    	  if(scoreScheduling[0]!="Red")					    		  
 					    		  scoreScheduling = ["#FFD800", "LOW"];
 					      } 
 					      else{
-					    	  li.style.color = "Red";
-					    	  li.style.background = "#ffe5e5"
+					    	  td1.style.background = "Red";
 					    	  scoreScheduling = ["Red", "HIGH"];
 					      }
-					      ulScheduling.appendChild(li);
+
 					}  
-					else if(data[i].ruleCategory == "TasksInfo"){
+					else if(data[i].ruleCategory == "Tasks"){
 						tasksIssues++;
-						var li=document.createElement('li');
-					      li.innerHTML = data[i].failMessage;   // Use innerHTML to set the text
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var td3 = document.createElement('td');					
+						var text1 = document.createTextNode(tasksIssues);
+						var text2 = document.createTextNode(data[i].failMessage.split("~")[0]);
+						 var text3 = document.createTextNode(data[i].failMessage.split("~")[1]);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						td3.appendChild(text3);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tr.appendChild(td3);
+						tableTasks.appendChild(tr);
 					      if(data[i].severity == 0){
-					    	  li.style.color = "Blue";
-					    	  li.style.background = "#cce5ff"
+					    	  td1.style.background = "#FFD800";
 					    	  if(scoreTasks[0]!="Red")
 					    		  scoreTasks = ["#FFD800", "LOW"];
 					      } 
 					      else{
-					    	  li.style.color = "Red";
-					    	  li.style.background = "#ffe5e5"
+					    	  td1.style.background = "Red";
 					    	  scoreTasks = ["Red", "HIGH"];
 					      }
-					      ulTasks.appendChild(li);
+					} 
+					else if(data[i].ruleCategory == "ChangeOrders"){
+						changeordersIssues++;
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var td3 = document.createElement('td');	
+						var text1 = document.createTextNode(changeordersIssues);
+						var text2 = document.createTextNode(data[i].failMessage.split("~")[0]);
+						var text3 = document.createTextNode(data[i].failMessage.split("~")[1]);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						td3.appendChild(text3);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tr.appendChild(td3);;
+						tableChangeOrders.appendChild(tr);
+					      if(data[i].severity == 0){
+					    	  td1.style.background = "#FFD800";
+					    	  if(scoreChangeOrders[0]!="Red")
+					    		  scoreChangeOrders = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  td1.style.background = "Red";
+					    	  scoreChangeOrders = ["Red", "HIGH"];
+					      }
+					} 
+					
+					else if(data[i].ruleCategory == "Equipment"){
+						equipmentIssues++;
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var td3 = document.createElement('td');	
+						var text1 = document.createTextNode(equipmentIssues);
+						var text2 = document.createTextNode(data[i].failMessage.split("~")[0]);
+						var text3 = document.createTextNode(data[i].failMessage.split("~")[1]);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						td3.appendChild(text3);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tr.appendChild(td3);;
+						tableEquipment.appendChild(tr);
+					      if(data[i].severity == 0){
+					    	  td1.style.background = "#FFD800";
+					    	  if(scoreEquipment[0]!="Red")
+					    		  scoreEquipment = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  td1.style.background = "Red";
+					    	  scoreEquipment = ["Red", "HIGH"];
+					      }
 					} 
 				}
-				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder,scoreTasks, scoreCloseout, scoreFinancial);
-				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues);
+				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseout, scoreFinancial);
+				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues);
 				//document.getElementById("projectManager").style.display = 'none';  					
 			}, error: function (data) {
 				alert('Server Error!');
@@ -10313,28 +10395,33 @@ function getScoreRules(project_id){
 	}
 }
 
-function getFailedRules(list_id){  //A.R.G
-	$("#scoreCardTopDiv").hide();
-	$("#scoreCardFailedRulesDiv").show();
-	hidingLists(list_id);
+function getFailedRules(table_id){  //A.R.G
+	
+	if($('#'+table_id + "> tbody > tr").length > 0){ //condition where if issues are 0, then user click will not work
+		$("#scoreCardTopDiv").hide();
+		$("#scoreCardFailedRulesDiv").show();
+		hidingTables(table_id);
+	}
 }
 
-function hidingLists(list_id){
-	$("#failedRulesTable ol").filter(
+function hidingTables(table_id){
+	$("#failedRulesTable table").filter(
 		    function() {		   
-		        if(this.id != list_id){
+		        if(this.id != table_id){
 		        	$(this).hide();
 		        }
 		        else $(this).show();
 		    });
 }
 
-function emptyingLists(){
-	$("#failedRulesTable ol").filter(
+
+function emptyingTables(){
+	$("#failedRulesTable table > tbody").filter(
 		    function() {
 		        $(this).empty();
 		    });
 }
+
 
 function returnToScoreCardView()  //A.R.G
 {
@@ -10353,16 +10440,49 @@ function goToProjectManager2() {
 * When the rule is clicked, take the user to location so that he can update the issue
 * 
 * */
-function fixingGeneralRules(){
-	goToProjectManager2();
+
+function fixingRules(category){
+	console.log(typeof(category));
+	switch(category){
+	case "general":
+		$('#projectInformationTabLink').trigger('click');
+		$('#general-info-item').trigger('click');
+		break;
+		
+	case "scheduling":
+		$('#projectInformationTabLink').trigger('click');
+		$('#scheduling-item').trigger('click');
+		break;
+		
+	case "financial":
+		$('#projectInformationTabLink').trigger('click');
+		$('#financial-item').trigger('click');
+		break;
+	
+	case "tasks":
+		$('#projectInformationTabLink').trigger('click');
+		$('#tasks-item').trigger('click');
+		break;
+	
+	case "changeorders":
+		$('#changeOrdersTabLink').trigger('click');
+		break;
+	
+	case "equipment":
+		$('#equipmentTabLink').trigger('click');
+		break;
+	default:
+		goToProjectManager2();
+	}
+	
 }
 	
-function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrder,scoreTasks, scoreCloseout, scoreFinancial){
+function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseout, scoreFinancial){
 	document.getElementById('generalInfoScore').style.background=scoreGeneral[0];
 	document.getElementById('schedulingScore').style.background=scoreScheduling[0];
 	document.getElementById('permitsAndInspectionsScore').style.background=scorePermits[0];
 	document.getElementById('equipmentScore').style.background=scoreEquipment[0];
-	document.getElementById('changeOrdersScore').style.background=scoreChangeOrder[0];
+	document.getElementById('changeOrdersScore').style.background=scoreChangeOrders[0];
 	document.getElementById('tasksScore').style.background=scoreTasks[0];
 	document.getElementById('closeoutScore').style.background=scoreCloseout[0];
 	document.getElementById('financialScore').style.background=scoreFinancial[0];
@@ -10371,17 +10491,17 @@ function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipme
 	document.getElementById('schedulingScore').innerHTML=scoreScheduling[1];
 	document.getElementById('permitsAndInspectionsScore').innerHTML=scorePermits[1];
 	document.getElementById('equipmentScore').innerHTML=scoreEquipment[1];
-	document.getElementById('changeOrdersScore').innerHTML=scoreChangeOrder[1];
+	document.getElementById('changeOrdersScore').innerHTML=scoreChangeOrders[1];
 	document.getElementById('tasksScore').innerHTML=scoreTasks[1];
 	document.getElementById('closeoutScore').innerHTML=scoreCloseout[1];
 	document.getElementById('financialScore').innerHTML=scoreFinancial[1];
 }
-function issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeorderIssues, tasksIssues, closeoutIssues, financialIssues){
+function issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues){
 	document.getElementById('generalIssues').innerHTML=generalIssues;
 	document.getElementById('schedulingIssues').innerHTML=schedulingIssues;
 	document.getElementById('permitsIssues').innerHTML=permitsIssues;
 	document.getElementById('equipmentIssues').innerHTML=equipmentIssues;
-	document.getElementById('changeorderIssues').innerHTML=changeorderIssues;
+	document.getElementById('changeordersIssues').innerHTML=changeordersIssues;
 	document.getElementById('tasksIssues').innerHTML=tasksIssues;
 	document.getElementById('closeoutIssues').innerHTML=closeoutIssues;
 	document.getElementById('financialIssues').innerHTML=financialIssues;
@@ -10397,13 +10517,18 @@ function getColorForAllProjects(){
 		url: 'Project',
 		data: {
 			'domain': 'project',
-			'action': 'getAllProjects'
+			'action': 'getAllProjectsIds'
 		}, success: function (data) {
 			projects = data;
+			
+			//var projectsIds = newArray;	
+			
 			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			console.log(RETRIEVED_PROJECTS); //An array of arrays
 			t1 = new Date().getTime();
 			console.log('took: ' + (t1 - t0) + 'ms');
 			//console.log("Newly retrieved projects are", RETRIEVED_PROJECTS);
+			RETRIEVED_PROJECTS = JSON.stringify(RETRIEVED_PROJECTS);
 			evaluateColorBasedOnRules(RETRIEVED_PROJECTS);
 		}
 	});
@@ -10411,8 +10536,7 @@ function getColorForAllProjects(){
 
 function evaluateColorBasedOnRules(projects){
 	t0 = new Date().getTime();
-	console.log(projects.length);
-
+	console.log("projects length is ",projects.length);
 	gettingTheFinalColors(projects)
 	
 	t1 = new Date().getTime();
@@ -10422,21 +10546,33 @@ function evaluateColorBasedOnRules(projects){
 
 function gettingTheFinalColors(project){
 	//listOfProjectColors.push([project,"Red"]);
+	t0 = new Date().getTime();
 	if (project != null) {
-		project = JSON.stringify(project);
-		console.log("stringified project ", project);
 		$.ajax({
 			type: 'POST',
 			url: 'Project',
-			async : false,
 			data: {
 				'domain': 'project',
 				'action': 'getScoreColor',
-				project: project
-			}, success: function (data) {			
+				 project: project
+			}, success: function (data) {	
+				console.log("output from getScoreColor is ", data);
+				t1 = new Date().getTime();
+				console.log('took: ' + (t1 - t0) + 'ms');
 			}
 		});	
 	}
 	//console.log(listOfProjectColors);
 	
+}
+
+function editSpecificPermitsAndInspections(permitCategory){
+	if(permitCategory == 'mechanical'){
+		editPermitsAndInspections();
+		$('#technicalPermit').trigger('click');
+	}
+	else if(permitCategory == 'sprinkler'){
+		editPermitsAndInspections();
+		$('#safetyPermit').trigger('click');
+	}
 }

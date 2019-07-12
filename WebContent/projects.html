@@ -283,9 +283,10 @@
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 			</div> <!-- Change Orders -->
 			<div style="width: 90%" class='info-tab info-tab-permits' id='permits'>
-				<table class='table table-hover table-striped' ondblclick="editPermitsAndInspections()">
-					<tr>
-						<th style="width: 7%; text-align: center"><button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
+				<table class='table table-striped permitsAndInspectionsHovering' >
+					<thead>
+					<tr> 
+						<th style="width: 7%; text-align: center"><button style = "display : none" onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Permit Required</th>
 						<th style="width: 10%; text-align: center">Permit Status</th>
@@ -294,8 +295,10 @@
 						<th style="width: 12%; text-align: center">Inspection Status</th>
 						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
 					</tr>
-					<tr>
-						<td class = "bold">Building</td>
+					</thead>
+					<tbody>
+					<tr onclick='editPermitsAndInspections()'>
+						<td class = "bold" >Building</td>
 						<td align="center" id='buildingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='buildingPermit' class ="italics permitTableData"></td>
 						<td align="center" id='buildingPermitDate' class ="italics permitTableData"></td>
@@ -303,7 +306,7 @@
 						<td align="center" id='buildingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick='editPermitsAndInspections()'>
 						<td class = "bold">Ceiling</td>
 						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
@@ -312,7 +315,7 @@
 						<td align="center" id='ceilingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('mechanical')">
 						<td class = "bold">Mechanical</td>
 						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
@@ -321,7 +324,7 @@
 						<td align="center" id='mechanicalInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('mechanical')">
 						<td class = "bold">Electrical</td>
 						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
@@ -330,7 +333,7 @@
 						<td align="center" id='electricalInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('mechanical')">
 						<td class = "bold">Plumbing</td>
 						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
@@ -339,7 +342,7 @@
 						<td align="center" id='plumbingInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('mechanical')">
 						<td class = "bold">Gas</td>
 						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
@@ -348,7 +351,7 @@
 						<td align="center" id='gasInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('sprinkler')">
 						<td class = "bold">Sprinkler</td>
 						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
@@ -357,7 +360,7 @@
 						<td align="center" id='sprinklerInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('sprinkler')">
 						<td class = "bold">Fire Alarm</td>
 						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
@@ -366,7 +369,7 @@
 						<td align="center" id='fireAlarmInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
-					<tr>
+					<tr onclick="editSpecificPermitsAndInspections('sprinkler')">
 						<td class = "bold">Low Voltage</td>
 						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
@@ -375,6 +378,7 @@
 						<td align="center" id='lowVoltageInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
+					</tbody>
 				</table>	
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
@@ -439,12 +443,12 @@
 						</tr>
 					</thead>
 					<tbody>
-					 <tr onclick ="getFailedRules('generalInfoFailedList');">
+					 <tr onclick ="getFailedRules('generalInfoFailedTable');">
 	   					<td>General Information</td>	    				
 	    				<td id = "generalInfoScore"> </td>
 	    				<td id = "generalIssues"></td>    				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('schedulingInfoFailedList');">
+	 				  <tr onclick ="getFailedRules('schedulingFailedTable');">
 	   					<td>Scheduling</td>	    				
 	    				<td id = "schedulingScore"> </td>
 	    				<td id ="schedulingIssues"></td>    				
@@ -454,17 +458,17 @@
 	    				<td id = "permitsAndInspectionsScore"> </td>
 	    				<td id ="permitsIssues"></td>    				
 	 				 </tr>
-	 				  <tr>
+	 				  <tr onclick = "getFailedRules('equipmentFailedTable');">
 	   					<td>Equipment</td>
 	    				<td id = "equipmentScore"> </td>
 	    				<td id ="equipmentIssues"></td>   				
 	 				 </tr>
-	 				  <tr>
+	 				  <tr onclick = "getFailedRules('changeOrdersFailedTable');">
 	   					<td>Change Order</td>	    			
 	    				<td id = "changeOrdersScore"> </td>
-	    				<td id ="changeorderIssues"></td>   				
+	    				<td id ="changeordersIssues"></td>   				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('tasksInfoFailedList');">
+	 				  <tr onclick ="getFailedRules('tasksFailedTable');">
 	   					<td>Tasks</td>	    			
 	    				<td id = "tasksScore"> </td>
 	    				<td id ="tasksIssues"></td>    				
@@ -474,7 +478,7 @@
 	    				<td id = "closeoutScore"> </td>
 	    				<td id ="closeoutIssues"></td>   				
 	 				 </tr>
-	 				  <tr onclick ="getFailedRules('financialInfoFailedList');">
+	 				  <tr onclick ="getFailedRules('financialFailedTable');">
 	   					<td>Financial</td>	   				
 	    				<td id = "financialScore"> </td>
 	    				<td id ="financialIssues"></td>
@@ -487,17 +491,103 @@
 
 					<h3 style="margin-left: 100px" id = "scoreCardFailedRulesHeader"><span></span>  </h3>
 					<div style="width: 80%; margin-left: 100px" id = "failedRulesTable" class ="failRulesAll" >
-						<ol class = "failRules rectangle-list" id = "generalInfoFailedList" onclick = "fixingGeneralRules();">
-						</ol>
+					<table id = "generalInfoFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr >
+								<th style="text-align: center" colspan = "2">GENERAL DISCREPANCIES</th>
+							</tr>
+							<tr >
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('general');">
 						
-						<ol class = "failRules" id = "financialInfoFailedList" onclick = "fixingGeneralRules();">
-						</ol>
 						
-						<ol class = "failRules" id = "schedulingInfoFailedList" onclick = "fixingGeneralRules();">
-						</ol>
+						</tbody>					
+					</table>
+					<table id = "schedulingFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "2">SCHEDULING DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>							
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('scheduling');">
 						
-						<ol class = "failRules" id = "tasksInfoFailedList" onclick = "fixingGeneralRules();">
-						</ol>
+						
+						</tbody>					
+					</table>
+					<table id = "equipmentFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">EQUIPMENT DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('equipment');">
+						
+						
+						</tbody>					
+					</table>
+					<table id = "changeOrdersFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">CHANGE ORDER DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('changeorders');">
+						
+						
+						</tbody>					
+					</table>
+					<table id = "tasksFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "3">TASKS DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center">TITLE</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('tasks');">
+						
+						
+						</tbody>					
+					</table>
+
+					<table id = "financialFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "2">FINANCIAL DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('financial');">
+						
+						
+						</tbody>					
+					</table>
+					
+					
+				
 						<br>
 						<button  class = "btn project-edit" onclick = "returnToScoreCardView();"> Back to Scorecard Overview</button>
 					</div>
@@ -1419,9 +1509,9 @@
 		
 			<ul class="nav nav-tabs">
 				<li id="buildingPermit" role='presentation' class='active' data-tab="buildingPermits"><a>Building Permits</a></li>
-				<li role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
-				<li role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
-				<li role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
+				<li id="technicalPermit" role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
+				<li id="safetyPermit" role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
+				<li id="otherPermit" role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
 		        <li role='presentation' onClick="saveProject_PERMIT()" id='save-permits' class='save-tab'>
 		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 				
@@ -1877,16 +1967,17 @@
 				</tr>
 				</table>
 				
-				<table class='table table-hover'>
+								<table class='table table-hover'>
 					<tr>
-						<td align="center" class = "bold" width = 13%>Permit Notes</td>
+						<td align="left" class = "bold" width = 13%>Permit Notes</td>
 						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500"></textarea></td>
 					</tr>
 					<tr>
-						<td align="center" class = "bold">Inspection Notes</td>
+						<td align="left" class = "bold">Inspection Notes</td>
 						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500"></textarea></td>
 					</tr>
 				</table>
+
 			</div>
 			
 			

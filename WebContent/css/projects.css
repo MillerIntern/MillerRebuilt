@@ -274,29 +274,6 @@
 .failRulesAll{
 	text-align:center;
 }
-.failRules {	
-	
-	background-color : #F2F2F2;
-	width:70%;
-	display:inline-block;
-
-
-}
-.failRules li{
-	font-size:17px;
-	font-family:Arial;
-	margin: 10px;
-	margin-right: 50px;
-	height:50px;
-	line-height: 50px;
-/* 	list-style-type: none; */
-	text-align: left;
-	padding-left:10px;
-
-}
-.failRules li:hover {
-  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
 
 
 /* ////////////////////////SCORE CARD TABLE CSS///////////////////////////////////// */
@@ -355,4 +332,47 @@ table.scoreCardTableHeaderClass thead tr:nth-child(1) th{
 }
 table.scoreCardTableHeaderClass thead tr:nth-child(2) th{
 	text-align:center;
+}
+
+table.permitsAndInspectionsHovering tbody tr:hover{
+		 background:#DDDDDD;
+}
+
+#failedRulesTable table td:nth-child(1){
+		color:white;
+		font-weight: bold;
+			font-size:19px;
+}
+
+#failedRulesTable table td:nth-child(2){
+    text-align: left;
+    font-weight: bold;
+    padding: 10px 0px 0px 50px;
+   
+}
+
+#tasksFailedTable td:nth-child(3){
+	    text-align: left;
+    font-weight: bold;
+    padding: 10px 0px 0px 50px;
+
+	}
+#changeOrdersFailedTable td:nth-child(3){
+	    text-align: left;
+    font-weight: bold;
+    padding: 10px 0px 0px 50px;
+
+	}
+
+#equipmentFailedTable td:nth-child(3){
+	    text-align: left;
+    font-weight: bold;
+    padding: 10px 0px 0px 50px;
+
+	}	
+
+.BrownBgWhiteColor thead tr:nth-child(1){
+	    color: white;
+    background: #9C756E;
+	
 }

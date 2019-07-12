@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +19,9 @@ import com.google.gson.Gson;
 
 import objects.HibernateUtil;
 import objects.RequestHandler;
+import projectObjects.ChangeOrder;
 import projectObjects.City;
+import projectObjects.NewEquipment;
 import projectObjects.ProjectRule;
 import projectObjects.Region;
 import projectObjects.RuleDetails;
@@ -289,6 +289,13 @@ public class Project extends HttpServlet
 		{
 			System.out.println("getting the projectsssss!");
 			response = ProjectService.getAllProjectsAsJson();
+			
+			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
+		}
+		else if(action.equals("getAllProjectsIds"))
+		{
+			System.out.println("getting the projectsssss!");
+			response = ProjectService.getAllProjectsIdsAsJson();
 			
 			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
 		}
@@ -1033,17 +1040,17 @@ public class Project extends HttpServlet
 			
 			//String task = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("projectId")));
 			
-			System.out.println("STAGE NAME IS"+ project.getStage().getName());
 			List<Task> task = ProjectObjectService.getAllTasks(Long.parseLong(parameters.get("projectId")));
-			
-			System.out.println("Projects AGAIN ARE "+ project);
-			System.out.println("TASKS AGAIN ARE "+ task);
+			List<ChangeOrder> changeOrders = ProjectObjectService.getAllChangeOrders(Long.parseLong(parameters.get("projectId")));
+			List<NewEquipment> equipment = ProjectObjectService.getAllNewEquipment(Long.parseLong(parameters.get("projectId")));
+			System.out.println("equipment size is "+ equipment.size());
 			ArrayList<RuleDetails> result = new ArrayList<>();
 			result.addAll(ProjectNewRuleService.generalInfoEvaluate(project));
-			result.addAll(ProjectNewRuleService.financialInfoEvaluate(project));
-			result.addAll(ProjectNewRuleService.schedulingInfoEvaluate(project));
-			
-			result.addAll(ProjectNewRuleService.tasksInfoEvaluate(task));
+			result.addAll(ProjectNewRuleService.financialEvaluate(project));
+			result.addAll(ProjectNewRuleService.schedulingEvaluate(project));
+			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
+			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(changeOrders));
+			result.addAll(ProjectNewRuleService.equipmentEvaluate(equipment));
 			Gson gson = new Gson();
 			response = gson.toJson(result);
 		}
@@ -1051,23 +1058,23 @@ public class Project extends HttpServlet
 			
 			 String[] projects = req.getParameterValues("project");
 			 System.out.println("pppprrrooojjjects are "+ projects);
-			 System.out.println(projects[0]);
-			//for(int i=0;i<)
-//			projectObjects.Project project = null;
-//			try 
-//			{
-//			 project = (projectObjects.Project) ProjectObjectService.get(Long.parseLong(parameters.get("projectId")), "Project");
-//			}
-//			catch(Exception e)
-//			{
-//				e.printStackTrace();
-//			}
-//			
-//			String color = ProjectNewRuleColorService.generalInfoColor(project);
-//			Gson gson = new Gson();
-//			response = gson.toJson(color);
+			 String projectsNew = projects[0];
+			 projectsNew = projectsNew.substring(1, projectsNew.length()-1);
+			 //System.out.println(String.split(projects));
+			 System.out.println("new projs are  "+projectsNew);
+			 String[] projectsNewSplit = projectsNew.split(",");
+			 System.out.println(projectsNewSplit[0]);
+			 //String[][] projectsIdColor;
+				
+				 HashMap<String, String> projectsIdColorHashMap = ProjectNewRuleColorService.generalInfoColor(projectsNewSplit);
+
+				Gson gson = new Gson();
+				response = gson.toJson(projectsIdColorHashMap);
+			}
+
+
 			
-		}
+		
 		else if(action.equals("getRules"))
 		{
 			List<ProjectRule> rules = ProjectObjectService.getAllRules();
