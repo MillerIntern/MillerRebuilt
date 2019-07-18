@@ -18,7 +18,73 @@
  * Navigational									5265	THRU	 5514
  */
 
+//can I create a function for all this
+$(document).on("click", "#equipmentFailedTable tbody tr", function(e){
+	
+	var row = $(this).children("td:nth-child(2)").text();
+	fixingRules('equipment');
+	
+	$('#equipmentTable tbody tr td:nth-child(1)').each(function(){
+		var otherRow = $(this).text();
+		if( otherRow == row){
+			 $(this).parent().click(); 
+            //$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+            this.scrollIntoView({behavior: "smooth"});
+		}
+			
+	});
+});
 
+$(document).on("click", "#changeOrdersFailedTable tbody tr", function(e){
+	
+	var row = $(this).children("td:nth-child(2)").text();
+	fixingRules('changeorders');
+	
+	$('#changeOrderTable tbody tr td:nth-child(2)').each(function(){
+		var otherRow = $(this).text();
+		if( otherRow == row){
+			$(this).parent().click(); 
+			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+            this.scrollIntoView({behavior: "smooth"});
+		}
+			
+	});
+});
+
+$(document).on("click", "#tasksFailedTable tbody tr", function(e){
+	
+	var row = $(this).children("td:nth-child(2)").text();
+	fixingRules('tasks');
+	
+	$('#taskTable tbody tr td:nth-child(1)').each(function(){
+		var otherRow = $(this).text();
+		if( otherRow == row){
+			$(this).parent().click(); 
+			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+            this.scrollIntoView({behavior: "smooth"});
+		}
+			
+	});
+});
+
+$(document).on("click", "#permitsFailedTable tbody tr", function(e){
+	
+	var row = $(this).children("td:nth-child(2)").text();
+	row = row.split(" ")[0];
+	fixingRules('permits');
+	
+	$('#permitTable tbody tr td:nth-child(1)').each(function(){
+		var otherRow = $(this).text();
+		if( otherRow.includes(row)){
+			//$(this).parent().click(); 
+			$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+            //this.scrollIntoView({behavior: "smooth"});
+		}
+			
+	});
+});
+
+let generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues;
 $(document).ready(function(){$('textarea').keydown(function(){
 	autoSizeTextAreas(this);
 })});
@@ -2721,7 +2787,7 @@ function saveProject_PROJECT_DATA() {
 				$("#projectManager").show();
 				*/
 				
-				goToProjectManager();
+				//goToProjectManager();
 						
 			}
 			
@@ -10194,7 +10260,7 @@ function sortTable(n){
 	      y = rows[i + 1].getElementsByTagName("TD")[n];
 	      //check if the two rows should switch place:
 	      if(n == 1){
-	    	  if (Number(x.innerHTML) > Number(y.innerHTML)) {
+	    	  if (Number(x.innerHTML) < Number(y.innerHTML)) {
 	  	        //if so, mark as a switch and break the loop:
 	  	        shouldSwitch = true;
 	  	        break;
@@ -10254,7 +10320,7 @@ function getScoreRules(project_id){
 				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseout, scoreFinancial ;
 				//GREEN 
 				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrders= scoreTasks= scoreCloseout= scoreFinancial =["#59ba63", ""] ;
-				let generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues;
+				
 				generalIssues=schedulingIssues=permitsIssues = equipmentIssues=changeordersIssues= tasksIssues= closeoutIssues= financialIssues=0;
 				for(var i =0; i<data.length; i++){
 					
@@ -10445,7 +10511,7 @@ function getScoreRules(project_id){
 }
 
 function getFailedRules(table_id){  //A.R.G
-	
+	console.log("It is Reaching here");
 	if($('#'+table_id + "> tbody > tr").length > 0){ //condition where if issues are 0, then user click will not work
 		$("#scoreCardTopDiv").hide();
 		$("#scoreCardFailedRulesDiv").show();
@@ -10496,32 +10562,39 @@ function fixingRules(category){
 	case "general":
 		$('#projectInformationTabLink').trigger('click');
 		$('#general-info-item').trigger('click');
+		$('#genFailedRules').show();
 		break;
 		
 	case "scheduling":
 		$('#projectInformationTabLink').trigger('click');
 		$('#scheduling-item').trigger('click');
+		$('#schFailedRules').show();	
 		break;
 		
 	case "financial":
 		$('#projectInformationTabLink').trigger('click');
 		$('#financial-item').trigger('click');
+		$('#finFailedRules').show();	
 		break;
 	
 	case "tasks":
 		$('#projectInformationTabLink').trigger('click');
 		$('#tasks-item').trigger('click');
+		$('#tasksFailedRules').show();	
 		break;
 	
 	case "changeorders":
 		$('#changeOrdersTabLink').trigger('click');
+		$('#choFailedRules').show();
 		break;
 	
 	case "equipment":
 		$('#equipmentTabLink').trigger('click');
+		$('#eqpFailedRules').show();
 		break;
 	case "permits":
 		$('#permitsTabLink').trigger('click');
+		$('#permFailedRules').show();
 		break;
 	default:
 		goToProjectManager2();
@@ -10692,6 +10765,109 @@ function savePermitInspectionNotes(){
 				
 			}
 		});
-      
+     
+	
+}
+
+function returnToFailedRules(category){
+	switch(category){
+	case "general":
+		goToProjectManager();
+		$('#scorecardTabLink').trigger('click');
+
+		console.log("General issues count is ", generalIssues);
+		//setTimeout(function(){
+			//if(generalIssues > 0)//{ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('generalInfoFailedTable');
+			//}	
+	//	}, 500);
+
+		$('#genFailedRules').hide();
+		break;
+
+	case "financial":
+		goToProjectManager();
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(financialIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('financialFailedTable');
+			//}	
+	//	},500);
+
+		$('#finFailedRules').hide();
+		break;
+		
+	case "scheduling":
+		goToProjectManager();
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('schedulingFailedTable');
+			//}	
+	//	},500);
+
+		$('#schFailedRules').hide();
+		break;
+		
+	case "equipment":
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('equipmentFailedTable');
+			//}	
+	//	},500);
+
+		$('#eqpFailedRules').hide();
+		break;
+
+	case "changeorders":
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('changeOrdersFailedTable');
+			//}	
+	//	},500);
+
+		$('#choFailedRules').hide();
+		break;
+		
+	case "tasks":
+		goToProjectManager();
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('tasksFailedTable');
+			//}	
+	//	},500);
+
+		$('#tasksFailedRules').hide();
+		break;
+		
+	case "permits":
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('permitsFailedTable');
+			//}	
+	//	},500);
+
+		$('#permFailedRules').hide();
+		break;
+
+	}
 	
 }

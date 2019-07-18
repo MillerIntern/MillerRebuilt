@@ -282,9 +282,10 @@
 				<button onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
 				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
+				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
 			</div> <!-- Change Orders -->
-			<div style="width: 90%" class='info-tab info-tab-permits' id='permits'>
-				<table class='table table-striped permitsAndInspectionsHovering' >
+			<div style="width: 90%" class='info-tab ' id='permits'>
+				<table id = "permitTable" class='table table-striped permitsAndInspectionsHovering' >
 					<thead>
 					<tr> 
 						<th style="width: 7%; text-align: center"><button style = "display : none" onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
@@ -394,6 +395,7 @@
 					</tr>
 					
 				</table>
+				<button  id = "permFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
@@ -413,6 +415,7 @@
 				</table>	
 				<button onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
 				<button id='editEquipment' onclick='editSelectedEquipment()' type="button" class="btn edit-submit" disabled>Edit Equipment</button>
+				<button  id = "eqpFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('equipment')" > Back to Failed Rules</button>
 				<button style = "display : none" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
 			<div style="width: 60%" class='info-tab info-tab-closeout' id='closeout'>
@@ -561,7 +564,7 @@
 								<th style="text-align: center"></th>
 							</tr>
 						</thead>
-						<tbody onclick = "fixingRules('equipment');">
+						<tbody > <!-- onclick = "fixingRules('equipment');" -->
 						
 						
 						</tbody>					
@@ -577,7 +580,7 @@
 								<th style="text-align: center"></th>
 							</tr>
 						</thead>
-						<tbody onclick = "fixingRules('changeorders');">
+						<tbody > <!-- onclick = "fixingRules('changeorders');" -->
 						
 						
 						</tbody>					
@@ -593,7 +596,7 @@
 								<th style="text-align: center"></th>
 							</tr>
 						</thead>
-						<tbody onclick = "fixingRules('tasks');">
+						<tbody > <!-- onclick = "fixingRules('tasks');" -->
 						
 						
 						</tbody>					
@@ -1244,12 +1247,12 @@
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        <li id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
-	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+	        
 			
 		</ul>
+
 		
-		<div style= "width : 75%" id="generalInformation" class="info-tab active">
+		<div style= "width : 75%; position:relative" id="generalInformation" class="info-tab active">
 			<table id="generalInformationTable" class='table table-hover'>
 		
 			<tr>
@@ -1344,6 +1347,9 @@
 	        
 			
 	        </table>
+	        <button style = "position: absolute; right:10px; bottom:10px;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	        <button  id = "genFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('general')" > Back to Failed Rules</button>
 		</div> <!-- End General Information -->
 		
 		<div style="width: 60%" id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
@@ -1386,6 +1392,9 @@
 		        </tr>
 		
 		    </table>
+		    <button style="position: relative; right: -80%; bottom: -10%;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	         <button  id = "schFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('scheduling')" > Back to Failed Rules</button>
 		</div> <!-- End Scheduling Information -->
 		
 		<div style="width:100%" id='tasksInformation' class='info-tab info-tab-tasks'>
@@ -1412,6 +1421,7 @@
 				</table>
 				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
 				<button class ="edit-submit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
+				<button  id = "tasksFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('tasks')" > Back to Failed Rules</button>
 			</div>
 			<div style = "width:100% "id = 'taskCreationZone' class = 'well'>
 				<div class='base-field'>
@@ -1489,17 +1499,17 @@
 		
 		</div>
 		
-		<div style="width: 35%"id='financialInformation' class='info-tab info-tab-financialInformation'>
+		<div style="width: 35%" id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table id="financialInformationTable" class='table table-hover'>
 	
 	            <tr>
 	            <td style="width: 35%" class = "bold">Should Invoice %</td>
-	            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
+	            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/></td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Actual Invoice %</td>
-	            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" />%</td>
+	            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" /></td>
 	            </tr>		
 	
 	            <tr>
@@ -1512,6 +1522,9 @@
 	            <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
+	    	<button style="position: relative; right: -74%; bottom: -10%;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	    	<button  id = "finFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('financial')" > Back to Failed Rules</button>
 		</div> <!-- End Financial Information -->
 		
 		

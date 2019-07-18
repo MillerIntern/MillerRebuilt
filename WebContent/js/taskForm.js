@@ -262,7 +262,7 @@ function getUserData () {
 					$('#taskDisplay').show();
 					clearTaskTable();
 					getTasks(1);
-					
+					$('#tasks-item').trigger('click');
 					if(alertMessage == taskAddedMessage && type == "EMPLOYEE")
 						sendTaskAlert(taskData);	
 				}
