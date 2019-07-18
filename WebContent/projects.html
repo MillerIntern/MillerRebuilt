@@ -162,7 +162,7 @@
 			   <br id="sortSpace">
 
 			   	<p id="sortProjects"><b>Sort By:</b>
-	       		<select onChange="sortTable(this.value)">
+	       		<select id = "sortProjectsValue" onChange="sortTable(this.value)">
 	       		<option value = "-1">-- Select an option --</option>
 	   			<option value = "0">Warehouse</option>
 	   			<option value = "1">MCS Number</option>
@@ -391,11 +391,10 @@
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
 						<td><textarea id='inspectionNotes2' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
-						<td><button onclick = "savePermitInspectionNotes()">Save Notes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button></td>
+						<td><button class = "btn btn-success"onclick = "savePermitInspectionNotes()">Save Notes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button></td>
 					</tr>
 					
-				</table>
-				<button  id = "permFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
+				</table>		
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 				<table id='equipmentTable' class='table'>
@@ -1347,9 +1346,12 @@
 	        
 			
 	        </table>
-	        <button style = "position: absolute; right:10px; bottom:10px;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        
+	        <div id = "buttonsGroup">
+	        	<button  id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
-	        <button  id = "genFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('general')" > Back to Failed Rules</button>
+	        	<button id = "genFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('general')" > Back to Failed Rules</button>
+	        </div> <!-- End of the buttonsGroup Div -->	     
 		</div> <!-- End General Information -->
 		
 		<div style="width: 60%" id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
@@ -1392,9 +1394,11 @@
 		        </tr>
 		
 		    </table>
-		    <button style="position: relative; right: -80%; bottom: -10%;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	        <div id = "buttonsGroup">
+	        	<button id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
-	         <button  id = "schFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('scheduling')" > Back to Failed Rules</button>
+	         <button  id = "schFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('scheduling')" > Back to Failed Rules</button>
+	        </div> <!-- End of the buttonsGroup Div -->	 		    		    
 		</div> <!-- End Scheduling Information -->
 		
 		<div style="width:100%" id='tasksInformation' class='info-tab info-tab-tasks'>
@@ -1522,9 +1526,11 @@
 	            <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
-	    	<button style="position: relative; right: -74%; bottom: -10%;" id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
+	    	<div id = "buttonsGroup">
+	        <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
 	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
-	    	<button  id = "finFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('financial')" > Back to Failed Rules</button>
+	    	<button id = "finFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('financial')" > Back to Failed Rules</button>
+	        </div> <!-- End of the buttonsGroup Div -->	     
 		</div> <!-- End Financial Information -->
 		
 		
@@ -1554,9 +1560,6 @@
 				<li id="technicalPermit" role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
 				<li id="safetyPermit" role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
 				<li id="otherPermit" role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
-		        <li role='presentation' onClick="saveProject_PERMIT()" id='save-permits' class='save-tab'>
-		        							<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
-				
 			</ul>
 		
 		
@@ -1645,6 +1648,8 @@
 				</tr>
 				
 				</table>
+				<button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
 			<div id="technicalPermits" class="info-tab">
@@ -1798,13 +1803,14 @@
 					<td align="center">
 		           		<input type="text" placeholder="Select a Date" id="gasInspectionLastUpdated" class="permitAndInspectionStatusDate autofill-Inspection-date"/>
 					</td>
-				</tr>
-				
+				</tr>				
 		        </table>
+		        <button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
 			<div id="safetyPermits" class="info-tab">
-					        <table class="manager table table-hover">
+			<table class="manager table table-hover">
 		        <tr>
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
@@ -1923,10 +1929,12 @@
 				</tr>
 				
 		        </table>
+		        <button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
 			<div class="info-tab " id="otherPermits">
-			       <table class="manager table table-hover">
+			    <table class="manager table table-hover">
 		        <tr>
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
@@ -2009,7 +2017,7 @@
 				</tr>
 				</table>
 				
-								<table class='table table-hover'>
+				<table class='table table-hover'>
 					<tr>
 						<td align="left" class = "bold" width = 13%>Permit Notes</td>
 						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
@@ -2019,7 +2027,8 @@
 						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr>
 				</table>
-
+				<button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
 			
@@ -3230,16 +3239,16 @@
  -->
 
 	<div id="changeOrder" class="editProject">
+	<div class="container">
 		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
 
 		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
 		
-		<div class="container">
+
 		
 			<ul class="nav nav-tabs">
 				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
-		        <li role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order'>
-		        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+		        
 		      
 		         <!-- <li class = "adminContent" role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
 		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li> -->
@@ -3356,6 +3365,8 @@
 		                </td>   
 		            </tr>
 				 </table>
+		        				
+				 <button role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order' class = "adminContent btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
 				 <button class = "adminContent btn btn-danger" id = "deleteChangeOrderButton" onclick = "deleteChangeOrder()"> Delete Change Order </button>
 			</div>
 			<div class='info-tab' id='saveButton'>

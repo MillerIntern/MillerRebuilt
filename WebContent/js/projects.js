@@ -76,8 +76,8 @@ $(document).on("click", "#permitsFailedTable tbody tr", function(e){
 	$('#permitTable tbody tr td:nth-child(1)').each(function(){
 		var otherRow = $(this).text();
 		if( otherRow.includes(row)){
-			//$(this).parent().click(); 
-			$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+			$(this).parent().click(); 
+			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
             //this.scrollIntoView({behavior: "smooth"});
 		}
 			
@@ -2187,7 +2187,7 @@ function saveProject_PERMIT()
 				*/
 				
 				
-				goToProjectManager();
+				//goToProjectManager();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -2209,7 +2209,7 @@ function saveProject_PERMIT()
 				$(".editProject").hide();
 				$("#projectManager").show();
 				*/
-				goToProjectManager();
+				//goToProjectManager();
 			
 				
 			}
@@ -8852,7 +8852,7 @@ function filterProjects (filter) {
 			clearAndAddSingleRow('No Results Found!');
 		}  
 		else {
-			for (var k = 0; k < json.length; k++) {
+			for (var k = json.length-1; k >= 0; k--) {
 				if(json[k] != null) {
 					let projectListing = document.createElement('tr');
 					let listDetails0 = document.createElement('td');
@@ -9959,6 +9959,7 @@ function goToFindProject() {
 	
 	clearPermitsAndInspectionsOverview();
 	updateFrontEnd();
+	sortTable($('#sortProjectsValue').val());
 	switch(currentDivLocation){
 		case "projectData":
 			$('#projectData').find('.info-tab').removeClass('active');
@@ -10594,7 +10595,7 @@ function fixingRules(category){
 		break;
 	case "permits":
 		$('#permitsTabLink').trigger('click');
-		$('#permFailedRules').show();
+		$('.permFailedRules').show();
 		break;
 	default:
 		goToProjectManager2();
@@ -10856,6 +10857,7 @@ function returnToFailedRules(category){
 		break;
 		
 	case "permits":
+		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10865,7 +10867,7 @@ function returnToFailedRules(category){
 			//}	
 	//	},500);
 
-		$('#permFailedRules').hide();
+		$('.permFailedRules').hide();
 		break;
 
 	}
