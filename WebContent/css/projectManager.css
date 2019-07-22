@@ -196,5 +196,19 @@
 #ui-datepicker-div > table > tbody > tr > .ui-datepicker-current-day > a {
 	color: white;
 }
+#buttonsGroup {
+    margin-top: 18px;
+    overflow: hidden;
+}
 
+#buttonsGroup :first-child {
+    float: right;
+}
+
+#buttonsGroup :nth-child(2) {
+    margin-right: 7px;
+    float: right;
+    background-color:#172a56; 
+    border-color:#172a56;
+}
 

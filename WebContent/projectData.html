@@ -85,11 +85,9 @@
 		<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 		<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 		<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-        <li id='saveProjectLink' onClick="saveProject()" data-tab="saveButton">
-        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
 	</ul>
 	
-	<div style = "width: 75%" id="generalInformation" class="info-tab active">
+	<div style = "width: 75%;" id="generalInformation" class="info-tab active">
 		<table class='table table-hover'>
 	
 		<tr>
@@ -179,19 +177,23 @@
         <td><b>Scope</b></td>
         <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="scope" ></textarea></td>
         <td><b>MCS Notes</b></td>
-        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="notes" ></textarea></td>
+        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="notes"  ondblclick = "dateFillFunction(this)"></textarea></td>
         </tr>
 
         <tr>
         <td><b>Customer Notes</b></td>
-        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="zUpdates" ></textarea></td>
+        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="zUpdates" ondblclick = "dateFillFunction(this)"></textarea></td>
         </tr>		       
         
         
         </table>
+       <div id = "buttonsGroup">
+	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	       </div>
 	</div> <!-- End General Information -->
 	
-	<div style="width: 60%" id="schedulingInformation" class="info-tab"> 
+	<div style="width: 60%;" id="schedulingInformation" class="info-tab"> 
 	    <table style="border-bottom: none" class='table table-hover'>
 	
 	
@@ -231,6 +233,10 @@
 	        </tr>
 	
 	    </table>
+	     <div id = "buttonsGroup">
+	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	       </div>
 	</div> <!-- End Scheduling Information -->
 	
 	<div style="width: 38%" id='financialInformation' class='info-tab'>
@@ -238,12 +244,12 @@
 
             <tr>
             <td style="width: 33%"><b>Should Invoice %</b></td>
-            <td style="width: 62%; text-align: center"><input type="text" id="shouldInvoice" value="0"/>%</td>
+            <td style="width: 62%; text-align: center"><input type="text" id="shouldInvoice" value="0"/></td>
             </tr>		
 
             <tr>
             <td><b>Actual Invoice %</b></td>
-            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" />%</td>
+            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" /></td>
             </tr>		
 
             <tr>
@@ -256,6 +262,10 @@
             <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
             </tr>
     	</table>
+    	<div id = "buttonsGroup">
+	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
+	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	       </div>
 	</div> <!-- End Financial Information -->
 	
 	

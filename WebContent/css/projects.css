@@ -391,3 +391,55 @@ table.permitsAndInspectionsHovering tbody tr:hover{
     background-color:#172a56; 
     border-color:#172a56;
 }
+
+ .circle_green
+    {
+     background-position:center center;
+  background-image:
+  
+    radial-gradient(
+      circle,
+      green, green 13px, transparent 0px
+    );
+
+     /*  height: 25px;
+	  width: 25px;
+	  background-color: green;
+	  border-radius: 50%;
+	  display: block;
+	  margin:auto;	 */
+    }
+    
+ .circle_yellow
+    {
+        background-image:
+  
+	    radial-gradient(
+	      circle,
+	      yellow, yellow 13px, transparent 0px
+	    );
+     /*  height: 25px;
+	  width: 25px;
+	  background-color: yellow;
+	  border-radius: 50%;
+	  display: block;
+	  margin:auto;	  */	
+
+    }
+  
+ .circle_red
+    {
+   
+   background-image:
+  
+    radial-gradient(
+      circle,
+      red, red 13px, transparent 0px
+    ); 
+   /*    height: 25px;
+	  width: 25px;
+	  background-color: red;
+	  border-radius: 50%;
+	  display: block;
+	  margin:auto;	  */        
+    }    

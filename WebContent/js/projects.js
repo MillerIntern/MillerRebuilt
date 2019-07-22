@@ -8878,11 +8878,12 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;
-//					listDetails4.innerHTML = json[k].mediumScore;
-//					if(json[k].mediumScore == 0) listDetails4.style.background = "Green";
-//					else if(json[k].mediumScore == 1) listDetails4.style.background = "yellow";
-//					else listDetails4.style.background = "red";
+					listDetails3.innerHTML = json[k].projectManagers.name;					
+					
+					
+//					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
+//					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+//					else listDetails4.setAttribute( 'class', 'circle_red' );
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
@@ -8926,10 +8927,11 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-//					listDetails3.innerHTML = json[k].projectManagers.name;		
-//					listDetails4.innerHTML = json[k].mediumScore;
-//					if(json[k].mediumScore == 0) listDetails4.style.background = "Green";
-//					else if(json[k].mediumScore == 1) listDetails4.style.background = "Red";
+					listDetails3.innerHTML = json[k].projectManagers.name;		
+					
+//					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
+//					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+//					else listDetails4.setAttribute( 'class', 'circle_red' );
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
