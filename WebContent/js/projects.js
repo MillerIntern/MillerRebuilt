@@ -8202,7 +8202,6 @@ function getAllProjects() {
 
 function establishRetrievedProjects()
 {
-	console.log()
 	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
 		RETRIEVED_PROJECTS[i].id = RETRIEVED_PROJECTS[i][0];
 		RETRIEVED_PROJECTS[i].McsNumber = RETRIEVED_PROJECTS[i][1];
@@ -8213,6 +8212,7 @@ function establishRetrievedProjects()
 		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
 		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
 		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
+//		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][9];
 
 		
 		for(var q = 0; q < 9; q++){
@@ -8248,6 +8248,7 @@ function updateFrontEnd() {
  */
 function updateDisplayableProjects(){
 	if(!RETRIEVED_PROJECTS) {console.log("Should have projects by now!"); return;}
+	refreshProjects();
 	
 
 	DISPLAYABLE_PROJECTS = new Array();
@@ -8266,7 +8267,7 @@ function updateDisplayableProjects(){
 		if(stagesOptions[i].selected == true) stagesOfInterest.push(stageOptions[i]);
 	}
 	*/
-			
+	console.log("RETRIEVED PROJECTS ARE", RETRIEVED_PROJECTS);		
 	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++)
 	{
 		
@@ -8281,7 +8282,7 @@ function updateDisplayableProjects(){
 	}	
 	
 	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
-	
+	console.log(DISPLAYABLE_PROJECTS);
 }
 
 
@@ -8751,13 +8752,13 @@ let FILT_COUNT = 0;
  * INNER FUNCTION CALLS: updateDisplayableProjects(), clearAndAddSingleRow()
  */
 function filterProjects (filter) {
-
+	
 	if(filter != undefined)
 		console.log(filter);
 	
 	updateDisplayableProjects();
 	//let json = JSON.parse(projects['projects']);
-	let json = DISPLAYABLE_PROJECTS.slice(0);
+	let json = DISPLAYABLE_PROJECTS.slice(0);	
 	let outputs = new Array();
 	//console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS , DISPLAYABLE_PROJECTS.length);
 	//console.log("Debug Retrieved: " , RETRIEVED_PROJECTS , RETRIEVED_PROJECTS.length);
@@ -8879,8 +8880,7 @@ function filterProjects (filter) {
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;					
-					
-					
+				
 //					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
 //					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
 //					else listDetails4.setAttribute( 'class', 'circle_red' );
@@ -10873,5 +10873,28 @@ function returnToFailedRules(category){
 		break;
 
 	}
+	
+}
+function refreshProjects(){
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		//async:false,
+		data: {
+			'domain': 'project',
+			'action': 'getAllProjects'
+		}, success: function (data) {
+			projects = data;		
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			establishRetrievedProjects();
+			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
+			$('.projectNavigator-projectFinder').show();
+			t1 = new Date().getTime();
+			console.log('took: ' + (t1 - t0) + 'ms');
+			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
+			//getSearchCriteria();
+		}
+	});
+
 	
 }
