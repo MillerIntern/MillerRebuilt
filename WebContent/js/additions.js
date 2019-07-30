@@ -2577,5 +2577,61 @@ function removeDefaultAfterEdit()
 {
 	$(".chosen-single").removeClass('chosen-default');
 }
+function getColorForAllProjects(){
+	
+	t0 = new Date().getTime();
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getAllProjectsIds'
+		}, success: function (data) {
+			projects = data;
+			
+			//var projectsIds = newArray;	
+			
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			console.log(RETRIEVED_PROJECTS); //An array of arrays
+			t1 = new Date().getTime();
+			console.log('took: ' + (t1 - t0) + 'ms');
+			//console.log("Newly retrieved projects are", RETRIEVED_PROJECTS);
+			RETRIEVED_PROJECTS = JSON.stringify(RETRIEVED_PROJECTS);
+			evaluateColorBasedOnRules(RETRIEVED_PROJECTS);
+		}
+	});
+}
+
+function evaluateColorBasedOnRules(projects){
+	t0 = new Date().getTime();
+	console.log("projects length is ",projects.length);
+	gettingTheFinalColors(projects)
+	
+	t1 = new Date().getTime();
+	console.log('took: ' + (t1 - t0) + 'ms');
+	
+}
+
+function gettingTheFinalColors(project){
+	//listOfProjectColors.push([project,"Red"]);
+	t0 = new Date().getTime();
+	if (project != null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getScoreColor',
+				 project: project
+			}, success: function (data) {	
+				console.log("output from getScoreColor is ", data);
+				t1 = new Date().getTime();
+				console.log('took: ' + (t1 - t0) + 'ms');
+			}
+		});	
+	}
+	//console.log(listOfProjectColors);
+	
+}
 
 

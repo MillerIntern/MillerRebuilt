@@ -70,11 +70,10 @@
 
 
 
-.info-tab-schedulingInformation{
-	margin-left: 30px;
+.info-tab-schedulingInformation{	
 	margin-right: auto;
 	padding: 12px 12px 12px 12px;
-	width: 50%;
+	width: 100%;
 	height: 100%;
 	background-color: white;
 	border: 1px solid #DDDDDD;
@@ -82,7 +81,6 @@
 }
 
 .info-tab-financialInformation{
-	margin-left: 230px;
 	margin-right: auto;
 	padding: 12px 12px 12px 12px;
 	width: 50%;
@@ -171,7 +169,7 @@
 }
 
 #generalInformation  {
-	width: 55%;
+	width: 100%;
 }
 
 #tasksInformation  {
@@ -183,7 +181,7 @@
 }
 
 #schedulingInformation  {
-	width: 55%;
+	width: 100%;
 }
 
 #schedulingInformationTable td  {
@@ -191,7 +189,7 @@
 }
 
 #financialInformation  {
-	width: 55%;
+	width: 100%;
 }
 
 #financialInformationTable td  {
@@ -240,7 +238,7 @@
 
 .scrollTextBoxPermits {
 	height: 40px;
-	width: 500px;
+	width: 100%;
 	resize: vertical;
 }
 
@@ -383,6 +381,8 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 
 #buttonsGroup :first-child {
     float: right;
+    background-color:#172a56; 
+    border-color:#172a56;
 }
 
 #buttonsGroup :nth-child(2) {
@@ -443,3 +443,25 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 	  display: block;
 	  margin:auto;	  */        
     }    
+  .circle_onholdcancel
+    {
+   
+   background-image:
+  
+    radial-gradient(
+      circle,
+      #191919, #191919 13px, transparent 0px
+    ); 
+   /*    height: 25px;
+	  width: 25px;
+	  background-color: #191919;
+	  border-radius: 50%;
+	  display: block;
+	  margin:auto;	  */        
+    }    
+.generalOverFlowScroll{
+	
+	display:block;
+	overflow:auto;
+	max-height:420px;    
+    }

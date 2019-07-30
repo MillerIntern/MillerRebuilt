@@ -1,13 +1,5 @@
 
-#projectHeader {
-	font-family: 'Rubik', sans-serif;
-	margin-top: 8px;
-	color: #14254e;
-	//background-color: red;
-	text-align: center;
-	font-size: 22px;
-	line-height: 8px;
-}
+
 
 .nav-tabs {
 	border-bottom: none;
@@ -71,7 +63,7 @@
 
 .project-edit:hover:not(.default) {
 	transition: .25s;
-	background-color: #3a69d9
+	
 }
 
 .italics {
@@ -203,6 +195,8 @@
 
 #buttonsGroup :first-child {
     float: right;
+    background-color:#172a56; 
+    border-color:#172a56;
 }
 
 #buttonsGroup :nth-child(2) {
@@ -212,3 +206,9 @@
     border-color:#172a56;
 }
 
+.generalOverFlowScroll{
+	
+	display:block;
+	overflow:auto;
+	max-height:420px;    
+    }

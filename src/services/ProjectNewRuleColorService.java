@@ -14,7 +14,8 @@ public class ProjectNewRuleColorService {
 	
 	public static HashMap<String, String> generalInfoColor(String[] projects) {
 		 HashMap<String, String> projectsIdColor = new HashMap<String, String>();
-			
+		 Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
 			for(int i=0;i<projects.length; i++) {
 
 				projectObjects.Project proj = null;
@@ -86,14 +87,13 @@ public class ProjectNewRuleColorService {
 		else if(generalColor.equals("red")) { 
 			proj.setMediumScore(2);
 		}
-		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
+		
 		session.clear();
 		session.update(proj);
-		tx.commit();
+		
 		 projectsIdColor.put(projects[i], generalColor);
 			}
-
+			tx.commit();
 			return projectsIdColor;
 		}
 

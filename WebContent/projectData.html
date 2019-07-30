@@ -80,120 +80,125 @@
 
  
 <div class='container'> 
-	<p id='projectHeader' class="projectIdentifier">New Project</p>
+<p>
+<button id='projectHeader' class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" >New Project</button>
+</p>
 	<ul class="nav nav-tabs">
 		<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 		<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 		<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
+		<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject()" >
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 	</ul>
 	
-	<div style = "width: 75%;" id="generalInformation" class="info-tab active">
-		<table class='table table-hover'>
-	
-		<tr>
-        <td style="width: 20%"><b>MCS Project #</b></td>
-        <td style="width: 30%"><input id="mcsNumber" type="text"></td>
-        </tr>
-
-        <tr>
-        <td><b>Warehouse</b></td>
-        <td>
-        <select id="warehouse"><option value="default">--Please select an option--</option></select>
-        </td>
-        <td style="width: 20%"><b>Item</b></td>
-        <td style="width: 30%">
-        <select id="project"><option value="default">--Please select an option--</option></select>
-		</td>
-        </tr>
-
-        <tr>
-        <td><b>Manager</b></td>
-        <td style = "width : 30%">
-        <select id="manager"><option value="default">--Please select an option--</option></select>
-		</td>
-        <td style="width: 17%"><b>Supervisor</b></td>
-        <td>
-        <select id="supervisor"><option value="default">--Please select an option--</option></select>
-        </td>
-        </tr>
-
-        <tr>
-        <td><b>Stage</b></td>
-        <td>
-        <select id="stage"><option value="default">--Please select an option--</option></select>
-		</td>
-		<td><b>Status</b></td>
-        <td>
-        <select id="status"><option value="default">--Please select an option--</option></select>
-		</td>
-		</tr>
-
-        <tr>
-        <td><b>Type</b></td>
-        <td>
-        <select id="pType"><option value="default">--Please select an option--</option></select>
-		</td>
-        <td><b>Project</b></td>
-       	<td>
-        <select id="class"><option value="default">--Please specify the project type--</option></select>
-		</td>	 
-		</tr>
+	<div style = "width: 100%;" id="generalInformation" class="info-tab active">
+		<div class="generalOverFlowScroll">
+			<table style="font-size:12px" class='table table-hover'>
 		
-		<tr>
-	    	<td><b>HVAC</b></td>
-	       	<td>
-	        <select id="autofill-HVAC">
-	        	<option value="default">--Does this project require an HVAC unit?--</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option> 
-                <option value="2">TBD</option>               	
-	        </select>
+			<tr>
+	        <td style="width: 20%"><b>MCS Project #</b></td>
+	        <td style="width: 30%"><input id="mcsNumber" type="text"></td>
+	        </tr>
+	
+	        <tr>
+	        <td><b>Warehouse</b></td>
+	        <td>
+	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
+	        </td>
+	        <td style="width: 20%"><b>Item</b></td>
+	        <td style="width: 30%">
+	        <select id="project"><option value="default">--Please select an option--</option></select>
 			</td>
-	        <td><b>Refrigeration</b></td>
-	       	<td>
-	        <select id="autofill-Refrigeration">
-	        	<option value="default">--Does this project require refrigeration?--</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>      
-                <option value="2">TBD</option>         	
-	        </select>
+	        </tr>
+	
+	        <tr>
+	        <td><b>Manager</b></td>
+	        <td style = "width : 30%">
+	        <select id="manager"><option value="default">--Please select an option--</option></select>
+			</td>
+	        <td style="width: 17%"><b>Supervisor</b></td>
+	        <td>
+	        <select id="supervisor"><option value="default">--Please select an option--</option></select>
+	        </td>
+	        </tr>
+	
+	        <tr>
+	        <td><b>Stage</b></td>
+	        <td>
+	        <select id="stage"><option value="default">--Please select an option--</option></select>
+			</td>
+			<td><b>Status</b></td>
+	        <td>
+	        <select id="status"><option value="default">--Please select an option--</option></select>
 			</td>
 			</tr>
-			
+	
 	        <tr>
-	        <td><b>Permits</b></td>
-	       	<td>
-	        <select id="autofill-Permits">
-	        	<option value="default">--Does this project require permits?--</option>
-                <option value="1">Yes</option>
-                <option value="2">No</option>   
-                <option value="0">TBD</option>
-                             	
-	        </select>
+	        <td><b>Type</b></td>
+	        <td>
+	        <select id="pType"><option value="default">--Please select an option--</option></select>
 			</td>
-		</tr>	
-
-        <tr>
-        <td><b>Scope</b></td>
-        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="scope" ></textarea></td>
-        <td><b>MCS Notes</b></td>
-        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="notes"  ondblclick = "dateFillFunction(this)"></textarea></td>
-        </tr>
-
-        <tr>
-        <td><b>Customer Notes</b></td>
-        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="zUpdates" ondblclick = "dateFillFunction(this)"></textarea></td>
-        </tr>		       
-        
-        
-        </table>
+	        <td><b>Project</b></td>
+	       	<td>
+	        <select id="class"><option value="default">--Please specify the project type--</option></select>
+			</td>	 
+			</tr>
+			
+			<tr>
+		    	<td><b>HVAC</b></td>
+		       	<td>
+		        <select id="autofill-HVAC">
+		        	<option value="default">--Does this project require an HVAC unit?--</option>
+	                <option value="1">Yes</option>
+	                <option value="0">No</option> 
+	                <option value="2">TBD</option>               	
+		        </select>
+				</td>
+		        <td><b>Refrigeration</b></td>
+		       	<td>
+		        <select id="autofill-Refrigeration">
+		        	<option value="default">--Does this project require refrigeration?--</option>
+	                <option value="1">Yes</option>
+	                <option value="0">No</option>      
+	                <option value="2">TBD</option>         	
+		        </select>
+				</td>
+				</tr>
+				
+		        <tr>
+		        <td><b>Permits</b></td>
+		       	<td>
+		        <select id="autofill-Permits">
+		        	<option value="default">--Does this project require permits?--</option>
+	                <option value="1">Yes</option>
+	                <option value="2">No</option>   
+	                <option value="0">TBD</option>
+	                             	
+		        </select>
+				</td>
+			</tr>	
+	
+	        <tr>
+	        <td><b>Scope</b></td>
+	        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="scope" ></textarea></td>
+	        <td><b>MCS Notes</b></td>
+	        <td rowspan="2"><textarea style = " width:600px;height:159px;" class="scrollTextBoxNewProject" maxlength="999" id="notes" ondblclick = "dateFillFunction(this)"></textarea></td>
+	        </tr>
+	
+	        <tr>
+	        <td><b>Customer Notes</b></td>
+	        <td><textarea class="scrollTextBoxNewProject" maxlength="999" id="zUpdates" ondblclick = "dateFillFunction(this)"></textarea></td>
+	        </tr>		       
+	        
+	        
+	        </table>
+	      </div>
        <div id = "buttonsGroup">
-	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	    
 	       </div>
 	</div> <!-- End General Information -->
 	
-	<div style="width: 60%;" id="schedulingInformation" class="info-tab"> 
+	<div style="width: 100%;" id="schedulingInformation" class="info-tab"> 
 	    <table style="border-bottom: none" class='table table-hover'>
 	
 	
@@ -234,12 +239,11 @@
 	
 	    </table>
 	     <div id = "buttonsGroup">
-	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	    
 	       </div>
 	</div> <!-- End Scheduling Information -->
 	
-	<div style="width: 38%" id='financialInformation' class='info-tab'>
+	<div style="width: 100%" id='financialInformation' class='info-tab'>
 		<table class='table table-hover'>
 
             <tr>
@@ -263,8 +267,7 @@
             </tr>
     	</table>
     	<div id = "buttonsGroup">
-	    <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	   
 	       </div>
 	</div> <!-- End Financial Information -->
 	

@@ -1068,7 +1068,8 @@ public class Project extends HttpServlet
 			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
 			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(changeOrders));
 			result.addAll(ProjectNewRuleService.equipmentEvaluate(equipment));
-			result.addAll(ProjectNewRuleService.permitsInfoEvaluate(project));
+			result.addAll(ProjectNewRuleService.permitsEvaluate(project));
+			result.addAll(ProjectNewRuleService.closeOutEvaluate(project));
 			Gson gson = new Gson();
 			response = gson.toJson(result);
 		}

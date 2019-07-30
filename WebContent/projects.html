@@ -217,7 +217,7 @@
 			<ul class='nav nav-tabs'>
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
-				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink"><a>Change Orders</a></li>
+				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Change Orders</a></li>
 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li>
 				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
 				<li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> 
@@ -284,7 +284,7 @@
 				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
 			</div> <!-- Change Orders -->
-			<div style="width: 90%" class='info-tab ' id='permits'>
+			<div style="width: 100%" class='info-tab ' id='permits'>
 				<table id = "permitTable" class='table table-striped permitsAndInspectionsHovering' >
 					<thead>
 					<tr> 
@@ -385,8 +385,8 @@
 				<table class='table table-hover'>
 					<tr>
 						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td><textarea id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
-						<td></td>
+						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td width = 13%></td>
 					</tr>
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
@@ -397,6 +397,7 @@
 				</table>		
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
+			<div class = "generalOverFlowScroll">
 				<table id='equipmentTable' class='table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
@@ -412,6 +413,7 @@
 					</thead>
 					<tbody></tbody>
 				</table>	
+				</div>
 				<button onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
 				<button id='editEquipment' onclick='editSelectedEquipment()' type="button" class="btn edit-submit" disabled>Edit Equipment</button>
 				<button  id = "eqpFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('equipment')" > Back to Failed Rules</button>
@@ -489,7 +491,7 @@
 	    				<td id = "tasksScore"> </td>
 	    				<td id ="tasksIssues"></td>    				
 	 				 </tr>
-	 				  <tr>
+	 				  <tr onclick ="getFailedRules('closeOutFailedTable');">
 	   					<td>Closeout</td>	    				
 	    				<td id = "closeoutScore"> </td>
 	    				<td id ="closeoutIssues"></td>   				
@@ -600,7 +602,23 @@
 						
 						</tbody>					
 					</table>
-
+					
+					<table id = "closeOutFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
+						<thead>
+							<tr>
+								<th style="text-align: center" colspan = "2">CLOSE OUT DISCREPANCIES</th>
+							</tr>
+							<tr>
+								<th style="text-align: center">SEVERITY</th>
+								<th style="text-align: center"></th>
+							</tr>
+						</thead>
+						<tbody onclick = "fixingRules('closeout');">
+						
+						
+						</tbody>					
+					</table>
+					
 					<table id = "financialFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
 						<thead>
 							<tr>
@@ -758,7 +776,7 @@
 			</div>				
 		</div> 	
 		
-		<div class='info-tab info-tab-project-scope' style="width: 88%" id='projectScope'>
+		<div class='info-tab info-tab-project-scope' id='projectScope'>
 	       <div id="projectMasterScope" style="width:100%">
 	          <div style="text-align: center">
 	            <span style="font-size:20px" id="masterScopeProjectTitle">: Master Scope</span>
@@ -1246,12 +1264,15 @@
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-	        
-			
+			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	        <!--  <li style = "display:none;top:4px;float:right;right:5px;background-color:#172a56;border-color:#172a56;" 
+	        id = "genFailedRules" class = "btn btn-success" onclick = "returnToFailedRules('general')" > 		 -->		
 		</ul>
 
 		
-		<div style= "width : 75%; position:relative" id="generalInformation" class="info-tab active">
+		<div style= "position:relative" id="generalInformation" class="info-tab active">
+		 <div class="generalOverFlowScroll">
 			<table id="generalInformationTable" class='table table-hover'>
 		
 			<tr>
@@ -1336,7 +1357,7 @@
 	        
 	        
 	        <td class="bold">MCS Notes</td>
-	        <td><textarea  class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
+	        <td rowspan="2"><textarea style = " width:600px;height:159px;" class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
 	        </tr>
 	        
 	        <tr>
@@ -1346,64 +1367,62 @@
 	        
 			
 	        </table>
-	        
+	        </div>
 	        <div id = "buttonsGroup">
-	        	<button  id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+
 	        	<button id = "genFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('general')" > Back to Failed Rules</button>
 	        </div> <!-- End of the buttonsGroup Div -->	     
 		</div> <!-- End General Information -->
 		
-		<div style="width: 60%" id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
+		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
 		    <table style="border-bottom: none" id="schedulingInformationTable" class='table table-hover'>
 		
 		
 		        <tr>
-		        <td style="width: 24%" class = "bold">Initiation Date</td>
-		        <td style="width: 25%; text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
-		        <td style="width: 26%" class = "bold">Site Survey Date</td>
-		        <td style="width: 25%; text-align: center"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
+		        <td style="width: 15%" class = "bold">Initiation Date</td>
+		        <td style="width: 15%; text-align: center"><input type="text" id="initiatedDate" placeholder="Select a Date"/></td>
+		        <td style="width: 15%" class = "bold">Site Survey Date</td>
+		        <td style="width: 55%;"><input type="text" id="surveyDate" placeholder="Select a Date"/></td>
 		        </tr>
 		        
 				<tr>
 		        <td class = "bold">Budgetary Due Date</td>
 		        <td style="text-align: center"><input type="text" id="budgetaryDueDate" placeholder="Select a Date"/></td>
 		        <td class = "bold">Budgetary Submitted Date</td>
-		        <td style="text-align: center"><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
+		        <td><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		        
 		        <tr>
 		        <td class = "bold">Proposal Due Date</td>
 		        <td style="text-align: center"><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
 		        <td class = "bold">Proposal Submitted Date</td>
-		        <td style="text-align: center"><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
+		        <td><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
 		        </tr>	
 		
 		        <tr>
 		        <td class = "bold">Scheduled Start Date</td>
 		        <td style="text-align: center"><input type="text" id="startDate" placeholder="Select a Date"/></td>
 		        <td class = "bold">Scheduled Turnover</td>
-		        <td style="text-align: center"><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
+		        <td><input type="text" id="scheduledTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		        
 		        <tr style="border-bottom: none">
 		        <td style="border-right: none; border-bottom: none"></td>
 		        <td style="border-left: none"></td>
 		        <td class = "bold">Actual Turnover</td>
-		        <td style="text-align: center"><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
+		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		
 		    </table>
 	        <div id = "buttonsGroup">
-	        	<button id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
+	        	
 	         <button  id = "schFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('scheduling')" > Back to Failed Rules</button>
 	        </div> <!-- End of the buttonsGroup Div -->	 		    		    
 		</div> <!-- End Scheduling Information -->
 		
 		<div style="width:100%" id='tasksInformation' class='info-tab info-tab-tasks'>
 				
-			<div style="width:100%" id = 'taskDisplay'>
+			<div class = "changeOrderTableDiv" id = 'taskDisplay'>
 		    <select id ='taskSelector2' class='form-control'>
 					<option value='all'>All</option>
 					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
@@ -1411,6 +1430,7 @@
 					<option value='complete'>Complete</option>
 					<option value='closed'>Closed</option>
 				</select>
+				 <div class="generalOverFlowScroll">
 				<table class='table' id='taskTable'>
 		   			<tr class='head'>
 		   				<th>Task</th>
@@ -1423,6 +1443,7 @@
 		   				<th style="width:200px">Notes</th>
 		   			</tr>
 				</table>
+				</div>
 				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
 				<button class ="edit-submit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
 				<button  id = "tasksFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('tasks')" > Back to Failed Rules</button>
@@ -1499,39 +1520,37 @@
 
 	</div>
 		
-		
-		
-		</div>
-		
-		<div style="width: 35%" id='financialInformation' class='info-tab info-tab-financialInformation'>
+			<div id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table id="financialInformationTable" class='table table-hover'>
 	
 	            <tr>
-	            <td style="width: 35%" class = "bold">Should Invoice %</td>
-	            <td style="text-align: center"><input type="text" id="shouldInvoice" value="0"/></td>
+	            <td style="width: 15%" class = "bold">Should Invoice %</td>
+	            <td><input type="text" id="shouldInvoice" value="0"/></td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Actual Invoice %</td>
-	            <td style="text-align: center"><input type="text" id="actualInvoice" value="0" /></td>
+	            <td><input type="text" id="actualInvoice" value="0" /></td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Project Cost</td>
-	            <td style="text-align: center"><input type="text" id="projectCost" value="" /></td>
+	            <td><input type="text" id="projectCost" value="" /></td>
 	            </tr>		
 	
 	            <tr>
 	            <td class = "bold">Customer Number</td>
-	            <td style="text-align: center"><input type="text" id="custNum" value="" /></td>
+	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>
 	    	<div id = "buttonsGroup">
-	        <button id='saveProjectLink' class = "btn btn-success" onclick="saveProject_PROJECT_DATA()" data-tab="saveButton">
-	        		Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"> </span></button>
 	    	<button id = "finFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('financial')" > Back to Failed Rules</button>
 	        </div> <!-- End of the buttonsGroup Div -->	     
-		</div> <!-- End Financial Information -->
+		</div> <!-- End Financial Information -->	
+		
+		</div>
+		
+
 		
 		
 		<div class='info-tab' id='saveButton'>
@@ -1560,6 +1579,8 @@
 				<li id="technicalPermit" role='presentation' data-tab='technicalPermits'><a>Technical Permits</a></li>
 				<li id="safetyPermit" role='presentation' data-tab='safetyPermits'><a>Safety Permits</a></li>
 				<li id="otherPermit" role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
+				<li style = "top:4px;float:right;"class = "btn btn-success"id='save-permits' onclick="saveProject_PERMIT()" >
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 			</ul>
 		
 		
@@ -1648,7 +1669,7 @@
 				</tr>
 				
 				</table>
-				<button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+			
 				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
@@ -1805,7 +1826,7 @@
 					</td>
 				</tr>				
 		        </table>
-		        <button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+		        
 				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
@@ -1929,7 +1950,7 @@
 				</tr>
 				
 		        </table>
-		        <button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+		       
 				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
@@ -2027,7 +2048,7 @@
 						<td><textarea id='inspectionNotes' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr>
 				</table>
-				<button class = "btn btn-success" onClick="saveProject_PERMIT()" id='save-permits' class='save-tab' >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+				
 				<button class = "btn project-edit permFailedRules" style = "display:none" onclick = "returnToFailedRules('permits')" > Back to Failed Rules</button>
 			</div>
 			
@@ -2069,18 +2090,18 @@
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
-	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
-	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+	        <li style="top:4px;float:right;" class="btn btn-success" onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 			
 		</ul>
 	
 	    <!-- Closeout Documents Tab--> 
-		<div style="width: 47%" id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
+		<div style="width: 100%" id="closeoutDocuments" class="info-tab active info-tab-closeoutDocuments">
 	        <table id='closeoutDocumentsTable' class='table table-hover'>
 	            <tr>
-	            	<td style="width: 25%; text-align: center"></td>
-	            	<td style="width: 33%; text-align: center"><b>Closeout Document Status</b></td>
-	            	<td style="width: 42%; text-align: center"><b>Closeout Document Last Updated</b></td>
+	            	<td style="width: 15%; text-align: center"></td>
+	            	<td style="width: 15%; text-align: center"><b>Closeout Document Status</b></td>
+	            	<td style="width: 70%; "><b>Closeout Document Last Updated</b></td>
 	            </tr>
 	            <tr>
                 <td class='closeoutLabel'>Punch List</td>
@@ -2089,7 +2110,7 @@
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="punchList" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
@@ -2100,7 +2121,7 @@
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                 <input type="text" placeholder="Select a Date" id="asBuilts" class="autofill-CloseoutDocs-Date" />
                 </td>   
             </tr>
@@ -2111,7 +2132,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <input id="closeoutPhotosCL" placeholder="Select a Date" type="text" class="autofill-CloseoutDocs-Date"></input>
                 </td>   
             </tr>
@@ -2122,7 +2143,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="HVACstartupFormDate" class="autofill-HVAC-date" />
                 </td>   
             </tr>
@@ -2133,7 +2154,7 @@
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                 <input type="text" placeholder="Select a Date" id="verisae" class="autofill-HVAC-date"/>	
                 </td>   
             </tr>
@@ -2144,7 +2165,7 @@
                     <option value="default">--Status--</option>
                 </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                 <input type="text" placeholder="Select a Date" id="alarmHvac" class="autofill-Refrigeration-date"/>
                 </td>   
             </tr>
@@ -2152,16 +2173,16 @@
         
         <table id='otherItemsSalvageTable' class='table table-hover'>
 	        	<tr>
-	        		<td style="width: 25%"></td>
-	        		<td style="width: 33%; text-align: center" class='bold'>Amount</td>
-	        		<td style="width: 42%; text-align: center" class='bold'>Date Last Updated</td>
+	        		<td style="width: 15%"></td>
+	        		<td style="width: 15%;text-align: center" class='bold'>Amount</td>
+	        		<td style="width: 70%;" class='bold'>Date Last Updated</td>
 	        	</tr>
 	        	<tr>
 	        		<td class='bold'>Salvage Value</td>
 	        		<td style="text-align: center">
 						<input type="text" placeholder="Enter Salvage Value" id="salvageAmount" class="autofill-Refrigeration-num"/>
 	        		</td>
-	        		<td style="text-align: center">
+	        		<td>
 	        			<input type="text" placeholder="Select a Date" id="salvageDate" class="autofill-Refrigeration-date"/>
 	        		</td>
 	        	</tr>
@@ -2169,8 +2190,8 @@
         
         <table id='closeoutDocumentsTable' class='table table-hover'>
             <tr>
-                <td style="width: 53%" class='closeoutLabel'>Number of MCS Change Orders</td>
-                <td style="width: 47%">  
+                <td style="width: 30%" class='closeoutLabel'>Number of MCS Change Orders</td>
+                <td style="width: 70%">  
                  <input type="text"  id="numOfMCSChangeOrders" />   
                 </td>  
             </tr>
@@ -2182,7 +2203,7 @@
             </tr>
             <tr>
                 <td class='closeoutLabel'>Closeout Documents Notes</td>
-                <td style="text-align: center">  
+                <td>  
                 <textarea id="closeoutDocumentsNotes" class="scrollTextBoxCloseoutDocs"> </textarea>
                 </td> 
             </tr>
@@ -2192,13 +2213,13 @@
 	    <!-- End Closeout Documents Tab--> 
 	
 	    <!-- Final Inspections Tab -->
-		<div style="width: 50%" id="finalInspections" class="info-tab info-tab-closeoutDocuments">
+		<div style="width: 100%" id="finalInspections" class="info-tab info-tab-closeoutDocuments">
 	        <table id='finalInspectionsTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	        	<tr>
-	            	<td style="width: 36%"></td>
-	            	<td style="width: 28%; text-align: center"><b>Final Inspection Status</b></td>
-	            	<td style="width: 36%; text-align: center"><b>Final Inspection Last Updated</b></td>
+	            	<td style="width: 15%"></td>
+	            	<td style="width: 15%; text-align: center"><b>Final Inspection Status</b></td>
+	            	<td style="width: 70%;"><b>Final Inspection Last Updated</b></td>
 	            </tr>
 	        	<tr>
 	                <td class='bold'>Building Final Inspection</td>
@@ -2207,7 +2228,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input id="buildingPermitCL" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr> 
@@ -2218,7 +2239,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input id="ceilingFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>	        
@@ -2229,7 +2250,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="mechFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
@@ -2240,7 +2261,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	            <input type="text" placeholder="Select a Date" id="elecFinalDate" class="autofill-Final-Insp-Date"/>
 	                </td>   
 	            </tr>
@@ -2251,7 +2272,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="plumbingFinalDate" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
@@ -2262,7 +2283,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="gasFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
@@ -2274,7 +2295,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="sprinkleFinalDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
@@ -2285,7 +2306,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input id="fireAlarmFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>
@@ -2296,7 +2317,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input id="lowVolFinalDate" placeholder="Select a Date" type="text" class="autofill-Final-Insp-Date"></input>
 	                </td>   
 	            </tr>  
@@ -2307,7 +2328,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	            <input type="text" placeholder="Select a Date" id="tmpCertificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr>
@@ -2318,15 +2339,15 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td>
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="certificateDate" class="autofill-Final-Insp-Date" />
 	                </td>   
 	            </tr> 
 	       </table>
 	       <table id='finalInspectionsTable' class='table table-hover'>     
 	            <tr>
-	                <td class='bold'>Final Inspection Notes</td>
-	                <td style="text-align: center">  
+	                <td style="width:15%" class='bold'>Final Inspection Notes</td>
+	                <td>  
 	                    <textarea id="finalInspectionNotes" class="scrollTextBoxCloseout"> </textarea>
 	                </td>
 	            </tr> 
@@ -2337,7 +2358,7 @@
 	    <!-- End Final Inspections Tab --> 
 	    
 	    <!-- Warranty Letters and Final Liens Tab -->
-		<div style="width: 90%" id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
+		<div style="width: 100%" id="warrantyLetters" class="info-tab info-tab-closeoutDocuments">
 	        <table id='warrantyLettersTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
 	        	<tr>
@@ -2565,12 +2586,12 @@
 	     <!-- End Warranty Letters and Final Liens Tab -->
 	
 	    <!-- Other Items Tab -->
-	    <div style="width: 54%" id="otherItems" class="info-tab info-tab-closeoutDocuments">
+	    <div style="width: 100%" id="otherItems" class="info-tab info-tab-closeoutDocuments">
 	        <table id='otherItemsTable' class='table table-hover'>
 	        <tr>
-	            	<td style="width: 50%"></td>
-	            	<td style="width: 20%; text-align: center"><b>AIA/MG2 Status</b></td>
-	            	<td style="width: 30%; text-align: center"><b>AIA/MG2 Last Updated</b></td>
+	            	<td style="width: 12%"></td>
+	            	<td style="width: 2%; text-align: center"><b>AIA/MG2 Status</b></td>
+	            	<td style="width: 30%;"><b>AIA/MG2 Last Updated</b></td>
 	        </tr>
 	        <tr>
 	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
@@ -2579,7 +2600,7 @@
 	                        <option value="default">--Status--</option>
 	                    </select>
 	                </td> 
-	                <td style="text-align: center">
+	                <td>
 	                    <input type="text" placeholder="Select a Date" id="substantialCompletionDate" class="autofill-Closeout-MG2-Date"/>
 	                </td>
 	        </tr>
@@ -2590,7 +2611,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="paymentOfDebtsAndClaimsDate" class="autofill-Closeout-MG2-Date"/>
                 </td>
             </tr>
@@ -2601,7 +2622,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="releaseOfLiensDate" class="autofill-Closeout-MG2-Date" />
                 </td>
             </tr>
@@ -2612,7 +2633,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td> 
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="mulvannySignOffDate" class="autofill-Closeout-MG2PO-Date"/>
                 </td>
             </tr>     
@@ -2623,7 +2644,7 @@
                         <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <input id="equipmentSubCL" placeholder="Select a Date" type="text" class="autofill-Closeout-Date"></input>  
                 </td>
             </tr>
@@ -2634,14 +2655,14 @@
                     <option value="default">--Status--</option>
                     </select>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <input type="text" placeholder="Select a Date" id="manualDate" class="autofill-Closeout-Date"/>
                 </td>   
             </tr>
         </table>
         <table id='otherItemsTable' class='table table-hover'>
             <tr>
-                <td style="width: 45%" class='bold'>Number of MG2 Change Orders</td>
+                <td style="width: 25.5%" class='bold'>Number of MG2 Change Orders</td>
                 <td>  
                  <input type="text" id="numOfChangeOrders" />   
                 </td>  
@@ -2657,16 +2678,16 @@
 	        
 	        
 	    </div>
-	    <div id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
+	    <div style="width:100%" id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
 				<table id='closeoutSummaryDocumentsTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
-					<tr><td width = 30% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
+					<tr><td width = 17% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
 					<tr><td class="bold">Punch List</td><td id='punchList'></td></tr>
 					<tr><td class="bold">Verisae Report</td><td id='verisaeReport'></td></tr>
 				</table>	
 				<table id='closeoutSummaryCompletionTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
-					<tr><td width = 30% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
+					<tr><td width = 17% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
 					<tr><td class="bold">Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
 					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>

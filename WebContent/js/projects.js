@@ -1254,13 +1254,14 @@ $(document).ready(function(){
 	
 	
 	$('#permitData').find('.nav-tabs > li').click(function () {
-		$('#permitData').find('.info-tab').removeClass('active');
-		$('#permitData').find('#' + $(this).attr('data-tab')).addClass('active');
-		
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-		$('#permitData').find('#saveButton > button').prop('disabled', true);
-
+		if($(this).attr('id') !== 'save-permits' ) {
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('#' + $(this).attr('data-tab')).addClass('active');
+			
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$('#permitData').find('#saveButton > button').prop('disabled', true);
+		}
 	});
 	
 	$('#permitData').find("#buildingPermitLastUpdated").datepicker();
@@ -2281,11 +2282,11 @@ var eqpid_array = [];
 $(document).ready(function()
 {
 	$('#projectData').find('.nav-tabs > li').click(function () {
-		if($(this).attr('id') !== 'saveProjectLink') {
+		if($(this).attr('id') !== 'saveProjectLink' && $(this).attr('id') !== 'genFailedRules' ) {
 
 			$('#projectData').find('.info-tab').removeClass('active');
 			$('#projectData').find('#' + $(this).attr('data-tab')).addClass('active');
-			
+		
 			$(this).siblings().removeClass('active');
 			$(this).addClass('active');
 			$('#saveButton > button').prop('disabled', true);
@@ -3145,7 +3146,7 @@ let selectedEquipment = null;
 
 
 //Does the tab work to set the proper active one
-$(document).ready(function () {
+$(document).ready(function () {	
 	$('#projectManager').find('.nav-tabs > li').click(function () {
 		$('#projectManager').find('.info-tab').removeClass('active');
 		$('#projectManager').find('#' + $(this).attr('data-tab')).addClass('active');
@@ -3209,7 +3210,7 @@ function createTask() {
 	
 	$('#taskCreationZone').find('#initDate').val(todaysDate);
 	
-	document.getElementById('tasksInformation').style.width = "75%";
+	document.getElementById('tasksInformation').style.width = "100%";
 	$('#taskDisplay').hide();
 	$('#taskCreationZone').show();
 	
@@ -4498,7 +4499,7 @@ function displayTaskWell() {
 	$('#tasksInformation').find('#taskDisplay').hide();
 	$('#tasksInformation').find('#taskCreationZone').show();
 	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').show();
-	document.getElementById('tasksInformation').style.width = "75%";
+	document.getElementById('tasksInformation').style.width = "100%";
 }
 
 
@@ -8854,7 +8855,7 @@ function filterProjects (filter) {
 		}  
 		else {
 			for (var k = json.length-1; k >= 0; k--) {
-				if(json[k] != null) {
+				if(json[k] != null) {					
 					let projectListing = document.createElement('tr');
 					let listDetails0 = document.createElement('td');
 					let listDetails1 = document.createElement('td');
@@ -8880,9 +8881,13 @@ function filterProjects (filter) {
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;					
-				
-//					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
+					
+//					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
+//						listDetails4.setAttribute( 'class', 'circle_onholdcancel' );
+//					}
+//					else if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
 //					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+//					 
 //					else listDetails4.setAttribute( 'class', 'circle_red' );
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
@@ -9641,13 +9646,15 @@ function changeOrderReport () {
 
 $(document).ready(function()
 {
-	$('.nav-tabs > li').click(function () {
-		$('.info-tab').removeClass('active');
-		$('#' + $(this).attr('data-tab')).addClass('active');
-		
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-		$('#saveButton > button').prop('disabled', true);
+	$('.nav-tabs > li').click(function () {		
+		if($(this).attr('id') !== 'saveProjectLink' && $(this).attr('id') !== 'genFailedRules' && $(this).attr('id') !== 'save-permits' ) {    //Why wasn't this if condition written before?
+			$('.info-tab').removeClass('active');
+			$('#' + $(this).attr('data-tab')).addClass('active');
+			
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$('#saveButton > button').prop('disabled', true);
+		}
 
 	});
 	
@@ -10189,7 +10196,6 @@ function updateProjectManager() {
  * INNER FUNCTION CALLS: getParameterByName(), getProject_PROJECT_MANAGER(), getAllProjects()
  */
 function preparePage() {
-	
 	let id = getParameterByName("id");
 	let from = getParameterByName("from");
 	let type = getParameterByName("type");
@@ -10319,10 +10325,11 @@ function getScoreRules(project_id){
 				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
 				let tableFinancial = document.getElementById('financialFailedTable').getElementsByTagName('tbody')[0];
 				let tablePermits = document.getElementById('permitsFailedTable').getElementsByTagName('tbody')[0];
+				let tableCloseOut = document.getElementById('closeOutFailedTable').getElementsByTagName('tbody')[0];
 				
-				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseout, scoreFinancial ;
+				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseOut, scoreFinancial ;
 				//GREEN 
-				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrders= scoreTasks= scoreCloseout= scoreFinancial =["#59ba63", ""] ;
+				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrders= scoreTasks= scoreCloseOut= scoreFinancial =["#59ba63", ""] ;
 				
 				generalIssues=schedulingIssues=permitsIssues = equipmentIssues=changeordersIssues= tasksIssues= closeoutIssues= financialIssues=0;
 				for(var i =0; i<data.length; i++){
@@ -10497,8 +10504,31 @@ function getScoreRules(project_id){
 					    	  scorePermits = ["Red", "HIGH"];
 					      }
 					} 
+					else if(data[i].ruleCategory == "CloseOut"){
+						closeoutIssues++;
+						var tr = document.createElement('tr');
+						var td1 = document.createElement('td');
+						var td2 = document.createElement('td');
+						var text1 = document.createTextNode(closeoutIssues);
+						 var text2 = document.createTextNode(data[i].failMessage);
+						td1.appendChild(text1);
+						td2.appendChild(text2);
+						tr.appendChild(td1);
+						tr.appendChild(td2);
+						tableCloseOut.appendChild(tr);
+					      if(data[i].severity == 0){
+					    	  td1.style.background = "#FFD800";
+					    	  if(scoreCloseOut[0]!="Red")					    		  
+					    		  scoreCloseOut = ["#FFD800", "LOW"];
+					      } 
+					      else{
+					    	  td1.style.background = "Red";
+					    	  scoreCloseOut = ["Red", "HIGH"];
+					      }
+
+					} 
 				}
-				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseout, scoreFinancial);
+				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseOut, scoreFinancial);
 				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues);
 				//document.getElementById("projectManager").style.display = 'none';  					
 			}, error: function (data) {
@@ -10599,20 +10629,22 @@ function fixingRules(category){
 		$('#permitsTabLink').trigger('click');
 		$('.permFailedRules').show();
 		break;
+	case "closeout":
+		break;
 	default:
 		goToProjectManager2();
 	}
 	
 }
 	
-function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseout, scoreFinancial){
+function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseOut, scoreFinancial){
 	document.getElementById('generalInfoScore').style.background=scoreGeneral[0];
 	document.getElementById('schedulingScore').style.background=scoreScheduling[0];
 	document.getElementById('permitsAndInspectionsScore').style.background=scorePermits[0];
 	document.getElementById('equipmentScore').style.background=scoreEquipment[0];
 	document.getElementById('changeOrdersScore').style.background=scoreChangeOrders[0];
 	document.getElementById('tasksScore').style.background=scoreTasks[0];
-	document.getElementById('closeoutScore').style.background=scoreCloseout[0];
+	document.getElementById('closeoutScore').style.background=scoreCloseOut[0];
 	document.getElementById('financialScore').style.background=scoreFinancial[0];
 
 	document.getElementById('generalInfoScore').innerHTML=scoreGeneral[1];
@@ -10621,7 +10653,7 @@ function scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipme
 	document.getElementById('equipmentScore').innerHTML=scoreEquipment[1];
 	document.getElementById('changeOrdersScore').innerHTML=scoreChangeOrders[1];
 	document.getElementById('tasksScore').innerHTML=scoreTasks[1];
-	document.getElementById('closeoutScore').innerHTML=scoreCloseout[1];
+	document.getElementById('closeoutScore').innerHTML=scoreCloseOut[1];
 	document.getElementById('financialScore').innerHTML=scoreFinancial[1];
 }
 function issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues){
@@ -10637,62 +10669,6 @@ function issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipm
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-function getColorForAllProjects(){
-	
-	t0 = new Date().getTime();
-	$.ajax({
-		type: 'POST',
-		url: 'Project',
-		data: {
-			'domain': 'project',
-			'action': 'getAllProjectsIds'
-		}, success: function (data) {
-			projects = data;
-			
-			//var projectsIds = newArray;	
-			
-			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
-			console.log(RETRIEVED_PROJECTS); //An array of arrays
-			t1 = new Date().getTime();
-			console.log('took: ' + (t1 - t0) + 'ms');
-			//console.log("Newly retrieved projects are", RETRIEVED_PROJECTS);
-			RETRIEVED_PROJECTS = JSON.stringify(RETRIEVED_PROJECTS);
-			evaluateColorBasedOnRules(RETRIEVED_PROJECTS);
-		}
-	});
-}
-
-function evaluateColorBasedOnRules(projects){
-	t0 = new Date().getTime();
-	console.log("projects length is ",projects.length);
-	gettingTheFinalColors(projects)
-	
-	t1 = new Date().getTime();
-	console.log('took: ' + (t1 - t0) + 'ms');
-	
-}
-
-function gettingTheFinalColors(project){
-	//listOfProjectColors.push([project,"Red"]);
-	t0 = new Date().getTime();
-	if (project != null) {
-		$.ajax({
-			type: 'POST',
-			url: 'Project',
-			data: {
-				'domain': 'project',
-				'action': 'getScoreColor',
-				 project: project
-			}, success: function (data) {	
-				console.log("output from getScoreColor is ", data);
-				t1 = new Date().getTime();
-				console.log('took: ' + (t1 - t0) + 'ms');
-			}
-		});	
-	}
-	//console.log(listOfProjectColors);
-	
-}
 
 function editSpecificPermitsAndInspections(permitCategory){
 	if(permitCategory == 'mechanical'){
@@ -10898,3 +10874,10 @@ function refreshProjects(){
 
 	
 }
+
+function scrollSmoothToBottom (id) { //For Change Orders to go to the bottom
+	var scrollingElement = (document.scrollingElement || document.body);
+	   $(scrollingElement).animate({
+	      scrollTop: document.body.scrollHeight
+	   }, 500);
+	}
