@@ -1286,56 +1286,56 @@ public class ProjectNewRuleService {
 			
 			//1
 			if(hvacStartUpFormStatus!=null && hvacStartUpFormStatus.equals("6")) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			
 			//2
 			if(verisaeReportStatus!=null && verisaeReportStatus.equals("6")) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			
 			//3
 			if(alarmFormStatus!=null && alarmFormStatus.equals("6")) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			
 			//4
 			if(salvageValue != null && salvageValue.getValue() <= 0) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidsalvageValueAmount", "Salvage value amount needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidsalvageValueAmount", "Salvage value amount needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			
 			//5
 			if((punchListStatus != null) && (punchListStatus.equals("6") || punchListStatus.equals("3")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
 			}
 			
 			//6
 			if((asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("6") || asBuiltDrawingStatus.equals("3")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As-Built Drawing status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As-Built Drawing status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
 			}
 			
 			//7
 			if((closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("6") || closeOutPhotosStatus.equals("3")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Close Out photo status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Close Out photo status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
 			}
 			
 			//8
 			if(numMcsCO != numMcsCOCompleted) {
-				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed -Documents", 1);
 				scoreRed = true;
 				al.add(rd);
 			}
@@ -1344,67 +1344,67 @@ public class ProjectNewRuleService {
 			
 			//1
 			if(buildingFinalInspectionStatus!=null && buildingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidBuildFinalInspStatus", "Building Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidBuildFinalInspStatus", "Building Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//2
 			if(ceilingFinalInspectionStatus!=null && ceilingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCeilFinalInspStatus", "Ceiling Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCeilFinalInspStatus", "Ceiling Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//3
 			if(mechanicalFinalInspectionStatus!=null && mechanicalFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidMechFinalInspStatus", "Mechanical Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidMechFinalInspStatus", "Mechanical Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//4
 			if(electricalFinalInspectionStatus!=null && electricalFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidElecFinalInspStatus", "Electrical Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidElecFinalInspStatus", "Electrical Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//5
 			if(plumbingFinalInspectionStatus!=null && plumbingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPlumbFinalInspStatus", "Plumbing Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidPlumbFinalInspStatus", "Plumbing Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//6
 			if(gasFinalInspectionStatus!=null && gasFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidGasFinalInspStatus", "Gas Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidGasFinalInspStatus", "Gas Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//7
 			if(sprinklerFinalInspectionStatus!=null && sprinklerFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidSprinkFinalInspStatus", "Sprinkler Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidSprinkFinalInspStatus", "Sprinkler Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//8
 			if(fireAlarmFinalInspectionStatus!=null && fireAlarmFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidFireFinalInspStatus", "Fire Alarm Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidFireFinalInspStatus", "Fire Alarm Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//9
 			if(lowVoltageFinalInspectionStatus!=null && lowVoltageFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidLowVoltFinalInspStatus", "Low Voltage Final Inspection Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidLowVoltFinalInspStatus", "Low Voltage Final Inspection Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//10
 			if(tempCertOccupancyStatus!=null && tempCertOccupancyStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidTmpCertOccuStatus", "Temporary certifcate of occupancy Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidTmpCertOccuStatus", "Temporary certifcate of occupancy Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//11
 			if(certOccupancyStatus!=null && certOccupancyStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCertOccuStatus", "Certifcate of occupancy Status needs to be updated", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCertOccuStatus", "Certifcate of occupancy Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
@@ -1415,56 +1415,56 @@ public class ProjectNewRuleService {
 				
 				//1
 				if(mcsWarrantyStatus != null && (mcsWarrantyStatus.equals("6") || mcsWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mcsWarrantyRequired", "MCS Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mcsWarrantyRequired", "MCS Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//2
 				if(gcWarrantyStatus != null && (gcWarrantyStatus.equals("6") || gcWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gcWarrantyRequired", "GC Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gcWarrantyRequired", "GC Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//3
 				if(mechanicalWarrantyStatus != null && (mechanicalWarrantyStatus.equals("6") || mechanicalWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mechWarrantyRequired", "Mechanical Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mechWarrantyRequired", "Mechanical Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//4
 				if(electricalWarrantyStatus != null && (electricalWarrantyStatus.equals("6") || electricalWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "elecWarrantyRequired", "Electrical Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "elecWarrantyRequired", "Electrical Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//5
 				if(plumbingWarrantyStatus != null && (plumbingWarrantyStatus.equals("6") || plumbingWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "plumbWarrantyRequired", "Plumbing Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "plumbWarrantyRequired", "Plumbing Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 						
 				//6
 				if(gasWarrantyStatus != null && (gasWarrantyStatus.equals("6"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gasWarrantyRequired", "Gas Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gasWarrantyRequired", "Gas Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//7
 				if(sprinklerWarrantyStatus != null && (sprinklerWarrantyStatus.equals("6") || sprinklerWarrantyStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "sprinkWarrantyRequired", "Sprinkler Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "sprinkWarrantyRequired", "Sprinkler Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//8
 				if(htiWarrantyStatus != null && (htiWarrantyStatus.equals("6"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "htiWarrantyRequired", "HTI Warranty needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "htiWarrantyRequired", "HTI Warranty needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
@@ -1473,56 +1473,56 @@ public class ProjectNewRuleService {
 				
 				//1
 				if(mcsLienStatus != null && (mcsLienStatus.equals("6") || mcsLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mcsLienRequired", "MCS Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mcsLienRequired", "MCS Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//2
 				if(gcLienStatus != null && (gcLienStatus.equals("6") || gcLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gcLienRequired", "GC Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gcLienRequired", "GC Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//3
 				if(mechanicalLienStatus != null && (mechanicalLienStatus.equals("6") || mechanicalLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mechLienRequired", "Mechanical Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mechLienRequired", "Mechanical Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//4
 				if(electricalLienStatus != null && (electricalLienStatus.equals("6") || electricalLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "elecLienRequired", "Electrical Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "elecLienRequired", "Electrical Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//5
 				if(plumbingLienStatus != null && (plumbingLienStatus.equals("6") || plumbingLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "plumbLienRequired", "Plumbing Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "plumbLienRequired", "Plumbing Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 						
 				//6
 				if(gasLienStatus != null && (gasLienStatus.equals("6"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gasLienRequired", "Gas Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gasLienRequired", "Gas Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//7
 				if(sprinklerLienStatus != null && (sprinklerLienStatus.equals("6") || sprinklerLienStatus.equals("3"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "sprinkLienRequired", "Sprinkler Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "sprinkLienRequired", "Sprinkler Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//8
 				if(htiLienStatus != null && (htiLienStatus.equals("6"))) {
-					RuleDetails rd = new RuleDetails("CloseOut", "htiLienRequired", "HTI Lien needs to be completed", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "htiLienRequired", "HTI Lien needs to be completed -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
@@ -1534,56 +1534,56 @@ public class ProjectNewRuleService {
 				//Warranty
 				//1
 				if(mcsWarrantyStatus != null && mcsWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mcsWarrantyNA", "MCS Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mcsWarrantyNA", "MCS Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//2
 				if(gcWarrantyStatus != null && gcWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gcWarrantyNA", "GC Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gcWarrantyNA", "GC Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//3
 				if(mechanicalWarrantyStatus != null && mechanicalWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mechWarrantyNA", "Mechanical Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mechWarrantyNA", "Mechanical Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//4
 				if(electricalWarrantyStatus != null && electricalWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "elecWarrantyNA", "Electrical Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "elecWarrantyNA", "Electrical Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//5
 				if(plumbingWarrantyStatus != null && plumbingWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "plumbWarrantyNA", "Plumbing Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "plumbWarrantyNA", "Plumbing Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//6
 				if(gasWarrantyStatus != null && gasWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gasWarrantyNA", "Gas Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gasWarrantyNA", "Gas Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//7
 				if(sprinklerWarrantyStatus != null && sprinklerWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "sprinkWarrantyNA", "Sprinkler Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "sprinkWarrantyNA", "Sprinkler Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//8
 				if(htiWarrantyStatus != null && htiWarrantyStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "htiWarrantyNA", "HTI Warranty must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "htiWarrantyNA", "HTI Warranty must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
@@ -1591,56 +1591,56 @@ public class ProjectNewRuleService {
 				//Lien
 				//1
 				if(mcsLienStatus != null && mcsLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mcsLienNA", "MCS Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mcsLienNA", "MCS Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//2
 				if(gcLienStatus != null && gcLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gcLienNA", "GC Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gcLienNA", "GC Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//3
 				if(mechanicalLienStatus != null && mechanicalLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "mechLienNA", "Mechanical Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "mechLienNA", "Mechanical Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//4
 				if(electricalLienStatus != null && electricalLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "elecLienNA", "Electrical Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "elecLienNA", "Electrical Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//5
 				if(plumbingLienStatus != null && plumbingLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "plumbLienNA", "Plumbing Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "plumbLienNA", "Plumbing Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//6
 				if(gasLienStatus != null && gasLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "gasLienNA", "Gas Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "gasLienNA", "Gas Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//7
 				if(sprinklerLienStatus != null && sprinklerLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "sprinkLienNA", "Sprinkler Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "sprinkLienNA", "Sprinkler Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				
 				//8
 				if(htiLienStatus != null && htiLienStatus.equals("3")) {
-					RuleDetails rd = new RuleDetails("CloseOut", "htiLienNA", "HTI Lien must be equal to N/A", 0);
+					RuleDetails rd = new RuleDetails("CloseOut", "htiLienNA", "HTI Lien must be equal to N/A -Warranty", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}

@@ -18,7 +18,7 @@
  * Navigational									5265	THRU	 5514
  */
 
-//can I create a function for all this
+//can I create a function for all this - Akash
 $(document).on("click", "#equipmentFailedTable tbody tr", function(e){
 	
 	var row = $(this).children("td:nth-child(2)").text();
@@ -77,6 +77,25 @@ $(document).on("click", "#permitsFailedTable tbody tr", function(e){
 		var otherRow = $(this).text();
 		if( otherRow.includes(row)){
 			$(this).parent().click(); 
+			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
+            //this.scrollIntoView({behavior: "smooth"});
+		}
+			
+	});
+});
+
+$(document).on("click", "#closeOutFailedTable tbody tr", function(e){
+	
+	var row = $(this).children("td:nth-child(2)").text();
+	row = row.split("-")[1];
+	fixingRules('closeout');
+	
+	$('#closeOutList li').each(function(){
+		var otherRow = $(this).text();
+		console.log("OTHER ROW IN LIST IS",otherRow);
+		console.log("ROW IN LIST IS",row);
+		if( otherRow.includes(row)){
+			$(this).click(); 
 			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
             //this.scrollIntoView({behavior: "smooth"});
 		}
@@ -198,13 +217,15 @@ $(document).ready(function(){
 
 	
 	$('#closeoutData').find('.nav-tabs > li').click(function () {
-		$('#closeoutData').find('.info-tab').removeClass('active');
-		$('#closeoutData').find('#' + $(this).attr('data-tab')).addClass('active');
-		
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-		
-		$('#closeoutData').find('#saveButton > button').prop('disabled', true);
+		if($(this).attr('id') !== 'save-closeout' && $(this).attr('id') !== 'backToFailedRulesCloseOut' ) {
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('#' + $(this).attr('data-tab')).addClass('active');
+			
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			
+			$('#closeoutData').find('#saveButton > button').prop('disabled', true);
+		}
 	});
 	
 	 	$('#closeoutData').find("#MCSDate").datepicker();   
@@ -1153,7 +1174,7 @@ function saveProject_CLOSEOUT()
 				console.log(data);
 				//UPDATE CLOSEOUT SUMMARY
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
-				goToProjectManager();
+				//goToProjectManager();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -1167,7 +1188,7 @@ function saveProject_CLOSEOUT()
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
 				//UPDATE CLOSEOUT SUMMARY
 				//getProject_PROJECT_MANAGER(projectID , 1);
-				goToProjectManager();
+				//goToProjectManager();
 
 			       //alert("Status: " + textStatus); 
 				   //alert("Error: " + errorThrown);
@@ -1254,7 +1275,7 @@ $(document).ready(function(){
 	
 	
 	$('#permitData').find('.nav-tabs > li').click(function () {
-		if($(this).attr('id') !== 'save-permits' ) {
+		if($(this).attr('id') !== 'save-permits' && $(this).attr('id') !== 'backToFailedRulesPermits' ) {
 			$('#permitData').find('.info-tab').removeClass('active');
 			$('#permitData').find('#' + $(this).attr('data-tab')).addClass('active');
 			
@@ -9647,7 +9668,7 @@ function changeOrderReport () {
 $(document).ready(function()
 {
 	$('.nav-tabs > li').click(function () {		
-		if($(this).attr('id') !== 'saveProjectLink' && $(this).attr('id') !== 'genFailedRules' && $(this).attr('id') !== 'save-permits' ) {    //Why wasn't this if condition written before?
+		if($(this).attr('id') !== 'saveProjectLink' && $(this).attr('id') !== 'backToFailedRules' && $(this).attr('id') !== 'backToFailedRulesPermits' && $(this).attr('id') !== 'save-permits' && $(this).attr('id') !== 'backToFailedRulesCloseOut' && $(this).attr('id') !== 'save-closeout') {    //Why wasn't this if condition written before?
 			$('.info-tab').removeClass('active');
 			$('#' + $(this).attr('data-tab')).addClass('active');
 			
@@ -10595,41 +10616,56 @@ function fixingRules(category){
 	case "general":
 		$('#projectInformationTabLink').trigger('click');
 		$('#general-info-item').trigger('click');
-		$('#genFailedRules').show();
+		$("#backToFailedRules").show();
+		$("#backToFailedRules").html("General Rules");
 		break;
 		
 	case "scheduling":
 		$('#projectInformationTabLink').trigger('click');
-		$('#scheduling-item').trigger('click');
-		$('#schFailedRules').show();	
+		$('#scheduling-item').trigger('click');	
+		$("#backToFailedRules").show();
+		$("#backToFailedRules").html("Scheduling Rules");
 		break;
 		
 	case "financial":
 		$('#projectInformationTabLink').trigger('click');
-		$('#financial-item').trigger('click');
-		$('#finFailedRules').show();	
+		$('#financial-item').trigger('click');	
+		$("#backToFailedRules").show();
+		$("#backToFailedRules").html("Financial Rules");
 		break;
 	
 	case "tasks":
 		$('#projectInformationTabLink').trigger('click');
 		$('#tasks-item').trigger('click');
-		$('#tasksFailedRules').show();	
+		$("#backToFailedRules").show();
+		$("#backToFailedRules").html("Task Rules");
 		break;
 	
 	case "changeorders":
 		$('#changeOrdersTabLink').trigger('click');
 		$('#choFailedRules').show();
+		$("#backToFailedRules").html("ChangeOrder Rules");
+		$("#choFailedRules").html("ChangeOrder Rules");
 		break;
 	
 	case "equipment":
 		$('#equipmentTabLink').trigger('click');
 		$('#eqpFailedRules').show();
+		$("#backToFailedRules").html("Equipment Rules");
+		$("#eqpFailedRules").html("Equipment Rules");
 		break;
 	case "permits":
 		$('#permitsTabLink').trigger('click');
-		$('.permFailedRules').show();
+		$("#backToFailedRulesPermits").show();
+		$("#backToFailedRules").html("Permit Rules");
+		$("#backToFailedRulesPermits").html("Permit Rules");
+//		$('.permFailedRules').show();
 		break;
 	case "closeout":
+	$('#closeoutTabLink').trigger('click');
+	$("#backToFailedRulesCloseOut").show();
+	$("#backToFailedRules").html("CloseOut Rules");
+	$("#backToFailedRulesCloseOut").html("CloseOut Rules");
 		break;
 	default:
 		goToProjectManager2();
@@ -10748,9 +10784,9 @@ function savePermitInspectionNotes(){
 	
 }
 
-function returnToFailedRules(category){
-	switch(category){
-	case "general":
+function returnToFailedRules(){
+	switch($('#backToFailedRules').html()){
+	case "General Rules":
 		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 
@@ -10763,10 +10799,10 @@ function returnToFailedRules(category){
 			//}	
 	//	}, 500);
 
-		$('#genFailedRules').hide();
+		$('#backToFailedRules').hide();
 		break;
 
-	case "financial":
+	case "Financial Rules":
 		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
@@ -10777,10 +10813,10 @@ function returnToFailedRules(category){
 			//}	
 	//	},500);
 
-		$('#finFailedRules').hide();
+		$('#backToFailedRules').hide();
 		break;
 		
-	case "scheduling":
+	case "Scheduling Rules":
 		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
@@ -10791,10 +10827,10 @@ function returnToFailedRules(category){
 			//}	
 	//	},500);
 
-		$('#schFailedRules').hide();
+		$('#backToFailedRules').hide();
 		break;
 		
-	case "equipment":
+	case "Equipment Rules":
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10807,7 +10843,7 @@ function returnToFailedRules(category){
 		$('#eqpFailedRules').hide();
 		break;
 
-	case "changeorders":
+	case "ChangeOrder Rules":
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10820,7 +10856,7 @@ function returnToFailedRules(category){
 		$('#choFailedRules').hide();
 		break;
 		
-	case "tasks":
+	case "Task Rules":
 		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
@@ -10831,10 +10867,10 @@ function returnToFailedRules(category){
 			//}	
 	//	},500);
 
-		$('#tasksFailedRules').hide();
+		$('#backToFailedRules').hide();
 		break;
 		
-	case "permits":
+	case "Permit Rules":
 		goToProjectManager();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
@@ -10844,10 +10880,23 @@ function returnToFailedRules(category){
 				hidingTables('permitsFailedTable');
 			//}	
 	//	},500);
-
-		$('.permFailedRules').hide();
+				$('#backToFailedRulesPermits').hide();
+		//$('.permFailedRules').hide();
 		break;
-
+		
+	case "CloseOut Rules":
+		goToProjectManager();
+		$('#scorecardTabLink').trigger('click');
+	//	setTimeout(function(){
+			//if(schedulingIssues > 0){ 
+				$("#scoreCardTopDiv").hide();
+				$("#scoreCardFailedRulesDiv").show();
+				hidingTables('closeOutFailedTable');
+			//}	
+	//	},500);
+				$('#backToFailedRulesCloseOut').hide();
+		//$('.permFailedRules').hide();
+		break;
 	}
 	
 }

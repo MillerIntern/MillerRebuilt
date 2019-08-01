@@ -248,6 +248,10 @@
 				</ul>
 			</div> <!-- Project Information -->
 			<div class='info-tab' id='changeOrders'>
+				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none;float:right;" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
+				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
+				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="project-edit btn" disabled>Edit Change Order</button>
+				<button style = "float:right;margin-right:5px;" onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
 				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
 					<option value='all' selected="selected">All</option>
 					<option value='review'>Review</option>
@@ -279,10 +283,7 @@
 				</table>
 				</div>
 				
-				<button onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
-				<button id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="btn edit-submit" disabled>Edit Change Order</button>
-				<button type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
-				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
+				
 			</div> <!-- Change Orders -->
 			<div style="width: 100%" class='info-tab ' id='permits'>
 				<table id = "permitTable" class='table table-striped permitsAndInspectionsHovering' >
@@ -385,7 +386,7 @@
 				<table class='table table-hover'>
 					<tr>
 						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 						<td width = 13%></td>
 					</tr>
 					<tr>
@@ -397,6 +398,14 @@
 				</table>		
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
+			<button  id = "eqpFailedRules" class = "btn project-edit" style = "display:none;float:right;" onclick = "returnToFailedRules('equipment')" > Back to Failed Rules</button>
+				<button style = "float:right;margin-right:5px;" onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
+				<button style = "float:right;margin-right:5px;background-color: #2a5617;" id='editEquipment' onclick='editSelectedEquipment()' type="button" class="project-edit btn" disabled>Edit Equipment</button>
+				
+			<br>
+			<br>
+			
+			
 			<div class = "generalOverFlowScroll">
 				<table id='equipmentTable' class='table'>
 				    <thead>
@@ -414,9 +423,7 @@
 					<tbody></tbody>
 				</table>	
 				</div>
-				<button onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
-				<button id='editEquipment' onclick='editSelectedEquipment()' type="button" class="btn edit-submit" disabled>Edit Equipment</button>
-				<button  id = "eqpFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('equipment')" > Back to Failed Rules</button>
+				
 				<button style = "display : none" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
 			<div style="width: 60%" class='info-tab info-tab-closeout' id='closeout'>
@@ -435,7 +442,7 @@
 				</table>
 				<button onclick='editCloseout()' type="button" class="project-edit btn btn-primary">Edit Closeout</button>
 				-->
-				<ul class="closeout-information list-group">
+				<ul id = "closeOutList" class="closeout-information list-group">
 					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
 					<li class="list-group-item closeout-info-list-item" id="final-inspection-item" >Final Inspections</li>
 					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
@@ -1266,6 +1273,8 @@
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
 			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	        <li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
+	        id = "backToFailedRules" onclick = "returnToFailedRules()" >Back to Failed Rules</li>				
 	        <!--  <li style = "display:none;top:4px;float:right;right:5px;background-color:#172a56;border-color:#172a56;" 
 	        id = "genFailedRules" class = "btn btn-success" onclick = "returnToFailedRules('general')" > 		 -->		
 		</ul>
@@ -1367,11 +1376,7 @@
 	        
 			
 	        </table>
-	        </div>
-	        <div id = "buttonsGroup">
-
-	        	<button id = "genFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('general')" > Back to Failed Rules</button>
-	        </div> <!-- End of the buttonsGroup Div -->	     
+	        </div>   
 		</div> <!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
@@ -1413,16 +1418,14 @@
 		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>
 		        </tr>
 		
-		    </table>
-	        <div id = "buttonsGroup">
-	        	
-	         <button  id = "schFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('scheduling')" > Back to Failed Rules</button>
-	        </div> <!-- End of the buttonsGroup Div -->	 		    		    
+		    </table>	    		    
 		</div> <!-- End Scheduling Information -->
 		
 		<div style="width:100%" id='tasksInformation' class='info-tab info-tab-tasks'>
 				
 			<div class = "changeOrderTableDiv" id = 'taskDisplay'>
+			<button style="float:right;margin-right:5px;" class ="project-edit btn" onclick = "createTask()"> Add Task </button>
+				<button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
 		    <select id ='taskSelector2' class='form-control'>
 					<option value='all'>All</option>
 					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
@@ -1443,9 +1446,7 @@
 		   				<th style="width:200px">Notes</th>
 		   			</tr>
 				</table>
-				</div>
-				<button class ="project-edit btn" onclick = "createTask()"> Add Task </button>
-				<button class ="edit-submit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
+				</div>			
 				<button  id = "tasksFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('tasks')" > Back to Failed Rules</button>
 			</div>
 			<div style = "width:100% "id = 'taskCreationZone' class = 'well'>
@@ -1542,10 +1543,7 @@
 	            <td class = "bold">Customer Number</td>
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
-	    	</table>
-	    	<div id = "buttonsGroup">
-	    	<button id = "finFailedRules" class = "btn btn-success" style = "display:none" onclick = "returnToFailedRules('financial')" > Back to Failed Rules</button>
-	        </div> <!-- End of the buttonsGroup Div -->	     
+	    	</table>   
 		</div> <!-- End Financial Information -->	
 		
 		</div>
@@ -1581,6 +1579,8 @@
 				<li id="otherPermit" role='presentation' data-tab='otherPermits'><a>Other Permits and Notes</a></li>
 				<li style = "top:4px;float:right;"class = "btn btn-success"id='save-permits' onclick="saveProject_PERMIT()" >
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	        	<li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
+	        		id = "backToFailedRulesPermits" onclick = "returnToFailedRules()" >Back to Failed Rules</li>	
 			</ul>
 		
 		
@@ -2041,7 +2041,7 @@
 				<table class='table table-hover'>
 					<tr>
 						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td><textarea id='permitNotes' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr>
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
@@ -2090,8 +2090,10 @@
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
-	        <li style="top:4px;float:right;" class="btn btn-success" onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
+	        <li style="top:4px;float:right;" class="btn btn-success" onClick="saveProject_CLOSEOUT()" data-tab="saveButton" id = "save-closeout">
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	        <li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
+	        id = "backToFailedRulesCloseOut" onclick = "returnToFailedRules()" >Back to Failed Rules</li>
 			
 		</ul>
 	

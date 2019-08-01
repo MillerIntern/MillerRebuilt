@@ -121,15 +121,23 @@ public class Project extends HttpServlet
 		      
 		      // Sender's email ID needs to be mentioned
 		      String from = "mcstaskalert@millerconstructionservices.com";
-
+		      //This password was missing, Akash added it
+		      String pass = "Tjm@1234";
 		      // Assuming you are sending email from localhost
-		      String host = "localhost";
+		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
+		      String host = "west.exch032.serverdata.net";
 
 		      // Get system properties
 		      Properties properties = System.getProperties();
 
 		      // Setup mail server
-		      properties.setProperty("mail.smtp.host", host);
+		      properties.put("mail.smtp.starttls.enable", "true");
+
+		      properties.put("mail.smtp.ssl.trust", host);
+		      properties.put("mail.smtp.user", from);
+		      properties.put("mail.smtp.password", pass);
+		      properties.put("mail.smtp.port", "587");
+		      properties.put("mail.smtp.auth", "true");
 
 
 		      // Get the default Session object.
@@ -183,7 +191,11 @@ public class Project extends HttpServlet
 		         message.setText(body);
 
 		         // Send message
-		         Transport.send(message);
+		         Transport transport = session.getTransport("smtp");
+		         transport.connect(host, from, pass);
+		         transport.sendMessage(message, message.getAllRecipients());
+		         transport.close();
+//		         Transport.send(message);
 		         System.out.println("Sent message successfully....");
 		      }catch (MessagingException mex) {
 		         mex.printStackTrace();
