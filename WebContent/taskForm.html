@@ -368,7 +368,8 @@
 	
 	function sendTaskAlert(taskData)
 	{
-	   	console.log("IN: sendTaskAlert()");
+		console.log("Task Data is ",taskData);
+		console.log("IN: sendTaskAlert()");
 	   	$.ajax({
 			type: 'POST',
 			url: 'Project',
@@ -384,6 +385,8 @@
 				'dueDate' : taskData.dueDate,
 				'description': taskData.description,
 				'type' : taskData.type,
+				'subAssignee' : taskData.subassignee,
+				'notes' : taskData.notes,
 			}, complete: function (response) {
 				console.log("RESPONSE FROM sendTaskAlert() = ", response);			
 			}

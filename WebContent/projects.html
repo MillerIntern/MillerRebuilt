@@ -426,7 +426,7 @@
 				
 				<button style = "display : none" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 			</div> <!-- Equipment -->
-			<div style="width: 60%" class='info-tab info-tab-closeout' id='closeout'>
+			<div style="width: 100%" class='info-tab info-tab-closeout' id='closeout'>
 			   <!-- 
 				<table class='table table-hover table-striped' ondblclick="editCloseout()">
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
@@ -3279,12 +3279,14 @@
 			</ul>
 		
 		    <!-- Closeout Documents Tab--> 
-			<div style="width: 45%" id="changeOrderInfo" class="info-tab active">
+			<div style="width: 100%" id="changeOrderInfo" class="info-tab active">
+			<button style = "float:right" class = "adminContent btn btn-danger" id = "deleteChangeOrderButton" onclick = "deleteChangeOrder()"> Delete Change Order </button>
+			 <button style = "float:right;margin-right:5px" role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order' class = "btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>				 
 		        <table class="table table-hover">
 		        
 		        	<colgroup>
-		        		<col style="width: 30%">
-		        		<col style="width: 70%">
+		        		<col style="width: 15%">
+		        		<col style="width: 85%">
 		        	</colgroup>
 		     
 		        	<tr style="height: 0px;"></tr>
@@ -3389,8 +3391,6 @@
 		            </tr>
 				 </table>
 		        				
-				 <button role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order' class = "btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
-				 <button class = "adminContent btn btn-danger" id = "deleteChangeOrderButton" onclick = "deleteChangeOrder()"> Delete Change Order </button>
 			</div>
 			<div class='info-tab' id='saveButton'>
 
@@ -3419,16 +3419,19 @@
 		
 		<ul class="nav nav-tabs">
 			<li role='presentation' class="active" data-tab="equipmentForm" id = "equipmentFormTabLink"><a>Equipment Form</a></li>
-	        <li role='presentation' onclick="saveProject_EQUIP()" data-tab="saveButton" id = "saveButtonTabLinkEquipment">
-	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
+	        
 		</ul>
 	
-		<div style="width: 45%" id="equipmentForm" class="info-tab active">
+		<div style="width: 100%" id="equipmentForm" class="info-tab active">
+		<button style="float:right" class="adminContent btn btn-danger" id="deleteEquipment" onclick="deleteEquipment()"> Delete Equipment </button>
+
+		<button class = "btn btn-success"style="float:right;margin-right:5px" role='presentation' onclick="saveProject_EQUIP()" data-tab="saveButton" id = "saveButtonTabLinkEquipment">
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
 	        <table class="table table-hover">
 	        
 	           <colgroup>
-		          <col style="width: 35%">
-		          <col style="width: 65%">
+		          <col style="width: 15%">
+		          <col style="width: 85%">
 		       </colgroup>
 	        
 	        	<tr style="height: 0px;"></tr>
@@ -3488,8 +3491,7 @@
 	            		<textarea id="notes" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999 ondblclick = "dateFillFunction(this)"></textarea>
 	            	</td>
 	            </tr>
-	        </table>
-	       <button class = "adminContent btn btn-danger" id = "deleteEquipment" onclick = "deleteEquipment()"> Delete Equipment </button>
+	        </table>	       
 		</div>
 	    <!-- End Equipment Tab--> 
 		<div class='info-tab' id='saveButton'>

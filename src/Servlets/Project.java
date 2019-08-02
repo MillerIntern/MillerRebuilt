@@ -164,6 +164,8 @@ public class Project extends HttpServlet
 		         String severity = parameters.get("severity");
 		         String dueDate = parameters.get("dueDate");
 		         String description = parameters.get("description");
+		         String subAssignee = parameters.get("subAssignee");
+		         String notes = parameters.get("notes");
 		         
 		         if(dueDate != null ) {
 		         System.out.println("Proj Item: "+projectItem+"\nDescription: "+description+"\nCity: "+warehouseCity+"\nID: "+warehouseID+
@@ -177,11 +179,11 @@ public class Project extends HttpServlet
 		         
 		         if(dueDate != null && !dueDate.equals("")) {
 		         body = "Project:  " + warehouseCity + ", " + warehouseState +
-		                " --- " + projectItem + "\n\nDescription: "+description+"\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity + "\n\nDue Date: " +
-		                dueDate;
+		                " --- " + projectItem+ "\n\nWarehouse #: " + warehouseID+"\n\nDescription: "+description  + "\n\nAssignee: "+subAssignee+ "\n\nPriority: " + severity + "\n\nDue Date: " +
+		                dueDate+ "\n\nNotes: " + notes ;
 		         } else {
 		        	 body = "Project:  " + warehouseCity + ", " + warehouseState +
-					            " --- " + projectItem + "\n\nDescription: "+description+"\n\nWarehouse #: " + warehouseID + "\n\nPriority: " + severity;
+					            " --- " + projectItem+"\n\nWarehouse #: " + warehouseID+"\n\nDescription: "+description  + "\n\nAssignee: "+subAssignee+ "\n\nPriority: " + severity+ "\n\nNotes: " + notes ;
 		         }
 		         
 

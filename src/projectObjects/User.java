@@ -109,7 +109,9 @@ public class User extends ProjectObject
 	public synchronized static User mapNameToUser(String name) {
 		
 		if (name == null) return null;
-		name = name.replaceAll("\\s+","");	
+		//name = name.replaceAll("\\s+","");
+		name = name.trim(); //Instead of removing all the white spaces, I'm using trim() to remove only the leading and trailing white spaces 
+		//which makes more sense, well atleast for me -A.G
 		List<Object> users = ProjectObjectService.getAll("User");
 		
 		for (int i = 0; i < users.size(); i++) {

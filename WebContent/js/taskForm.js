@@ -273,6 +273,7 @@ function getUserData () {
 	
 	function sendTaskAlert(taskData)
 	{
+		console.log("Task Data is ",taskData);
 	   	console.log("IN: sendTaskAlert()");
 	   	console.log(PROJECT_DATA);
 	   	$.ajax({
@@ -290,6 +291,8 @@ function getUserData () {
 				'dueDate' : taskData.dueDate,
 				'description': taskData.description,
 				'type' : taskData.type ,
+				'subAssignee' : taskData.subassignee,
+				'notes' : taskData.notes,
 			}, complete: function (response) {
 				console.log("RESPONSE FROM sendTaskAlert() = ", response);		
 				clearTaskForm();
