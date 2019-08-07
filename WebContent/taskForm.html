@@ -132,7 +132,7 @@
 				
 				let item = data.projectItem.name;
 				
-				$('#title').html('Task Form: ' + city + ', ' + state + ' --- ' + item);
+				$('#title').html('<h4><b>Task Form: </b>' + city + ', ' + state + ' --- ' + item+ '</h4>');
 				//getUsers();
 				 getUserData();
 			}, error: function (data) {
@@ -456,7 +456,7 @@
 	        <ul class="dropdown-menu">
 	          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Add Project</a></li>
-	          <li><a href="findProject.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
 	      		onmouseout="style='background-color: none;'">Find Projects</a></li>
 	        </ul>
 	      </li>
@@ -492,10 +492,13 @@
 	</nav>
 	
     <div class="container">
+    
+
     		
-   		<h4 id='title' style='display:inline'></h4>
-   		<button style='margin: 4px' type='button' class='button' onclick='navigateToProjManager()'> Go To Project Manager</button>
-		<div class='base-field'>
+   		<p id='title' style='text-align:center;'></p>
+   		<button style='margin: 4px' type='button' class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick='navigateToProjManager()'> Go To Project Manager</button>
+		<div style="width:100%" class="info-tab info-tab-tasks active">
+		<div class="well">
 			<table class='table'>
 				<tr>
 					<td><label for='titleEntry'>Task:</label>
@@ -548,6 +551,7 @@
 		        </tr>
 			</table>
 			<button onclick='submitTask()' class='btn btn-success'>Save Task</button>
+		</div>
 		</div>
 	</div>
   

@@ -63,7 +63,7 @@
 
 .project-edit:hover:not(.default) {
 	transition: .25s;
-	
+	background-color:#3a69d9;
 }
 
 .italics {
