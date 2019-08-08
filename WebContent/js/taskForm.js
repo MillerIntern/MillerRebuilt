@@ -1,6 +1,5 @@
 let user;	
-
-
+var assigneeEntryVal;
 
 function getUserData () {
 		
@@ -162,6 +161,19 @@ function getUserData () {
 	}
 	
 	function submitTask () {
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			async: false,
+			data: {
+				'action': 'getSpecificTask',
+				'taskID' : SELECTED_TASK_ID,
+				},
+				success: function(data)
+				{
+					assigneeEntryVal = data;
+				}
+			});
 		console.log("Task Action = " , TASK_ACTION);
 		
 		let title = $('#taskCreationZone').find('#titleEntry').val();
@@ -265,6 +277,11 @@ function getUserData () {
 					$('#tasks-item').trigger('click');
 					if(alertMessage == taskAddedMessage && type == "EMPLOYEE")
 						sendTaskAlert(taskData);	
+					else if((assignee != assigneeEntryVal) && alertMessage == taskUpdatedMessage && type == "EMPLOYEE")
+						{
+						sendTaskAlert(taskData);
+						}
+						
 				}
 			}
 		});

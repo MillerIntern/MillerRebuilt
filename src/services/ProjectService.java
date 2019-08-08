@@ -1199,9 +1199,38 @@ public class ProjectService extends ProjectObjectService
 
 		CityFiller.fillCity(city, parameters);
 
-		ProjectObjectService.addObject("City", city);
-		
+		ProjectObjectService.addObject("City", city);		
 		return "CITY_ADDED";
 	}
-	
+	public synchronized static void countChangeOrders(Long projectID) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In count change orders:");
+
+		
+
+		Project currentProject = null;
+		try {
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		List<ChangeOrder> changeOrders = ProjectObjectService.getAllChangeOrders(projectID);
+		int NumMcsCo = changeOrders.size();
+		int NumMcsCoComp = 0;
+		for(ChangeOrder co : changeOrders) {
+			if(co.getStatus().equals("4")|| co.getStatus().equals("5")) {
+				
+				
+				NumMcsCoComp++;
+			}
+		}
+
+		currentProject.getCloseoutDetails().setNumOfMCSChangeOrders(NumMcsCo);
+		currentProject.getCloseoutDetails().setNumOfMCSChangeOrdersCompleted(NumMcsCoComp);
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.update(currentProject);
+		tx.commit();
+	}
 }

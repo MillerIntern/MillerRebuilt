@@ -1449,7 +1449,9 @@
 				</div>			
 				<button  id = "tasksFailedRules" class = "btn project-edit" style = "display:none" onclick = "returnToFailedRules('tasks')" > Back to Failed Rules</button>
 			</div>
-			<div style = "width:100% "id = 'taskCreationZone' class = 'well'>
+			<div style = "width:100%;padding:5px; "id = 'taskCreationZone' class = 'well'>
+					<button style = "float:right" onclick='submitTask()' class='btn btn-success'>Save Task</button>
+					<button style = "float:right; margin-right:5px;" onclick='viewTasks()' class='btn btn-danger'>Back to Task View</button>
 				<div class='base-field'>
 					<table class='table taskCreationTable'>
 						<tr>
@@ -1513,8 +1515,6 @@
 				        	</td>
 				        </tr>
 					</table>
-					<button onclick='submitTask()' class='btn btn-success'>Save Task</button>
-					<button onclick='viewTasks()' class='btn btn-danger'>Back to Task View</button>
 			</div>
 		
 			</div>

@@ -42,7 +42,6 @@ import services.ProjectService;
 import services.QueryService;
 import services.helpers.TaskFiller;
 import objects.HashGen;
-
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -902,7 +901,21 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if (action.equals("closeTask")) {
+		} 
+		else if(action.equals("getSpecificTask")) {
+			try {
+				Task currentTask = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
+				String name = currentTask.getAssignee().getFirstName();
+				System.out.println("Old name us " + name);
+				Gson gson = new Gson();
+				response = gson.toJson(name);
+				System.out.println(response);
+			} catch (NumberFormatException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (action.equals("closeTask")) {
 			System.out.println("Closing Task");
 			try {
 				Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
@@ -1204,6 +1217,17 @@ public class Project extends HttpServlet
 			
 			Gson gson = new Gson();
 			response = gson.toJson(allResults);
+		}
+		else if(action.equals("countChangeOrders")) {
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+			ProjectService.countChangeOrders(projectID);
+			}
+			catch(ClassNotFoundException | ParseException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 //		else if(action.equals("TESTevaluateAllProjects"))
 //		{

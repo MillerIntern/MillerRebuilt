@@ -7959,6 +7959,8 @@ function clearAndAddSingleRowTask(msg) {
 	let listDetails3 = document.createElement('td');
 	let listDetails4 = document.createElement('td');
 	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
 
 	
 	listDetails0.innerHTML = msg;
@@ -7969,6 +7971,8 @@ function clearAndAddSingleRowTask(msg) {
 	$(placeHolder).append(listDetails3);
 	$(placeHolder).append(listDetails4);
 	$(placeHolder).append(listDetails5);
+	$(placeHolder).append(listDetails6);
+	$(placeHolder).append(listDetails7);
 	
 	$('#taskTable > tbody').append(placeHolder);
 }
@@ -9528,11 +9532,36 @@ function saveProject_CHANGE_ORDER()
 			error: function(data)
 			{
 				alert('Saved Change Order');
+				
+				$.ajax({
+					type: 'POST',
+					url: 'Project', 
+					dataType: 'json',
+					data: 
+					{
+						'domain': 'project',
+						'action': 'countChangeOrders',
+						
+						'projectID': projectID,
+
+
+					},
+					success:function(){
+						
+						
+
+					},
+					error: function(data)
+					{
+				
+					}
+				});
 				goToProjectManager();
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
 			}
 		});
+
 		
 		
 }
@@ -9986,7 +10015,9 @@ function toggleTaskAssignee() {
  * @returns
  */
 function goToFindProject() {
-	
+	$('#editTask').prop('disabled', true);
+	$('#editEquipment').prop('disabled', true);
+	$('#editChangeOrder').prop('disabled', true);
 	clearPermitsAndInspectionsOverview();
 	updateFrontEnd();
 	sortTable($('#sortProjectsValue').val());
@@ -10041,7 +10072,9 @@ function goToFindProject() {
  * @returns
  */
 function goToProjectManager() {
-	
+	$('#editTask').prop('disabled', true);
+	$('#editEquipment').prop('disabled', true);
+	$('#editChangeOrder').prop('disabled', true);
 	$(".editProject").hide();
 	$("#projectManager").show();
 	

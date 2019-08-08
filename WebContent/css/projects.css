@@ -232,7 +232,7 @@
 
 .scrollTextBoxTask {
 	height: 40px;
-	width: 230px;
+	width: 100%;
 	resize: vertical;
 }
 

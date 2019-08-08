@@ -1202,26 +1202,7 @@ public class ProjectNewRuleService {
 			}
 		
 		}
-//		System.out.println("Score Red is");
-//		System.out.println(scoreRed);
-//		System.out.println("Score Yellow is");
-//		System.out.println(scoreYellow);
-//		if(scoreRed)
-//		{
-//			proj.setMediumScore(2);
-//		}
-//		else if(scoreYellow) {
-//			proj.setMediumScore(1);
-//		}
-//		else {
-//			proj.setMediumScore(0);
-//		}
-//		
-//		Session session = HibernateUtil.getSession();
-//		Transaction tx = session.beginTransaction();
-//		session.clear();
-//		session.update(proj);
-//		tx.commit();
+
 		return al;
 		
 	}
@@ -1653,8 +1634,48 @@ public class ProjectNewRuleService {
 //				
 //				
 //			}
+//			System.out.println("Score Red is");
+//			System.out.println(scoreRed);
+//			System.out.println("Score Yellow is");
+//			System.out.println(scoreYellow);
+//			if(scoreRed)
+//			{
+//				proj.setMediumScore(2);
+//			}
+//			else if(scoreYellow) {
+//				proj.setMediumScore(1);
+//			}
+//			else {
+//				proj.setMediumScore(0);
+//			}
+//			
+//			Session session = HibernateUtil.getSession();
+//			Transaction tx = session.beginTransaction();
+//			session.clear();
+//			session.update(proj);
+//			tx.commit();
 			return al;
 		}
+//		System.out.println("Score Red is");
+//		System.out.println(scoreRed);
+//		System.out.println("Score Yellow is");
+//		System.out.println(scoreYellow);
+//		if(scoreRed)
+//		{
+//			proj.setMediumScore(2);
+//		}
+//		else if(scoreYellow) {
+//			proj.setMediumScore(1);
+//		}
+//		else {
+//			proj.setMediumScore(0);
+//		}
+//		
+//		Session session = HibernateUtil.getSession();
+//		Transaction tx = session.beginTransaction();
+//		session.clear();
+//		session.update(proj);
+//		tx.commit();
 		return al;
 		
 		
