@@ -245,13 +245,13 @@ public class ProjectNewRuleService {
 
 		//13
 		if((proposalDueDate != null) && ((proposalDueDate).before(today)) && (proposalSubmittedDate == null)) {
-			RuleDetails rd = new RuleDetails("Scheduling", "LateProposalSubmittedDate", "Proposal Submitted date is late", 1);
+			RuleDetails rd = new RuleDetails("Scheduling", "LateProposalSubmittedDate", "Proposal Submitted Date is late", 1);
 			scoreRed = true;
 			al.add(rd);
 		}
 		//14
 		if((scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
-			RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Actual Turnover date is late", 1);
+			RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Actual Turnover Date is late", 1);
 			scoreRed = true;
 			al.add(rd);
 		}
@@ -283,7 +283,7 @@ public class ProjectNewRuleService {
 			}
 			//19
 			if((budgetaryDueDate != null) && ((budgetaryDueDate).before(today)) && (budgetarySubmittedDate == null)) {
-				RuleDetails rd = new RuleDetails("Scheduling", "LateBudgetarySubmittedDate", "Budgetary Submitted date is late", 1);
+				RuleDetails rd = new RuleDetails("Scheduling", "LateBudgetarySubmittedDate", "Budgetary Submitted Date is late", 1);
 				scoreRed = true;
 				al.add(rd);
 			}
@@ -302,7 +302,7 @@ public class ProjectNewRuleService {
 				
 				//1
 				if(dueDate != null && initiatedDate != null && dueDate.before(initiatedDate)) {
-					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("%s~Due date must be later than initiated date ",currentTask.getTitle()), 0);
+					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("%s~Due Date must be later than initiated date ",currentTask.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
@@ -535,7 +535,7 @@ public class ProjectNewRuleService {
 				}
 				//11
 				if((estDeliveryDate != null) && ((estDeliveryDate).before(today)) && (actDeliveryDate == null)) {
-					RuleDetails rd = new RuleDetails("Equipment", "LateActualDeliveryDate", String.format("%s~Actual Delivery date is late", currentEquipment.getEquipmentName()), 0);
+					RuleDetails rd = new RuleDetails("Equipment", "LateActualDeliveryDate", String.format("%s~Actual Delivery Date is late", currentEquipment.getEquipmentName()), 0);
 					scoreYellow = true;
 					al.add(rd);
 				}

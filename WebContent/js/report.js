@@ -46,6 +46,7 @@ $(document).ready( function () {
     
     document.getElementById("ToolTables_DataTables_Table_0_0").onclick = function() {
     	console.log("CLICKEDDDDDDD ME");
+    	window.print();
 		if(tableIndex == false) $('.tableIndex').remove();
     } 
 } );

@@ -346,10 +346,10 @@ public class AutoFillService {
 			inspectionReq = "0";
 		}
 		else if(_value.equals("1")) {
-			permitStatus = "TBD";
+			permitStatus = "Preparing";
 			inspectionStatus = "TBD";
-			permitReq = "0";
-			inspectionReq = "0";
+			permitReq = "1";
+			inspectionReq = "1";
 		}		
 		else if(_value.equals("2")) {
 			permitStatus = "N/A";

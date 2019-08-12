@@ -1440,6 +1440,22 @@ function fillDropdowns_PERMIT(json)
 //	}
 	
 	
+	/*
+		Akash
+		Writing this piece of code to swap some values. Andy wanted the below order
+		Preparing -> submitted -> approved -> issued -> closed -> N/A
+		However the table in the database has a different order with id's which are already in use.
+		That is why changing the order here on the front end.
+	*/
+	console.log("PERMIT STAGE IS", permitStage);
+	var temp1 = permitStage[2];
+	permitStage[2] = permitStage[4];
+	var temp2 = permitStage[3];
+	permitStage[3] = temp1;
+	permitStage[4] = temp2;
+	console.log("Changed PERMIT STAGE IS", permitStage);
+	
+	
 	for(var i = 0; i < permitStage.length; i++)
 	{
 		var option = document.createElement("option");
@@ -9533,7 +9549,7 @@ function saveProject_CHANGE_ORDER()
 			{
 				alert('Saved Change Order');
 				
-				$.ajax({
+/*				$.ajax({
 					type: 'POST',
 					url: 'Project', 
 					dataType: 'json',
@@ -9555,7 +9571,7 @@ function saveProject_CHANGE_ORDER()
 					{
 				
 					}
-				});
+				});*/
 				goToProjectManager();
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);

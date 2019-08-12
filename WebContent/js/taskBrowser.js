@@ -474,7 +474,7 @@ function createTaskTable () {
 			tasksOfInterest.push(tasks[i]); //Adds task to the user's currently selected tasks of interest
 			addTaskToTable(tasks[i]);
 		}
-		console.log(tasks[i]);
+	//	console.log(tasks[i]);
 	}
 	projectsOfInterest = tasksOfInterest;
 	if (count === 0) {
