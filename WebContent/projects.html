@@ -108,16 +108,16 @@
 				
 				<!--  THE INPUT VALUES CORRESPOND TO THE PROJECTSTAGE DATABASE ID -->
 				
-				<input id="AllStages" class="stage" type ="checkbox" value="all" ><span id="all" class = "stageLabel"> All</span>
-				<input id="NoStages" class="stage" type = "checkbox" value="none"> <span id="none" class = "stageLabel">None</span> &nbsp;&nbsp; : &nbsp;&nbsp;
+				<input id="AllStages" class="pointer stage" type ="checkbox" value="all" ><span id="all" class = "stageLabel"> All</span>
+				<input id="NoStages" class="pointer stage" type = "checkbox" value="none"> <span id="none" class = "stageLabel">None</span> &nbsp;&nbsp; : &nbsp;&nbsp;
 				 
 				
-				<input class = "commonStage stage" type ="checkbox" value="8" checked = 'true'><span id="8" class = "stageLabel">Budgetary</span>&nbsp;
-				<input class = "commonStage stage" type ="checkbox" value="1" checked = 'true'><span id="1" class = "stageLabel">Proposal</span>&nbsp;
-				<input class = "commonStage stage" type ="checkbox" value="2" checked = 'true'><span id="2" class = "stageLabel">Active</span>&nbsp;
-				<input class ="commonStage stage" type ="checkbox" value="4"><span id="4" class = "stageLabel">Closed</span> &nbsp;
-				<input class ="commonStage stage" type ="checkbox" value="9"><span id="9" class = "stageLabel">On Hold</span> &nbsp;
-				<input class ="commonStage stage" type ="checkbox" value="15"><span id="15" class = "stageLabel">Canceled</span>
+				<input class = "pointer commonStage stage" type ="checkbox" value="8" checked = 'true'><span id="8" class = "stageLabel">Budgetary</span>&nbsp;
+				<input class = "pointer commonStage stage" type ="checkbox" value="1" checked = 'true'><span id="1" class = "stageLabel">Proposal</span>&nbsp;
+				<input class = "pointer commonStage stage" type ="checkbox" value="2" checked = 'true'><span id="2" class = "stageLabel">Active</span>&nbsp;
+				<input class ="pointer commonStage stage" type ="checkbox" value="4"><span id="4" class = "stageLabel">Closed</span> &nbsp;
+				<input class ="pointer commonStage stage" type ="checkbox" value="9"><span id="9" class = "stageLabel">On Hold</span> &nbsp;
+				<input class ="pointer commonStage stage" type ="checkbox" value="15"><span id="15" class = "stageLabel">Canceled</span>
 				
 				
 				<!--
@@ -140,13 +140,13 @@
 				
 	   			
 			    <div class="paramHolder">
-			        <select class="parameterID" id="paramID1">
+			        <select class="pointer parameterID" id="paramID1">
 			            <option value="default">-- Please select an option --</option>
 			        </select>
-			        <select class="parameterValue" id="paramVal1">
+			        <select class="pointer parameterValue" id="paramVal1">
 			            <option value="default">---</option>
 			        </select>
-			        <span onClick="removeParam(this)">&times;</span>
+			        <span style = "cursor:pointer" onClick="removeParam(this)">&times;</span>
 			   </div>
 			   <div class="paramHolder" id="param2">
 			        <select class="parameterID" id="paramID2">
@@ -162,7 +162,7 @@
 			   <br id="sortSpace">
 
 			   	<p id="sortProjects"><b>Sort By:</b>
-	       		<select id = "sortProjectsValue" onChange="sortTable(this.value)">
+	       		<select class = "pointer" id = "sortProjectsValue" onChange="sortTable(this.value)">
 	       		<option value = "-1">-- Select an option --</option>
 	   			<option value = "0">Warehouse</option>
 	   			<option value = "1">MCS Number</option>
@@ -214,7 +214,7 @@
 	    
 	    	<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectFinder project-edit" onclick="goToFindProject();">Find Another Project</button>
 	    	               
-			<ul class='nav nav-tabs'>
+			<ul class='pointer nav nav-tabs'>
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Change Orders</a></li>
@@ -225,6 +225,7 @@
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
 				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
+				<!-- <li role='presentation' data-tab='permitsnew' id="settingsTabLink"><a>NewPermits</a></li> -->
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
 			   <!--
@@ -240,7 +241,7 @@
 				
 				<button onclick='editProjectInfo()' type="button" class="project-edit btn btn-primary">Edit Project Information</button>
 				-->
-				<ul class="project-information list-group">
+				<ul class="pointer project-information list-group">
 					<li class="list-group-item project-info-list-item" id="general-info-item">General Info</li>
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
 					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
@@ -467,7 +468,7 @@
 		    				<th>ISSUES</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class = "pointer">
 					 <tr onclick ="getFailedRules('generalInfoFailedTable');">
 	   					<td>General Information</td>	    				
 	    				<td id = "generalInfoScore"> </td>
@@ -1244,7 +1245,126 @@
 				<button onclick='comingSoon(this)' type='button' class='btn btn-warning'>Flag Project</button> -->
 			</table>				
 			</div>
+			<!-- <div style="width: 100%" class='info-tab' id='permitsnew'>
+				<table id = "permitTable" class='table table-striped permitsAndInspectionsHovering' >
+					<thead>
+					<tr> 
+						<th style="width: 7%; text-align: center"><button style = "display : none" onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
+						<th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th>
+						<th style="width: 10%; text-align: center">Permit Required</th>
+						<th style="width: 10%; text-align: center">Permit Status</th>
+						<th style="width: 12%; text-align: center">Permit Last Updated</th>
+						<th style="width: 12%; text-align: center">Inspection Required</th>
+						<th style="width: 12%; text-align: center">Inspection Status</th>
+						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td class = "bold" >Building</td>
+						<td align="center" id='buildingPermitRequired' class="italics inspectionTableData"></td>
+					<td align="center">
+					    <select data-associated-date='buildingPermitLastUpdated' onchange="fillBuilding()" class="selectNoBorder permitReq autofill-Permit-Requirement" id="buildingPermitReq">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					<td align="center">
+						<select data-associated-date='buildingPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="buildingPermitStatus">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+						<td align="center" id='buildingPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='buildingInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='buildingInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Ceiling</td>
+						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
+					<td align="center">
+					    <select>
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
+						<td align="center" id='ceilingPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='ceilingInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='ceilingInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Mechanical</td>
+						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
+						<td align="center" id='mechanicalPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='mechanicalInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='mechanicalInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Electrical</td>
+						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
+						<td align="center" id='electricalPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='electricalInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='electricalInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Plumbing</td>
+						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
+						<td align="center" id='plumbingPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='plumbingInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='plumbingInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Gas</td>
+						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
+						<td align="center" id='gasPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='gasInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='gasInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Sprinkler</td>
+						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
+						<td align="center" id='sprinklerPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='sprinklerInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='sprinklerInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Fire Alarm</td>
+						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
+						<td align="center" id='fireAlarmPermitDate' class ="italics permitTableData"></td>
+						<td align="center" id='fireAlarmInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='fireAlarmInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					<tr>
+						<td class = "bold">Low Voltage</td>
+						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
+						<td align="center" id='lowVoltagePermitDate' class ="italics permitTableData"></td>	
+						<td align="center" id='lowVoltageInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='lowVoltageInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					</tbody>
+				</table>	
 			
+			</div> -->
 			
 	    </div> <!-- End Container -->
 		
@@ -1265,7 +1385,7 @@
 		<p id ='pageLocation'> <small id ='projectHeader'>---</small><p>
 
 		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-		<ul class="nav nav-tabs">
+		<ul class="pointer nav nav-tabs">
 
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>

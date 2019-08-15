@@ -465,4 +465,17 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 	overflow:auto;
 	max-height:420px;    
     }
- 
+ .selectNoBorder{
+	 border:none;
+	 outline:0;
+	 background:none;
+ }
+ .pointer {
+	cursor: pointer;
+}
+#results td{
+	cursor:pointer;
+}
+#scoreCardFailedRulesDiv table tbody{
+	cursor:pointer;
+}

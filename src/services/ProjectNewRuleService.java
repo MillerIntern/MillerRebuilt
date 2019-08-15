@@ -127,12 +127,14 @@ public class ProjectNewRuleService {
 			scoreYellow = true;
 			al.add(rd);
 		}
-		//3
-		if(cost.isEmpty()) {
-			RuleDetails rd = new RuleDetails("Financial", "CostEmpty", "Cost needs a value", 0);
-			scoreYellow = true;
-			al.add(rd);
-		}
+		
+		//Removing this rule for now as per Andy's Instruction
+//		//3
+//		if(cost.isEmpty()) {
+//			RuleDetails rd = new RuleDetails("Financial", "CostEmpty", "Cost needs a value", 0);
+//			scoreYellow = true;
+//			al.add(rd);
+//		}
 
 		//4
 		if(actualInvoice != shouldInvoice) {
@@ -314,12 +316,16 @@ public class ProjectNewRuleService {
 					al.add(rd);
 				}
 				
-				//3
-				if(taskStatus != null && taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("%s~Task Needs to be completed", currentTask.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
+				//3 //Updating this rule such that task needs to be completed will be shown only if the task is not late
+				if(!(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open"))) {
+					if(taskStatus != null && taskStatus.equals("Open")) {
+						RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("%s~Task Needs to be completed", currentTask.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					
 				}
+				
 			}
 		}
 
