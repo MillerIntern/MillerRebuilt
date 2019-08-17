@@ -74,20 +74,34 @@
     			}
     		});
     	}
+    	
+    	function showPwd() {
+    		  var x = document.getElementById("inputPassword");
+    		  
+    		  if (x.type === "password") {
+    		    x.type = "text";
+    		  } else {
+    		    x.type = "password";
+    		  }
+    		  x.setAttribute("style", "margin-bottom:10px");
+    		}
     </script>
 
   </head>
   <body >
     <div class="container">
 
-      <form class="form-signin" style="display:none">
-        <h2 class="form-signin-heading">Miller sign in</h2>
+      <form style = "max-width:380px;background:white;" class="form-signin" style="display:none">
+      <center><img src="css\theme\currentTheme\MillerLogo.png" alt="MillerLogo" > </center>
+      
+        <h3 style = "text-align:center" class="form-signin-heading">Miller Construction Services, Inc.</h3>
         <label for="inputUsername" class="sr-only">Username</label>
         <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <br>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
+		<input type="checkbox" onclick="showPwd()" id="showpwd" name = "showpwd">
+		<label for="showpwd">Show Password</label>
         <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <div id="invalidLogin" class="alert alert-danger" role="alert">
 		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

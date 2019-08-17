@@ -182,7 +182,7 @@
 	   			<th>MCS Number</th>
 	   			<th>Item</th>
 	   			<th>Manager</th>
-	   			<!-- <th style= "text-align:center">Score</th> -->
+	   			<th style= "text-align:center">Score</th>
 	   			</tr>
 	   			
 	   			<!-- <th><input type="radio" name="projects" value="warehouse" onchange="sortProjectsBy(this);">Warehouse</th>
@@ -2831,55 +2831,7 @@
 </div> <!-- THIS ENDS THE DIV FOR CLOSEOUT DATA-->
 
 
-<!-- THIS BEGINS THE SCORECARD DIV -->
 
-<div id = 'scorecardData' class ='editProject'>
-	
-	<div id="scorecardUpperDiv"class="container active">
-		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
-	
-		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-	    <br>
-	    <div style="width: 50%; margin-left: 280px" id="scorecardFields"> 
-		<ul class = "list-group">
-				<li class = "list-group-item scorecard-info-list-item" id = "GeneralInfoItem">General Info <span id = "generalInfoStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "SchedulingItem">Scheduling <span id = "schedulingStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "PermitsAndInspectionsItem">Permits and Inspections<span id = "permitsAndInspectionStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "EquipmentItem">Equipment <span id = "equipmentStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "ChangeOrdersItem">Change Order <span id = "changeOrderStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "TasksItem">Tasks <span id = "tasksStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "CloseoutItem">Closeout <span id = "closeoutStatus"></span></li>
-				<li class = "list-group-item scorecard-info-list-item" id = "FinancialItem">Financial <span id = "financialStatus"></span></li>
-		</ul>
-		</div>
-		<br>
-	</div>	
-		
-	<div id="failedRulesDiv" style="display: none" class="active">
-		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
-	
-		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-		<h3 style="margin-left: 100px" id = "failedRulesHeader"><span></span> Discrepancies </h3>
-		<div style="width: 80%; margin-left: 100px" id = "failedRulesTable" class = "well param-field" >
-			<table class = "table table-responsive table-striped">
-				<thead>
-					<tr class = "head">
-						<th>Action to Fix Discrepancy</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-				</tbody>
-			</table>
-		</div>
-		<button style="margin-left: 100px" class = "btn project-edit" onclick = "returnToScorecardOverview();"> Back to Scorecard Overview</button>
-	</div>
-			
-	<div id="footer"> </div>  
-
-</div>
-
-<!-- THIS ENDS THE SCORECARD DIV -->
 
 <div id = 'costEstimateData' class ='editProject'>
 	   <div class="container">

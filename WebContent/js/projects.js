@@ -3310,7 +3310,49 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				setCostCompTitle();
 				getComparableCostEsts();
 			}, error: function (data) {
-				alert('Server Error!');
+				alert('Server Error1!');
+				console.log(data);
+			}
+		});
+	} else {
+		$('#projectHeader').text('No Project Selected!');
+		if (confirm('No Project Selected. Return to find project?')) {
+			window.location.href = FINDPROJECT;
+		}
+	}
+}
+
+function getProject_PROJECT_MANAGER1(project_id , stopServerCalls) {
+	console.log("ID = ", project_id);
+    projectID = project_id;
+	if (projectID !== null) {
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID
+			}, success: function (data) {
+				//getTheProjects();
+				
+				PROJECT_DATA = data;
+				setProjectHeader(data, currentDivLocation);
+                var item = data.projectItem.id;
+              
+				fillTabs_PROJECT_MANAGER(data, currentDivLocation);
+				
+				
+//				getTasks(stopServerCalls);
+//				getProjCostEstimate(stopServerCalls)
+//				getProjSpecScopes(stopServerCalls);
+//				getSpecMasterScope(item);
+//				getSpecificMasterScope(item);
+//				getSpecProjMasterScope(stopServerCalls);
+//				setCostCompTitle();
+//				getComparableCostEsts();
+			}, error: function (data) {
+				alert('Server Error1!');
 				console.log(data);
 			}
 		});
@@ -5363,7 +5405,7 @@ function getProjCostEstimate(stopServerCalls)
 				getUserData();
 			
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error2!');
 		}
 	});
 	
@@ -5612,7 +5654,7 @@ function getComparableCostEsts()
 			}	
 			
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error3!');
 			console.log(data);
 		}
 	});
@@ -5633,7 +5675,7 @@ function getSpecProject(id)
 				console.log("project:", data);
 				fillComp(id, data);
 			}, error: function (data) {
-				alert('Server Error!');
+				alert('Server Error4!');
 			}
 		});
 }
@@ -5707,7 +5749,7 @@ function getSpecCostEst(id, select)
 			console.log("spec cost est:", data);
 			fillColumn(data, select);
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error5!');
 			console.log(data);
 		}
 	});
@@ -6052,7 +6094,7 @@ function getProjSpecScopes(stopServerCalls) {
 				getUserData();
 			
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error6!');
 		}
 	});
 }
@@ -6121,7 +6163,7 @@ function getSpecProjScope(item)
 			fillProjSpecScopeForm(data);
 			
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error7!');
 		}
 	});
 }
@@ -6739,7 +6781,7 @@ function getProject_SCORECARD(edit)
 				fillProjectDetails(data);
 			
 			}, error: function (data) {
-				alert('Server Error!');
+				alert('Server Error8!');
 			}
 		});
 	} 
@@ -6821,7 +6863,7 @@ function reevaluateProject(project_id) {
 				
 				
 			}, error: function (data) {
-				alert('Server Error!');
+				alert('Server Error9!');
 			}
 		});
 	} else {
@@ -8254,7 +8296,7 @@ function establishRetrievedProjects()
 		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
 		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
 		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
-//		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][9];
+		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][9];
 
 		
 		for(var q = 0; q < 9; q++){
@@ -8902,7 +8944,7 @@ function filterProjects (filter) {
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
-//					let listDetails4 = document.createElement('td');
+					let listDetails4 = document.createElement('td');
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -8923,18 +8965,18 @@ function filterProjects (filter) {
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;					
 					
-//					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
-//						listDetails4.setAttribute( 'class', 'circle_onholdcancel' );
-//					}
-//					else if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
-//					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
-//					 
-//					else listDetails4.setAttribute( 'class', 'circle_red' );
+					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
+						listDetails4.setAttribute( 'class', 'circle_onholdcancel' );
+					}
+					else if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+					 
+					else listDetails4.setAttribute( 'class', 'circle_red' );
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
-//					$(projectListing).append(listDetails4);
+					$(projectListing).append(listDetails4);
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -8956,7 +8998,7 @@ function filterProjects (filter) {
 					let listDetails1 = document.createElement('td');
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
-//					let listDetails4 = document.createElement('td');
+					let listDetails4 = document.createElement('td');
 					
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
@@ -8975,14 +9017,14 @@ function filterProjects (filter) {
 					listDetails2.innerHTML = json[k].projectItem.name;
 					listDetails3.innerHTML = json[k].projectManagers.name;		
 					
-//					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
-//					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
-//					else listDetails4.setAttribute( 'class', 'circle_red' );
+					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+					else listDetails4.setAttribute( 'class', 'circle_red' );
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);	
-//					$(projectListing).append(listDetails4);	
+					$(projectListing).append(listDetails4);	
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -9061,7 +9103,7 @@ function getTasks(stopServerCalls) {
 			if(!stopServerCalls) getUserData();
 		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
 		}, error: function (data) {
-			alert('Server Error!');
+			alert('Server Error!10');
 		}
 	});
 }
@@ -10135,16 +10177,7 @@ function goToProjectManager() {
 			$('#projectManager').find('#smartSystemTabLink').addClass('active');
 			$('#projectManager').find('#smartSystem').addClass('active');
 			break;	
-		case "scorecardUpperDiv":
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#scorecardData').find('.info-tab').removeClass('active');
-			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
-			$('#scorecardData').find('#scorecard').addClass('active');
-			$('#scorecardData').find('#generalInfo').addClass('active');
-			$('#scorecardData').find('#scorecardUpperDiv').css("display", "none");
-			$('#projectManager').find('#scorecardTabLink').addClass('active');
-			$('#projectManager').find('#scorecard').addClass('active');
-			break;
+
 		case "costEstimateData":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#costEstimateData').find('.info-tab').removeClass('active');
@@ -10153,18 +10186,6 @@ function goToProjectManager() {
 			$('#projectManager').find('#costEstimateTabLink').addClass('active');
 			$('#projectManager').find('#costEstimate').addClass('active');
 			break;	
-		case "failedRulesDiv":
-			console.log("failedRules");
-			getProject_PROJECT_MANAGER(projectID, 1);
-			$('#scorecardData').find('.info-tab').removeClass('active');
-			$('#scorecardData').find('.nav-tabs > li.active').removeClass('active');
-			$('#failedRulesDiv').removeClass('active');
-			$('#scorecardData').find('#failedRulesDiv').css("display", "none");
-			$('#failedRulesDiv').find('#scorecard').addClass('active');
-			$('#failedRulesDiv').find('#generalInfo').addClass('active');
-			$('#projectManager').find('#scorecardTabLink').addClass('active');
-			$('#projectManager').find('#scorecard').addClass('active');
-			break;
 		case "changeOrder":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#changeOrder').find('.info-tab').removeClass('active');
@@ -10191,7 +10212,89 @@ function goToProjectManager() {
 	
 	setCurrentDivLocation('projectManager');
 }
+function goToProjectManager1() {
+	$('#editTask').prop('disabled', true);
+	$('#editEquipment').prop('disabled', true);
+	$('#editChangeOrder').prop('disabled', true);
+	$(".editProject").hide();
+	$("#projectManager").show();
+	
+	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
+	switch(currentDivLocation){
+		case "projectData":
+			getProject_PROJECT_MANAGER1(projectID , 1);
+			$('#projectData').find('.info-tab').removeClass('active');
+			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformationTabLink').addClass('active');
+			$('#projectManager').find('#projectInformation').addClass('active');
+			break;
+		case "permitData":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#permitData').find('.info-tab').removeClass('active');
+			$('#permitData').find('.nav-tabs > li.active').removeClass('active');
+			let activeTab = $('#projectManager').find('.nav-tabs > li.active').id;
+			$('#permitData').find('#buildingPermit').addClass('active');
+			$('#permitData').find('#buildingPermits').addClass('active');
+			$('#projectManager').find('#permits').addClass('active');
+			$('#projectManager').find('#'+activeTab).addClass('active');
+			$('#inspectionsTabLink').removeClass('active');
+			$('#permitsTabLink').addClass('active');
+			break;
+		case "closeoutData":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectManager').find('#closeoutTabLink').addClass('active');
+			$('#projectManager').find('#closeout').addClass('active');
+			break;
+		case "smartSystemData":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#smartSystemData').find('.info-tab').removeClass('active');
+		//	$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#smartSystemData').find('#closeout').addClass('active');
+			$('#smartSystemData').find('#scopeForm').addClass('active');
+			$('#projectManager').find('#smartSystemTabLink').addClass('active');
+			$('#projectManager').find('#smartSystem').addClass('active');
+			break;	
 
+		case "costEstimateData":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#costEstimateData').find('.info-tab').removeClass('active');
+			$('#costEstimateData').find('.nav-tabs > li.active').removeClass('active');
+			$('#costEstimateData').find('#costEstimate').addClass('active');
+			$('#projectManager').find('#costEstimateTabLink').addClass('active');
+			$('#projectManager').find('#costEstimate').addClass('active');
+			break;	
+		case "changeOrder":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#changeOrder').find('.info-tab').removeClass('active');
+			$('#changeOrder').find('.nav-tabs > li.active').removeClass('active');
+			$('#changeOrder').find('#changeOrderTab').addClass('active');
+			$('#changeOrder').find('#changeOrderInfo').addClass('active');
+			$('#projectManager').find('.nav-tabs > li.active').removeClass('active');
+			$('#projectManager').find('#changeOrdersTabLink').addClass('active');
+			$('#projectManager').find('#changeOrders').addClass('active');
+			$('#projectManager').find('#editChangeOrder').prop('disabled', true);
+			$('#closeoutData').find('.info-tab').removeClass('active');
+			$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
+			$('#closeoutData').find('#closeout').addClass('active');
+			$('#closeoutData').find('#closeoutDocuments').addClass('active');
+			$('#projectData').find('#generalInformation').addClass('active');
+			$('#saveButton').removeClass('active');
+			break;
+		case "equipmentDiv":
+			getProject_PROJECT_MANAGER1(projectID, 1);
+			$('#equipment').addClass('active');
+			break;
+			
+	}
+	
+	setCurrentDivLocation('projectManager');
+}
 /**
  * This function sets the current div location so we know what to display
  * INNER FUNCTION CALLS: none
@@ -10602,7 +10705,7 @@ function getScoreRules(project_id){
 				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues);
 				//document.getElementById("projectManager").style.display = 'none';  					
 			}, error: function (data) {
-				alert('Server Error!');
+				alert('Server Error!11');
 			}
 		});
 	} else {
@@ -10614,7 +10717,6 @@ function getScoreRules(project_id){
 }
 
 function getFailedRules(table_id){  //A.R.G
-	console.log("It is Reaching here");
 	if($('#'+table_id + "> tbody > tr").length > 0){ //condition where if issues are 0, then user click will not work
 		$("#scoreCardTopDiv").hide();
 		$("#scoreCardFailedRulesDiv").show();
@@ -10836,7 +10938,7 @@ function savePermitInspectionNotes(){
 function returnToFailedRules(){
 	switch($('#backToFailedRules').html()){
 	case "General Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 
 		console.log("General issues count is ", generalIssues);
@@ -10852,7 +10954,7 @@ function returnToFailedRules(){
 		break;
 
 	case "Financial Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(financialIssues > 0){ 
@@ -10866,7 +10968,7 @@ function returnToFailedRules(){
 		break;
 		
 	case "Scheduling Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10906,7 +11008,7 @@ function returnToFailedRules(){
 		break;
 		
 	case "Task Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10920,7 +11022,7 @@ function returnToFailedRules(){
 		break;
 		
 	case "Permit Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10934,7 +11036,7 @@ function returnToFailedRules(){
 		break;
 		
 	case "CloseOut Rules":
-		goToProjectManager();
+		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
 	//	setTimeout(function(){
 			//if(schedulingIssues > 0){ 
@@ -10953,7 +11055,7 @@ function refreshProjects(){
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
-		//async:false,
+		async:false,
 		data: {
 			'domain': 'project',
 			'action': 'getAllProjects'
