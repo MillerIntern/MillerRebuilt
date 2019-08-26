@@ -87,6 +87,7 @@ function createTaskTableByManager (tasks) {
 				(tasks[i].subAssignee != undefined && tasks[i].subAssignee.name.toLowerCase() == managersOfInterest[q].toLowerCase())) {
 			count++;
 			console.log("COUNT: ", count);
+			console.log("Logged Task is ", tasks[i].id, managersOfInterest[q],tasks[i].assignee.firstName,tasks[i].subAssignee.name);
 			tasksOfInterest.push(tasks[i]);
 			addTaskToTable(tasks[i]);
 		}

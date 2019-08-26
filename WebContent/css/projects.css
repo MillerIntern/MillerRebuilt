@@ -479,3 +479,7 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 #scoreCardFailedRulesDiv table tbody{
 	cursor:pointer;
 }
+.eqTableBorder tbody td{
+	border-left:1px solid #dddddd;
+	cursor:pointer;
+}

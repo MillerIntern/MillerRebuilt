@@ -2577,6 +2577,30 @@ function removeDefaultAfterEdit()
 {
 	$(".chosen-single").removeClass('chosen-default');
 }
+
+
+function permissionCheckForScoreCard(){
+	let user;
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, success: function (data) {
+			user = data;
+			if(user.permission.name == "superadmin")
+			{
+				getColorForAllProjects();
+			}
+			else
+			{
+				alert("You don't have the permission to Update scorecard");
+			}
+		}
+	});
+}
+
 function getColorForAllProjects(){
 	
 	t0 = new Date().getTime();

@@ -203,3 +203,12 @@ h3 {
 	width: 100px;
 	resize: vertical;
 }
+
+.pointer{
+	cursor:pointer;
+}
+.bgtable tbody td{
+   text-wrap: normal;
+	word-wrap: break-word;
+	border-left:1px solid #dddddd;
+}

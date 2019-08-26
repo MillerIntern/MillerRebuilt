@@ -218,14 +218,15 @@
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Change Orders</a></li>
-				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li>
+<!-- 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li> -->
+				<li role='presentation' data-tab='permitsnew' id="permits_1TabLink" onclick = "getProjectEnums_PERMIT1()"><a>Permits/Inspections</a></li>
 				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
 				<li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> 
 				<li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Cost Comparison</a></li> 
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
 				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
-				<!-- <li role='presentation' data-tab='permitsnew' id="settingsTabLink"><a>NewPermits</a></li> -->
+ 
 			</ul>	
 			<div class='info-tab info-tab-projectInformation active' id='projectInformation'>
 			   <!--
@@ -408,7 +409,7 @@
 			
 			
 			<div class = "generalOverFlowScroll">
-				<table id='equipmentTable' class='table'>
+				<table id='equipmentTable' class='eqTableBorder table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
 						<th width = 8%>Name</th>
@@ -1245,12 +1246,14 @@
 				<button onclick='comingSoon(this)' type='button' class='btn btn-warning'>Flag Project</button> -->
 			</table>				
 			</div>
-			<!-- <div style="width: 100%" class='info-tab' id='permitsnew'>
-				<table id = "permitTable" class='table table-striped permitsAndInspectionsHovering' >
+			<div style="width: 100%" class='info-tab' id='permitsnew'>
+			<button style = "top:4px;float:right;" class = "btn btn-success"onclick = "saveProject_PERMIT1()">Save Permits&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+			<button style = "top: 4px; float: right; margin-right: 7px;display:none;" id = "permFailedRules" class = "btn project-edit"  onclick = "returnToFailedRules('permit')" > Back to Failed Rules</button>
+			<table id = "permitTable_1" class='table table-striped permitsAndInspectionsHovering' >
 					<thead>
 					<tr> 
 						<th style="width: 7%; text-align: center"><button style = "display : none" onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit</button></th>
-						<th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th>
+						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Permit Required</th>
 						<th style="width: 10%; text-align: center">Permit Status</th>
 						<th style="width: 12%; text-align: center">Permit Last Updated</th>
@@ -1262,109 +1265,419 @@
 					<tbody>
 					<tr>
 						<td class = "bold" >Building</td>
-						<td align="center" id='buildingPermitRequired' class="italics inspectionTableData"></td>
-					<td align="center">
-					    <select data-associated-date='buildingPermitLastUpdated' onchange="fillBuilding()" class="selectNoBorder permitReq autofill-Permit-Requirement" id="buildingPermitReq">
+
+						<td align="center">
+					    <select id='buildingPermitRequired_1' data-associated-date='buildingPermitLastUpdated_1' onchange="fillBuilding1()" class = "selectNoBorder">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
                             <option value="0">TBD</option>
 					    </select>
 					</td>
+
 					<td align="center">
-						<select data-associated-date='buildingPermitLastUpdated' class="permitStatus autofill-Permit-Status" id="buildingPermitStatus">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='buildingPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='buildingPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="buildingPermitStatus_1">
 							<option value="default">--Status--</option>
 						</select>
 					</td>
-						<td align="center" id='buildingPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='buildingInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='buildingInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td>
-					</tr>
-					<tr>
-						<td class = "bold">Ceiling</td>
-						<td align="center" id='ceilingPermitRequired' class="italics inspectionTableData"></td>
+					
+				
 					<td align="center">
-					    <select>
+		            	<input type="text" placeholder="Select a Date" id="buildingPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "buildingInspectionRequired_1" class = "selectNoBorder">
 					        <option value="default">--Required--</option>
 					        <option value="1">Yes</option>
                             <option value="2">No</option>
                             <option value="0">TBD</option>
 					    </select>
 					</td>
-						<td align="center" id='ceilingPermit' class ="italics permitTableData"></td>
-						<td align="center" id='ceilingPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='ceilingInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='ceilingInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="buildingInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='buildingInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="buildingInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					</tr>
+					
+					
+					<tr>
+						<td class = "bold" >Ceiling</td>
+
+						<td align="center">
+					    <select id='ceilingPermitRequired_1' data-associated-date='ceilingPermitLastUpdated_1' onchange="fillCeiling1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='ceilingPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='ceilingPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="ceilingPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="ceilingPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "ceilingInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="ceilingInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='ceilingInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="ceilingInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					</tr>
+					
+					<tr>
+						<td class = "bold" >Mechanical</td>
+
+						<td align="center">
+					    <select id='mechanicalPermitRequired_1' data-associated-date='mechanicalPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='mechanicalPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='mechanicalPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="mechanicalPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="mechanicalPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "mechanicalInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="mechanicalInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="mechanicalInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					</tr>
+<tr>
+						<td class = "bold" >Electrical</td>
+
+						<td align="center">
+					    <select id='electricalPermitRequired_1' data-associated-date='electricalPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='electricalPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='electricalPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="electricalPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="electricalPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "electricalInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="electricalInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="electricalInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					<tr>
-						<td class = "bold">Mechanical</td>
-						<td align="center" id='mechanicalPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='mechanicalPermit' class ="italics permitTableData"></td>
-						<td align="center" id='mechanicalPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='mechanicalInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='mechanicalInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='mechanicalInspectionDate' class ="italics inspectionTableData"></td>
+						<td class = "bold" >Plumbing</td>
+
+						<td align="center">
+					    <select id='plumbingPermitRequired_1' data-associated-date='plumbingPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='plumbingPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='plumbingPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="plumbingPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="plumbingPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "plumbingInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="plumbingInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="plumbingInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					<tr>
-						<td class = "bold">Electrical</td>
-						<td align="center" id='electricalPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='electricalPermit' class ="italics permitTableData"></td>
-						<td align="center" id='electricalPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='electricalInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='electricalInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='electricalInspectionDate' class ="italics inspectionTableData"></td>
+						<td class = "bold" >Gas</td>
+
+						<td align="center">
+					    <select id='gasPermitRequired_1' data-associated-date='gasPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='gasPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='gasPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="gasPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="gasPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "gasInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="gasInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="gasInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					<tr>
-						<td class = "bold">Plumbing</td>
-						<td align="center" id='plumbingPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='plumbingPermit' class ="italics permitTableData"></td>
-						<td align="center" id='plumbingPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='plumbingInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='plumbingInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='plumbingInspectionDate' class ="italics inspectionTableData"></td>
+						<td class = "bold" >Sprinkler</td>
+
+						<td align="center">
+					    <select id='sprinklerPermitRequired_1' data-associated-date='sprinklerPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='sprinklerPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='sprinklerPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="sprinklerPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="sprinklerPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "sprinklerInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="sprinklerInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="sprinklerInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					<tr>
-						<td class = "bold">Gas</td>
-						<td align="center" id='gasPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='gasPermit' class ="italics permitTableData"></td>
-						<td align="center" id='gasPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='gasInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='gasInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='gasInspectionDate' class ="italics inspectionTableData"></td>
+						<td class = "bold" >Fire Alarm</td>
+
+						<td align="center">
+					    <select id='fireAlarmPermitRequired_1' data-associated-date='fireAlarmPermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='fireAlarmPermitLastUpdated' TO SELECT -->
+						<select data-associated-date='fireAlarmPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="fireAlarmPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="fireAlarmPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "fireAlarmInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="fireAlarmInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="fireAlarmInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					<tr>
-						<td class = "bold">Sprinkler</td>
-						<td align="center" id='sprinklerPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='sprinklerPermit' class ="italics permitTableData"></td>
-						<td align="center" id='sprinklerPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='sprinklerInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='sprinklerInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='sprinklerInspectionDate' class ="italics inspectionTableData"></td>
-					</tr>
-					<tr>
-						<td class = "bold">Fire Alarm</td>
-						<td align="center" id='fireAlarmPermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='fireAlarmPermit' class ="italics permitTableData"></td>
-						<td align="center" id='fireAlarmPermitDate' class ="italics permitTableData"></td>
-						<td align="center" id='fireAlarmInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='fireAlarmInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='fireAlarmInspectionDate' class ="italics inspectionTableData"></td>
-					</tr>
-					<tr>
-						<td class = "bold">Low Voltage</td>
-						<td align="center" id='lowVoltagePermitRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='lowVoltagePermit' class ="italics permitTableData"></td>
-						<td align="center" id='lowVoltagePermitDate' class ="italics permitTableData"></td>	
-						<td align="center" id='lowVoltageInspectionRequired' class="italics inspectionTableData"></td>
-						<td align="center" id='lowVoltageInspection' class ="italics inspectionTableData"></td>
-						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td>
+						<td class = "bold" >Low Voltage</td>
+
+						<td align="center">
+					    <select id='lowVoltagePermitRequired_1' data-associated-date='lowVoltagePermitLastUpdated_1' onchange="fillMechanical1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+					<!--IN ORDER TO AUTO-GENERATE DATE ADD data-associated-date='lowVoltagePermitLastUpdated' TO SELECT -->
+						<select data-associated-date='lowVoltagePermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="lowVoltagePermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="lowVoltagePermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "lowVoltageInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="lowVoltageInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+<!-- 						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td> -->
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="lowVoltageInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
 					</tr>
 					</tbody>
-				</table>	
-			
-			</div> -->
+				</table>
+				<table class='table table-hover'>
+					<tr>
+						<td align="left" class = "bold" width = 13%>Permit Notes</td>
+						<td><textarea style="width:100%" id='permitNotes_1' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
+
+					</tr>
+					<tr>
+						<td align="left" class = "bold">Inspection Notes</td>
+						<td><textarea id='inspectionNotes_1' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>					
+					</tr>
+					
+				</table>		
+				
+			</div>
 			
 	    </div> <!-- End Container -->
 		

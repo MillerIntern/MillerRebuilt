@@ -9,6 +9,7 @@ let projectManagers;
 let subcontractors;
 let task;
 let tasks;
+let tasks1;
 let tasksOfInterest = new Array();
 let projectsOfInterest = new Array();
 let selectedProjID;
@@ -17,6 +18,28 @@ let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
 let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 
 
+////////////////////////////////////////////////////////////////////////
+let TASK_OBJECT1 = {
+		WAREHOUSES1 : new Array(), 
+		_WAREHOUSES1 : new Array ,
+		ITEMS1 : new Array() ,
+		_ITEMS1 : new Array() ,
+		PROJ_IDS1 : new Array() ,
+		PERSONS1 : new Array() ,
+		_PERSONS1 : new Array() ,
+		SUBS1 : new Array() ,
+		_SUBS1 : new Array() ,
+		TASKS1 : undefined ,
+		USERS1 : new Array() ,
+		_USERS1 : new Array() ,
+}
+
+let UNIQUE_IDS1 = new Array();
+let PROJECT_FIELDS1;
+
+let beginTime1;
+let endTime1;
+////////////////////////////////////////////////////////////////////////
 
 
 
@@ -291,25 +314,6 @@ function getSubcontractors() {
 		if(user.permission.canAccessAdminPage === true) createManagerQueue();
 		createSubDropdown(TASK_OBJECT.SUBS);
 }
-
-/*function toggleTaskAssignee() {
-	if(taskAssigneeType == TASK_EMPLOYEE_ASSIGNEE) {
-		taskAssigneeType = TASK_SUB_ASSIGNEE;
-		$('#employeeDropdown').hide();
-		$('#subcontractorsDropdown').show();
-		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
-		document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
-
-	}
-	else {
-		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
-		$('#employeeDropdown').show();
-		$('#subcontractorsDropdown').hide();
-		document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
-		document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
-
-	}
-}*/
 
 function createSubDropdown (json) {
 	let d = document.createDocumentFragment();
@@ -591,6 +595,24 @@ function createProperTaskTable()
 	}
 }
 
+function createProperTaskTable1()
+{
+	$('#projectSearch').val("");
+	$('#descriptionSearch').val("");
+	clearTaskTable();
+	if(user.permission.canAccessAdminPage == false){
+		createTaskTable();
+	} else {
+		establishManagersOfInterest();
+		console.log("Logged complete tasks ",tasks);
+		refreshTasks();
+//		tasks = tasks1;
+//		
+//		console.log("No, I came First");
+//		console.log("Logged New complete tasks ",tasks);
+//		createTaskTableByManager(tasks);
+	}
+}
 
 /**
  * This function clears the task table and 
@@ -931,7 +953,7 @@ function saveTaskChanges (taskFilter) {
 					alert('Task Updated Successfully');
 					$('#taskWell').slideUp();
 					clearTaskTable();
-					createProperTaskTable();
+					createProperTaskTable1();
 					//location.reload(true);
 				}
 			}
@@ -1286,7 +1308,221 @@ function dateFillFunction(x){
 	
 }
 
+function refreshTasks(){
 
+	getTheTasks1();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function enterTaskActivity1()
+{
+	
+		endTime1 = new Date().getTime();
+		let took1 = endTime1 - beginTime1;
+		console.log("TOOK: " , took1);
+		tasks1 = TASK_OBJECT1.TASKS1;
+		console.log("I came First");
+		projectsOfInterest = tasks1;
+		console.log("TASK 1 ARE ", tasks1);
+		console.log("TASK ARE = ", tasks1 , TASK_OBJECT1);
+		let taskID = getParameterByName('id');
+		if(taskID){
+			console.log("TASK ID = ", taskID);
+			for(var i = 0; i < tasks1.length; i++) {
+				tasks1[i].value = tasks1[i].id;
+				if(tasks1[i].id == taskID) expandTaskInfo(tasks1[i]);
+			}
+		}
+		//getUserData1();
+}
+
+function getTheTasks1() {
+	beginTime1 = new Date().getTime();
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		async:false,
+		data: {
+			'domain': 'project',
+			'action': 'getTheTasks',
+		}, complete: function (data) {
+			TASK_OBJECT1.TASKS1 = data.responseJSON;
+			
+			defineTaskFields1();
+			getEnums1();
+			
+		}
+	});
+	
+}
+
+function getSpecificPartsOfProject1()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		async:false,
+		data: {
+			'domain': 'project',
+			'action': 'getSpecificFieldIdsOfProject',
+			'warehouse' : true,
+			'item' : true
+		}, complete: function (data) {
+			PROJECT_FIELDS1 = data.responseJSON;
+			
+			matchProjects1();
+			cleanTaskObject1();		
+			matchTasks1();
+			enterTaskActivity1();
+			tasks = tasks1;
+			
+			console.log("No, I came First");
+			console.log("Logged New complete tasks ",tasks);
+			createTaskTableByManager(tasks);
+
+		}
+	});
+}
+
+function cleanTaskObject1()
+{
+	for(var i = 0; i < TASK_OBJECT1.TASKS1.length ; i++)
+	{
+		for(var k = 12; k > -1; k--)
+			TASK_OBJECT1.TASKS1[i].splice(k , 1);
+	}
+}
+
+function matchProjects1()
+{
+	for(var i = 0; i < PROJECT_FIELDS1.length; i++)
+	{
+		PROJECT_FIELDS1[i].projectItem = TASK_OBJECT1._ITEMS1["_" + PROJECT_FIELDS1[i][1]];
+		PROJECT_FIELDS1[i].warehouse = TASK_OBJECT1._WAREHOUSES1["_" + PROJECT_FIELDS1[i][2]];
+		
+			for(var k = 0; k < TASK_OBJECT1.TASKS1.length; k++)
+			{
+				if(TASK_OBJECT1.TASKS1[k].project == PROJECT_FIELDS1[i][0]) 
+				{
+					TASK_OBJECT1.TASKS1[k].project = {id : undefined , projectItem : undefined , warehouse : undefined};
+					TASK_OBJECT1.TASKS1[k].project.id = PROJECT_FIELDS1[i][0];
+					TASK_OBJECT1.TASKS1[k].project.projectItem = PROJECT_FIELDS1[i].projectItem;
+					TASK_OBJECT1.TASKS1[k].project.warehouse = PROJECT_FIELDS1[i].warehouse;
+				}
+					
+			}
+	}
+			
+	
+
+}
+
+function matchTasks1()
+{
+	for(var i = 0; i < TASK_OBJECT1.TASKS1.length; i++)
+	{
+		var sub = TASK_OBJECT1.TASKS1[i].subAssignee;
+		var user = TASK_OBJECT1.TASKS1[i].assignee;
+		
+		TASK_OBJECT1.TASKS1[i].subAssignee = TASK_OBJECT1._SUBS1["_" + TASK_OBJECT1.TASKS1[i].subAssignee];
+		TASK_OBJECT1.TASKS1[i].assignee = TASK_OBJECT1._USERS1["_" + TASK_OBJECT1.TASKS1[i].assignee];
+		
+		if(TASK_OBJECT1.TASKS1[i].subAssignee == undefined && TASK_OBJECT1.TASKS1[i].assignee == undefined)
+			console.log("SUB = " , sub , "USERS = " , user);
+
+		
+		//console.log(" i = " , i , TASK_OBJECT.TASKS[i] , TASK_OBJECT.SUBS["_" + TASK_OBJECT.TASKS[i].subAssignee] , TASK_OBJECT.PERSONS["_" + TASK_OBJECT.TASKS[i].assignee])
+	}
+
+}
+
+function defineTaskFields1() {
+	for(var i = 0; i < TASK_OBJECT1.TASKS1.length; i++) {
+		//console.log(TASK_OBJECT.TASKS[i]);
+		TASK_OBJECT1.TASKS1[i].id = TASK_OBJECT1.TASKS1[i][0];
+		TASK_OBJECT1.TASKS1[i].project = TASK_OBJECT1.TASKS1[i][1];
+		TASK_OBJECT1.TASKS1[i].assignedDate = TASK_OBJECT1.TASKS1[i][2];
+		TASK_OBJECT1.TASKS1[i].assignee = TASK_OBJECT1.TASKS1[i][3];
+		TASK_OBJECT1.TASKS1[i].subAssignee = TASK_OBJECT1.TASKS1[i][4];
+		TASK_OBJECT1.TASKS1[i].dueDate = TASK_OBJECT1.TASKS1[i][5];
+		TASK_OBJECT1.TASKS1[i].completed = TASK_OBJECT1.TASKS1[i][6];
+		TASK_OBJECT1.TASKS1[i].description = TASK_OBJECT1.TASKS1[i][7];
+		TASK_OBJECT1.TASKS1[i].notes = TASK_OBJECT1.TASKS1[i][8];
+		TASK_OBJECT1.TASKS1[i].status = TASK_OBJECT1.TASKS1[i][9];
+		TASK_OBJECT1.TASKS1[i].title = TASK_OBJECT1.TASKS1[i][10];
+		TASK_OBJECT1.TASKS1[i].type = TASK_OBJECT1.TASKS1[i][11];
+		TASK_OBJECT1.TASKS1[i].severity = TASK_OBJECT1.TASKS1[i][12];
+	}
+
+}
+
+function getEnums1()
+{
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSpecificObjects',
+			'warehouse': true,
+			'item': true,
+			'person': true,
+			'users' : true,
+			'subcontractors': true,
+		}, success: function(data) {
+			TASK_OBJECT1.ITEMS1 = JSON.parse(data.item);
+			TASK_OBJECT1.PERSONS1 = JSON.parse(data.person);
+			TASK_OBJECT1.USERS1 = JSON.parse(data.users);
+			TASK_OBJECT1.SUBS1 = JSON.parse(data.subcontractors);
+			TASK_OBJECT1.WAREHOUSES1 = JSON.parse(data.warehouse);
+			createMaps1();
+			getUniqueProjectIds1();
+			getSpecificPartsOfProject1();
+		}
+	});
+	
+
+}
+
+function createMaps1()
+{
+	for(var i = 0; i < TASK_OBJECT1.ITEMS1.length; i++)
+	  {
+		 TASK_OBJECT1._ITEMS1["_" + TASK_OBJECT1.ITEMS1[i].id] = TASK_OBJECT1.ITEMS1[i];
+	  }
+	
+	for(var i = 0; i < TASK_OBJECT1.PERSONS1.length; i++)
+	  {
+		 TASK_OBJECT1._PERSONS1["_" + TASK_OBJECT1.PERSONS1[i].id] = TASK_OBJECT1.PERSONS1[i];
+	  }
+	
+	for(var i = 0; i < TASK_OBJECT1.USERS1.length; i++)
+	  {
+		 TASK_OBJECT1._USERS1["_" + TASK_OBJECT1.USERS1[i].id] = TASK_OBJECT1.USERS1[i];
+	  }
+	
+	for(var i = 0; i < TASK_OBJECT1.SUBS1.length; i++)
+	  {
+		 TASK_OBJECT1._SUBS1["_" + TASK_OBJECT1.SUBS1[i].id] = TASK_OBJECT1.SUBS1[i];
+	  }
+	
+	for(var i = 0; i < TASK_OBJECT1.WAREHOUSES1.length; i++)
+	  {
+		 TASK_OBJECT1._WAREHOUSES1["_" + TASK_OBJECT1.WAREHOUSES1[i].id] = TASK_OBJECT1.WAREHOUSES1[i];
+	  }
+	
+
+}
+
+function getUniqueProjectIds1()
+{	
+	for(var i = 0; i < TASK_OBJECT1.TASKS1.length; i++){
+		if(UNIQUE_IDS1["_" + TASK_OBJECT1.TASKS1[i].project] == undefined) {
+			UNIQUE_IDS1["_" + TASK_OBJECT1.TASKS1[i].project] = true;
+			TASK_OBJECT1.PROJ_IDS1.push(TASK_OBJECT1.TASKS1[i].project);
+		}
+	}
+	
+}
 
 
