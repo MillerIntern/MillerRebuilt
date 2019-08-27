@@ -8920,7 +8920,10 @@ function establishRetrievedProjects()
 		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
 		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
 		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][9];
-
+		if(RETRIEVED_PROJECTS[i][10]!=null)
+			RETRIEVED_PROJECTS[i].scheduledStartDate = RETRIEVED_PROJECTS[i][10];
+		else
+			RETRIEVED_PROJECTS[i].scheduledStartDate = "Unavailable";
 		
 		for(var q = 0; q < 9; q++){
 			var num = 8 - q;
@@ -9568,6 +9571,7 @@ function filterProjects (filter) {
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
 					let listDetails4 = document.createElement('td');
+					let listDetails5 = document.createElement('td');
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -9586,20 +9590,22 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;					
+					listDetails4.innerHTML = json[k].projectManagers.name;					
 					
 					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
-						listDetails4.setAttribute( 'class', 'circle_onholdcancel' );
+						listDetails5.setAttribute( 'class', 'circle_onholdcancel' );
 					}
-					else if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
-					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
+					else if(json[k].mediumScore == 0) listDetails5.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
 					 
-					else listDetails4.setAttribute( 'class', 'circle_red' );
+					else listDetails5.setAttribute( 'class', 'circle_red' );
+					listDetails3.innerHTML = json[k].scheduledStartDate;	
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
 					$(projectListing).append(listDetails4);
+					$(projectListing).append(listDetails5);
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -9622,7 +9628,7 @@ function filterProjects (filter) {
 					let listDetails2 = document.createElement('td');
 					let listDetails3 = document.createElement('td');
 					let listDetails4 = document.createElement('td');
-					
+					let listDetails5 = document.createElement('td');
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
@@ -9638,17 +9644,18 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails3.innerHTML = json[k].projectManagers.name;		
+					listDetails4.innerHTML = json[k].projectManagers.name;		
 					
-					if(json[k].mediumScore == 0) listDetails4.setAttribute( 'class', 'circle_green' );
-					else if(json[k].mediumScore == 1) listDetails4.setAttribute( 'class', 'circle_yellow' );
-					else listDetails4.setAttribute( 'class', 'circle_red' );
+					if(json[k].mediumScore == 0) listDetails5.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
+					else listDetails5.setAttribute( 'class', 'circle_red' );
+					listDetails3.innerHTML = json[k].scheduledStartDate;
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);	
 					$(projectListing).append(listDetails4);	
-					
+					$(projectListing).append(listDetails5);
 					$('#results > tbody').append(projectListing);
 				}
 			}
@@ -11071,6 +11078,32 @@ function sortTable(n){
 	  	        break;
 	  	      }
 	      }
+	      else if(n == 3){
+	    	  
+	    	  x=x.innerHTML;
+	    	  y=y.innerHTML;
+	    	  if(x!="Unavailable"){
+	    		  var t1 = x.split('/');
+	    	  }
+	    	  else var t1 = [9999,99,99];
+	    	  
+	    	  
+	    	  if(y!="Unavailable"){
+	    		  var t2 = y.split('/');
+	    	  }
+	    	  else var t2 = [9999,99,99];
+	    	  
+	    	  
+	    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
+	    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
+	    	  
+	    	  if ((d1) > (d2)) {
+		  	        //if so, mark as a switch and break the loop:
+		  	        shouldSwitch = true;
+		  	        break;
+	    	  		}
+	      }
+	      
 	      else{
 	    	  if ((x.innerHTML) > (y.innerHTML)) {
 		  	        //if so, mark as a switch and break the loop:

@@ -212,3 +212,7 @@
 	overflow:auto;
 	max-height:420px;    
     }
+
+.pointer{
+	cursor:pointer;
+}

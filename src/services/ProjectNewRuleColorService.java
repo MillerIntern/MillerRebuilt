@@ -1426,18 +1426,19 @@ public class ProjectNewRuleColorService {
 				scoreColor = "yellow";	
 			}
 			
-			//8
-			if(numMcsCO != numMcsCOCompleted) {
-				scoreColor = "red";
-				proj.setMediumScore(2);
-				Session session = HibernateUtil.getSession();
-				Transaction tx = session.beginTransaction();
-				session.clear();
-				session.update(proj);
-				tx.commit();
-				projectsIdColor.put(projects[i], scoreColor);
-				continue;
-			}
+			//commenting it now until the fix in counting the CO's is perfect
+//			//8
+//			if(numMcsCO != numMcsCOCompleted) {
+//				scoreColor = "red";
+//				proj.setMediumScore(2);
+//				Session session = HibernateUtil.getSession();
+//				Transaction tx = session.beginTransaction();
+//				session.clear();
+//				session.update(proj);
+//				tx.commit();
+//				projectsIdColor.put(projects[i], scoreColor);
+//				continue;
+//			}
 			
 			//Final Inspections Rules
 			

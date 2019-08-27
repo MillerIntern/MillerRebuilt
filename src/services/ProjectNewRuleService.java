@@ -1325,13 +1325,13 @@ public class ProjectNewRuleService {
 				scoreYellow = true;
 				al.add(rd);		
 			}
-			
+			//commenting it now until the fix in counting the CO's is perfect
 			//8
-			if(numMcsCO != numMcsCOCompleted) {
-				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed -Documents", 1);
-				scoreRed = true;
-				al.add(rd);
-			}
+//			if(numMcsCO != numMcsCOCompleted) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed -Documents", 1);
+//				scoreRed = true;
+//				al.add(rd);
+//			}
 			
 			//Final Inspections Rules
 			

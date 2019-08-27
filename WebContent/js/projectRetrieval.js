@@ -48,6 +48,8 @@ let TIME_FINISH;
 					PROJECT_OBJECT.PROJECTS[i].projectManagers = response.responseJSON[i][7];
 					PROJECT_OBJECT.PROJECTS[i].projectClass = response.responseJSON[i][8];
 					PROJECT_OBJECT.PROJECTS[i].mediumScore = response.responseJSON[i][9];
+					PROJECT_OBJECT.PROJECTS[i].scheduledStartDate = response.responseJSON[i][10];
+					
 				}
 				console.log(PROJECT_OBJECT.PROJECTS);
 

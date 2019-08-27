@@ -483,3 +483,13 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 	border-left:1px solid #dddddd;
 	cursor:pointer;
 }
+#changeOrderTable tbody td{
+	cursor:pointer;
+}
+
+/* #results td:nth-child(4){
+	display:none;
+}
+#results th:nth-child(4){
+	display:none;
+} */

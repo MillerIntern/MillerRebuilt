@@ -167,7 +167,8 @@
 	   			<option value = "0">Warehouse</option>
 	   			<option value = "1">MCS Number</option>
 	   			<option value = "2"> Item</option>
-	   			<option value = "3">Manager</option>
+	   			<option value = "4">Manager</option>
+	   			<option value = "3">Start Date</option>
 	   			</select>
 	   			</p>
 			   </div>
@@ -181,8 +182,10 @@
 	   			<th>Warehouse</th>
 	   			<th>MCS Number</th>
 	   			<th>Item</th>
+	   			<th>Start Date</th>
 	   			<th>Manager</th>
 	   			<th style= "text-align:center">Score</th>
+	   			
 	   			</tr>
 	   			
 	   			<!-- <th><input type="radio" name="projects" value="warehouse" onchange="sortProjectsBy(this);">Warehouse</th>
@@ -1725,36 +1728,36 @@
 	        <tr>
 	         <td><b>Warehouse</b></td>
 	        <td>
-	        <select id="warehouse"><option value="default">--Please select an option--</option></select>
+	        <select id="warehouse" class="pointer"><option value="default">--Please select an option--</option></select>
 	        </td>
 	        <td style="width: 20%"><b>Item</b></td>
 	        <td>
-	        <select id="project"><option value="default">--Please select an option--</option></select>
+	        <select id="project" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Manager</b></td>
-	        <td><select id="manager"><option value="default">--Please select an option--</option></select></td>
+	        <td><select id="manager" class="pointer"><option value="default">--Please select an option--</option></select></td>
 	        <td style="width: 20%"><b>Supervisor</b></td>
-	        <td style="width: 30%"><select id="supervisor"><option value="default">--Please select an option--</option></select></td>
+	        <td style="width: 30%"><select id="supervisor" class="pointer"><option value="default">--Please select an option--</option></select></td>
 	        </tr>
 	
 	        <tr>
 	        <td><b>Stage</b></td>
-	        <td><select id="stage"><option value="default">--Please select an option--</option></select></td>
+	        <td><select id="stage" class="pointer"><option value="default">--Please select an option--</option></select></td>
 	        <td><b>Status</b></td>
-	        <td><select id="status"><option value="default">--Please select an option--</option></select></td>
+	        <td><select id="status" class="pointer"><option value="default">--Please select an option--</option></select></td>
 			</tr>
 	
 	        <tr>
 	        <td><b>Type</b></td>
 	        <td>
-	        <select id="pType"><option value="default">--Please select an option--</option></select>
+	        <select id="pType" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
 	        <td><b>Project</b></td>
 	       	<td>
-	        <select id="class" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
+	        <select id="class"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
 	        	<option value="default">--Please specify the project type--</option>
 	        </select>
 			</td>
@@ -1763,7 +1766,7 @@
 			<tr>
 			<td><b>HVAC</b></td>
 			<td>
-			<select id="autofill-HVAC" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
+			<select id="autofill-HVAC"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
 				<option value="default">--Does this project require an HVAC unit?--</option>
 				<option value="1">Yes</option>
                 <option value="0">No</option> 
@@ -1772,7 +1775,7 @@
 	        </td>
 	        <td><b>Refrigeration</b></td>
 	        <td>
-	        <select id="autofill-Refrigeration" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration?  NOTE: The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
+	        <select id="autofill-Refrigeration" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration?  NOTE: The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
 	        	<option value="default">--Does this project require refrigeration?--</option>
 	        	<option value="1">Yes</option>
                 <option value="0">No</option>  
@@ -1784,7 +1787,7 @@
 	        <tr>
 	        <td><b>Permits</b></td>
 	        <td>
-	        <select id="autofill-Permits" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
+	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
 	        	<option value="default">--Does this project require permits?--</option>
                 <option value="1">Yes</option>
                 <option value="2">No</option>  
