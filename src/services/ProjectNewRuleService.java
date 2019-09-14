@@ -387,7 +387,7 @@ public class ProjectNewRuleService {
 					al.add(rd);
 				}
 				//6
-				if(subsSubmittedDate == null) {
+				if(status != null && !(status.equals("4")) && subsSubmittedDate == null) {
 					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", String.format("%s~Subs Submitted Date needs a value", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
@@ -399,13 +399,13 @@ public class ProjectNewRuleService {
 					al.add(rd);
 				}
 				//8
-				if(submitDate == null) {
+				if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
 					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", String.format("%s~Submit Date needs a value", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//9
-				if(approvedDate == null) {
+				if(status != null && !(status.equals("4")) && approvedDate == null) {
 					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", String.format("%s~Approved Date needs a value", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
@@ -416,8 +416,8 @@ public class ProjectNewRuleService {
 					scoreYellow = true;
 					al.add(rd);
 				}
-				//11   //Update this rule such that it is ignored for customer MCS Non billable which is 8
-				if(sell == 0) {
+				//11
+				if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
 					RuleDetails rd = new RuleDetails("ChangeOrders", "SellZero", String.format("%s~Sell needs a value other than 0", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);

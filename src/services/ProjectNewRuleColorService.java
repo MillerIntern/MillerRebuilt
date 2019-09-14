@@ -354,7 +354,7 @@ public class ProjectNewRuleColorService {
 					scoreColor = "yellow";
 				}
 				//6
-				if(subsSubmittedDate == null) {
+				if(COStatus != null && !(COStatus.equals("4")) && subsSubmittedDate == null) {
 					scoreColor = "yellow";
 				}
 				//7
@@ -362,19 +362,19 @@ public class ProjectNewRuleColorService {
 					scoreColor = "yellow";
 				}
 				//8
-				if(submitDate == null) {
+				if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
 					scoreColor = "yellow";
 				}
 				//9
-				if(approvedDate == null) {
+				if(COStatus != null && !(COStatus.equals("4")) && approvedDate == null) {
 					scoreColor = "yellow";
 				}
 				//10
 				if(COCost == 0) {
 					scoreColor = "yellow";
 				}
-				//11   //Update this rule such that it is ignored for customer MCS Non billable which is 8
-				if(sell == 0) {
+				//11
+				if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
 					scoreColor = "yellow";
 				}
 				
