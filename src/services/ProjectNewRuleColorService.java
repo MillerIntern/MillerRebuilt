@@ -1342,6 +1342,10 @@ public class ProjectNewRuleColorService {
 			
 			Date punchListLastUpdated = closeOut.getPunchList();
 			
+			Date scheduledStartDateNew = proj.getScheduledStartDate();
+			
+			Date actualTurnoverDateNew = proj.getActualTurnover();
+			
 			//CloseOut Documents
 			String hvacStartUpFormStatus = closeOut.getHVACstartupFormStatus();
 			String verisaeReportStatus = closeOut.getVerisaeReportStatus();
@@ -1439,6 +1443,62 @@ public class ProjectNewRuleColorService {
 //				projectsIdColor.put(projects[i], scoreColor);
 //				continue;
 //			}
+			
+			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+				scoreColor = "yellow";			
+				
+			}
+			
+			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+				scoreColor = "yellow";		
+				
+			}
+			
+			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+				scoreColor = "yellow";	
+				
+			}
+			
+			
+			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+				scoreColor = "red";
+				proj.setMediumScore(2);
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(proj);
+				tx.commit();
+				projectsIdColor.put(projects[i], scoreColor);
+				continue;	
+				
+			}
+			
+			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+				scoreColor = "red";
+				proj.setMediumScore(2);
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(proj);
+				tx.commit();
+				projectsIdColor.put(projects[i], scoreColor);
+				continue;		
+				
+			}
+			
+			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+				scoreColor = "red";
+				proj.setMediumScore(2);
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(proj);
+				tx.commit();
+				projectsIdColor.put(projects[i], scoreColor);
+				continue;
+				
+			}
+			
 			
 			//Final Inspections Rules
 			

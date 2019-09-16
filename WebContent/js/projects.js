@@ -18,6 +18,12 @@
  * Navigational									5265	THRU	 5514
  */
 
+
+//$(document).on("click", ".circle_yellow", function(e){
+//	$('#scorecardTabLink').trigger('click');
+//	alert("hi");
+//});
+
 //can I create a function for all this - Akash
 $(document).on("click", "#equipmentFailedTable tbody tr", function(e){
 	
@@ -1927,7 +1933,7 @@ function fillBuilding1()
 {	
 	if($('#buildingPermitRequired_1').val() == 1)
 	{	
-		$('#buildingPermitStatus_1').val("TBD");
+		$('#buildingPermitStatus_1').val("Preparing");
 		$('#buildingPermitLastUpdated_1').val(getToday());
 	    $('#buildingInspectionRequired_1').val(1);
         $('#buildingInspectionStatus_1').val("TBD");
@@ -1984,7 +1990,7 @@ function fillCeiling1()
 {	
 	if($('#ceilingPermitRequired_1').val() == 1)
 	{	
-		$('#ceilingPermitStatus_1').val("TBD");
+		$('#ceilingPermitStatus_1').val("Preparing");
 		$('#ceilingPermitLastUpdated_1').val(getToday());
 	    $('#ceilingInspectionRequired_1').val(1);
         $('#ceilingInspectionStatus_1').val("TBD");
@@ -2040,7 +2046,7 @@ function fillMechanical1()
 {	
 	if($('#mechanicalPermitRequired_1').val() == 1)
 	{	
-		$('#mechanicalPermitStatus_1').val("TBD");
+		$('#mechanicalPermitStatus_1').val("Preparing");
 		$('#mechanicalPermitLastUpdated_1').val(getToday());
 	    $('#mechanicalInspectionRequired_1').val(1);
         $('#mechanicalInspectionStatus_1').val("TBD");
@@ -2092,6 +2098,34 @@ function fillElectrical()
     }  
 }
 
+function fillElectrical1()
+{	
+	if($('#electricalPermitRequired_1').val() == 1)
+	{	
+		$('#electricalPermitStatus_1').val("Preparing");
+		$('#electricalPermitLastUpdated_1').val(getToday());
+	    $('#electricalInspectionRequired_1').val(1);
+        $('#electricalInspectionStatus_1').val("TBD");
+        $('#electricalInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#electricalPermitRequired_1').val() == 2)
+    {	$('#electricalPermitStatus_1').val("N/A");
+		$('#electricalPermitLastUpdated_1').val(getToday());
+	    $('#electricalInspectionRequired_1').val(2);
+	    $('#electricalInspectionStatus_1').val("N/A");
+	    $('#electricalInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#electricalPermitRequired_1').val() == 0)
+    {	
+		$('#electricalPermitStatus_1').val("TBD");
+		$('#electricalPermitLastUpdated_1').val(getToday());
+	    $('#electricalInspectionRequired_1').val(0);
+        $('#electricalInspectionStatus_1').val("TBD");
+        $('#electricalInspectionLastUpdated_1').val(getToday());  
+    }  
+}
+
 function fillPlumbing()
 {
 	if($('#permitData').find("#plumbingPermitReq").val() == 1)
@@ -2117,6 +2151,34 @@ function fillPlumbing()
 		$('#permitData').find("#plumbingInspectionReq").val(0);
 		$('#permitData').find("#plumbingInspectionStatus").val("TBD");
 		$('#permitData').find("#plumbingInspectionLastUpdated").val(getToday());    
+    }  
+}
+
+function fillPlumbing1()
+{	
+	if($('#plumbingPermitRequired_1').val() == 1)
+	{	
+		$('#plumbingPermitStatus_1').val("Preparing");
+		$('#plumbingPermitLastUpdated_1').val(getToday());
+	    $('#plumbingInspectionRequired_1').val(1);
+        $('#plumbingInspectionStatus_1').val("TBD");
+        $('#plumbingInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#plumbingPermitRequired_1').val() == 2)
+    {	$('#plumbingPermitStatus_1').val("N/A");
+		$('#plumbingPermitLastUpdated_1').val(getToday());
+	    $('#plumbingInspectionRequired_1').val(2);
+	    $('#plumbingInspectionStatus_1').val("N/A");
+	    $('#plumbingInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#plumbingPermitRequired_1').val() == 0)
+    {	
+		$('#plumbingPermitStatus_1').val("TBD");
+		$('#plumbingPermitLastUpdated_1').val(getToday());
+	    $('#plumbingInspectionRequired_1').val(0);
+        $('#plumbingInspectionStatus_1').val("TBD");
+        $('#plumbingInspectionLastUpdated_1').val(getToday());  
     }  
 }
 
@@ -2148,6 +2210,34 @@ function fillGas()
     }   
 }
 
+function fillGas1()
+{	
+	if($('#gasPermitRequired_1').val() == 1)
+	{	
+		$('#gasPermitStatus_1').val("Preparing");
+		$('#gasPermitLastUpdated_1').val(getToday());
+	    $('#gasInspectionRequired_1').val(1);
+        $('#gasInspectionStatus_1').val("TBD");
+        $('#gasInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#gasPermitRequired_1').val() == 2)
+    {	$('#gasPermitStatus_1').val("N/A");
+		$('#gasPermitLastUpdated_1').val(getToday());
+	    $('#gasInspectionRequired_1').val(2);
+	    $('#gasInspectionStatus_1').val("N/A");
+	    $('#gasInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#gasPermitRequired_1').val() == 0)
+    {	
+		$('#gasPermitStatus_1').val("TBD");
+		$('#gasPermitLastUpdated_1').val(getToday());
+	    $('#gasInspectionRequired_1').val(0);
+        $('#gasInspectionStatus_1').val("TBD");
+        $('#gasInspectionLastUpdated_1').val(getToday());  
+    }  
+}
+
 function fillSprinkler()
 {
 	if($('#permitData').find("#sprinklerPermitReq").val() == 1)
@@ -2176,6 +2266,35 @@ function fillSprinkler()
     }  
 }
 
+function fillSprinkler1()
+{	
+	if($('#sprinklerPermitRequired_1').val() == 1)
+	{	
+		$('#sprinklerPermitStatus_1').val("Preparing");
+		$('#sprinklerPermitLastUpdated_1').val(getToday());
+	    $('#sprinklerInspectionRequired_1').val(1);
+        $('#sprinklerInspectionStatus_1').val("TBD");
+        $('#sprinklerInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#sprinklerPermitRequired_1').val() == 2)
+    {	$('#sprinklerPermitStatus_1').val("N/A");
+		$('#sprinklerPermitLastUpdated_1').val(getToday());
+	    $('#sprinklerInspectionRequired_1').val(2);
+	    $('#sprinklerInspectionStatus_1').val("N/A");
+	    $('#sprinklerInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#sprinklerPermitRequired_1').val() == 0)
+    {	
+		$('#sprinklerPermitStatus_1').val("TBD");
+		$('#sprinklerPermitLastUpdated_1').val(getToday());
+	    $('#sprinklerInspectionRequired_1').val(0);
+        $('#sprinklerInspectionStatus_1').val("TBD");
+        $('#sprinklerInspectionLastUpdated_1').val(getToday());  
+    }  
+}
+
+
 function fillFireAlarm()
 {
 	if($('#permitData').find("#fireAlarmPermitReq").val() == 1)
@@ -2201,6 +2320,34 @@ function fillFireAlarm()
     	$('#permitData').find("#fireAlarmInspectionReq").val(0);
 		$('#permitData').find("#fireAlarmInspectionStatus").val("TBD");
 		$('#permitData').find("#fireAlarmInspectionLastUpdated").val(getToday());    
+    }  
+}
+
+function fillfireAlarm1()
+{	
+	if($('#fireAlarmPermitRequired_1').val() == 1)
+	{	
+		$('#fireAlarmPermitStatus_1').val("Preparing");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(1);
+        $('#fireAlarmInspectionStatus_1').val("TBD");
+        $('#fireAlarmInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#fireAlarmPermitRequired_1').val() == 2)
+    {	$('#fireAlarmPermitStatus_1').val("N/A");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(2);
+	    $('#fireAlarmInspectionStatus_1').val("N/A");
+	    $('#fireAlarmInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#fireAlarmPermitRequired_1').val() == 0)
+    {	
+		$('#fireAlarmPermitStatus_1').val("TBD");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(0);
+        $('#fireAlarmInspectionStatus_1').val("TBD");
+        $('#fireAlarmInspectionLastUpdated_1').val(getToday());  
     }  
 }
 
@@ -2231,6 +2378,62 @@ function fillLowVoltage()
 		$('#permitData').find("#voltageInspectionLastUpdated").val(getToday());    
     }  
 }
+
+function fillfireAlarm1()
+{	
+	if($('#fireAlarmPermitRequired_1').val() == 1)
+	{	
+		$('#fireAlarmPermitStatus_1').val("Preparing");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(1);
+        $('#fireAlarmInspectionStatus_1').val("TBD");
+        $('#fireAlarmInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#fireAlarmPermitRequired_1').val() == 2)
+    {	$('#fireAlarmPermitStatus_1').val("N/A");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(2);
+	    $('#fireAlarmInspectionStatus_1').val("N/A");
+	    $('#fireAlarmInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#fireAlarmPermitRequired_1').val() == 0)
+    {	
+		$('#fireAlarmPermitStatus_1').val("TBD");
+		$('#fireAlarmPermitLastUpdated_1').val(getToday());
+	    $('#fireAlarmInspectionRequired_1').val(0);
+        $('#fireAlarmInspectionStatus_1').val("TBD");
+        $('#fireAlarmInspectionLastUpdated_1').val(getToday());  
+    }  
+}
+
+function filllowVoltage1()
+{	
+	if($('#lowVoltagePermitRequired_1').val() == 1)
+	{	
+		$('#lowVoltagePermitStatus_1').val("Preparing");
+		$('#lowVoltagePermitLastUpdated_1').val(getToday());
+	    $('#lowVoltageInspectionRequired_1').val(1);
+        $('#lowVoltageInspectionStatus_1').val("TBD");
+        $('#lowVoltageInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#lowVoltagePermitRequired_1').val() == 2)
+    {	$('#lowVoltagePermitStatus_1').val("N/A");
+		$('#lowVoltagePermitLastUpdated_1').val(getToday());
+	    $('#lowVoltageInspectionRequired_1').val(2);
+	    $('#lowVoltageInspectionStatus_1').val("N/A");
+	    $('#lowVoltageInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#lowVoltagePermitRequired_1').val() == 0)
+    {	
+		$('#lowVoltagePermitStatus_1').val("TBD");
+		$('#lowVoltagePermitLastUpdated_1').val(getToday());
+	    $('#lowVoltageInspectionRequired_1').val(0);
+        $('#lowVoltageInspectionStatus_1').val("TBD");
+        $('#lowVoltageInspectionLastUpdated_1').val(getToday());  
+    }  
+}	
 
 function fillOtherA()
 {
