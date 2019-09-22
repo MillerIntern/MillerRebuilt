@@ -106,11 +106,11 @@ public class ProjectNewRuleColorService {
 		String customerNumber = proj.getCustomerNumber();
 		
 		//1
-		if(actualInvoice == 0) {
+		if(status != null && status == 35 && actualInvoice == 0) {
 			scoreColor = "yellow";
 		}
 		//2
-		if(shouldInvoice == 0) {
+		if(status != null && status == 35 && shouldInvoice == 0) {
 			scoreColor = "yellow";
 		}
 		
@@ -161,11 +161,11 @@ public class ProjectNewRuleColorService {
 			scoreColor = "yellow";
 		}
 		//4
-		if(scheduledStartDate == null) {
+		if((status != null) && (status == 35 || status == 29) && scheduledStartDate == null) {
 			scoreColor = "yellow";
 		}
 		//5
-		if(scheduledTurnoverDate == null) {
+		if((status != null) && (status == 35 || status == 29) && scheduledTurnoverDate == null) {
 
 		}
 		//6
@@ -280,32 +280,37 @@ public class ProjectNewRuleColorService {
 				Date initiatedDate = currentTask.getAssignedDate();
 				String taskStatus = currentTask.getTaskStatus().getStatus();
 				
-				//1
-				if(dueDate != null && initiatedDate != null && dueDate.before(initiatedDate)) {
-					scoreColor = "yellow";
-				}
-				
-				//2
-				if(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open")) {
-					scoreColor = "red";
-					proj.setMediumScore(2);
-					Session session = HibernateUtil.getSession();
-					Transaction tx = session.beginTransaction();
-					session.clear();
-					session.update(proj);
-					tx.commit();
-					projectsIdColor.put(projects[i], scoreColor);
-					taskBreak = true;
-					break;
-				}
-				
-				//3 //Updating this rule such that task needs to be completed will be shown only if the task is not late
-				if(!(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open"))) {
-					if(taskStatus != null && taskStatus.equals("Open")) {
+				if(taskStatus != null && !(taskStatus.equals("Closed"))) {
+					
+					//1
+					if(dueDate != null && initiatedDate != null && dueDate.before(initiatedDate)) {
 						scoreColor = "yellow";
 					}
 					
+					//2
+					if(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open")) {
+						scoreColor = "red";
+						proj.setMediumScore(2);
+						Session session = HibernateUtil.getSession();
+						Transaction tx = session.beginTransaction();
+						session.clear();
+						session.update(proj);
+						tx.commit();
+						projectsIdColor.put(projects[i], scoreColor);
+						taskBreak = true;
+						break;
+					}
+					
+					//3 //Updating this rule such that task needs to be completed will be shown only if the task is not late
+					if(!(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open"))) {
+						if(taskStatus != null && taskStatus.equals("Open")) {
+							scoreColor = "yellow";
+						}
+						
+					}
 				}
+				
+
 				
 			}
 			if(taskBreak == true) {
@@ -333,79 +338,84 @@ public class ProjectNewRuleColorService {
 				String customerCopNum = currentChangeOrder.getCustomerCOPnum();
 				String subCoNum = currentChangeOrder.getSubCO();
 
-				//1
-				if(mcsCoNum == null || mcsCoNum.isEmpty()) {
-					scoreColor = "yellow";;
-				}
-				//2
-				if(title == null || title.isEmpty()) {
-					scoreColor = "yellow";
-				}
-				//3
-				if(description == null || description.isEmpty()) {
-					scoreColor = "yellow";
-				}
-				//4
-				if(COStatus == null || COStatus.isEmpty()) {
-					scoreColor = "yellow";
-				}
-				//5
-				if(subNames == null || subNames.isEmpty()) {
-					scoreColor = "yellow";
-				}
-				//6
-				if(COStatus != null && !(COStatus.equals("4")) && subsSubmittedDate == null) {
-					scoreColor = "yellow";
-				}
-				//7
-				if(customer == null || customer.isEmpty()) {
-					scoreColor = "yellow";
-				}
-				//8
-				if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
-					scoreColor = "yellow";
-				}
-				//9
-				if(COStatus != null && !(COStatus.equals("4")) && approvedDate == null) {
-					scoreColor = "yellow";
-				}
-				//10
-				if(COStatus != null && !(COStatus.equals("4"))&& COCost == 0) {
-					scoreColor = "yellow";
-				}
-				//11
-				if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
-					scoreColor = "yellow";
+				if(!(COStatus.equals("1"))) {   // "1" here means Preparing
+					//1
+					if(mcsCoNum == null || mcsCoNum.isEmpty()) {
+						scoreColor = "yellow";;
+					}
+					//2
+					if(title == null || title.isEmpty()) {
+						scoreColor = "yellow";
+					}
+					//3
+					if(description == null || description.isEmpty()) {
+						scoreColor = "yellow";
+					}
+					//4
+					if(COStatus == null || COStatus.isEmpty()) {
+						scoreColor = "yellow";
+					}
+					//5
+					if(subNames == null || subNames.isEmpty()) {
+						scoreColor = "yellow";
+					}
+					//6
+					if(COStatus != null && !(COStatus.equals("4")) && subsSubmittedDate == null) {
+						scoreColor = "yellow";
+					}
+					//7
+					if(customer == null || customer.isEmpty()) {
+						scoreColor = "yellow";
+					}
+					//8
+					if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
+						scoreColor = "yellow";
+					}
+					//9
+					if(COStatus != null && !(COStatus.equals("4")) && approvedDate == null) {
+						scoreColor = "yellow";
+					}
+					//10
+					if(COStatus != null && !(COStatus.equals("4"))&& COCost == 0) {
+						scoreColor = "yellow";
+					}
+					//11
+					if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
+						scoreColor = "yellow";
+					}
+					
+					
+					//BUA ASKED ME TO REMOVE THESE RULES FOR NOW
+//					//12
+//					if(invoiceNum == null || invoiceNum.isEmpty()) {
+//					scoreColor = "yellow";
+//					}						
+//					
+//					//13
+//					if(customerCopNum == null || customerCopNum.isEmpty()) {
+//					scoreColor = "yellow";
+//					}
+//					//14  
+//					if(subCoNum == null || subCoNum.isEmpty()) {
+//					scoreColor = "yellow";
+//					}
+					
+					
+					
+					
+					//15
+					if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
+						scoreColor = "yellow";
+					}
+					//16
+					if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
+						scoreColor = "yellow";
+					}
 				}
 				
-				
-				//BUA ASKED ME TO REMOVE THESE RULES FOR NOW
-//				//12
-//				if(invoiceNum == null || invoiceNum.isEmpty()) {
-//				scoreColor = "yellow";
-//				}						
-//				
-//				//13
-//				if(customerCopNum == null || customerCopNum.isEmpty()) {
-//				scoreColor = "yellow";
-//				}
-//				//14  
-//				if(subCoNum == null || subCoNum.isEmpty()) {
-//				scoreColor = "yellow";
-//				}
-				
-				
-				
-				
-				//15
-				if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
+				else {
 					scoreColor = "yellow";
 				}
-				//16
-				if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
-					scoreColor = "yellow";
-				}
-
 			}
 		}
 		

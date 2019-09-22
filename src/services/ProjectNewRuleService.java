@@ -116,16 +116,16 @@ public class ProjectNewRuleService {
 		int shouldInvoice = proj.getShouldInvoice();
 		String cost = proj.getCost();
 		String customerNumber = proj.getCustomerNumber();
-		
+		Long status = proj.getStatus().getId();
 		//1
-		if(actualInvoice == 0) {
-			RuleDetails rd = new RuleDetails("Financial", "ActiualInvioceZero", "Actual Invoice needs a value other than 0", 0);
+		if(status != null && status == 35 && actualInvoice == 0) {
+			RuleDetails rd = new RuleDetails("Financial", "ActiualInvoiceZero", "Actual Invoice needs a value other than 0", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
 		//2
-		if(shouldInvoice == 0) {
-			RuleDetails rd = new RuleDetails("Financial", "ShouldInvioceZero", "Should Invoice needs a value other than 0", 0);
+		if(status != null && status == 35 && shouldInvoice == 0) {
+			RuleDetails rd = new RuleDetails("Financial", "ShouldInvoiceZero", "Should Invoice needs a value other than 0", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
@@ -168,6 +168,8 @@ public class ProjectNewRuleService {
 		Date scheduledTurnoverDate = proj.getScheduledTurnover();
 		Date actualTurnoverDate = proj.getActualTurnover();
 		
+		Long status = proj.getStatus().getId();
+		
 		//1
 //		if(siteSurveyDate == null ) {
 //			RuleDetails rd = new RuleDetails("Scheduling", "SiteSuveyDate", "Site Survey Date needs a value", 0);
@@ -187,13 +189,13 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//4
-		if(scheduledStartDate == null) {
+		if((status != null) && (status == 35 || status == 29) && scheduledStartDate == null) {
 			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledStartDate", "Scheduled Start Date needs a value", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
 		//5
-		if(scheduledTurnoverDate == null) {
+		if((status != null) && (status == 35 || status == 29) && scheduledTurnoverDate == null) {
 			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledTurnoverDate", "Scheduled Turnover Date needs a value", 0);
 			scoreYellow = true;
 			al.add(rd);
@@ -304,27 +306,30 @@ public class ProjectNewRuleService {
 				Date initiatedDate = currentTask.getAssignedDate();
 				String taskStatus = currentTask.getTaskStatus().getStatus();
 				
-				//1
-				if(dueDate != null && initiatedDate != null && dueDate.before(initiatedDate)) {
-					RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("%s~Due Date must be later than initiated date ",currentTask.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
+				if(taskStatus != null && !(taskStatus.equals("Closed"))) {
 				
-				//2
-				if(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open")) {
-					RuleDetails rd = new RuleDetails("Tasks", "PassedDueDate", String.format("%s~Task is Late", currentTask.getTitle()), 1);
-					scoreRed = true;
-					al.add(rd);
-				}
-				
-				//3 //Updating this rule such that task needs to be completed will be shown only if the task is not late
-				if(!(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open"))) {
-					if(taskStatus != null && taskStatus.equals("Open")) {
-						RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("%s~Task Needs to be completed", currentTask.getTitle()), 0);
+					//1
+					if(dueDate != null && initiatedDate != null && dueDate.before(initiatedDate)) {
+						RuleDetails rd = new RuleDetails("Tasks", "IncorrectDueDate", String.format("%s~Due Date must be later than initiated date ",currentTask.getTitle()), 0);
 						scoreYellow = true;
 						al.add(rd);
 					}
+					
+					//2
+					if(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open")) {
+						RuleDetails rd = new RuleDetails("Tasks", "PassedDueDate", String.format("%s~Task is Late", currentTask.getTitle()), 1);
+						scoreRed = true;
+						al.add(rd);
+					}
+					
+					//3 //Updating this rule such that task needs to be completed will be shown only if the task is not late
+					if(!(dueDate != null && taskStatus != null && dueDate.before(today) && taskStatus.equals("Open"))) {
+						if(taskStatus != null && taskStatus.equals("Open")) {
+							RuleDetails rd = new RuleDetails("Tasks", "OpenTask", String.format("%s~Task Needs to be completed", currentTask.getTitle()), 0);
+							scoreYellow = true;
+							al.add(rd);
+						}
+				}
 					
 				}
 				
@@ -355,109 +360,122 @@ public class ProjectNewRuleService {
 				String invoiceNum = currentChangeOrder.getInvoiceNumber();
 				String customerCopNum = currentChangeOrder.getCustomerCOPnum();
 				String subCoNum = currentChangeOrder.getSubCO();
+				
+				if(!(status.equals("1"))) {   // "1" here means Preparing 
+					//1
+					if(mcsCoNum == null || mcsCoNum.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", String.format("%s~MCS CO # needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//2
+					if(title == null || title.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidTitle", String.format("%s~Title needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//3
+					if(description == null || description.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidDescription", String.format("%s~Description needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//4
+					if(status == null || status.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidStatus", String.format("%s~Status needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//5
+					if(subNames == null || subNames.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubNames", String.format("%s~Sub Name(s) needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//6
+					if(status != null && !(status.equals("4")) && subsSubmittedDate == null) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", String.format("%s~Subs Submitted Date needs a value", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//7
+					if(customer == null || customer.isEmpty()) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidCustomer", String.format("%s~Customer needs to be updated", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//8
+					if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", String.format("%s~Submit Date needs a value", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//9
+					if(status != null && !(status.equals("4")) && approvedDate == null) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", String.format("%s~Approved Date needs a value", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//10
+					if(status != null && !(status.equals("4")) && cost == 0) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", "CostZero", String.format("%s~Cost needs a value other than 0", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//11
+					if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", "SellZero", String.format("%s~Sell needs a value other than 0", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					
+					
+					//BUA ASKED ME TO REMOVE THESE RULES FOR NOW
+//					//12
+//					if(invoiceNum == null || invoiceNum.isEmpty()) {
+//						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidInvoiceNum", String.format("%s~Invoice number needs to be updated", currentChangeOrder.getTitle()), 0);
+//						scoreYellow = true;
+//						al.add(rd);
+//					}						
+//					
+//					//13
+//					if(customerCopNum == null || customerCopNum.isEmpty()) {
+//						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSustomerCopNum", String.format("%s~Customer COP number needs to be updated", currentChangeOrder.getTitle()), 0);
+//						al.add(rd);
+//					}
+//					//14  
+//					if(subCoNum == null || subCoNum.isEmpty()) {
+//						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubCoNum", String.format("%s~Sub CO number needs to be updated", currentChangeOrder.getTitle()), 0);
+//						al.add(rd);
+//					}
+					
+					
+					
+					
+					//15
+					if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierSubmitDate", String.format("%s~Submit Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					//16
+					if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierApprovedDate", String.format("%s~Approved Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
+					
+				}
+				
+				else {
+					//If the Change order status is preparing
+					RuleDetails rd = new RuleDetails("ChangeOrders", "NeedToSubmitProposal", String.format("%s~Need to complete change order proposal and submit", currentChangeOrder.getTitle()), 0);
+					scoreYellow = true;
+					al.add(rd);
+					
+				}
+					
 
-				//1
-				if(mcsCoNum == null || mcsCoNum.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", String.format("%s~MCS CO # needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//2
-				if(title == null || title.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidTitle", String.format("%s~Title needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//3
-				if(description == null || description.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidDescription", String.format("%s~Description needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//4
-				if(status == null || status.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidStatus", String.format("%s~Status needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//5
-				if(subNames == null || subNames.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubNames", String.format("%s~Sub Name(s) needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//6
-				if(status != null && !(status.equals("4")) && subsSubmittedDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubsSubmittedDate", String.format("%s~Subs Submitted Date needs a value", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//7
-				if(customer == null || customer.isEmpty()) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidCustomer", String.format("%s~Customer needs to be updated", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//8
-				if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && submitDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubmitDate", String.format("%s~Submit Date needs a value", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//9
-				if(status != null && !(status.equals("4")) && approvedDate == null) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDate", String.format("%s~Approved Date needs a value", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//10
-				if(status != null && !(status.equals("4")) && cost == 0) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "CostZero", String.format("%s~Cost needs a value other than 0", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//11
-				if(status != null && !(status.equals("4")) && (customer!= null && (!(customer.equals("7")) && !(customer.equals("8")))) && sell == 0) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "SellZero", String.format("%s~Sell needs a value other than 0", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				
-				
-				//BUA ASKED ME TO REMOVE THESE RULES FOR NOW
-//				//12
-//				if(invoiceNum == null || invoiceNum.isEmpty()) {
-//					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidInvoiceNum", String.format("%s~Invoice number needs to be updated", currentChangeOrder.getTitle()), 0);
-//					scoreYellow = true;
-//					al.add(rd);
-//				}						
-//				
-//				//13
-//				if(customerCopNum == null || customerCopNum.isEmpty()) {
-//					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSustomerCopNum", String.format("%s~Customer COP number needs to be updated", currentChangeOrder.getTitle()), 0);
-//					al.add(rd);
-//				}
-//				//14  
-//				if(subCoNum == null || subCoNum.isEmpty()) {
-//					RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidSubCoNum", String.format("%s~Sub CO number needs to be updated", currentChangeOrder.getTitle()), 0);
-//					al.add(rd);
-//				}
-				
-				
-				
-				
-				//15
-				if((submitDate != null) && (subsSubmittedDate != null) && (submitDate).before(subsSubmittedDate)) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierSubmitDate", String.format("%s~Submit Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				//16
-				if((approvedDate != null) && (subsSubmittedDate != null) && (approvedDate).before(subsSubmittedDate)) {
-					RuleDetails rd = new RuleDetails("ChangeOrders", "EarlierApprovedDate", String.format("%s~Approved Date is earlier than Sub Submitted Date", currentChangeOrder.getTitle()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
 
 			}
 		}
