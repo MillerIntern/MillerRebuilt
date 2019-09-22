@@ -411,7 +411,7 @@ public class ProjectNewRuleService {
 					al.add(rd);
 				}
 				//10
-				if(cost == 0) {
+				if(status != null && !(status.equals("4")) && cost == 0) {
 					RuleDetails rd = new RuleDetails("ChangeOrders", "CostZero", String.format("%s~Cost needs a value other than 0", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
@@ -1309,26 +1309,26 @@ public class ProjectNewRuleService {
 				al.add(rd);
 			}
 			
-			//5
-			if((punchListStatus != null) && (punchListStatus.equals("6")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", 0);
-				scoreYellow = true;
-				al.add(rd);		
-			}
-			
-			//6
-			if((asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("6")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As-Built Drawing status needs to be updated -Documents", 0);
-				scoreYellow = true;
-				al.add(rd);		
-			}
-			
-			//7
-			if((closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("6")) ) {					
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Close Out photo status needs to be updated -Documents", 0);
-				scoreYellow = true;
-				al.add(rd);		
-			}
+//			//5
+//			if((punchListStatus != null) && (punchListStatus.equals("6")) ) {					
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", 0);
+//				scoreYellow = true;
+//				al.add(rd);		
+//			}
+//			
+//			//6
+//			if((asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("6")) ) {					
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As Built Drawing status needs to be updated -Documents", 0);
+//				scoreYellow = true;
+//				al.add(rd);		
+//			}
+//			
+//			//7
+//			if((closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("6")) ) {					
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Close Out photo status needs to be updated -Documents", 0);
+//				scoreYellow = true;
+//				al.add(rd);		
+//			}
 			//commenting it now until the fix in counting the CO's is perfect
 			//8
 //			if(numMcsCO != numMcsCOCompleted) {
@@ -1337,21 +1337,21 @@ public class ProjectNewRuleService {
 //				al.add(rd);
 //			}
 			
-			if(scheduledStartDate != null && scheduledStartDate.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus1", "Punch list status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
 				
 			}
 			
-			if(scheduledStartDate != null && scheduledStartDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "As-Built Drawing status needs to be updated -Documents", 0);
+			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "As Built Drawing status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
 				
 			}
 			
-			if(scheduledStartDate != null && scheduledStartDate.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus1", "Close Out photo status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);	
@@ -1367,7 +1367,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(actualTurnoverDate != null && actualTurnoverDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "As-Built Drawing status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "As Built Drawing status needs to be updated -Documents", 1);
 				scoreRed = true;
 				al.add(rd);		
 				

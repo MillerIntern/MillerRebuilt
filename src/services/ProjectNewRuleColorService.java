@@ -370,7 +370,7 @@ public class ProjectNewRuleColorService {
 					scoreColor = "yellow";
 				}
 				//10
-				if(COCost == 0) {
+				if(COStatus != null && !(COStatus.equals("4"))&& COCost == 0) {
 					scoreColor = "yellow";
 				}
 				//11
@@ -1415,20 +1415,20 @@ public class ProjectNewRuleColorService {
 				scoreColor = "yellow";
 			}
 			
-			//5
-			if((punchListStatus != null) && (punchListStatus.equals("6")) ) {					
-				scoreColor = "yellow";	
-			}
-			
-			//6
-			if((asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("6")) ) {					
-				scoreColor = "yellow";	
-			}
-			
-			//7
-			if((closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("6")) ) {					
-				scoreColor = "yellow";	
-			}
+//			//5
+//			if((punchListStatus != null) && (punchListStatus.equals("6")) ) {					
+//				scoreColor = "yellow";	
+//			}
+//			
+//			//6
+//			if((asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("6")) ) {					
+//				scoreColor = "yellow";	
+//			}
+//			
+//			//7
+//			if((closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("6")) ) {					
+//				scoreColor = "yellow";	
+//			}
 			
 			//commenting it now until the fix in counting the CO's is perfect
 //			//8
@@ -1444,17 +1444,17 @@ public class ProjectNewRuleColorService {
 //				continue;
 //			}
 			
-			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				scoreColor = "yellow";			
 				
 			}
 			
-			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
 				scoreColor = "yellow";		
 				
 			}
 			
-			if(scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
 				scoreColor = "yellow";	
 				
 			}
