@@ -277,6 +277,7 @@ $(document).ready(function(){
 		$('#closeoutData').find("#mg2CompletionDate").datepicker();
 		$('#closeoutData').find("#MCSWarranty").datepicker();
 		$('#closeoutData').find("#equipmentSubCL").datepicker();
+		$('#closeoutData').find("#costcoSignoff").datepicker();
 		$('#closeoutData').find("#punchList").datepicker();
 		$('#closeoutData').find("#asBuilts").datepicker();
 		$('#closeoutData').find("#closeoutPhotosCL").datepicker();
@@ -397,13 +398,13 @@ function convertDefault( value )
 function fillTabs_CLOSEOUT(data)
 {
 	var json = data;
-	console.log(json);
 	if (json.closeoutDetails != null)
 	{	
 		
 		$('#closeoutData').find("#airGas").val(json.closeoutDetails.airGas);
 		$('#closeoutData').find("#permits").val(json.closeoutDetails.permitsClosed);
 		$('#closeoutData').find("#asBuilts").val(json.closeoutDetails.asBuilts);
+		$('#closeoutData').find("#costcoSignoff").val(json.closeoutDetails.costcoSignoff);
 		$('#closeoutData').find("#punchList").val(json.closeoutDetails.punchList);
 		$('#closeoutData').find("#alarmHvac").val(json.closeoutDetails.alarmHvacForm);
 		$('#closeoutData').find("#verisae").val(json.closeoutDetails.verisaeShutdownReport);
@@ -593,6 +594,7 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#manualStatus").val(convertDefault(json.closeoutDetails.manualStatus));
 		$('#closeoutData').find("#manualDate").val(json.closeoutDetails.manualDate);
 		
+		$('#closeoutData').find("#costcoSignoffStatus").val(convertDefault(json.closeoutDetails.costcoSignoffStatus));
 		$('#closeoutData').find("#punchListStatus").val(convertDefault(json.closeoutDetails.punchListStatus));
 
 		$('#closeoutData').find("#asBuiltDrawingsStatus").val(convertDefault(json.closeoutDetails.asBuiltDrawingsStatus));
@@ -720,7 +722,6 @@ function fillDropdowns_CLOSEOUT(data)
 		option.setAttribute("value", json[i].id);	
 		d.appendChild(option);
 	}
-
 	for(var i = 0; i < CLOSEOUTSTATUS_DROPDOWNS.length; i++)
 	{
 		var copy = d.cloneNode(true);
@@ -741,6 +742,7 @@ function fillDropdowns_CLOSEOUT(data)
 function saveProject_CLOSEOUT()
 {
     console.log("Saving Closeout Information");
+    var costcoSignoff = $('#closeoutData').find("#costcoSignoff").val();
     var punchList = $('#closeoutData').find("#punchList").val();
 	var alarmHvac = $('#closeoutData').find("#alarmHvac").val();
 	var verisae = $('#closeoutData').find("#verisae").val();
@@ -874,6 +876,8 @@ function saveProject_CLOSEOUT()
     var manualStatus = $('#closeoutData').find("#manualStatus").val();
     var manualDate = $('#closeoutData').find("#manualDate").val();
     
+    var costcoSignoffStatus = $('#closeoutData').find("#costcoSignoffStatus").val();
+    
     var punchListStatus = $('#closeoutData').find("#punchListStatus").val();
     //punchList = punchListDate
     
@@ -938,7 +942,7 @@ function saveProject_CLOSEOUT()
 				
 				manualDate, HVACstartupFormDate, salvageDate, substantialCompletionDate, 
 				paymentOfDebtsAndClaimsDate, releaseOfLiensDate, mulvannySignOffDate, asBuilts,
-				punchList, alarmHvac, verisae
+				costcoSignoff, punchList, alarmHvac, verisae
                 ];
     
     
@@ -987,9 +991,10 @@ function saveProject_CLOSEOUT()
     		if(i == 37) releaseOfLiensDate = dates_CLOSEOUT[i];
     		if(i == 38) mulvannySignOffDate = dates_CLOSEOUT[i];
     		if(i == 39) asBuilts = dates_CLOSEOUT[i];
-    		if(i == 40) punchList = dates_CLOSEOUT[i];
-    		if(i == 41) alarmHvac = dates_CLOSEOUT[i];
-    		if(i == 42) verisae = dates_CLOSEOUT[i];
+    		if(i == 40) costcoSignoff = dates_CLOSEOUT[i];
+    		if(i == 41) punchList = dates_CLOSEOUT[i];
+    		if(i == 42) alarmHvac = dates_CLOSEOUT[i];
+    		if(i == 43) verisae = dates_CLOSEOUT[i];
     	}
 		var action = "editCloseout";
 		var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
@@ -1022,6 +1027,7 @@ function saveProject_CLOSEOUT()
 				'salvageID': SALVAGE_ID,
 
 				'asBuilts':asBuilts,
+				'costcoSignoff':costcoSignoff,
 				'punchList':punchList,
 				'alarmHvac':alarmHvac,
 				'verisae':verisae,
@@ -1143,6 +1149,7 @@ function saveProject_CLOSEOUT()
 				'manualStatus': manualStatus,
 				'manualDate': manualDate,
 				
+				'costcoSignoffStatus':costcoSignoffStatus,
 				'punchListStatus': punchListStatus,
 				
 				'asBuiltDrawingsStatus': asBuiltDrawingsStatus,
@@ -1260,7 +1267,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"MCSWarrantyStatus", "GCWarrantyStatus", "mechanicalWarrantyStatus", "electricalWarrantyStatus", "sprinkleWarrantyStatus", 
                 				"plumbingWarrantyStatus", "gasWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
                 				
-                				"equipmentSubmittalStatus", "manualStatus","punchListStatus", "asBuiltDrawingsStatus", 
+                				"equipmentSubmittalStatus", "manualStatus", "costcoSignoffStatus", "punchListStatus", "asBuiltDrawingsStatus", 
                                 "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",   
                                 'substantialCompletionStatus', 'paymentOfDebtsAndClaimsStatus', 'releaseOfLiensStatus',
                                 'mulvannySignOffStatus'

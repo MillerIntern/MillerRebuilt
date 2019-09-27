@@ -253,6 +253,12 @@ public class CloseoutDetailsFiller
 		cd.setManualDate(manualDate);
 		cd.setManualStatus(params.get("manualStatus"));
 
+		Date costcoSignoff = null;
+		if(!params.get("costcoSignoff").isEmpty())
+			costcoSignoff = formatter.parse(params.get("costcoSignoff"));
+		cd.setCostcoSignoff(costcoSignoff);
+		cd.setCostcoSignoffStatus(params.get("costcoSignoffStatus"));
+		
 		Date punchList = null;
 		if(!params.get("punchList").isEmpty())
 			punchList = formatter.parse(params.get("punchList"));

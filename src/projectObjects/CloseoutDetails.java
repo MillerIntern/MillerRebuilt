@@ -211,6 +211,8 @@ public class CloseoutDetails extends ProjectObject
 	
 	private String punchListStatus;
 
+	private String costcoSignoffStatus;
+	private Date costcoSignoff;
 	
 	private String asBuiltDrawingsStatus;
 
@@ -247,7 +249,7 @@ public class CloseoutDetails extends ProjectObject
 	private Date mulvannySignOffDate;
 
 	public CloseoutDetails(Date asBuilts, SalvageValue salvageValue,
-			Date punchList, Date alarmHvacForm, Date airGas,
+			Date costcoSignoff, Date punchList, Date alarmHvacForm, Date airGas,
 			Date permitsClosed, Date verisaeShutdownReport, 
 			Date closeoutNotes,	Date buildingPermitCL, Date inspectionSOCL,	 Date certCompletionCL,
 			Date mPunchListCL, Date closeoutPhotosCL, Date subConWarrantiesCL,
@@ -272,7 +274,7 @@ public class CloseoutDetails extends ProjectObject
 			String ceilingFinalStatus, Date ceilingFinalDate, String fireAlarmFinalStatus, Date fireAlarmFinalDate,
 			String lowVolFinalStatus, Date lowVolFinalDate, String otherFinalLiensBStatus, Date otherFinalLiensBDate,
 			String buildingFinalNotes, String tmpCertificateStatus, Date certificateDate, String certificateStatus, 
-			String punchListStatus, Date mg2CompletionDate, String mg2CompletionStatus, Date tmpCertificateDate, 
+			String costcoSignoffStatus, String punchListStatus, Date mg2CompletionDate, String mg2CompletionStatus, Date tmpCertificateDate, 
 			String buildingFinalStatus, String HVACstartupFormStatus, String otherWarrantyStatusB, Date otherWarrantyDateA, 
 			Date HTIWarrantyDate, String gasStatus, Date sprinkleDate, String plumbingStatus, 
 			Date mechanicalDate, String GCStatus, String warrantyNotes, String finalLiensNotes, String finalInspectionNotes,
@@ -282,6 +284,7 @@ public class CloseoutDetails extends ProjectObject
 	{
 		this.asBuilts = asBuilts;
 		this.salvageValue = salvageValue;
+		this.costcoSignoff = costcoSignoff; 
 		this.punchList = punchList;
 		this.alarmHvacForm = alarmHvacForm;
 		this.airGas = airGas;
@@ -403,6 +406,7 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateDate = certificateDate;
 		
 		this.certificateStatus = certificateStatus;
+		this.costcoSignoffStatus = costcoSignoffStatus;
 		this.punchListStatus = punchListStatus;
 		
 		
@@ -428,6 +432,7 @@ public class CloseoutDetails extends ProjectObject
 	{
 		this.asBuilts = null;
 		this.salvageValue = null;
+		this.costcoSignoff = null;
 		this.punchList = null;
 		this.alarmHvacForm = null;
 		this.airGas = null;
@@ -551,6 +556,7 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateDate = null;
 		
 		this.certificateStatus = null;
+		this.costcoSignoffStatus = null;
 		this.punchListStatus = null;
 		
 		this.mg2CompletionDate = null;
@@ -571,6 +577,22 @@ public class CloseoutDetails extends ProjectObject
 		this.mulvannySignOffStatus = null;
 	}
 	
+	public synchronized String getCostcoSignoffStatus() {
+		return costcoSignoffStatus;
+	}
+
+	public synchronized void setCostcoSignoffStatus(String costcoSignoffStatus) {
+		this.costcoSignoffStatus = costcoSignoffStatus;
+	}
+
+	public synchronized Date getCostcoSignoff() {
+		return costcoSignoff;
+	}
+
+	public synchronized void setCostcoSignoff(Date costcoSignoff) {
+		this.costcoSignoff = costcoSignoff;
+	}
+
 	/**
 	 * This method sets the id of this closeoutdetail
 	 */
@@ -1566,6 +1588,8 @@ public class CloseoutDetails extends ProjectObject
 			return co.getCloseOutPhotosStatus();
 		else if(name.equalsIgnoreCase("asBuiltDrawingsStatus"))
 			return co.getAsBuiltDrawingsStatus();
+		else if(name.equalsIgnoreCase("costcoSignoffStatus"))
+			return co.getCostcoSignoffStatus();
 		else if(name.equalsIgnoreCase("punchListStatus"))
 			return co.getPunchListStatus();
 		else if(name.equalsIgnoreCase("manualStatus"))
@@ -1675,6 +1699,8 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("closeoutPhotosCL" , "Date");
 		fields.put("asBuiltDrawingsStatus" , "String");
 		fields.put("asBuilts" , "Date");
+		fields.put("costcoSignoffStatus" , "String");
+		fields.put("costcoSignoff" , "Date");
 		fields.put("punchListStatus" , "String");
 		fields.put("punchList" , "Date");
 		fields.put("manualStatus" , "String");
