@@ -916,55 +916,55 @@ public class ProjectNewRuleService {
 				
 				//37
 				if( (buildingInspectionStatus!= null) && (buildingInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "BuildInspStatusTBD", "Building Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "BuildInspStatusTBD", "Building Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//38
 				if( (ceilingInspectionStatus!= null) && (ceilingInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "CeilInspStatusTBD", "Ceiling Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "CeilInspStatusTBD", "Ceiling Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//39
 				if( (mechanicalInspectionStatus!= null) && (mechanicalInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "MechInspStatusTBD", "Mechanical Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "MechInspStatusTBD", "Mechanical Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//40
 				if( (electricalInspectionStatus!= null) && (electricalInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "ElecInspStatusTBD", "Electrical Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "ElecInspStatusTBD", "Electrical Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//41
 				if( (plumbingInspectionStatus!= null) && (plumbingInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "PlumbInspStatusTBD", "Plumbing Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "PlumbInspStatusTBD", "Plumbing Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//42
 				if( (gasInspectionStatus!= null) && (gasInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "GasInspStatusTBD", "Gas Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "GasInspStatusTBD", "Gas Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//43
 				if( (sprinklerInspectionStatus!= null) && (sprinklerInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "SprinklerInspStatusTBD", "Sprinkler Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "SprinklerInspStatusTBD", "Sprinkler Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//44
 				if( (fireAlarmInspectionStatus!= null) && (fireAlarmInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "FireInspStatusTBD", "Fire Alarm Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "FireInspStatusTBD", "Fire Alarm Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}
 				//45
 				if( (lowVoltageInspectionStatus!= null) && (lowVoltageInspectionStatus.equals("TBD"))) {
-					RuleDetails rd = new RuleDetails("Permits", "LowVoltInspStatusTBD", "Low Voltage Inspection Status must be either Yes or No", 0);
+					RuleDetails rd = new RuleDetails("Permits", "LowVoltInspStatusTBD", "Low Voltage Inspection Status must be Updated", 0);
 					scoreYellow = true;
 					al.add(rd);
 				}

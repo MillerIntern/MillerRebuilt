@@ -5211,7 +5211,8 @@ function editSelectedEquipment (source) {
 }
 
 function equipmentReport () {
-	window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
+	//window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
+	window.location.href = "Report?" + 'id=' + projectID + "&type=Equipment Report";
 }
 
 /**
