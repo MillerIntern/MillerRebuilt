@@ -2591,7 +2591,8 @@ function permissionCheckForScoreCard(){
 			user = data;
 			if(user.permission.name == "superadmin")
 			{
-				getColorForAllProjects();
+				if(confirm('Make Sure that Nobody is using the Database. Are you sure you want to update?') == true)
+					getColorForAllProjects();
 			}
 			else
 			{
