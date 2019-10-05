@@ -82,7 +82,7 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//5
-		if(mcsNumber == 0 || mcsNumber == -1) {
+		if((stage.equals("Active")) && (mcsNumber == 0 || mcsNumber == -1)) {
 			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidMCS#", "MCS Project # needs to be updated", 0);
 			scoreYellow = true;
 			al.add(rd);
@@ -139,7 +139,7 @@ public class ProjectNewRuleService {
 //		}
 
 		//4
-		if(actualInvoice != shouldInvoice) {
+		if((status != null && status == 35) && (actualInvoice != shouldInvoice)) {
 			RuleDetails rd = new RuleDetails("Financial", "ActualShouldNotEqual", "Actual Invoice and Should Invoice need to be equal", 0);
 			scoreYellow = true;
 			al.add(rd);
@@ -200,14 +200,14 @@ public class ProjectNewRuleService {
 			scoreYellow = true;
 			al.add(rd);
 		}
-		//6
-		if((scheduledTurnoverDate != null) && (scheduledTurnoverDate.before(today))) {
-			if(actualTurnoverDate == null) {
-				RuleDetails rd = new RuleDetails("Scheduling", "ActualTurnoverDate", "Actual Turnover Date needs a value", 0);
-				scoreYellow = true;
-				al.add(rd);
-			}
-		}
+		//6  BUA asked me to remove this, but technically it is same as the Actual Turnover date is late Rule
+//		if((scheduledTurnoverDate != null) && (scheduledTurnoverDate.before(today))) {
+//			if((status != null) && (status == 35) && (actualTurnoverDate == null)) {
+//				RuleDetails rd = new RuleDetails("Scheduling", "ActualTurnoverDate", "Actual Turnover Date needs a value", 0);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
+//		}
 		
 
 		//IGNORING THIS RULE FOR NOW AS PER ANDY'S INSTRUCTION
@@ -256,7 +256,7 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//14
-		if((scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
+		if((status != null) && (status == 35) && (scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
 			RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Actual Turnover Date is late", 1);
 			scoreRed = true;
 			al.add(rd);
@@ -1254,7 +1254,8 @@ public class ProjectNewRuleService {
 			String hvacStartUpFormStatus = closeOut.getHVACstartupFormStatus();
 			String verisaeReportStatus = closeOut.getVerisaeReportStatus();
 			String alarmFormStatus = closeOut.getAlarmFormStatus();
-			SalvageValue salvageValue = closeOut.getSalvageValue();		
+			SalvageValue salvageValue = closeOut.getSalvageValue();
+			String costcoCloseoutFormStatus = closeOut.getCostcoSignoffStatus();
 			String punchListStatus = closeOut.getPunchListStatus();
 			String asBuiltDrawingStatus = closeOut.getAsBuiltDrawingsStatus();
 			String closeOutPhotosStatus = closeOut.getCloseOutPhotosStatus();
@@ -1355,6 +1356,13 @@ public class ProjectNewRuleService {
 //				al.add(rd);
 //			}
 			
+			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus1", "Costco Closeout SignOff Form status needs to be updated -Documents", 0);
+				scoreYellow = true;
+				al.add(rd);		
+				
+			}
+			
 			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus1", "Punch list status needs to be updated -Documents", 0);
 				scoreYellow = true;
@@ -1373,6 +1381,13 @@ public class ProjectNewRuleService {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus1", "Close Out photo status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);	
+				
+			}
+			
+			if(actualTurnoverDate != null && actualTurnoverDate.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus2", "Costco Closeout SignOff Form status needs to be updated -Documents", 1);
+				scoreRed = true;
+				al.add(rd);		
 				
 			}
 			

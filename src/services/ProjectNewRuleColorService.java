@@ -75,7 +75,7 @@ public class ProjectNewRuleColorService {
 			scoreColor = "yellow";
 		}
 		//5
-		if(mcsNumber == 0 || mcsNumber == -1) {
+		if((stage.equals("Active")) && (mcsNumber == 0 || mcsNumber == -1)) {
 			scoreColor = "yellow";
 		}
 		//6
@@ -121,7 +121,7 @@ public class ProjectNewRuleColorService {
 //		}
 
 		//4
-		if(actualInvoice != shouldInvoice) {
+		if((status != null && status == 35) && (actualInvoice != shouldInvoice)) {
 			scoreColor = "yellow";
 		}
 		
@@ -168,12 +168,12 @@ public class ProjectNewRuleColorService {
 		if((status != null) && (status == 35 || status == 29) && scheduledTurnoverDate == null) {
 
 		}
-		//6
-		if((scheduledTurnoverDate != null) && (scheduledTurnoverDate.before(today))) {
-			if(actualTurnoverDate == null) {
-				scoreColor = "yellow";
-			}
-		}
+//		//6  BUA asked me to remove this, but technically it is same as the Actual Turnover date is late Rule
+//		if((scheduledTurnoverDate != null) && (scheduledTurnoverDate.before(today))) {
+//			if((status != null) && (status == 35) && (actualTurnoverDate == null)) {
+//				scoreColor = "yellow";
+//			}
+//		}
 		
 
 		//IGNORING THIS RULE FOR NOW AS PER ANDY'S INSTRUCTION
@@ -218,7 +218,7 @@ public class ProjectNewRuleColorService {
 			continue;
 		}
 		//14
-		if((scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
+		if((status != null) && (status == 35) && (scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
 			scoreColor = "red";
 			proj.setMediumScore(2);
 			Session session = HibernateUtil.getSession();
@@ -1361,6 +1361,7 @@ public class ProjectNewRuleColorService {
 			String verisaeReportStatus = closeOut.getVerisaeReportStatus();
 			String alarmFormStatus = closeOut.getAlarmFormStatus();
 			SalvageValue salvageValue = closeOut.getSalvageValue();		
+			String costcoCloseoutFormStatus = closeOut.getCostcoSignoffStatus();
 			String punchListStatus = closeOut.getPunchListStatus();
 			String asBuiltDrawingStatus = closeOut.getAsBuiltDrawingsStatus();
 			String closeOutPhotosStatus = closeOut.getCloseOutPhotosStatus();
@@ -1454,6 +1455,11 @@ public class ProjectNewRuleColorService {
 //				continue;
 //			}
 			
+			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+				scoreColor = "yellow";	
+				
+			}
+			
 			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				scoreColor = "yellow";			
 				
@@ -1469,6 +1475,19 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
+			
+			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+				scoreColor = "red";
+				proj.setMediumScore(2);
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(proj);
+				tx.commit();
+				projectsIdColor.put(projects[i], scoreColor);
+				continue;	
+				
+			}
 			
 			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				scoreColor = "red";
