@@ -11947,3 +11947,19 @@ function scrollSmoothToBottom (id) { //For Change Orders to go to the bottom
 	      scrollTop: document.body.scrollHeight
 	   }, 500);
 	}
+
+function sendInvoiceAlert()
+{
+   	console.log("IN: sendInvoiceAlert()");
+   	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'sendInvoiceAlert',
+			'shouldInvoice' :document.getElementById('shouldInvoice').value
+		}, complete: function (response) {
+			console.log("RESPONSE FROM sendInvoiceAlert() = ", response);					
+		}
+	});
+}

@@ -204,7 +204,87 @@ public class Project extends HttpServlet
 		    	  e.printStackTrace();
 		      }
 		      
-		} else if(action.equals("sendText")) {
+		}
+		
+		else if(action.equals("sendInvoiceAlert")) {
+
+			System.out.println("SENDING INVOICE ALERT");
+	         
+	         
+	       
+	         
+			// Recipient's email ID needs to be mentioned.
+		      String to;
+		    
+		      to = "akashgurram18@gmail.com";
+		      
+		      // Sender's email ID needs to be mentioned
+		      String from = "mcstaskalert@millerconstructionservices.com";
+		      //This password was missing, Akash added it
+		      String pass = "Tjm@1234";
+		      // Assuming you are sending email from localhost
+		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
+		      String host = "west.exch032.serverdata.net";
+
+		      // Get system properties
+		      Properties properties = System.getProperties();
+
+		      // Setup mail server
+		      properties.put("mail.smtp.starttls.enable", "true");
+
+		      properties.put("mail.smtp.ssl.trust", host);
+		      properties.put("mail.smtp.user", from);
+		      properties.put("mail.smtp.password", pass);
+		      properties.put("mail.smtp.port", "587");
+		      properties.put("mail.smtp.auth", "true");
+
+
+		      // Get the default Session object.
+		      javax.mail.Session session = javax.mail.Session.getDefaultInstance(properties);
+
+		      try {
+		         // Create a default MimeMessage object.
+		         MimeMessage message = new MimeMessage(session);
+
+		         // Set From: header field of the header.
+		         message.setFrom(new InternetAddress(from));
+
+		         // Set To: header field of the header.
+		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+		         // Set Subject: header field
+		         String subject, body;
+		        
+		         subject = "MCS Should Invoice Alert";		        
+
+		         
+		         
+		         
+		         body = "Project:  " + "is ready to bill as of today" ;
+		 
+		         
+
+		         message.setSubject(subject);
+
+		         // Now set the actual message
+		         message.setText(body);
+
+		         // Send message
+		         Transport transport = session.getTransport("smtp");
+		         transport.connect(host, from, pass);
+		         transport.sendMessage(message, message.getAllRecipients());
+		         transport.close();
+//		         Transport.send(message);
+		         System.out.println("Sent message successfully....");
+		      }catch (MessagingException mex) {
+		         mex.printStackTrace();
+		      } catch(Exception e) {
+		    	  e.printStackTrace();
+		      }
+		      
+		
+		}
+		else if(action.equals("sendText")) {
 			System.out.println("SENDING TEXT");
 
 			 String phoneNumber = parameters.get("phoneNumber");

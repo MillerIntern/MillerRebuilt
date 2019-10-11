@@ -90,6 +90,9 @@ public class AutoFillService {
 		else 
 			cd = proj.getCloseoutDetails();
 		
+		cd.setCostcoSignoffStatus(value);
+		cd.setCostcoSignoff(today);
+		
 		cd.setPunchListStatus(value);
 		cd.setPunchList(today);
 		
