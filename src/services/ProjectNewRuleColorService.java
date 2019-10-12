@@ -105,10 +105,10 @@ public class ProjectNewRuleColorService {
 		String cost = proj.getCost();
 		String customerNumber = proj.getCustomerNumber();
 		
-		//1
-		if(status != null && status == 35 && actualInvoice == 0) {
-			scoreColor = "yellow";
-		}
+//		//1
+//		if(status != null && status == 35 && actualInvoice == 0) {
+//			scoreColor = "yellow";
+//		}
 		//2
 		if(status != null && status == 35 && shouldInvoice == 0) {
 			scoreColor = "yellow";
@@ -1407,12 +1407,12 @@ public class ProjectNewRuleColorService {
 			//CloseOut Documents Rules
 			
 			//1
-			if(hvacStartUpFormStatus!=null && hvacStartUpFormStatus.equals("6")) {
+			if(status != null && status == 35 && hvacStartUpFormStatus!=null && hvacStartUpFormStatus.equals("6")) {
 				scoreColor = "yellow";
 			}
 			
 			//2
-			if(verisaeReportStatus!=null && verisaeReportStatus.equals("6")) {
+			if(status != null && status == 35 && verisaeReportStatus!=null && verisaeReportStatus.equals("6")) {
 				scoreColor = "yellow";
 			}
 			
@@ -1455,12 +1455,12 @@ public class ProjectNewRuleColorService {
 //				continue;
 //			}
 			
-			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+			if(status != null && status == 35 && !(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
 				scoreColor = "yellow";	
 				
 			}
 			
-			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+			if(status != null && status == 35 && !(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				scoreColor = "yellow";			
 				
 			}
@@ -1470,13 +1470,13 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
-			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+			if(status != null && status == 35 && !(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
 				scoreColor = "yellow";	
 				
 			}
 			
 			
-			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
+			if(status != null && status == 35 && actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (costcoCloseoutFormStatus != null) && (costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("4") || costcoCloseoutFormStatus.equals("6"))) {
 				scoreColor = "red";
 				proj.setMediumScore(2);
 				Session session = HibernateUtil.getSession();
@@ -1489,7 +1489,7 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
-			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
+			if(status != null && status == 35 && actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (punchListStatus != null) && (punchListStatus.equals("2") || punchListStatus.equals("4") || punchListStatus.equals("6"))) {
 				scoreColor = "red";
 				proj.setMediumScore(2);
 				Session session = HibernateUtil.getSession();
@@ -1515,7 +1515,7 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
-			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
+			if(status != null && status == 35 && actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (closeOutPhotosStatus != null) && (closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("4") || closeOutPhotosStatus.equals("6"))) {
 				scoreColor = "red";
 				proj.setMediumScore(2);
 				Session session = HibernateUtil.getSession();

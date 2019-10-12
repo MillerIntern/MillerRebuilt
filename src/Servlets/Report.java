@@ -335,7 +335,8 @@ public class Report extends HttpServlet
 	public synchronized String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
 		System.out.println("PROJECTS OF INTEREST");
-
+		System.out.println(projects);
+		System.out.println(reportName);
 		StringBuilder sb = new StringBuilder();
 		//Generate the html header
 		sb.append(HtmlGenerator.generateHtmlHeader(reportName));
@@ -354,6 +355,22 @@ public class Report extends HttpServlet
 
 		if(reportName.equals("Adrienne's Report")) sortProjectsStage(projects);
 		else if(reportName.contains("Change Orders")) sortProjectsChangeOrder(projects);
+		
+		//WRITING THIS PART SO THAT Drain Pan, Evaporators, and Refrigerant Conversion items will not be visible in the Project Report
+		else if(reportName.contains("Permits")) {
+			for (int i = 0; i < projects.size(); i++) {
+				projectObjects.Project p = projects.get(i);
+				if(p.getProjectItem().getName().contains("Drain Pan") || p.getProjectItem().getName().contains("Evaporators") || 
+						p.getProjectItem().getName().contains("Refrigerant Conversion")) {
+					projects.remove(i);
+					i--;		
+				}
+			}
+			System.out.println("\nProj len is ");
+			System.out.println(projects.size());
+			sortProjects(projects);
+		}
+		
 		else sortProjects(projects);
 		
 		sb.append("<tbody>");

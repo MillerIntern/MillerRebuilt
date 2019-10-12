@@ -1040,7 +1040,6 @@ function printButton(){
 		}
 	
 	printTasks(projectsOfInterest);
-
 	console.log("PROJ OF INTTT = ", projectsOfInterest);
 	
 	let taskIDs = new Array();
@@ -1066,6 +1065,7 @@ function printButton(){
  * INNER FUNCTION CALLS: window.print()
  */
 function printTasks(projectsOfInterest) {
+	console.log("Managers of interest", managersOfInterest);
 	console.log("PROJECTS OF INTEREST  ==== ", projectsOfInterest);
 	document.body.innerHTML="";
     document.body.style.backgroundColor = "white";
@@ -1074,7 +1074,16 @@ function printTasks(projectsOfInterest) {
 	div.id = "insertTable";
 	var title = document.createElement("h3");
 	title.id = "taskReportTitle";
-	title.innerHTML = "Miller Construction: Selected Tasks";
+	if(managersOfInterest == undefined){
+		title.innerHTML = "Task Report: "+user.firstName;
+	}
+	else if(managersOfInterest.length == 1){
+		title.innerHTML = "Task Report: "+managersOfInterest[0];
+	}
+	else {
+		title.innerHTML = "Task Report";
+	}
+	
 	title.align = 'center';
 	var br = document.createElement("br");
 	var table = document.createElement("table");
@@ -1093,8 +1102,8 @@ function printTasks(projectsOfInterest) {
 	printButton.innerHTML = "Print";
 	printButton.align = "center";
 	printButton.onclick = function() {
-		$("#printTaskReport").hide();
-		$("#backButton").hide();
+		$("#printTaskReport");
+		$("#backButton");
 		window.print();
 	};
 	
