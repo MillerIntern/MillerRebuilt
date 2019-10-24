@@ -1373,7 +1373,7 @@ public class ProjectNewRuleService {
 				
 			}
 			
-			if(!(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) && scheduledStartDate != null && scheduledStartDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "As Built Drawing status needs to be updated -Documents", 0);
 				scoreYellow = true;
 				al.add(rd);		
@@ -1402,7 +1402,7 @@ public class ProjectNewRuleService {
 				
 			}
 			
-			if(actualTurnoverDate != null && actualTurnoverDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "As Built Drawing status needs to be updated -Documents", 1);
 				scoreRed = true;
 				al.add(rd);		

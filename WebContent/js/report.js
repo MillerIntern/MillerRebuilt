@@ -47,6 +47,17 @@ $(document).ready( function () {
     document.getElementById("ToolTables_DataTables_Table_0_0").onclick = function() {
     	console.log("CLICKEDDDDDDD ME");
     	window.print();
+    	
+    	//Hardcoding all the shows that were previously hidden. Find a better way than hardcoding.
+    	$(".DTTT_container").show();
+    	$(".clear").show();
+    	$(".dataTables_length").show();
+    	$("#DataTables_Table_0_filter").show();
+    	$(':button').show();
+    	$(".dataTables_info").show();
+    	$("#DataTables_Table_0_paginate").show();
+    	$(".DTTT_PrintMessage").hide();
+    	$("#backButton").hide();
 		if(tableIndex == false) $('.tableIndex').remove();
     } 
 } );
@@ -113,6 +124,8 @@ $(document).ready(function() {
         var $button = $("<button type='button'>");
         $button.text("Export to CSV");
         $button.insertAfter($table);
+        $button.css({position:'fixed'});
+        $button.css({'margin-top':'35px'});
 
         $button.click(
 		function download() {

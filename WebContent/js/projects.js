@@ -5212,7 +5212,8 @@ function editSelectedEquipment (source) {
 
 function equipmentReport () {
 	//window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
-	window.location.href = "Report?" + 'id=' + projectID + "&type=Equipment Report";
+	//window.location.href = "Report?" + 'id=' + projectID + "&type=Equipment Report";
+	window.open("Report?" + 'id=' + projectID + "&type=Equipment Report");
 }
 
 /**
@@ -10578,7 +10579,8 @@ function toggleChangeOrder (source) {
 }
 
 function changeOrderReport () {
-	window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
+	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
+	window.open("Report?" + 'id=' + projectID + "&type=Change Order Report");
 }
 
 //

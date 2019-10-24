@@ -1065,177 +1065,196 @@ function printButton(){
  * INNER FUNCTION CALLS: window.print()
  */
 function printTasks(projectsOfInterest) {
-	console.log("Managers of interest", managersOfInterest);
-	console.log("PROJECTS OF INTEREST  ==== ", projectsOfInterest);
-	document.body.innerHTML="";
-    document.body.style.backgroundColor = "white";
-	
-    var div = document.createElement("div");
-	div.id = "insertTable";
-	var title = document.createElement("h3");
-	title.id = "taskReportTitle";
-	if(managersOfInterest == undefined){
-		title.innerHTML = "Task Report: "+user.firstName;
-	}
-	else if(managersOfInterest.length == 1){
-		title.innerHTML = "Task Report: "+managersOfInterest[0];
-	}
-	else {
-		title.innerHTML = "Task Report";
-	}
-	
-	title.align = 'center';
-	var br = document.createElement("br");
-	var table = document.createElement("table");
-	table.id = "table";
-    table.className = "taskReport";
-    
-    var backButton = document.createElement("button");
-    backButton.id = "backButton";
-    backButton.innerHTML = "Go Back";
-    backButton.onclick = function() {
-    	window.location.href = "taskBrowser.html";
-    };
-    
-    var printButton = document.createElement("button");
-	printButton.id = "printTaskReport";
-	printButton.innerHTML = "Print";
-	printButton.align = "center";
-	printButton.onclick = function() {
-		$("#printTaskReport");
-		$("#backButton");
-		window.print();
-	};
-	
-    document.body.appendChild(backButton);
-	document.body.appendChild(printButton);
-    
-	var head = document.createElement("tbody");
-	head.id = "tableHeader";
-	var headRow = document.createElement("tr");
-	headRow.id = "head";
-	var indexHead = document.createElement("th");
-	indexHead.innerHTML = "Index";
-	indexHead.style = 'text-align: center; width:4%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-    var warehouseHead = document.createElement("th");
-    warehouseHead.innerHTML = "Warehouse";
-    warehouseHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var projectHead = document.createElement("th");
-	projectHead.innerHTML = "Project";
-	projectHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var taskHead = document.createElement("th");
-	taskHead.innerHTML = "Title";
-	taskHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var MCSHead = document.createElement("th");
-	MCSHead.innerHTML = "MCS";
-	MCSHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var assigneeHead = document.createElement("th");
-	assigneeHead.innerHTML = "Assignee";
-	assigneeHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var descriptionHead = document.createElement("th");
-	descriptionHead.innerHTML = "Description";
-	descriptionHead.style = 'text-align: center; width:15%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var createdHead = document.createElement("th");
-	createdHead.innerHTML = "Created";
-	createdHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var dueHead = document.createElement("th");
-	dueHead.innerHTML = "Due";
-	dueHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var statusHead = document.createElement("th");
-	statusHead.innerHTML = "Status";
-	statusHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var priorityHead = document.createElement("th");
-	priorityHead.innerHTML = "Priority";
-	priorityHead.style = 'text-align: center; width:1%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	var notesHead = document.createElement("th");
-	notesHead.innerHTML = "Notes";
-	notesHead.style = 'text-align: center; width: 26%; font-weight:bold; border-top:none; border-left:none; border-right:none';
-	document.body.appendChild(div);
+var myWindow = window.open("");
+//myWindow.document.write(myHtml);
+myWindow.document.title = 'Task Report';
+console.log("Managers of interest", managersOfInterest);
+console.log("PROJECTS OF INTEREST  ==== ", projectsOfInterest);
+//myWindow.document.write('<head><link type="text/css" href="css/taskBrowser.css" rel="stylesheet"></head>');
+var head = myWindow.document.head;
+var link = myWindow.document.createElement("link");
+link.type = "text/css";
+link.rel = "stylesheet";
+link.href = window.location.protocol + "//"+ window.location.hostname + ":" + window.location.port + "/MillerRebuilt/css/taskBrowser.css";
+head.appendChild(link);
 
-	document.getElementById("insertTable").appendChild(title);
-	document.getElementById("insertTable").appendChild(br);
-	document.getElementById("insertTable").appendChild(table);
-	document.getElementById("table").setAttribute("border-spacing", "3px");
-	document.getElementById("table").setAttribute("border-collapse", "separate");
-	document.getElementById("table").appendChild(head);
-	document.getElementById("tableHeader").appendChild(headRow);
-	document.getElementById("head").appendChild(indexHead);
-	document.getElementById("head").appendChild(warehouseHead);
-	document.getElementById("head").appendChild(projectHead);
-	document.getElementById("head").appendChild(taskHead);
-	document.getElementById("head").appendChild(MCSHead);
-	document.getElementById("head").appendChild(assigneeHead);
-	document.getElementById("head").appendChild(descriptionHead);
-	document.getElementById("head").appendChild(createdHead);
-	document.getElementById("head").appendChild(dueHead);
-	document.getElementById("head").appendChild(statusHead);
-	document.getElementById("head").appendChild(priorityHead);
-	document.getElementById("head").appendChild(notesHead);
+var link = myWindow.document.createElement("link");
+link.type = "text/css";
+link.rel = "stylesheet";
+link.href = window.location.protocol + "//"+ window.location.hostname + ":" + window.location.port + "/MillerRebuilt/css/bootstrap.min.css";
+head.appendChild(link);
+
+var head = myWindow.document.head;
+var script = myWindow.document.createElement("script");//<script src="js/taskBrowser.js"></script>
+script.src = "js/taskBrowser.js";
+//link.rel = "stylesheet";
+//link.href = "http://localhost:8080/MillerRebuilt/WebContent/css/taskBrowser.css";
+head.appendChild(script);
+
+myWindow.document.body.innerHTML="";
+myWindow.document.body.style.backgroundColor = "white";
+var div = myWindow.document.createElement("div");
+div.id = "insertTable";
+var title = myWindow.document.createElement("h3");
+title.id = "taskReportTitle";
+if(managersOfInterest == undefined){
+title.innerHTML = "Task Report: "+user.firstName;
+}
+else if(managersOfInterest.length == 1){
+title.innerHTML = "Task Report: "+managersOfInterest[0];
+}
+else {
+title.innerHTML = "Task Report";
+}
+title.align = 'center';
+var br = myWindow.document.createElement("br");
+var table = myWindow.document.createElement("table");
+table.id = "table";
+table.className = "taskReport";
+var backButton = myWindow.document.createElement("button");
+backButton.id = "backButton";
+backButton.innerHTML = "Go Back";
+backButton.onclick = function() {
+//window.location.href = "taskBrowser.html";
+	myWindow.close();
+};
+var printButton = myWindow.document.createElement("button");
+printButton.id = "printTaskReport";
+printButton.innerHTML = "Print";
+printButton.align = "center";
+printButton.style = "float:left";
+printButton.onclick = function() {
+printButton.style.visibility = 'hidden';
+backButton.style.visibility = 'hidden';
+myWindow.print();
+printButton.style.visibility = 'visible';
+backButton.style.visibility = 'visible';
+};
+myWindow.document.body.appendChild(backButton);
+myWindow.document.body.appendChild(printButton);
+var head = myWindow.document.createElement("tbody");
+head.id = "tableHeader";
+var headRow = myWindow.document.createElement("tr");
+headRow.id = "head";
+
 	
-	var count = 0;
-	for(var i = 0;i<projectsOfInterest.length; i++)
-	{
-		console.log(projectsOfInterest[i]);
 	
-		count++;
-		var row = table.insertRow();
-		var index = row.insertCell();
-	//	index.align = "center";
-		var warehouse = row.insertCell();
-	//	warehouse.align = "center";
-		var project = row.insertCell();
-	//	project.align = "center";
-		var task = row.insertCell();
-	//	task.align = 'center';
-		var MCS = row.insertCell();
-		//	task.align = 'center';
-			
-		var assignee = row.insertCell();
-	//	assignee.align = 'center';
-		var description = row.insertCell();
-	//	description.align = 'center';
-		var created = row.insertCell();
-	//	created.align = 'center';
-		var due = row.insertCell();
-	//	due.align = 'center';
-		var status = row.insertCell();
-	//	status.align = 'center';
-		var priority = row.insertCell();
-	//	priority.align = 'center';
-		var notes = row.insertCell();
-    //    notes.align = 'center';
-        
-		index.innerHTML = (count);
-		warehouse.innerHTML = projectsOfInterest[i].project.warehouse.city.name + ' #' + projectsOfInterest[i].project.warehouse.warehouseID;
-		project.innerHTML = projectsOfInterest[i].project.projectItem.name;
-		task.innerHTML =  projectsOfInterest[i].title;
-		MCS.innerHTML = projectsOfInterest[i].assignee.firstName;
-		assignee.innerHTML = projectsOfInterest[i].subAssignee.name;
-		description.innerHTML = projectsOfInterest[i].description;
-		created.innerHTML = projectsOfInterest[i].assignedDate;
-		due.innerHTML = projectsOfInterest[i].dueDate;
-		status.innerHTML = projectsOfInterest[i].status.status;
-		priority.innerHTML = projectsOfInterest[i].severity;
-		notes.innerHTML = projectsOfInterest[i].notes;
-		
-		row.appendChild(index);
-		row.appendChild(warehouse);
-		row.appendChild(project);
-		row.appendChild(task);
-		row.appendChild(MCS);
-		row.appendChild(assignee);
-		row.appendChild(description);
-		row.appendChild(created);
-		row.appendChild(due);
-		row.appendChild(status);
-		row.appendChild(priority);
-		row.appendChild(notes);
-		head.appendChild(row)
-		table.appendChild(head);
-	}
-	
+var indexHead = myWindow.document.createElement("th");
+indexHead.innerHTML = "Index";
+indexHead.style = 'text-align: center; width:4%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var warehouseHead = myWindow.document.createElement("th");
+warehouseHead.innerHTML = "Warehouse";
+warehouseHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var projectHead = myWindow.document.createElement("th");
+projectHead.innerHTML = "Project";
+projectHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var taskHead = myWindow.document.createElement("th");
+taskHead.innerHTML = "Title";
+taskHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var MCSHead = myWindow.document.createElement("th");
+MCSHead.innerHTML = "MCS";
+MCSHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var assigneeHead = myWindow.document.createElement("th");
+assigneeHead.innerHTML = "Assignee";
+assigneeHead.style = 'text-align: center; width:6%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var descriptionHead = myWindow.document.createElement("th");
+descriptionHead.innerHTML = "Description";
+descriptionHead.style = 'text-align: center; width:15%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var createdHead = myWindow.document.createElement("th");
+createdHead.innerHTML = "Created";
+createdHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var dueHead = myWindow.document.createElement("th");
+dueHead.innerHTML = "Due";
+dueHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var statusHead = myWindow.document.createElement("th");
+statusHead.innerHTML = "Status";
+statusHead.style = 'text-align: center; width:7%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var priorityHead = myWindow.document.createElement("th");
+priorityHead.innerHTML = "Priority";
+priorityHead.style = 'text-align: center; width:1%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+var notesHead = myWindow.document.createElement("th");
+notesHead.innerHTML = "Notes";
+notesHead.style = 'text-align: center; width: 26%; font-weight:bold; border-top:none; border-left:none; border-right:none';
+myWindow.document.body.appendChild(div);
+myWindow.document.getElementById("insertTable").appendChild(title);
+myWindow.document.getElementById("insertTable").appendChild(br);
+myWindow.document.getElementById("insertTable").appendChild(table);
+myWindow.document.getElementById("table").setAttribute("border-spacing", "3px");
+myWindow.document.getElementById("table").setAttribute("border-collapse", "separate");
+//myWindow.document.getElementById("table").setAttribute("border", "1px solid black");
+myWindow.document.getElementById("table").appendChild(head);
+myWindow.document.getElementById("tableHeader").appendChild(headRow);
+myWindow.document.getElementById("head").appendChild(indexHead);
+myWindow.document.getElementById("head").appendChild(warehouseHead);
+myWindow.document.getElementById("head").appendChild(projectHead);
+myWindow.document.getElementById("head").appendChild(taskHead);
+myWindow.document.getElementById("head").appendChild(MCSHead);
+myWindow.document.getElementById("head").appendChild(assigneeHead);
+myWindow.document.getElementById("head").appendChild(descriptionHead);
+myWindow.document.getElementById("head").appendChild(createdHead);
+myWindow.document.getElementById("head").appendChild(dueHead);
+myWindow.document.getElementById("head").appendChild(statusHead);
+myWindow.document.getElementById("head").appendChild(priorityHead);
+myWindow.document.getElementById("head").appendChild(notesHead);
+var count = 0;
+for(var i = 0;i<projectsOfInterest.length; i++)
+{
+console.log(projectsOfInterest[i]);
+count++;
+var row = table.insertRow();
+var index = row.insertCell();
+//	index.align = "center";
+var warehouse = row.insertCell();
+//	warehouse.align = "center";
+var project = row.insertCell();
+//	project.align = "center";
+var task = row.insertCell();
+//	task.align = 'center';
+var MCS = row.insertCell();
+//	task.align = 'center';
+var assignee = row.insertCell();
+//	assignee.align = 'center';
+var description = row.insertCell();
+//	description.align = 'center';
+var created = row.insertCell();
+//	created.align = 'center';
+var due = row.insertCell();
+//	due.align = 'center';
+var status = row.insertCell();
+//	status.align = 'center';
+var priority = row.insertCell();
+//	priority.align = 'center';
+var notes = row.insertCell();
+//    notes.align = 'center';
+index.innerHTML = (count);
+warehouse.innerHTML = projectsOfInterest[i].project.warehouse.city.name + ' #' + projectsOfInterest[i].project.warehouse.warehouseID;
+project.innerHTML = projectsOfInterest[i].project.projectItem.name;
+task.innerHTML =  projectsOfInterest[i].title;
+MCS.innerHTML = projectsOfInterest[i].assignee.firstName;
+assignee.innerHTML = projectsOfInterest[i].subAssignee.name;
+description.innerHTML = projectsOfInterest[i].description;
+created.innerHTML = projectsOfInterest[i].assignedDate;
+due.innerHTML = projectsOfInterest[i].dueDate;
+status.innerHTML = projectsOfInterest[i].status.status;
+priority.innerHTML = projectsOfInterest[i].severity;
+notes.innerHTML = projectsOfInterest[i].notes;
+row.appendChild(index);
+row.appendChild(warehouse);
+row.appendChild(project);
+row.appendChild(task);
+row.appendChild(MCS);
+row.appendChild(assignee);
+row.appendChild(description);
+row.appendChild(created);
+row.appendChild(due);
+row.appendChild(status);
+row.appendChild(priority);
+row.appendChild(notes);
+head.appendChild(row)
+table.appendChild(head);
+}
 //	window.print();
-	
+//	myWindow.print();
 }
 
 function addTaskToTable(_task)

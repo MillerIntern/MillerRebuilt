@@ -404,8 +404,10 @@
 			</div> <!-- Permits and Inspections -->
 			<div class='info-tab' id='equipment'>
 			<button  id = "eqpFailedRules" class = "btn project-edit" style = "display:none;float:right;" onclick = "returnToFailedRules('equipment')" > Back to Failed Rules</button>
-				<button style = "float:right;margin-right:5px;" onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
+				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
 				<button style = "float:right;margin-right:5px;background-color: #2a5617;" id='editEquipment' onclick='editSelectedEquipment()' type="button" class="project-edit btn" disabled>Edit Equipment</button>
+				<button style = "float:right;margin-right:5px;" onclick='addEquipment()' type='button' class='project-edit btn'>Add Equipment</button>
+				
 				
 			<br>
 			<br>
@@ -429,7 +431,7 @@
 				</table>	
 				</div>
 				
-				<button style = "display : none" type='button' class='project-edit btn' onclick='equipmentReport()'>Print Equipment</button>
+				
 			</div> <!-- Equipment -->
 			<div style="width: 100%" class='info-tab info-tab-closeout' id='closeout'>
 			   <!-- 

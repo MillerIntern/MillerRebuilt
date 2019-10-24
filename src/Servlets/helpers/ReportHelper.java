@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import comparators.ChangeOrderNumberComparator;
 import comparators.ProjectItemComparator;
@@ -22,6 +24,7 @@ import projectObjects.Task;
 import services.ProjectObjectService;
 import projectObjects.ChangeOrder;
 import projectObjects.ChangeOrderType;
+import projectObjects.Equipment;
 import projectObjects.User;
 
 /**
@@ -535,7 +538,10 @@ public class ReportHelper
 					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
 					  "<th>Subs Submitted Date</th><th>Customer</th><th>Submitted Date</th><th>Approved Date</th>" + 
 					  "<th>Cost</th><th>Sell</th><th>Invoice #</th><th>Customer COP#</th><th class='longText'>Notes");
-		} else if(value.equals("permitNotes")) {
+		}  else if (value.equals("equipmentSolo")) {
+			sb.append("<th>Name</th><th class='longText'>Description</th><th>Supplier</><th>Delivery Status</th><th>Ordered Date</th>" + 
+					  "<th >Scheduled Date</th><th>Actual Date</th><th class='longText'>Notes</th>");
+		}else if(value.equals("permitNotes")) {
 			sb.append("<th>");
 			sb.append("Permit Notes");
 		} else if(value.equals("inspectionNotes")) {
@@ -1726,6 +1732,46 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
 			}
 			return changeOrders.toString();
+		}
+		else if (value.equals("equipmentSolo") && p.getEquipment() != null) {
+			
+			System.out.println("IT is coming here 2");
+
+			int amountOfEquipments = p.getProjEquipment().size();
+			System.out.println("AMT EQP IS");
+			System.out.println(amountOfEquipments);
+			if (amountOfEquipments == 0) return "";
+				
+			StringBuilder equipments = new StringBuilder();
+			Iterator<NewEquipment> iter2 = p.getProjEquipment().iterator();
+			List<NewEquipment> list = new ArrayList<NewEquipment>();
+			while (iter2.hasNext()) {
+			    list.add(iter2.next());
+			}
+			//sortChangeOrders(list);
+			
+			List<NewEquipment> sortedList = list.stream()
+					  .sorted(Comparator.comparing(NewEquipment::getEquipmentName))
+					  .collect(Collectors.toList());
+			
+			list = sortedList;
+			
+			Iterator<NewEquipment> iter = list.iterator();
+			
+			while(iter.hasNext()) {
+				NewEquipment tmp = iter.next();
+				equipments.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getEquipmentName()) + "</td>");
+				equipments.append("<td>" + nullOrFull(tmp.getDescription()) + "</td>");	
+				equipments.append("<td>" + nullOrFull(tmp.getEqSupplier().getName()) + "</td>");
+				equipments.append("<td>" + nullOrFull(tmp.getEqStatus().getName()) + "</td>");
+				equipments.append("<td>" + tryDateFormat(dForm,tmp.getOrderedDate()) + "</td>");			
+				equipments.append("<td>" + tryDateFormat(dForm,tmp.getEstDeliveryDate()) + "</td>");
+				equipments.append("<td>" + tryDateFormat(dForm,tmp.getDeliveryDate()) + "</td>");
+				equipments.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");			
+			}			
+			return equipments.toString();
+		
+			
 		}
 		else
 			return "---";	// If nothing else just fill the field with nothing

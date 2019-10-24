@@ -1465,7 +1465,7 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
-			if(!(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+			if(status != null && status == 35 && !(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today)) && scheduledStartDateNew != null && scheduledStartDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
 				scoreColor = "yellow";		
 				
 			}
@@ -1502,7 +1502,7 @@ public class ProjectNewRuleColorService {
 				
 			}
 			
-			if(actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
+			if(status != null && status == 35 && actualTurnoverDateNew != null && actualTurnoverDateNew.before(today) && (asBuiltDrawingStatus != null) && (asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("4") || asBuiltDrawingStatus.equals("6"))) {
 				scoreColor = "red";
 				proj.setMediumScore(2);
 				Session session = HibernateUtil.getSession();
