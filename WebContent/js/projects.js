@@ -10006,8 +10006,7 @@ function getProject_CHANGE_ORDER()
 				setProjectHeader(data, currentDivLocation);
 				console.log("PROJ DATA = ", data);
 				
-				if(edit_CHANGE_ORDER == 'true') {
-					
+				if(edit_CHANGE_ORDER == 'true') {					
 					fillTabs_CHANGE_ORDER(PROJECT_DATA);
 					console.log("IT WAS truuuuu");
 				} 
@@ -10121,6 +10120,9 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find('#title').val(changeOrderToEdit.title);
 	$('#changeOrder').find('#invoiceNumber').val(changeOrderToEdit.invoiceNumber);
 	$('#changeOrder').find('#customerCOPnum').val(changeOrderToEdit.customerCOPnum);
+	
+	$('#changeOrder').find('#mcsInvoiceStatus').val(changeOrderToEdit.mcsInvoiceStatus);
+	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
 
 	
 	}
@@ -10366,6 +10368,9 @@ function saveProject_CHANGE_ORDER()
 	var sell = $('#changeOrder').find("#sell").val();
 	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
 	
+	var mcsInvoiceStatus = $('#changeOrder').find("#mcsInvoiceStatus").val();
+	var subInvoiceStatus = $('#changeOrder').find("#subInvoiceStatus").val();
+	
 	var invoiceNumber = $('#changeOrder').find("#invoiceNumber").val();
 	var customerCOPnum = $('#changeOrder').find("#customerCOPnum").val();
 	
@@ -10418,6 +10423,8 @@ function saveProject_CHANGE_ORDER()
 				'notes': notes,
 				'cost': cost,
 				'sell': sell,
+				'mcsInvoiceStatus': mcsInvoiceStatus,
+				'subInvoiceStatus': subInvoiceStatus,
 				'title':title,
 				'invoiceNumber' : invoiceNumber,
 				'customerCOPnum' : customerCOPnum ,

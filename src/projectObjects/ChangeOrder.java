@@ -42,6 +42,9 @@ public class ChangeOrder extends ProjectObject
 	private double cost;
 	private double sell;
 	
+	private String mcsInvoiceStatus;
+	private String subInvoiceStatus;
+	
 	private String invoiceNumber;
 	
 	
@@ -56,8 +59,8 @@ public class ChangeOrder extends ProjectObject
 	 * @param amount the amount of money that the change order is associated with
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
-					   String briefDescription, String notes, double cost, double sell, String type,
-					   String customerCOPnum, String subCO, String title, String invoiceNumber)
+					   String briefDescription, String notes, double cost, double sell, String mcsInvoiceStatus, String type,
+					   String subInvoiceStatus, String customerCOPnum, String subCO, String title, String invoiceNumber)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -74,6 +77,9 @@ public class ChangeOrder extends ProjectObject
 		this.type = type;
 		this.title = title;
 		this.invoiceNumber = invoiceNumber;
+		
+		this.mcsInvoiceStatus = mcsInvoiceStatus;
+		this.subInvoiceStatus = subInvoiceStatus;
 	}
 	
 	public ChangeOrder()
@@ -93,6 +99,8 @@ public class ChangeOrder extends ProjectObject
 		this.customerCOPnum = null;
 		this.title = null;
 		this.invoiceNumber = null;
+		this.mcsInvoiceStatus = null;
+		this.subInvoiceStatus = null;
 	}
 
 
@@ -237,6 +245,22 @@ public class ChangeOrder extends ProjectObject
 		this.customerCOPnum = customerCOPnum;
 	}
 	
+	public synchronized String getMcsInvoiceStatus() {
+		return mcsInvoiceStatus;
+	}
+
+	public synchronized void setMcsInvoiceStatus(String mcsInvoiceStatus) {
+		this.mcsInvoiceStatus = mcsInvoiceStatus;
+	}
+
+	public synchronized String getSubInvoiceStatus() {
+		return subInvoiceStatus;
+	}
+
+	public synchronized void setSubInvoiceStatus(String subInvoiceStatus) {
+		this.subInvoiceStatus = subInvoiceStatus;
+	}
+	
 	
 	public static Object getChangeOrderFields(String name , ChangeOrder co)
 	{
@@ -274,6 +298,9 @@ public class ChangeOrder extends ProjectObject
 		fields.put("briefDescription" , "String");
 		fields.put("subNames" , "String");
 		fields.put("type" , "String");
+		fields.put("type" , "String");
+		fields.put("mcsInvoiceStatus" , "String");
+		fields.put("subInvoiceStatus" , "String");
 		return fields;
 	}
 	

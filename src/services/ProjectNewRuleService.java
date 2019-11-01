@@ -183,11 +183,12 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//3
-		if(proposalSubmittedDate == null) {
-			RuleDetails rd = new RuleDetails("Scheduling", "ProposalSubmittedDate", "Proposal Submitted Date needs a value", 0);
-			scoreYellow = true;
-			al.add(rd);
-		}
+		//Removing this rule as per Bua's task
+//		if(proposalSubmittedDate == null) {
+//			RuleDetails rd = new RuleDetails("Scheduling", "ProposalSubmittedDate", "Proposal Submitted Date needs a value", 0);
+//			scoreYellow = true;
+//			al.add(rd);
+//		}
 		//4
 		if((status != null) && (status == 35 || status == 29) && scheduledStartDate == null) {
 			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledStartDate", "Scheduled Start Date needs a value", 0);

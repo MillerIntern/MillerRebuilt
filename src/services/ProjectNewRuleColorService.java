@@ -157,9 +157,10 @@ public class ProjectNewRuleColorService {
 			scoreColor = "yellow";
 		}
 		//3
-		if(proposalSubmittedDate == null) {
-			scoreColor = "yellow";
-		}
+		//Removing this rule as per Bua's task
+//		if(proposalSubmittedDate == null) {
+//			scoreColor = "yellow";
+//		}
 		//4
 		if((status != null) && (status == 35 || status == 29) && scheduledStartDate == null) {
 			scoreColor = "yellow";
