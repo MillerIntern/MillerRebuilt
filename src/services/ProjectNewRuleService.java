@@ -157,7 +157,8 @@ public class ProjectNewRuleService {
 	
 	public static ArrayList<RuleDetails> schedulingEvaluate(Project proj){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
-		String projectStage = proj.getStage().getName();		
+		String projectStage = proj.getStage().getName();
+		String projectStatus = proj.getStatus().getName();
 		Date projectInitiatedDate = proj.getProjectInitiatedDate();
 		Date siteSurveyDate = proj.getSiteSurvey();
 		Date budgetaryDueDate = proj.getBudgetaryDue();
@@ -177,11 +178,13 @@ public class ProjectNewRuleService {
 //		}
 
 		//2
-		if(proposalDueDate == null) {
-			RuleDetails rd = new RuleDetails("Scheduling", "ProposalDueDate", "Proposal Due Date needs a value", 0);
-			scoreYellow = true;
-			al.add(rd);
-		}
+		
+		//Removing this rule as per Bua's task
+//		if(proposalDueDate == null) {
+//			RuleDetails rd = new RuleDetails("Scheduling", "ProposalDueDate", "Proposal Due Date needs a value", 0);
+//			scoreYellow = true;
+//			al.add(rd);
+//		}
 		//3
 		//Removing this rule as per Bua's task
 //		if(proposalSubmittedDate == null) {
@@ -189,6 +192,18 @@ public class ProjectNewRuleService {
 //			scoreYellow = true;
 //			al.add(rd);
 //		}
+		
+		//Adding a new rule to compensate for the previous two rules.
+		
+		if((projectStage.equals("Proposal")) && !((projectStatus.equals("Awaiting Direction")) || (projectStatus.equals("Awaiting Drawings"))) 
+				&& (proposalSubmittedDate == null)){
+			RuleDetails rd = new RuleDetails("Scheduling", "ProposalSubmittedDate", "Need to submit the proposal", 0);
+			scoreYellow = true;
+			al.add(rd);
+			
+		}
+		
+		
 		//4
 		if((status != null) && (status == 35 || status == 29) && scheduledStartDate == null) {
 			RuleDetails rd = new RuleDetails("Scheduling", "ScheduledStartDate", "Scheduled Start Date needs a value", 0);
@@ -1229,6 +1244,34 @@ public class ProjectNewRuleService {
 					scoreRed = true;
 					al.add(rd);
 				}
+				
+				
+				
+				//New rules for permits 2.1, 2.2, 2.3
+				
+				Date scheduledStartDate = proj.getScheduledStartDate();
+				Date scheduledTurnoverDate = proj.getScheduledTurnover();
+				
+				if(scheduledStartDate != null && scheduledStartDate.before(today)) {
+					RuleDetails rd = new RuleDetails("Permits", "PermitStatusRed", "Need to update the Permit Status", 1);
+					scoreRed = true;
+					al.add(rd);
+				}
+				
+				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today))) {
+					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusYellow", "Need to update the Inspections Status", 0);
+					scoreYellow = true;
+					al.add(rd);
+				}
+				
+				
+				if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
+					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusRed", "Need to update the Inspections Status", 1);
+					scoreRed = true;
+					al.add(rd);
+				}
+				
+				
 			
 			}
 

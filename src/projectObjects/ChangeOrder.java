@@ -46,6 +46,7 @@ public class ChangeOrder extends ProjectObject
 	private String subInvoiceStatus;
 	
 	private String invoiceNumber;
+	private String subInvoiceNumber;
 	
 	
 	
@@ -60,7 +61,7 @@ public class ChangeOrder extends ProjectObject
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
 					   String briefDescription, String notes, double cost, double sell, String mcsInvoiceStatus, String type,
-					   String subInvoiceStatus, String customerCOPnum, String subCO, String title, String invoiceNumber)
+					   String subInvoiceStatus, String customerCOPnum, String subCO, String title, String invoiceNumber, String subInvoiceNumber)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -80,6 +81,7 @@ public class ChangeOrder extends ProjectObject
 		
 		this.mcsInvoiceStatus = mcsInvoiceStatus;
 		this.subInvoiceStatus = subInvoiceStatus;
+		this.subInvoiceNumber = subInvoiceNumber;
 	}
 	
 	public ChangeOrder()
@@ -101,6 +103,7 @@ public class ChangeOrder extends ProjectObject
 		this.invoiceNumber = null;
 		this.mcsInvoiceStatus = null;
 		this.subInvoiceStatus = null;
+		this.subInvoiceNumber = null;
 	}
 
 
@@ -261,6 +264,15 @@ public class ChangeOrder extends ProjectObject
 		this.subInvoiceStatus = subInvoiceStatus;
 	}
 	
+	public synchronized String getSubInvoiceNumber() {
+		return subInvoiceNumber;
+	}
+
+	public synchronized void setSubInvoiceNumber(String subInvoiceNumber) {
+		this.subInvoiceNumber = subInvoiceNumber;
+	}
+	
+	
 	
 	public static Object getChangeOrderFields(String name , ChangeOrder co)
 	{
@@ -301,6 +313,7 @@ public class ChangeOrder extends ProjectObject
 		fields.put("type" , "String");
 		fields.put("mcsInvoiceStatus" , "String");
 		fields.put("subInvoiceStatus" , "String");
+		fields.put("subInvoiceNumber" , "String");
 		return fields;
 	}
 	

@@ -1323,7 +1323,7 @@ function reportCreator(elem)
 	console.log("elem = ", elem.value);
 	switch(elem.value){
 		
-	    case 'Active':
+	    case 'Active':	    
 			generateReport($('.reportTypePicker :selected').val()+'_A');
 			break;
 
@@ -1724,6 +1724,7 @@ function generateReport(reportType)
 			status.push(PROJECT_STATUS_AWAITING_CONTRACT);
 			status.push(PROJECT_STATUS_AWAITING_DRAWINGS);
 			status.push(PROJECT_STATUS_AWAITING_PERMIT);
+			status.push(PROJECT_STATUS_AWAITING_DIRECTION);
 			break;
 
 		case OTHER_ACTIVE:

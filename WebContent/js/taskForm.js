@@ -310,6 +310,7 @@ function getUserData () {
 				'type' : taskData.type ,
 				'subAssignee' : taskData.subassignee,
 				'notes' : taskData.notes,
+				'title' : taskData.title,
 			}, complete: function (response) {
 				console.log("RESPONSE FROM sendTaskAlert() = ", response);		
 				clearTaskForm();

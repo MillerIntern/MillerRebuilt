@@ -3781,7 +3781,7 @@
 		                    
 		               	<span class="coLabel">Sub Invoice Status</span>
 		 				
-		                <span>
+		                <span class = "subInvoiceStatus">
 		                	<select style= "width: 158px;" class="closeout-input" id="subInvoiceStatus">
 		                        <option value="default">----</option>
 		                        <option value="1">Yes</option>
@@ -3796,13 +3796,20 @@
 		            
 		            
 		            <tr>
-		                <td  class="coLabel">Invoice #</td>
+		                <td  class="coLabel">MCS Invoice #</td>
 		                <td>
-		                    <input type="text" id="invoiceNumber" />               
+		                    <input type="text" id="invoiceNumber" />  
+		             <span>
+		                <span  class="coLabel">Sub Invoice #</span>
+		                <span class="subInvoiceNumber">
+		                    <input type="text" id="subInvoiceNumber" />               
+		                </span>
+		            </span>             
 		                </td>
 		            </tr>
+
 		            <tr>
-		                <td  class="coLabel">Customer COP ###</td>
+		                <td  class="coLabel">Customer COP #</td>
 		                <td>
 		                    <input type="text" id="customerCOPnum" />               
 		                </td>

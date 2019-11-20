@@ -109,7 +109,15 @@
 	font-weight: bold;
 }
 
+.subInvoiceNumber {
+	padding-left: 40px;
+	
+}
 
+.subInvoiceStatus {
+	padding-left: 10px;
+	
+}
 
 
 #changeOrderTable { 

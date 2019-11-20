@@ -1712,7 +1712,7 @@ public class ReportHelper
 			
 			while(iter.hasNext()) {
 				ChangeOrder tmp = iter.next();
-				changeOrders.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
+				changeOrders.append("<tr><td class='tableIndex' style = 'display:none'></td><td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
 				changeOrders.append("<td>" + p.getWarehouse().getCity().getName() + 
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
 				changeOrders.append("<td>" + p.getProjectItem().getName() + "</td>");

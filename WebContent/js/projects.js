@@ -10123,6 +10123,8 @@ function fillTabs_CHANGE_ORDER(json)
 	
 	$('#changeOrder').find('#mcsInvoiceStatus').val(changeOrderToEdit.mcsInvoiceStatus);
 	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
+	
+	$('#changeOrder').find('#subInvoiceNumber').val(changeOrderToEdit.subInvoiceNumber);
 
 	
 	}
@@ -10372,6 +10374,8 @@ function saveProject_CHANGE_ORDER()
 	var subInvoiceStatus = $('#changeOrder').find("#subInvoiceStatus").val();
 	
 	var invoiceNumber = $('#changeOrder').find("#invoiceNumber").val();
+	var subInvoiceNumber = $('#changeOrder').find("#subInvoiceNumber").val();
+	
 	var customerCOPnum = $('#changeOrder').find("#customerCOPnum").val();
 	
 	var dates = [proposalDate, submittedDate, approvedDate];
@@ -10427,6 +10431,7 @@ function saveProject_CHANGE_ORDER()
 				'subInvoiceStatus': subInvoiceStatus,
 				'title':title,
 				'invoiceNumber' : invoiceNumber,
+				'subInvoiceNumber' : subInvoiceNumber,
 				'customerCOPnum' : customerCOPnum ,
 			},
 			success:function(data){
