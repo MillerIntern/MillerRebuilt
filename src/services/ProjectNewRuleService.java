@@ -1249,27 +1249,27 @@ public class ProjectNewRuleService {
 				
 				//New rules for permits 2.1, 2.2, 2.3
 				
-				Date scheduledStartDate = proj.getScheduledStartDate();
-				Date scheduledTurnoverDate = proj.getScheduledTurnover();
-				
-				if(scheduledStartDate != null && scheduledStartDate.before(today)) {
-					RuleDetails rd = new RuleDetails("Permits", "PermitStatusRed", "Need to update the Permit Status", 1);
-					scoreRed = true;
-					al.add(rd);
-				}
-				
-				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today))) {
-					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusYellow", "Need to update the Inspections Status", 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
-				
-				
-				if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
-					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusRed", "Need to update the Inspections Status", 1);
-					scoreRed = true;
-					al.add(rd);
-				}
+//				Date scheduledStartDate = proj.getScheduledStartDate();
+//				Date scheduledTurnoverDate = proj.getScheduledTurnover();
+//				
+//				if(scheduledStartDate != null && scheduledStartDate.before(today)) {
+//					RuleDetails rd = new RuleDetails("Permits", "PermitStatusRed", "Need to update the Permit Status", 1);
+//					scoreRed = true;
+//					al.add(rd);
+//				}
+//				
+//				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today))) {
+//					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusYellow", "Need to update the Inspections Status", 0);
+//					scoreYellow = true;
+//					al.add(rd);
+//				}
+//				
+//				
+//				if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
+//					RuleDetails rd = new RuleDetails("Permits", "InspectionStatusRed", "Need to update the Inspections Status", 1);
+//					scoreRed = true;
+//					al.add(rd);
+//				}
 				
 				
 			

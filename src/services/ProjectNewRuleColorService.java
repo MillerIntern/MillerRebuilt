@@ -1349,35 +1349,35 @@ public class ProjectNewRuleColorService {
 				}
 				
 				//New rules for permits 2.1, 2.2, 2.3
-				if(scheduledStartDate != null && scheduledStartDate.before(today)) {
-					scoreColor = "red";
-					proj.setMediumScore(2);
-					Session session = HibernateUtil.getSession();
-					Transaction tx = session.beginTransaction();
-					session.clear();
-					session.update(proj);
-					tx.commit();
-					projectsIdColor.put(projects[i], scoreColor);
-					continue;
-					
-				}
-				
-				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today))) {
-					scoreColor = "yellow";
-				}
-				
-				
-				if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
-					scoreColor = "red";
-					proj.setMediumScore(2);
-					Session session = HibernateUtil.getSession();
-					Transaction tx = session.beginTransaction();
-					session.clear();
-					session.update(proj);
-					tx.commit();
-					projectsIdColor.put(projects[i], scoreColor);
-					continue;
-				}
+//				if(scheduledStartDate != null && scheduledStartDate.before(today)) {
+//					scoreColor = "red";
+//					proj.setMediumScore(2);
+//					Session session = HibernateUtil.getSession();
+//					Transaction tx = session.beginTransaction();
+//					session.clear();
+//					session.update(proj);
+//					tx.commit();
+//					projectsIdColor.put(projects[i], scoreColor);
+//					continue;
+//					
+//				}
+//				
+//				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today))) {
+//					scoreColor = "yellow";
+//				}
+//				
+//				
+//				if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
+//					scoreColor = "red";
+//					proj.setMediumScore(2);
+//					Session session = HibernateUtil.getSession();
+//					Transaction tx = session.beginTransaction();
+//					session.clear();
+//					session.update(proj);
+//					tx.commit();
+//					projectsIdColor.put(projects[i], scoreColor);
+//					continue;
+//				}
 				
 			
 			
