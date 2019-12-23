@@ -3501,7 +3501,7 @@ function dateFillFunction(x){
 	
 	var firstName = ' ('+ user.firstName + ') -  ';
 	var cursorPosition = today.length + firstName.length-1;
-	x.value = today + firstName + x.value;
+	x.value = today + firstName + "\n" + x.value;
 	$(x).prop('selectionEnd', cursorPosition);
 
 	
@@ -4505,6 +4505,32 @@ function fillChangeOrders (data) {
 		status.width = "9%";
 		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
 		
+		var invoiceStatus = document.createElement('td');
+		invoiceStatus.width = "10%";
+		
+		//AND (and), the MCS_INVOICE_STATUS, SUB_INVOICE_STATUS
+		var MCS_INVOICE_STATUS = changeOrder.mcsInvoiceStatus;
+		var SUB_INVOICE_STATUS = changeOrder.subInvoiceStatus;
+		var AND_INVOICE_STATUS		
+		
+		if(MCS_INVOICE_STATUS == "1" && SUB_INVOICE_STATUS == "1"){			
+			AND_INVOICE_STATUS = "Yes";
+		}
+		else if(MCS_INVOICE_STATUS == "0" && SUB_INVOICE_STATUS == "0"){			
+			AND_INVOICE_STATUS = "No";
+		}
+		else if(MCS_INVOICE_STATUS == "2" && SUB_INVOICE_STATUS == "2"){			
+			AND_INVOICE_STATUS = "N/A";
+		}
+		else if(MCS_INVOICE_STATUS == undefined && SUB_INVOICE_STATUS == undefined){
+			AND_INVOICE_STATUS = "   ";
+		}
+		else if(((MCS_INVOICE_STATUS == undefined || MCS_INVOICE_STATUS == "2") && SUB_INVOICE_STATUS == "1") || ((MCS_INVOICE_STATUS == undefined || MCS_INVOICE_STATUS == "2") && SUB_INVOICE_STATUS == undefined)){			
+			AND_INVOICE_STATUS = "Yes";
+		}
+		
+		invoiceStatus.appendChild(document.createTextNode(AND_INVOICE_STATUS));
+		
 		var subNames = document.createElement('td');
 		subNames.width = "12%";
 		subNames.appendChild(document.createTextNode(changeOrder.subNames));
@@ -4537,6 +4563,8 @@ function fillChangeOrders (data) {
 		var notes = document.createElement('td');
 		notes.appendChild(document.createTextNode(changeOrder.notes));
 		
+
+		
 		//var approvedDate = document.createElement('td');
 		//if (changeOrder.approvedDate === undefined)
 		//	approvedDate.appendChild(document.createTextNode("---"))
@@ -4547,12 +4575,13 @@ function fillChangeOrders (data) {
 		tableRow.appendChild(title);
 		tableRow.appendChild(briefDescription);
 		tableRow.appendChild(status);
+		tableRow.append(invoiceStatus)
 		tableRow.appendChild(subNames);
 		tableRow.appendChild(type);
 		tableRow.appendChild(submittedDate);
 		tableRow.appendChild(cost);
 		tableRow.appendChild(sell);
-		tableRow.appendChild(notes);
+		tableRow.appendChild(notes);		
 		tableRow.ondblclick = function() {
 			goToChangeOrder(1);
 		};

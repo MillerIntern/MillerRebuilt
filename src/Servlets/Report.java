@@ -381,13 +381,14 @@ public class Report extends HttpServlet
 
 		if(reportName.equals("Adrienne's Report")) sortProjectsStage(projects);
 		else if(reportName.contains("Change Orders")) sortProjectsChangeOrder(projects);
-		
-		//WRITING THIS PART SO THAT Drain Pan, Evaporators, and Refrigerant Conversion items will not be visible in the Project Report
+		//Changing it so that instead of just specific projects like drain pan etc., be removed, now removing all the projects with permits = No
+		//WRITING THIS PART SO THAT Drain Pan, Evaporators, and Refrigerant Conversion items will not be visible in the Project Report		
 		else if(reportName.contains("Permits")) {
 			for (int i = 0; i < projects.size(); i++) {
 				projectObjects.Project p = projects.get(i);
-				if(p.getProjectItem().getName().contains("Drain Pan") || p.getProjectItem().getName().contains("Evaporators") || 
-						p.getProjectItem().getName().contains("Refrigerant Conversion")) {
+//				System.out.println("GETAUTO "+p.getAutofillPermits()+ p.getWarehouse() + p.getProjectItem().getName());				
+				if(p.getAutofillPermits() != null && p.getAutofillPermits().equals("2")) {
+					System.out.println("Coming here here");
 					projects.remove(i);
 					i--;		
 				}
