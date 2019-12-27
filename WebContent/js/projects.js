@@ -4511,21 +4511,24 @@ function fillChangeOrders (data) {
 		//AND (and), the MCS_INVOICE_STATUS, SUB_INVOICE_STATUS
 		var MCS_INVOICE_STATUS = changeOrder.mcsInvoiceStatus;
 		var SUB_INVOICE_STATUS = changeOrder.subInvoiceStatus;
-		var AND_INVOICE_STATUS		
+		var AND_INVOICE_STATUS = " ";		
 		
 		if(MCS_INVOICE_STATUS == "1" && SUB_INVOICE_STATUS == "1"){			
 			AND_INVOICE_STATUS = "Yes";
 		}
-		else if(MCS_INVOICE_STATUS == "0" && SUB_INVOICE_STATUS == "0"){			
+		else if(MCS_INVOICE_STATUS == "0" || SUB_INVOICE_STATUS == "0"){			
 			AND_INVOICE_STATUS = "No";
 		}
 		else if(MCS_INVOICE_STATUS == "2" && SUB_INVOICE_STATUS == "2"){			
 			AND_INVOICE_STATUS = "N/A";
 		}
-		else if(MCS_INVOICE_STATUS == undefined && SUB_INVOICE_STATUS == undefined){
+		else if(MCS_INVOICE_STATUS == undefined || SUB_INVOICE_STATUS == undefined){
 			AND_INVOICE_STATUS = "   ";
 		}
-		else if(((MCS_INVOICE_STATUS == undefined || MCS_INVOICE_STATUS == "2") && SUB_INVOICE_STATUS == "1") || ((MCS_INVOICE_STATUS == undefined || MCS_INVOICE_STATUS == "2") && SUB_INVOICE_STATUS == undefined)){			
+		else if(MCS_INVOICE_STATUS == "2" && SUB_INVOICE_STATUS == "1"){			
+			AND_INVOICE_STATUS = "Yes";
+		}
+		else if(MCS_INVOICE_STATUS == "1" && SUB_INVOICE_STATUS == "2"){			
 			AND_INVOICE_STATUS = "Yes";
 		}
 		
