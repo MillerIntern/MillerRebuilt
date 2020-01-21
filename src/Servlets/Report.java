@@ -188,6 +188,32 @@ public class Report extends HttpServlet
 				
 				
 			}
+			else if(type.contains("Project Task Report")) {
+				System.out.println("IT is coming 123 ");
+				String projStatus = type.split("~")[1];				
+				Long id = Long.parseLong(req.getParameter("id"));				
+				List<String> shownFields = new ArrayList<String>();
+				String shownField = "projectTaskSolo";				
+				tableIndex = false;
+				shownFields.add(shownField);
+				shownFields.add(projStatus);
+				shownFields.toString();
+				
+				List<projectObjects.Project> projects = new ArrayList<projectObjects.Project>();
+				
+				projectObjects.Project project = null;
+				try {
+					project = (Project) ProjectObjectService.get(id, "Project");
+					projects.add(project);
+					out.println(generateProjectReport(projects, type, shownFields ));
+					
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
 			else //ChangeOrder report for one project
 			{
 			Long id = Long.parseLong(req.getParameter("id"));
@@ -408,9 +434,17 @@ public class Report extends HttpServlet
 
 			if(shownFields.get(0).equals("equipmentName") || shownFields.get(0).equals("changeOrder")
 					|| shownFields.get(0).equals("changeOrderSolo") || shownFields.get(0).equals("equipmentSolo"))
-			{
-				System.out.println("IT is coming here 1");
+			{				
+				System.out.println("IT is coming here 1");				
 				String value = getValueFromProject(shownFields.get(0), p);
+				System.out.println(value);
+				sb.append(value);
+			}
+			
+			if(shownFields.get(0).equals("projectTaskSolo"))
+			{
+				System.out.println("IT is coming here 111");				
+				String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);
 				System.out.println(value);
 				sb.append(value);
 			}

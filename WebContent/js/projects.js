@@ -9994,6 +9994,7 @@ var CHANGE_ORDER_ID;
 
 var PROJECT_DATA;
 var edit_CHANGE_ORDER;
+var edit_PENDING_INVOICE;
 
 
 $(document).ready(function()
@@ -10066,6 +10067,74 @@ function getProject_CHANGE_ORDER()
 	}
 }
 
+
+
+
+
+
+
+
+
+
+function getProject_PENDING_INVOICE()
+{
+	console.log("P ID = ", projectID);
+	if(projectID !== null) {	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: 
+			{
+				'domain': 'project',
+				'action': 'get',
+				'id': projectID,
+				
+			},
+			success: function(data)
+			{
+				PROJECT_DATA = data;
+				setProjectHeader(data, currentDivLocation);
+				console.log("PROJ DATA = ", data);
+				
+//				if(edit_CHANGE_ORDER == 'true') {					
+//					fillTabs_CHANGE_ORDER(PROJECT_DATA);
+//					console.log("IT WAS truuuuu");
+//				} 
+//				else {
+//					let mcsCO;
+//					if(PROJECT_DATA.changeOrders)
+//					{
+//						if(PROJECT_DATA.changeOrders.length != 0) {mcsCO = PROJECT_DATA.changeOrders.length + 1;}
+//						else mcsCO = 1;
+//					}
+//					else 
+//				    {
+//						mcsCO = 1;
+//				    }
+//					console.log("MCS CO = ", mcsCO);
+//					$('#changeOrder').find('#mcsCO').val(mcsCO);
+//				}
+				//getTasks();
+
+	
+			}
+		});
+	} else {
+		alert('Something went wrong');
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * This function retrives the change order drop down info from the server
  * INNER FUNCTION CALLS : fillDropdowns_CHANGE_ORDER(), getProject_CHANGE_ORDER()
@@ -10103,6 +10172,56 @@ function getDropdownInfo_CHANGE_ORDER()
 		}
 	});
 }
+
+
+
+
+
+
+
+
+function getDropdownInfo_PENDING_INVOICE()
+{
+	//PAGETYPE = getParameterByName("type");	
+	//projectID = getParameterByName("id");
+	if(projectID === null) {
+		alert('Invalid URL. Try returning to this page again.');
+		return;
+	}
+	
+	//if(projectID !== null) {}
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		data: 
+		{
+			'domain': 'project',
+			'action': 'getSpecificObjects',		
+
+		},
+		success: function(data)
+		{
+			getProject_PENDING_INVOICE();		
+//			fillDropdowns_CHANGE_ORDER(data);
+//			if(edit_CHANGE_ORDER == "true") getProject_CHANGE_ORDER();
+//			else 
+//			{
+//				clearTabs_CHANGE_ORDER();
+//				getProject_CHANGE_ORDER();
+//				
+//			}
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
 
 /**
  * This function fills the change order tabs with the appropriate
@@ -10188,6 +10307,10 @@ function cleanNumericValueForSaving(num)
  */
 function cleanNumericValueForDisplaying(num)
 {
+	var neg
+	if(num<0) neg = true;
+	else neg = false;
+	num = Math.abs(num);
 	//console.log("BEFORE: ", num);
 	var str = num.toString();
 	
@@ -10228,6 +10351,9 @@ function cleanNumericValueForDisplaying(num)
 		
 		cleanPrice = "$" + correctOrder + "." + cleanCents;
 		//console.log("AFTER: ", cleanPrice);
+		if(neg){
+			cleanPrice = "(-" + cleanPrice + ")";
+		}
 		return cleanPrice;
 	} 
 	else
@@ -10260,6 +10386,9 @@ function cleanNumericValueForDisplaying(num)
 		
 		cleanPrice = "$" + correctOrder;
 		//console.log("AFTER: ", cleanPrice);
+		if(neg){
+			cleanPrice = "(-" + cleanPrice + ")";
+		}
 		return cleanPrice;
 		
 	}
@@ -10286,6 +10415,24 @@ function clearTabs_CHANGE_ORDER(){
 	$('#changeOrder').find("#notes").val("");
 	$('#changeOrder').find("#title").val("");
 	$('#changeOrder').find("#invoiceNumber").val("");
+}
+function clearTabs_PENDING_INVOICE(){
+	
+	$('#pendingInvoice').find("#invoiceNumber").val("");
+//	$('#changeOrder').find("#mcsCO").val("");
+//	$('#changeOrder').find("#subCO").val("");
+//	$('#changeOrder').find("#proposalDate").val("");
+//	$('#changeOrder').find("#briefDescription").val("");
+//	$('#changeOrder').find("#subNames").val("");
+//	$('#changeOrder').find("#cost").val("");
+//	$('#changeOrder').find("#sell").val("");
+//	$('#changeOrder').find("#status").val("");
+//	$('#changeOrder').find("#submittedTo").val("");
+//	$('#changeOrder').find("#submittedDate").val("");
+//	$('#changeOrder').find("#approvedDate").val("");
+//	$('#changeOrder').find("#notes").val("");
+//	$('#changeOrder').find("#title").val("");
+//	$('#changeOrder').find("#invoiceNumber").val("");
 }
 
 /**
@@ -10560,6 +10707,27 @@ function goToChangeOrder(edit){
 	
 	
 	getDropdownInfo_CHANGE_ORDER();
+}
+
+function goToPendingInvoice(edit){
+	clearTabs_PENDING_INVOICE();
+	$('.editProject').hide();
+	$('#pendingInvoice').show();
+	$('#pendingInvoiceInfo').addClass('active');
+	setCurrentDivLocation('pendingInvoice');
+	console.log("EDIT = ", edit);	
+	if(edit == 0) {
+		edit_PENDING_INVOICE = 'false';		
+		$('#deletePendingInvoiceButton').hide();
+
+	}
+	else {
+		edit_PENDING_INVOICE = 'true';
+		$('#deletePendingInvoiceButton').show();
+	}
+	
+	
+	getDropdownInfo_PENDING_INVOICE();
 }
 
 /**
@@ -11023,7 +11191,7 @@ function goToProjectManager() {
 	$(".editProject").hide();
 	$("#projectManager").show();
 	
-	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);
+	console.log("GTPM CURRENT LOCATION = ", currentDivLocation);	
 	switch(currentDivLocation){
 		case "projectData":
 			getProject_PROJECT_MANAGER(projectID , 1);
@@ -11090,6 +11258,11 @@ function goToProjectManager() {
 			$('#projectData').find('#generalInformation').addClass('active');
 			$('#saveButton').removeClass('active');
 			break;
+		
+		case "pendingInvoice":
+			$('#financial-item').trigger('click');
+			break;
+			
 		case "equipmentDiv":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#equipment').addClass('active');
@@ -12008,4 +12181,10 @@ function sendInvoiceAlert()
 			console.log("RESPONSE FROM sendInvoiceAlert() = ", response);					
 		}
 	});
+}
+
+function projectTaskReport() {
+	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
+	
+	window.open("Report?" + 'id=' + projectID + "&type=Project Task Report "+"~"+$('#taskSelector2').val());
 }

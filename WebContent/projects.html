@@ -1710,6 +1710,7 @@
 			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
+			<li role='presentation' data-tab='pendingInvoiceInformation'><a>Pending Invoices</a></li>
 			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 	        <li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
@@ -1863,8 +1864,13 @@
 		<div style="width:100%" id='tasksInformation' class='info-tab info-tab-tasks'>
 				
 			<div class = "changeOrderTableDiv" id = 'taskDisplay'>
+			
+			
+			
+			<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectTaskReport()'>Print Tasks</button>
+			<button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
 			<button style="float:right;margin-right:5px;" class ="project-edit btn" onclick = "createTask()"> Add Task </button>
-				<button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editTask" type="button" onclick="editSelectedTask()" disabled> Edit Task </button>
+				
 		    <select id ='taskSelector2' class='form-control'>
 					<option value='all'>All</option>
 					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
@@ -1983,7 +1989,63 @@
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
 	    	</table>   
-		</div> <!-- End Financial Information -->	
+	    	<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Pending Invoices</button>
+				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editPendingInvoice' onclick='goToPendingInvoice(1)' type="button" class="project-edit btn" disabled>Edit Pending Invoice</button>
+				<button style = "float:right;margin-right:5px;" onclick='goToPendingInvoice(0);' type='button' class='project-edit btn'>Add Pending Invoice</button>
+	    					<div id = "pendingInvoiceTableDiv">
+				<table id='pendingInvoiceTable' class='table'>				
+					<thead class="pendingInvoiceTableHead">
+					  <tr>
+						<th width = 4% >Invoice #</th>
+						<th width = 12%>Title</th>
+						<th width = 12%>Description</th>
+						<th width = 8% >Status</th>
+						<th width = 6%>Invoice Status</th>
+						<th width = 8%>Sub Name(s)</th>
+						<th width = 10%>Customer</th>
+						<th width = 11%>Submit Date</th>
+						<th width = 7% >Cost</th>
+						<th width = 7% >Sell</th>
+						<th width = 15%>Invoice Notes</th>
+					  </tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				</div>
+		</div> <!-- End Financial Information -->
+		
+		
+		<div id='pendingInvoiceInformation' class='info-tab info-tab-pendingInvoiceInformation'>
+	
+	
+	    	<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Pending Invoices</button>
+				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editPendingInvoice' onclick='goToPendingInvoice(1)' type="button" class="project-edit btn" disabled>Edit Pending Invoice</button>
+				<button style = "float:right;margin-right:5px;" onclick='goToPendingInvoice(0);' type='button' class='project-edit btn'>Add Pending Invoice</button>
+	    					<div id = "pendingInvoiceTableDiv">
+				<table id='pendingInvoiceTable' class='table'>				
+					<thead class="pendingInvoiceTableHead">
+					  <tr>
+						<th width = 4% >Invoice #</th>
+						<th width = 12%>Title</th>
+						<th width = 12%>Description</th>
+						<th width = 8% >Status</th>
+						<th width = 6%>Invoice Status</th>
+						<th width = 8%>Sub Name(s)</th>
+						<th width = 10%>Customer</th>
+						<th width = 11%>Submit Date</th>
+						<th width = 7% >Cost</th>
+						<th width = 7% >Sell</th>
+						<th width = 15%>Invoice Notes</th>
+					  </tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				</div>
+		</div> <!-- End Pending Invoices Information -->
+		
+			
 		
 		</div>
 		
@@ -3845,6 +3907,181 @@
 		</div>
 
 </div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
+
+
+
+
+
+
+
+
+
+	<div id="pendingInvoice" class="editProject">
+	<div class="container">
+		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+
+		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+		
+
+		
+			<ul class="nav nav-tabs">
+				<li role='presentation' class="active" data-tab="pendingInvoiceInfo" id="pendingInvoiceTab"><a>Pending Invoice</a></li>
+		        
+		      
+		         <!-- <li class = "adminContent" role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
+		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li> -->
+		       
+			</ul>
+		
+		    <!-- Closeout Documents Tab--> 
+			<div style="width: 100%" id="pendingInvoiceInfo" class="info-tab active">
+			<button style = "float:right" class = "adminContent btn btn-danger" id = "deletePendingInvoiceButton" onclick = "deletePendingInvoice()"> Delete Pending Invoice </button>
+			 <button style = "float:right;margin-right:5px" role='presentation' onClick="saveProject_PENDING_INVOICE()" data-tab="saveButton" id = 'save-pending-invoice' class = "btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>				 
+		        <table class="table table-hover">
+		        
+		        	<colgroup>
+		        		<col style="width: 15%">
+		        		<col style="width: 85%">
+		        	</colgroup>
+		     
+		        	<tr style="height: 0px;"></tr>
+		            <tr>
+		                <td class="coLabel">Invoice #</td>
+		                <td>
+		                    <input id="invoiceNumberPend"></input>
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Title</td>
+		                <td>
+		                    <input size = "40" type="text" id="titlePend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Description</td>
+		                <td>
+		                    <textarea id="briefDescriptionPend" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40"> </textarea>
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Status</td>
+		 
+		                <td>
+		                    <select class="closeout-input" id="statusPend">
+		                        <option value="default">--Status--</option>
+		                    </select>                  
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Sub Name(s)</td>
+		                <td>
+		                    <input size="40" type="text" id="subNamesPend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Subs Submitted Date</td>
+		                <td>
+		                	<input type="text" id="proposalDatePend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Customer</td>
+		 				
+		                <td>
+		                	<select class="closeout-input" id="customerCOPend">
+		                        <option value="default">--Customer--</option>
+		                    </select>		                	
+		                </td>   
+		            </tr>		           
+		            <tr>
+		                <td class="coLabel">Submit Date</td>
+		 
+		                <td>
+		                	<input type="text" id="submittedDatePend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Approved Date</td>
+		 
+		                <td>
+		                	<input type="text" id="approvedDatePend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Cost</td>
+		                <td>
+		                    <input type="text" id="costPend" />
+		                </td>   
+		            </tr>
+		            <tr>
+		                <td class="coLabel">Sell</td>
+		 
+		                <td>
+		                	<input type="text" id="sellPend" />
+		                </td>   
+		            </tr>
+		            
+		            <tr>
+		                <td class="coLabel">MCS Invoice Status</td>
+		 				
+		                <td>
+		                	<select style= "width: 158px;" class="closeout-input" id="mcsInvoiceStatusPend">
+		                        <option value="default">----</option>
+		                        <option value="1">Yes</option>
+				                <option value="0">No</option> 
+				                <option value="2">N/A</option>   
+		                    </select>			                         	                
+		                </td> 
+		                
+   
+		            </tr>	
+		            
+		            
+		            <tr>
+		                <td  class="coLabel">MCS Invoice #</td>
+		                <td>
+		                    <input type="text" id="invoiceNumberPend" />             
+		                </td>
+		            </tr>
+
+		            <tr>
+		                <td  class="coLabel">Customer COP #</td>
+		                <td>
+		                    <input type="text" id="customerCOPnumPend" />               
+		                </td>
+		            </tr>
+
+		             <tr>
+		                <td class="coLabel">CO Notes</td>
+		                <td>
+		                    <textarea id="notesPend" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40" ondblclick = "dateFillFunction(this)"> </textarea>
+		                </td>   
+		            </tr>
+				 </table>
+		        				
+			</div>
+			<div class='info-tab' id='saveButton'>
+
+			</div>
+			<div class='info-tab' id='deleteButton'>
+				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+				<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
+				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+				
+			</div>
+		</div>
+		
+		<div id="footer">
+		</div>
+
+</div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
+
+
+
+
+
+
+
 
 <!-- THIS is THE DIV FOR EQUIPMENT -->
 

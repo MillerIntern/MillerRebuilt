@@ -541,7 +541,12 @@ public class ReportHelper
 		}  else if (value.equals("equipmentSolo")) {
 			sb.append("<th>Name</th><th class='longText'>Description</th><th>Supplier</><th>Delivery Status</th><th>Ordered Date</th>" + 
 					  "<th >Scheduled Date</th><th>Actual Date</th><th class='longText'>Notes</th>");
-		}else if(value.equals("permitNotes")) {
+		}
+		else if(value.equals("projectTaskSolo")) {
+			sb.append("<th>Name</th><th class='longText'>Description</th><th>MCS</><th>Assignee</th><th>Assigned Date</th>" + 
+					  "<th >Due Date</th><th>Priority</th><th>Status</th><th class='longText'>Notes</th>");
+		}
+		else if(value.equals("permitNotes")) {
 			sb.append("<th>");
 			sb.append("Permit Notes");
 		} else if(value.equals("inspectionNotes")) {
@@ -1773,6 +1778,76 @@ public class ReportHelper
 		
 			
 		}
+		else if (value.contains("projectTaskSolo") && ProjectObjectService.getAllTasks(p.getId()) != null) {
+			
+			System.out.println("IT is coming here 2");
+			String projStatus = value.split("~")[1];			
+			int amountOfTasks = ProjectObjectService.getAllTasks(p.getId()).size();			
+			System.out.println(amountOfTasks);
+			if (amountOfTasks == 0) return "";
+				
+			StringBuilder projTasks = new StringBuilder();
+			Iterator<Task> iter2 = ProjectObjectService.getAllTasks(p.getId()).iterator();
+			List<Task> list = new ArrayList<Task>();
+			while (iter2.hasNext()) {
+				Task tmp1 = iter2.next();
+				
+				if(projStatus.equals("all")) {				
+					list.add(tmp1);								
+				}
+				
+				else if(projStatus.equals("open_complete")) {
+					if(tmp1.getTaskStatus().getStatus().equals("Open") || tmp1.getTaskStatus().getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("open")) {
+					if(tmp1.getTaskStatus().getStatus().equals("Open")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("complete")) {
+					if(tmp1.getTaskStatus().getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				else if(projStatus.equals("closed")) {
+					if(tmp1.getTaskStatus().getStatus().equals("Closed")) {
+						list.add(tmp1);	
+					}					
+				}
+			    //list.add(iter2.next());
+			}			
+			//sortChangeOrders(list);
+			
+			List<Task> sortedList = list.stream()
+					  .sorted(Comparator.comparing(Task::getTitle))
+					  .collect(Collectors.toList());
+			
+			list = sortedList;
+			
+			Iterator<Task> iter = list.iterator();
+			
+			while(iter.hasNext()) {				
+				Task tmp = iter.next();
+				System.out.println(tmp.getTaskStatus().getStatus());
+				projTasks.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getTitle()) + "</td>");
+				projTasks.append("<td>" + nullOrFull(tmp.getDescription()) + "</td>");	
+				projTasks.append("<td>" + nullOrFull(tmp.getAssignee().getFirstName()) + "</td>");
+				projTasks.append("<td>" + nullOrFull(tmp.getSubAssignee().getName()) + "</td>");				
+				projTasks.append("<td>" + tryDateFormat(dForm,tmp.getAssignedDate()) + "</td>");			
+				projTasks.append("<td>" + tryDateFormat(dForm,tmp.getDueDate()) + "</td>");
+				projTasks.append("<td>" + nullOrFull(tmp.getSeverity()) + "</td>");
+				projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus().getStatus()) + "</td>");
+				projTasks.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");			
+			}		
+			
+			return projTasks.toString();
+		
+			
+		}
 		else
 			return "---";	// If nothing else just fill the field with nothing
 	}
@@ -1785,7 +1860,7 @@ public class ReportHelper
 	 * @param t - the task containing the values
 	 * @return - a string containing the value
 	 */
-	public synchronized static String getReportVal(String value, Task t){
+	public synchronized static String getReportVal(String value, Task t){		
 		DateFormat dForm = new SimpleDateFormat("MM/dd/yyyy");
 		String returnVal = "";
 		if(value.equals("warehouse")){
