@@ -122,6 +122,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("projectClass.id"));	
 				projectionList.add(Projections.property("mediumScore"));	
 				projectionList.add(Projections.property("scheduledStartDate"));
+				projectionList.add(Projections.property("scheduledTurnover"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -623,6 +624,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("projectClass").as("projectClass"));
 				projectionList.add(Projections.property("mediumScore").as("mediumScore"));
 				projectionList.add(Projections.property("scheduledStartDate").as("scheduledStartDate"));
+				projectionList.add(Projections.property("scheduledTurnover").as("scheduledTurnover"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);

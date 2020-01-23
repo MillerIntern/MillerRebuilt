@@ -49,9 +49,11 @@ let TIME_FINISH;
 					PROJECT_OBJECT.PROJECTS[i].projectClass = response.responseJSON[i][8];
 					PROJECT_OBJECT.PROJECTS[i].mediumScore = response.responseJSON[i][9];
 					PROJECT_OBJECT.PROJECTS[i].scheduledStartDate = response.responseJSON[i][10];
+					PROJECT_OBJECT.PROJECTS[i].scheduledTurnover = response.responseJSON[i][11];
+					
 					
 				}
-				console.log(PROJECT_OBJECT.PROJECTS);
+				console.log("PROJS are",PROJECT_OBJECT.PROJECTS);
 
 				getTheProjectEnums();
 			}

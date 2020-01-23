@@ -9168,6 +9168,11 @@ function establishRetrievedProjects()
 			RETRIEVED_PROJECTS[i].scheduledStartDate = RETRIEVED_PROJECTS[i][10];
 		else
 			RETRIEVED_PROJECTS[i].scheduledStartDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][11]!=null)
+			RETRIEVED_PROJECTS[i].scheduledTurnover = RETRIEVED_PROJECTS[i][11];
+		else
+			RETRIEVED_PROJECTS[i].scheduledTurnover = "Unavailable";
 		
 		for(var q = 0; q < 9; q++){
 			var num = 8 - q;
@@ -9816,6 +9821,8 @@ function filterProjects (filter) {
 					let listDetails3 = document.createElement('td');
 					let listDetails4 = document.createElement('td');
 					let listDetails5 = document.createElement('td');
+					let listDetails6 = document.createElement('td');
+					let listDetails7 = document.createElement('td');
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -9843,13 +9850,17 @@ function filterProjects (filter) {
 					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
 					 
 					else listDetails5.setAttribute( 'class', 'circle_red' );
-					listDetails3.innerHTML = json[k].scheduledStartDate;	
+					listDetails3.innerHTML = json[k].scheduledStartDate;
+					listDetails6.innerHTML = json[k].scheduledTurnover;
+					listDetails7.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);
 					$(projectListing).append(listDetails4);
 					$(projectListing).append(listDetails5);
+					$(projectListing).append(listDetails6);
+					$(projectListing).append(listDetails7);
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -9873,6 +9884,8 @@ function filterProjects (filter) {
 					let listDetails3 = document.createElement('td');
 					let listDetails4 = document.createElement('td');
 					let listDetails5 = document.createElement('td');
+					let listDetails6 = document.createElement('td');
+					let listDetails7 = document.createElement('td');
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
@@ -9894,12 +9907,16 @@ function filterProjects (filter) {
 					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
 					else listDetails5.setAttribute( 'class', 'circle_red' );
 					listDetails3.innerHTML = json[k].scheduledStartDate;
+					listDetails6.innerHTML = json[k].scheduledTurnover;
+					listDetails7.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
 					$(projectListing).append(listDetails3);	
 					$(projectListing).append(listDetails4);	
 					$(projectListing).append(listDetails5);
+					$(projectListing).append(listDetails6);
+					$(projectListing).append(listDetails7);
 					$('#results > tbody').append(projectListing);
 				}
 			}
