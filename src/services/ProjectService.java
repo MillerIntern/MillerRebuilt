@@ -1005,6 +1005,52 @@ public class ProjectService extends ProjectObjectService
 		return true;
 	}
 
+	
+	public synchronized static boolean addPendingInvoice(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		System.out.println("In Add Pending Invoice:");
+
+		if(projectID == null) return false;
+		
+		Project currentProject = null;
+		try
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
+		Iterator<NewEquipment> eqiter = newEquipment.iterator();
+		while(eqiter.hasNext())
+		{
+			eqiter.next().setId(null);
+		}
+
+
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+
+		ChangeOrder co = new ChangeOrder();
+		ChangeOrderFiller.fillChangeOrder(co, params);
+		changeOrders.add(co);
+		currentProject.setChangeOrders(changeOrders);
+		int k;
+
+		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
+		k = 1;
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullSetObjects();
+		return true;
+	}
+
+	
+	
+	
 	/**
 	 * @param projectID
 	 * @param parameters

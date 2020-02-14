@@ -160,133 +160,133 @@ function getUserData () {
 		$('#assigneeEntry').val(assigneeVal);
 	}
 	
-	function submitTask () {
-		$.ajax({
-			type: 'POST',
-			url: 'Project', 
-			async: false,
-			data: {
-				'action': 'getSpecificTask',
-				'taskID' : SELECTED_TASK_ID,
-				},
-				success: function(data)
-				{
-					assigneeEntryVal = data;
-				}
-			});
-		console.log("Task Action = " , TASK_ACTION);
-		
-		let title = $('#taskCreationZone').find('#titleEntry').val();
-		let description = $('#taskCreationZone').find('#descriptionEntry').val();
-
-		let initiatedDate = $('#taskCreationZone').find('#initDate').val();
-		let dueDate = $('#taskCreationZone').find('#dueDate').val();
-		let severity = $('#taskCreationZone').find('#severity').val();
-		let notes = $('#taskCreationZone').find('#notes').val();
-		let type = "EMPLOYEE";
-		
-		let taskStatus = $('#taskCreationZone').find('#taskStatus').val();
-		if(taskStatus == "Open") taskStatus = 1;
-		else if(taskStatus == "Completed") taskStatus = 2;
-		else taskStatus = 3;
-		
-		//console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
-		console.log("TYPE: ", type);
-		
-		let assignee;
-		let subassignee;
-		assignee = $('#taskCreationZone').find('#assigneeEntry').val();
-		subassignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
-
-		console.log("ASSIGNEE: " , assignee);
-		
-		//let projectID = getParameterByName('id');
-		console.log(projectID);
-		if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
-		
-		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
-		if (typeof description === 'undefined' || description === '') return alert('Bad Description');
-		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
-		if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
-		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
-		if (dueDate === 'undefined'|| dueDate === '') return alert('Bad Due Date');
-		
-		
-		console.log("TASK STATUS " , taskStatus);
-		
-		let taskData = {
-			'title': title,
-			'action': TASK_ACTION,
-			'project': projectID,
-			'description': description,
-			'assignee': assignee,
-			'subassignee': subassignee,
-			'initiatedDate': initiatedDate,
-			'dueDate': dueDate,
-			'severity': severity,
-			'notes': notes,
-			'description': description,
-			'type' : type ,
-		};
-	
-		console.log("PROJECT == ", project);
-		$.ajax({
-			type: 'POST',
-			url: 'Project', 
-			data: {
-				'title': title,
-				'action': TASK_ACTION,
-				'taskID' : SELECTED_TASK_ID,
-				'project': projectID,
-				'description': description,
-				'assignee': assignee,
-				'subassignee': subassignee,
-				'initiatedDate': initiatedDate,
-				'dueDate': dueDate,
-				'status' : taskStatus,
-				'severity': severity,
-				'notes': notes,
-				'type' : type,
-			}, complete: function (serverResponse) {
-				console.log(serverResponse);
-				let response = $.trim(serverResponse.responseText);
-				
-				let taskAddedMessage = "Task Added Successfully";
-				let taskUpdatedMessage = "Task Updated Successfully";
-				let taskErrorMessage = "ERROR UPDATING OR ADDING TASK";
-				let alertMessage;
-				
-				if(response == "TASK_ADDED")
-					alertMessage = taskAddedMessage;
-				else if(response == "UPDATED_TASK")
-					alertMessage = taskUpdatedMessage;
-				else
-					alertMessage = taskErrorMessage;
-				
-				if (alertMessage == taskErrorMessage) 				
-					alert(taskErrorMessage);
-				else 
-				{
-					alert(alertMessage);
-					$(".editProject").hide();
-					$("#projectManager").show();
-					$('#taskCreationZone').hide();
-					$('#taskDisplay').show();
-					clearTaskTable();
-					getTasks(1);
-					$('#tasks-item').trigger('click');
-					if(alertMessage == taskAddedMessage && type == "EMPLOYEE")
-						sendTaskAlert(taskData);	
-					else if((assignee != assigneeEntryVal) && alertMessage == taskUpdatedMessage && type == "EMPLOYEE")
-						{
-						sendTaskAlert(taskData);
-						}
-						
-				}
-			}
-		});
-		
-	}
+//	function submitTask () {
+//		$.ajax({
+//			type: 'POST',
+//			url: 'Project', 
+//			async: false,
+//			data: {
+//				'action': 'getSpecificTask',
+//				'taskID' : SELECTED_TASK_ID,
+//				},
+//				success: function(data)
+//				{
+//					assigneeEntryVal = data;
+//				}
+//			});
+//		console.log("Task Action = " , TASK_ACTION);
+//		
+//		let title = $('#taskCreationZone').find('#titleEntry').val();
+//		let description = $('#taskCreationZone').find('#descriptionEntry').val();
+//
+//		let initiatedDate = $('#taskCreationZone').find('#initDate').val();
+//		let dueDate = $('#taskCreationZone').find('#dueDate').val();
+//		let severity = $('#taskCreationZone').find('#severity').val();
+//		let notes = $('#taskCreationZone').find('#notes').val();
+//		let type = "EMPLOYEE";
+//		
+//		let taskStatus = $('#taskCreationZone').find('#taskStatus').val();
+//		if(taskStatus == "Open") taskStatus = 1;
+//		else if(taskStatus == "Completed") taskStatus = 2;
+//		else taskStatus = 3;
+//		
+//		//console.log("BUTTON: " , document.getElementById('toggleTaskAssignee'));
+//		console.log("TYPE: ", type);
+//		
+//		let assignee;
+//		let subassignee;
+//		assignee = $('#taskCreationZone').find('#assigneeEntry').val();
+//		subassignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
+//
+//		console.log("ASSIGNEE: " , assignee);
+//		
+//		//let projectID = getParameterByName('id');
+//		console.log(projectID);
+//		if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+//		
+//		if (typeof title === 'undefined' || title === '') return alert('Bad Title');
+//		if (typeof description === 'undefined' || description === '') return alert('Bad Description222');
+//		if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
+//		if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
+//		if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
+//		if (dueDate === 'undefined'|| dueDate === '') return alert('Bad Due Date');
+//		
+//		
+//		console.log("TASK STATUS " , taskStatus);
+//		
+//		let taskData = {
+//			'title': title,
+//			'action': TASK_ACTION,
+//			'project': projectID,
+//			'description': description,
+//			'assignee': assignee,
+//			'subassignee': subassignee,
+//			'initiatedDate': initiatedDate,
+//			'dueDate': dueDate,
+//			'severity': severity,
+//			'notes': notes,
+//			'description': description,
+//			'type' : type ,
+//		};
+//	
+//		console.log("PROJECT == ", project);
+//		$.ajax({
+//			type: 'POST',
+//			url: 'Project', 
+//			data: {
+//				'title': title,
+//				'action': TASK_ACTION,
+//				'taskID' : SELECTED_TASK_ID,
+//				'project': projectID,
+//				'description': description,
+//				'assignee': assignee,
+//				'subassignee': subassignee,
+//				'initiatedDate': initiatedDate,
+//				'dueDate': dueDate,
+//				'status' : taskStatus,
+//				'severity': severity,
+//				'notes': notes,
+//				'type' : type,
+//			}, complete: function (serverResponse) {
+//				console.log(serverResponse);
+//				let response = $.trim(serverResponse.responseText);
+//				
+//				let taskAddedMessage = "Task Added Successfully";
+//				let taskUpdatedMessage = "Task Updated Successfully";
+//				let taskErrorMessage = "ERROR UPDATING OR ADDING TASK";
+//				let alertMessage;
+//				
+//				if(response == "TASK_ADDED")
+//					alertMessage = taskAddedMessage;
+//				else if(response == "UPDATED_TASK")
+//					alertMessage = taskUpdatedMessage;
+//				else
+//					alertMessage = taskErrorMessage;
+//				
+//				if (alertMessage == taskErrorMessage) 				
+//					alert(taskErrorMessage);
+//				else 
+//				{
+//					alert(alertMessage);
+//					$(".editProject").hide();
+//					$("#projectManager").show();
+//					$('#taskCreationZone').hide();
+//					$('#taskDisplay').show();
+//					clearTaskTable();
+//					getTasks(1);
+//					$('#tasks-item').trigger('click');
+//					if(alertMessage == taskAddedMessage && type == "EMPLOYEE")
+//						sendTaskAlert(taskData);	
+//					else if((assignee != assigneeEntryVal) && alertMessage == taskUpdatedMessage && type == "EMPLOYEE")
+//						{
+//						sendTaskAlert(taskData);
+//						}
+//						
+//				}
+//			}
+//		});
+//		
+//	}
 	
 	function sendTaskAlert(taskData)
 	{

@@ -182,11 +182,11 @@
 	   			<th>Warehouse</th>
 	   			<th>MCS Number</th>
 	   			<th>Item</th>
-	   			<th>Start Date</th>
-	   			<th>Manager</th>
 	   			<th style= "text-align:center">Score</th>
-	   			<th>End Date</th>
 	   			<th>Status</th>
+	   			<th>Start Date</th>	   				   			
+	   			<th>End Date</th>	
+	   			<th>Manager</th>   			
 	   			
 	   			</tr>
 	   			
@@ -251,7 +251,8 @@
 					<li class="list-group-item project-info-list-item" id="general-info-item">General Info</li>
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
 					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
-					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>						
+					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>		
+					<li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li>				
 				</ul>
 			</div> <!-- Project Information -->
 			<div class='info-tab' id='changeOrders'>
@@ -1990,31 +1991,7 @@
 	            <td class = "bold">Customer Number</td>
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
-	    	</table>   
-	    	<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Pending Invoices</button>
-				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editPendingInvoice' onclick='goToPendingInvoice(1)' type="button" class="project-edit btn" disabled>Edit Pending Invoice</button>
-				<button style = "float:right;margin-right:5px;" onclick='goToPendingInvoice(0);' type='button' class='project-edit btn'>Add Pending Invoice</button>
-	    					<div id = "pendingInvoiceTableDiv">
-				<table id='pendingInvoiceTable' class='table'>				
-					<thead class="pendingInvoiceTableHead">
-					  <tr>
-						<th width = 4% >Invoice #</th>
-						<th width = 12%>Title</th>
-						<th width = 12%>Description</th>
-						<th width = 8% >Status</th>
-						<th width = 6%>Invoice Status</th>
-						<th width = 8%>Sub Name(s)</th>
-						<th width = 10%>Customer</th>
-						<th width = 11%>Submit Date</th>
-						<th width = 7% >Cost</th>
-						<th width = 7% >Sell</th>
-						<th width = 15%>Invoice Notes</th>
-					  </tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-				</div>
+	    	</table>   	    		
 		</div> <!-- End Financial Information -->
 		
 		
@@ -2028,17 +2005,16 @@
 				<table id='pendingInvoiceTable' class='table'>				
 					<thead class="pendingInvoiceTableHead">
 					  <tr>
+					  	<th width = 4% >Item #</th>
 						<th width = 4% >Invoice #</th>
-						<th width = 12%>Title</th>
-						<th width = 12%>Description</th>
-						<th width = 8% >Status</th>
-						<th width = 6%>Invoice Status</th>
+						<th width = 12%>Invoice Amount</th>
 						<th width = 8%>Sub Name(s)</th>
-						<th width = 10%>Customer</th>
 						<th width = 11%>Submit Date</th>
-						<th width = 7% >Cost</th>
-						<th width = 7% >Sell</th>
-						<th width = 15%>Invoice Notes</th>
+						<th width = 12%>Description</th>
+						<th width = 8% >Status</th>											
+						<th width = 10%>DB CO#</th>						
+						<th width = 7% >PO #</th>						
+						<th width = 15%>Notes</th>
 					  </tr>
 					</thead>
 					<tbody>
@@ -3954,9 +3930,21 @@
 		                </td>   
 		            </tr>
 		            <tr>
-		                <td class="coLabel">Title</td>
+		                <td class="coLabel">Invoice Amount($)</td>
 		                <td>
-		                    <input size = "40" type="text" id="titlePend" />
+		                    <input size = "40" type="text" id="invoiceAmtPend" />
+		                </td>   
+		            </tr>
+       		        <tr>
+		                <td class="coLabel">Sub Name(s)</td>
+		                <td>
+		                    <input size="40" type="text" id="subNamesPend" />
+		                </td>   
+		            </tr>
+          		    <tr>
+		                <td class="coLabel">Subs Submitted Date</td>
+		                <td>
+		                	<input type="text" id="submittedDatePend" />
 		                </td>   
 		            </tr>
 		            <tr>
@@ -3974,87 +3962,23 @@
 		                    </select>                  
 		                </td>   
 		            </tr>
-		            <tr>
-		                <td class="coLabel">Sub Name(s)</td>
+
+
+          		    <tr>
+		                <td  class="coLabel">DB CO #</td>
 		                <td>
-		                    <input size="40" type="text" id="subNamesPend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Subs Submitted Date</td>
-		                <td>
-		                	<input type="text" id="proposalDatePend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Customer</td>
-		 				
-		                <td>
-		                	<select class="closeout-input" id="customerCOPend">
-		                        <option value="default">--Customer--</option>
-		                    </select>		                	
-		                </td>   
-		            </tr>		           
-		            <tr>
-		                <td class="coLabel">Submit Date</td>
-		 
-		                <td>
-		                	<input type="text" id="submittedDatePend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Approved Date</td>
-		 
-		                <td>
-		                	<input type="text" id="approvedDatePend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Cost</td>
-		                <td>
-		                    <input type="text" id="costPend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Sell</td>
-		 
-		                <td>
-		                	<input type="text" id="sellPend" />
-		                </td>   
-		            </tr>
-		            
-		            <tr>
-		                <td class="coLabel">MCS Invoice Status</td>
-		 				
-		                <td>
-		                	<select style= "width: 158px;" class="closeout-input" id="mcsInvoiceStatusPend">
-		                        <option value="default">----</option>
-		                        <option value="1">Yes</option>
-				                <option value="0">No</option> 
-				                <option value="2">N/A</option>   
-		                    </select>			                         	                
-		                </td> 
-		                
-   
-		            </tr>	
-		            
-		            
-		            <tr>
-		                <td  class="coLabel">MCS Invoice #</td>
-		                <td>
-		                    <input type="text" id="invoiceNumberPend" />             
+		                    <input type="text" id="dbCoNumPend" />               
 		                </td>
 		            </tr>
-
-		            <tr>
-		                <td  class="coLabel">Customer COP #</td>
+		            
+          		    <tr>
+		                <td  class="coLabel">PO #</td>
 		                <td>
-		                    <input type="text" id="customerCOPnumPend" />               
+		                    <input type="text" id="poNumPend" />               
 		                </td>
 		            </tr>
-
 		             <tr>
-		                <td class="coLabel">CO Notes</td>
+		                <td class="coLabel">Notes</td>
 		                <td>
 		                    <textarea id="notesPend" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40" ondblclick = "dateFillFunction(this)"> </textarea>
 		                </td>   

@@ -720,7 +720,7 @@ public class ProjectObjectService
 	 * @throws ClassNotFoundException
 	 */
 	public synchronized static Object get(Long id, String domain) throws ClassNotFoundException
-	{
+	{		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
 		Transaction tx = session.beginTransaction();

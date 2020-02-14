@@ -121,7 +121,7 @@ public class Project extends HttpServlet
 		      // Sender's email ID needs to be mentioned
 		      String from = "mcstaskalert@millerconstructionservices.com";
 		      //This password was missing, Akash added it
-		      String pass = "Tjm@1234";
+		      String pass = "MCS@1234";
 		      // Assuming you are sending email from localhost
 		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
 		      String host = "west.exch032.serverdata.net";
@@ -222,7 +222,7 @@ public class Project extends HttpServlet
 		      // Sender's email ID needs to be mentioned
 		      String from = "mcstaskalert@millerconstructionservices.com";
 		      //This password was missing, Akash added it
-		      String pass = "Tjm@1234";
+		      String pass = "MCS@1234";
 		      // Assuming you are sending email from localhost
 		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
 		      String host = "west.exch032.serverdata.net";
@@ -558,6 +558,24 @@ public class Project extends HttpServlet
 			try
 			{
 				successfulAddition = ProjectService.addChangeOrder(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				successfulAddition = false;
+				e.printStackTrace();
+			}
+			
+			if(successfulAddition) 	response = " SUCCESSFULLY ADDED CHANGE ORDER\n";
+			else response = " ERROR ADDING CHANGE ORDER\n";
+		}
+		else if(action.equals("addPendingInvoice"))
+		{
+			boolean successfulAddition = true;
+
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				successfulAddition = ProjectService.addPendingInvoice(projectID, parameters);
 			}
 			catch(ClassNotFoundException | ParseException e)
 			{
@@ -985,7 +1003,11 @@ public class Project extends HttpServlet
 		} 
 		else if(action.equals("getSpecificTask")) {
 			try {
-				Task currentTask = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
+				System.out.println("Coming here");
+				System.out.println(parameters.get("taskID"));
+				System.out.println(Long.parseLong(parameters.get("taskID")));
+				System.out.println("Coming here only");
+				Task currentTask = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");				
 				String name = currentTask.getAssignee().getFirstName();
 				System.out.println("Old name us " + name);
 				Gson gson = new Gson();

@@ -4268,6 +4268,14 @@ function prepareProjectData(source_id){
 		$('#projectData').find("#financialInformation").addClass("active");
 
 	}
+	
+	else if(source_id == "pendingInvoice-item")
+	{
+		$('#projectData').find(".nav-tabs").find("[data-tab=pendingInvoiceInformation]").addClass("active");
+		$('#projectData').find("#pendingInvoiceInformation").addClass("active");
+
+	}
+	
 	else console.log("Bad ID in prepareProjectData");
 }
 
@@ -9841,18 +9849,18 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails4.innerHTML = json[k].projectManagers.name;					
+					listDetails7.innerHTML = json[k].projectManagers.name;					
 					
 					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
-						listDetails5.setAttribute( 'class', 'circle_onholdcancel' );
+						listDetails3.setAttribute( 'class', 'circle_onholdcancel' );
 					}
-					else if(json[k].mediumScore == 0) listDetails5.setAttribute( 'class', 'circle_green' );
-					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
+					else if(json[k].mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
 					 
-					else listDetails5.setAttribute( 'class', 'circle_red' );
-					listDetails3.innerHTML = json[k].scheduledStartDate;
+					else listDetails3.setAttribute( 'class', 'circle_red' );
+					listDetails5.innerHTML = json[k].scheduledStartDate;
 					listDetails6.innerHTML = json[k].scheduledTurnover;
-					listDetails7.innerHTML = json[k].status['name'];
+					listDetails4.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
@@ -9901,14 +9909,14 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails4.innerHTML = json[k].projectManagers.name;		
+					listDetails7.innerHTML = json[k].projectManagers.name;		
 					
-					if(json[k].mediumScore == 0) listDetails5.setAttribute( 'class', 'circle_green' );
-					else if(json[k].mediumScore == 1) listDetails5.setAttribute( 'class', 'circle_yellow' );
-					else listDetails5.setAttribute( 'class', 'circle_red' );
-					listDetails3.innerHTML = json[k].scheduledStartDate;
+					if(json[k].mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
+					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
+					else listDetails3.setAttribute( 'class', 'circle_red' );
+					listDetails5.innerHTML = json[k].scheduledStartDate;
 					listDetails6.innerHTML = json[k].scheduledTurnover;
-					listDetails7.innerHTML = json[k].status['name'];
+					listDetails4.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
 					$(projectListing).append(listDetails2);
@@ -11277,7 +11285,7 @@ function goToProjectManager() {
 			break;
 		
 		case "pendingInvoice":
-			$('#financial-item').trigger('click');
+			$('#pendingInvoice-item').trigger('click');
 			break;
 			
 		case "equipmentDiv":
@@ -12204,4 +12212,197 @@ function projectTaskReport() {
 	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
 	
 	window.open("Report?" + 'id=' + projectID + "&type=Project Task Report "+"~"+$('#taskSelector2').val());
+}
+
+function saveProject_PENDING_INVOICE()
+{
+	console.log("saving Pending Invoice");
+	
+	var invoiceNumber = $('#pendingInvoice').find("#invoiceNumberPend").val();
+	var invoiceAmount = $('#pendingInvoice').find("invoiceAmtPend").val();
+//	if(invoiceAmount) {invoiceAmount = cleanNumericValueForSaving($('#pendingInvoice').find("#invoiceAmtPend")[0].value); invoiceAmount = parseFloat(invoiceAmount);}
+	
+	var subNames = $('#pendingInvoice').find("#subNamesPend").val();
+	var submittedDate = $('#pendingInvoice').find("#submittedDatePend").val();
+	var briefDescription = $('#pendingInvoice').find("#briefDescriptionPend").val();
+	var status = $('#pendingInvoice').find("#statusPend").val();
+	var dbCONum = $('#pendingInvoice').find("#dbCoNumPend").val();
+	var poNum = $('#pendingInvoice').find("#poNumPend").val();
+	var notes = $('#pendingInvoice').find("#notesPend").val();
+	
+	
+	
+	var dates = [submittedDate];
+	
+	var action = "addPendingInvoice";
+	if(edit_PENDING_INVOICE == 'true')
+		action = "editPendingInvoice";
+	
+	if(isValidInput_CHANGE_ORDER(dates))
+		for(var i = 0; i < dates.length; i++) {
+			if(dates[i]) dates[i] = dateCleaner(dates[i]);			
+			if(i == 0) submittedDate = dates[i];
+		}
+	
+	if(action == "editPendingInvoice" && (!CHANGE_ORDER_ID || !projectID)) {
+		console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
+		alert("Server Error! (Edit Change Order)");
+		return;
+	}
+	
+	if(action == "addPendingInvoice" && !projectID) {
+		console.log("Change Order ID: ", CHANGE_ORDER_ID, "Project ID: ", projectID);
+		alert("Server Error! (Add Change Order)");
+		return; 
+	}
+	
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			dataType: 'json',
+			data: 
+			{
+				'domain': 'project',
+				'action': action,
+				
+				'projectID': projectID,
+				'changeOrderID': CHANGE_ORDER_ID,	
+				'invoiceNumber' : invoiceNumber,
+				'invoiceAmount' : invoiceAmount,
+				'subNames': subNames,
+				'submittedDate': submittedDate,
+				'briefDescription': briefDescription,
+				'status': status,
+				'dbCONum': dbCONum,
+				'poNum': poNum,
+				'notes': notes,
+				
+			},
+			success:function(data){
+				
+				alert('Saved Pending Invoice');
+				goToProjectManager();
+				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+				console.log(data);
+			},
+			error: function(data)
+			{
+				alert('Saved Pending Invoice : ERROR');
+				
+				goToProjectManager();
+				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+			}
+		});
+
+		
+		
+}
+
+
+function submitTask () {
+	let title = $('#titleEntry').val();
+	let description = $('#descriptionEntry').val();
+	let assignee;
+	let subassignee;
+	
+	
+	assignee = $('#assigneeEntry').val();
+ 
+	subassignee = $('#subcontractorsDropdown').val();
+	
+	console.log("Assignee: ", assignee);
+	let initiatedDate = $('#initDate').val();
+	let dueDate = $('#dueDate').val();
+	let severity = $('#severity').val();
+	let notes = $('#notes').val();
+	let type = taskAssigneeType;
+	
+//	let projectID = getParameterByName('id');
+	console.log("PID", projectID);
+	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+	
+	if (typeof title === 'undefined' || title === '') return alert('Bad Title');
+	if (typeof description === 'undefined' || description === '') return alert('Bad Description111');
+	if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
+	if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
+	if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
+	if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
+	
+	let taskData = {
+		'title': title,
+		'action': 'createTask',
+		'project': projectID,
+		'description': description,
+		'assignee': assignee,
+		'subassignee': subassignee,
+		'initiatedDate': initiatedDate,
+		'dueDate': dueDate,
+		'severity': severity,
+		'notes': notes,
+		'description': description,
+		'type' : type ,
+	};
+
+	console.log("PROJECT == ", project);
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		data: {
+			'title': title,
+			'action': 'createTask',
+			'project': projectID,
+			'description': description,
+			'assignee': assignee,
+			'subassignee': subassignee,
+			'initiatedDate': initiatedDate,
+			'dueDate': dueDate,
+			'severity': severity,
+			'notes': notes,
+			'type' : type,
+		}, complete: function (serverResponse) {
+			console.log(serverResponse);
+			let response = $.trim(serverResponse.responseText);
+			if (response === 'TASK_ADDED') {
+				alert('Task Added Successfully');
+				$(".editProject").hide();
+				$("#projectManager").show();
+				$('#taskCreationZone').hide();
+				$('#taskDisplay').show();
+				clearTaskTable();
+				getTasks(1);
+				$('#tasks-item').trigger('click');
+				if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
+//				window.location.href='taskBrowser.html'
+			}
+		}
+	});
+	
+}
+
+function sendTaskAlert(taskData)
+{
+	console.log("Task Data is ",taskData);
+	console.log("IN: sendTaskAlert()");
+   	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'sendTaskAlert',
+			'projectItem': project.projectItem.name,
+			'warehouseCity': project.warehouse.city.name,
+			'warehouseID': project.warehouse.warehouseID,
+			'warehouseState':project.warehouse.state,
+			'assignee': taskData.assignee,
+			'severity' : taskData.severity,
+			'dueDate' : taskData.dueDate,
+			'description': taskData.description,
+			'type' : taskData.type,
+			'subAssignee' : taskData.subassignee,
+			'notes' : taskData.notes,
+		}, complete: function (response) {
+			console.log("RESPONSE FROM sendTaskAlert() = ", response);			
+		}
+	});
 }
