@@ -445,149 +445,190 @@ function fillTabs_CLOSEOUT(data)
 		
 		$('#closeoutData').find("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
 		
-		if(json.permits.mechanicalPermitRequired == 1)
-		{
-			$('#closeoutData').find("#mechFinalDate").val(getToday());
-	    	$('#closeoutData').find("#mechFinalStatus").val(4);
-		}
-		else if(json.permits.mechanicalPermitRequired == 2)
-		{
-			$('#closeoutData').find("#mechFinalDate").val(getToday());
-	    	$('#closeoutData').find("#mechFinalStatus").val(3);
-		}
-		else
-		{
-			$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
-			$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
-		}
+		console.log("JSON P ", json.permits);
 		
-		if(json.permits.electricalPermitRequired == 1)
-		{
-			$('#closeoutData').find("#elecFinalDate").val(getToday());
-	    	$('#closeoutData').find("#elecFinalStatus").val(4);
-		}
-		else if(json.permits.electricalPermitRequired == 2)
-		{
-			$('#closeoutData').find("#elecFinalDate").val(getToday());
-	    	$('#closeoutData').find("#elecFinalStatus").val(3);
-		}
-		else
-		{
-			$('#closeoutData').find("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
-			$('#closeoutData').find("#elecFinalStatus").val(convertDefault(json.closeoutDetails.elecFinalStatus));
-		}
+//		if(json.permits.mechanicalPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#mechFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#mechFinalStatus").val(4);
+//		}
+//		else if(json.permits.mechanicalPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#mechFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#mechFinalStatus").val(3);
+//		}
+//		else
+//		{
+//			$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
+//			$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
+//		}
+//		
+//		if(json.permits.electricalPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#elecFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#elecFinalStatus").val(4);
+//		}
+//		else if(json.permits.electricalPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#elecFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#elecFinalStatus").val(3);
+//		}
+//		else
+//		{
+//			$('#closeoutData').find("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
+//			$('#closeoutData').find("#elecFinalStatus").val(convertDefault(json.closeoutDetails.elecFinalStatus));
+//		}
+//		
+//		if(json.permits.plumbingPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#plumbingFinalStatus").val(4);
+//		}
+//		else if(json.permits.plumbingPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#plumbingFinalStatus").val(3);
+//		}
+//		else
+//		{
+//			$('#closeoutData').find("#plumbingFinalStatus").val(convertDefault(json.closeoutDetails.plumbingFinalStatus));
+//			$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
+//		}
+//		
+//		if(json.permits.gasPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#gasFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#gasFinalStatus").val(4);
+//		}
+//		else if(json.permits.gasPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#gasFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#gasFinalStatus").val(3);
+//		}
+//		else
+//		{
+//			$('#closeoutData').find("#gasFinalStatus").val(convertDefault(json.closeoutDetails.gasFinalStatus));
+//			$('#closeoutData').find("#gasFinalDate").val(json.closeoutDetails.gasFinalDate);
+//		}
+//		
+//		if(json.permits.ceilingPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#ceilingFinalStatus").val(4);
+//		}
+//		else if(json.permits.ceilingPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#ceilingFinalStatus").val(3);
+//		}
+//	    else
+//	    {
+//	    	$('#closeoutData').find("#ceilingFinalStatus").val(convertDefault(json.closeoutDetails.ceilingFinalStatus));
+//			$('#closeoutData').find("#ceilingFinalDate").val(json.closeoutDetails.ceilingFinalDate);
+//		}	
+//		
+//		if(json.permits.fireAlarmPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(4);
+//		}
+//		else if(json.permits.fireAlarmPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(3);
+//		}
+//	    else
+//	    {
+//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(convertDefault(json.closeoutDetails.fireAlarmFinalStatus));
+//	    	$('#closeoutData').find("#fireAlarmFinalDate").val(json.closeoutDetails.fireAlarmFinalDate);
+//	    }
+//		
+//		if(json.permits.voltagePermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#lowVolFinalStatus").val(4);
+//		}
+//		else if(json.permits.voltagePermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#lowVolFinalStatus").val(3);
+//		}
+//	    else
+//	    {
+//	    	$('#closeoutData').find("#lowVolFinalStatus").val(convertDefault(json.closeoutDetails.lowVolFinalStatus));
+//			$('#closeoutData').find("#lowVolFinalDate").val(json.closeoutDetails.lowVolFinalDate);
+//	    }
+//		
+//		if(json.permits.sprinklerPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(4);
+//		}
+//		else if(json.permits.sprinklerPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
+//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(3);
+//		}
+//	    else
+//	    {
+//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(convertDefault(json.closeoutDetails.sprinkleFinalStatus));
+//	    	$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
+//	    }
+//		
+//		if(json.permits.buildingPermitRequired == 1)
+//		{
+//			$('#closeoutData').find("#buildPermitCL").val(getToday());
+//	    	$('#closeoutData').find("#buildFinalStatus").val(4);
+//		}
+//		else if(json.permits.buildingPermitRequired == 2)
+//		{
+//			$('#closeoutData').find("#buildPermitCL").val(getToday());
+//	    	$('#closeoutData').find("#buildFinalStatus").val(3);
+//		}
+//	    else
+//	    {
+//	    	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
+//	    	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
+//	    }
+//		
 		
-		if(json.permits.plumbingPermitRequired == 1)
-		{
-			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
-	    	$('#closeoutData').find("#plumbingFinalStatus").val(4);
-		}
-		else if(json.permits.plumbingPermitRequired == 2)
-		{
-			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
-	    	$('#closeoutData').find("#plumbingFinalStatus").val(3);
-		}
-		else
-		{
-			$('#closeoutData').find("#plumbingFinalStatus").val(convertDefault(json.closeoutDetails.plumbingFinalStatus));
-			$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
-		}
 		
-		if(json.permits.gasPermitRequired == 1)
-		{
-			$('#closeoutData').find("#gasFinalDate").val(getToday());
-	    	$('#closeoutData').find("#gasFinalStatus").val(4);
-		}
-		else if(json.permits.gasPermitRequired == 2)
-		{
-			$('#closeoutData').find("#gasFinalDate").val(getToday());
-	    	$('#closeoutData').find("#gasFinalStatus").val(3);
-		}
-		else
-		{
-			$('#closeoutData').find("#gasFinalStatus").val(convertDefault(json.closeoutDetails.gasFinalStatus));
-			$('#closeoutData').find("#gasFinalDate").val(json.closeoutDetails.gasFinalDate);
-		}
+
+		$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
+		$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
 		
-		if(json.permits.ceilingPermitRequired == 1)
-		{
-			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
-	    	$('#closeoutData').find("#ceilingFinalStatus").val(4);
-		}
-		else if(json.permits.ceilingPermitRequired == 2)
-		{
-			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
-	    	$('#closeoutData').find("#ceilingFinalStatus").val(3);
-		}
-	    else
-	    {
-	    	$('#closeoutData').find("#ceilingFinalStatus").val(convertDefault(json.closeoutDetails.ceilingFinalStatus));
-			$('#closeoutData').find("#ceilingFinalDate").val(json.closeoutDetails.ceilingFinalDate);
-		}	
+		$('#closeoutData').find("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
+		$('#closeoutData').find("#elecFinalStatus").val(convertDefault(json.closeoutDetails.elecFinalStatus));
 		
-		if(json.permits.fireAlarmPermitRequired == 1)
-		{
-			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
-	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(4);
-		}
-		else if(json.permits.fireAlarmPermitRequired == 2)
-		{
-			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
-	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(3);
-		}
-	    else
-	    {
-	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(convertDefault(json.closeoutDetails.fireAlarmFinalStatus));
-	    	$('#closeoutData').find("#fireAlarmFinalDate").val(json.closeoutDetails.fireAlarmFinalDate);
-	    }
+		$('#closeoutData').find("#plumbingFinalStatus").val(convertDefault(json.closeoutDetails.plumbingFinalStatus));
+		$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
+	
+		$('#closeoutData').find("#gasFinalStatus").val(convertDefault(json.closeoutDetails.gasFinalStatus));
+		$('#closeoutData').find("#gasFinalDate").val(json.closeoutDetails.gasFinalDate);
+	 
+    	$('#closeoutData').find("#ceilingFinalStatus").val(convertDefault(json.closeoutDetails.ceilingFinalStatus));
+		$('#closeoutData').find("#ceilingFinalDate").val(json.closeoutDetails.ceilingFinalDate);
+	
+    	$('#closeoutData').find("#fireAlarmFinalStatus").val(convertDefault(json.closeoutDetails.fireAlarmFinalStatus));
+    	$('#closeoutData').find("#fireAlarmFinalDate").val(json.closeoutDetails.fireAlarmFinalDate);
+    
+
+    	$('#closeoutData').find("#lowVolFinalStatus").val(convertDefault(json.closeoutDetails.lowVolFinalStatus));
+		$('#closeoutData').find("#lowVolFinalDate").val(json.closeoutDetails.lowVolFinalDate);
+    
+    	$('#closeoutData').find("#sprinkleFinalStatus").val(convertDefault(json.closeoutDetails.sprinkleFinalStatus));
+    	$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
+    
+    	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
+    	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
+    
 		
-		if(json.permits.voltagePermitRequired == 1)
-		{
-			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
-	    	$('#closeoutData').find("#lowVolFinalStatus").val(4);
-		}
-		else if(json.permits.voltagePermitRequired == 2)
-		{
-			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
-	    	$('#closeoutData').find("#lowVolFinalStatus").val(3);
-		}
-	    else
-	    {
-	    	$('#closeoutData').find("#lowVolFinalStatus").val(convertDefault(json.closeoutDetails.lowVolFinalStatus));
-			$('#closeoutData').find("#lowVolFinalDate").val(json.closeoutDetails.lowVolFinalDate);
-	    }
 		
-		if(json.permits.sprinklerPermitRequired == 1)
-		{
-			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
-	    	$('#closeoutData').find("#sprinkleFinalStatus").val(4);
-		}
-		else if(json.permits.sprinklerPermitRequired == 2)
-		{
-			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
-	    	$('#closeoutData').find("#sprinkleFinalStatus").val(3);
-		}
-	    else
-	    {
-	    	$('#closeoutData').find("#sprinkleFinalStatus").val(convertDefault(json.closeoutDetails.sprinkleFinalStatus));
-	    	$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
-	    }
 		
-		if(json.permits.buildingPermitRequired == 1)
-		{
-			$('#closeoutData').find("#buildPermitCL").val(getToday());
-	    	$('#closeoutData').find("#buildFinalStatus").val(4);
-		}
-		else if(json.permits.buildingPermitRequired == 2)
-		{
-			$('#closeoutData').find("#buildPermitCL").val(getToday());
-	    	$('#closeoutData').find("#buildFinalStatus").val(3);
-		}
-	    else
-	    {
-	    	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
-	    	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
-	    }
+		
+		
+		
+		console.log("CS D", json.closeoutDetails);
 		
 		$('#closeoutData').find("#equipmentSubmittalStatus").val(convertDefault(json.closeoutDetails.equipmentSubmittalStatus));
 		
@@ -3085,8 +3126,185 @@ function saveProject_PERMIT1()
 				
 			}
 		});
-    }  
+    } 
+    
+    console.log("B INS", buildingInspectionStatus);
+    console.log("C INS", ceilingInspectionStatus);
+    console.log("M INS", mechanicalInspectionStatus);
+    console.log("E INS", electricalInspectionStatus);
+    console.log("P INS", plumbingInspectionStatus);
+    console.log("G INS", gasInspectionStatus);
+    console.log("S INS", sprinklerInspectionStatus);
+    console.log("F INS", fireAlarmInspectionStatus);
+    console.log("V INS", voltageInspectionStatus);    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+ 
+    
+    
+    
+    
+
+/*//	 INSPECTIONS
+
+    var mechFinalStatus = $('#closeoutData').find("#mechFinalStatus").val();
+    var mechFinalDate = $('#closeoutData').find("#mechFinalDate").val();
+
+    var elecFinalDate = $('#closeoutData').find("#elecFinalDate").val();
+    var elecFinalStatus = $('#closeoutData').find("#elecFinalStatus").val();
+
+    var plumbingFinalDate = $('#closeoutData').find("#plumbingFinalDate").val();
+    var plumbingFinalStatus = $('#closeoutData').find("#plumbingFinalStatus").val();
+
+    var gasFinalDate = $('#closeoutData').find("#gasFinalDate").val();
+    var gasFinalStatus = $('#closeoutData').find("#gasFinalStatus").val();
+
+    var ceilingFinalDate = $('#closeoutData').find("#ceilingFinalDate").val();
+    var ceilingFinalStatus = $('#closeoutData').find("#ceilingFinalStatus").val();
+
+    var fireAlarmFinalDate = $('#closeoutData').find("#fireAlarmFinalDate").val();
+    var fireAlarmFinalStatus = $('#closeoutData').find("#fireAlarmFinalStatus").val();
+
+    var lowVolFinalDate = $('#closeoutData').find("#lowVolFinalDate").val();
+    var lowVolFinalStatus = $('#closeoutData').find("#lowVolFinalStatus").val();
+
+    var sprinkleFinalStatus = $('#closeoutData').find("#sprinkleFinalStatus").val();
+    var sprinkleFinalDate = $('#closeoutData').find("#sprinkleFinalDate").val();
+
+    // buildingPermitCL = buildingFinalDate;
+    var buildingFinalStatus = $('#closeoutData').find("#buildFinalStatus").val();
+       
+    var dates_CLOSEOUT =[
+    												
+    			sprinkleFinalDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
+    			ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate,
+    											
+                ];
+
+
+    if(isValidInput_CLOSEOUT(dates_CLOSEOUT))
+    {
+    	console.log("we got valid data now");
+    	for(var i = 0; i < dates_CLOSEOUT.length; i++) {
+    		if(dates_CLOSEOUT[i]) dates_CLOSEOUT[i] = dateCleaner(dates_CLOSEOUT[i]);
+
+    		if(i == 13) sprinkleFinalDate = dates_CLOSEOUT[i];
+    		if(i == 15) mechFinalDate = dates_CLOSEOUT[i];
+    		if(i == 16) elecFinalDate = dates_CLOSEOUT[i];
+    		if(i == 17) plumbingFinalDate = dates_CLOSEOUT[i];
+    		if(i == 18) gasFinalDate = dates_CLOSEOUT[i];
+    		if(i == 19) ceilingFinalDate = dates_CLOSEOUT[i];
+    		if(i == 20) fireAlarmFinalDate = dates_CLOSEOUT[i];
+    		if(i == 21) lowVolFinalDate = dates_CLOSEOUT[i];
+
+    	}
+    	var action = "editCloseout";
+    	var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
+    	var SALVAGE_ID = 0;
+    	if(PROJECT_DATA.closeoutDetails.salvageValue != null)
+    		SALVAGE_ID = PROJECT_DATA.closeoutDetails.salvageValue.id;
+    	
+    	if( (!PROJECT_DATA || !PROJECT_DATA.id))
+    	{
+    		alert("Server Error! (Project ID)");
+    		return;
+    	}
+    	
+    	if(!CLOSEOUT_ID)
+    	{
+    		alert("Server Error! (Closeout ID)");
+    		return;
+    	}
+    	
+    	$.ajax({
+    		type: 'POST',
+    		url: 'Project', 
+    		dataType: 'json',
+    		data: 
+    		{
+    			'domain': 'project',
+    			'action': action,
+    			'projectID':PROJECT_DATA.id,
+    			'closeoutID':CLOSEOUT_ID,
+    			'salvageID': SALVAGE_ID,
+
+
+    			
+    			'mechFinalStatus': mechFinalStatus,
+    			'mechFinalDate': mechFinalDate,
+    			
+    			'elecFinalStatus': elecFinalStatus,
+    			'elecFinalDate': elecFinalDate,
+    			
+    			'plumbingFinalStatus': plumbingFinalStatus,
+    			'plumbingFinalDate': plumbingFinalDate,
+    			
+    			'gasFinalStatus': gasFinalStatus,
+    			'gasFinalDate': gasFinalDate,
+    			
+    			'ceilingFinalStatus': ceilingFinalStatus,
+    			'ceilingFinalDate': ceilingFinalDate,
+    			
+    			'fireAlarmFinalStatus': fireAlarmFinalStatus,
+    			'fireAlarmFinalDate': fireAlarmFinalDate,
+    			
+    			'lowVolFinalStatus': lowVolFinalStatus,
+    			'lowVolFinalDate': lowVolFinalDate,
+    			
+    			'sprinkleFinalStatus': sprinkleFinalStatus,
+    			'sprinkleFinalDate': sprinkleFinalDate,
+    			
+    			'buildingFinalStatus': buildingFinalStatus,	
+    			
+    		},
+    		success:function(data){
+    			updateFrontEnd();			
+    			//getProject_PROJECT_MANAGER(projectID , 1);
+    			alert('Project Saved');
+    			console.log(data);
+    			//UPDATE CLOSEOUT SUMMARY
+    			$('#closeoutData').find('#saveButton > button').prop('disabled', false);
+    			//goToProjectManager();
+
+    		},
+    		commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
+    		 * Code works perfectly with error statement 
+    		  Need to figure out how to fix this error to work 100 percent correctly
+    		
+    		 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    		error: function()
+    		{
+    			alert('Project Saved');
+    			$('#closeoutData').find('#saveButton > button').prop('disabled', false);
+    			//UPDATE CLOSEOUT SUMMARY
+    			//getProject_PROJECT_MANAGER(projectID , 1);
+    			//goToProjectManager();
+
+    		       //alert("Status: " + textStatus); 
+    			   //alert("Error: " + errorThrown);
+    		//error:function(xhr){
+    			//alert(xhr.responceText);
+    			//console.log(xhr.responseText);
+    						
+    		}
+    	});
+
+    }
+*/    
 }
+
+
+
 
 /*
 function returnToProjectManager () {
@@ -11533,10 +11751,10 @@ function sortTable(n){
 	  	        break;
 	  	      }
 	      }
-	      else if(n == 3){
+	      else if(n == 5){
 	    	  
 	    	  x=x.innerHTML;
-	    	  y=y.innerHTML;
+	    	  y=y.innerHTML;	    	  	    	 
 	    	  if(x!="Unavailable"){
 	    		  var t1 = x.split('/');
 	    	  }
@@ -11558,6 +11776,34 @@ function sortTable(n){
 		  	        break;
 	    	  		}
 	      }
+	      
+	      
+	      else if(n == 6){
+	    	  
+	    	  x=x.innerHTML;
+	    	  y=y.innerHTML;	    	  	    	  
+	    	  if(x!="Unavailable"){
+	    		  var t1 = x.split('/');
+	    	  }
+	    	  else var t1 = [9999,99,99];
+	    	  
+	    	  
+	    	  if(y!="Unavailable"){
+	    		  var t2 = y.split('/');
+	    	  }
+	    	  else var t2 = [9999,99,99];
+	    	  
+	    	  
+	    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
+	    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
+	    	  
+	    	  if ((d1) > (d2)) {
+		  	        //if so, mark as a switch and break the loop:
+		  	        shouldSwitch = true;
+		  	        break;
+	    	  		}
+	      }
+	      
 	      
 	      else{
 	    	  if ((x.innerHTML) > (y.innerHTML)) {
