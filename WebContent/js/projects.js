@@ -12547,22 +12547,23 @@ function saveProject_PENDING_INVOICE()
 
 
 function submitTask () {
-	let title = $('#titleEntry').val();
-	let description = $('#descriptionEntry').val();
+	let title = $('#taskCreationZone').find('#titleEntry').val();
+	let description = $('#taskCreationZone').find('#descriptionEntry').val();
 	let assignee;
 	let subassignee;
-	
-	
-	assignee = $('#assigneeEntry').val();
- 
-	subassignee = $('#subcontractorsDropdown').val();
+	assignee = $('#taskCreationZone').find('#assigneeEntry').val();
+	subassignee = $('#taskCreationZone').find('#subcontractorsDropdown').val();
 	
 	console.log("Assignee: ", assignee);
-	let initiatedDate = $('#initDate').val();
-	let dueDate = $('#dueDate').val();
-	let severity = $('#severity').val();
-	let notes = $('#notes').val();
-	let type = taskAssigneeType;
+	let initiatedDate = $('#taskCreationZone').find('#initDate').val();
+	let dueDate = $('#taskCreationZone').find('#dueDate').val();
+	let severity = $('#taskCreationZone').find('#severity').val();
+	let notes = $('#taskCreationZone').find('#notes').val();
+	let type = "EMPLOYEE";
+	let taskStatus = $('#taskCreationZone').find('#taskStatus').val();	
+	if(taskStatus == "Open") taskStatus = 1;
+	else if(taskStatus == "Completed") taskStatus = 2;
+	else taskStatus = 3;
 	
 //	let projectID = getParameterByName('id');
 	console.log("PID", projectID);
@@ -12591,39 +12592,82 @@ function submitTask () {
 	};
 
 	console.log("PROJECT == ", project);
-	$.ajax({
-		type: 'POST',
-		url: 'Project', 
-		data: {
-			'title': title,
-			'action': 'createTask',
-			'project': projectID,
-			'description': description,
-			'assignee': assignee,
-			'subassignee': subassignee,
-			'initiatedDate': initiatedDate,
-			'dueDate': dueDate,
-			'severity': severity,
-			'notes': notes,
-			'type' : type,
-		}, complete: function (serverResponse) {
-			console.log(serverResponse);
-			let response = $.trim(serverResponse.responseText);
-			if (response === 'TASK_ADDED') {
-				alert('Task Added Successfully');
-				$(".editProject").hide();
-				$("#projectManager").show();
-				$('#taskCreationZone').hide();
-				$('#taskDisplay').show();
-				clearTaskTable();
-				getTasks(1);
-				$('#tasks-item').trigger('click');
-				if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
-//				window.location.href='taskBrowser.html'
+	if(TASK_ACTION == "createTask"){		
+		
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				'title': title,
+				'action': 'createTask',
+				'project': projectID,
+				'description': description,
+				'assignee': assignee,
+				'subassignee': subassignee,
+				'initiatedDate': initiatedDate,
+				'dueDate': dueDate,
+				'severity': severity,
+				'status' : taskStatus,
+				'notes': notes,
+				'type' : type,
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'TASK_ADDED') {
+					alert('Task Added Successfully');
+					$(".editProject").hide();
+					$("#projectManager").show();
+					$('#taskCreationZone').hide();
+					$('#taskDisplay').show();
+					clearTaskTable();
+					getTasks(1);
+					$('#tasks-item').trigger('click');
+					if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
+//					window.location.href='taskBrowser.html'
+				}
 			}
-		}
-	});
-	
+		});
+
+		
+	}
+	else if(TASK_ACTION == "updateTask"){
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				'title': title,
+				'taskID': SELECTED_TASK_ID,
+				'action': 'updateTask',
+				'project': projectID,
+				'description': description,
+				'assignee': assignee,
+				'subassignee': subassignee,
+				'initiatedDate': initiatedDate,
+				'dueDate': dueDate,
+				'severity': severity,
+				'status' : taskStatus,
+				'notes': notes,
+				'type' : type,
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'UPDATED_TASK') {
+					alert('Task Updated Successfully');
+					$(".editProject").hide();
+					$("#projectManager").show();
+					$('#taskCreationZone').hide();
+					$('#taskDisplay').show();
+					clearTaskTable();
+					getTasks(1);
+					$('#tasks-item').trigger('click');
+//					if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
+//					window.location.href='taskBrowser.html'
+				}
+			}
+		});
+
+	}
+		
 }
 
 function sendTaskAlert(taskData)
