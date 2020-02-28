@@ -441,7 +441,7 @@ public class Report extends HttpServlet
 				sb.append(value);
 			}
 			
-			if(shownFields.get(0).equals("projectTaskSolo"))
+			else if(shownFields.get(0).equals("projectTaskSolo"))
 			{
 				System.out.println("IT is coming here 111");				
 				String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);
