@@ -10531,7 +10531,10 @@ function fillTabs_CHANGE_ORDER(json)
  * @returns computer friendly number
  */
 function cleanNumericValueForSaving(num)
-{
+{	
+	if(num[0] == "("){
+		num = num.slice(1,num.length);
+	}
 	while(num.indexOf(",") != -1) {
 		num = num.replace(",","");
 	}
