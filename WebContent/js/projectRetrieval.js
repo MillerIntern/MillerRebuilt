@@ -50,6 +50,10 @@ let TIME_FINISH;
 					PROJECT_OBJECT.PROJECTS[i].mediumScore = response.responseJSON[i][9];
 					PROJECT_OBJECT.PROJECTS[i].scheduledStartDate = response.responseJSON[i][10];
 					PROJECT_OBJECT.PROJECTS[i].scheduledTurnover = response.responseJSON[i][11];
+					PROJECT_OBJECT.PROJECTS[i].budgetaryDueDate = response.responseJSON[i][12];
+					PROJECT_OBJECT.PROJECTS[i].budgetarySubmittedDate = response.responseJSON[i][13];
+					PROJECT_OBJECT.PROJECTS[i].proposalDueDate = response.responseJSON[i][14];
+					PROJECT_OBJECT.PROJECTS[i].proposalSubmittedDate = response.responseJSON[i][15];
 					
 					
 				}

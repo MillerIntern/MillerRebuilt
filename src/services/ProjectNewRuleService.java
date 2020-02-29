@@ -913,7 +913,11 @@ public class ProjectNewRuleService {
 				
 				Date scheduledStartDate = proj.getScheduledStartDate();
 				Date scheduledTurnoverDate = proj.getScheduledTurnover();
-				long diff = scheduledStartDate.getTime() - today.getTime();
+				long diff = 0;
+				if(scheduledStartDate != null){
+					diff = scheduledStartDate.getTime() - today.getTime();
+				}									
+				
 				int diffDays = (int) (diff / (24 * 60 * 60 * 1000));		
 				String result = null;
 				if (!sectionsPermits.equals(" ") && scheduledStartDate != null && (diffDays >0 && diffDays <= 30) )

@@ -9400,6 +9400,30 @@ function establishRetrievedProjects()
 		else
 			RETRIEVED_PROJECTS[i].scheduledTurnover = "Unavailable";
 		
+		
+		
+		if(RETRIEVED_PROJECTS[i][12]!=null)
+			RETRIEVED_PROJECTS[i].budgetaryDueDate = RETRIEVED_PROJECTS[i][12];
+		else
+			RETRIEVED_PROJECTS[i].budgetaryDueDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][13]!=null)
+			RETRIEVED_PROJECTS[i].budgetarySubmittedDate = RETRIEVED_PROJECTS[i][13];
+		else
+			RETRIEVED_PROJECTS[i].budgetarySubmittedDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][14]!=null)
+			RETRIEVED_PROJECTS[i].proposalDueDate = RETRIEVED_PROJECTS[i][14];
+		else
+			RETRIEVED_PROJECTS[i].proposalDueDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][15]!=null)
+			RETRIEVED_PROJECTS[i].proposalSubmittedDate = RETRIEVED_PROJECTS[i][15];
+		else
+			RETRIEVED_PROJECTS[i].proposalSubmittedDate = "Unavailable";		
+		
+		
+		
 		for(var q = 0; q < 9; q++){
 			var num = 8 - q;
 			RETRIEVED_PROJECTS[i].splice(num, 1);
@@ -10076,8 +10100,19 @@ function filterProjects (filter) {
 					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
 					 
 					else listDetails3.setAttribute( 'class', 'circle_red' );
-					listDetails5.innerHTML = json[k].scheduledStartDate;
-					listDetails6.innerHTML = json[k].scheduledTurnover;
+					if(json[k].stage.name == "Active" || json[k].stage.name == "Closed" || json[k].stage.name == "Canceled" || json[k].stage.name == "On Hold"){
+						listDetails5.innerHTML = json[k].scheduledStartDate;
+						listDetails6.innerHTML = json[k].scheduledTurnover;
+					}
+					else if(json[k].stage.name == "Budgetary"){
+						listDetails5.innerHTML = json[k].budgetaryDueDate;
+						listDetails6.innerHTML = json[k].budgetarySubmittedDate;
+					}
+					else if(json[k].stage.name == "Proposal"){
+						listDetails5.innerHTML = json[k].proposalDueDate;
+						listDetails6.innerHTML = json[k].proposalSubmittedDate;
+					}
+					
 					listDetails4.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
@@ -10132,8 +10167,18 @@ function filterProjects (filter) {
 					if(json[k].mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
 					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
 					else listDetails3.setAttribute( 'class', 'circle_red' );
-					listDetails5.innerHTML = json[k].scheduledStartDate;
-					listDetails6.innerHTML = json[k].scheduledTurnover;
+					if(json[k].stage.name == "Active" || json[k].stage.name == "Closed" || json[k].stage.name == "Canceled" || json[k].stage.name == "On Hold"){
+						listDetails5.innerHTML = json[k].scheduledStartDate;
+						listDetails6.innerHTML = json[k].scheduledTurnover;
+					}
+					else if(json[k].stage.name == "Budgetary"){
+						listDetails5.innerHTML = json[k].budgetaryDueDate;
+						listDetails6.innerHTML = json[k].budgetarySubmittedDate;
+					}
+					else if(json[k].stage.name == "Proposal"){
+						listDetails5.innerHTML = json[k].proposalDueDate;
+						listDetails6.innerHTML = json[k].proposalSubmittedDate;
+					}
 					listDetails4.innerHTML = json[k].status['name'];
 					$(projectListing).append(listDetails0);
 					$(projectListing).append(listDetails1);
