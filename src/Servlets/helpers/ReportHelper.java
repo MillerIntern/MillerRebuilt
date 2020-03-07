@@ -1765,10 +1765,24 @@ public class ReportHelper
 			
 			while(iter.hasNext()) {
 				NewEquipment tmp = iter.next();
+								
 				equipments.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getEquipmentName()) + "</td>");
-				equipments.append("<td>" + nullOrFull(tmp.getDescription()) + "</td>");	
-				equipments.append("<td>" + nullOrFull(tmp.getEqSupplier().getName()) + "</td>");
-				equipments.append("<td>" + nullOrFull(tmp.getEqStatus().getName()) + "</td>");
+				equipments.append("<td>" + nullOrFull(tmp.getDescription()) + "</td>");
+				//Handling the java.lang.NullPointerException		
+				if(tmp.getEqSupplier() != null) {
+					equipments.append("<td>" + nullOrFull(tmp.getEqSupplier().getName()) + "</td>");
+				}
+				else {
+					equipments.append("<td>" + nullOrFull(tmp.getEqSupplier()) + "</td>");
+				}
+
+				//Handling the java.lang.NullPointerException
+				if(tmp.getEqStatus() != null) {
+					equipments.append("<td>" + nullOrFull(tmp.getEqStatus().getName()) + "</td>");
+				}			
+				else {
+					equipments.append("<td>" + nullOrFull(tmp.getEqStatus()) + "</td>");
+				}
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getOrderedDate()) + "</td>");			
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getEstDeliveryDate()) + "</td>");
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getDeliveryDate()) + "</td>");
@@ -1835,12 +1849,30 @@ public class ReportHelper
 				System.out.println(tmp.getTaskStatus().getStatus());
 				projTasks.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getTitle()) + "</td>");
 				projTasks.append("<td>" + nullOrFull(tmp.getDescription()) + "</td>");	
-				projTasks.append("<td>" + nullOrFull(tmp.getAssignee().getFirstName()) + "</td>");
-				projTasks.append("<td>" + nullOrFull(tmp.getSubAssignee().getName()) + "</td>");				
+				if(tmp.getAssignee() != null) {
+					projTasks.append("<td>" + nullOrFull(tmp.getAssignee().getFirstName()) + "</td>");
+				}
+				else {
+					projTasks.append("<td>" + nullOrFull(tmp.getAssignee()) + "</td>");
+				}
+//				projTasks.append("<td>" + nullOrFull(tmp.getAssignee().getFirstName()) + "</td>");
+				if(tmp.getSubAssignee() != null) {
+					projTasks.append("<td>" + nullOrFull(tmp.getSubAssignee().getName()) + "</td>");
+				}
+				else {
+					projTasks.append("<td>" + nullOrFull(tmp.getSubAssignee()) + "</td>");
+				}
+//				projTasks.append("<td>" + nullOrFull(tmp.getSubAssignee().getName()) + "</td>");				
 				projTasks.append("<td>" + tryDateFormat(dForm,tmp.getAssignedDate()) + "</td>");			
 				projTasks.append("<td>" + tryDateFormat(dForm,tmp.getDueDate()) + "</td>");
 				projTasks.append("<td>" + nullOrFull(tmp.getSeverity()) + "</td>");
-				projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus().getStatus()) + "</td>");
+				if(tmp.getTaskStatus() != null) {
+					projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus().getStatus()) + "</td>");
+				}
+				else {
+					projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus()) + "</td>");
+				}
+//				projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus().getStatus()) + "</td>");
 				projTasks.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");			
 			}		
 			

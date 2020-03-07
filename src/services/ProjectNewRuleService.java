@@ -367,8 +367,7 @@ public class ProjectNewRuleService {
 				String status = currentChangeOrder.getStatus();
 				String subNames = currentChangeOrder.getSubNames();
 				Date subsSubmittedDate = currentChangeOrder.getProposalDate(); //For some reason this was being saved under proposal date
-				String customer = currentChangeOrder.getType(); //This is the Customer Field in ChangeOrder
-				System.out.println("CUSTOMER IS " + customer);
+				String customer = currentChangeOrder.getType(); //This is the Customer Field in ChangeOrder				
 				Date submitDate = currentChangeOrder.getSubmittedDate();
 				Date approvedDate = currentChangeOrder.getApprovedDate();
 				double cost = currentChangeOrder.getCost();
@@ -377,7 +376,7 @@ public class ProjectNewRuleService {
 				String customerCopNum = currentChangeOrder.getCustomerCOPnum();
 				String subCoNum = currentChangeOrder.getSubCO();
 				
-				if(!(status.equals("1"))) {   // "1" here means Preparing 
+				if(status != null && !(status.equals("1")) && !(status.equals("4"))) {   // "1" here means Preparing 
 					//1
 					if(mcsCoNum == null || mcsCoNum.isEmpty()) {
 						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidMCSCo#", String.format("%s~MCS CO # needs to be updated", currentChangeOrder.getTitle()), 0);
@@ -433,7 +432,7 @@ public class ProjectNewRuleService {
 						al.add(rd);
 					}
 					//10
-					if(status != null && !(status.equals("4")) && cost == 0) {
+					if(status != null && !(status.equals("4")) && (customer!= null && (!customer.equals("7"))) && cost == 0) {
 						RuleDetails rd = new RuleDetails("ChangeOrders", "CostZero", String.format("%s~Cost needs a value other than 0", currentChangeOrder.getTitle()), 0);
 						scoreYellow = true;
 						al.add(rd);
@@ -483,11 +482,19 @@ public class ProjectNewRuleService {
 					
 				}
 				
-				else {
+				else if(status != null && (status.equals("1"))){
 					//If the Change order status is preparing
 					RuleDetails rd = new RuleDetails("ChangeOrders", "NeedToSubmitProposal", String.format("%s~Need to complete change order proposal and submit", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
+					
+				}
+				else if(status != null && (status.equals("4"))) {
+					if(approvedDate == null) {
+						RuleDetails rd = new RuleDetails("ChangeOrders", " InvalidApprovedDateRejected", String.format("%s~Change Order Rejected, provide a date in approved date", currentChangeOrder.getTitle()), 0);
+						scoreYellow = true;
+						al.add(rd);
+					}
 					
 				}
 					
@@ -552,11 +559,11 @@ public class ProjectNewRuleService {
 					al.add(rd);
 				}
 				//7 
-				if(actDeliveryDate == null) {
-					RuleDetails rd = new RuleDetails("Equipment", " InvalidActualDeliveryDate", String.format("%s~Actual Delivery Date needs a value", currentEquipment.getEquipmentName()), 0);
-					scoreYellow = true;
-					al.add(rd);
-				}
+//				if(actDeliveryDate == null) {
+//					RuleDetails rd = new RuleDetails("Equipment", " InvalidActualDeliveryDate", String.format("%s~Actual Delivery Date needs a value", currentEquipment.getEquipmentName()), 0);
+//					scoreYellow = true;
+//					al.add(rd);
+//				}
 				//8
 				if(deliveryStatus == null) {
 					RuleDetails rd = new RuleDetails("Equipment", " InvalidDeliveryStatus", String.format("%s~Delivery Status must be given a value", currentEquipment.getEquipmentName()), 0);

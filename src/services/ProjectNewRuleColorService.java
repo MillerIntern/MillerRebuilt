@@ -349,7 +349,7 @@ public class ProjectNewRuleColorService {
 				String customerCopNum = currentChangeOrder.getCustomerCOPnum();
 				String subCoNum = currentChangeOrder.getSubCO();
 
-				if(!(COStatus.equals("1"))) {   // "1" here means Preparing
+				if(COStatus != null && !(COStatus.equals("1")) && !(COStatus.equals("4"))) {   // "1" here means Preparing
 					//1
 					if(mcsCoNum == null || mcsCoNum.isEmpty()) {
 						scoreColor = "yellow";;
@@ -387,7 +387,7 @@ public class ProjectNewRuleColorService {
 						scoreColor = "yellow";
 					}
 					//10
-					if(COStatus != null && !(COStatus.equals("4"))&& COCost == 0) {
+					if(COStatus != null && !(COStatus.equals("4")) && (customer!= null && (!customer.equals("7"))) && COCost == 0) {
 						scoreColor = "yellow";
 					}
 					//11
@@ -424,7 +424,10 @@ public class ProjectNewRuleColorService {
 					}
 				}
 				
-				else {
+				else if(COStatus != null && (COStatus.equals("1"))) {
+					scoreColor = "yellow";
+				}
+				else if(COStatus != null && (COStatus.equals("4"))) {
 					scoreColor = "yellow";
 				}
 			}
@@ -471,9 +474,9 @@ public class ProjectNewRuleColorService {
 					scoreColor = "yellow";
 				}
 				//7 
-				if(actDeliveryDate == null) {
-					scoreColor = "yellow";
-				}
+//				if(actDeliveryDate == null) {
+//					scoreColor = "yellow";
+//				}
 				//8
 				if(deliveryStatus == null) {
 					scoreColor = "yellow";
