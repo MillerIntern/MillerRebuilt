@@ -97,14 +97,14 @@
    		<select  class = "chosenElement taskManager" id = 'projectManagerDropdown' multiple = "multiple">
    		</select>
    		
-   		<select id ='taskSelector'>
+   		<select onchange="createProperTaskTable()" id ='taskSelector'>
 			<option value='all'>All</option>
 			<option value='open_complete' selected = "selected"> Open &amp; Completed</option>		
 			<option value='open'>Open</option>         
 			<option value='complete'>Completed</option>
 			<option value='closed'>Closed</option>
 		</select>
-		<button class="btn btn-success" id = "displayTasks" onclick="createProperTaskTable()">Retrieve Tasks</button>
+		<!-- <button class="btn btn-success" id = "displayTasks" onclick="createProperTaskTable()">Retrieve Tasks</button> -->
 		
 		
 		<br> <br>

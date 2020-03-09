@@ -4301,6 +4301,9 @@ function createTask() {
 	document.getElementById('tasksInformation').style.width = "100%";
 	$('#taskDisplay').hide();
 	$('#taskCreationZone').show();
+	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').show();
+	//adding the below line because when a new task is added, it is fetching the previous value.
+	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').find('#taskStatus').val("Open");
 	
 }
 
