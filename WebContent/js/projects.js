@@ -12605,6 +12605,12 @@ function projectTaskReport() {
 	window.open("Report?" + 'id=' + projectID + "&type=Project Task Report "+"~"+$('#taskSelector2').val());
 }
 
+function projectPendInvReport() {
+	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
+	
+	window.open("Report?" + 'id=' + projectID + "&type=Project PendInv Report "+"~"+$('#pendingInvoiceSelector2').val());
+}
+
 function submitTask () {
 	let title = $('#taskCreationZone').find('#titleEntry').val();
 	let description = $('#taskCreationZone').find('#descriptionEntry').val();
@@ -12763,24 +12769,19 @@ function submitPendInv () {
 	let submittedDate = $('#pendingInvoiceCreationZone').find('#submittedDatePend').val();
 	let description = $('#pendingInvoiceCreationZone').find('#briefDescriptionPend').val();
 
-	let pendStatus = $('#pendingInvoiceCreationZone').find('#statusPend').val();	
-//	if(pendStatus == "Open") pendStatus = 1;
-//	else if(pendStatus == "Completed") pendStatus = 2;
-//	else pendStatus = 3;
+	let pendStatus = $('#pendingInvoiceCreationZone').find('#statusPend').val();		
 	let dbCoNum = $('#pendingInvoiceCreationZone').find('#dbCoNumPend').val();
 	let poNum = $('#pendingInvoiceCreationZone').find('#poNumPend').val();
 	let notes = $('#pendingInvoiceCreationZone').find('#notesPend').val();
 	let pendingInvoice_id = projectID;
-//	let projectID = getParameterByName('id');
-	console.log("PID", projectID);	
-//	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
-//	
-//	if (typeof invoiceNum === 'undefined' || invoiceNum === '') return alert('Bad InvoiceNum');
-//	if (typeof description === 'undefined' || description === '') return alert('Bad Description111');
-//	if (typeof assignee === 'undefined' || assignee === '') return alert('Bad Assignee');
-//	if (typeof subassignee === 'undefined' || subassignee === '') return alert('Bad Sub Assignee');
-//	if (typeof severity === 'undefined' || severity === '') return alert('Bad Severity');
-//	if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
+
+	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+	if (typeof invoiceNum === 'undefined' || invoiceNum === '') return alert('Bad Invoice Number');
+	if (typeof invoiceAmt === 'undefined' || invoiceAmt === '') return alert('Bad Invoice Amount');
+	if (typeof subNames === 'undefined' || subNames === '') return alert('Bad Sub Name(s)');
+	if (typeof submittedDate === 'undefined' || submittedDate === '') return alert('Bad Submitted Date');
+	if (typeof description === 'undefined' || description === '') return alert('Bad Description');
+	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Bad Status');
 	
 	let pendInvData = {
 		'action': 'createPendInv',

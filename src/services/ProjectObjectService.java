@@ -389,6 +389,24 @@ public class ProjectObjectService
 	}
 	
 	
+	public synchronized static List<projectObjects.PendingInvoice> getAllPendInvs(Long projectId)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from PendingInvoice where pendingInvoice_id = " + projectId);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.PendingInvoice> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	
+	
 	/**
 	 * This function returns all Projects from the database.
 	 * @return a list of all Projects in the database.

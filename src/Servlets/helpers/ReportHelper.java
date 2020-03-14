@@ -18,6 +18,7 @@ import comparators.ProjectItemComparator;
 import comparators.ProjectRegionComparator;
 import comparators.WarehouseComparator;
 import projectObjects.NewEquipment;
+import projectObjects.PendingInvoice;
 import projectObjects.Person;
 import projectObjects.Project;
 import projectObjects.Task;
@@ -545,6 +546,10 @@ public class ReportHelper
 		else if(value.equals("projectTaskSolo")) {
 			sb.append("<th>Name</th><th class='longText'>Description</th><th>MCS</><th>Assignee</th><th>Assigned Date</th>" + 
 					  "<th >Due Date</th><th>Priority</th><th>Status</th><th class='longText'>Notes</th>");
+		}
+		else if(value.equals("projectPendInvSolo")) {
+			sb.append("<th>Invoice#</th><th>Invoice Amount</th><th>Sub Name(s)</th><th>Submitted Date</th><th class='longText'>Description</th>" + 
+					  "<th>Status</th><th>DB CO#</th><th>PO#</th><th class='longText'>Notes</th>");
 		}
 		else if(value.equals("permitNotes")) {
 			sb.append("<th>");
@@ -1880,6 +1885,78 @@ public class ReportHelper
 		
 			
 		}
+		
+		else if (value.contains("projectPendInvSolo") && ProjectObjectService.getAllPendInvs(p.getId()) != null) {
+			
+			System.out.println("VVV " + value);
+			String projStatus = value.split("~")[1];			
+			int amountOfPendInvs = ProjectObjectService.getAllPendInvs(p.getId()).size();						
+			if (amountOfPendInvs == 0) return "";
+				
+			StringBuilder projPendInvs = new StringBuilder();
+			Iterator<PendingInvoice> iter2 = ProjectObjectService.getAllPendInvs(p.getId()).iterator();
+			List<PendingInvoice> list = new ArrayList<PendingInvoice>();
+			while (iter2.hasNext()) {
+				PendingInvoice tmp1 = iter2.next();
+				
+				if(projStatus.equals("all")) {				
+					list.add(tmp1);								
+				}
+				
+				else if(projStatus.equals("open_complete")) {
+					if(tmp1.getStatus().equals("Open") || tmp1.getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("open")) {
+					if(tmp1.getStatus().equals("Open")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("complete")) {
+					if(tmp1.getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				else if(projStatus.equals("closed")) {
+					if(tmp1.getStatus().equals("Closed")) {
+						list.add(tmp1);	
+					}					
+				}
+			    //list.add(iter2.next());
+			}			
+			//sortChangeOrders(list);
+			
+			List<PendingInvoice> sortedList = list.stream()
+					  .sorted(Comparator.comparing(PendingInvoice::getInvoiceNumber))
+					  .collect(Collectors.toList());
+			
+			list = sortedList;
+			
+			Iterator<PendingInvoice> iter = list.iterator();
+			
+			while(iter.hasNext()) {				
+				PendingInvoice tmp = iter.next();
+				System.out.println(tmp.getStatus());
+				projPendInvs.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getInvoiceNumber()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getInvoiceAmount()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");				
+				projPendInvs.append("<td>" + tryDateFormat(dForm,tmp.getSubmittedDate()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");	
+				projPendInvs.append("<td>" + nullOrFull(tmp.getStatus()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getDbCONum()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getPoNum()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
+														
+			}		
+			
+			return projPendInvs.toString();
+		
+			
+		}
+		
 		else
 			return "---";	// If nothing else just fill the field with nothing
 	}
