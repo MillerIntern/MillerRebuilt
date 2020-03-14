@@ -22,6 +22,7 @@ import objects.RequestHandler;
 import projectObjects.ChangeOrder;
 import projectObjects.City;
 import projectObjects.NewEquipment;
+import projectObjects.PendingInvoice;
 import projectObjects.ProjectRule;
 import projectObjects.Region;
 import projectObjects.RuleDetails;
@@ -40,6 +41,7 @@ import services.ProjectObjectService;
 import services.ProjectRuleService;
 import services.ProjectService;
 import services.QueryService;
+import services.helpers.PendInvFiller;
 import services.helpers.TaskFiller;
 import objects.HashGen;
 import java.util.*;
@@ -923,6 +925,42 @@ public class Project extends HttpServlet
 			} catch(ClassNotFoundException | ParseException e) {
 				e.printStackTrace();
 			}
+		}  else if (action.equals("createPendInv")) {
+			System.out.println("Creating PendInv");
+			
+			try {
+			response = ProjectService.createPendInv(parameters, (String) req.getSession().getAttribute("user"));
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+			
+			
+		} else if (action.equals("updatePendInv")) {
+			System.out.println("Updating PendInv");
+			
+			PendingInvoice currentPendInv = null;			
+			try {
+				long pendInvID = Long.parseLong(parameters.get("pendInvID"));
+				currentPendInv = (PendingInvoice)ProjectObjectService.get(pendInvID,  "PendingInvoice");
+			} catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				PendInvFiller.fillPendInvInformation(currentPendInv, parameters, (String) req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
+			session.clear();
+			session.update(currentPendInv);
+			tx.commit();
+
+			response =  "UPDATED_PENDINV";
+			
 		} else if (action.equals("getTasks")) {
 			try {
 				System.out.println("Getting Tasks");
@@ -977,7 +1015,10 @@ public class Project extends HttpServlet
 		} else if (action.equals("getProjectTasks")) {
 			System.out.println("getting Project tasks");
 			response = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("id")));
-		} else if (action.equals("getCompCostEst")) {
+		} else if (action.equals("getProjectPendInvs")) {
+			System.out.println("getting Project Pending Invoices");
+			response = ProjectObjectService.getProjectPendInvsAsJSON(Long.parseLong(parameters.get("id")));
+		}else if (action.equals("getCompCostEst")) {
 			System.out.println("getting comparable cost ests");
 			response = ProjectObjectService.getComparableCostEst(Integer.parseInt(parameters.get("id")));
 		} else if (action.equals("getProjSpecScopes")) {

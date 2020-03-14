@@ -1172,6 +1172,45 @@ public class ProjectObjectService
 		return "";
 	}
 	
+	
+	/**
+	 * @param parseLong
+	 * @return
+	 */
+	public synchronized static String getProjectPendInvsAsJSON(long projectID) {
+        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+		} catch(TransactionException ex) {	
+			tx.commit();
+			return "ERROR";
+		}
+		Class<?> c;
+		
+		try {
+			c = Class.forName("projectObjects.PendingInvoice");
+			
+			Criteria criteria = session.createCriteria(c);
+
+			Criterion projectIDRestriction = Restrictions.sqlRestriction("pendingInvoice_id = " + projectID);
+			criteria.add(projectIDRestriction);
+			
+	        List<?> list = criteria.list();
+	        
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	
+	
 
 	public synchronized static String getComparableCostEst(int id) {
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();

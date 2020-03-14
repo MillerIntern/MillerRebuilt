@@ -26,6 +26,8 @@ Password: 81043600
 Miller Intern GitHub Login
 username: MillerIntern
 password: mcsIntern1
+recovery email: internmiller@gmail.com  mcsIntern1, 
+recovery email for internmiller@gmail.com : akashgurram18@gmail.com (Change this to Andy's email account)
 
 Miller Email:
 username: mcstaskalert@millerconstructionservices.com

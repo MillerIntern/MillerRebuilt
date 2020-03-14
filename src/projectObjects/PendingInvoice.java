@@ -19,10 +19,11 @@ public class PendingInvoice extends ProjectObject {
 	private String dbCONum;
 	private String poNum;
 	private String notes;
+	private String pendingInvoice_id;
 			
 	
 	public PendingInvoice(String invoiceNumber, String invoiceAmount, String subNames, Date submittedDate,
-			String briefDescription, String status, String dbCONum, String poNum, String notes) {
+			String briefDescription, String status, String dbCONum, String poNum, String notes, String pendingInvoice_id) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.invoiceAmount = invoiceAmount;
@@ -33,8 +34,11 @@ public class PendingInvoice extends ProjectObject {
 		this.dbCONum = dbCONum;
 		this.poNum = poNum;
 		this.notes = notes;
+		this.pendingInvoice_id = pendingInvoice_id;
 	}
 	
+
+
 	public PendingInvoice() {
 		
 		this.invoiceNumber = null;
@@ -46,6 +50,7 @@ public class PendingInvoice extends ProjectObject {
 		this.dbCONum = null;
 		this.poNum = null;
 		this.notes = null;
+		this.pendingInvoice_id = null;
 		
 	}
 
@@ -104,5 +109,12 @@ public class PendingInvoice extends ProjectObject {
 	public synchronized void setNotes(String notes) {
 		this.notes = notes;
 	}	
+	public synchronized String getPendingInvoice_id() {
+		return pendingInvoice_id;
+	}
+
+	public synchronized void setPendingInvoice_id(String pendingInvoice_id) {
+		this.pendingInvoice_id = pendingInvoice_id;
+	}
 
 }

@@ -27,6 +27,7 @@ import projectObjects.CloseoutDetails;
 import projectObjects.CostEstimate;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
+import projectObjects.PendingInvoice;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectMasterScope;
@@ -44,6 +45,7 @@ import projectObjects.Subcontractor;
 import projectObjects.City;
 import projectObjects.MasterScope;
 import services.helpers.MasterScopeFiller;
+import services.helpers.PendInvFiller;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.CostEstimateFiller;
@@ -1308,6 +1310,23 @@ public class ProjectService extends ProjectObjectService
 		
 		return "TASK_ADDED";
 	}
+	
+	
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public synchronized static String createPendInv(Map<String, String> parameters, String username) throws ClassNotFoundException, ParseException {
+		PendingInvoice p = new PendingInvoice();
+
+		PendInvFiller.fillPendInvInformation(p, parameters, username);
+
+		ProjectObjectService.addObject("PendingInvoice", p);
+		
+		return "PENDINV_ADDED";
+	}
+	
+	
 	
 	/**
 	 * @param parameters

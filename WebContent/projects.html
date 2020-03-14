@@ -1996,42 +1996,88 @@
 	    	</table>   	    		
 		</div> <!-- End Financial Information -->
 		
-		
-		<div id='pendingInvoiceInformation' class='info-tab info-tab-pendingInvoiceInformation'>
-	
-	
-	    	<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Pending Invoices</button>
-				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editPendingInvoice' onclick='goToPendingInvoice(1)' type="button" class="project-edit btn" disabled>Edit Pending Invoice</button>
-				<button style = "float:right;margin-right:5px;" onclick='goToPendingInvoice(0);' type='button' class='project-edit btn'>Add Pending Invoice</button>
-	    					<div id = "pendingInvoiceTableDiv">
-				<table id='pendingInvoiceTable' class='table'>				
-					<thead class="pendingInvoiceTableHead">
-					  <tr>
-					  	<th width = 4% >Item #</th>
-						<th width = 4% >Invoice #</th>
-						<th width = 12%>Invoice Amount</th>
-						<th width = 8%>Sub Name(s)</th>
-						<th width = 11%>Submit Date</th>
-						<th width = 12%>Description</th>
-						<th width = 8% >Status</th>											
-						<th width = 10%>DB CO#</th>						
-						<th width = 7% >PO #</th>						
-						<th width = 15%>Notes</th>
-					  </tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-				</div>
-		</div> <!-- End Pending Invoices Information -->
-		
-			
-		
+		<div style="width:100%" id='pendingInvoiceInformation' class='info-tab info-tab-pendingInvoiceInformation'>		
+		   <div class = "changeOrderTableDiv" id = 'pendingInvoiceDisplay'>
+        	  <button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Pending Invoices</button>
+        	  <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editPendingInvoice" type="button" onclick="editSelectedPendInv()" disabled> Edit Pending Invoice </button>			  
+			  <button style="float:right;margin-right:5px;" class ="project-edit btn" onclick = "createPendInv()"> Add Pending Invoice </button>			  
+		      	  		      										
+		      <select id ='pendingInvoiceSelector2' class='form-control'>
+					<option value='all'>All</option>
+					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
+					<option value='open'>Open</option>
+					<option value='complete'>Complete</option>
+					<option value='closed'>Closed</option>
+			 </select>
+		      <div class="generalOverFlowScroll">
+		         <table class='table' id='pendingInvoiceTable'>
+		            <tr class='head'>
+					  	<th>Item #</th>
+						<th>Invoice #</th>
+						<th>Invoice Amount</th>
+						<th>Sub Name(s)</th>
+						<th>Submit Date</th>
+						<th>Description</th>
+						<th>Status</th>											
+						<th>DB CO#</th>						
+						<th>PO #</th>						
+						<th>Notes</th>
+		            </tr>
+		         </table>
+		      </div>		      
+		   </div>
+		   <div style = "width:100%;padding:5px; "id = 'pendingInvoiceCreationZone' class = 'well'>
+		      <button style = "float:right" onclick='submitPendInv()' class='btn btn-success'>Save Pending Invoice</button>
+		      <button style = "float:right; margin-right:5px;" onclick='viewPendInv()' class='btn btn-danger'>Back to Pending Invoice View</button>
+		      <div class='base-field'>
+		         <table class='table taskCreationTable'>
+		            <tr>
+		               <td><label for='invoiceNumberPend'>Invoice #</label>
+		               <td><input type='text' id='invoiceNumberPend'/>
+		            </tr>
+		            <tr>
+		               <td><label for='invoiceAmtPend'>Invoice Amount($)</label></td>
+		               <td><input type='text' id='invoiceAmtPend'></td>
+		            </tr>
+    		         <tr>
+		               <td><label for='subNamesPend'>Sub Name(s)</label></td>
+		               <td><input type='text' id='subNamesPend'></td>
+		            </tr>
+         		    <tr>
+		               <td><label for='submittedDatePend'>Subs Submitted Date</label></td>
+		               <td><input type='text' class="hasDatepicker" id='submittedDatePend'/>
+		            </tr>
+         			<tr>
+						<td><label for='briefDescriptionPend'>Description</label></td>
+						<td><textarea class="scrollTextBoxTask" maxlength="254" id='briefDescriptionPend'></textarea></td>
+					</tr> 
+		            <tr id = "pendingInvoiceStatusSelectionRow" style = "display : none">
+		               <td><label>Status</label></td>
+		               <td>
+		                  <select id = "statusPend" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
+		                     <option value="Open"> Open </option>
+		                     <option value="Completed"> Completed </option>
+		                     <option id="closedStatus"  value="Closed"> Closed </option>
+		                  </select>
+		               </td>
+		            </tr>
+		  			 <tr>
+		               <td><label for='dbCoNumPend'>DB CO #</label></td>
+		               <td><input type='text' id='dbCoNumPend'>
+		            </tr>
+		      		<tr>
+		               <td><label for='poNumPend'>PO #</label></td>
+		               <td><input type='text' id='poNumPend'/>
+		            </tr>	
+		           	<tr>
+						<td><label for='notesPend'>Notes</label></td>
+						<td><textarea class="scrollTextBoxTask" maxlength="254" id='notesPend'></textarea></td>
+					</tr> 		            		         
+		         </table>
+		      </div>
+		   </div>
 		</div>
-		
-
-		
-		
+									
 		<div class='info-tab' id='saveButton'>
 			<button onclick='goToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
 			<button onclick='goToFindProject()' class='btn btn-primary' disabled>Find Another Project</button>
@@ -3887,129 +3933,6 @@
 		</div>
 
 </div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
-
-
-
-
-
-
-
-
-
-	<div id="pendingInvoice" class="editProject">
-	<div class="container">
-		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
-
-		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
-		
-
-		
-			<ul class="nav nav-tabs">
-				<li role='presentation' class="active" data-tab="pendingInvoiceInfo" id="pendingInvoiceTab"><a>Pending Invoice</a></li>
-		        
-		      
-		         <!-- <li class = "adminContent" role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
-		        				<a>Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a></li> -->
-		       
-			</ul>
-		
-		    <!-- Closeout Documents Tab--> 
-			<div style="width: 100%" id="pendingInvoiceInfo" class="info-tab active">
-			<button style = "float:right" class = "adminContent btn btn-danger" id = "deletePendingInvoiceButton" onclick = "deletePendingInvoice()"> Delete Pending Invoice </button>
-			 <button style = "float:right;margin-right:5px" role='presentation' onClick="saveProject_PENDING_INVOICE()" data-tab="saveButton" id = 'save-pending-invoice' class = "btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>				 
-		        <table class="table table-hover">
-		        
-		        	<colgroup>
-		        		<col style="width: 15%">
-		        		<col style="width: 85%">
-		        	</colgroup>
-		     
-		        	<tr style="height: 0px;"></tr>
-		            <tr>
-		                <td class="coLabel">Invoice #</td>
-		                <td>
-		                    <input id="invoiceNumberPend"></input>
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Invoice Amount($)</td>
-		                <td>
-		                    <input size = "40" type="text" id="invoiceAmtPend" />
-		                </td>   
-		            </tr>
-       		        <tr>
-		                <td class="coLabel">Sub Name(s)</td>
-		                <td>
-		                    <input size="40" type="text" id="subNamesPend" />
-		                </td>   
-		            </tr>
-          		    <tr>
-		                <td class="coLabel">Subs Submitted Date</td>
-		                <td>
-		                	<input type="text" id="submittedDatePend" />
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Description</td>
-		                <td>
-		                    <textarea id="briefDescriptionPend" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40"> </textarea>
-		                </td>   
-		            </tr>
-		            <tr>
-		                <td class="coLabel">Status</td>
-		 
-		                <td>
-		                    <select class="closeout-input" id="statusPend">
-		                        <option value="default">--Status--</option>
-		                    </select>                  
-		                </td>   
-		            </tr>
-
-
-          		    <tr>
-		                <td  class="coLabel">DB CO #</td>
-		                <td>
-		                    <input type="text" id="dbCoNumPend" />               
-		                </td>
-		            </tr>
-		            
-          		    <tr>
-		                <td  class="coLabel">PO #</td>
-		                <td>
-		                    <input type="text" id="poNumPend" />               
-		                </td>
-		            </tr>
-		             <tr>
-		                <td class="coLabel">Notes</td>
-		                <td>
-		                    <textarea id="notesPend" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40" ondblclick = "dateFillFunction(this)"> </textarea>
-		                </td>   
-		            </tr>
-				 </table>
-		        				
-			</div>
-			<div class='info-tab' id='saveButton'>
-
-			</div>
-			<div class='info-tab' id='deleteButton'>
-				<button onclick='goToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
-				<button onclick='goToFindProject()' class='btn btn-primary'>Find Another Project</button>
-				<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
-				
-			</div>
-		</div>
-		
-		<div id="footer">
-		</div>
-
-</div> <!-- THIS ENDS THE DIV FOR CHANGE ORDER -->
-
-
-
-
-
-
-
 
 <!-- THIS is THE DIV FOR EQUIPMENT -->
 
