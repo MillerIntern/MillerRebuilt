@@ -4504,9 +4504,12 @@ function prepareProjectData(source_id){
 	$('#projectData').find("[class~=active]").removeClass("active");
 
 	document.getElementById('tasksInformation').style.width = "100%";
+	document.getElementById('pendingInvoiceInformation').style.width = "100%";	
 	$('#taskCreationZone').hide();
 	$('#pendingInvoiceCreationZone').hide();
 	$('#taskDisplay').show();
+	$('#pendingInvoiceDisplay').show();
+	
 	
 	
 	if(source_id == "general-info-item")
@@ -4541,7 +4544,7 @@ function prepareProjectData(source_id){
 	
 	else if(source_id == "pendingInvoice-item")
 	{
-		document.getElementById('tasksInformation').style.width = "100%";
+		document.getElementById('pendingInvoiceInformation').style.width = "100%";
 		$('#pendingInvoiceDisplay').show();
 		$('#pendingInvoiceCreationZone').hide();
 		$('#projectData').find(".nav-tabs").find("[data-tab=pendingInvoiceInformation]").addClass("active");
