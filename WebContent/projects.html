@@ -2015,7 +2015,7 @@
 					  	<th>Item #</th>
 						<th>Invoice #</th>
 						<th>Invoice Amount</th>
-						<th>Sub Name(s)</th>
+						<th>Sub Name</th>
 						<th>Submit Date</th>
 						<th>Description</th>
 						<th>Status</th>											
@@ -2032,27 +2032,27 @@
 		      <div class='base-field'>
 		         <table class='table taskCreationTable'>
 		            <tr>
-		               <td><label for='invoiceNumberPend'>Invoice #</label>
+		               <td><label for='invoiceNumberPend'>Invoice # <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceNumberPend'/>
 		            </tr>
 		            <tr>
-		               <td><label for='invoiceAmtPend'>Invoice Amount($)</label></td>
+		               <td><label for='invoiceAmtPend'>Invoice Amount($) <span style="color:#FF0000">*</span></label></td>
 		               <td><input type='text' id='invoiceAmtPend'></td>
 		            </tr>
     		         <tr>
-		               <td><label for='subNamesPend'>Sub Name(s)</label></td>
+		               <td><label for='subNamesPend'>Sub Name <span style="color:#FF0000">*</span></label></td>
 		               <td><input type='text' id='subNamesPend'></td>
 		            </tr>
          		    <tr>
-		               <td><label for='submittedDatePend'>Subs Submitted Date</label></td>
+		               <td><label for='submittedDatePend'>Subs Submitted Date <span style="color:#FF0000">*</span></label></td>
 		               <td><input type='text' id='submittedDatePend'/>
 		            </tr>
          			<tr>
-						<td><label for='briefDescriptionPend'>Description</label></td>
+						<td><label for='briefDescriptionPend'>Description <span style="color:#FF0000">*</span></label></td>
 						<td><textarea class="scrollTextBoxTask" maxlength="254" id='briefDescriptionPend'></textarea></td>
 					</tr> 
 		            <tr id = "pendingInvoiceStatusSelectionRow" style = "display : none">
-		               <td><label>Status</label></td>
+		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
 		               <td>
 		                  <select id = "statusPend" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
 		                     <option value="Open"> Open </option>
@@ -2086,7 +2086,7 @@
 		</div>
 	
 	    </div>  <!-- End Container -->
-			
+		</div>	
 		
 		
   <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	

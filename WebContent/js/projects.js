@@ -5749,7 +5749,12 @@ function fillPendInvsTable(pendInvs) {
 		
 		itemNum.innerHTML = i+1;
 		invoiceNum.innerHTML = pendInvs[i].invoiceNumber;
-		invoiceAmt.innerHTML = pendInvs[i].invoiceAmount;
+		if(pendInvs[i].invoiceAmount)
+			invoiceAmt.innerHTML = cleanNumericValueForDisplaying(pendInvs[i].invoiceAmount);
+		else
+			invoiceAmt.innerHTML = "---";
+//		invoiceAmt.innerHTML = pendInvs[i].invoiceAmount;
+		
 		subNames.innerHTML = pendInvs[i].subNames;
 		submittedDate.innerHTML = pendInvs[i].submittedDate;
 		description.innerHTML = pendInvs[i].briefDescription;
@@ -12779,12 +12784,12 @@ function submitPendInv () {
 	let pendingInvoice_id = projectID;
 
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
-	if (typeof invoiceNum === 'undefined' || invoiceNum === '') return alert('Bad Invoice Number');
-	if (typeof invoiceAmt === 'undefined' || invoiceAmt === '') return alert('Bad Invoice Amount');
-	if (typeof subNames === 'undefined' || subNames === '') return alert('Bad Sub Name(s)');
-	if (typeof submittedDate === 'undefined' || submittedDate === '') return alert('Bad Submitted Date');
-	if (typeof description === 'undefined' || description === '') return alert('Bad Description');
-	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Bad Status');
+	if (typeof invoiceNum === 'undefined' || invoiceNum === '') return alert('Invoice Number is Mandatory');
+	if (typeof invoiceAmt === 'undefined' || invoiceAmt === '') return alert('Invoice Amount is Mandatory');
+	if (typeof subNames === 'undefined' || subNames === '') return alert('Sub Name is Mandatory');
+	if (typeof submittedDate === 'undefined' || submittedDate === '') return alert('Submitted Date is Mandatory');
+	if (typeof description === 'undefined' || description === '') return alert('Description is Mandatory');
+	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Status is Mandatory');
 	
 	let pendInvData = {
 		'action': 'createPendInv',
@@ -12877,3 +12882,42 @@ function submitPendInv () {
 	}
 		
 }
+//
+//function getSubcontractorsPend() {
+//	$.ajax({
+//		type: 'POST',
+//		url: 'Project',
+//		data: {
+//			'domain': 'project',
+//			'action': 'getSubcontractors',
+//		}, complete: function (data) {
+//			console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
+//			if (data.responseJSON) {
+//				createSubDropdown(data.responseJSON);
+//			}
+//
+//			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
+//		}
+//		
+//	});
+//}
+//
+//function createSubDropdown (json) {
+//	let d = document.createDocumentFragment();
+//	
+//	json.sort(function(a,b){
+//		if(a.name < b.name) return -1;
+//		else if(a.name > b.name) return 1;
+//		return 0;
+//	});
+//	
+//	for (var i = 0; i < json.length; i++) {
+//		let option = document.createElement('option');
+//		// when users store both username and name, access the user's name and username fields
+//		option.innerHTML = json[i].name;
+//		option.setAttribute("value", json[i].name);
+//		option.setAttribute("id", json[i].name + "Option");
+//		d.appendChild(option);
+//	}
+//	$('#subcontractorsDropdown').append(d);
+//}
