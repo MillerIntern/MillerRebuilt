@@ -4309,31 +4309,7 @@ function createTask() {
 	$('#tasksInformation').find('#taskCreationZone').find('#taskStatusSelectionRow').find('#taskStatus').val("Open");
 	
 }
-function createPendInv() {
 
-	PENDINV_ACTION = "createPendInv";
-	clearPendInvForm();
-
-	document.getElementById('pendingInvoiceInformation').style.width = "100%";
-	$('#pendingInvoiceDisplay').hide();
-	$('#pendingInvoiceCreationZone').show();
-	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').show();
-	//adding the below line because when a new task is added, it is fetching the previous value.
-	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').find('#statusPend').val("Open");
-	
-}
-function clearPendInvForm()
-{
-	$('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val('');
-	$('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val('');
-	$('#pendingInvoiceCreationZone').find('#subNamesPend').val('');
-	$('#pendingInvoiceCreationZone').find('#submittedDatePend').val('');
-	$('#pendingInvoiceCreationZone').find('#briefDescriptionPend').val('');
-	$('#pendingInvoiceCreationZone').find('#statusPend').val('Open');
-	$('#pendingInvoiceCreationZone').find('#dbCoNumPend').val('');
-	$('#pendingInvoiceCreationZone').find('#poNumPend').val('');
-	$('#pendingInvoiceCreationZone').find('#notesPend').val('');		
-}
 
 function viewTasks() {
 	
@@ -4351,25 +4327,6 @@ function viewTasks() {
 		document.getElementById('tasksInformation').style.width = "100%";
 		$('#taskCreationZone').hide();
 		$('#taskDisplay').show();
-	}
-
-}
-function viewPendInv() {
-	
-	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
-	let createMessage = "This Pending Invoice will not be added, are you sure you want to leave this screen?";
-	let displayedMessage;
-	
-	if(PENDINV_ACTION == "createPendInv")
-		displayedMessage = createMessage;
-	else 
-		displayedMessage = updateMessage;
-	
-	if(confirm(displayedMessage))
-	{
-		document.getElementById('pendingInvoiceInformation').style.width = "100%";
-		$('#pendingInvoiceCreationZone').hide();
-		$('#pendingInvoiceDisplay').show();
 	}
 
 }
@@ -4404,6 +4361,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				
 				getTasks(stopServerCalls);
 				getPendInvs(stopServerCalls);
+				getSubcontractorsPend();
 				getProjCostEstimate(stopServerCalls)
 				getProjSpecScopes(stopServerCalls);
 				getSpecMasterScope(item);
@@ -5705,86 +5663,6 @@ function fillTasksTable(tasks) {
 }
 
 
-
-function fillPendInvsTable(pendInvs) {
-	let selector = $('#pendingInvoiceSelector2').val();	
-	clearPendingInvoiceTable();
-	let count = 0;
-	for (var i = 0; i < pendInvs.length; i++) {
-		if((selector === 'open' && pendInvs[i].status != "Open") || 
-				(selector === 'complete' && pendInvs[i].status != "Completed") ||
-				(selector === 'open_complete' && pendInvs[i].status == "Closed") ||
-				(selector === 'closed' && pendInvs[i].status != "Closed")) 
-				continue; // do nothing
-		var pendInv = pendInvs[i];
-		console.log(pendInv);
-		
-		var pendInvListing = document.createElement('tr');
-		pendInvListing.setAttribute("value", pendInv.id);
-		pendInvListing.onclick = function() {
-			togglePendInv(this);
-		};
-		
-		pendInvListing.ondblclick = function(){
-			editSelectedPendInv(this);
-		};
-		
-
-		count++;
-		
-		pendInvListing.value = pendInvs[i].id;
-		pendInvListing.id = "pendInv_" + pendInvs[i].id;
-		
-		
-		let itemNum = document.createElement('td');
-		let invoiceNum = document.createElement('td');
-		let invoiceAmt = document.createElement('td');
-		let subNames = document.createElement('td');		
-		let submittedDate = document.createElement('td');
-		let description = document.createElement('td');
-		let status = document.createElement('td');
-		let dbCoNum = document.createElement('td');
-		let poNum = document.createElement('td');
-		let notes = document.createElement('td');
-		
-		itemNum.innerHTML = i+1;
-		invoiceNum.innerHTML = pendInvs[i].invoiceNumber;
-		if(pendInvs[i].invoiceAmount)
-			invoiceAmt.innerHTML = cleanNumericValueForDisplaying(pendInvs[i].invoiceAmount);
-		else
-			invoiceAmt.innerHTML = "---";
-//		invoiceAmt.innerHTML = pendInvs[i].invoiceAmount;
-		
-		subNames.innerHTML = pendInvs[i].subNames;
-		submittedDate.innerHTML = pendInvs[i].submittedDate;
-		description.innerHTML = pendInvs[i].briefDescription;
-		status.innerHTML = pendInvs[i].status;
-		dbCoNum.innerHTML = pendInvs[i].dbCONum;
-		poNum.innerHTML = pendInvs[i].poNum;
-		notes.innerHTML = pendInvs[i].notes;
-		
-		
-		pendInvListing.appendChild(itemNum);
-		pendInvListing.appendChild(invoiceNum);
-		pendInvListing.appendChild(invoiceAmt);
-		pendInvListing.appendChild(subNames);
-		pendInvListing.appendChild(submittedDate);
-		pendInvListing.appendChild(description);
-		pendInvListing.appendChild(status);
-		pendInvListing.appendChild(dbCoNum);
-		pendInvListing.appendChild(poNum);
-		pendInvListing.appendChild(notes);
-
-		$('#pendingInvoiceTable > tbody').append(pendInvListing);
-		
-	}
-
-	if (count === 0) {
-		clearAndAddSingleRowPendInvs("No Pending Invoices to Show");		
-	}	
-	
-}
-
 let SELECTED_TASK_ID;
 let SELECTED_PENDINV_ID;
 
@@ -5795,55 +5673,7 @@ function toggleTask (source) {
 	SELECTED_TASK_ID = $(source).attr('value');
 	console.log("task id = ", SELECTED_TASK_ID);
 }
-function togglePendInv (source) {
-	$(source).siblings().css('background-color', 'white');
-	$(source).css('background-color', '#dddddd');
-	$('#editPendingInvoice').prop('disabled', false);
-	SELECTED_PENDINV_ID = $(source).attr('value');
-	console.log("Pend Inv id = ", SELECTED_PENDINV_ID);
-}
 
-function editSelectedPendInv()
-{
-	PENDINV_ACTION = "updatePendInv";
-	displayPendInvWell();
-	fillPendInvWell(SELECTED_PENDINV_ID);
-}
-
-function displayPendInvWell() {
-	console.log("PendInc ACTION: ", PENDINV_ACTION);
-	
-	$('#pendingInvoiceInformation').find('#pendingInvoiceDisplay').hide();
-	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').show();
-	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').show();
-	document.getElementById('pendingInvoiceInformation').style.width = "100%";
-}
-
-function fillPendInvWell(source) {
-	let tmp_id = source;	
-	let selected_pendInv;
-	for(var i = 0; i < pendInvs.length; i++) {
-		if(pendInvs[i].id == tmp_id) {
-			selected_pendInv = pendInvs[i];
-			SELECTED_PENDINV_ID = pendInvs[i].id;
-		}	
-	}
-	
-	if(!selected_pendInv) {
-		console.log("IMPROPER PENDINV SELECTION");
-		return;
-	}	
-	$('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val(selected_pendInv.invoiceNumber);
-	$('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val(selected_pendInv.invoiceAmount);
-	$('#pendingInvoiceCreationZone').find('#subNamesPend').val(selected_pendInv.subNames);
-	$('#pendingInvoiceCreationZone').find('#submittedDatePend').val(selected_pendInv.submittedDate);
-	$('#pendingInvoiceCreationZone').find('#briefDescriptionPend').val(selected_pendInv.briefDescription);
-	$('#pendingInvoiceCreationZone').find('#statusPend').val(selected_pendInv.status);
-	$('#pendingInvoiceCreationZone').find('#dbCoNumPend').val(selected_pendInv.dbCONum);
-	$('#pendingInvoiceCreationZone').find('#poNumPend').val(selected_pendInv.poNum);
-	$('#pendingInvoiceCreationZone').find('#notesPend').val(selected_pendInv.notes);	
-		
-}
 
 
 function editSelectedTask()
@@ -9316,38 +9146,6 @@ function clearAndAddSingleRowTask(msg) {
 	$('#taskTable > tbody').append(placeHolder);
 }
 
-function clearAndAddSingleRowPendInvs(msg) {
-	$('#pendingInvoiceTable > tbody').children('tr:not(.head)').remove();
-	
-	let placeHolder = document.createElement('tr');
-	let listDetails0 = document.createElement('td');
-	let listDetails1 = document.createElement('td');
-	let listDetails2 = document.createElement('td');	
-	let listDetails3 = document.createElement('td');
-	let listDetails4 = document.createElement('td');
-	let listDetails5 = document.createElement('td');
-	let listDetails6 = document.createElement('td');
-	let listDetails7 = document.createElement('td');
-	let listDetails9 = document.createElement('td');
-	let listDetails8 = document.createElement('td');
-
-	
-	listDetails0.innerHTML = msg;
-	
-	$(placeHolder).append(listDetails0);
-	$(placeHolder).append(listDetails1);
-	$(placeHolder).append(listDetails2);
-	$(placeHolder).append(listDetails3);
-	$(placeHolder).append(listDetails4);
-	$(placeHolder).append(listDetails5);
-	$(placeHolder).append(listDetails6);
-	$(placeHolder).append(listDetails7);
-	$(placeHolder).append(listDetails8);
-	$(placeHolder).append(listDetails9);
-	
-	$('#pendingInvoiceTable > tbody').append(placeHolder);
-}
-
 
 /**
  * This function clears the task table
@@ -9356,10 +9154,6 @@ function clearAndAddSingleRowPendInvs(msg) {
 function clearTaskTable () {
 	$('#taskDisplay').find('#taskTable').find('tr:not(.head)').remove();
 }
-function clearPendingInvoiceTable () {
-	$('#pendingInvoiceDisplay').find('#pendingInvoiceTable').find('tr:not(.head)').remove();
-}
-
 
 
 /**
@@ -10493,37 +10287,6 @@ function getTasks(stopServerCalls) {
 			if (data) {
 				clearTaskTable();
 				fillTasksTable(data);
-			}
-			if(!stopServerCalls) getUserData();
-		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
-		}, error: function (data) {
-			alert('Server Error!10');
-		}
-	});
-}
-
-
-/**
- * This function retrieves all of the pendingInvoices from the server
- * INNER FUNCTION CALLS: fillPendInvTable()
- */
-function getPendInvs(stopServerCalls) {
-	console.log(projectID);
-	$.ajax({
-		type: 'POST',
-		url: 'Project',
-		data: {
-			'domain': 'project',
-			'action': 'getProjectPendInvs',
-			'id': projectID
-		}, success: function (data) {
-			console.log("proj pendingInvoices!!!!", data);
-			let type = getParameterByName("from");
-			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
-			pendInvs = data;
-			if (data) {
-				clearPendingInvoiceTable();
-				fillPendInvsTable(data);
 			}
 			if(!stopServerCalls) getUserData();
 		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
@@ -12613,11 +12376,6 @@ function projectTaskReport() {
 	window.open("Report?" + 'id=' + projectID + "&type=Project Task Report "+"~"+$('#taskSelector2').val());
 }
 
-function projectPendInvReport() {
-	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
-	
-	window.open("Report?" + 'id=' + projectID + "&type=Project PendInv Report "+"~"+$('#pendingInvoiceSelector2').val());
-}
 
 function submitTask () {
 	let title = $('#taskCreationZone').find('#titleEntry').val();
@@ -12770,6 +12528,25 @@ function sendTaskAlert(taskData)
 	});
 }
 
+//////////////////////////////////////////////// THIS CONTAINS ALL THE PENDING INVOICE FUNCTIONS //////////////////////////////////////////////////////////
+/**
+ * AUTHOR : AKASH GURRAM
+ * START OF PENDING INVOICES FUNCTIONS 
+ */
+
+
+/**
+ * This function generates the Report for a project's Pending Invoices 
+ */
+
+function projectPendInvReport() {	
+	window.open("Report?" + 'id=' + projectID + "&type=Project PendInv Report "+"~"+$('#pendingInvoiceSelector2').val());
+}
+
+/**
+ * This function creates a new or updates an older pending invoice.
+ *  
+ */
 function submitPendInv () {
 	let invoiceNum = $('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val();
 	let invoiceAmt = $('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val();
@@ -12882,42 +12659,321 @@ function submitPendInv () {
 	}
 		
 }
-//
-//function getSubcontractorsPend() {
-//	$.ajax({
-//		type: 'POST',
-//		url: 'Project',
-//		data: {
-//			'domain': 'project',
-//			'action': 'getSubcontractors',
-//		}, complete: function (data) {
-//			console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
-//			if (data.responseJSON) {
-//				createSubDropdown(data.responseJSON);
-//			}
-//
-//			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
-//		}
-//		
-//	});
-//}
-//
-//function createSubDropdown (json) {
-//	let d = document.createDocumentFragment();
-//	
-//	json.sort(function(a,b){
-//		if(a.name < b.name) return -1;
-//		else if(a.name > b.name) return 1;
-//		return 0;
-//	});
-//	
-//	for (var i = 0; i < json.length; i++) {
-//		let option = document.createElement('option');
-//		// when users store both username and name, access the user's name and username fields
-//		option.innerHTML = json[i].name;
-//		option.setAttribute("value", json[i].name);
-//		option.setAttribute("id", json[i].name + "Option");
-//		d.appendChild(option);
-//	}
-//	$('#subcontractorsDropdown').append(d);
-//}
+
+/**
+ * This function gets all the subcontractors from the data bases
+ * Inner Function call : createDropdownPend() 
+ */
+function getSubcontractorsPend() {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getSubcontractors',
+		}, complete: function (data) {			
+			if (data.responseJSON) {
+				createSubDropdownPend(data.responseJSON);
+			}
+
+			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
+		}
+		
+	});
+}
+
+/**
+ * This function based on the getSubcontractorsPend(), creates a dropdown for SubName in Pending Invoice
+ */
+function createSubDropdownPend(json) {
+	let d = document.createDocumentFragment();
+	
+	json.sort(function(a,b){
+		if(a.name < b.name) return -1;
+		else if(a.name > b.name) return 1;
+		return 0;
+	});
+	
+	for (var i = 0; i < json.length; i++) {
+		let option = document.createElement('option');
+		option.innerHTML = json[i].name;
+		option.setAttribute("value", json[i].name);
+		option.setAttribute("id", json[i].name + "Option");
+		d.appendChild(option);
+	}
+	$('#subNamesPend').append(d);
+}
+
+/**
+ * This function fills the Pending Invoices Table based on the filer selected (Open, Complete, Open & Complete, Closed) 
+ */
+function fillPendInvsTable(pendInvs) {
+	let selector = $('#pendingInvoiceSelector2').val();	
+	clearPendingInvoiceTable();
+	let count = 0;
+	for (var i = 0; i < pendInvs.length; i++) {
+		if((selector === 'open' && pendInvs[i].status != "Open") || 
+				(selector === 'complete' && pendInvs[i].status != "Completed") ||
+				(selector === 'open_complete' && pendInvs[i].status == "Closed") ||
+				(selector === 'closed' && pendInvs[i].status != "Closed")) 
+				continue; // do nothing
+		var pendInv = pendInvs[i];
+		console.log(pendInv);
+		
+		var pendInvListing = document.createElement('tr');
+		pendInvListing.setAttribute("value", pendInv.id);
+		pendInvListing.onclick = function() {
+			togglePendInv(this);
+		};
+		
+		pendInvListing.ondblclick = function(){
+			editSelectedPendInv(this);
+		};
+		
+
+		count++;
+		
+		pendInvListing.value = pendInvs[i].id;
+		pendInvListing.id = "pendInv_" + pendInvs[i].id;
+		
+		
+		let itemNum = document.createElement('td');
+		let invoiceNum = document.createElement('td');
+		let invoiceAmt = document.createElement('td');
+		let subNames = document.createElement('td');		
+		let submittedDate = document.createElement('td');
+		let description = document.createElement('td');
+		let status = document.createElement('td');
+		let dbCoNum = document.createElement('td');
+		let poNum = document.createElement('td');
+		let notes = document.createElement('td');
+		
+		itemNum.innerHTML = i+1;
+		invoiceNum.innerHTML = pendInvs[i].invoiceNumber;
+		if(pendInvs[i].invoiceAmount)
+			invoiceAmt.innerHTML = cleanNumericValueForDisplaying(pendInvs[i].invoiceAmount);
+		else
+			invoiceAmt.innerHTML = "---";		
+		subNames.innerHTML = pendInvs[i].subNames;
+		submittedDate.innerHTML = pendInvs[i].submittedDate;
+		description.innerHTML = pendInvs[i].briefDescription;
+		status.innerHTML = pendInvs[i].status;
+		dbCoNum.innerHTML = pendInvs[i].dbCONum;
+		poNum.innerHTML = pendInvs[i].poNum;
+		notes.innerHTML = pendInvs[i].notes;
+		
+		
+		pendInvListing.appendChild(itemNum);
+		pendInvListing.appendChild(invoiceNum);
+		pendInvListing.appendChild(invoiceAmt);
+		pendInvListing.appendChild(subNames);
+		pendInvListing.appendChild(submittedDate);
+		pendInvListing.appendChild(description);
+		pendInvListing.appendChild(status);
+		pendInvListing.appendChild(dbCoNum);
+		pendInvListing.appendChild(poNum);
+		pendInvListing.appendChild(notes);
+
+		$('#pendingInvoiceTable > tbody').append(pendInvListing);
+		
+	}
+	//This adds No Pending Invoices to Show to the table if there are none in that filter or category (Ex: Open, Complete)
+	if (count === 0) {
+		clearAndAddSingleRowPendInvs("No Pending Invoices to Show");		
+	}	
+	
+}
+
+/**
+ * This function shows the Pending Invoice Form when Add Pending Invoice is clicked
+ * It hides other divs.
+ * It also sets the status of a new pending Invoice to Open 
+ */
+function createPendInv() {
+
+	PENDINV_ACTION = "createPendInv";
+	clearPendInvForm();	
+	document.getElementById('pendingInvoiceInformation').style.width = "100%";
+	$('#pendingInvoiceDisplay').hide();
+	$('#pendingInvoiceCreationZone').show();
+	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').show();
+	//adding the below line because when a new task is added, it is fetching the previous value.
+	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').find('#statusPend').val("Open");
+	
+}
+
+/**
+ * This function clears the Pending Invoice form to be empty when a add pending invoice is clicked. 
+ */
+function clearPendInvForm()
+{
+	$('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val('');
+	$('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val('');
+	$('#pendingInvoiceCreationZone').find('#subNamesPend').val('');
+	$('#pendingInvoiceCreationZone').find('#submittedDatePend').val('');
+	$('#pendingInvoiceCreationZone').find('#briefDescriptionPend').val('');
+	$('#pendingInvoiceCreationZone').find('#statusPend').val('Open');
+	$('#pendingInvoiceCreationZone').find('#dbCoNumPend').val('');
+	$('#pendingInvoiceCreationZone').find('#poNumPend').val('');
+	$('#pendingInvoiceCreationZone').find('#notesPend').val('');		
+}
+
+/**
+ * This function displays the following messages when Back to Pending Invoices in clicked in the form 
+ */
+function viewPendInv() {
+	
+	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
+	let createMessage = "This Pending Invoice will not be added, are you sure you want to leave this screen?";
+	let displayedMessage;
+	
+	if(PENDINV_ACTION == "createPendInv")
+		displayedMessage = createMessage;
+	else 
+		displayedMessage = updateMessage;
+	
+	if(confirm(displayedMessage))
+	{
+		document.getElementById('pendingInvoiceInformation').style.width = "100%";
+		$('#pendingInvoiceCreationZone').hide();
+		$('#pendingInvoiceDisplay').show();
+	}
+
+}
+
+/**
+ * This function enables the Edit Pending Invoice button when a Pending Invoice is single clicked in the table 
+ */
+function togglePendInv (source) {
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editPendingInvoice').prop('disabled', false);
+	SELECTED_PENDINV_ID = $(source).attr('value');
+	console.log("Pend Inv id = ", SELECTED_PENDINV_ID);
+}
+
+/**
+ * This function opens the edit form of the pending invoice when double clicked. 
+ */
+function editSelectedPendInv()
+{
+	PENDINV_ACTION = "updatePendInv";
+	displayPendInvWell();
+	fillPendInvWell(SELECTED_PENDINV_ID);
+}
+
+/**
+ * This function shows the form. 
+ */
+function displayPendInvWell() {
+	console.log("PendInc ACTION: ", PENDINV_ACTION);
+	
+	$('#pendingInvoiceInformation').find('#pendingInvoiceDisplay').hide();
+	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').show();
+	$('#pendingInvoiceInformation').find('#pendingInvoiceCreationZone').find('#pendingInvoiceStatusSelectionRow').show();
+	document.getElementById('pendingInvoiceInformation').style.width = "100%";
+}
+
+/**
+ * This function fills the form using the old data. i.e., it is called in edit pending invoice so that older values are filled. 
+ */
+function fillPendInvWell(source) {
+	let tmp_id = source;	
+	let selected_pendInv;
+	for(var i = 0; i < pendInvs.length; i++) {
+		if(pendInvs[i].id == tmp_id) {
+			selected_pendInv = pendInvs[i];
+			SELECTED_PENDINV_ID = pendInvs[i].id;
+		}	
+	}
+	
+	if(!selected_pendInv) {
+		console.log("IMPROPER PENDINV SELECTION");
+		return;
+	}	
+	$('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val(selected_pendInv.invoiceNumber);
+	$('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val(selected_pendInv.invoiceAmount);
+	$('#pendingInvoiceCreationZone').find('#subNamesPend').val(selected_pendInv.subNames);
+	$('#pendingInvoiceCreationZone').find('#submittedDatePend').val(selected_pendInv.submittedDate);
+	$('#pendingInvoiceCreationZone').find('#briefDescriptionPend').val(selected_pendInv.briefDescription);
+	$('#pendingInvoiceCreationZone').find('#statusPend').val(selected_pendInv.status);
+	$('#pendingInvoiceCreationZone').find('#dbCoNumPend').val(selected_pendInv.dbCONum);
+	$('#pendingInvoiceCreationZone').find('#poNumPend').val(selected_pendInv.poNum);
+	$('#pendingInvoiceCreationZone').find('#notesPend').val(selected_pendInv.notes);	
+		
+}
+
+/**
+ * This function adds the message No Pending Invoices to show 
+ */
+function clearAndAddSingleRowPendInvs(msg) {
+	$('#pendingInvoiceTable > tbody').children('tr:not(.head)').remove();
+	
+	let placeHolder = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');	
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
+	let listDetails9 = document.createElement('td');
+	let listDetails8 = document.createElement('td');
+
+	
+	listDetails0.innerHTML = msg;
+	
+	$(placeHolder).append(listDetails0);
+	$(placeHolder).append(listDetails1);
+	$(placeHolder).append(listDetails2);
+	$(placeHolder).append(listDetails3);
+	$(placeHolder).append(listDetails4);
+	$(placeHolder).append(listDetails5);
+	$(placeHolder).append(listDetails6);
+	$(placeHolder).append(listDetails7);
+	$(placeHolder).append(listDetails8);
+	$(placeHolder).append(listDetails9);
+	
+	$('#pendingInvoiceTable > tbody').append(placeHolder);
+}
+
+function clearPendingInvoiceTable () {
+	$('#pendingInvoiceDisplay').find('#pendingInvoiceTable').find('tr:not(.head)').remove();
+}
+
+
+/**
+ * This function retrieves all of the pendingInvoices from the server
+ * INNER FUNCTION CALLS: fillPendInvTable()
+ */
+function getPendInvs(stopServerCalls) {
+	console.log(projectID);
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjectPendInvs',
+			'id': projectID
+		}, success: function (data) {
+			console.log("proj pendingInvoices!!!!", data);
+			let type = getParameterByName("from");
+			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
+			pendInvs = data;
+			if (data) {
+				clearPendingInvoiceTable();
+				fillPendInvsTable(data);
+			}
+			if(!stopServerCalls) getUserData();
+		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
+		}, error: function (data) {
+			alert('Server Error!10');
+		}
+	});
+}
+
+/**
+ * AUTHOR : AKASH GURRAM
+ * END OF PENDING INVOICES FUNCTIONS 
+ */
