@@ -12,6 +12,7 @@ import projectObjects.CloseoutDetails;
 import projectObjects.EquipmentStatus;
 import projectObjects.EquipmentVendor;
 import projectObjects.NewEquipment;
+import projectObjects.PendingInvoice;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectStatus;
@@ -110,7 +111,7 @@ public class ProjectNewRuleService {
 		
 	}
 	
-	public static ArrayList<RuleDetails> financialEvaluate(Project proj){
+	public static ArrayList<RuleDetails> financialEvaluate(Project proj, List<PendingInvoice> pendInvs){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
 		int actualInvoice = proj.getInvoiced();
 		int shouldInvoice = proj.getShouldInvoice();
@@ -151,6 +152,19 @@ public class ProjectNewRuleService {
 		 * RuleDetails rd = new RuleDetails("FinancialInfo", "CustomerNumberEmpty",
 		 * "Customer Number needs a value", 1); al.add(rd); }
 		 */
+		if(pendInvs.size() != 0) {
+			for(int i=0; i<pendInvs.size(); i++) {				
+				PendingInvoice currentPendInvs = pendInvs.get(i);								
+				String pendInvsStatus = currentPendInvs.getStatus();
+				
+				if(pendInvsStatus != null && (pendInvsStatus.equals("Open"))) {															
+					RuleDetails rd = new RuleDetails("Financial", "PendInvsOpen", " Please check the pending invoice (s)", 0);
+					scoreYellow = true;
+					al.add(rd);		
+					break;
+				}					
+				}				
+			}
 		
 		return al;
 	}

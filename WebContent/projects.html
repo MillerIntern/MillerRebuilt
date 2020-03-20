@@ -649,7 +649,7 @@
 								<th style="text-align: center"></th>
 							</tr>
 						</thead>
-						<tbody onclick = "fixingRules('financial');">
+						<tbody>
 						
 						
 						</tbody>					
@@ -2030,7 +2030,7 @@
 		      <button style = "float:right" onclick='submitPendInv()' class='btn btn-success'>Save Pending Invoice</button>
 		      <button style = "float:right; margin-right:5px;" onclick='viewPendInv()' class='btn btn-danger'>Back to Pending Invoice View</button>
 		      <div class='base-field'>
-		         <table class='table taskCreationTable'>
+		         <table class='table pendInvCreationTable'>
 		            <tr>
 		               <td><label for='invoiceNumberPend'>Invoice # <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceNumberPend'/>
@@ -2054,7 +2054,7 @@
 		            </tr>
          			<tr>
 						<td><label for='briefDescriptionPend'>Description <span style="color:#FF0000">*</span></label></td>
-						<td><textarea class="scrollTextBoxTask" maxlength="254" id='briefDescriptionPend'></textarea></td>
+						<td><textarea class="scrollTextBoxPendInvs" maxlength="254" id='briefDescriptionPend'></textarea></td>
 					</tr> 
 		            <tr id = "pendingInvoiceStatusSelectionRow" style = "display : none">
 		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
@@ -2076,7 +2076,7 @@
 		            </tr>	
 		           	<tr>
 						<td><label for='notesPend'>Notes</label></td>
-						<td><textarea class="scrollTextBoxTask" maxlength="254" id='notesPend'></textarea></td>
+						<td><textarea class="scrollTextBoxPendInvs" maxlength="254" id='notesPend' ondblclick = "dateFillFunction(this)"></textarea></td>
 					</tr> 		            		         
 		         </table>
 		      </div>

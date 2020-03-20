@@ -4805,7 +4805,8 @@ function fillChangeOrders (data) {
 			sell.appendChild(document.createTextNode("---"));		
 		
 		var notes = document.createElement('td');
-		notes.appendChild(document.createTextNode(changeOrder.notes));
+		notes.innerHTML = addingBreaktoHTML(changeOrder.notes);		
+//		notes.appendChild(document.createTextNode(changeOrder.notes));
 		
 
 		
@@ -5044,7 +5045,8 @@ function fillEquipment (data) {
 			deliveryDate.appendChild(document.createTextNode(equipment.deliveryDate));
 		
 		var equipmentNotes = document.createElement('td');
-		equipmentNotes.appendChild(document.createTextNode(equipment.notes));
+//		equipmentNotes.appendChild(document.createTextNode(addingSlashNtoHTML(equipment.notes)));
+		equipmentNotes.innerHTML = addingBreaktoHTML(equipment.notes);
 		
 		tableRow.appendChild(equipmentName);
 		tableRow.appendChild(equipmentDescription);
@@ -5639,7 +5641,7 @@ function fillTasksTable(tasks) {
 		
 		status.innerHTML = tasks[i].status.status;
 		
-		notes.innerHTML = tasks[i].notes;
+		notes.innerHTML = addingBreaktoHTML(tasks[i].notes);
 		
 		taskListing.appendChild(taskTitle);
 		taskListing.appendChild(taskDesc);
@@ -11814,7 +11816,20 @@ function getScoreRules(project_id){
 						td2.appendChild(text2);
 						tr.appendChild(td1);
 						tr.appendChild(td2);
-						tableFinancial.appendChild(tr);						
+						tableFinancial.appendChild(tr);
+						
+						
+						var currentRow = tr;
+					    var createClickHandler = function(row) {
+					        return function() {
+					          var cell = row.getElementsByTagName("td")[1];
+					          var id = cell.innerHTML;
+					          fixingRules('financial',id);
+					        };
+					      };
+					      currentRow.onclick = createClickHandler(currentRow);
+					      
+					      
 					      if(data[i].severity == 0){
 					    	  td1.style.background = "#FFD800";					    	  
 					    	  if(scoreFinancial[0]!="Red")
@@ -12034,7 +12049,7 @@ function goToProjectManager2() {
 * 
 * */
 
-function fixingRules(category){
+function fixingRules(category,text){
 	console.log(typeof(category));
 	switch(category){
 	case "general":
@@ -12052,11 +12067,22 @@ function fixingRules(category){
 		break;
 		
 	case "financial":
-		$('#projectInformationTabLink').trigger('click');
-		$('#financial-item').trigger('click');	
-		$("#backToFailedRules").show();
-		$("#backToFailedRules").html("Financial Rules");
-		break;
+		if(text.includes("Please check the pending invoice (s)")){
+			$('#projectInformationTabLink').trigger('click');
+			$('#pendingInvoice-item').trigger('click');	
+			$("#backToFailedRules").show();
+			$("#backToFailedRules").html("Financial Rules");
+			break;	
+			
+		}
+		else{
+			$('#projectInformationTabLink').trigger('click');
+			$('#financial-item').trigger('click');	
+			$("#backToFailedRules").show();
+			$("#backToFailedRules").html("Financial Rules");
+			break;			
+		}
+
 	
 	case "tasks":
 		$('#projectInformationTabLink').trigger('click');
@@ -12760,7 +12786,8 @@ function fillPendInvsTable(pendInvs) {
 		status.innerHTML = pendInvs[i].status;
 		dbCoNum.innerHTML = pendInvs[i].dbCONum;
 		poNum.innerHTML = pendInvs[i].poNum;
-		notes.innerHTML = pendInvs[i].notes;
+		notes.innerHTML = addingBreaktoHTML(pendInvs[i].notes);
+		
 		
 		
 		pendInvListing.appendChild(itemNum);
@@ -12971,6 +12998,16 @@ function getPendInvs(stopServerCalls) {
 			alert('Server Error!10');
 		}
 	});
+}
+
+function addingBreaktoHTML(s){
+	
+	var n = s.split("\n")
+	var n1 = "";
+	for(var z = 0; z < n.length; z++){
+		n1 = n1 + n[z] + "<br>";
+	}
+	return n1
 }
 
 /**

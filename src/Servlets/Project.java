@@ -1231,10 +1231,11 @@ public class Project extends HttpServlet
 			List<Task> task = ProjectObjectService.getAllTasks(Long.parseLong(parameters.get("projectId")));
 			List<ChangeOrder> changeOrders = ProjectObjectService.getAllChangeOrders(Long.parseLong(parameters.get("projectId")));
 			List<NewEquipment> equipment = ProjectObjectService.getAllNewEquipment(Long.parseLong(parameters.get("projectId")));
+			List<PendingInvoice> pendInvs = ProjectObjectService.getAllPendInvs(Long.parseLong(parameters.get("projectId")));
 			System.out.println("equipment size is "+ equipment.size());
 			ArrayList<RuleDetails> result = new ArrayList<>();
 			result.addAll(ProjectNewRuleService.generalInfoEvaluate(project));
-			result.addAll(ProjectNewRuleService.financialEvaluate(project));
+			result.addAll(ProjectNewRuleService.financialEvaluate(project, pendInvs));
 			result.addAll(ProjectNewRuleService.schedulingEvaluate(project));
 			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
 			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(changeOrders));

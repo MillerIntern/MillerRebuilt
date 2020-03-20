@@ -1285,8 +1285,7 @@ function addTaskToTable(_task)
 	
 	if(!_task.project.projectItem)
 		console.log("NULL TASK " , _task);
-	
-	console.log("task is " , _task);
+		
 	
 	projectDetails.innerHTML = _task.project.warehouse.city.name + 
 				' #' + _task.project.warehouse.warehouseID +
@@ -1315,8 +1314,7 @@ function addTaskToTable(_task)
 	$(taskListing).append(notes);
 
 	
-	$('#taskTable > tbody').append(taskListing);	
-	console.log("APPENDED");
+	$('#taskTable > tbody').append(taskListing);		
 }
 
 

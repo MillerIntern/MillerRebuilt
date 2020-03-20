@@ -243,7 +243,17 @@
 	width: 100%;
 	resize: vertical;
 }
-
+.scrollTextBoxPendInvs {
+	height: 60px;
+	width: 70%;
+	resize: vertical;
+}
+.pendInvCreationTable td:nth-child(1){
+		width:20%;
+	}
+.pendInvCreationTable td:nth-child(2){
+		width:80%;
+	}
 .scrollTextBoxPermits {
 	height: 40px;
 	width: 100%;

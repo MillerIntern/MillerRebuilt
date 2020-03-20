@@ -536,7 +536,7 @@ public class ReportHelper
 					  "<th>Cost</th><th>Sell</th><th>Invoice #</th><th>Customer COP#</th><th class='longText'>Notes");
 		} else if (value.equals("changeOrderSolo")) {
 			sb.append("<th>MCS CO#</th><th>Warehouse</th><th>Project</><th>Manager</th><th>Title</th>" + 
-					  "<th class='longText'>Brief Description</th><th>Status</th><th>Sub Names(s)</th>" + 
+					  "<th class='longText'>Brief Description</th><th>Status</th><th>Invoice Status</th><th>Sub Names(s)</th>" + 
 					  "<th>Subs Submitted Date</th><th>Customer</th><th>Submitted Date</th><th>Approved Date</th>" + 
 					  "<th>Cost</th><th>Sell</th><th>Invoice #</th><th>Customer COP#</th><th class='longText'>Notes");
 		}  else if (value.equals("equipmentSolo")) {
@@ -1722,6 +1722,28 @@ public class ReportHelper
 			
 			while(iter.hasNext()) {
 				ChangeOrder tmp = iter.next();
+				String MCS_INVOICE_STATUS = tmp.getStatus();
+				String SUB_INVOICE_STATUS = tmp.getSubInvoiceStatus();
+				String AND_INVOICE_STATUS = "";
+
+				if(MCS_INVOICE_STATUS.equals("1") && SUB_INVOICE_STATUS.equals("1")){			
+					AND_INVOICE_STATUS = "Yes";
+				}
+				else if(MCS_INVOICE_STATUS.equals("0") || SUB_INVOICE_STATUS.equals("0")){			
+					AND_INVOICE_STATUS = "No";
+				}
+				else if(MCS_INVOICE_STATUS.equals("2") && SUB_INVOICE_STATUS.equals("2")){			
+					AND_INVOICE_STATUS = "N/A";
+				}
+				else if(MCS_INVOICE_STATUS.equals(null) || SUB_INVOICE_STATUS.equals(null)){
+					AND_INVOICE_STATUS = "   ";
+				}
+				else if(MCS_INVOICE_STATUS.equals("2") && SUB_INVOICE_STATUS.equals("1")){			
+					AND_INVOICE_STATUS = "Yes";
+				}
+				else if(MCS_INVOICE_STATUS.equals("1") && SUB_INVOICE_STATUS.equals("2")){			
+					AND_INVOICE_STATUS = "Yes";
+				}
 				changeOrders.append("<tr><td class='tableIndex' style = 'display:none'></td><td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
 				changeOrders.append("<td>" + p.getWarehouse().getCity().getName() + 
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
@@ -1730,6 +1752,7 @@ public class ReportHelper
 				changeOrders.append("<td>" + nullOrFull(tmp.getTitle()) + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");
 				changeOrders.append("<td>" + convertChangeOrderStatus(tmp.getStatus()) + "</td>");
+				changeOrders.append("<td>" + AND_INVOICE_STATUS + "</td>");
 				changeOrders.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");			
 				changeOrders.append("<td>" + tryDateFormat(dForm, tmp.getProposalDate()) + "</td>");
 				changeOrders.append("<td>" + convertChangeOrderType(tmp.getType()) + "</td>");
@@ -1739,7 +1762,7 @@ public class ReportHelper
 				changeOrders.append("<td>$" + doubleToDisplayableString(tmp.getSell()) + "</td>");
 				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getInvoiceNumber()) + "</td>");
 				changeOrders.append("<td align = 'center'>" + nullOrFull(tmp.getSubmittedTo()) + "</td>");
-				changeOrders.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
+				changeOrders.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");
 			}
 			return changeOrders.toString();
 		}
@@ -1791,7 +1814,7 @@ public class ReportHelper
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getOrderedDate()) + "</td>");			
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getEstDeliveryDate()) + "</td>");
 				equipments.append("<td>" + tryDateFormat(dForm,tmp.getDeliveryDate()) + "</td>");
-				equipments.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");			
+				equipments.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");			
 			}			
 			return equipments.toString();
 		
@@ -1878,7 +1901,7 @@ public class ReportHelper
 					projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus()) + "</td>");
 				}
 //				projTasks.append("<td>" + nullOrFull(tmp.getTaskStatus().getStatus()) + "</td>");
-				projTasks.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");			
+				projTasks.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");			
 			}		
 			
 			return projTasks.toString();
@@ -1887,8 +1910,7 @@ public class ReportHelper
 		}
 		
 		else if (value.contains("projectPendInvSolo") && ProjectObjectService.getAllPendInvs(p.getId()) != null) {
-			
-			System.out.println("VVV " + value);
+						
 			String projStatus = value.split("~")[1];			
 			int amountOfPendInvs = ProjectObjectService.getAllPendInvs(p.getId()).size();						
 			if (amountOfPendInvs == 0) return "";
@@ -1948,7 +1970,7 @@ public class ReportHelper
 				projPendInvs.append("<td>" + nullOrFull(tmp.getStatus()) + "</td>");
 				projPendInvs.append("<td>" + nullOrFull(tmp.getDbCONum()) + "</td>");
 				projPendInvs.append("<td>" + nullOrFull(tmp.getPoNum()) + "</td>");
-				projPendInvs.append("<td>" + nullOrFull(tmp.getNotes()) + "</td>");
+				projPendInvs.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");
 														
 			}		
 			
@@ -2073,6 +2095,17 @@ public class ReportHelper
 		if(value == null || value.toString().equals(""))
 			return "---";
 		else return value;
+	}
+	
+	private static Object addingBR(Object value)
+	{
+		String[] arrOfStr = ((String) value).split("\n");
+		String n1 = "";
+		for (String a: arrOfStr) {
+			n1 = n1 + a + "<br>";
+		}
+            
+		return n1;
 	}
 	
 	private static String tryDateFormat(DateFormat dForm, Date value) {

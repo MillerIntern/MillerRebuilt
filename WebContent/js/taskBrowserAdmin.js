@@ -80,19 +80,14 @@ function createTaskTableByManager (tasks) {
 	    //console.log("tasks assignee = " + tasks[i].assignee.firstName);
 	    for(var q = 0; q < managersOfInterest.length; q++)
 	    {
-	    	//console.log("interesr in " + managersOfInterest[q]);
-	    console.log("Assignees" , tasks[i].assignee.firstName, tasks[i].subAssignee.name, managersOfInterest[q]);
+	    	//console.log("interesr in " + managersOfInterest[q]);	    
 	    
 		if ((tasks[i].assignee != undefined && tasks[i].assignee.firstName.toLowerCase() == managersOfInterest[q].toLowerCase()) ||
 				(tasks[i].subAssignee != undefined && tasks[i].subAssignee.name.toLowerCase() == managersOfInterest[q].toLowerCase())) {
 			count++;
-			console.log("COUNT: ", count);
-			console.log("Logged Task is ", tasks[i].id, managersOfInterest[q],tasks[i].assignee.firstName,tasks[i].subAssignee.name);
 			tasksOfInterest.push(tasks[i]);
 			addTaskToTable(tasks[i]);
 		}
-		console.log(tasks[i]);
-		console.log("COUNT: ", count);
 	  }
 	    
      } 
