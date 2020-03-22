@@ -405,6 +405,21 @@ public class ProjectObjectService
         return list;
 	}
 	
+	public synchronized static List<projectObjects.PendingInvoice> getAllPendInvs()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from PendingInvoice");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.PendingInvoice> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
 	
 	
 	/**

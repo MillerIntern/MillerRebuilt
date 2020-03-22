@@ -356,6 +356,9 @@ function testAll() {
 	
 
 }
+function openPendInvReport(){	
+	window.open("Report?" + "type=All PendInv Report "+"~"+"open");	
+}
 
 
 

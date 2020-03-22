@@ -38,6 +38,12 @@ public class PendInvFiller {
 		p.setPoNum(params.get("poNum"));
 		p.setNotes(params.get("notes"));
 		p.setPendingInvoice_id(params.get("pendingInvoice_id"));
+		p.setPendingInvoice_city(params.get("pendingInvoice_city"));
+		p.setPendingInvoice_item(params.get("pendingInvoice_item"));
+		p.setPendingInvoice_manager(params.get("pendingInvoice_manager"));
+		p.setPendingInvoice_state(params.get("pendingInvoice_state"));
+		p.setPendingInvoice_stateabbr(params.get("pendingInvoice_stateabbr"));
+		
 
 	}
 }

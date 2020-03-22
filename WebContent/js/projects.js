@@ -24,6 +24,10 @@
 //	alert("hi");
 //});
 
+
+
+
+
 //can I create a function for all this - Akash
 $(document).on("click", "#equipmentFailedTable tbody tr", function(e){
 	
@@ -12565,7 +12569,7 @@ function sendTaskAlert(taskData)
  * This function generates the Report for a project's Pending Invoices 
  */
 
-function projectPendInvReport() {	
+function projectPendInvReport() {		
 	window.open("Report?" + 'id=' + projectID + "&type=Project PendInv Report "+"~"+$('#pendingInvoiceSelector2').val());
 }
 
@@ -12585,7 +12589,12 @@ function submitPendInv () {
 	let poNum = $('#pendingInvoiceCreationZone').find('#poNumPend').val();
 	let notes = $('#pendingInvoiceCreationZone').find('#notesPend').val();
 	let pendingInvoice_id = projectID;
-
+	let pendingInvoice_city = PROJECT_DATA.warehouse.city.name;
+	let pendingInvoice_item = PROJECT_DATA.projectItem.name;
+	let pendingInvoice_manager = PROJECT_DATA.projectManagers.name;
+	let pendingInvoice_state = state_dict[PROJECT_DATA.warehouse.state].state;	
+	let pendingInvoice_stateabbr = state_dict[PROJECT_DATA.warehouse.state].abbr;
+	
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 	if (typeof invoiceNum === 'undefined' || invoiceNum === '') return alert('Invoice Number is Mandatory');
 	if (typeof invoiceAmt === 'undefined' || invoiceAmt === '') return alert('Invoice Amount is Mandatory');
@@ -12594,6 +12603,7 @@ function submitPendInv () {
 	if (typeof description === 'undefined' || description === '') return alert('Description is Mandatory');
 	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Status is Mandatory');
 	
+
 	let pendInvData = {
 		'action': 'createPendInv',
 		'project': projectID,
@@ -12607,9 +12617,16 @@ function submitPendInv () {
 		'poNum': poNum,
 		'notes': notes,
 		'pendingInvoice_id' : pendingInvoice_id,
+		'pendingInvoice_city' : pendingInvoice_city,
+		'pendingInvoice_item' : pendingInvoice_item,
+		'pendingInvoice_manager' : pendingInvoice_manager,
+		'pendingInvoice_state' : pendingInvoice_state,
+		'pendingInvoice_stateabbr' : pendingInvoice_stateabbr,
+		
+		
 	};
 
-	console.log("PROJECT == ", project);
+	console.log("PROJECT == ", project);	
 	if(PENDINV_ACTION == "createPendInv"){		
 		
 		$.ajax({
@@ -12627,7 +12644,12 @@ function submitPendInv () {
 				'dbCoNum': dbCoNum,
 				'poNum': poNum,
 				'notes': notes,
-				'pendingInvoice_id' : pendingInvoice_id,
+				'pendingInvoice_id' : pendingInvoice_id,				
+				'pendingInvoice_city' : pendingInvoice_city,
+				'pendingInvoice_item' : pendingInvoice_item,
+				'pendingInvoice_manager' : pendingInvoice_manager,
+				'pendingInvoice_state' : pendingInvoice_state,
+				'pendingInvoice_stateabbr' : pendingInvoice_stateabbr,
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
@@ -12665,6 +12687,11 @@ function submitPendInv () {
 				'poNum': poNum,
 				'notes': notes,
 				'pendingInvoice_id' : pendingInvoice_id,
+				'pendingInvoice_city' : pendingInvoice_city,
+				'pendingInvoice_item' : pendingInvoice_item,
+				'pendingInvoice_manager' : pendingInvoice_manager,
+				'pendingInvoice_state' : pendingInvoice_state,
+				'pendingInvoice_stateabbr' : pendingInvoice_stateabbr,
 																																																				
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
@@ -13014,3 +13041,68 @@ function addingBreaktoHTML(s){
  * AUTHOR : AKASH GURRAM
  * END OF PENDING INVOICES FUNCTIONS 
  */
+var state_dict = {
+		"NEW_YORK" : {"state" : "New York", "abbr":"NY"},
+		"ALABAMA" : {"state" : "Alabama", "abbr" : "AL" },
+		"ALASKA" : {"state" : "Alaska", "abbr" : "AK" },
+		"AMERICAN_SAMOA" : {"state" : "American Samoa", "abbr" : "AS" },
+		"ARIZONA" : {"state" : "Arizona", "abbr" : "AZ" },
+		"ARKANSAS" : {"state" : "Arkansas", "abbr" : "AR" },
+		"CALIFORNIA" : {"state" : "California", "abbr" : "CA" },
+		"COLORADO" : {"state" : "Colorado", "abbr" : "CO" },
+		"CONNECTICUT" : {"state" : "Connecticut", "abbr" : "CT" },
+		"DELAWARE" : {"state" : "Delaware", "abbr" : "DE" },
+		"DISTRICT_OF_COLUMBIA" : {"state" : "WASHINGTON D.C.", "abbr" : "DC" },
+		"FEDERATED_STATES_OF_MICRONESIA" : {"state" : "Federated States of Micronesia", "abbr" : "FM" },
+		"FLORIDA" : {"state" : "Florida", "abbr" : "FL" },
+		"GEORGIA" : {"state" : "Georgia", "abbr" : "GA" },
+		"GUAM" : {"state" : "Guam", "abbr" : "GU" },
+		"HAWAII" : {"state" : "Hawaii", "abbr" : "HI" },
+		"IDAHO" : {"state" : "Idaho", "abbr" : "ID" },
+		"ILLINOIS" : {"state" : "Illinois", "abbr" : "IL" },
+		"INDIANA" : {"state" : "Indiana", "abbr" : "IN" },
+		"IOWA" : {"state" : "Iowa", "abbr" : "IA" },
+		"KANSAS" : {"state" : "Kansas", "abbr" : "KS" },
+		"KENTUCKY" : {"state" : "Kentucky", "abbr" : "KY" },
+		"LOUISIANA" : {"state" : "Louisiana", "abbr" : "LA" },
+		"MAINE" : {"state" : "Maine", "abbr" : "ME" },
+		"MARYLAND" : {"state" : "Maryland", "abbr" : "MD" },
+		"MARSHALL_ISLANDS" : {"state" : "Marshall Islands", "abbr" : "MH" },
+		"MASSACHUSETTS" : {"state" : "Massachusetts", "abbr" : "MA" },
+		"MICHIGAN" : {"state" : "Michigan", "abbr" : "MI" },
+		"MINNESOTA" : {"state" : "Minnesota", "abbr" : "MN" },
+		"MISSISSIPPI" : {"state" : "Mississippi", "abbr" : "MS" },
+		"MISSOURI" : {"state" : "Missouri", "abbr" : "MO" },
+		"MONTANA" : {"state" : "Montana", "abbr" : "MT" },
+		"NEBRASKA" : {"state" : "Nebraska", "abbr" : "NE" },
+		"NEVADA" : {"state" : "Nevada", "abbr" : "NV" },
+		"NEW_HAMPSHIRE" : {"state" : "New Hampshire", "abbr" : "NH" },
+		"NEW_JERSEY" : {"state" : "New Jersey", "abbr" : "NJ" },
+		"NEW_MEXICO" : {"state" : "New Mexico", "abbr" : "NM" },
+		"NEW_YORK" : {"state" : "New York", "abbr" : "NY" },
+		"NORTH_CAROLINA" : {"state" : "North Carolina", "abbr" : "NC" },
+		"NORTH_DAKOTA" : {"state" : "North Dakota", "abbr" : "ND" },
+		"NORTHERN_MARIANA_ISLANDS" : {"state" : "Northern Mariana Islands", "abbr" : "MP" },
+		"OHIO" : {"state" : "Ohio", "abbr" : "OH" },
+		"OKLAHOMA" : {"state" : "Oklahoma", "abbr" : "OK" },
+		"OREGON" : {"state" : "Oregon", "abbr" : "OR" },
+		"PALAU" : {"state" : "Palau", "abbr" : "PW" },
+		"PENNSYLVANIA" : {"state" : "Pennsylvania", "abbr" : "PA" },
+		"PUERTO_RICO" : {"state" : "Puerto Rico", "abbr" : "PR" },
+		"RHODE_ISLAND" : {"state" : "Rhode Island", "abbr" : "RI" },
+		"SOUTH_CAROLINA" : {"state" : "South Carolina", "abbr" : "SC" },
+		"SOUTH_DAKOTA" : {"state" : "South Dakota", "abbr" : "SD" },
+		"TENNESSEE" : {"state" : "Tennessee", "abbr" : "TN" },
+		"TEXAS" : {"state" : "Texas", "abbr" : "TX" },
+		"UTAH" : {"state" : "Utah", "abbr" : "UT" },
+		"VERMONT" : {"state" : "Vermont", "abbr" : "VT" },
+		"VIRGIN_ISLANDS" : {"state" : "Virgin Islands", "abbr" : "VI" },
+		"VIRGINIA" : {"state" : "Virginia", "abbr" : "VA" },
+		"WASHINGTON" : {"state" : "Washington", "abbr" : "WA" },
+		"WEST_VIRGINIA" : {"state" : "West Virginia", "abbr" : "WV" },
+		"WISCONSIN" : {"state" : "Wisconsin", "abbr" : "WI" },
+		"WYOMING" : {"state" : "Wyoming", "abbr" : "WY" },
+		"UNKNOWN" : {"state" : "Unknown", "abbr" : "" },
+		
+
+};

@@ -551,6 +551,10 @@ public class ReportHelper
 			sb.append("<th>Invoice#</th><th>Invoice Amount</th><th>Sub Name(s)</th><th>Submitted Date</th><th class='longText'>Description</th>" + 
 					  "<th>Status</th><th>DB CO#</th><th>PO#</th><th class='longText'>Notes</th>");
 		}
+		else if(value.equals("allPendInv")) {
+			sb.append("<th>Warehouse</th><th>Project</th><th>Manager</th><th>Invoice#</th><th>Invoice Amount</th><th>Sub Name(s)</th><th>Submitted Date</th><th class='longText'>Description</th>" + 
+					  "<th>Status</th><th>DB CO#</th><th>PO#</th><th class='longText'>Notes</th>");
+		}
 		else if(value.equals("permitNotes")) {
 			sb.append("<th>");
 			sb.append("Permit Notes");
@@ -1963,6 +1967,81 @@ public class ReportHelper
 				PendingInvoice tmp = iter.next();
 				System.out.println(tmp.getStatus());
 				projPendInvs.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getInvoiceNumber()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getInvoiceAmount()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");				
+				projPendInvs.append("<td>" + tryDateFormat(dForm,tmp.getSubmittedDate()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getBriefDescription()) + "</td>");	
+				projPendInvs.append("<td>" + nullOrFull(tmp.getStatus()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getDbCONum()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getPoNum()) + "</td>");
+				projPendInvs.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");
+														
+			}		
+			
+			return projPendInvs.toString();
+		
+			
+		}
+		
+		
+		else if (value.contains("allPendInv") && ProjectObjectService.getAllPendInvs() != null) {
+			
+			String projStatus = value.split("~")[1];			
+			int amountOfPendInvs = ProjectObjectService.getAllPendInvs().size();						
+			if (amountOfPendInvs == 0) return "";
+				
+			StringBuilder projPendInvs = new StringBuilder();
+			Iterator<PendingInvoice> iter2 = ProjectObjectService.getAllPendInvs().iterator();
+			List<PendingInvoice> list = new ArrayList<PendingInvoice>();
+			while (iter2.hasNext()) {
+				PendingInvoice tmp1 = iter2.next();
+				
+				if(projStatus.equals("all")) {				
+					list.add(tmp1);								
+				}
+				
+				else if(projStatus.equals("open_complete")) {
+					if(tmp1.getStatus().equals("Open") || tmp1.getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("open")) {
+					if(tmp1.getStatus().equals("Open")) {
+						list.add(tmp1);	
+					}					
+				}
+				
+				else if(projStatus.equals("complete")) {
+					if(tmp1.getStatus().equals("Completed")) {
+						list.add(tmp1);	
+					}					
+				}
+				else if(projStatus.equals("closed")) {
+					if(tmp1.getStatus().equals("Closed")) {
+						list.add(tmp1);	
+					}					
+				}
+			    //list.add(iter2.next());
+			}			
+			//sortChangeOrders(list);
+			
+			List<PendingInvoice> sortedList = list.stream()
+					  .sorted(Comparator.comparing(PendingInvoice::getInvoiceNumber))
+					  .collect(Collectors.toList());
+			
+			list = sortedList;
+			
+			Iterator<PendingInvoice> iter = list.iterator();			
+			while(iter.hasNext()) {				
+				PendingInvoice tmp = iter.next();
+				System.out.println(tmp.getStatus());
+											
+				projPendInvs.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getPendingInvoice_city()) + ", "
+				+nullOrFull(tmp.getPendingInvoice_stateabbr())+ "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getPendingInvoice_item()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getPendingInvoice_manager()) + "</td>");
+				projPendInvs.append("<td>" + nullOrFull(tmp.getInvoiceNumber()) + "</td>");
 				projPendInvs.append("<td>" + nullOrFull(tmp.getInvoiceAmount()) + "</td>");
 				projPendInvs.append("<td>" + nullOrFull(tmp.getSubNames()) + "</td>");				
 				projPendInvs.append("<td>" + tryDateFormat(dForm,tmp.getSubmittedDate()) + "</td>");

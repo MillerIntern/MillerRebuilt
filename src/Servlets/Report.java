@@ -241,6 +241,17 @@ public class Report extends HttpServlet
 				
 			}
 			
+			else if(type.contains("All PendInv Report")) {				
+				String projStatus = type.split("~")[1];											
+				List<String> shownFields = new ArrayList<String>();
+				String shownField = "allPendInv";				
+				tableIndex = false;
+				shownFields.add(shownField);
+				shownFields.add(projStatus);
+				shownFields.toString();									
+				out.println(generatePendInvReport(type, shownFields ));								
+			}
+			
 			
 			
 			else //ChangeOrder report for one project
@@ -482,6 +493,11 @@ public class Report extends HttpServlet
 				String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);				
 				sb.append(value);
 			}
+			else if(shownFields.get(0).equals("allPendInv"))
+			{							
+				String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);				
+				sb.append(value);
+			}
 			else
 			{
 				// if(shownFields.contains("permitReport""))
@@ -506,6 +522,34 @@ public class Report extends HttpServlet
 		sb.append(HtmlGenerator.generateHtmlCloser());
 		return sb.toString();
 		
+	}
+	
+	/**
+	 * This method generates an HTML page representing Pending Invoices of all Projects that are to be included in the report.
+	 * @param reportName the name of the report
+	 * @return a String representing the HTML the report page.
+	 */
+	public synchronized String generatePendInvReport(String reportName, List<String> shownFields)
+	{
+		StringBuilder sb = new StringBuilder();
+		//Generate the html header
+		sb.append(HtmlGenerator.generateHtmlHeader("Pending Invoices - OPEN"));
+		sb.append(makeBackLink());	
+		sb.append(generateTableHeader(shownFields));
+
+		//Contents
+		sb.append("<tbody>");
+		//Generate table contents
+		if(shownFields.get(0).equals("allPendInv"))
+		{							
+			projectObjects.Project p = null;
+			String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);				
+			sb.append(value);
+		}
+		sb.append("<tbody>");
+		sb.append("</table>");
+		sb.append(HtmlGenerator.generateHtmlCloser());
+		return sb.toString();		
 	}
 	
 	/**

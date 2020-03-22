@@ -20,10 +20,21 @@ public class PendingInvoice extends ProjectObject {
 	private String poNum;
 	private String notes;
 	private String pendingInvoice_id;
+	private String pendingInvoice_city;
+	private String pendingInvoice_manager;
+	private String pendingInvoice_item;
+	private String pendingInvoice_state;
+	private String pendingInvoice_stateabbr;
 			
 	
+
+
+
+
 	public PendingInvoice(String invoiceNumber, String invoiceAmount, String subNames, Date submittedDate,
-			String briefDescription, String status, String dbCONum, String poNum, String notes, String pendingInvoice_id) {
+			String briefDescription, String status, String dbCONum, String poNum, String notes, String pendingInvoice_id,
+			String pendingInvoice_city, String pendingInvoice_manager, String pendingInvoice_item, String pendingInvoice_state, 
+			String pendingInvoice_stateabbr) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.invoiceAmount = invoiceAmount;
@@ -35,6 +46,11 @@ public class PendingInvoice extends ProjectObject {
 		this.poNum = poNum;
 		this.notes = notes;
 		this.pendingInvoice_id = pendingInvoice_id;
+		this.pendingInvoice_city = pendingInvoice_city;
+		this.pendingInvoice_manager = pendingInvoice_manager;
+		this.pendingInvoice_item = pendingInvoice_item;
+		this.pendingInvoice_state = pendingInvoice_state;
+		this.pendingInvoice_stateabbr = pendingInvoice_stateabbr;
 	}
 	
 
@@ -51,6 +67,12 @@ public class PendingInvoice extends ProjectObject {
 		this.poNum = null;
 		this.notes = null;
 		this.pendingInvoice_id = null;
+		this.pendingInvoice_city = null;
+		this.pendingInvoice_manager = null;
+		this.pendingInvoice_item = null;
+		this.pendingInvoice_state = null;
+		this.pendingInvoice_stateabbr = null;
+		
 		
 	}
 
@@ -115,6 +137,36 @@ public class PendingInvoice extends ProjectObject {
 
 	public synchronized void setPendingInvoice_id(String pendingInvoice_id) {
 		this.pendingInvoice_id = pendingInvoice_id;
+	}
+	public String getPendingInvoice_city() {
+		return pendingInvoice_city;
+	}
+	public synchronized void setPendingInvoice_city(String pendingInvoice_city) {
+		this.pendingInvoice_city = pendingInvoice_city;
+	}
+	public synchronized String getPendingInvoice_manager() {
+		return pendingInvoice_manager;
+	}
+	public synchronized void setPendingInvoice_manager(String pendingInvoice_manager) {
+		this.pendingInvoice_manager = pendingInvoice_manager;
+	}
+	public synchronized String getPendingInvoice_item() {
+		return pendingInvoice_item;
+	}
+	public synchronized void setPendingInvoice_item(String pendingInvoice_item) {
+		this.pendingInvoice_item = pendingInvoice_item;
+	}
+	public synchronized String getPendingInvoice_state() {
+		return pendingInvoice_state;
+	}
+	public synchronized void setPendingInvoice_state(String pendingInvoice_state) {
+		this.pendingInvoice_state = pendingInvoice_state;
+	}
+	public synchronized String getPendingInvoice_stateabbr() {
+		return pendingInvoice_stateabbr;
+	}
+	public synchronized void setPendingInvoice_stateabbr(String pendingInvoice_stateabbr) {
+		this.pendingInvoice_stateabbr = pendingInvoice_stateabbr;
 	}
 
 }
