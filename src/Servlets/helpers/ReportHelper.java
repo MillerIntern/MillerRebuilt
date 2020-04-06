@@ -1726,11 +1726,14 @@ public class ReportHelper
 			
 			while(iter.hasNext()) {
 				ChangeOrder tmp = iter.next();
-				String MCS_INVOICE_STATUS = tmp.getStatus();
+				String MCS_INVOICE_STATUS = tmp.getMcsInvoiceStatus();
 				String SUB_INVOICE_STATUS = tmp.getSubInvoiceStatus();
 				String AND_INVOICE_STATUS = "";
 
-				if(MCS_INVOICE_STATUS.equals("1") && SUB_INVOICE_STATUS.equals("1")){			
+				if(MCS_INVOICE_STATUS == null || SUB_INVOICE_STATUS == null){
+					AND_INVOICE_STATUS = "   ";
+				}
+				else if(MCS_INVOICE_STATUS.equals("1") && SUB_INVOICE_STATUS.equals("1")){			
 					AND_INVOICE_STATUS = "Yes";
 				}
 				else if(MCS_INVOICE_STATUS.equals("0") || SUB_INVOICE_STATUS.equals("0")){			
@@ -1739,15 +1742,14 @@ public class ReportHelper
 				else if(MCS_INVOICE_STATUS.equals("2") && SUB_INVOICE_STATUS.equals("2")){			
 					AND_INVOICE_STATUS = "N/A";
 				}
-				else if(MCS_INVOICE_STATUS.equals(null) || SUB_INVOICE_STATUS.equals(null)){
-					AND_INVOICE_STATUS = "   ";
-				}
+
 				else if(MCS_INVOICE_STATUS.equals("2") && SUB_INVOICE_STATUS.equals("1")){			
 					AND_INVOICE_STATUS = "Yes";
 				}
 				else if(MCS_INVOICE_STATUS.equals("1") && SUB_INVOICE_STATUS.equals("2")){			
 					AND_INVOICE_STATUS = "Yes";
 				}
+
 				changeOrders.append("<tr><td class='tableIndex' style = 'display:none'></td><td align = 'center'>" + nullOrFull(tmp.getMcsCO()) + "</td>");
 				changeOrders.append("<td>" + p.getWarehouse().getCity().getName() + 
 									", " + p.getWarehouse().getState().getAbbreviation() + "</td>");
@@ -2034,8 +2036,17 @@ public class ReportHelper
 			
 			Iterator<PendingInvoice> iter = list.iterator();			
 			while(iter.hasNext()) {				
-				PendingInvoice tmp = iter.next();
-				System.out.println(tmp.getStatus());
+				PendingInvoice tmp = iter.next();				
+				
+					
+				// IN THE FUTURE IF WE NEED ANYTHING ELSE FROM THE PROJECT DETAILS
+//				Project currentProject = null;
+//				try {
+//					currentProject = (Project)ProjectObjectService.get(Long.parseLong(tmp.getPendingInvoice_id()),  "Project");
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//				}
+			
 											
 				projPendInvs.append("<tr><td class='tableIndex'></th><td align = 'center'>" + nullOrFull(tmp.getPendingInvoice_city()) + ", "
 				+nullOrFull(tmp.getPendingInvoice_stateabbr())+ "</td>");
@@ -2050,6 +2061,7 @@ public class ReportHelper
 				projPendInvs.append("<td>" + nullOrFull(tmp.getDbCONum()) + "</td>");
 				projPendInvs.append("<td>" + nullOrFull(tmp.getPoNum()) + "</td>");
 				projPendInvs.append("<td>" + addingBR(nullOrFull(tmp.getNotes())) + "</td>");
+
 														
 			}		
 			

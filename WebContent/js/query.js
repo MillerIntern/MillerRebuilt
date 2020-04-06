@@ -56,6 +56,7 @@ const PROJECT_TYPE_R = 6;
 const PROJECT_TYPE_CR=3;
 const PROJECT_TYPE_OH=2;
 const PROJECT_TYPE_H=8;
+const PROJECT_TYPE_F=12;
 const PROJECT_TYPE_RX = 9;
 const PROJECT_TYPE_RR = 11;
 const PROJECT_TYPE_BE=4;
@@ -1688,6 +1689,7 @@ function generateReport(reportType)
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_RX);
 			pType.push(PROJECT_TYPE_H);
+			pType.push(PROJECT_TYPE_F);
 			break;
 	
 		case PROPOSAL_OTHER:
@@ -1711,13 +1713,14 @@ function generateReport(reportType)
 			title = "Active Projects";
 			break;
 			
-		case ACTIVE_MEETING:
+		case ACTIVE_MEETING:		
 			title = "Meeting Active Projects";
 			stage.push(ACTIVE_STAGE);
 			pType.push(PROJECT_TYPE_C);
 			pType.push(PROJECT_TYPE_R);
 			pType.push(PROJECT_TYPE_RX);
 			pType.push(PROJECT_TYPE_H);
+			pType.push(PROJECT_TYPE_F);
 			status.push(PROJECT_STATUS_CLOSEOUT);
 			status.push(PROJECT_STATUS_SCHEDULING);
 			status.push(PROJECT_STATUS_SCHEDULED);
@@ -2281,7 +2284,8 @@ function generateReport(reportType)
         data['shownFields'] = selectedFields;
         var params = $.param(data);
         console.log(REPORT_URL+"?"+params)
-        document.location.href = REPORT_URL+"?"+params;
+//        document.location.href = REPORT_URL+"?"+params;
+        window.open(REPORT_URL+"?"+params);
 }
 
 //This method un-checks all available check boxes in a given form
