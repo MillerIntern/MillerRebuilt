@@ -83,7 +83,7 @@ public class ProjectNewRuleColorService {
 			scoreColor = "yellow";
 		}
 		//7
-		if((stage.equals("Budgetary")) && !(status == 4 || status == 11 || status == 1 || status == 3)) {
+		if((stage.equals("Budgetary")) && !(status == 4 || status == 11 || status == 37 || status == 1)) {
 			scoreColor = "yellow";
 		}
 		//8

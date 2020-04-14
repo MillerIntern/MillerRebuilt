@@ -121,12 +121,13 @@ public class Project extends HttpServlet
 		    	  to = employeeRecipient.getEmail();
 		      
 		      // Sender's email ID needs to be mentioned
-		      String from = "mcstaskalert@millerconstructionservices.com";
+		      String from = "mcs.project.db@gmail.com";
 		      //This password was missing, Akash added it
 		      String pass = "MCS@1234";
 		      // Assuming you are sending email from localhost
 		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
-		      String host = "west.exch032.serverdata.net";
+		      String host = "smtp.gmail.com";
+//		      String host = "west.exch032.serverdata.net";	
 
 		      // Get system properties
 		      Properties properties = System.getProperties();
@@ -222,12 +223,12 @@ public class Project extends HttpServlet
 		      to = "akashgurram18@gmail.com";
 		      
 		      // Sender's email ID needs to be mentioned
-		      String from = "mcstaskalert@millerconstructionservices.com";
+		      String from = "mcs.project.db@gmail.com";
 		      //This password was missing, Akash added it
 		      String pass = "MCS@1234";
 		      // Assuming you are sending email from localhost
 		      // before host = "localhost". Clearly that did not work. Updated the host by contacting Justin in IT
-		      String host = "west.exch032.serverdata.net";
+		      String host = "smtp.gmail.com";
 
 		      // Get system properties
 		      Properties properties = System.getProperties();

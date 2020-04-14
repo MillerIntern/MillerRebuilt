@@ -95,8 +95,8 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//7
-		if((stage.equals("Budgetary")) && !(status == 4 || status == 11 || status == 1 || status == 3)) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaBudgetaryStage", "Status must be either Awaiting Direction, Awaiting Drawings, Preparing Proposal, or Proposal Submitted if the Stage is Budgetary", 0);
+		if((stage.equals("Budgetary")) && !(status == 4 || status == 11 || status == 37 || status == 1)) {
+			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaBudgetaryStage", "Status must be either Awaiting Direction, Awaiting Drawings, Budgetary Submitted, or Preparing Proposal if the Stage is Budgetary", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
@@ -286,10 +286,24 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//14
-		if((status != null) && (status == 35) && (scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today)) && (actualTurnoverDate == null)) {
-			RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Actual Turnover Date is late", 1);
-			scoreRed = true;
-			al.add(rd);
+		if( projectStage != null && projectStage.equals("Active") && (scheduledTurnoverDate != null) && ((scheduledTurnoverDate).before(today))){
+//			(status != null) && (status == 35)
+//			
+			if(actualTurnoverDate == null) {
+				RuleDetails rd = new RuleDetails("Scheduling", "LateActualTurnoverdDate", "Scheduled Turnover date has passed. If the project" + 
+						" has been completed, please update the \"Actual Turnover\" date and change the \"Status\" to \"Closeout\".", 1);
+				scoreRed = true;
+				al.add(rd);
+			}
+			else {
+				if((status != null) && !(status == 35)) {
+					RuleDetails rd = new RuleDetails("Scheduling", "LateCloseout", "Scheduled Turnover date has passed. If the project "
+							+ "has been completed, please change the \"Status\" to \"Closeout\".", 1);
+					scoreRed = true;
+					al.add(rd);
+				}
+			}
+
 		}
 		
 		if(projectStage.equals("Budgetary")) {  //Budgetary Rules will be checked only if the project stage is Budgetary.	
