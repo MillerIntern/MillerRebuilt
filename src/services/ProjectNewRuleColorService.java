@@ -60,7 +60,10 @@ public class ProjectNewRuleColorService {
 		int mediumScore = 0 ;
 		//GENERAL RULES
 		if(Gpermits == null || Gpermits.equals("0")) {
-			scoreColor = "yellow";
+			if(!(stage.equals("Budgetary")) && !(stage.equals("Proposal"))) {
+				scoreColor = "yellow";
+			}
+			
 		}
 		//2
 		if(hvac == null|| hvac.equals("2")) {
@@ -246,10 +249,11 @@ public class ProjectNewRuleColorService {
 			if(budgetaryDueDate == null) {
 				scoreColor = "yellow";
 			}
-			//16
-			if(budgetarySubmittedDate == null) {
-				scoreColor = "yellow";
-			}
+			//Removing this rule as per Andy's request - Akash
+//			//16
+//			if(budgetarySubmittedDate == null) {
+//				scoreColor = "yellow";
+//			}
 			//17
 			if((budgetaryDueDate != null) && (projectInitiatedDate != null) && (budgetaryDueDate).before(projectInitiatedDate)) {
 				scoreColor = "red";

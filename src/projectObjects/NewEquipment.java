@@ -31,6 +31,7 @@ public class NewEquipment extends ProjectObject
 	private String equipmentName;
 	private String vendor;
 	private Date orderedDate;
+	private Date equipProposalDate;
 	private Date deliveryDate;
 	private Date estDeliveryDate;
 	private String notes;
@@ -42,7 +43,7 @@ public class NewEquipment extends ProjectObject
 	
 	public NewEquipment(String poNum, String equipmentName,
 						String vendor,
-						Date deliveryDate, Date estDeliveryDate, Date orderedDate,
+						Date deliveryDate, Date estDeliveryDate, Date orderedDate, Date equipProposalDate,
 						String notes,  String deliveryStatus, String providerName, String description,
 						EquipmentVendor eqSupplier , EquipmentStatus eqStatus)
 	{
@@ -52,6 +53,7 @@ public class NewEquipment extends ProjectObject
 		this.deliveryDate = deliveryDate;
 		this.estDeliveryDate = estDeliveryDate;
 		this.orderedDate = orderedDate;
+		this.equipProposalDate = equipProposalDate;
 		this.notes = notes;
 		this.deliveryStatus = deliveryStatus;
 		this.providerName = providerName;
@@ -68,6 +70,7 @@ public class NewEquipment extends ProjectObject
 		this.deliveryDate = null;
 		this.estDeliveryDate = null;
 		this.orderedDate = null;
+		this.equipProposalDate = null;
 		this.notes = null;
 		this.deliveryStatus = null;
 		this.providerName = null;
@@ -115,6 +118,15 @@ public class NewEquipment extends ProjectObject
 	public synchronized void setOrderedDate(Date orderedDate) {
 		this.orderedDate = orderedDate;
 	}
+	
+	public synchronized Date getequipProposalDate() {
+		return equipProposalDate;
+	}
+
+	public synchronized void setequipProposalDate(Date equipProposalDate) {
+		this.equipProposalDate = equipProposalDate;
+	}
+
 
 	public synchronized Date getEstDeliveryDate() {
 		return estDeliveryDate;
@@ -195,6 +207,7 @@ public class NewEquipment extends ProjectObject
 	{
 		Map<String , String> fields = new HashMap<String , String>();
 		fields.put("orderedDate", "Date");
+		fields.put("equipProposalDate", "Date");
 		fields.put("deliveryDate", "Date");
 		fields.put("estDeliveryDate", "Date");
 		fields.put("deliveryStatus", "String");

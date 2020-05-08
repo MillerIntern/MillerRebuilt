@@ -40,6 +40,11 @@ public class EquipmentFiller
 			orderedDate = formatter.parse(params.get("orderedDate"));
 		eq.setOrderedDate(orderedDate);
 		
+		Date equipProposalDate = null;
+		if(params.get("equipProposalDate") != null && !params.get("equipProposalDate").isEmpty())
+			equipProposalDate = formatter.parse(params.get("equipProposalDate"));
+		eq.setequipProposalDate(equipProposalDate);
+		
 		eq.setPoNum(params.get("poNum"));
 		eq.setEquipmentName(params.get("equipmentName"));
 		//eq.setVendor(params.get("vendor"));

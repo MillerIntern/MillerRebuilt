@@ -229,8 +229,9 @@ function createWarehouse()
 	var city = $('#city').val();
 	var state = $("#state").val();
 	var region = $("#region").val();
+	var warehouseID = $('#warehouseId').val();
 	
-	if(city != '' && state != '' && region != '')
+	if(city != '' && state != '' && region != '' && warehouseID != '')
 		$.ajax({
 			type: 'POST',
 			url: 'Admin', 
@@ -240,6 +241,7 @@ function createWarehouse()
 				'city': city,
 				'state': state,
 				'region': region,
+				'warehouseID' : warehouseID,
 			},
 			success: function(data)
 			{
@@ -247,6 +249,7 @@ function createWarehouse()
 				$('#city').val('');
 				$('#state').val('');
 				$('#region').val('');
+				$('#warehouseId').val('');
 				alert("Warehouse Created Successfully!");
 			}
 		});

@@ -93,9 +93,10 @@ public class Admin extends HttpServlet
 			String city = parameters.get("city");
 			String state = parameters.get("state");
 			String region = parameters.get("region");
+			int warehouseID = Integer.parseInt(parameters.get("warehouseID"));
 			City newCity = new City(city);
 			ProjectObjectService.addObject("City", newCity);
-			Warehouse warehouse = new Warehouse(-1, newCity, State.valueOf(state), Region.valueOf(region));
+			Warehouse warehouse = new Warehouse(warehouseID, newCity, State.valueOf(state), Region.valueOf(region));
 			ProjectObjectService.addObject("Warehouse", warehouse);
 			response = "warehouse created";
 		}

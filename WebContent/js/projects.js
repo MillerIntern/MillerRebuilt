@@ -5036,6 +5036,12 @@ function fillEquipment (data) {
 		else
 			orderedDate.appendChild(document.createTextNode(equipment.orderedDate));
 		
+		var equipProposalDate = document.createElement('td');
+		if (equipment.equipProposalDate === undefined)
+			equipProposalDate.appendChild(document.createTextNode("---"));
+		else
+			equipProposalDate.appendChild(document.createTextNode(equipment.equipProposalDate));
+		
 		var estDeliveryDate = document.createElement('td');
 		if (equipment.estDeliveryDate === undefined)
 			estDeliveryDate.appendChild(document.createTextNode("---"));
@@ -5055,6 +5061,7 @@ function fillEquipment (data) {
 		tableRow.appendChild(equipmentName);
 		tableRow.appendChild(equipmentDescription);
 		tableRow.appendChild(supplier);
+		tableRow.appendChild(equipProposalDate);
 		tableRow.appendChild(deliveryStatus);
 		tableRow.appendChild(orderedDate);
 		tableRow.appendChild(estDeliveryDate);
@@ -10992,7 +10999,8 @@ $(document).ready(function()
 	
  	$('#equipmentForm #estDeliveryDate').datepicker();   
  	$('#equipmentForm #deliveryDate').datepicker(); 
- 	$('#equipmentForm #orderedDate').datepicker();   
+ 	$('#equipmentForm #orderedDate').datepicker(); 
+ 	$('#equipmentForm #equipProposalDate').datepicker(); 
 
 });
 
@@ -11133,6 +11141,7 @@ function fillTabs_EQUIP(json)
 	$('#equipmentForm #estDeliveryDate').val(equipmentToEdit.estDeliveryDate);
 	$('#equipmentForm #deliveryDate').val(equipmentToEdit.deliveryDate);
 	$('#equipmentForm #orderedDate').val(equipmentToEdit.orderedDate);
+	$('#equipmentForm #equipProposalDate').val(equipmentToEdit.equipProposalDate);
 	$('#equipmentForm #notes').val(equipmentToEdit.notes);
 	//$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
 	if(equipmentToEdit.eqStatus)
@@ -11154,6 +11163,7 @@ function saveProject_EQUIP()
 	var deliveryDate = $('#equipmentForm #deliveryDate').val();
 	var estDeliveryDate = $('#equipmentForm #estDeliveryDate').val();
 	var orderedDate = $('#equipmentForm #orderedDate').val();
+	var equipProposalDate = $('#equipmentForm #equipProposalDate').val();
 	var notes = $('#equipmentForm #notes').val();
 	var deliveryStatus = $('#equipmentForm #deliveryStatusEquipment').val();
 	
@@ -11181,6 +11191,7 @@ function saveProject_EQUIP()
 				'deliveryDate': deliveryDate,
 				'estDeliveryDate': estDeliveryDate,
 				'orderedDate' : orderedDate,
+				'equipProposalDate' : equipProposalDate,
 				'notes': notes,
 				'deliveryStatus' : deliveryStatus,
 			},

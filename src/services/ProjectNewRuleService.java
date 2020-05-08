@@ -60,9 +60,12 @@ public class ProjectNewRuleService {
 		 * */
 		//1
 		if(permits == null || permits.equals("0")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Permits must be either Yes or No", 0);
-			scoreYellow = true;
-			al.add(rd);
+			if(!(stage.equals("Budgetary")) && !(stage.equals("Proposal"))){
+				RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Permits must be either Yes or No", 0);
+				scoreYellow = true;
+				al.add(rd);
+			}
+			
 		}
 		//2
 		if(hvac == null|| hvac.equals("2")) {
@@ -313,12 +316,13 @@ public class ProjectNewRuleService {
 				scoreYellow = true;
 				al.add(rd);
 			}
-			//16
-			if(budgetarySubmittedDate == null) {
-				RuleDetails rd = new RuleDetails("Scheduling", "BudgetarySubmittedDate", "Budgetary Submitted Date needs a value", 0);
-				scoreYellow = true;
-				al.add(rd);
-			}
+			//Removing this rule as per Andy's request - Akash
+//			//16
+//			if(budgetarySubmittedDate == null) {
+//				RuleDetails rd = new RuleDetails("Scheduling", "BudgetarySubmittedDate", "Budgetary Submitted Date needs a value", 0);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			//17
 			if((budgetaryDueDate != null) && (projectInitiatedDate != null) && (budgetaryDueDate).before(projectInitiatedDate)) {
 				RuleDetails rd = new RuleDetails("Scheduling", "EarlierBudgetaryDueDate", "Budgetary Due Date is earlier than Project Initiation Date", 0);

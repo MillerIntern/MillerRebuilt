@@ -14,7 +14,7 @@ import java.util.List;
 public enum Region 
 {
 	NE(1, "NE"), N(2, "N"), NW(3, "NW"), W(4, "W"),
-	SW(5, "SW"), S(6, "S"), SE(7, "SE"), E(8, "E"), 
+	TX(5, "TX"), S(6, "S"), SE(7, "SE"), E(8, "E"), 
 	PR(9, "PR"), MW(10, "MW"), UNKNOWN(11, "UNKNOWN");
 	
 	int num;
