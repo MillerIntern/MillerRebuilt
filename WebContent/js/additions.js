@@ -223,7 +223,28 @@ function fillStates(json)
 
 }
 
-
+function createCustomer(){
+	var customerName = $('#customerName').val();
+	if(customerName != '')
+		$.ajax({
+			type: 'POST',
+			url: 'Admin', 
+			data: 
+			{
+				'action': 'createCustomer',
+				'customerName': customerName,
+			},
+			success: function(data)
+			{
+				console.log(data);
+				$('#customerName').val('');
+				alert("Customer Added Successfully!");
+			}
+		});
+	else{
+		alert("Please provide a Customer Name");
+	}
+}
 function createWarehouse()
 {
 	var city = $('#city').val();

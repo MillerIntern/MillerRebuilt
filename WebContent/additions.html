@@ -100,7 +100,8 @@
 
 <div class="container">
 	<ul class="tabs categoriesToEdit">
-		<li style="width: 10.5%" class="tab-link current" data-tab="warehouse">Warehouse</li>
+		<li class="tab-link current" data-tab="customer">Customer</li>
+		<li style="width: 10.5%" class="tab-link" data-tab="warehouse">Warehouse</li>
 		<li style="width: 11.4%" class="tab-link" data-tab="item">Project Item</li>
 		<li style="width: 16.6%" class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
 		<li style="width: 12.5%" class="tab-link" data-tab="subcontractor">Subcontractor</li>
@@ -112,7 +113,22 @@
 		<li style="width: 7.2%" class="tab-link" data-tab="deleteTab">Delete</li>
 	</ul>
 	
-	<div style="width: 55%" id="warehouse" class="tab-content current">
+	
+	<div style="width: 55%" id="customer" class="tab-content current">
+		<table>
+			<tr>
+				<td style="width: 35.55%">Customer</td><td></td>
+			</tr>
+				
+			<tr>
+				<td>Name: </td>        					
+				<td><input style="width: 300px" id="customerName" type="text"></td>
+			</tr>		
+		</table>
+		<button class = "btn btn-primary makeChanges" onclick="createCustomer()">Create New Customer</button>		
+	</div>
+	
+	<div style="width: 55%" id="warehouse" class="tab-content editable">
 		<table>
 			<tr>
 				<td style="width: 35.55%">Warehouse</td><td></td>

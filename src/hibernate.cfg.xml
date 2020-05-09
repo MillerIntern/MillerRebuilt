@@ -21,6 +21,7 @@
         <mapping class="projectObjects.ProjectItem" />
         <mapping class="projectObjects.ChangeOrder" />
         <mapping class="projectObjects.City" />
+        <mapping class="projectObjects.Customer" />
         <mapping class="projectObjects.CloseoutDetails" />
         <mapping class="projectObjects.Person" />
         <mapping class="projectObjects.ProjectStatus" />

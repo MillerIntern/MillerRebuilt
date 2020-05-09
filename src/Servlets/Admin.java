@@ -31,6 +31,7 @@ import objects.HashGen;
 import objects.HibernateUtil;
 import objects.RequestHandler;
 import projectObjects.City;
+import projectObjects.Customer;
 import projectObjects.EquipmentVendor;
 import projectObjects.Permission;
 import projectObjects.Person;
@@ -99,6 +100,13 @@ public class Admin extends HttpServlet
 			Warehouse warehouse = new Warehouse(warehouseID, newCity, State.valueOf(state), Region.valueOf(region));
 			ProjectObjectService.addObject("Warehouse", warehouse);
 			response = "warehouse created";
+		}
+		else if(action.equals("createCustomer")) {
+			String customerName = parameters.get("customerName");
+			Customer newCustomer = new Customer(customerName);
+			ProjectObjectService.addObject("Customer", newCustomer);
+			response = "customer created";
+			
 		}
 		else if(action.equals("createItem"))
 		{

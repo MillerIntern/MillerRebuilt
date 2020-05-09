@@ -16,7 +16,7 @@ public class Customer extends ProjectObject
 	
 	public Customer()
 	{
-		id = new Long(-1);
+		//id = new Long(-1);
 		name = "NULL";
 	}
 	
