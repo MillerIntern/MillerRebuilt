@@ -4147,6 +4147,11 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#manager").val(json.projectManagers.id);
 	$('#projectData').find("#supervisor").val(json.supervisors[0].id);
 	$('#projectData').find("#stage").val(json.stage.id);
+	
+	//This is filling the data when the form loads.
+	//So perform the onLoad functionality of options here.
+	changeStatus();
+	
 	$('#projectData').find("#status").val(json.status.id);
 	$('#projectData').find("#pType").val(json.projectType.id);
     formatRelativeTextAreas(json.scope , "scope", "projectData");
@@ -13117,3 +13122,67 @@ var state_dict = {
 		
 
 };
+
+function changeStatus(){		
+	//code to remove all options
+	$('#status').empty();
+	
+	//code to add multiple options at the same time depending on the stage
+	var projectStage = $('#stage').val();
+	if(projectStage == "2"){//Active
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
+		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
+		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
+	}
+	else if(projectStage == "8"){//Budgetary)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
+		$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
+	}
+	else if(projectStage == "15"){//Canceled)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:34, text:'Lost'}));
+	}
+	else if(projectStage == "4"){//Closed)
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
+	}
+	else if(projectStage == "9"){//On Hold)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
+		$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));		
+		$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
+		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
+		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
+		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
+	}
+	else if(projectStage == "1"){//Proposal)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
+		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
+	}
+	
+	/*
+	//List of all the options so far.
+	$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+	$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+	$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+	$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
+	$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
+	$('#status ').append($('<option>', {value:35, text:'Closeout'}));
+	$('#status ').append($('<option>', {value:34, text:'Lost'}));
+	$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
+	$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
+	$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
+	$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
+	*/
+	
+}
