@@ -45,6 +45,9 @@ public class ReportHelper
 	private static final String NA = "3";
 	private static final String INCOMPLETE = "2";
 	private static final String COMPLETE = "1";
+	private static final String REQUIRED = "4";
+	private static final String TBD = "6";
+	// ADD REQUIRED AND TBD HERE
 	
 	/**
 	 * Creates table headers based on the values passed in from the report
@@ -693,9 +696,21 @@ public class ReportHelper
 		else if (value.equals("type") && p.getProjectType() != null)
 			return p.getProjectType().getName();
 		
-		else if (value.equals("asBuilts") && p.getCloseoutDetails().getAsBuilts() != null)
-			return dForm.format(p.getCloseoutDetails().getAsBuilts());
-		
+		else if (value.equals("asBuilts") && p.getCloseoutDetails().getAsBuilts() != null) {
+			//BELOW CODE ADDS THE ASBUILT DRAWING STATUS. UNCOMMENT BEFORE DEPLOYMENT
+			StringBuilder sb = new StringBuilder();
+			if(p.getCloseoutDetails().getAsBuiltDrawingsStatus() != null)
+				sb.append(convert(p.getCloseoutDetails().getAsBuiltDrawingsStatus()));
+			/*
+			 * Removing the DATE from the Report as per Andy's Request.
+			 * Uncomment this whenever required.
+			if(p.getCloseoutDetails().getAsBuilts() != null)
+				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getAsBuilts()));
+			*/
+			if(sb.toString().equals(""))
+				sb.append("---");
+			return sb.toString();
+		}
 		else if (value.equals("salvageValue") && p.getCloseoutDetails().getSalvageValue() != null)
 			return "$"+ p.getCloseoutDetails().getSalvageValue().getValue() + " " + dForm.format(p.getCloseoutDetails().getSalvageValue().getDate());
 		
@@ -851,9 +866,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getEquipmentSubmittalStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getEquipmentSubmittalStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getEquipmentSubCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getEquipmentSubCL()));
-			 
+			*/ 
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -863,9 +880,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getManualStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getManualStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getManualDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getManualDate()));
-			
+			*/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -875,8 +894,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getPunchListStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getPunchListStatus()));
+			/*
+			 * Removing Date for punchList
 			if(p.getCloseoutDetails().getPunchList() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getPunchList()));
+			*/
 			 
 			if(sb.toString().equals(""))
 				sb.append("---");
@@ -887,13 +909,17 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getAsBuiltDrawingsStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getAsBuiltDrawingsStatus()));
+			/*
+			 * Removing Date for As-Built
 			if(p.getCloseoutDetails().getAsBuilts() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getAsBuilts()));
-			 
+			 */
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
 		}
+		/*
+		 * Duplicate
 		else if(value.equals("closeoutPhotos"))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -906,14 +932,17 @@ public class ReportHelper
 				sb.append("---");
 			return sb.toString();
 		}
+		*/
 		else if(value.equals("closeoutPhotos"))
 		{
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getCloseOutPhotosStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getCloseOutPhotosStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getCloseoutPhotosCL() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getCloseoutPhotosCL()));
-			 
+			 */
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -923,9 +952,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getHVACstartupFormStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getHVACstartupFormStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getHVACstartupFormDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getHVACstartupFormDate()));
-			 
+			 */
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -935,9 +966,15 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getAlarmFormStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getAlarmFormStatus()));
+			
+			/*
+			 * The below lines are adding date to the report.
+			 * Removing the DATE from the Report as per Andy's Request.
+			 * Uncomment this whenever required.
+			
 			if(p.getCloseoutDetails().getAlarmHvacForm() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getAlarmHvacForm()));
-			 
+			 */
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -947,9 +984,12 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getVerisaeReportStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getVerisaeReportStatus()));
+			
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getVerisaeShutdownReport() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getVerisaeShutdownReport()));
-			 
+			 */
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -1210,8 +1250,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getSubstantialCompletionStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getSubstantialCompletionStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getSubstantialCompletionDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getSubstantialCompletionDate()));
+			*/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -1232,8 +1275,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getReleaseOfLiensStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getReleaseOfLiensStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getReleaseOfLiensDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getReleaseOfLiensDate()));
+			*/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();	
@@ -1243,8 +1289,11 @@ public class ReportHelper
 			StringBuilder sb = new StringBuilder();
 			if(p.getCloseoutDetails().getMulvannySignOffStatus() != null)
 				sb.append(convert(p.getCloseoutDetails().getMulvannySignOffStatus()));
+			/*
+			 * Removing Date
 			if(p.getCloseoutDetails().getMulvannySignOffDate() != null)
 				sb.append("<br>" + dForm.format(p.getCloseoutDetails().getMulvannySignOffDate()));
+			*/
 			if(sb.toString().equals(""))
 				sb.append("---");
 			return sb.toString();
@@ -2238,6 +2287,12 @@ public class ReportHelper
 			return "Incomplete";
 		else if(i.equals(NA))
 			return "N/A";
+		else if(i.equals(REQUIRED))
+			return "Required";
+		else if(i.equals(TBD))
+			return "TBD";
+		
+		// Add conditions where i equals REQUIRED AND TBD
 
 		
 		return "";
