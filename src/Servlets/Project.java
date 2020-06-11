@@ -1239,7 +1239,7 @@ public class Project extends HttpServlet
 			result.addAll(ProjectNewRuleService.financialEvaluate(project, pendInvs));
 			result.addAll(ProjectNewRuleService.schedulingEvaluate(project));
 			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
-			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(changeOrders));
+			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(project, changeOrders));
 			result.addAll(ProjectNewRuleService.equipmentEvaluate(equipment));
 			result.addAll(ProjectNewRuleService.permitsEvaluate(project));
 			result.addAll(ProjectNewRuleService.closeOutEvaluate(project));

@@ -2215,6 +2215,7 @@ function fillCityDropdown(json)
 {
 	console.log("FILLING CITIES" , cities);
 	$('#cityDropdown').find('option').remove();
+	$('#warehouseDropdown').find('option').remove();
 	
 	cities.sort(function(a,b){
 		if(!a.name) return -1;
@@ -2232,6 +2233,7 @@ function fillCityDropdown(json)
 		option.text = cities[i].name;
 		option.value = cities[i].id;
 		$('#cityDropdown').append(option);
+		$('#warehouseDropdown').append(option);
 		
 		option = document.createElement('option');
 		option.text = cities[i].name;
@@ -2240,6 +2242,7 @@ function fillCityDropdown(json)
 	}
 	
 	$('#cityDropdown').chosen({width : '200px'});
+	$('#warehouseDropdown').chosen({width : '200px'});
 	$('#duplicateCityDropdown').chosen({width : '200px'});
 
 

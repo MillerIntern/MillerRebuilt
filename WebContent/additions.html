@@ -131,11 +131,15 @@
 	<div style="width: 55%" id="warehouse" class="tab-content editable">
 		<table>
 			<tr>
-				<td style="width: 35.55%">Warehouse</td><td></td>
+				<td style="width: 35.55%">Warehouse</td>
+				<td style = "display:none">
+					<select id = "warehouseDropdown" >
+				    </select> 
+				</td>
 			</tr>
 				
 			<tr>
-				<td>City: </td>        					
+				<td>Location: </td>        					
 				<td><input style="width: 300px" id="city" type="text"></td>
 			</tr>
 			<tr>
@@ -156,11 +160,12 @@
 										</select></td>
 			</tr>
 			<tr>
-				<td>Warehouse ID: </td>        					
+				<td>Location ID: </td>        					
 				<td><input style="width: 300px" id="warehouseId" type="number"></td>
 			</tr>
 		</table>
-		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>		
+		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>	
+		<button class = "btn btn-primary editButton" disabled onclick = "getWarehouses()">Edit Warehouse</button>		
 	</div>
 	<div style="width: 54%" id="item" class="tab-content editable">
 		<table>
