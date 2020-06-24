@@ -101,7 +101,7 @@
 <div class="container">
 	<ul class="tabs categoriesToEdit">
 		<li class="tab-link current" data-tab="customer">Customer</li>
-		<li style="width: 10.5%" class="tab-link" data-tab="warehouse">Warehouse</li>
+		<li style="width: 10.5%" class="tab-link" data-tab="warehouse">Location</li>
 		<li style="width: 11.4%" class="tab-link" data-tab="item">Project Item</li>
 		<li style="width: 16.6%" class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
 		<li style="width: 12.5%" class="tab-link" data-tab="subcontractor">Subcontractor</li>
@@ -117,7 +117,11 @@
 	<div style="width: 55%" id="customer" class="tab-content current">
 		<table>
 			<tr>
-				<td style="width: 35.55%">Customer</td><td></td>
+				<td style="width: 35.55%">Customer</td>
+				<td>
+					<select id = "customerDropdown" >
+				    </select> 
+				</td>
 			</tr>
 				
 			<tr>
@@ -131,13 +135,17 @@
 	<div style="width: 55%" id="warehouse" class="tab-content editable">
 		<table>
 			<tr>
-				<td style="width: 35.55%">Warehouse</td>
+				<td style="width: 35.55%">Location Information</td>
 				<td style = "display:none">
 					<select id = "warehouseDropdown" >
 				    </select> 
 				</td>
 			</tr>
 				
+			<tr>
+				<td>Customer:</td>        					
+				<td><select id="locationCustomerDropdown"></select></td>
+			</tr>
 			<tr>
 				<td>Location: </td>        					
 				<td><input style="width: 300px" id="city" type="text"></td>
@@ -162,6 +170,10 @@
 			<tr>
 				<td>Location ID: </td>        					
 				<td><input style="width: 300px" id="warehouseId" type="number"></td>
+			</tr>
+			<tr>
+				<td>Manager: </td>        					
+				<td><input disabled style="width: 300px" id="warehouseManager" type="text"></td>
 			</tr>
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Warehouse</button>	

@@ -96,7 +96,7 @@ function getUserData () {
 				'domain': 'project',
 				'action': 'getSubcontractors',
 			}, complete: function (data) {
-				console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
+//				console.log("REPONSE JSON FROM getSubcontractors() = ",data.responseJSON);
 				if (data.responseJSON) {
 					createSubDropdown(data.responseJSON);
 				}

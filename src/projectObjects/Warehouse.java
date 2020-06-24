@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Fetch;
@@ -36,16 +37,22 @@ public class Warehouse extends ProjectObject
 	private City city;
 	
 	/**
-	 * This is the region that the warehoue is in.
+	 * This is the region that the warehouse is in.
 	 */
 	private Region region;
 	
-	public Warehouse(int id, City city, State state, Region r)
+	/**
+	 * This is the customer to which the warehouse belongs to.
+	 */
+	private Customer customer;
+	
+	public Warehouse(int id, City city, State state, Region r, Customer customer)
 	{
 		this.city = city;
 		this.state = state;
 		warehouseID = id;
 		this.region = r;
+		this.customer = customer;
 	}
 	
 	public Warehouse()
@@ -54,6 +61,7 @@ public class Warehouse extends ProjectObject
 		state = null;
 		warehouseID = 0;
 		region = null;
+		customer = null;
 	}
 	
 	/**
@@ -123,6 +131,25 @@ public class Warehouse extends ProjectObject
 	 */
 	public synchronized void setCity(City city) {
 		this.city = city;
+	}
+	
+	
+	/**
+	 * This method gets the customer that the warehouse belongs to.
+	 * @return the customer
+	 */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)	
+	public synchronized Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * This method sets the Customer that the warehouse belongs to
+	 * @param customer the new customer
+	 */
+	public synchronized void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
 	/**

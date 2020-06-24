@@ -178,6 +178,7 @@ function preparePage() {
 		    	  document.location.href = "homepage.html";
 		      }
 		      getUsers();
+		      getCustomers();
 			} else {
 				console.log("GetUserData() RESPONSE = ",data);
 				alert('Server Failure!');
@@ -186,6 +187,87 @@ function preparePage() {
 		}
 	});
 }
+
+function getCustomers () {
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getCustomers',
+		}, complete: function (data) {			
+			if (data.responseJSON) {
+				customers = data.responseJSON;
+				console.log("CUSTOMERS = ",customers);
+				fillCustomerDropdown(customers);
+				fillLocationCustomerDropdown(customers);
+			}
+		}
+		
+	});	
+}
+
+
+function fillCustomerDropdown(customers){
+	$('#customerDropdown').find('option').remove();
+	
+	customers.sort(function(a,b){
+		if(!a.name) return -1;
+		if(!b.name) return 1;
+		
+		if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	
+	for(var i = 0; i < customers.length; i++) 
+	{
+		let option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+		$('#customerDropdown').append(option);
+		
+		option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+	}
+	
+	$('#customerDropdown').chosen({width : '200px'});
+
+}
+
+function fillLocationCustomerDropdown(customers){
+	$('#locationCustomerDropdown').find('option').remove();
+	
+	customers.sort(function(a,b){
+		if(!a.name) return -1;
+		if(!b.name) return 1;
+		
+		if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	
+	for(var i = 0; i < customers.length; i++) 
+	{
+		let option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+		$('#locationCustomerDropdown').append(option);
+		
+		option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+	}
+	
+	$('#locationCustomerDropdown').chosen({width : '200px'});
+
+}
+
 
 function getStates()
 {
@@ -250,6 +332,7 @@ function createWarehouse()
 	var city = $('#city').val();
 	var state = $("#state").val();
 	var region = $("#region").val();
+	var customer = $("#locationCustomerDropdown option:selected").text();
 	var warehouseID = $('#warehouseId').val();
 	
 	if(city != '' && state != '' && region != '' && warehouseID != '')
@@ -263,6 +346,7 @@ function createWarehouse()
 				'state': state,
 				'region': region,
 				'warehouseID' : warehouseID,
+				'customer' : customer,
 			},
 			success: function(data)
 			{

@@ -918,6 +918,14 @@ public class Project extends HttpServlet
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(users);
+		} else if (action.equals("getCustomers")) {			
+			// TODO: Store User's name under User.class this implementation is really bad
+			List<Object> customers= ProjectObjectService.getAll("Customer");
+			
+			
+			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
+			Gson gson = new Gson();
+			response = gson.toJson(customers);
 		} else if (action.equals("createTask")) {
 			System.out.println("Creating Task");
 			
