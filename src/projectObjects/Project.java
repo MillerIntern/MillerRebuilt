@@ -60,6 +60,7 @@ public class Project extends ProjectObject
 	private ProjectStage stage;
 	private ProjectType projectType;
 	private String zachUpdates;
+	private String keyStatus;
 	private String cost;
 	private String customerNumber;
 	
@@ -192,7 +193,7 @@ public class Project extends ProjectObject
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
 			int invoiced, String projectNotes, Date scheduledStartDate,
-			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates,
+			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates, String keyStatus,
 			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
@@ -244,6 +245,7 @@ public class Project extends ProjectObject
 		this.McsNumber = 0;
 		this.projectType = pType;
 		this.zachUpdates = zUpdates;
+		this.keyStatus = keyStatus;
 		this.cost = cst;
 		this.customerNumber = custNum;
 		this.DrawingsDue=DrawingsDue;
@@ -397,6 +399,7 @@ public class Project extends ProjectObject
 		this.McsNumber = 0;
 		this.projectType = null;
 		this.zachUpdates = null;
+		this.keyStatus = null;
 		this.cost = null;
 		this.customerNumber = null;
 		this.DrawingsDue=null;
@@ -766,6 +769,15 @@ public class Project extends ProjectObject
 	
 	public synchronized void setZachUpdates(String zUpdates) {
 		this.zachUpdates = zUpdates;
+	}
+	
+	@Column(length = 300)
+	public synchronized String getKeyStatus() {
+		return keyStatus;
+	}
+	
+	public synchronized void setKeyStatus(String keyStatus) {
+		this.keyStatus = keyStatus;
 	}
 	
 	public synchronized String getCost() {
