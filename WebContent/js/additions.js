@@ -2770,4 +2770,26 @@ function gettingTheFinalColors(project){
 	
 }
 
+function getWarehouses(){	
+	$('#warehouse').hide();	
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getAllWarehouses'
+		}, success: function (data) {
+			warehouses = data;		
+			console.log("WH",warehouses);
+//			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+//			establishRetrievedProjects();
+//			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
+//			$('.projectNavigator-projectFinder').show();
+//			t1 = new Date().getTime();
+//			console.log('took: ' + (t1 - t0) + 'ms');
+//			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
+//			//getSearchCriteria();
+		}
+	});
+}
 

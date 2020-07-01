@@ -389,6 +389,10 @@ public class Project extends HttpServlet
 			
 			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
 		}
+		else if(action.equals("getAllWarehouses"))
+		{			
+			response = ProjectObjectService.getAllAsJsonString("Warehouse");						
+		}
 		else if(action.equals("getAllProjectsIds"))
 		{
 			System.out.println("getting the projectsssss!");

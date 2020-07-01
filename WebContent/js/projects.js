@@ -3768,6 +3768,7 @@ function saveProject_PROJECT_DATA() {
 	var actualInvoice = $('#projectData').find("#actualInvoice").val();
 	var prevNotes = PROJECT_DATA.projectNotes;
 	var notes = $('#projectData').find("#notes").val();
+	var keyStatus = $('#projectData').find("#keyStatus").val();
 	var refrigNotes = $('#projectData').find("#zUpdates").val();
 	var cost = $('#projectData').find("#projectCost").val();
 	if(cost) {cost = cleanNumericValueForSaving($('#projectData').find("#projectCost")[0].value); cost = parseFloat(cost);}
@@ -3848,6 +3849,7 @@ function saveProject_PROJECT_DATA() {
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
 				'notes': notes,
+				'keyStatus': keyStatus,
 				'refrigNotes': refrigNotes,
 				'cost': cost,
 				'customerNumber': customerNumber,
@@ -4172,6 +4174,9 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#actualInvoice").val(json.invoiced);
     formatRelativeTextAreas(json.projectNotes , "notes", "projectData");
 	$('#projectData').find("#notes").val(json.projectNotes);
+	
+	$('#projectData').find("#keyStatus").val(json.keyStatus);
+	
     formatRelativeTextAreas(json.zachUpdates , "zUpdates", "projectData");
 	$('#projectData').find("#zUpdates").val(json.zachUpdates);
 	if(json.cost) json.cost = cleanNumericValueForDisplaying(json.cost);
@@ -10678,10 +10683,12 @@ function fillDropdowns_CHANGE_ORDER(json)
 	
 	for(var i = 0; i < changeorderStatus.length; i++)
 	{
-		var option = document.createElement("option");
-		option.innerHTML = changeorderStatus[i].name;
-		option.setAttribute("value", changeorderStatus[i].id);
-		d.appendChild(option);
+		if(changeorderStatus[i].name != "Review"){
+			var option = document.createElement("option");
+			option.innerHTML = changeorderStatus[i].name;
+			option.setAttribute("value", changeorderStatus[i].id);
+			d.appendChild(option);
+		}		
 	}
 	$('#changeOrder').find("#status").append(d);
 	

@@ -357,6 +357,7 @@ function saveProject() {
 	var shouldInvoice = $("#shouldInvoice").val();
 	var actualInvoice = $("#actualInvoice").val();
 	var notes = $("#notes").val();
+	var keyStatus = $("#keyStatus").val();
 	var refrigNotes = $("#zUpdates").val();
 	var cost = $("#projectCost").val();
 	var customerNumber = $("#custNum").val();
@@ -413,6 +414,7 @@ function saveProject() {
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
 				'notes': notes,
+				'keyStatus': keyStatus,
 				'refrigNotes': refrigNotes,
 				'cost': cost,
 				'customerNumber': customerNumber,
