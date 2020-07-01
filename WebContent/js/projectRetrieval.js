@@ -54,6 +54,7 @@ let TIME_FINISH;
 					PROJECT_OBJECT.PROJECTS[i].budgetarySubmittedDate = response.responseJSON[i][13];
 					PROJECT_OBJECT.PROJECTS[i].proposalDueDate = response.responseJSON[i][14];
 					PROJECT_OBJECT.PROJECTS[i].proposalSubmittedDate = response.responseJSON[i][15];
+					PROJECT_OBJECT.PROJECTS[i].keyStatus = response.responseJSON[i][16];
 					
 					
 				}

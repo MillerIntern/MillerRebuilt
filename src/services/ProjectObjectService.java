@@ -127,6 +127,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("budgetarySubmitted"));
 				projectionList.add(Projections.property("proposalDue"));
 				projectionList.add(Projections.property("proposalSubmitted"));
+				projectionList.add(Projections.property("keyStatus"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);
@@ -666,6 +667,7 @@ public class ProjectObjectService
 				projectionList.add(Projections.property("budgetarySubmitted"));
 				projectionList.add(Projections.property("proposalDue"));
 				projectionList.add(Projections.property("proposalSubmitted"));
+				projectionList.add(Projections.property("keyStatus"));
 				//projectionList.add(Projections.property("supervisors.name").as("supervisors.name"));
 
 				criteria.setProjection(projectionList);

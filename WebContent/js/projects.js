@@ -9462,7 +9462,12 @@ function establishRetrievedProjects()
 		if(RETRIEVED_PROJECTS[i][15]!=null)
 			RETRIEVED_PROJECTS[i].proposalSubmittedDate = RETRIEVED_PROJECTS[i][15];
 		else
-			RETRIEVED_PROJECTS[i].proposalSubmittedDate = "Unavailable";		
+			RETRIEVED_PROJECTS[i].proposalSubmittedDate = "Unavailable";	
+		
+		if(RETRIEVED_PROJECTS[i][16]!=null)
+			RETRIEVED_PROJECTS[i].keyStatus = RETRIEVED_PROJECTS[i][16];
+		else
+			RETRIEVED_PROJECTS[i].keyStatus = "     ----------     ";		
 		
 		
 		
@@ -10115,6 +10120,7 @@ function filterProjects (filter) {
 					let listDetails5 = document.createElement('td');
 					let listDetails6 = document.createElement('td');
 					let listDetails7 = document.createElement('td');
+					let listDetails8 = document.createElement('td');
 					
 																
 					projectListing.id = 'project' + json[k].id;
@@ -10133,7 +10139,8 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails7.innerHTML = json[k].projectManagers.name;					
+					listDetails7.innerHTML = json[k].projectManagers.name;	
+					listDetails8.innerHTML = json[k].keyStatus;
 					
 					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
 						listDetails3.setAttribute( 'class', 'circle_onholdcancel' );
@@ -10164,6 +10171,7 @@ function filterProjects (filter) {
 					$(projectListing).append(listDetails5);
 					$(projectListing).append(listDetails6);
 					$(projectListing).append(listDetails7);
+					$(projectListing).append(listDetails8);
 					
 					$('#results > tbody').append(projectListing);
 				}
@@ -10189,6 +10197,7 @@ function filterProjects (filter) {
 					let listDetails5 = document.createElement('td');
 					let listDetails6 = document.createElement('td');
 					let listDetails7 = document.createElement('td');
+					let listDetails8 = document.createElement('td');
 					projectListing.id = 'project' + json[k].id;
 					projectListing.onclick = function() {
 						navigateTo(projectListing);
@@ -10204,7 +10213,8 @@ function filterProjects (filter) {
 					}
 					listDetails1.innerHTML = json[k].McsNumber;
 					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails7.innerHTML = json[k].projectManagers.name;		
+					listDetails7.innerHTML = json[k].projectManagers.name;
+					listDetails8.innerHTML = json[k].keyStatus;
 					
 					if(json[k].mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
 					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
@@ -10230,6 +10240,7 @@ function filterProjects (filter) {
 					$(projectListing).append(listDetails5);
 					$(projectListing).append(listDetails6);
 					$(projectListing).append(listDetails7);
+					$(projectListing).append(listDetails8);
 					$('#results > tbody').append(projectListing);
 				}
 			}
