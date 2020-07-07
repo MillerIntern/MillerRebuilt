@@ -1521,11 +1521,11 @@ public class ProjectNewRuleService {
 			
 
 			//COSTCO CLOSEOUT SIGNOFF FORM 			
-			if(costcoCloseoutFormStatus!=null && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus", "Costco Closeout SignOff Form status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(costcoCloseoutFormStatus!=null && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus", "Costco Closeout SignOff Form status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1548,11 +1548,11 @@ public class ProjectNewRuleService {
 			
 			
 			//PUNCH LIST	
-			if(punchListStatus!=null && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(punchListStatus!=null && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1574,11 +1574,11 @@ public class ProjectNewRuleService {
 			
 			
 			//AS-BUILT DRAWINGS
-			if(asBuiltDrawingStatus!=null && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As Built Drawing status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(asBuiltDrawingStatus!=null && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As Built Drawing status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1600,11 +1600,11 @@ public class ProjectNewRuleService {
 			
 			
 			//CLOSEOUT PHOTOS
-			if(closeOutPhotosStatus!=null && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Close Out photo Drawing status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(closeOutPhotosStatus!=null && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Closeout photos status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1626,11 +1626,11 @@ public class ProjectNewRuleService {
 			
 			
 			//HVAC STARTUP FORM
-			if(hvacStartUpFormStatus!=null && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(hvacStartUpFormStatus!=null && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1651,11 +1651,11 @@ public class ProjectNewRuleService {
 			
 			
 			//VERISAE REPORT
-			if(verisaeReportStatus!=null && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(verisaeReportStatus!=null && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
@@ -1676,11 +1676,11 @@ public class ProjectNewRuleService {
 			
 			
 			//ALARM FORM
-			if(alarmFormStatus!=null && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated -Documents", closeoutColorCode);
-				scoreYellow = true;
-				al.add(rd);
-			}
+//			if(alarmFormStatus!=null && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated -Documents", closeoutColorCode);
+//				scoreYellow = true;
+//				al.add(rd);
+//			}
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 

@@ -42,7 +42,8 @@ $(document).ready(function()
 			$('.projectObjectDropdowns').hide();
 
 			$('.makeChanges').click( function() {
-				makeChanges();
+				console.log("This is Disabling the buttons in tools earlier");
+//				makeChanges();
 			});
 		
 			attachEventHandlersToDuplicateSelects();
@@ -2589,7 +2590,7 @@ function matchProjectObject(selectedId , _tabId)
 
 function makeChanges()
 {
-	
+	console.log("in makeChanges()");
 	$('.makeChanges').attr('disabled' , 'true');
 	$('.makeChanges').off('click');
 	
