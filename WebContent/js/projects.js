@@ -9604,13 +9604,25 @@ function clearAndAddSingleRow(msg) {
 	let placeHolder = document.createElement('tr');
 	let listDetails0 = document.createElement('td');
 	let listDetails1 = document.createElement('td');
-	let listDetails2 = document.createElement('td');	
+	let listDetails2 = document.createElement('td');
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
+	let listDetails8 = document.createElement('td');
 	
 	listDetails0.innerHTML = msg;
 	
 	$(placeHolder).append(listDetails0);
 	$(placeHolder).append(listDetails1);
 	$(placeHolder).append(listDetails2);
+	$(placeHolder).append(listDetails3);
+	$(placeHolder).append(listDetails4);
+	$(placeHolder).append(listDetails5);
+	$(placeHolder).append(listDetails6);
+	$(placeHolder).append(listDetails7);
+	$(placeHolder).append(listDetails8);
 	
 	$('#results > tbody').append(placeHolder);
 }

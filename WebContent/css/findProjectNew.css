@@ -50,12 +50,12 @@
 }
 
 #findProject .table > tbody > tr > th {
-	font-size: 20px;
+	font-size: 16px;
 	border-bottom: 2px solid #333;
 }
 
 #findProject .table > tbody > tr > td {
-	font-size: 16px;
+	font-size: 14px;
 	border-bottom: 2px solid #555;
 }
 
