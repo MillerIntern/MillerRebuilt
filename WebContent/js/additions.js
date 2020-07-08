@@ -13,7 +13,6 @@ let CURRENT_INTENT = {
 		INTENT : 1,
 }
 
-
 $(document).ready(function()
 {
 	$('ul.tabs li').click(function()
@@ -91,6 +90,38 @@ $(document).ready(function()
 //   getMasterScopes();
 //});
 
+$(document).ready(function(){
+	prepareCustomerModal();
+});
+
+function prepareCustomerModal(){
+	//Get DOM Elements
+	const Customermodal = document.querySelector('#customer-modal');
+	const CustomerModalBtn = document.querySelector('#editCustomerModalButton');
+	const CustomerCloseBtn = document.querySelector('#closeEditCustomerModal');
+
+	// Events
+	CustomerModalBtn.addEventListener('click', openModal);
+	CustomerCloseBtn.addEventListener('click', closeModal);
+	window.addEventListener('click', outsideClick);
+
+	// Open
+	function openModal() {
+		Customermodal.style.display = 'block';
+	}
+
+	// Close
+	function closeModal() {
+		Customermodal.style.display = 'none';
+	}
+
+	// Close If Outside Click
+	function outsideClick(e) {
+	  if (e.target == Customermodal) {
+		  Customermodal.style.display = 'none';
+	  }
+	}
+}
 
 function getMasterScopes()
 {
@@ -189,7 +220,7 @@ function preparePage() {
 	});
 }
 
-function getCustomers () {
+function getCustomers() {
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -202,6 +233,7 @@ function getCustomers () {
 				console.log("CUSTOMERS = ",customers);
 				fillCustomerDropdown(customers);
 				fillLocationCustomerDropdown(customers);
+				fillEditCustomerDropdown(customers);
 			}
 		}
 		
@@ -210,6 +242,7 @@ function getCustomers () {
 
 
 function fillCustomerDropdown(customers){
+	console.log("filling customer dropdown");
 	$('#customerDropdown').find('option').remove();
 	
 	customers.sort(function(a,b){
@@ -225,16 +258,17 @@ function fillCustomerDropdown(customers){
 	
 	for(var i = 0; i < customers.length; i++) 
 	{
+		console.log("Adding the option: ", customers[i].name);
 		let option = document.createElement('option');
 		option.text = customers[i].name;
 		option.value = customers[i].id;
 		$('#customerDropdown').append(option);
 		
-		option = document.createElement('option');
-		option.text = customers[i].name;
-		option.value = customers[i].id;
+//		option = document.createElement('option');
+//		option.text = customers[i].name;
+//		option.value = customers[i].id;
 	}
-	
+//	$('#customerDropdown').selectmenu().selectmenu('refresh', true);
 	$('#customerDropdown').chosen({width : '200px'});
 
 }
@@ -268,7 +302,35 @@ function fillLocationCustomerDropdown(customers){
 	$('#locationCustomerDropdown').chosen({width : '200px'});
 
 }
+function fillEditCustomerDropdown(customers){
+	$('#editCustomerDropdown').find('option').remove();
+	
+	customers.sort(function(a,b){
+		if(!a.name) return -1;
+		if(!b.name) return 1;
+		
+		if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	
+	for(var i = 0; i < customers.length; i++) 
+	{
+		let option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+		$('#editCustomerDropdown').append(option);
+		
+		option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+	}
+	
+	$('#editCustomerDropdown').chosen({width : '200px'});
 
+}
 
 function getStates()
 {
@@ -2792,5 +2854,35 @@ function getWarehouses(){
 //			//getSearchCriteria();
 		}
 	});
+}
+
+function editCustomer(){
+	var oldCustomerId = document.getElementById("editCustomerDropdown").value;
+	var newCustomerName = document.getElementById("editCustomerName").value;
+	if(newCustomerName != ''){
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'editCustomer',
+				'oldCustomerId' : oldCustomerId,
+				'newCustomerName' : newCustomerName
+			}, complete: function (response) {
+				alert("Customer Updated Succesfully");
+				
+				//Write the code to update the list then and there rather than refreshing
+//				getCustomers();
+				location.reload();											
+//				$("li[data-tab = 'warehouse']").trigger('click');
+				
+				
+				console.log("RESPONSE FROM editCustomer() = ", response);			
+			}
+		});
+	}
+	else{
+		alert("Please provide a valid Customer Name");
+	}
 }
 

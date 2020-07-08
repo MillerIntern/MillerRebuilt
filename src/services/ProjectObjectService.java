@@ -45,6 +45,7 @@ import projectObjects.Status;
 import projectObjects.Task;
 import projectObjects.ChangeOrder;
 import projectObjects.CostEstimate;
+import projectObjects.Customer;
 
 import java.util.Set;
 
@@ -1541,6 +1542,20 @@ public class ProjectObjectService
 		}
 		
 		return "";
+	}
+	
+	public synchronized static void editCustomer(Map<String, String> params) throws ClassNotFoundException, NonUniqueObjectException
+	{
+		String customerId = params.get("oldCustomerId");
+		String newCustomerName = params.get("newCustomerName");
+		//Get session and start transaction
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		Customer customer = session.load(Customer.class, Long.parseLong(customerId));
+		customer.setName(newCustomerName);
+		session.update(customer);
+		tx.commit();
 	}
 }
 

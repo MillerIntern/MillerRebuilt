@@ -129,7 +129,34 @@
 				<td><input style="width: 300px" id="customerName" type="text"></td>
 			</tr>		
 		</table>
-		<button class = "btn btn-primary makeChanges" onclick="createCustomer()">Create New Customer</button>		
+		<button class = "btn btn-primary makeChanges" onclick="createCustomer()">Create New Customer</button>	
+		<button id = "editCustomerModalButton" class = "btn btn-primary editButton">Edit Customer</button>
+	  	<div id="customer-modal" class="new-modal">
+		    <div class="new-modal-content">
+		      <div class="new-modal-header">
+		        <span id = "closeEditCustomerModal" class="close">&times;</span>
+		        Edit Customer
+		      </div>
+		      <div class="new-modal-body">
+				<table>
+					<tr>
+						<td style="width: 35.55%; font-size:16px">Customer:</td>
+						<td>
+							<select id = "editCustomerDropdown" >
+						    </select> 
+						</td>
+					</tr>
+						
+					<tr>
+						<td>New Name: </td>        					
+						<td><input id="editCustomerName" type="text"></td>
+					</tr>		
+				</table>
+				<button class = "btn btn-primary editButton" onclick="editCustomer()">Save New Changes</button>	
+		      </div>
+
+		    </div>
+	  </div>
 	</div>
 	
 	<div style="width: 55%" id="warehouse" class="tab-content editable">
