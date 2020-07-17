@@ -782,7 +782,212 @@ public class ProjectNewRuleService {
 			
 			if(proj.getAutofillPermits()!=null && proj.getAutofillPermits().equals("1")) {
 				
-
+				/*
+				 * LATEST RULES 07/16/2020
+				 * akashgurram18@gmail.com
+				 * To-do -> Disable all the other old rules in permits and inspections
+				 * 
+				 */
+				
+				Date scheduledStartDate = proj.getScheduledStartDate();
+				Date scheduledTurnoverDate = proj.getScheduledTurnover();
+				Date actualTurnoverDate = proj.getActualTurnover();
+				
+				
+				/* 
+				 * Permit Rules for 1st Timeline --> Scheduled Start Date has passed but not the Actual Turnover Date
+				 */
+				
+				
+				if((scheduledStartDate != null && scheduledStartDate.before(today)) && !(actualTurnoverDate != null && actualTurnoverDate.before(today))) {
+					
+					String permitsToBeIssued = "";
+					if((buildingPermitRequired != null) && (buildingPermitRequired.equals("1"))
+							&& (buildingPermitStatus!= null && !(buildingPermitStatus.equals("Issued") || buildingPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Building, ";
+					}
+					
+					if((ceilingPermitRequired != null) && (ceilingPermitRequired.equals("1"))
+							&& (ceilingPermitStatus!= null && !(ceilingPermitStatus.equals("Issued") || ceilingPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Ceiling, ";
+					}
+					
+					if((mechanicalPermitRequired != null) && (mechanicalPermitRequired.equals("1"))
+							&& (mechanicalPermitStatus!= null && !(mechanicalPermitStatus.equals("Issued") || mechanicalPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Mechanical, ";
+					}
+					
+					if((electricalPermitRequired != null) && (electricalPermitRequired.equals("1"))
+							&& (electricalPermitStatus!= null && !(electricalPermitStatus.equals("Issued") || electricalPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Electrical, ";
+					}
+					
+					if((plumbingPermitRequired != null) && (plumbingPermitRequired.equals("1"))
+							&& (plumbingPermitStatus!= null && !(plumbingPermitStatus.equals("Issued") || plumbingPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Plumbing, ";
+					}
+					
+					if((gasPermitRequired != null) && (gasPermitRequired.equals("1"))
+							&& (gasPermitStatus!= null && !(gasPermitStatus.equals("Issued") || gasPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Gas, ";
+					}
+					
+					if((sprinklerPermitRequired != null) && (sprinklerPermitRequired.equals("1"))
+							&& (sprinklerPermitStatus!= null && !(sprinklerPermitStatus.equals("Issued") || sprinklerPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Sprinkler, ";
+					}
+					
+					if((fireAlarmPermitRequired != null) && (fireAlarmPermitRequired.equals("1"))
+							&& (fireAlarmPermitStatus!= null && !(fireAlarmPermitStatus.equals("Issued") || fireAlarmPermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Fire Alarm, ";
+					}
+					
+					if((lowVoltagePermitRequired != null) && (lowVoltagePermitRequired.equals("1"))
+							&& (lowVoltagePermitStatus!= null && !(lowVoltagePermitStatus.equals("Issued") || lowVoltagePermitStatus.equals("Closed")))) {
+						permitsToBeIssued += "Low Voltage, ";
+					}
+					
+					if(!permitsToBeIssued.equals("")) {
+						String result = null;
+						if ((permitsToBeIssued != null) && (permitsToBeIssued.length() > 0)) {
+						      result = permitsToBeIssued.substring(0, permitsToBeIssued.length() - 2);
+						   }
+						
+						RuleDetails rd = new RuleDetails("Permits", "permitsToBeIssued", "Following Permits need to be Issued - "+result, 1);
+						scoreRed = true;
+						al.add(rd);
+					}
+					
+				}
+				
+				
+				/* 
+				 * Permit Rules for 2nd Timeline --> Actual Turnover Date has passed
+				 */
+				if( actualTurnoverDate != null && actualTurnoverDate.before(today)) {
+					
+					String permitsToBeClosed = "";
+					if((buildingPermitRequired != null) && (buildingPermitRequired.equals("1"))
+							&& (buildingPermitStatus!= null && !(buildingPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Building, ";
+					}
+					
+					if((ceilingPermitRequired != null) && (ceilingPermitRequired.equals("1"))
+							&& (ceilingPermitStatus!= null && !(ceilingPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Ceiling, ";
+					}
+					
+					if((mechanicalPermitRequired != null) && (mechanicalPermitRequired.equals("1"))
+							&& (mechanicalPermitStatus!= null && !(mechanicalPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Mechanical, ";
+					}
+					
+					if((electricalPermitRequired != null) && (electricalPermitRequired.equals("1"))
+							&& (electricalPermitStatus!= null && !(electricalPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Electrical, ";
+					}
+					
+					if((plumbingPermitRequired != null) && (plumbingPermitRequired.equals("1"))
+							&& (plumbingPermitStatus!= null && !(plumbingPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Plumbing, ";
+					}
+					
+					if((gasPermitRequired != null) && (gasPermitRequired.equals("1"))
+							&& (gasPermitStatus!= null && !(gasPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Gas, ";
+					}
+					
+					if((sprinklerPermitRequired != null) && (sprinklerPermitRequired.equals("1"))
+							&& (sprinklerPermitStatus!= null && !(sprinklerPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Sprinkler, ";
+					}
+					
+					if((fireAlarmPermitRequired != null) && (fireAlarmPermitRequired.equals("1"))
+							&& (fireAlarmPermitStatus!= null && !(fireAlarmPermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Fire Alarm, ";
+					}
+					
+					if((lowVoltagePermitRequired != null) && (lowVoltagePermitRequired.equals("1"))
+							&& (lowVoltagePermitStatus!= null && !(lowVoltagePermitStatus.equals("Closed")))) {
+						permitsToBeClosed += "Low Voltage, ";
+					}
+					
+					if(!permitsToBeClosed.equals("")) {
+						String result = null;
+						if ((permitsToBeClosed != null) && (permitsToBeClosed.length() > 0)) {
+						      result = permitsToBeClosed.substring(0, permitsToBeClosed.length() - 2);
+						   }
+						
+						RuleDetails rd = new RuleDetails("Permits", "permitsToBeClosed", "Following Permits need to be Closed - "+result, 1);
+						scoreRed = true;
+						al.add(rd);
+					}
+					
+				}
+				
+				/* 
+				 * Inspection Rules  --> Scheduled Turnover Date has passed
+				 */
+				if( scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
+					
+					String inspectionsToBeClosed = "";
+					if((buildingInspectionRequired != null) && (buildingInspectionRequired.equals("1"))
+							&& (buildingInspectionStatus!= null && !(buildingInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Building, ";
+					}
+					
+					if((ceilingInspectionRequired != null) && (ceilingInspectionRequired.equals("1"))
+							&& (ceilingInspectionStatus!= null && !(ceilingInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Ceiling, ";
+					}
+					
+					if((mechanicalInspectionRequired != null) && (mechanicalInspectionRequired.equals("1"))
+							&& (mechanicalInspectionStatus!= null && !(mechanicalInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Mechanical, ";
+					}
+					
+					if((electricalInspectionRequired != null) && (electricalInspectionRequired.equals("1"))
+							&& (electricalInspectionStatus!= null && !(electricalInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Electrical, ";
+					}
+					
+					if((plumbingInspectionRequired != null) && (plumbingInspectionRequired.equals("1"))
+							&& (plumbingInspectionStatus!= null && !(plumbingInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Plumbing, ";
+					}
+					
+					if((gasInspectionRequired != null) && (gasInspectionRequired.equals("1"))
+							&& (gasInspectionStatus!= null && !(gasInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Gas, ";
+					}
+					
+					if((sprinklerInspectionRequired != null) && (sprinklerInspectionRequired.equals("1"))
+							&& (sprinklerInspectionStatus!= null && !(sprinklerInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Sprinkler, ";
+					}
+					
+					if((fireAlarmInspectionRequired != null) && (fireAlarmInspectionRequired.equals("1"))
+							&& (fireAlarmInspectionStatus!= null && !(fireAlarmInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Fire Alarm, ";
+					}
+					
+					if((lowVoltageInspectionRequired != null) && (lowVoltageInspectionRequired.equals("1"))
+							&& (lowVoltageInspectionStatus!= null && !(lowVoltageInspectionStatus.equals("Passed")))) {
+						inspectionsToBeClosed += "Low Voltage, ";
+					}
+					
+					if(!inspectionsToBeClosed.equals("")) {
+						String result = null;
+						if ((inspectionsToBeClosed != null) && (inspectionsToBeClosed.length() > 0)) {
+						      result = inspectionsToBeClosed.substring(0, inspectionsToBeClosed.length() - 2);
+						   }
+						
+						RuleDetails rd = new RuleDetails("Permits", "inspectionsToBeClosed", "Following Inspections need to be Scheduled and Passed - "+result, 1);
+						scoreRed = true;
+						al.add(rd);
+					}
+					
+				}
 				
 			
 			}
