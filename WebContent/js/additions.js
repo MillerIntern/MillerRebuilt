@@ -40,9 +40,8 @@ $(document).ready(function()
 			$('.removeButton').hide();
 			$('.projectObjectDropdowns').hide();
 
-			$('.makeChanges').click( function() {
-				console.log("This is Disabling the buttons in tools earlier");
-//				makeChanges();
+			$('.makeChanges').click( function() {				
+				makeChanges();
 			});
 		
 			attachEventHandlersToDuplicateSelects();
@@ -384,6 +383,7 @@ function createCustomer(){
 				console.log(data);
 				$('#customerName').val('');
 				alert("Customer Added Successfully!");
+				location.reload();
 			}
 		});
 	else{
@@ -2653,8 +2653,8 @@ function matchProjectObject(selectedId , _tabId)
 function makeChanges()
 {
 	console.log("in makeChanges()");
-	$('.makeChanges').attr('disabled' , 'true');
-	$('.makeChanges').off('click');
+//	$('.makeChanges').attr('disabled' , 'true');
+//	$('.makeChanges').off('click');
 	
 	let currentTabId = $('.tab-content.current').attr('id');
 			

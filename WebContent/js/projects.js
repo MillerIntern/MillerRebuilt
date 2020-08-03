@@ -3390,6 +3390,8 @@ $(document).ready(function()
 	
 	$('#projectData').find("#initiatedDate").datepicker();
 	$('#projectData').find("#surveyDate").datepicker();
+	$('#projectData').find("#proposalScopeDate").datepicker();
+	$('#projectData').find("#draftScheduleDate").datepicker();
 	$('#projectData').find("#proposalDueDate").datepicker();
 	$('#projectData').find("#budgetaryDueDate").datepicker();
 	$('#projectData').find("#budgetarySubmittedDate").datepicker();
@@ -3757,6 +3759,8 @@ function saveProject_PROJECT_DATA() {
 	var survey = $('#projectData').find("#surveyDate").val();
 	var budgetaryDue = $('#projectData').find("#budgetaryDueDate").val();
 	var budgetarySubmitted = $('#projectData').find("#budgetarySubmittedDate").val();
+	var proposalScopeDate = $('#projectData').find("#proposalScopeDate").val();
+	var draftScheduleDate = $('#projectData').find("#draftScheduleDate").val();
 	var costco = $('#projectData').find("#proposalDueDate").val();
 	var proposalDate = $('#projectData').find("#proposalDate_pd").val();
 	var startDate = $('#projectData').find("#startDate").val();
@@ -3840,6 +3844,8 @@ function saveProject_PROJECT_DATA() {
 				
 				'initiated': initiated,
 				'survey': survey,
+				'proposalScopeDate': proposalScopeDate,
+				'draftScheduleDate': draftScheduleDate,
 				'costco': costco,
 				'proposalDate': proposalDate,
 				'startDate': startDate,
@@ -4162,6 +4168,8 @@ function fillForm_PROJECT_DATA(data)
 	
 	$('#projectData').find("#initiatedDate").val(json.projectInitiatedDate);
 	$('#projectData').find("#surveyDate").val(json.siteSurvey);
+	$('#projectData').find("#proposalScopeDate").val(json.proposalScopeDate);
+	$('#projectData').find("#draftScheduleDate").val(json.draftScheduleDate);
 	$('#projectData').find("#budgetaryDueDate").val(json.budgetaryDue);
 	$('#projectData').find("#budgetarySubmittedDate").val(json.budgetarySubmitted);
 	$('#projectData').find("#proposalDueDate").val(json.proposalDue);

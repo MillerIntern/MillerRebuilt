@@ -161,7 +161,7 @@
 
 			   <br id="sortSpace">
 
-			   	<p id="sortProjects"><b>Sort By:</b>
+			   	<p style="float:left" id="sortProjects"><b>Sort By:</b>
 	       		<select class = "pointer" id = "sortProjectsValue" onChange="sortTable(this.value)">
 	       		<option value = "-1">-- Select an option --</option>
 	   			<option value = "0">Warehouse</option>
@@ -173,9 +173,16 @@
 	   			<option value = "4">Status</option>
 	   			</select>
 	   			</p>
+	   			
+	   			<p style = "padding-left: 250px;" id="dashboardView"><b>View:</b>
+	   			<select class = "pointer" id ="dashboardViewValue">
+		   			<option value = "0">Project</option>
+		   			<option value = "1">Proposal</option>
+	   			</select>
 			   </div>
 
 	   		<br>
+	   	
 
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
@@ -1847,13 +1854,20 @@
 		        <td><input type="text" id="budgetarySubmittedDate" placeholder="Select a Date"/></td>
 		        </tr>
 		        
+          		<tr>
+		        <td class = "bold">Proposal Scope Date</td>
+		        <td style="text-align: center"><input type="text" id="proposalScopeDate" placeholder="Select a Date"/></td>
+		        <td class = "bold">Draft Schedule Date</td>
+		        <td><input type="text" id="draftScheduleDate" placeholder="Select a Date"/></td>
+		        </tr>	
+		        
 		        <tr>
 		        <td class = "bold">Proposal Due Date</td>
 		        <td style="text-align: center"><input type="text" id="proposalDueDate" placeholder="Select a Date"/></td>
 		        <td class = "bold">Proposal Submitted Date</td>
 		        <td><input type="text" id="proposalDate_pd" placeholder="Select a Date"/></td>
 		        </tr>	
-		
+		   
 		        <tr>
 		        <td class = "bold">Scheduled Start Date</td>
 		        <td style="text-align: center"><input type="text" id="startDate" placeholder="Select a Date"/></td>
@@ -1862,7 +1876,7 @@
 		        </tr>
 		        
 		        <tr style="border-bottom: none">
-		        <td style="border-right: none; border-bottom: none"></td>
+ 		        <td style="border-right: none; border-bottom: none"></td>
 		        <td style="border-left: none"></td>
 		        <td class = "bold">Actual Turnover</td>
 		        <td><input type="text" id="actualTurnover" placeholder="Select a Date"/></td>

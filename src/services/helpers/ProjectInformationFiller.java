@@ -78,6 +78,16 @@ public class ProjectInformationFiller {
 		if (!(params.get("survey")).isEmpty())
 			fsurvey = formatter.parse(params.get("survey"));
 		currentProject.setSiteSurvey(fsurvey);
+		
+		Date proposalScopeDate = null;
+		if (!(params.get("proposalScopeDate")).isEmpty())
+			proposalScopeDate = formatter.parse(params.get("proposalScopeDate"));
+		currentProject.setProposalScopeDate(proposalScopeDate);
+		
+		Date draftScheduleDate = null;
+		if (!(params.get("draftScheduleDate")).isEmpty())
+			draftScheduleDate = formatter.parse(params.get("draftScheduleDate"));
+		currentProject.setDraftScheduleDate(draftScheduleDate);
 
 		Date fcostco = null;
 		if (!(params.get("costco")).isEmpty())

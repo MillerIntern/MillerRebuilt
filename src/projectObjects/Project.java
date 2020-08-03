@@ -43,6 +43,8 @@ public class Project extends ProjectObject
 	private Date siteSurvey;
 	private Date budgetaryDue;
 	private Date budgetarySubmitted;
+	private Date proposalScopeDate;
+	private Date draftScheduleDate;
 	private Date proposalDue;
 	private Date proposalSubmitted;
 	private CloseoutDetails closeoutDetails;
@@ -197,7 +199,7 @@ public class Project extends ProjectObject
 			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
-            String autofill_Permits, int _low, int _med, int _high, Date _scoreLast)
+            String autofill_Permits, int _low, int _med, int _high, Date _scoreLast, Date proposalScopeDate,Date draftScheduleDate)
 //		   	String numAndStage, String permEval,
 //            String _hvac, String refrig, String permitsTbd, String stageStatus, String proj, String _lateProposal, 
 //            String _lateBudgetary, String _lateTurnover, String _emptyInitiation, String _earlierSchedTurnover,
@@ -264,6 +266,9 @@ public class Project extends ProjectObject
 		this.mediumScore = _med;
 		this.highScore = _high;
 		this.scoreLastUpdated = _scoreLast; 
+		
+		this.proposalScopeDate = proposalScopeDate;
+		this.draftScheduleDate = draftScheduleDate;
 		
 //		this.mcsNumberAndStage = numAndStage;
 //		this.permitsEval = permEval;
@@ -415,6 +420,8 @@ public class Project extends ProjectObject
 		this.mediumScore = 0;
 		this.highScore = 0;
 		this.scoreLastUpdated = null;
+		this.proposalScopeDate = null;
+		this.draftScheduleDate = null;
 		
 //		this.mcsNumberAndStage = null;
 //		this.permitsEval = null;
@@ -647,6 +654,22 @@ public class Project extends ProjectObject
 
 	public synchronized void setSiteSurvey(Date siteSurvey) {
 		this.siteSurvey = siteSurvey;
+	}
+	
+	public synchronized Date getProposalScopeDate() {
+		return proposalScopeDate;
+	}
+
+	public synchronized void setProposalScopeDate(Date proposalScopeDate) {
+		this.proposalScopeDate = proposalScopeDate;
+	}
+
+	public synchronized Date getDraftScheduleDate() {
+		return draftScheduleDate;
+	}
+
+	public synchronized void setDraftScheduleDate(Date draftScheduleDate) {
+		this.draftScheduleDate = draftScheduleDate;
 	}
 
 	public synchronized Date getProposalDue() {
