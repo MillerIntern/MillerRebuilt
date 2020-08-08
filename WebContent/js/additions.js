@@ -91,6 +91,7 @@ $(document).ready(function()
 
 $(document).ready(function(){
 	prepareCustomerModal();
+	prepareLocationModal();
 });
 
 function prepareCustomerModal(){
@@ -118,6 +119,35 @@ function prepareCustomerModal(){
 	function outsideClick(e) {
 	  if (e.target == Customermodal) {
 		  Customermodal.style.display = 'none';
+	  }
+	}
+}
+
+function prepareLocationModal(){
+	//Get DOM Elements
+	const Locationmodal = document.querySelector('#location-modal');
+	const LocationModalBtn = document.querySelector('#editLocationModalButton');
+	const LocationCloseBtn = document.querySelector('#closeEditLocationModal');
+
+	// Events
+	LocationModalBtn.addEventListener('click', openModal);
+	LocationCloseBtn.addEventListener('click', closeModal);
+	window.addEventListener('click', outsideClick);
+
+	// Open
+	function openModal() {
+		Locationmodal.style.display = 'block';
+	}
+
+	// Close
+	function closeModal() {
+		Locationmodal.style.display = 'none';
+	}
+
+	// Close If Outside Click
+	function outsideClick(e) {
+	  if (e.target == Locationmodal) {
+		  Locationmodal.style.display = 'none';
 	  }
 	}
 }
@@ -210,6 +240,7 @@ function preparePage() {
 		      }
 		      getUsers();
 		      getCustomers();
+		      getWarehouses();
 			} else {
 				console.log("GetUserData() RESPONSE = ",data);
 				alert('Server Failure!');
@@ -2833,8 +2864,7 @@ function gettingTheFinalColors(project){
 	
 }
 
-function getWarehouses(){	
-	$('#warehouse').hide();	
+function getWarehouses(){		
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -2844,17 +2874,43 @@ function getWarehouses(){
 		}, success: function (data) {
 			warehouses = data;		
 			console.log("WH",warehouses);
-//			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
-//			establishRetrievedProjects();
-//			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
-//			$('.projectNavigator-projectFinder').show();
-//			t1 = new Date().getTime();
-//			console.log('took: ' + (t1 - t0) + 'ms');
-//			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
-//			//getSearchCriteria();
+			fillEditLocationDropdown(warehouses);
+
 		}
 	});
 }
+
+function fillEditLocationDropdown(warehouses){
+	$('#editLocationDropdown').find('option').remove();
+	
+	warehouses.sort(function(a,b){
+		if(!a.city.name) return -1;
+		if(!b.city.name) return 1;
+		
+		if(a.city.name.toLowerCase() < b.city.name.toLowerCase()) return -1;
+		if(a.city.name.toLowerCase() > b.city.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	
+	for(var i = 0; i < warehouses.length; i++) 
+	{
+		let option = document.createElement('option');
+		option.text = warehouses[i].city.name;
+		option.value = warehouses[i].city.id;
+		option.setAttribute('warehouseId', warehouses[i].id);
+		$('#editLocationDropdown').append(option);
+		
+		option = document.createElement('option');
+		option.text = warehouses[i].city.name;
+		option.value = warehouses[i].city.id;
+		option.setAttribute('warehouseId', warehouses[i].id);
+	}
+	
+	$('#editLocationDropdown').chosen({width : '200px'});
+}
+
 
 function editCustomer(){
 	var oldCustomerId = document.getElementById("editCustomerDropdown").value;
@@ -2886,3 +2942,21 @@ function editCustomer(){
 	}
 }
 
+
+function editLocation(){
+	
+	var oldLocationValue = document.getElementById("editLocationDropdown");
+	var oldLocationSelected = oldLocationValue.options[oldLocationValue.selectedIndex];
+	
+	var oldLocationCityId = document.getElementById("editLocationDropdown").value;
+	var oldLocationWarehouseId = oldLocationSelected.getAttribute('warehouseId');	
+	
+	/*
+	 * I am able to fetch the warehouse id and the city id.
+	 * To do:
+	 * After the design and architecture is finalized, try to include
+	 * 1. onchange option, autofill other values
+	 * */
+//	alert(oldLocationCityId);
+//	alert(oldLocationWarehouseId);
+}

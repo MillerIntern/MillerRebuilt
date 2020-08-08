@@ -204,7 +204,34 @@
 			</tr>
 		</table>
 		<button class = "btn btn-primary makeChanges" onclick="createWarehouse()">Create New Location</button>	
-		<button class = "btn btn-primary editButton" disabled onclick = "getWarehouses()">Edit Location</button>		
+		<button id = "editLocationModalButton" disabled class = "btn btn-primary editButton">Edit Location</button>	
+		<div id="location-modal" class="new-modal">
+		    <div class="new-modal-content">
+		      <div class="new-modal-header">
+		        <span id = "closeEditLocationModal" class="close">&times;</span>
+		        Edit Location
+		      </div>
+		      <div class="new-modal-body">
+				<table>
+					<tr>
+						<td style="width: 35.55%; font-size:16px">Location:</td>
+						<td>
+							<select id = "editLocationDropdown" >
+						    </select> 
+						</td>
+					</tr>
+						
+					<tr>
+						<td>New Name: </td>        					
+						<td><input id="editLocationName" type="text"></td>
+					</tr>		
+				</table>
+				<button class = "btn btn-primary editButton" onclick="editLocation()">Save New Changes</button>	
+		      </div>
+
+		    </div>
+	  </div>
+			
 	</div>
 	<div style="width: 54%" id="item" class="tab-content editable">
 		<table>
