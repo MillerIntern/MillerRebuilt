@@ -226,7 +226,7 @@ var PROJECT_DATA_EQUIP;
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
 	
-
+	generateViewTableHeaders();
 	
 	$('#closeoutData').find('.nav-tabs > li').click(function () {
 		if($(this).attr('id') !== 'save-closeout' && $(this).attr('id') !== 'backToFailedRulesCloseOut' ) {
@@ -303,6 +303,35 @@ $(document).ready(function(){
 	
 });
 
+function generateViewTableHeaders(){
+	//Code to remove first row
+	$('#ViewHeaderRow').remove();
+	if($('#dashboardViewValue').val() == 0){		
+		$('#projectTableDiv').find('table tbody').prepend('<tr class="head" id = "ViewHeaderRow"></tr>');
+		var projectTableRow = $('#projectTableDiv').find($('#results tbody').find('#ViewHeaderRow'));
+		projectTableRow.append('<th>Warehouse</th>');
+		projectTableRow.append('<th>MCS #</th>');
+		projectTableRow.append('<th>Item</th>');
+		projectTableRow.append('<th style= "text-align:center">Score</th>');
+		projectTableRow.append('<th>Status</th>');
+		projectTableRow.append('<th>Start Date</th>');
+		projectTableRow.append('<th>End Date</th>');
+		projectTableRow.append('<th>Manager</th>');
+		projectTableRow.append('<th>Key Status</th>');
+	}
+	else{
+		$('#projectTableDiv').find('table tbody').prepend('<tr class="head" id = "ViewHeaderRow"></tr>');
+		var projectTableRow = $('#projectTableDiv').find($('#results tbody').find('#ViewHeaderRow'));
+		projectTableRow.append('<th>Warehouse</th>');
+		projectTableRow.append('<th>MCS #</th>');
+		projectTableRow.append('<th>Item</th>');
+		projectTableRow.append('<th>Manager</th>');
+		projectTableRow.append('<th>Scope Date</th>');
+		projectTableRow.append('<th>Draft Schedule Date</th>');
+		projectTableRow.append('<th>Due Date</th>');		
+		projectTableRow.append('<th>Key Status</th>');
+	}
+}
 
 
 /**
@@ -9477,6 +9506,16 @@ function establishRetrievedProjects()
 		else
 			RETRIEVED_PROJECTS[i].keyStatus = "     ----------     ";		
 		
+		if(RETRIEVED_PROJECTS[i][17]!=null)
+			RETRIEVED_PROJECTS[i].proposalScopeDate = RETRIEVED_PROJECTS[i][17];
+		else
+			RETRIEVED_PROJECTS[i].proposalScopeDate = "Unavailable";
+		
+		if(RETRIEVED_PROJECTS[i][18]!=null)
+			RETRIEVED_PROJECTS[i].draftScheduleDate = RETRIEVED_PROJECTS[i][18];
+		else
+			RETRIEVED_PROJECTS[i].draftScheduleDate = "Unavailable";
+		
 		
 		
 		for(var q = 0; q < 9; q++){
@@ -10130,70 +10169,13 @@ function filterProjects (filter) {
 		}  
 		else {
 			for (var k = json.length-1; k >= 0; k--) {
-				if(json[k] != null) {					
-					let projectListing = document.createElement('tr');
-					let listDetails0 = document.createElement('td');
-					let listDetails1 = document.createElement('td');
-					let listDetails2 = document.createElement('td');
-					let listDetails3 = document.createElement('td');
-					let listDetails4 = document.createElement('td');
-					let listDetails5 = document.createElement('td');
-					let listDetails6 = document.createElement('td');
-					let listDetails7 = document.createElement('td');
-					let listDetails8 = document.createElement('td');
-					
-																
-					projectListing.id = 'project' + json[k].id;
-					projectListing.onclick = function() {
-						navigateTo(projectListing);
+				if(json[k] != null) {		
+					if($('#dashboardViewValue').val() == 0){						
+						fillProjectViewData(json[k]);
 					}
-
-					//if(json[k].warehouse.city.name == "APANA") 
-					if(json[k].warehouse && json[k].warehouse.city && json[k].warehouse.city.name && json[k].warehouse.city.name.includes("APANA")) {
-						listDetails0.innerHTML = json[k].warehouse.city.name + ', ' +
-						json[k].warehouse.region;
+					else if($('#dashboardViewValue').val() == 1){						
+						fillProposalViewData(json[k]);
 					}
-					else {
-						listDetails0.innerHTML = json[k].warehouse.city.name + ' #' +
-											json[k].warehouse.warehouseID;
-					}
-					listDetails1.innerHTML = json[k].McsNumber;
-					listDetails2.innerHTML = json[k].projectItem.name;
-					listDetails7.innerHTML = json[k].projectManagers.name;	
-					listDetails8.innerHTML = json[k].keyStatus;
-					
-					if((json[k].stage.name == "Canceled") || (json[k].stage.name == "On Hold")){
-						listDetails3.setAttribute( 'class', 'circle_onholdcancel' );
-					}
-					else if(json[k].mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
-					else if(json[k].mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
-					 
-					else listDetails3.setAttribute( 'class', 'circle_red' );
-					if(json[k].stage.name == "Active" || json[k].stage.name == "Closed" || json[k].stage.name == "Canceled" || json[k].stage.name == "On Hold"){
-						listDetails5.innerHTML = json[k].scheduledStartDate;
-						listDetails6.innerHTML = json[k].scheduledTurnover;
-					}
-					else if(json[k].stage.name == "Budgetary"){
-						listDetails5.innerHTML = json[k].budgetaryDueDate;
-						listDetails6.innerHTML = json[k].budgetarySubmittedDate;
-					}
-					else if(json[k].stage.name == "Proposal"){
-						listDetails5.innerHTML = json[k].proposalDueDate;
-						listDetails6.innerHTML = json[k].proposalSubmittedDate;
-					}
-					
-					listDetails4.innerHTML = json[k].status['name'];
-					$(projectListing).append(listDetails0);
-					$(projectListing).append(listDetails1);
-					$(projectListing).append(listDetails2);
-					$(projectListing).append(listDetails3);
-					$(projectListing).append(listDetails4);
-					$(projectListing).append(listDetails5);
-					$(projectListing).append(listDetails6);
-					$(projectListing).append(listDetails7);
-					$(projectListing).append(listDetails8);
-					
-					$('#results > tbody').append(projectListing);
 				}
 			}
 		}		
@@ -10208,6 +10190,7 @@ function filterProjects (filter) {
 		} else {
 			for (var k = 0; k < json.length; k++) {
 				if(json[k] != null) {
+					alert("Alert Akash that this is being reachable");					
 					let projectListing = document.createElement('tr');
 					let listDetails0 = document.createElement('td');
 					let listDetails1 = document.createElement('td');
@@ -10266,6 +10249,129 @@ function filterProjects (filter) {
 			}
 		}
 	}
+}
+
+
+function fillProjectViewData(json){
+	let projectListing = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
+	let listDetails8 = document.createElement('td');
+	
+												
+	projectListing.id = 'project' + json.id;
+	projectListing.onclick = function() {
+		navigateTo(projectListing);
+	}
+
+	//if(json[k].warehouse.city.name == "APANA") 
+	if(json.warehouse && json.warehouse.city && json.warehouse.city.name && json.warehouse.city.name.includes("APANA")) {
+		listDetails0.innerHTML = json.warehouse.city.name + ', ' +
+		json.warehouse.region;
+	}
+	else {
+		listDetails0.innerHTML = json.warehouse.city.name + ' #' +
+							json.warehouse.warehouseID;
+	}
+	listDetails1.innerHTML = json.McsNumber;
+	listDetails2.innerHTML = json.projectItem.name;
+	listDetails7.innerHTML = json.projectManagers.name;	
+	listDetails8.innerHTML = json.keyStatus;
+	
+	if((json.stage.name == "Canceled") || (json.stage.name == "On Hold")){
+		listDetails3.setAttribute( 'class', 'circle_onholdcancel' );
+	}
+	else if(json.mediumScore == 0) listDetails3.setAttribute( 'class', 'circle_green' );
+	else if(json.mediumScore == 1) listDetails3.setAttribute( 'class', 'circle_yellow' );
+	 
+	else listDetails3.setAttribute( 'class', 'circle_red' );
+	if(json.stage.name == "Active" || json.stage.name == "Closed" || json.stage.name == "Canceled" || json.stage.name == "On Hold"){
+		listDetails5.innerHTML = json.scheduledStartDate;
+		listDetails6.innerHTML = json.scheduledTurnover;
+	}
+	else if(json.stage.name == "Budgetary"){
+		listDetails5.innerHTML = json.budgetaryDueDate;
+		listDetails6.innerHTML = json.budgetarySubmittedDate;
+	}
+	else if(json.stage.name == "Proposal"){
+		listDetails5.innerHTML = json.proposalDueDate;
+		listDetails6.innerHTML = json.proposalSubmittedDate;
+	}
+	
+	listDetails4.innerHTML = json.status['name'];
+	$(projectListing).append(listDetails0);
+	$(projectListing).append(listDetails1);
+	$(projectListing).append(listDetails2);
+	$(projectListing).append(listDetails3);
+	$(projectListing).append(listDetails4);
+	$(projectListing).append(listDetails5);
+	$(projectListing).append(listDetails6);
+	$(projectListing).append(listDetails7);
+	$(projectListing).append(listDetails8);
+	
+	$('#results > tbody').append(projectListing);
+	
+}
+
+function fillProposalViewData(json){
+	
+	let projectListing = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
+	
+												
+	projectListing.id = 'project' + json.id;
+	projectListing.onclick = function() {
+		navigateTo(projectListing);
+	}
+
+	//if(json[k].warehouse.city.name == "APANA") 
+	if(json.warehouse && json.warehouse.city && json.warehouse.city.name && json.warehouse.city.name.includes("APANA")) {
+		listDetails0.innerHTML = json.warehouse.city.name + ', ' +
+		json.warehouse.region;
+	}
+	else {
+		listDetails0.innerHTML = json.warehouse.city.name + ' #' +
+							json.warehouse.warehouseID;
+	}
+	listDetails1.innerHTML = json.McsNumber;
+	listDetails2.innerHTML = json.projectItem.name;
+	listDetails3.innerHTML = json.projectManagers.name;	
+	listDetails4.innerHTML = json.proposalScopeDate;
+	listDetails5.innerHTML = json.draftScheduleDate;
+	
+
+	 
+
+
+	listDetails6.innerHTML = json.proposalDueDate;	
+	listDetails7.innerHTML = json.keyStatus;
+	
+	$(projectListing).append(listDetails0);
+	$(projectListing).append(listDetails1);
+	$(projectListing).append(listDetails2);
+	$(projectListing).append(listDetails3);
+	$(projectListing).append(listDetails4);
+	$(projectListing).append(listDetails5);
+	$(projectListing).append(listDetails6);	
+	$(projectListing).append(listDetails7);
+	
+	$('#results > tbody').append(projectListing);
+	
+
+	
 }
 
 
@@ -12417,7 +12523,7 @@ function refreshProjects(){
 			'action': 'getAllProjects'
 		}, success: function (data) {
 			projects = data;		
-			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);			
 			establishRetrievedProjects();
 			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
 			$('.projectNavigator-projectFinder').show();

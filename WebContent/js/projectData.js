@@ -36,6 +36,8 @@ $(document).ready(function()
 	
 	$("#initiatedDate").datepicker();
 	$("#surveyDate").datepicker();
+	$("#proposalScopeDate").datepicker();
+	$("#draftScheduleDate").datepicker();
 	$("#budgetaryDueDate").datepicker();
 	$("#budgetarySubmittedDate").datepicker();
 	$("#proposalDueDate").datepicker();
@@ -344,6 +346,8 @@ function saveProject() {
 	// scheduling
 	var initiated = $("#initiatedDate").val();
 	var survey = $("#surveyDate").val();
+	var proposalScopeDate = $("#proposalScopeDate").val();
+	var draftScheduleDate = $("#draftScheduleDate").val();
 	var budgetaryDue = $("#budgetaryDueDate").val();
 	var budgetarySubmitted = $("#budgetarySubmittedDate").val();
 	var costco = $("#proposalDueDate").val();
@@ -404,7 +408,8 @@ function saveProject() {
 				
 				'initiated': initiated,
 				'survey': survey,
-				
+				'proposalScopeDate': proposalScopeDate,
+				'draftScheduleDate': draftScheduleDate,
 				'costco' : costco, 
 				'proposalDate': proposalDate,
 				'startDate': startDate,

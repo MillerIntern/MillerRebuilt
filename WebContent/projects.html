@@ -175,7 +175,7 @@
 	   			</p>
 	   			
 	   			<p style = "padding-left: 250px;" id="dashboardView"><b>View:</b>
-	   			<select class = "pointer" id ="dashboardViewValue">
+	   			<select class = "pointer" id ="dashboardViewValue" onchange = "generateViewTableHeaders(); filterProjects();">
 		   			<option value = "0">Project</option>
 		   			<option value = "1">Proposal</option>
 	   			</select>
@@ -187,8 +187,8 @@
 	   		
 	   		<div class = "well param-field" id="projectTableDiv">
 	   		<table id="results" class="table table-striped">
-	   			<tr class='head'>
-	   			<th>Warehouse</th>
+	   			<tr class='head' id = "ViewHeaderRow">
+ 	   			<th>Warehouse</th>
 	   			<th>MCS #</th>
 	   			<th>Item</th>
 	   			<th style= "text-align:center">Score</th>
