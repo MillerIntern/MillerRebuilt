@@ -227,7 +227,7 @@ var PROJECT_DATA_EQUIP;
 $(document).ready(function(){
 	
 	generateViewTableHeaders();
-	
+	generateSortOptions("project");
 	$('#closeoutData').find('.nav-tabs > li').click(function () {
 		if($(this).attr('id') !== 'save-closeout' && $(this).attr('id') !== 'backToFailedRulesCloseOut' ) {
 			$('#closeoutData').find('.info-tab').removeClass('active');
@@ -306,7 +306,8 @@ $(document).ready(function(){
 function generateViewTableHeaders(){
 	//Code to remove first row
 	$('#ViewHeaderRow').remove();
-	if($('#dashboardViewValue').val() == 0){		
+	if($('#dashboardViewValue').val() == 0){
+		generateSortOptions("project");
 		$('#projectTableDiv').find('table tbody').prepend('<tr class="head" id = "ViewHeaderRow"></tr>');
 		var projectTableRow = $('#projectTableDiv').find($('#results tbody').find('#ViewHeaderRow'));
 		projectTableRow.append('<th>Warehouse</th>');
@@ -320,6 +321,7 @@ function generateViewTableHeaders(){
 		projectTableRow.append('<th>Key Status</th>');
 	}
 	else{
+		generateSortOptions("proposal");
 		$('#projectTableDiv').find('table tbody').prepend('<tr class="head" id = "ViewHeaderRow"></tr>');
 		var projectTableRow = $('#projectTableDiv').find($('#results tbody').find('#ViewHeaderRow'));
 		projectTableRow.append('<th>Warehouse</th>');
@@ -331,6 +333,49 @@ function generateViewTableHeaders(){
 		projectTableRow.append('<th>Due Date</th>');		
 		projectTableRow.append('<th>Key Status</th>');
 	}
+}
+
+function generateSortOptions(viewName){	
+	//Create the options here for Sort Project 
+	$('#sortProjectsValue').empty();
+	if(viewName == "project"){
+		
+		createSortProjectOption("Warehouse", "0");
+		createSortProjectOption("MCS Number", "1");
+		createSortProjectOption("Item", "2");
+		createSortProjectOption("Manager", "7");
+		createSortProjectOption("Start Date", "5");
+		createSortProjectOption("End Date", "6");
+		createSortProjectOption("Status", "4");		
+	}
+	if(viewName == "proposal"){
+		
+		createSortProjectOption("Warehouse", "0");
+		createSortProjectOption("MCS Number", "1");
+		createSortProjectOption("Item", "2");
+		createSortProjectOption("Manager", "3");
+		createSortProjectOption("Scope Date", "4");
+		createSortProjectOption("Draft Schedule Date", "5");
+		createSortProjectOption("Due Date", "6");		
+	}
+	/*
+		<select class = "pointer" id = "sortProjectsValue" onChange="sortTable(this.value)">
+   		<option value = "-1">-- Select an option --</option>
+			<option value = "0">Warehouse</option>
+			<option value = "1">MCS Number</option>
+			<option value = "2"> Item</option>
+			<option value = "7">Manager</option>
+			<option value = "5">Start Date</option>
+			<option value = "6">End Date</option>
+			<option value = "4">Status</option>*/
+}
+
+function createSortProjectOption(text, value){
+	var sortProjectsDropDown = document.getElementById("sortProjectsValue");
+	var sortOption = document.createElement("option");
+	sortOption.text = text;
+	sortOption.value = value;
+	sortProjectsDropDown.add(sortOption);	
 }
 
 
@@ -11805,106 +11850,156 @@ function preparePage() {
 
 //This is the function that sorts the table of projects based on some criteria 
 function sortTable(n){
-	var table, rows, switching, i, x, y, shouldSwitch;
-	  table = document.getElementById("results");
-	  switching = true;
-	  /*Make a loop that will continue until
-	  no switching has been done:*/
-	  while (switching) {
-		if(n=="-1") break;
-	    //start by saying: no switching is done:
-	    switching = false;
-	    rows = table.rows;
-	    
-	    /*Loop through all table rows (except the
-	    first, which contains table headers):*/
-	    for (i = 1; i < (rows.length - 1); i++) {
-	      //start by saying there should be no switching:
-	      shouldSwitch = false;
-	      /*Get the two elements you want to compare,
-	      one from current row and one from the next:*/
-	      x = rows[i].getElementsByTagName("TD")[n];
-	      y = rows[i + 1].getElementsByTagName("TD")[n];
-	      //check if the two rows should switch place:
-	      if(n == 1){
-	    	  if (Number(x.innerHTML) < Number(y.innerHTML)) {
-	  	        //if so, mark as a switch and break the loop:
-	  	        shouldSwitch = true;
-	  	        break;
-	  	      }
-	      }
-	      else if(n == 5){
-	    	  
-	    	  x=x.innerHTML;
-	    	  y=y.innerHTML;	    	  	    	 
-	    	  if(x!="Unavailable"){
-	    		  var t1 = x.split('/');
-	    	  }
-	    	  else var t1 = [9999,99,99];
-	    	  
-	    	  
-	    	  if(y!="Unavailable"){
-	    		  var t2 = y.split('/');
-	    	  }
-	    	  else var t2 = [9999,99,99];
-	    	  
-	    	  
-	    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
-	    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
-	    	  
-	    	  if ((d1) > (d2)) {
+	//alert($('#dashboardViewValue').val());
+	if($('#dashboardViewValue').val() == "0"){
+		var table, rows, switching, i, x, y, shouldSwitch;
+		  table = document.getElementById("results");
+		  switching = true;
+		  /*Make a loop that will continue until
+		  no switching has been done:*/
+		  while (switching) {
+			if(n=="-1") break;
+		    //start by saying: no switching is done:
+		    switching = false;
+		    rows = table.rows;
+		    
+		    /*Loop through all table rows (except the
+		    first, which contains table headers):*/
+		    for (i = 1; i < (rows.length - 1); i++) {
+		      //start by saying there should be no switching:
+		      shouldSwitch = false;
+		      /*Get the two elements you want to compare,
+		      one from current row and one from the next:*/
+		      x = rows[i].getElementsByTagName("TD")[n];
+		      y = rows[i + 1].getElementsByTagName("TD")[n];
+		      //check if the two rows should switch place:
+		      if(n == 1){
+		    	  if (Number(x.innerHTML) < Number(y.innerHTML)) {
 		  	        //if so, mark as a switch and break the loop:
 		  	        shouldSwitch = true;
 		  	        break;
-	    	  		}
-	      }
-	      
-	      
-	      else if(n == 6){
-	    	  
-	    	  x=x.innerHTML;
-	    	  y=y.innerHTML;	    	  	    	  
-	    	  if(x!="Unavailable"){
-	    		  var t1 = x.split('/');
-	    	  }
-	    	  else var t1 = [9999,99,99];
-	    	  
-	    	  
-	    	  if(y!="Unavailable"){
-	    		  var t2 = y.split('/');
-	    	  }
-	    	  else var t2 = [9999,99,99];
-	    	  
-	    	  
-	    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
-	    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
-	    	  
-	    	  if ((d1) > (d2)) {
+		  	      }
+		      }
+		      else if(n == 5 || n == 6){
+		    	  
+		    	  x=x.innerHTML;
+		    	  y=y.innerHTML;	    	  	    	 
+		    	  if(x!="Unavailable"){
+		    		  var t1 = x.split('/');
+		    	  }
+		    	  else var t1 = [9999,99,99];
+		    	  
+		    	  
+		    	  if(y!="Unavailable"){
+		    		  var t2 = y.split('/');
+		    	  }
+		    	  else var t2 = [9999,99,99];
+		    	  
+		    	  
+		    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
+		    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
+		    	  
+		    	  if ((d1) > (d2)) {
+			  	        //if so, mark as a switch and break the loop:
+			  	        shouldSwitch = true;
+			  	        break;
+		    	  		}
+		      }		      		      		      		      
+		      
+		      else{
+		    	  if ((x.innerHTML) > (y.innerHTML)) {
+			  	        //if so, mark as a switch and break the loop:
+			  	        shouldSwitch = true;
+			  	        break;
+		      }
+		    
+		    }
+		    }
+		    
+		    
+		    if (shouldSwitch) {
+		      /*If a switch has been marked, make the switch
+		      and mark that a switch has been done:*/
+		      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		      switching = true;
+		    }
+		  }
+	}
+	
+	else if($('#dashboardViewValue').val() == "1"){
+		var table, rows, switching, i, x, y, shouldSwitch;
+		  table = document.getElementById("results");
+		  switching = true;
+		  /*Make a loop that will continue until
+		  no switching has been done:*/
+		  while (switching) {
+			if(n=="-1") break;
+		    //start by saying: no switching is done:
+		    switching = false;
+		    rows = table.rows;
+		    
+		    /*Loop through all table rows (except the
+		    first, which contains table headers):*/
+		    for (i = 1; i < (rows.length - 1); i++) {
+		      //start by saying there should be no switching:
+		      shouldSwitch = false;
+		      /*Get the two elements you want to compare,
+		      one from current row and one from the next:*/
+		      x = rows[i].getElementsByTagName("TD")[n];
+		      y = rows[i + 1].getElementsByTagName("TD")[n];
+		      //check if the two rows should switch place:
+		      if(n == 1){
+		    	  if (Number(x.innerHTML) < Number(y.innerHTML)) {
 		  	        //if so, mark as a switch and break the loop:
 		  	        shouldSwitch = true;
 		  	        break;
-	    	  		}
-	      }
-	      
-	      
-	      else{
-	    	  if ((x.innerHTML) > (y.innerHTML)) {
-		  	        //if so, mark as a switch and break the loop:
-		  	        shouldSwitch = true;
-		  	        break;
-	      }
-	    
-	    }
-	    }
-	    
-	    
-	    if (shouldSwitch) {
-	      /*If a switch has been marked, make the switch
-	      and mark that a switch has been done:*/
-	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	      switching = true;
-	    }
-	  }
+		  	      }
+		      }
+		      else if(n == 4 || n == 5 || n == 6){
+		    	  
+		    	  x=x.innerHTML;
+		    	  y=y.innerHTML;	    	  	    	 
+		    	  if(x!="Unavailable"){
+		    		  var t1 = x.split('/');
+		    	  }
+		    	  else var t1 = [9999,99,99];
+		    	  
+		    	  if(y!="Unavailable"){
+		    		  var t2 = y.split('/');
+		    	  }
+		    	  else var t2 = [9999,99,99];
+		    	  
+		    	  var d1 = new Date(t1[2], t1[0]-1, t1[1]).getTime();
+		    	  var d2 = new Date(t2[2], t2[0]-1, t2[1]).getTime(); 
+		    	  
+		    	  if ((d1) > (d2)) {
+			  	        //if so, mark as a switch and break the loop:
+			  	        shouldSwitch = true;
+			  	        break;
+		    	  		}
+		      }
+		      
+
+		      else{
+		    	  if ((x.innerHTML) > (y.innerHTML)) {
+			  	        //if so, mark as a switch and break the loop:
+			  	        shouldSwitch = true;
+			  	        break;
+		      }
+		    
+		    }
+		    }
+		    
+		    
+		    if (shouldSwitch) {
+		      /*If a switch has been marked, make the switch
+		      and mark that a switch has been done:*/
+		      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		      switching = true;
+		    }
+		  }
+	}
+
 	
 } 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
