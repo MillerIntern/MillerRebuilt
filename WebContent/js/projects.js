@@ -329,7 +329,7 @@ function generateViewTableHeaders(){
 		projectTableRow.append('<th>Item</th>');
 		projectTableRow.append('<th>Manager</th>');
 		projectTableRow.append('<th>Scope Date</th>');
-		projectTableRow.append('<th>Draft Schedule Date</th>');
+		projectTableRow.append('<th>Schedule</th>');
 		projectTableRow.append('<th>Due Date</th>');		
 		projectTableRow.append('<th>Key Status</th>');
 	}
@@ -355,7 +355,7 @@ function generateSortOptions(viewName){
 		createSortProjectOption("Item", "2");
 		createSortProjectOption("Manager", "3");
 		createSortProjectOption("Scope Date", "4");
-		createSortProjectOption("Draft Schedule Date", "5");
+		createSortProjectOption("Schedule", "5");
 		createSortProjectOption("Due Date", "6");		
 	}
 	/*

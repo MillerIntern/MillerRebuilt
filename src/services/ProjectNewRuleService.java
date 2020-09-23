@@ -1330,14 +1330,19 @@ public class ProjectNewRuleService {
 				scoreYellow = true;
 				al.add(rd);
 			}
+			
+			/*
+			 *Updating the below two rules on 08/29/2020 As per Andy and Bua's requirement.
+			 *Rule will be triggered if status is either 2,4,6, i.e., Incomplete, Required or TBD.		
+			 */
 			//10
-			if(tempCertOccupancyStatus!=null && tempCertOccupancyStatus.equals("6") ) {
+			if(tempCertOccupancyStatus!=null && (tempCertOccupancyStatus.equals("2") || tempCertOccupancyStatus.equals("4") || tempCertOccupancyStatus.equals("6")) ) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidTmpCertOccuStatus", "Temporary certifcate of occupancy Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//11
-			if(certOccupancyStatus!=null && certOccupancyStatus.equals("6") ) {
+			if(certOccupancyStatus!=null && (certOccupancyStatus.equals("2") || certOccupancyStatus.equals("4")|| certOccupancyStatus.equals("6")) ) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidCertOccuStatus", "Certifcate of occupancy Status needs to be updated -Final Inspections", 0);
 				scoreYellow = true;
 				al.add(rd);
