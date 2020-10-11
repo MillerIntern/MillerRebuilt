@@ -232,13 +232,14 @@
 	    	               
 			<ul class='pointer nav nav-tabs'>
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
+				<li role='presentation' data-tab='projectProposals' id="projectProposalsTabLink"><a>Proposals</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
 				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Change Orders</a></li>
 <!-- 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li> -->
 				<li role='presentation' data-tab='permitsnew' id="permits_1TabLink" onclick = "getProjectEnums_PERMIT1()"><a>Permits/Inspections</a></li>
 				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
-				<li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> 
-				<li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Cost Comparison</a></li> 
+				<!-- <li role='presentation' data-tab='costEstimate' id="costEstimateTabLink"><a>Cost Estimate</a></li> --> 
+				<!-- <li role='presentation' data-tab='smartSystem' id="smartSystemTabLink"><a>Cost Comparison</a></li>  -->
 				<li role='presentation' data-tab='closeout' id="closeoutTabLink"><a>Closeout</a></li>
 				<li role='presentation' data-tab='scorecard' id="scorecardTabLink"><a>Scorecard</a></li>
 				<li role='presentation' data-tab='settings' id="settingsTabLink"><a>Settings</a></li>
@@ -266,6 +267,15 @@
 					<li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li>				
 				</ul>
 			</div> <!-- Project Information -->
+			<div class='info-tab info-tab-projectProposals' id='projectProposals'><!-- Project Cost -->
+				<ul class="pointer project-proposals list-group">
+					<li class="list-group-item project-proposals-list-item" id="price-estimate-summary-item">Price Estimate Summary</li>
+					<li class="list-group-item project-proposals-list-item" id="item2-item">Item2</li>
+					<li class="list-group-item project-proposals-list-item" id="equipment-item">Equipment</li>
+					<li class="list-group-item project-proposals-list-item" id="cost-comparison-item">Cost Comparison</li>		
+					<li class="list-group-item project-proposals-list-item" id="item5-item">Item5</li>				
+				</ul>
+			</div> <!-- Project Cost -->
 			<div class='info-tab' id='changeOrders'>
 				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none;float:right;" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
 				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
@@ -2625,6 +2635,59 @@
 <!--  
 		LINES 799 THRU 1377 CORRESPOND TO THE CLOSEOUT DATA DIV	
  -->
+ <div id = "proposalsData" class ='editProject'>
+ 	<div class="container">
+ 		<p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+ 		<button class="btn-info btn-block btn-lg  projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+ 			
+		<ul class="nav nav-tabs">
+			<li id = "proposals" role='presentation' class="active" data-tab="priceEstimateSummary"><a>Price Estimate Summary</a></li>
+			<li role='presentation' data-tab="item2"><a>Item2</a></li>
+	        <li role='presentation' data-tab="equipmentProposals"><a>Equipment</a></li>
+			<li role='presentation' data-tab="costComparison"><a>Cost Comparison</a></li>
+			<li role='presentation' data-tab="item5"><a>Item5</a></li>
+	        <li style="top:4px;float:right;" class="btn btn-success" onClick="" data-tab="saveButton" id = "save-closeout">
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>	       			
+		</ul>
+		
+	    <div style="width:100%" id="priceEstimateSummary" class="info-tab info-tab-proposalsInformation">
+	    	<p>TEST999</p>
+	     </div>
+   	    <div style="width:100%" id="equipmentProposals" class="info-tab info-tab-proposalsInformation">
+							
+				<button style = "float:right;margin-right:5px;background-color: #2a5617;" id='editEquipmentProposals' onclick='editSelectedEquipmentProposals()' type="button" class="project-edit btn" disabled>Edit Equipment</button>
+				<button style = "float:right;margin-right:5px;" onclick='addEquipmentProposals()' type='button' class='project-edit btn'>Add Equipment</button>
+				
+				
+			<br>
+			<br>
+			
+			
+			<div class = "generalOverFlowScroll">
+				<table id='equipmentTableProposals' class='eqTableBorder table'>
+				    <thead>
+					<tr class = "equipmentTableHead">
+						<th width = 8%>Name</th>
+						<th width = 16%>Description</th>
+						<th width = 9% >Supplier</th>
+						<th width = 9% >Proposal Date</th>
+						<th width = 13%>Delivery Status</th>
+						<th width = 12%>Ordered Date</th>
+						<th width = 13%>Scheduled Date</th>
+						<th width = 11%>Actual Date</th>
+						<th width = 10%>Notes</th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>	
+				</div>
+				
+				
+			</div> <!-- Equipment -->
+	     </div>
+ 	
+ </div>
+ 
 	<div id = 'closeoutData' class ='editProject'>
 	
 	<div class="container">
@@ -4082,6 +4145,132 @@
 
 
 </div>
+
+
+<div id = "equipmentDivProposals" class = "editProject">
+	<div class="container">
+	
+	    <p id ='pageLocation'> <small id ='projectHeader'>---</small></p>
+		   
+		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+		
+		<ul class="nav nav-tabs">
+			<li role='presentation' class="active" data-tab="equipmentFormProposals" id = "equipmentFormProposalsTabLink"><a>Equipment Form</a></li>
+	        
+		</ul>
+	
+		<div style="width: 100%" id="equipmentFormProposals" class="info-tab active">
+		<button style="float:right" class="adminContent btn btn-danger" id="deleteEquipmentProposals" onclick="deleteEquipment()"> Delete Equipment </button>
+
+		<button class = "btn btn-success"style="float:right;margin-right:5px" role='presentation' onclick="saveProject_EQUIP_PROP()" data-tab="saveButtonProposals" id = "saveButtonProposalsTabLinkEquipment">
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>
+	        <table class="table table-hover">
+	        
+	           <colgroup>
+		          <col style="width: 15%">
+		          <col style="width: 85%">
+		       </colgroup>
+	        
+	        	<tr style="height: 0px;"></tr>
+	        	<tr>
+	        		<td class='bold'>PO #</td>
+	        		<td><input type="text" id="poNumProposals" class="equipment-input" onchange = "poNumCheck()"></td>
+	        	</tr>
+	            <tr>
+	                <td class='bold'>Equipment Name</td>
+	                <td>
+	                    <input type="text" class="equipment-input" id="equipmentNameProposals">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td class='bold'>Description</td>
+	                <td>
+	                    <textarea maxlength = 998 class="equipment-input scrollTextBoxEquip" id="equipmentDescriptionProposals"> </textarea>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td class='bold'>Supplier</td>
+	                <td>
+	                    <select class="equipment-select" id="supplierProposals">
+	                    </select>  
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Proposal Date</td>
+	 
+	                <td>
+	                	<input type="text" id="equipProposalDateProposals" class = "equipment-input"/>
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Delivery Status</td>
+	                <td>
+	                    <select class="equipment-select" id="deliveryStatusEquipmentProposals">	                        
+	                    </select>  
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Ordered Date</td>
+	 
+	                <td>
+	                	<input type="text" id="orderedDateProposals" class = "equipment-input"/>
+	                </td>   
+	            </tr>
+	           <tr>
+	                <td class='bold'>Estimated Delivery Date</td>
+	 
+	                <td>
+	                	<input type="text" id="estDeliveryDateProposals" class = "equipment-input"/>
+	                </td>   
+	            </tr>
+	            <tr>
+	                <td class='bold'>Actual Delivery Date</td>
+	                <td>
+	                	<input type="text" id="deliveryDateProposals" class = "equipment-input"/>
+	                </td>   
+	            </tr>
+	            <tr>
+	            	<td class='bold'>Equipment Notes</td>
+	            	<td>
+	            		<textarea id="notesProposals" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999 ondblclick = "dateFillFunction(this)"></textarea>
+	            	</td>
+	            </tr>
+	
+	
+	        </table>	       
+		</div>
+	    <!-- End Equipment Tab--> 
+		<div class='info-tab' id='saveButton'>
+		<!--  
+			<button onclick='returnToProjectManager()' class='btn btn-primary'>Return to Project Manager</button>
+			<button onclick='returnToFindProject()' class='btn btn-primary'>Find Another Project</button>
+			<button onclick='goHome()' class='btn btn-warning'>Return Home</button>
+			<select style='margin: 4px' id='taskSelector' class='form-control'>
+				<option value='incomplete'>Incomplete</option>
+				<option value='complete'>Complete</option>
+				<option value='all'>All</option>
+			</select>
+			<table class='table table-hover' id='taskTable'>
+	   			<tr class='head'>
+	   				<th>Task</th>
+	   				<th>Description</th>
+	   				<th>Assigned</th>
+	   				<th>Due</th>
+	   				<th>Priority</th>
+	   				<th style='width: 200px;'>Notes</th>
+	   				<th></th>
+	   			</tr>
+			</table>
+		-->
+		</div>
+	</div>
+	
+	<div id="footer">
+	</div>
+
+
+</div>
+
 
 	
 	</body>
