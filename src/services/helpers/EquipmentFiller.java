@@ -55,6 +55,9 @@ public class EquipmentFiller
 		
 		eq.setEqSupplier(EquipmentVendor.matchEquipmentVendor(params.get("vendor")));
 		eq.setEqStatus(EquipmentStatus.matchEquipmentStatus(params.get("deliveryStatus")));
+		eq.setUnitPrice(params.get("unitPrice"));
+		eq.setQuantity(params.get("quantity"));		
+		eq.setTotalPrice(params.get("totalPrice"));
 
 		
 				

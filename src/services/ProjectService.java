@@ -1121,9 +1121,7 @@ public class ProjectService extends ProjectObjectService
 	 * @param parameters
 	 */
 	public synchronized static void addEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
-	{
-		System.out.println("In Add Equipment:");
-
+	{		
 		Project currentProject = null;
 		try
 		{

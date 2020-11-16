@@ -40,12 +40,15 @@ public class NewEquipment extends ProjectObject
 	private EquipmentStatus eqStatus;
 	private String providerName;
 	private String description;
+	private String quantity;
+	private String unitPrice;
+	private String totalPrice;
 	
 	public NewEquipment(String poNum, String equipmentName,
 						String vendor,
 						Date deliveryDate, Date estDeliveryDate, Date orderedDate, Date equipProposalDate,
 						String notes,  String deliveryStatus, String providerName, String description,
-						EquipmentVendor eqSupplier , EquipmentStatus eqStatus)
+						EquipmentVendor eqSupplier , EquipmentStatus eqStatus, String quantity, String unitPrice, String totalPrice)
 	{
 		this.poNum = poNum;
 		this.equipmentName = equipmentName;
@@ -60,6 +63,9 @@ public class NewEquipment extends ProjectObject
 		this.description = description;
 		this.eqSupplier = eqSupplier;
 		this.eqStatus = eqStatus;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
 	}
 	
 	public NewEquipment()
@@ -77,6 +83,9 @@ public class NewEquipment extends ProjectObject
 		this.description = null;
 		this.eqSupplier = null;
 		this.eqStatus = null;
+		this.quantity = null;
+		this.unitPrice = null;
+		this.totalPrice = null;
 	}
 
 	public synchronized String getPoNum() {
@@ -127,6 +136,30 @@ public class NewEquipment extends ProjectObject
 		this.equipProposalDate = equipProposalDate;
 	}
 
+
+	public synchronized String getQuantity() {
+		return quantity;
+	}
+
+	public synchronized void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public synchronized String getUnitPrice() {
+		return unitPrice;
+	}
+
+	public synchronized void setUnitPrice(String unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public synchronized String getTotalPrice() {
+		return totalPrice;
+	}
+
+	public synchronized void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public synchronized Date getEstDeliveryDate() {
 		return estDeliveryDate;
@@ -215,6 +248,9 @@ public class NewEquipment extends ProjectObject
 		fields.put("eqSupplier" , "String");
 		fields.put("description" , "String");
 		fields.put("equipmentName" , "String");
+		fields.put("quantity", "String");
+		fields.put("unitPrice", "String");
+		fields.put("totalPrice", "String");
 		return fields;
 
 	}

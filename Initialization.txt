@@ -16,7 +16,7 @@ User log-in Information:
 remote/administrator 
 IP: 192.168.0.210
 Username: administrator 
-password: admin_chc1975 
+password: Justin_admin1984 
 
 Apache Tomcat: 
 Html: 192.168.0.210:8081
@@ -57,7 +57,7 @@ restart Apache Tomcat server:
 1. Login to the Remote Desktop using the following credentials
 	IP:192.168.0.210
 	Username: administrator 
-	password: admin_chc1975 
+	password: Justin_admin1984 
 2. Open the File Explorer and go to C:\Users\Administrator\Desktop\MCS Website\MCSPMDBBat
 3. To stop the server, run the serverCleanUp.bat file
 4. To start the server, run the serverStarter.bat file

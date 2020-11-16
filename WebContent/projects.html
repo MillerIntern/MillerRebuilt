@@ -270,7 +270,7 @@
 			<div class='info-tab info-tab-projectProposals' id='projectProposals'><!-- Project Cost -->
 				<ul class="pointer project-proposals list-group">
 					<li class="list-group-item project-proposals-list-item" id="price-estimate-summary-item">Price Estimate Summary</li>
-					<li class="list-group-item project-proposals-list-item" id="item2-item">Item2</li>
+					<li class="list-group-item project-proposals-list-item" id="worksheet-item">Worksheet</li>
 					<li class="list-group-item project-proposals-list-item" id="equipment-item">Equipment</li>
 					<li class="list-group-item project-proposals-list-item" id="cost-comparison-item">Cost Comparison</li>		
 					<li class="list-group-item project-proposals-list-item" id="item5-item">Item5</li>				
@@ -442,15 +442,18 @@
 				<table id='equipmentTable' class='eqTableBorder table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
-						<th width = 8%>Name</th>
-						<th width = 16%>Description</th>
-						<th width = 9% >Supplier</th>
-						<th width = 9% >Proposal Date</th>
-						<th width = 13%>Delivery Status</th>
-						<th width = 12%>Ordered Date</th>
-						<th width = 13%>Scheduled Date</th>
-						<th width = 11%>Actual Date</th>
-						<th width = 10%>Notes</th>
+						<th width = 8%>Name<br></br></th>
+						<th width = 16%>Description<br></br></th>
+						<th width = 9% >Supplier<br></br></th>
+						<th width = 8% >Proposal Date</th>
+						<th width = 7%>Delivery Status</th>
+						<th width = 8%>Ordered Date</th>
+						<th width = 8%>Scheduled Date</th>
+						<th width = 7%>Actual Date</th>
+						<th width = 10%>Notes<br></br></th>
+						<th width = 6%>Unit Price</th>
+						<th width = 6%>Quantity<br></br></th>
+						<th width = 6%>Total Price</th>
 					</tr>
 					</thead>
 					<tbody></tbody>
@@ -2642,17 +2645,26 @@
  			
 		<ul class="nav nav-tabs">
 			<li id = "proposals" role='presentation' class="active" data-tab="priceEstimateSummary"><a>Price Estimate Summary</a></li>
-			<li role='presentation' data-tab="item2"><a>Item2</a></li>
+			<li role='presentation' data-tab="worksheet"><a>Worksheet</a></li>
 	        <li role='presentation' data-tab="equipmentProposals"><a>Equipment</a></li>
 			<li role='presentation' data-tab="costComparison"><a>Cost Comparison</a></li>
-			<li role='presentation' data-tab="item5"><a>Item5</a></li>
+			<!-- <li role='presentation' data-tab="item5"><a>Item5</a></li> -->
 	        <li style="top:4px;float:right;" class="btn btn-success" onClick="" data-tab="saveButton" id = "save-closeout">
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>	       			
 		</ul>
 		
 	    <div style="width:100%" id="priceEstimateSummary" class="info-tab info-tab-proposalsInformation">
-	    	<p>TEST999</p>
+	    	<p></p>
 	     </div>
+	     
+         <div style="width:100%" id="worksheet" class="info-tab info-tab-worksheet">
+	    	<p></p>
+	     </div>
+	     
+         <div style="width:100%" id="costComparison" class="info-tab info-tab-costComparison">
+	    	<p></p>
+	     </div>
+	     
    	    <div style="width:100%" id="equipmentProposals" class="info-tab info-tab-proposalsInformation">
 							
 				<button style = "float:right;margin-right:5px;background-color: #2a5617;" id='editEquipmentProposals' onclick='editSelectedEquipmentProposals()' type="button" class="project-edit btn" disabled>Edit Equipment</button>
@@ -2667,15 +2679,18 @@
 				<table id='equipmentTableProposals' class='eqTableBorder table'>
 				    <thead>
 					<tr class = "equipmentTableHead">
-						<th width = 8%>Name</th>
-						<th width = 16%>Description</th>
-						<th width = 9% >Supplier</th>
-						<th width = 9% >Proposal Date</th>
-						<th width = 13%>Delivery Status</th>
-						<th width = 12%>Ordered Date</th>
-						<th width = 13%>Scheduled Date</th>
-						<th width = 11%>Actual Date</th>
-						<th width = 10%>Notes</th>
+						<th width = 8%>Name<br></br></th>
+						<th width = 16%>Description<br></br></th>
+						<th width = 9% >Supplier<br></br></th>
+						<th width = 8% >Proposal Date</th>
+						<th width = 7%>Delivery Status</th>
+						<th width = 8%>Ordered Date</th>
+						<th width = 8%>Scheduled Date</th>
+						<th width = 7%>Actual Date</th>
+						<th width = 10%>Notes<br></br></th>
+						<th width = 6%>Unit Price</th>
+						<th width = 6%>Quantity<br></br></th>
+						<th width = 6%>Total Price</th>
 					</tr>
 					</thead>
 					<tbody></tbody>
@@ -4112,6 +4127,18 @@
 	            		<textarea id="notes" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999 ondblclick = "dateFillFunction(this)"></textarea>
 	            	</td>
 	            </tr>
+           		<tr>
+	            	<td class='bold'>Unit Price</td>
+	            	<td><input type="number" id="unitPrice" class="equipment-input" onchange ="totalEquipmentCost()"></td>
+	            </tr>
+	            <tr>
+	            	<td class='bold'>Quantity</td>
+					<td><input type="number" id="quantity" class="equipment-input" onchange ="totalEquipmentCost()"></td>
+	            </tr>
+        	     <tr>
+	            	<td class='bold'>Total Price</td>
+					<td><input type="text" id="totalPrice" class="equipment-input" disabled></td>
+	            </tr>
 	        </table>	       
 		</div>
 	    <!-- End Equipment Tab--> 
@@ -4235,7 +4262,18 @@
 	            		<textarea id="notesProposals" rows="" cols="" class="equipment-input scrollTextBoxEquip" maxlength = 999 ondblclick = "dateFillFunction(this)"></textarea>
 	            	</td>
 	            </tr>
-	
+	         		<tr>
+	            	<td class='bold'>Unit Price</td>
+	            	<td><input type="number" id="unitPriceProposals" class="equipment-input" onchange ="totalEquipmentCostProposals()"></td>
+	            </tr>
+	            <tr>
+	            	<td class='bold'>Quantity</td>
+					<td><input type="number" id="quantityProposals" class="equipment-input" onchange ="totalEquipmentCostProposals()"></td>
+	            </tr>
+        	     <tr>
+	            	<td class='bold'>Total Price</td>
+					<td><input type="text" id="totalPriceProposals" class="equipment-input" dsiabled></td>
+	            </tr>
 	
 	        </table>	       
 		</div>

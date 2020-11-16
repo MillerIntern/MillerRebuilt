@@ -5139,6 +5139,7 @@ function fillEquipment (data) {
 	
 	let equipmentList = data.projEquipment;
 	console.log("FILLING EQUIPMENT ",equipmentList )
+	
 
 	if(equipmentList) {
 		 equipmentList.sort(function(a,b){
@@ -5217,6 +5218,30 @@ function fillEquipment (data) {
 //		equipmentNotes.appendChild(document.createTextNode(addingSlashNtoHTML(equipment.notes)));
 		equipmentNotes.innerHTML = addingBreaktoHTML(equipment.notes);
 		
+		var equipmentUnitPrice = document.createElement('td');
+		if (equipment.unitPrice === undefined){
+			equipmentUnitPrice.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentUnitPrice.innerHTML = addingBreaktoHTML(equipment.unitPrice);
+		
+		var equipmentQuantity = document.createElement('td');
+		if (equipment.quantity === undefined){
+			equipmentQuantity.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentQuantity.innerHTML = addingBreaktoHTML(equipment.quantity);
+		
+		var equipmentTotalPrice = document.createElement('td');
+		if (equipment.totalPrice === undefined){
+			equipmentTotalPrice.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentTotalPrice.innerHTML = addingBreaktoHTML(equipment.totalPrice);
+		
 		tableRow.appendChild(equipmentName);
 		tableRow.appendChild(equipmentDescription);
 		tableRow.appendChild(supplier);
@@ -5226,6 +5251,9 @@ function fillEquipment (data) {
 		tableRow.appendChild(estDeliveryDate);
 		tableRow.appendChild(deliveryDate);
 		tableRow.appendChild(equipmentNotes);
+		tableRow.appendChild(equipmentUnitPrice);
+		tableRow.appendChild(equipmentQuantity);
+		tableRow.appendChild(equipmentTotalPrice);
 		$("#equipmentTable").find('tbody').append(tableRow);
 		//$("#equipmentTableProposals").find('tbody').append(tableRow);
 		
@@ -5319,6 +5347,31 @@ function fillEquipmentProposals (data) {
 //		equipmentNotes.appendChild(document.createTextNode(addingSlashNtoHTML(equipment.notes)));
 		equipmentNotes.innerHTML = addingBreaktoHTML(equipment.notes);
 		
+		var equipmentUnitPrice = document.createElement('td');
+		if (equipment.unitPrice === undefined){
+			equipmentUnitPrice.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentUnitPrice.innerHTML = addingBreaktoHTML(equipment.unitPrice);
+		
+		var equipmentQuantity = document.createElement('td');
+		if (equipment.quantity === undefined){
+			equipmentQuantity.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentQuantity.innerHTML = addingBreaktoHTML(equipment.quantity);
+		
+		var equipmentTotalPrice = document.createElement('td');
+		if (equipment.totalPrice === undefined){
+			equipmentTotalPrice.appendChild(document.createTextNode('---'));			
+		}
+			
+		else 
+			equipmentTotalPrice.innerHTML = addingBreaktoHTML(equipment.totalPrice);
+		
+		
 		tableRow.appendChild(equipmentName);
 		tableRow.appendChild(equipmentDescription);
 		tableRow.appendChild(supplier);
@@ -5328,6 +5381,9 @@ function fillEquipmentProposals (data) {
 		tableRow.appendChild(estDeliveryDate);
 		tableRow.appendChild(deliveryDate);
 		tableRow.appendChild(equipmentNotes);
+		tableRow.appendChild(equipmentUnitPrice);
+		tableRow.appendChild(equipmentQuantity);
+		tableRow.appendChild(equipmentTotalPrice);
 		//$("#equipmentTable").find('tbody').append(tableRow);
 		$("#equipmentTableProposals").find('tbody').append(tableRow);
 		
@@ -11657,6 +11713,9 @@ function fillTabs_EQUIP(json)
 		$('#equipmentForm #deliveryStatusEquipment').val("default");
 	$('#equipmentForm #providerName').val(equipmentToEdit.providerName);
 	$('#equipmentForm #equipmentDescription').val(equipmentToEdit.description);
+	$('#equipmentForm #unitPrice').val(equipmentToEdit.unitPrice);
+	$('#equipmentForm #quantity').val(equipmentToEdit.quantity);
+	$('#equipmentForm #totalPrice').val(equipmentToEdit.totalPrice);
 }
 
 function fillTabs_EQUIP_PROP(json)
@@ -11691,6 +11750,9 @@ function fillTabs_EQUIP_PROP(json)
 		$('#equipmentFormProposals #deliveryStatusEquipmentProposals').val("default");
 	$('#equipmentFormProposals #providerNameProposals').val(equipmentToEdit.providerName);
 	$('#equipmentFormProposals #equipmentDescriptionProposals').val(equipmentToEdit.description);
+	$('#equipmentFormProposals #unitPriceProposals').val(equipmentToEdit.unitPrice);
+	$('#equipmentFormProposals #quantityProposals').val(equipmentToEdit.quantity);
+	$('#equipmentFormProposals #totalPriceProposals').val(equipmentToEdit.totalPrice);
 }
 
 
@@ -11707,13 +11769,14 @@ function saveProject_EQUIP()
 	var equipProposalDate = $('#equipmentForm #equipProposalDate').val();
 	var notes = $('#equipmentForm #notes').val();
 	var deliveryStatus = $('#equipmentForm #deliveryStatusEquipment').val();
+	var unitPrice = $('#equipmentForm #unitPrice').val();
+	var quantity = $('#equipmentForm #quantity').val();
+	var totalPrice = $('#equipmentForm #totalPrice').val();
 	
 	var dates = [deliveryDate, estDeliveryDate];
 	var action = 'addEquipment';
 	if(PAGETYPE_EQUIP == 'edit')
 		action = 'editEquipment';
-	if(PAGETYPE_EQUIP == 'edit')
-		alert("PAGETYPE EQUIP")
 	// TODO: Required Fields?
 	if(isValidInput_EQUIP(dates))
 	{
@@ -11736,6 +11799,9 @@ function saveProject_EQUIP()
 				'equipProposalDate' : equipProposalDate,
 				'notes': notes,
 				'deliveryStatus' : deliveryStatus,
+				'unitPrice' : unitPrice ,
+				'quantity': quantity,
+				'totalPrice':totalPrice ,
 			},
 			success:function(data){
 				alert('Saved Equipment');
@@ -11766,6 +11832,9 @@ function saveProject_EQUIP_PROP()
 	var equipProposalDate = $('#equipmentFormProposals #equipProposalDateProposals').val();
 	var notes = $('#equipmentFormProposals #notesProposals').val();
 	var deliveryStatus = $('#equipmentFormProposals #deliveryStatusEquipmentProposals').val();
+	var unitPrice = $('#equipmentFormProposals #unitPriceProposals').val();
+	var quantity = $('#equipmentFormProposals #quantityProposals').val();
+	var totalPrice = $('#equipmentFormProposals #totalPriceProposals').val();
 	
 	var dates = [deliveryDate, estDeliveryDate];
 	var action = 'addEquipment';
@@ -11794,6 +11863,9 @@ function saveProject_EQUIP_PROP()
 				'equipProposalDate' : equipProposalDate,
 				'notes': notes,
 				'deliveryStatus' : deliveryStatus,
+				'unitPrice' : unitPrice ,
+				'quantity': quantity,
+				'totalPrice':totalPrice ,
 			},
 			success:function(data){
 				alert('Saved Equipment');
@@ -13851,4 +13923,28 @@ function changeStatus(){
 	$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
 	*/
 	
+}
+
+function totalEquipmentCost(){
+	var unitPrice = $("#unitPrice").val();
+	var quantity = $("#quantity").val();
+	
+	if(unitPrice && quantity){
+		$("#totalPrice").val(unitPrice*quantity);
+	}
+	else{
+		$("#totalPrice").val("");
+	}
+}
+
+function totalEquipmentCostProposals(){
+	var unitPrice = $("#unitPriceProposals").val();
+	var quantity = $("#quantityProposals").val();
+	
+	if(unitPrice && quantity){
+		$("#totalPriceProposals").val(unitPrice*quantity);
+	}
+	else{
+		$("#totalPriceProposals").val("");
+	}
 }
