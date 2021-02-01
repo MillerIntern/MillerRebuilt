@@ -312,7 +312,7 @@ function generateViewTableHeaders(){
 		var projectTableRow = $('#projectTableDiv').find($('#results tbody').find('#ViewHeaderRow'));
 		projectTableRow.append('<th>Warehouse</th>');
 		projectTableRow.append('<th>MCS #</th>');
-		projectTableRow.append('<th>Item</th>');
+		projectTableRow.append('<th style="width:20%;">Item</th>');
 		projectTableRow.append('<th style= "text-align:center">Score</th>');
 		projectTableRow.append('<th>Status</th>');
 		projectTableRow.append('<th>Start Date</th>');
@@ -4227,7 +4227,9 @@ function fillForm_PROJECT_DATA(data)
 	$('#projectData').find("#class").val(json.projectClass.id);
 	$('#projectData').find("#project").val(json.projectItem.id);
 	$('#projectData').find("#manager").val(json.projectManagers.id);
-	$('#projectData').find("#supervisor").val(json.supervisors[0].id);
+	if(json.supervisors[0]){
+		$('#projectData').find("#supervisor").val(json.supervisors[0].id);
+	}
 	$('#projectData').find("#stage").val(json.stage.id);
 	
 	//This is filling the data when the form loads.
@@ -4844,7 +4846,9 @@ function fillProjectInformation (data) {
 	$('#projectManager').find('#projectType').text(data.projectType.name);
 	$('#projectManager').find('#projectStage').text(data.stage.name);
 	$('#projectManager').find('#projectManager').text(data.projectManagers.name);
-	$('#projectManager').find('#projectSupervisor').text(data.supervisors[0].name);
+	if(data.supervisors[0]){
+		$('#projectManager').find('#projectSupervisor').text(data.supervisors[0].name);
+	}
 	
 } // fillProjectInformation
 

@@ -15,7 +15,7 @@ public enum Region
 {
 	NE(1, "NE"), N(2, "N"), NW(3, "NW"), W(4, "W"),
 	TX(5, "TX"), S(6, "S"), SE(7, "SE"), E(8, "E"), 
-	PR(9, "PR"), MW(10, "MW"), UNKNOWN(11, "UNKNOWN");
+	PR(9, "PR"), MW(10, "MW"), UNKNOWN(11, "UNKNOWN"), SD(12, "SD");
 	
 	int num;
 	String name;
