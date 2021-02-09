@@ -1070,7 +1070,7 @@ public class ProjectNewRuleService {
 
 			//COSTCO CLOSEOUT SIGNOFF FORM 			
 //			if(costcoCloseoutFormStatus!=null && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus", "Costco Closeout SignOff Form status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus", "Costco Closeout SignOff Form status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1078,7 +1078,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus1", "Scheduled Start Date has passed, Costco Closeout SignOff Form status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus1", "Costco Closeout SignOff Form status needs to be \"complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);		
 				
@@ -1086,7 +1086,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus2", "Actual Turnover Date has passed, Costco Closeout SignOff Form status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus2", "Costco Closeout SignOff Form status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
 				
@@ -1097,7 +1097,7 @@ public class ProjectNewRuleService {
 			
 			//PUNCH LIST	
 //			if(punchListStatus!=null && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus", "Punch list status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1105,7 +1105,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (punchListStatus != null) && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus1", "Scheduled Start Date has passed, Punch list status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus1", "Punch list status needs to be \"complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);		
 				
@@ -1113,7 +1113,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (punchListStatus != null) && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus2", "Actual Turnover Date has passed, Punch list status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus2", "Punch list status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
 				
@@ -1123,7 +1123,7 @@ public class ProjectNewRuleService {
 			
 			//AS-BUILT DRAWINGS
 //			if(asBuiltDrawingStatus!=null && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As Built Drawing status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus", "As Built Drawing status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1131,7 +1131,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "Scheduled Start Date has passed, As Built Drawing status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "As Built Drawing status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);		
 				
@@ -1139,7 +1139,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "Actual Turnover Date has passed, As Built Drawing status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "As Built Drawing status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
 				
@@ -1149,7 +1149,7 @@ public class ProjectNewRuleService {
 			
 			//CLOSEOUT PHOTOS
 //			if(closeOutPhotosStatus!=null && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Closeout photos status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus", "Closeout photos status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1157,7 +1157,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus1", "Scheduled Start Date has passed, Close Out photo status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus1", "Close Out photo status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);	
 				
@@ -1165,7 +1165,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus2", "Actual Turnover Date has passed, Close Out photo status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus2", "Close Out photo status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
 				
@@ -1175,7 +1175,7 @@ public class ProjectNewRuleService {
 			
 			//HVAC STARTUP FORM
 //			if(hvacStartUpFormStatus!=null && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm", "Hvac Startup form status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1183,7 +1183,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm1", "Scheduled Start Date has passed, Hvac Startup form status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm1", "Hvac Startup form status needs to be \"complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
 				
@@ -1191,7 +1191,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm2", "Actual Turnover Date has passed, Hvac Startup form status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm2", "Hvac Startup form status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
 				
@@ -1200,7 +1200,7 @@ public class ProjectNewRuleService {
 			
 			//VERISAE REPORT
 //			if(verisaeReportStatus!=null && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus", "Verisae Report status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1208,7 +1208,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus1", "Scheduled Start Date has passed, Verisae Report status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus1", "Verisae Report status needs to be \"complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
 				
@@ -1216,7 +1216,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus2", "Actual Turnover Date has passed, Verisae Report status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus2", "Verisae Report status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
 				
@@ -1225,7 +1225,7 @@ public class ProjectNewRuleService {
 			
 			//ALARM FORM
 //			if(alarmFormStatus!=null && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated -Documents", closeoutColorCode);
+//				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus", "Alarm form status needs to be updated ", closeoutColorCode);
 //				scoreYellow = true;
 //				al.add(rd);
 //			}
@@ -1233,7 +1233,7 @@ public class ProjectNewRuleService {
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
 					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus1", "Scheduled Start Date has passed, Alarm form status needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus1", "Alarm form status needs to be updated \"complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
 				
@@ -1241,7 +1241,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
 					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus2", "Actual Turnover Date has passed, Alarm form status needs to be updated -Documents", 1);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus2", "Alarm form status needs to be \"complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
 				
@@ -1254,7 +1254,7 @@ public class ProjectNewRuleService {
 			//SALVAGE VALUE 
 			//4 Updating this rule such that rule is ignored if Refrigeration is No
 			if(proj.getAutofillRefrigeration() != null && !(proj.getAutofillRefrigeration().equals("0")) && salvageValue != null && salvageValue.getValue() <= 0) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidsalvageValueAmount", "Salvage value amount needs to be updated -Documents", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidsalvageValueAmount", "Salvage value amount needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
@@ -1263,7 +1263,7 @@ public class ProjectNewRuleService {
 			//commenting it now until the fix in counting the CO's is perfect
 			//8
 //			if(numMcsCO != numMcsCOCompleted) {
-//				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed -Documents", 1);
+//				RuleDetails rd = new RuleDetails("CloseOut", "mcsChangeOrdersIncomplete", "All change orders must be completed ", 1);
 //				scoreRed = true;
 //				al.add(rd);
 //			}
@@ -1278,55 +1278,55 @@ public class ProjectNewRuleService {
 			
 			//1
 			if(buildingFinalInspectionStatus!=null && buildingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidBuildFinalInspStatus", "Building Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidBuildFinalInspStatus", "Building Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//2
 			if(ceilingFinalInspectionStatus!=null && ceilingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCeilFinalInspStatus", "Ceiling Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCeilFinalInspStatus", "Ceiling Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//3
 			if(mechanicalFinalInspectionStatus!=null && mechanicalFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidMechFinalInspStatus", "Mechanical Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidMechFinalInspStatus", "Mechanical Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//4
 			if(electricalFinalInspectionStatus!=null && electricalFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidElecFinalInspStatus", "Electrical Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidElecFinalInspStatus", "Electrical Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//5
 			if(plumbingFinalInspectionStatus!=null && plumbingFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidPlumbFinalInspStatus", "Plumbing Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidPlumbFinalInspStatus", "Plumbing Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//6
 			if(gasFinalInspectionStatus!=null && gasFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidGasFinalInspStatus", "Gas Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidGasFinalInspStatus", "Gas Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//7
 			if(sprinklerFinalInspectionStatus!=null && sprinklerFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidSprinkFinalInspStatus", "Sprinkler Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidSprinkFinalInspStatus", "Sprinkler Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//8
 			if(fireAlarmFinalInspectionStatus!=null && fireAlarmFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidFireFinalInspStatus", "Fire Alarm Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidFireFinalInspStatus", "Fire Alarm Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//9
 			if(lowVoltageFinalInspectionStatus!=null && lowVoltageFinalInspectionStatus.equals("6") ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidLowVoltFinalInspStatus", "Low Voltage Final Inspection Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidLowVoltFinalInspStatus", "Low Voltage Final Inspection Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
@@ -1337,13 +1337,13 @@ public class ProjectNewRuleService {
 			 */
 			//10
 			if(tempCertOccupancyStatus!=null && (tempCertOccupancyStatus.equals("2") || tempCertOccupancyStatus.equals("4") || tempCertOccupancyStatus.equals("6")) ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidTmpCertOccuStatus", "Temporary certifcate of occupancy Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidTmpCertOccuStatus", "Temporary certifcate of occupancy Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
 			//11
 			if(certOccupancyStatus!=null && (certOccupancyStatus.equals("2") || certOccupancyStatus.equals("4")|| certOccupancyStatus.equals("6")) ) {
-				RuleDetails rd = new RuleDetails("CloseOut", "invalidCertOccuStatus", "Certifcate of occupancy Status needs to be updated -Final Inspections", 0);
+				RuleDetails rd = new RuleDetails("CloseOut", "invalidCertOccuStatus", "Certifcate of occupancy Status needs to be \"complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);
 			}
