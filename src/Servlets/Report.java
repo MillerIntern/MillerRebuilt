@@ -163,7 +163,7 @@ public class Report extends HttpServlet
 				
 			}
 			else if(type.equals("Equipment Report")) {
-				System.out.println("IT is coming ");
+				//System.out.println("IT is coming ");
 
 				Long id = Long.parseLong(req.getParameter("id"));
 				
@@ -189,7 +189,7 @@ public class Report extends HttpServlet
 				
 			}
 			else if(type.contains("Project Task Report")) {
-				System.out.println("IT is coming 123 ");
+				//System.out.println("IT is coming 123 ");
 				String projStatus = type.split("~")[1];				
 				Long id = Long.parseLong(req.getParameter("id"));				
 				List<String> shownFields = new ArrayList<String>();
@@ -426,7 +426,7 @@ public class Report extends HttpServlet
 	 */
 	public synchronized String generateProjectReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
-		System.out.println("PROJECTS OF INTEREST");
+		//System.out.println("PROJECTS OF INTEREST");
 		System.out.println(projects);
 		System.out.println(reportName);
 		StringBuilder sb = new StringBuilder();
@@ -437,7 +437,7 @@ public class Report extends HttpServlet
 		sb.append(generateTableHeader(shownFields));
 
 		//Contents
-		System.out.println("shown Fields are");
+		System.out.println("shown Fields are: ");
 		for (int i = 0; i < shownFields.size(); i++)
 		{
 			
@@ -475,7 +475,7 @@ public class Report extends HttpServlet
 			if(shownFields.get(0).equals("equipmentName") || shownFields.get(0).equals("changeOrder")
 					|| shownFields.get(0).equals("changeOrderSolo") || shownFields.get(0).equals("equipmentSolo"))
 			{				
-				System.out.println("IT is coming here 1");				
+				//System.out.println("IT is coming here 1");				
 				String value = getValueFromProject(shownFields.get(0), p);
 				System.out.println(value);
 				sb.append(value);
@@ -483,7 +483,7 @@ public class Report extends HttpServlet
 			
 			else if(shownFields.get(0).equals("projectTaskSolo"))
 			{
-				System.out.println("IT is coming here 111");				
+				//System.out.println("IT is coming here 111");				
 				String value = getValueFromProject(shownFields.get(0)+"~"+shownFields.get(1), p);
 				System.out.println(value);
 				sb.append(value);
@@ -560,7 +560,7 @@ public class Report extends HttpServlet
 	 */
 	public synchronized String generateChangeOrderReport(List<projectObjects.Project> projects, String reportName, List<String> shownFields)
 	{
-		System.out.println("PROJECTS OF INTEREST");
+		//System.out.println("PROJECTS OF INTEREST");
 
 		StringBuilder sb = new StringBuilder();
 		//Generate the html header
@@ -569,7 +569,7 @@ public class Report extends HttpServlet
 		sb.append(generateTableHeader(shownFields));
 
 		//Contents
-		System.out.println("shown Fields are");
+		System.out.println("Shown Fields are: ");
 		for (int i = 0; i < shownFields.size(); i++)
 		{
 			
@@ -632,7 +632,7 @@ public class Report extends HttpServlet
 	 */
 	public synchronized String generateTaskReport(List<projectObjects.Task> tasks, String reportName, List<String> shownFields)
 	{
-		System.out.println("TASKS OF INTEREST");
+		//System.out.println("TASKS OF INTEREST");
 
 		StringBuilder sb = new StringBuilder();
 		//Generate the html header
@@ -641,7 +641,7 @@ public class Report extends HttpServlet
 		sb.append(generateTableHeader(shownFields));
 
 		//Contents
-		System.out.println("shown Fields are");
+		System.out.println("Shown fields are: ");
 		for (int i = 0; i < shownFields.size(); i++)
 		{
 			

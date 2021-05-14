@@ -511,7 +511,7 @@ public class ProjectNewRuleColorService {
 		
 		if(permits != null) {
 			//Building
-			System.out.println("project is");
+			//System.out.println("project is");
 			System.out.println(projects[i]);
 			String buildingPermitRequired = permits.getBuildingPermitRequired();
 			String buildingPermitStatus = permits.getBuildingPermitStatus();

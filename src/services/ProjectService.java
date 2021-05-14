@@ -742,7 +742,7 @@ public class ProjectService extends ProjectObjectService
 
 	public synchronized static void editCloseout(Long projectID, Map<String, String>params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Closeout:");
+		//System.out.println("In Edit Closeout:");
 
 		String closeoutIDString = params.get("closeoutID");
 		String salvageIDString = params.get("salvageID");
@@ -810,7 +810,7 @@ public class ProjectService extends ProjectObjectService
 	
 	public synchronized static String addCostEstimate(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit cost est:");
+		//System.out.println("In Edit cost est:");
 		
 		CostEstimate ce = new CostEstimate();
 		CostEstimateFiller.fillCostEstimate(ce, params);
@@ -822,7 +822,7 @@ public class ProjectService extends ProjectObjectService
 	
 	public synchronized static void editPermits(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Permits:");
+		//System.out.println("In Edit Permits:");
 
 		String permitsIDString = params.get("permitsID");
 		Long permitsID = (long)-1;
@@ -862,7 +862,7 @@ public class ProjectService extends ProjectObjectService
 	}
 	public synchronized static void editPermitNotes(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Permits:");
+		//System.out.println("In Edit Permits:");
 
 		String permitsIDString = params.get("permitsID");
 		Long permitsID = (long)-1;
@@ -903,7 +903,7 @@ public class ProjectService extends ProjectObjectService
 
 	public synchronized static void editInspections(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Inspections:");
+		//System.out.println("In Edit Inspections:");
 
 		String inspectionIDString = params.get("inspectionID");
 		Long inspectionID = (long)-1;
@@ -967,7 +967,7 @@ public class ProjectService extends ProjectObjectService
 	 */
 	public synchronized static boolean addChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Add Change Order:");
+		//System.out.println("In Add Change Order:");
 
 		if(projectID == null) return false;
 		
@@ -1010,7 +1010,7 @@ public class ProjectService extends ProjectObjectService
 	
 	public synchronized static boolean addPendingInvoice(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Add Pending Invoice:");
+		//System.out.println("In Add Pending Invoice:");
 
 		if(projectID == null) return false;
 		
@@ -1059,7 +1059,7 @@ public class ProjectService extends ProjectObjectService
 	 */
 	public synchronized static boolean editChangeOrder(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Change Order:");
+		//System.out.println("In Edit Change Order:");
 		Long changeOrderID;
 		
 		try 
@@ -1099,7 +1099,7 @@ public class ProjectService extends ProjectObjectService
 			System.out.println(item.getId() + " is the ID compared to " + changeOrderID);
 			if(item.getId().longValue() == changeOrderID.longValue())
 			{
-				System.out.println("Found the correct change order!");
+				//System.out.println("Found the correct change order!");
 				oldOrder = item;
 				ChangeOrderFiller.fillChangeOrder(oldOrder, params);
 
@@ -1189,7 +1189,7 @@ public class ProjectService extends ProjectObjectService
 	
 	public synchronized static void editEquipment(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In Edit Equipment:");
+		//System.out.println("In Edit Equipment:");
 		Long equipmentID = Long.parseLong(params.get("equipmentID"));
 
 		Project currentProject = null;
@@ -1258,7 +1258,7 @@ public class ProjectService extends ProjectObjectService
 		{
 			if(iterCO.next().getId() == changeOrderID) {
 				iterCO.remove();
-				System.out.println("FOUND CHANGE ORDER");
+				//System.out.println("FOUND CHANGE ORDER");
 				break;
 			}
 		}
@@ -1355,7 +1355,7 @@ public class ProjectService extends ProjectObjectService
 	}
 	public synchronized static void countChangeOrders(Long projectID) throws ClassNotFoundException, ParseException
 	{
-		System.out.println("In count change orders:");
+		//System.out.println("In count change orders:");
 
 		
 

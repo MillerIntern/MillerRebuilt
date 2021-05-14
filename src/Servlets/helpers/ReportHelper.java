@@ -1823,10 +1823,10 @@ public class ReportHelper
 		}
 		else if (value.equals("equipmentSolo") && p.getEquipment() != null) {
 			
-			System.out.println("IT is coming here 2");
+			//System.out.println("IT is coming here 2");
 
 			int amountOfEquipments = p.getProjEquipment().size();
-			System.out.println("AMT EQP IS");
+			//System.out.println("AMT EQP IS");
 			System.out.println(amountOfEquipments);
 			if (amountOfEquipments == 0) return "";
 				
@@ -1877,7 +1877,7 @@ public class ReportHelper
 		}
 		else if (value.contains("projectTaskSolo") && ProjectObjectService.getAllTasks(p.getId()) != null) {
 			
-			System.out.println("IT is coming here 2");
+			//System.out.println("IT is coming here 2");
 			String projStatus = value.split("~")[1];			
 			int amountOfTasks = ProjectObjectService.getAllTasks(p.getId()).size();			
 			System.out.println(amountOfTasks);

@@ -14,7 +14,7 @@ public class CostEstimateFiller
 
 	public synchronized static void fillCostEstimate(CostEstimate ce,  Map<String, String>params) throws ParseException
 	{
-		System.out.println("cost est filler");
+		//System.out.println("cost est filler");
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 		System.out.println(Long.parseLong(params.get("projectID")));

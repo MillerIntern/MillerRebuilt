@@ -249,7 +249,7 @@ public class ProposalObjectService
 		catch (Exception e) 
 		{
 			if (tx!=null) tx.rollback();
-			System.out.println("NOTHING WENT WRONG");
+			//System.out.println("NOTHING WENT WRONG");
 		}
 		
 		return success;
@@ -263,7 +263,7 @@ public class ProposalObjectService
 	 */
 	public synchronized static String addObject(String domain, Object o)
 	{
-		System.out.println("add Project");
+		//System.out.println("add Project");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		session.save(o);

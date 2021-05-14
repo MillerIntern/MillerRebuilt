@@ -859,16 +859,14 @@ public class ProjectObjectService
 
 		   // Object o = session.get(c, id); 
 		    session.delete(oldObject2); 
-		    System.out.println("hi");
 		    tx.commit();
-		    System.out.println("hello");
 		    success = "PROJECT_OBJECT_DELETED";
 		}
 		catch (Exception e) 
 		{
 			System.out.println(e.getMessage());
 			if (tx!=null) tx.rollback();
-			System.out.println("NOTHING WENT WRONG - kind of");
+			//System.out.println("NOTHING WENT WRONG - kind of");
 		}
 		
 		
@@ -885,7 +883,7 @@ public class ProjectObjectService
 	 */
 	public synchronized static Serializable addObject(String domain, Object o)
 	{
-		System.out.println("add Object");
+		//System.out.println("add Object");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		//session.save(o);
@@ -906,7 +904,7 @@ public class ProjectObjectService
 	 */
 	public synchronized static long addUser(Object o, Permission permission, Status status)
 	{
-		System.out.println("add Object");
+		//System.out.println("add Object");
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		//session.save(o);
@@ -1293,7 +1291,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getMasterScopesAsJSON()
 	{
-		System.out.println("getting master scopes");
+		//System.out.println("getting master scopes");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1352,7 +1350,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getProjItemAsJSON(Long id)
 	{
-		System.out.println("getting proj item");
+		//System.out.println("getting proj item");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1371,7 +1369,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecMasterScope(Long id)
 	{
-		System.out.println("getting master Scope");
+		//System.out.println("getting master Scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1390,7 +1388,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecProjScope(Long id)
 	{
-		System.out.println("getting proj scope");
+		//System.out.println("getting proj scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1409,7 +1407,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecProjMasterScope(Long id)
 	{
-		System.out.println("getting proj master Scope");
+		//System.out.println("getting proj master Scope");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -1427,7 +1425,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecProject(Long id)
 	{
-		System.out.println("getting proj item");
+		//System.out.println("getting proj item");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx;
@@ -1454,7 +1452,7 @@ public class ProjectObjectService
 	
 	public synchronized static String getSpecCostEst(int id)
 	{
-		System.out.println("getting cost est");
+		//System.out.println("getting cost est");
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();

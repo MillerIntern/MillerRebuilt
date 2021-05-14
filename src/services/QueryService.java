@@ -70,7 +70,7 @@ public class QueryService
 		{
 			String paramName = iter.next();
 			Disjunction or = Restrictions.disjunction();
-			System.out.println();
+			//System.out.println();
 
 
 			String v = pars.get(paramName)[0];
@@ -268,13 +268,13 @@ public class QueryService
 		
 		if(dataList.size() > 1 && dataList.size()%2 == 0)
 			isAnd = true;
-		System.out.println("Gets here! " + dataList.size() + " " + dataList.size()%2);	
+		System.out.println(dataList.size() + " " + dataList.size()%2);	
 		for(int i = 0; i < dataList.size(); i++)
 		{
-			System.out.println("Gets here!!");
+			//System.out.println("Gets here!!");
 			if(isAnd)
 			{
-				System.out.println("Gets here!!!");
+				//System.out.println("Gets here!!!");
 					String date = dataList.get(i);
 					//String relation = comparisonList.get(i);
 					
@@ -283,14 +283,14 @@ public class QueryService
 					int compar = d1.compareTo(d2);
 					if(compar <= 0)
 					{
-						System.out.println("Gets here!!!!");
+						//System.out.println("Gets here!!!!");
 						and.add(Restrictions.lt("scheduledStartDate", d2));
 						and.add(Restrictions.gt("scheduledTurnover", d1));
 						and.add(Restrictions.lt("scheduledTurnover", d2));
 					}
 					else
 					{
-						System.out.println("Gets here!!!!!");
+						//System.out.println("Gets here!!!!!");
 						and.add(Restrictions.lt("scheduledStartDate", d1));
 						and.add(Restrictions.gt("scheduledTurnover", d2));
 						and.add(Restrictions.lt("scheduledTurnover", d1));

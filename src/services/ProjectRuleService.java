@@ -658,7 +658,7 @@ public class ProjectRuleService
 				return true;
 		}
 		
-		System.out.println("missed if");
+		//System.out.println("missed if");
 		return true;
 	}
 	
@@ -805,7 +805,7 @@ public class ProjectRuleService
 			}	
 		}
 		
-		System.out.println("missed if");
+		//System.out.println("missed if");
 		return true;
 		
 	}
@@ -2094,7 +2094,7 @@ public class ProjectRuleService
 		project.setMediumScore(0);
 		project.setHighScore(0);
 		
-		System.out.println("eval project");
+		//System.out.println("eval project");
 		
 		for(ProjectRule rule : rules)
 		{
@@ -2218,7 +2218,7 @@ public class ProjectRuleService
 		project.setMediumScore(0);
 		project.setHighScore(0);
 		
-		System.out.println("eval project");
+		//System.out.println("eval project");
 		
 		for(ProjectRule rule : rules)
 		{

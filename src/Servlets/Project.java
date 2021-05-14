@@ -104,11 +104,11 @@ public class Project extends HttpServlet
 		}
 		if (action.equals("getAllObjects"))
 		{
-			System.out.println("get All Objects");
+			//System.out.println("get All Objects");
 			response = ProjectService.getAllEnumsAsJson();
 			
 		} else if(action.equals("sendTaskAlert")) {
-			System.out.println("SENDING TASK ALERT");
+			//System.out.println("SENDING TASK ALERT");
 	         String assignee = parameters.get("assignee");
 	         System.out.println("ASSIGNEE: " + assignee);
 	         User employeeRecipient = User.mapNameToUser(assignee);
@@ -212,7 +212,7 @@ public class Project extends HttpServlet
 		
 		else if(action.equals("sendInvoiceAlert")) {
 
-			System.out.println("SENDING INVOICE ALERT");
+			//System.out.println("SENDING INVOICE ALERT");
 	         
 	         
 	       
@@ -289,7 +289,7 @@ public class Project extends HttpServlet
 		
 		}
 		else if(action.equals("sendText")) {
-			System.out.println("SENDING TEXT");
+			//System.out.println("SENDING TEXT");
 
 			 String phoneNumber = parameters.get("phoneNumber");
 	         String textMessage = parameters.get("message");
@@ -360,19 +360,19 @@ public class Project extends HttpServlet
 		         mex.printStackTrace();
 		      }
 		} else if (action.equals("getSpecificObjects")) {
-			System.out.println("getting specific objects");
+			//System.out.println("getting specific objects");
 			response = ProjectService.getSpecificAsJson(parameters);
 			System.out.println("SPECIFIC OBJECT SIZE = " + response.length());
 
 		}
 		else if (action.equals("getEditQueryObjects"))
 		{
-			System.out.println("qenum");
+			//System.out.println("qenum");
 			response = ProjectService.getEditEnumsAsJSON();
 		}
 		else if (action.equals("getProjectToEdit"))
 		{
-			System.out.println("getEdit");
+			//System.out.println("getEdit");
 			String warehouse = (parameters.get("warehouse"));
 			String stage = (parameters.get("stage"));
 			String classID = (parameters.get("class"));
@@ -384,7 +384,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getAllProjects"))
 		{
-			System.out.println("getting the projectsssss!");
+			//System.out.println("getting the projectsssss!");
 			response = ProjectService.getAllProjectsAsJson();
 			
 			System.out.println("SIZE OF GET ALL PROJECTS = " + Integer.toString(response.length()));
@@ -402,7 +402,7 @@ public class Project extends HttpServlet
 		}
 		else if (action.equals("getEditableProject"))
 		{
-			System.out.println("getEditableProject");
+			//System.out.println("getEditableProject");
 			String warehouse = (parameters.get("whID"));
 			String stage = (parameters.get("stageID"));
 			String classID = (parameters.get("classID"));
@@ -411,7 +411,7 @@ public class Project extends HttpServlet
 			//String inspections=(parameters.get("inspections"));
 			response = QueryService.getProjectToEdit(warehouse, stage, classID, itemID, projectID);
 		} else if(action.equals("addNewProject")) {
-			System.out.println("addingNewProject");
+			//System.out.println("addingNewProject");
 			
 			try
 			{
@@ -423,7 +423,7 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		} else if(action.equals("editExistingProject")) {
-			System.out.println("editExistingProject");
+			//System.out.println("editExistingProject");
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
@@ -437,7 +437,7 @@ public class Project extends HttpServlet
 		} 
 			else if(action.equals("saveEvalRules"))
 		{
-			System.out.println("saveEvalRules");
+			//System.out.println("saveEvalRules");
 			
 			try {
 				System.out.println(parameters);
@@ -452,7 +452,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("autofillPermits")) 
 		{
-			System.out.println("autofillPermits");
+			//System.out.println("autofillPermits");
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
@@ -464,7 +464,7 @@ public class Project extends HttpServlet
 				System.out.println("Some other error!");
 			}
 		} else if(action.equals("autofillHVAC")) {
-			System.out.println("autofillHVAC");
+			//System.out.println("autofillHVAC");
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
@@ -476,7 +476,7 @@ public class Project extends HttpServlet
 				System.out.println("Some other error!");
 			}
 		} else if(action.equals("autofillRefrigeration")) {
-			System.out.println("autofillRefrigeration");
+			//System.out.println("autofillRefrigeration");
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
@@ -488,7 +488,7 @@ public class Project extends HttpServlet
 				System.out.println("Some other error!");
 			}
 		} else if(action.equals("autofillProjectClass")) {
-			System.out.println("autofillProjectClass");
+			//System.out.println("autofillProjectClass");
 			
 			try {
 				Long projID = Long.parseLong(parameters.get("projectID"));		
@@ -671,7 +671,7 @@ public class Project extends HttpServlet
 		}
 		else if (action.equals("get"))
 		{
-			System.out.println("GET");
+			//System.out.println("GET");
 			try 
 			{
 				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "Project");
@@ -683,7 +683,7 @@ public class Project extends HttpServlet
 		} 
 		else if(action.equals("getWarehouse")) 
 		{
-			System.out.println("GET WAREHOUSE");
+			//System.out.println("GET WAREHOUSE");
 			try 
 			{
 				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "Warehouse");
@@ -695,7 +695,7 @@ public class Project extends HttpServlet
 		} 
 		else if(action.equals("getItem")) 
 		{
-			System.out.println("GET ITEM");
+			//System.out.println("GET ITEM");
 			try 
 			{
 				response = (String) ProjectObjectService.getAsJSON(Long.parseLong(parameters.get("id")), "ProjectItem");
@@ -707,7 +707,7 @@ public class Project extends HttpServlet
 		} 
 		else if(action.equals("getMasterScopes")) 
 		{
-			System.out.println("GET master scopes");
+			//System.out.println("GET master scopes");
 			try 
 			{
 				response = ProjectObjectService.getMasterScopesAsJSON();
@@ -719,7 +719,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getSpecMasterScope")) 
 		{
-			System.out.println("GET spec master scopes");
+			//System.out.println("GET spec master scopes");
 			try 
 			{
 				response = ProjectObjectService.getSpecMasterScope(Long.parseLong(parameters.get("id")));
@@ -731,7 +731,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getSpecProjScope")) 
 		{
-			System.out.println("GET spec proj scopes");
+			//System.out.println("GET spec proj scopes");
 			try 
 			{
 				response = ProjectObjectService.getSpecProjScope(Long.parseLong(parameters.get("id")));
@@ -743,7 +743,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getSpecProject")) 
 		{
-			System.out.println("GET spec project");
+			//System.out.println("GET spec project");
 			try 
 			{
 				response = ProjectObjectService.getSpecProject(Long.parseLong(parameters.get("id")));
@@ -755,7 +755,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getSpecProjMasterScope")) 
 		{
-			System.out.println("GET spec proj master scopes");
+			//System.out.println("GET spec proj master scopes");
 			try 
 			{
 				response = ProjectObjectService.getSpecProjMasterScope(Long.parseLong(parameters.get("id")));
@@ -767,7 +767,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getProjCostEst")) 
 		{
-			System.out.println("GET cost est");
+			//System.out.println("GET cost est");
 			try 
 			{
 				response = ProjectObjectService.getSpecCostEst(Integer.parseInt(parameters.get("id")));
@@ -779,7 +779,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getProjectItem")) 
 		{
-			System.out.println("GET spec projectItem");
+			//System.out.println("GET spec projectItem");
 			try 
 			{
 				response = ProjectObjectService.getProjItemAsJSON(Long.parseLong(parameters.get("id")));
@@ -816,7 +816,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("deleteProject"))
 		{
-			System.out.println("deleting a project");
+			//System.out.println("deleting a project");
 			
 			try {
 				Gson gson = new Gson();
@@ -828,7 +828,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("deleteMasterScope"))
 		{
-			System.out.println("deleting a master scope");
+			//System.out.println("deleting a master scope");
 			
 			try {
 				Gson gson = new Gson();
@@ -840,7 +840,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("deleteProjSpecScope"))
 		{
-			System.out.println("deleting a proj spec scope");
+			//System.out.println("deleting a proj spec scope");
 			
 			try {
 				Gson gson = new Gson();
@@ -862,7 +862,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("deleteChangeOrder"))
 		{
-			System.out.println("deleting a change order");
+			//System.out.println("deleting a change order");
 			try {
 				ProjectService.removeChangeOrder(Long.parseLong(parameters.get("projectID")), Long.parseLong(parameters.get("changeOrderID")));
 				ProjectService.delete(Long.parseLong(parameters.get("changeOrderID")), "ChangeOrder");
@@ -879,7 +879,7 @@ public class Project extends HttpServlet
 		else if(action.equals("deleteEquipment"))
 		{
 			
-			System.out.println("Deleting Equipment");
+			//System.out.println("Deleting Equipment");
 			
 			String equipmentToDelete = parameters.get("equipmentID");
 			String associatedProjectID = parameters.get("projectID");
@@ -903,7 +903,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getProjectManagers"))
 		{
-			System.out.println("Gettng Names of All Project Managers");
+			//System.out.println("Gettng Names of All Project Managers");
 			// TODO: Store User's name under User.class this implementation is really bad
 			//String[] projectManagers = {"Adrienne","Alex","Andy", "Bart", "Craig", "Dave",
 			//				   "David", "Joe", "Scott"};
@@ -914,7 +914,7 @@ public class Project extends HttpServlet
 			System.out.println("Proj managers = " + response);
 		}
 		else if (action.equals("getUsers")) {
-			System.out.println("Gettng Names of All Users");
+			//System.out.println("Gettng Names of All Users");
 			// TODO: Store User's name under User.class this implementation is really bad
 			List<Object> users= ProjectObjectService.getAll("User");
 			
@@ -941,7 +941,7 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		} else if (action.equals("createTask")) {
-			System.out.println("Creating Task");
+			//System.out.println("Creating Task");
 			
 			try {
 			response = ProjectService.createTask(parameters, (String) req.getSession().getAttribute("user"));
@@ -949,7 +949,7 @@ public class Project extends HttpServlet
 				e.printStackTrace();
 			}
 		}  else if (action.equals("createPendInv")) {
-			System.out.println("Creating PendInv");
+			//System.out.println("Creating PendInv");
 			
 			try {
 			response = ProjectService.createPendInv(parameters, (String) req.getSession().getAttribute("user"));
@@ -959,7 +959,7 @@ public class Project extends HttpServlet
 			
 			
 		} else if (action.equals("updatePendInv")) {
-			System.out.println("Updating PendInv");
+			//System.out.println("Updating PendInv");
 			
 			PendingInvoice currentPendInv = null;			
 			try {
@@ -986,7 +986,7 @@ public class Project extends HttpServlet
 			
 		} else if (action.equals("getTasks")) {
 			try {
-				System.out.println("Getting Tasks");
+				//System.out.println("Getting Tasks");
 				response = ProjectObjectService.getAllAsJsonString("Task");
 
 			} catch (NumberFormatException e) {
@@ -995,7 +995,7 @@ public class Project extends HttpServlet
 
 		} else if (action.equals("getTheTasks")) {
 			try {
-				System.out.println("Getting Tasks");
+				//System.out.println("Getting Tasks");
 				response = ProjectObjectService.getAllAsJsonString("Task");
 
 			} catch (NumberFormatException e) {
@@ -1003,14 +1003,14 @@ public class Project extends HttpServlet
 			}
 
 		} else if (action.equals("getUserInfo")) {
-			System.out.println("getting User Info");
+			//System.out.println("getting User Info");
 			System.out.println("GET == " + req.getSession().getAttribute("user"));
 			System.out.println(User.mapNameToUser((String)req.getSession().getAttribute("user")));
 			Gson g = new Gson();
 			response = g.toJson(User.mapNameToUser((String) req.getSession().getAttribute("user")));
 			System.out.println("response = " +response);
 		} else if (action.equals("updateTask")) {
-			System.out.println("Updating Task");
+			//System.out.println("Updating Task");
 			
 			Task currentTask = null;
 			try {
@@ -1036,19 +1036,19 @@ public class Project extends HttpServlet
 			response =  "UPDATED_TASK";
 			
 		} else if (action.equals("getProjectTasks")) {
-			System.out.println("getting Project tasks");
+			//System.out.println("getting Project tasks");
 			response = ProjectObjectService.getProjectTasksAsJSON(Long.parseLong(parameters.get("id")));
 		} else if (action.equals("getProjectPendInvs")) {
-			System.out.println("getting Project Pending Invoices");
+			//System.out.println("getting Project Pending Invoices");
 			response = ProjectObjectService.getProjectPendInvsAsJSON(Long.parseLong(parameters.get("id")));
 		}else if (action.equals("getCompCostEst")) {
-			System.out.println("getting comparable cost ests");
+			//System.out.println("getting comparable cost ests");
 			response = ProjectObjectService.getComparableCostEst(Integer.parseInt(parameters.get("id")));
 		} else if (action.equals("getProjSpecScopes")) {
-			System.out.println("getting Project spec scopes");
+			//System.out.println("getting Project spec scopes");
 			response = ProjectObjectService.getProjSpecScopesAsJSON(Long.parseLong(parameters.get("id")));
 		} else if (action.equals("closeTask")) {
-			System.out.println("Closing Task");
+			//System.out.println("Closing Task");
 			try {
 				Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
 				
@@ -1067,10 +1067,10 @@ public class Project extends HttpServlet
 		} 
 		else if(action.equals("getSpecificTask")) {
 			try {
-				System.out.println("Coming here");
+				//System.out.println("Coming here");
 				System.out.println(parameters.get("taskID"));
 				System.out.println(Long.parseLong(parameters.get("taskID")));
-				System.out.println("Coming here only");
+				//System.out.println("Coming here only");
 				Task currentTask = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");				
 				String name = currentTask.getAssignee().getFirstName();
 				System.out.println("Old name us " + name);
@@ -1083,7 +1083,7 @@ public class Project extends HttpServlet
 			}
 		}
 		else if (action.equals("closeTask")) {
-			System.out.println("Closing Task");
+			//System.out.println("Closing Task");
 			try {
 				Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
 				
@@ -1099,9 +1099,11 @@ public class Project extends HttpServlet
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//Is this even being used? -Fardeen
 		}else if(action.equals("changePassword")){
 		
-			System.out.println("Change Password");
+			//System.out.println("Change Password");
 			try {
 				User user = (User)ProjectObjectService.get(Long.parseLong(parameters.get("id")), "User");
 				String pass = parameters.get("newPassword");
@@ -1136,8 +1138,7 @@ public class Project extends HttpServlet
 		}
 		else if(action.equals("getSubcontractors"))
 		{
-			
-			System.out.println("Getting Subcontractors");
+			//System.out.println("Getting Subcontractors");
 			
 			List<Object> subcontractors = ProjectObjectService.getAll("Subcontractor");
 			Gson gson = new Gson();
@@ -1147,7 +1148,7 @@ public class Project extends HttpServlet
 		else if(action.equals("GET_ALL_PROJECTS"))
 		{
 			
-			System.out.println("Getting PROJECTS");
+			//System.out.println("Getting PROJECTS");
 			
 			String projects = ProjectObjectService.getTheProjects();
 			Gson gson = new Gson();
@@ -1162,7 +1163,7 @@ public class Project extends HttpServlet
 		else if(action.equals("GET_ALL_PROJECTS_WITH_RULE"))
 		{
 			
-			System.out.println("Getting PROJECTS");
+			//System.out.println("Getting PROJECTS");
 			
 			String projects = ProjectObjectService.getTheProjectsWithRuleResults();
 			Gson gson = new Gson();
@@ -1177,7 +1178,7 @@ public class Project extends HttpServlet
 		else if(action.equals("getSpecificFieldIdsOfProject"))
 		{
 			
-			System.out.println("Getting PROJECT FIELDS FOR TASK");
+			//System.out.println("Getting PROJECT FIELDS FOR TASK");
 			
 			String projects = ProjectObjectService.getSpecificFieldIdsOfProject(parameters);
 			Gson gson = new Gson();
@@ -1198,7 +1199,7 @@ public class Project extends HttpServlet
 			
 			ProjectObjectService.updateProjectScore(project);
 			response = "SCORES UPDATED";
-			System.out.println("updating score");
+			//System.out.println("updating score");
 			
 		}
 		else if(action.equals("evaluateProject"))
@@ -1271,7 +1272,7 @@ public class Project extends HttpServlet
 		else if(action.equals("getScoreColor")) {
 			
 			 String[] projects = req.getParameterValues("project");
-			 System.out.println("pppprrrooojjjects are "+ projects);
+			 System.out.println("projects are "+ projects);
 			 String projectsNew = projects[0];
 			 projectsNew = projectsNew.substring(1, projectsNew.length()-1);
 			 //System.out.println(String.split(projects));

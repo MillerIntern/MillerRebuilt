@@ -50,13 +50,13 @@ public class Trigger extends HttpServlet
 
 		if (action.equals("getTriggers")) {
 			// TODO: Currently triggers are created but not managable (editable, deletable), they should be further refinable.
-			System.out.println("getting the alerts!");
+			//System.out.println("getting the alerts!");
 			response = ProjectService.getAllAlertsAsJson();
 		} else if(action.equals("getProjectTriggers")) {
 			TriggerService ts = new TriggerService(Long.parseLong(req.getParameter("project_id")));
 			response = ts.getAllSpecificTriggersAsJson();
 		} else if(action.equals("submitTrigger")) {
-			System.out.println("submitTrigger");
+			//System.out.println("submitTrigger");
 
 			JsonParser parser = new JsonParser();
 
@@ -101,7 +101,7 @@ public class Trigger extends HttpServlet
 				}
 			}
 		} else if (action.equals("getAlerts")) {
-			System.out.println("getting the alerts!");
+			//System.out.println("getting the alerts!");
 			response = ProjectService.getAllAlertsAsJson();
 		}
 
