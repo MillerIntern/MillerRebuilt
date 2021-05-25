@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import projectObjects.CustomerApproval;
 import projectObjects.Person;
 import projectObjects.Project;
 import projectObjects.ProjectClass;
@@ -36,6 +37,8 @@ public class ProjectInformationFiller {
 				.addSupervisor((Person) ProjectObjectService.get(Long.parseLong(params.get("supervisor")), "Person"));
 		currentProject.setStatus(
 				(ProjectStatus) ProjectObjectService.get(Long.parseLong(params.get("status")), "ProjectStatus"));
+		currentProject.setCustomerApproval(
+				(CustomerApproval) ProjectObjectService.get(Long.parseLong(params.get("customerApproval")), "CustomerApproval"));
 		currentProject
 				.setStage((ProjectStage) ProjectObjectService.get(Long.parseLong(params.get("stage")), "ProjectStage"));
 		currentProject.setProjectType(

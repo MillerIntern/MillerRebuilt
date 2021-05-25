@@ -560,6 +560,9 @@ public class ProjectService extends ProjectObjectService
 		if(parameters.get("status") != null && !parameters.get("status").isEmpty())
 			if(parameters.get("status").equals("true"))
 				map.put("status", ProjectObjectService.getAllAsJsonString("ProjectStatus"));
+		if(parameters.get("customerApproval") != null && !parameters.get("customerApproval").isEmpty())
+			if(parameters.get("customerApproval").equals("true"))
+				map.put("customerApproval", ProjectObjectService.getAllAsJsonString("CustomerApproval"));
 		if(parameters.get("stage") != null && !parameters.get("stage").isEmpty())
 			if(parameters.get("stage").equals("true"))
 				map.put("stage", ProjectObjectService.getAllAsJsonString("ProjectStage"));

@@ -135,7 +135,7 @@ public class Admin extends HttpServlet
 		}
 		else if(action.equals("removeItem"))
 		{
-			System.out.println("REMOVING ITEM");
+			//System.out.println("REMOVING ITEM");
 			String itemID = parameters.get("itemId");
 			Long id = Long.parseLong(itemID);
 			
@@ -173,7 +173,7 @@ public class Admin extends HttpServlet
 		}
 		else if(action.equals("swapAndRemove"))
 		{
-			System.out.println("SWAPPING ITEM");
+			//System.out.println("SWAPPING ITEM");
 			
 			String table = parameters.get("table");
 			String column = parameters.get("column");
@@ -233,7 +233,7 @@ public class Admin extends HttpServlet
 		else if(action.equals("createSubcontractor"))
 		{
 			
-			System.out.println("Creating Subcontractor");
+			//System.out.println("Creating Subcontractor");
 			
 			try {
 			response = ProjectService.createSubcontractor(parameters);
@@ -260,7 +260,7 @@ public class Admin extends HttpServlet
 		else if(action.equals("createCity"))
 		{
 			
-			System.out.println("Creating City");
+			//System.out.println("Creating City");
 			
 			try {
 			response = ProjectService.createCity(parameters);

@@ -3503,6 +3503,7 @@ function getProjectEnums_PROJECT_DATA(edit)
 			'status': true,
 			'type': true,
 			'subcontractors' : true,
+			'customerApproval' : true,
 		},
 		success: function(data)
 		{
@@ -3537,7 +3538,8 @@ function fillDropdowns_PROJECT_DATA(data)
 	generateDropdowns(data["status"], "status");
 	generateDropdowns(data["stage"], "stage");
 	generateDropdowns(data["type"], "pType");	
-	generateDropdowns(data["subcontractors"], "subcontractors")
+	generateDropdowns(data["subcontractors"], "subcontractors");
+	generateDropdowns(data["customerApproval"], "customerApproval")
 }
 
 /**
@@ -3631,7 +3633,7 @@ function generateDropdowns(str, className)
 		if(sent)
 		{
 			//console.log(className);
-			if(className == "manager" || className == 'supervisor' || className == 'warehouse' || className == "project" || className == 'projecteq' || className == 'stage' || className == 'status' || className == 'class' || className == "pType" )
+			if(className == "customerApproval" || className == "manager" || className == 'supervisor' || className == 'warehouse' || className == "project" || className == 'projecteq' || className == 'stage' || className == 'status' || className == 'class' || className == "pType" )
 			{	
 				option.setAttribute("value", json[i].id);	
 			}
@@ -3824,9 +3826,11 @@ function saveProject_PROJECT_DATA() {
 	var manager = $('#projectData').find('#manager').val();
 	var supervisor = $('#projectData').find('#supervisor').val();
 	var status = $('#projectData').find('#status').val();
+	var customerApproval = $('#projectData').find('#customerApproval').val();
 	var stage = $('#projectData').find("#stage").val();
 	var pType = $('#projectData').find('#pType').val();
 	var scope = $('#projectData').find("#scope").val();
+	
 	
 	// scheduling
 	var initiated = $('#projectData').find("#initiatedDate").val();
@@ -3913,6 +3917,7 @@ function saveProject_PROJECT_DATA() {
 				'supervisor': supervisor,
 				'stage': stage,
 				'status': status,
+				'customerApproval': customerApproval,
 				'pType': pType,
 				'scope': scope,
 				
@@ -4237,6 +4242,11 @@ function fillForm_PROJECT_DATA(data)
 	changeStatus();
 	
 	$('#projectData').find("#status").val(json.status.id);
+	
+	//if customerApproval exists, then add data
+	if(json.customerApproval)
+		$('#projectData').find("#customerApproval").val(json.customerApproval.id);
+	
 	$('#projectData').find("#pType").val(json.projectType.id);
     formatRelativeTextAreas(json.scope , "scope", "projectData");
 	$('#projectData').find("#scope").val(json.scope);

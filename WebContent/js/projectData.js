@@ -160,6 +160,7 @@ function getProjectEnums()
 			'person': true,
 			'stage': true,
 			'status': true,
+			'customerApproval': true,
 			'type': true
 		},
 		success: function(data)
@@ -192,6 +193,7 @@ function fillDropdowns(data)
 	generateDropdowns(data["person"], "manager");
 	generateDropdowns(data["person"], "supervisor");
 	generateDropdowns(data["status"], "status");
+	generateDropdowns(data["customerApproval"], "customerApproval");
 	generateDropdowns(data["stage"], "stage");
 	generateDropdowns(data["type"], "pType");	
 }
@@ -316,6 +318,11 @@ function saveProject() {
 	if(status === 'undefined' || status === 'default')
 		return alert("The Status field is required. Please give it a value.");
 		
+	//add field for customerApproval
+	var customerApproval = $('#customerApproval').val();
+	if(customerApproval === 'undefined' || customerApproval === 'default')
+		return alert("The Customer Approval field is required. Please give it a value.");
+		
 	var pType = $('#pType').val();
 	if(pType === 'undefined' || pType === 'default')
 		return alert("The Type field is required. Please give it a value.");
@@ -403,6 +410,7 @@ function saveProject() {
 				'supervisor': supervisor,
 				'stage': stage,
 				'status': status,
+				'customerApproval': customerApproval,
 				'pType': pType,
 				'scope': scope,
 				
@@ -415,7 +423,7 @@ function saveProject() {
 				'startDate': startDate,
 				'scheduledTurnover': scheduledTurnover,
 				'actualTurnover': actualTurnover,
-								
+				
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
 				'notes': notes,
