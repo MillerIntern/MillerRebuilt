@@ -95,23 +95,42 @@
 		 <div class="generalOverFlowScroll">
 			<table id="generalInformationTable" class='table table-hover'>
 		
+			
 			<tr>
+	        
+	       <!-- MCS PROJECT -->
 	        <td style="width: 20%"><b>MCS Project #</b></td>
 	        <td><input id="mcsNumber" type="text" maxlength="5"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"></td>
-	        </tr>
-	
-	        <tr>
-	         <td><b>Warehouse</b></td>
+	        
+	        <!--  WAREHOUSE -->
+	        <td><b>Warehouse</b></td>
 	        <td>
 	        <select id="warehouse" class="pointer"><option value="default">--Please select an option--</option></select>
 	        </td>
+	        
+	        </tr>
+
+	        <tr>
+	        
+	        <!-- ITEM -->
 	        <td style="width: 20%"><b>Item</b></td>
 	        <td>
 	        <select id="project" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
+			
+			<!-- PROJECT -->
+			<td><b>Project</b></td>
+	       	<td>
+	        <select id="class"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
+	        	<option value="default">--Please specify the project type--</option>
+	        </select>
+			</td>
+			
 	        </tr>
 	
 	        <tr>
+	        
+	        <!-- MANAGER -->
 	        <td><b>Manager</b></td>
 	        <td><select id="manager" class="pointer"><option value="default">--Please select an option--</option></select></td>
 	        <td style="width: 20%"><b>Supervisor</b></td>
@@ -119,47 +138,52 @@
 	        </tr>
 	
 	        <tr>
+	        
+	        <!-- STAGE -->
 	        <td><b>Stage</b></td>
 	        <td><select id="stage" class="pointer" onChange = "changeStatus()" onLoad = "changeStatus()"><option value="default">--Please select an option--</option></select></td>
 	        
+	        <!-- STATUS -->
 	        <td><b>Status</b></td>
 	        <td><select id="status" class="pointer"><option value="default">--Please select an option--</option></select></td>
 			</tr>
 	
 	        <tr>
+	        
+	        <!-- TYPE -->
 	        <td><b>Type</b></td>
 	        <td>
 	        <select id="pType" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
 			
-	        <td><b>Project</b></td>
-	       	<td>
-	        <select id="class"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
-	        	<option value="default">--Please specify the project type--</option>
-	        </select>
-			</td>
+			<!-- CUSTOMER APPROVAL -->
+			<td><b>Customer Approval</b></td>
+            <td><select id="customerApproval" class="pointer"><option value="default">--Please select an option--</option></select></td>
+	        			
 			</tr>
 			
 			<tr>
-			<td><b>HVAC</b></td>
-			<td>
-			<select id="autofill-HVAC"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
-				<option value="default">--Does this project require an HVAC unit?--</option>
-				<option value="1">Yes</option>
-                <option value="0">No</option> 
-                <option value="2">TBD</option>   
-            </select>
-	        </td>
+    
+	        <!-- PERMITS -->
+	         <td><b>Permits</b></td>
+	        <td>
+	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
+	        	<option value="default">--Does this project require permits?--</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>  
+                <option value="0">TBD</option>	        
+	        </select>
+            </td>
+            
+            <!-- KEY STATUS -->
+	        <td style="width: 20%"><b>Key Status</b></td>
+	        <td><input id="keyStatus" type="text" maxlength="30" style = "width:250px"></td>
 	        
-	        
-	        <td><b>Customer Approval</b></td>
-            <td><select id="customerApproval" class="pointer"><option value="default">--Please select an option--</option></select></td>
-	        
-	        
-	        
-	        </tr>
-	        
-	        <tr>
+			</tr>
+			
+			<tr>
+	         
+	         <!-- Refrigeration -->
 	        <td><b>Refrigeration</b></td>
 	        <td>
 	        <select id="autofill-Refrigeration" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration?  NOTE: The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
@@ -170,51 +194,44 @@
             </select>
 	        </td>
 	        
-	        <td><b>Permits</b></td>
-	        <td>
-	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
-	        	<option value="default">--Does this project require permits?--</option>
-                <option value="1">Yes</option>
-                <option value="2">No</option>  
-                <option value="0">TBD</option>	        
-	        </select>
-            </td>
+	        <!-- HVAC -->
+	        <td><b>HVAC</b></td>
+			<td>
+			<select id="autofill-HVAC"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
+				<option value="default">--Does this project require an HVAC unit?--</option>
+				<option value="1">Yes</option>
+                <option value="0">No</option> 
+                <option value="2">TBD</option>   
+            </select>
+	        </td>
 	        
 	        </tr>
 	        
+			<tr>
 	        
-	        <tr>
-            
-    	    <td style="width: 20%"><b>Key Status</b></td>
-	        <td><input id="keyStatus" type="text" maxlength="30" style = "width:250px"></td>
-	        
-	         <td class="bold">MCS Notes</td>
-	        <td rowspan="2"><textarea style = " width:600px;height:159px;" class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
-            </tr>
-           	
-	        <tr>
+	        <!-- SCOPE -->
 	        <td class="bold">Scope</td>
-	        <td><textarea class="scrollTextBox" maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
+	        <td><textarea style = width:250px;height:50px; class="scrollTextBox" maxlength="999" id="scope" rows="3" cols="50"></textarea></td>
 	        
+	        <!-- MCS NOTES -->
+	        <td class="bold">MCS Notes</td>
+	        <td rowspan="2"><textarea style = " width:600px;height:150px;" class="scrollTextBox" maxlength="999 id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
 	        
-	       
 	        </tr>
 	        
 	        <!-- This is an unused text field. If at some point someone would like to add a new text field for general information about a project, simply uncomment and rename this field.
 	        <tr>
 	        <td class="bold">Customer Notes TEST</td>
 	        <td><textarea  class="scrollTextBox" maxlength="999" id="zUpdates" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
-	        </tr>	
-	  -->       
-			
+	        </tr>	 -->     
+	          
 	        </table>
 	        </div>   
-		</div> <!-- End General Information -->
+		</div> 
+		<!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
 		    <table style="border-bottom: none" id="schedulingInformationTable" class='table table-hover'>
-	
-	
 	
 	        <tr>
 	        <td style="width: 15%"><b>Initiation Date</b></td>
