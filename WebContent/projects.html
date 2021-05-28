@@ -1834,25 +1834,6 @@
 			</tr>
 			
 			<tr>
-    
-	        <!-- PERMITS -->
-	         <td><b>Permits</b></td>
-	        <td>
-	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
-	        	<option value="default">--Does this project require permits?--</option>
-                <option value="1">Yes</option>
-                <option value="2">No</option>  
-                <option value="0">TBD</option>	        
-	        </select>
-            </td>
-            
-            <!-- KEY STATUS -->
-	        <td style="width: 20%"><b>Key Status</b></td>
-	        <td><input id="keyStatus" type="text" maxlength="30" style = "width:250px"></td>
-	        
-			</tr>
-			
-			<tr>
 	         
 	         <!-- Refrigeration -->
 	        <td><b>Refrigeration</b></td>
@@ -1879,10 +1860,29 @@
 	        </tr>
 	        
 			<tr>
+    
+	        <!-- PERMITS -->
+	         <td><b>Permits</b></td>
+	        <td>
+	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
+	        	<option value="default">--Does this project require permits?--</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>  
+                <option value="0">TBD</option>	        
+	        </select>
+            </td>
+            
+            <!-- KEY STATUS -->
+	        <td style="width: 20%"><b>Key Status</b></td>
+	        <td><input id="keyStatus" type="text" maxlength="30" style = "width:250px"></td>
+	        
+			</tr>
+			
+			<tr>
 	        
 	        <!-- SCOPE -->
 	        <td class="bold">Scope</td>
-	        <td><textarea style = width:250px;height:50px; class="scrollTextBox" maxlength="999" id="scope" rows="3" cols="50"></textarea></td>
+	        <td><textarea style = width:280px;height:150px; class="scrollTextBox" maxlength="999" id="scope" rows="3" cols="50"></textarea></td>
 	        
 	        <!-- MCS NOTES -->
 	        <td class="bold">MCS Notes</td>
