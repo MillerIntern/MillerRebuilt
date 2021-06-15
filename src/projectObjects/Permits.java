@@ -89,13 +89,30 @@ public class Permits extends ProjectObject
 	private String otherBInspectionStatus;
 	private Date otherBInspectionLastUpdated;	
 	
+	//Temp Certificate of Occupancy
+	private Date tempCertOccupancy;
+	private String tempCertOccupancyPermitRequired;
+	private String tempCertOccupancyPermitStatus;
+	private String tempCertOccupancyInspectionRequired;
+	private String tempCertOccupancyInspectionStatus;
+	private Date tempCertOccupancyInspectionLastUpdated;
+	
+	//Certificate of Occupancy
+		private Date certOccupancy;
+		private String certOccupancyPermitRequired;
+		private String certOccupancyPermitStatus;
+		private String certOccupancyInspectionRequired;
+		private String certOccupancyInspectionStatus;
+		private Date certOccupancyInspectionLastUpdated;
+		
+	
 	public Permits()
 	{
 		
 	}
 	
 	public Permits(Date buildingPermitDate,	Date mechanicalPermitDate, Date electricalPermitDate, Date plumbingPermitDate, Date gasPermitDate, Date fireSprinklerDate,
-				   Date fireAlarmPermitDate,Date lowVoltagePermitDate)
+				   Date fireAlarmPermitDate,Date lowVoltagePermitDate, Date tempCertOccupancyPermitDate, Date certOccupancyPermitDate)
 	 {
 		this.building = buildingPermitDate ;
 		this.mechanical = mechanicalPermitDate;
@@ -105,7 +122,9 @@ public class Permits extends ProjectObject
 		this.fire_sprinkler = fireSprinklerDate;
 		this.fire_alarm = fireAlarmPermitDate;
 		this.low_voltage = lowVoltagePermitDate;
-	  }
+		this.tempCertOccupancy = tempCertOccupancyPermitDate;
+		this.certOccupancy = certOccupancyPermitDate;
+	 }
 
 	public synchronized void setBuildingPermitDate( Date a)
 	{
@@ -177,7 +196,27 @@ public class Permits extends ProjectObject
 	{
 		return this.low_voltage;
 	}
+	
+	public synchronized void setTempCertOccupancyPermitDate(Date a)
+	{
+		this.tempCertOccupancy = a;
+	}
+	
+	public synchronized Date getTempCertOccupancyPermitDate()
+	{
+		return this.tempCertOccupancy;
+	}
 
+	public synchronized void setCertOccupancyPermitDate(Date a)
+	{
+		this.certOccupancy = a;
+	}
+	
+	public synchronized Date getCertOccupancyPermitDate()
+	{
+		return this.certOccupancy;
+	}
+	
 	public synchronized Date getBuilding() {
 		return building;
 	}
@@ -673,6 +712,104 @@ public class Permits extends ProjectObject
 	public synchronized void setGasInspectionLastUpdated(Date gasInspectionLastUpdated) {
 		this.gasInspectionLastUpdated = gasInspectionLastUpdated;
 	}
+	
+	//Temp Certificate of Occupancy
+	public Date getTempCertOccupancy() {
+		return tempCertOccupancy;
+	}
+
+	public void setTempCertOccupancy(Date tempCertOccupancy) {
+		this.tempCertOccupancy = tempCertOccupancy;
+	}
+
+	public String getTempCertOccupancyPermitRequired() {
+		return tempCertOccupancyPermitRequired;
+	}
+
+	public void setTempCertOccupancyPermitRequired(String tempCertOccupancyPermitRequired) {
+		this.tempCertOccupancyPermitRequired = tempCertOccupancyPermitRequired;
+	}
+
+	public String getTempCertOccupancyPermitStatus() {
+		return tempCertOccupancyPermitStatus;
+	}
+
+	public void setTempCertOccupancyPermitStatus(String tempCertOccupancyPermitStatus) {
+		this.tempCertOccupancyPermitStatus = tempCertOccupancyPermitStatus;
+	}
+
+	public String getTempCertOccupancyInspectionRequired() {
+		return tempCertOccupancyInspectionRequired;
+	}
+
+	public void setTempCertOccupancyInspectionRequired(String tempCertOccupancyInspectionRequired) {
+		this.tempCertOccupancyInspectionRequired = tempCertOccupancyInspectionRequired;
+	}
+
+	public String getTempCertOccupancyInspectionStatus() {
+		return tempCertOccupancyInspectionStatus;
+	}
+
+	public void setTempCertOccupancyInspectionStatus(String tempCertOccupancyInspectionStatus) {
+		this.tempCertOccupancyInspectionStatus = tempCertOccupancyInspectionStatus;
+	}
+
+	public Date getTempCertOccupancyInspectionLastUpdated() {
+		return tempCertOccupancyInspectionLastUpdated;
+	}
+
+	public void setTempCertOccupancyInspectionLastUpdated(Date tempCertOccupancyInspectionLastUpdated) {
+		this.tempCertOccupancyInspectionLastUpdated = tempCertOccupancyInspectionLastUpdated;
+	}
+
+	public Date getCertOccupancy() {
+		return certOccupancy;
+	}
+
+	public void setCertOccupancy(Date certOccupancy) {
+		this.certOccupancy = certOccupancy;
+	}
+
+	public String getCertOccupancyPermitRequired() {
+		return certOccupancyPermitRequired;
+	}
+
+	public void setCertOccupancyPermitRequired(String certOccupancyPermitRequired) {
+		this.certOccupancyPermitRequired = certOccupancyPermitRequired;
+	}
+
+	public String getCertOccupancyPermitStatus() {
+		return certOccupancyPermitStatus;
+	}
+
+	public void setCertOccupancyPermitStatus(String certOccupancyPermitStatus) {
+		this.certOccupancyPermitStatus = certOccupancyPermitStatus;
+	}
+
+	public String getCertOccupancyInspectionRequired() {
+		return certOccupancyInspectionRequired;
+	}
+
+	public void setCertOccupancyInspectionRequired(String certOccupancyInspectionRequired) {
+		this.certOccupancyInspectionRequired = certOccupancyInspectionRequired;
+	}
+
+	public String getCertOccupancyInspectionStatus() {
+		return certOccupancyInspectionStatus;
+	}
+
+	public void setCertOccupancyInspectionStatus(String certOccupancyInspectionStatus) {
+		this.certOccupancyInspectionStatus = certOccupancyInspectionStatus;
+	}
+
+	public Date getCertOccupancyInspectionLastUpdated() {
+		return certOccupancyInspectionLastUpdated;
+	}
+
+	public void setCertOccupancyInspectionLastUpdated(Date certOccupancyInspectionLastUpdated) {
+		this.certOccupancyInspectionLastUpdated = certOccupancyInspectionLastUpdated;
+	}
+
 
 	
 	public synchronized String getPermitNotes() {
@@ -828,8 +965,44 @@ public class Permits extends ProjectObject
 			else if(name.contains("InspectionStatus"))
 				return perms.getCeilingInspectionStatus();
 			else if(name.contains("InspectionLastUpdated"))
-				return perms.getCeilingInspectionLastUpdated();
+				return perms.getCeilingInspectionLastUpdated();    
 		}
+		
+		//Temp Certificate of Occupancy
+		else if(name.contains("tempCertOccupancy")) {
+			
+			if(name.equals("tempCertOccupancy"))
+				return perms.getTempCertOccupancy();
+			else if(name.contains("PermitRequired"))
+				return perms.getTempCertOccupancyPermitRequired();
+			else if(name.contains("PermitStatus"))
+				return perms.getTempCertOccupancyPermitStatus();
+			else if(name.contains("InspectionRequired"))
+				return perms.getTempCertOccupancyInspectionRequired();
+			else if(name.contains("InspectionStatus"))
+				return perms.getTempCertOccupancyInspectionStatus();
+			else if(name.contains("InspectionLastUpdated"))
+				return perms.getTempCertOccupancyInspectionLastUpdated();  
+			
+		}
+		
+		//Certificate of Occupancy
+				else if(name.contains("certOccupancy")) {
+					
+					if(name.equals("certOccupancy"))
+						return perms.getCertOccupancy();
+					else if(name.contains("PermitRequired"))
+						return perms.getCertOccupancyPermitRequired();
+					else if(name.contains("PermitStatus"))
+						return perms.getCertOccupancyPermitStatus();
+					else if(name.contains("InspectionRequired"))
+						return perms.getCertOccupancyInspectionRequired();
+					else if(name.contains("InspectionStatus"))
+						return perms.getCertOccupancyInspectionStatus();
+					else if(name.contains("InspectionLastUpdated"))
+						return perms.getCertOccupancyInspectionLastUpdated();  
+					
+				}
 		else if(name.contains("otherA"))
 		{
 			if(name.equals("otherA"))
@@ -875,6 +1048,8 @@ public class Permits extends ProjectObject
 		allRelationsFromStub("voltage" , fields);
 		allRelationsFromStub("sprinkler" , fields);
 		allRelationsFromStub("ceiling" , fields);
+		allRelationsFromStub("tempCertOccupancy", fields);
+		allRelationsFromStub("certOccupancy", fields);
 		allRelationsFromStub("otherA" , fields);
 		allRelationsFromStub("otherB" , fields);
 		

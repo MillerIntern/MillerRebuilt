@@ -247,6 +247,9 @@
 					<tr><td class = "bold">Fire Sprinkler Permit</td><td id='sprinklerPermit' class ="italics"></td><td id='sprinklerPermitDate' class ="italics"></td></tr>
 					<tr><td class = "bold">Fire Alarm Permit</td><td id='fireAlarmPermit' class ="italics"></td><td id='fireAlarmPermitDate' class ="italics"></td></tr>
 					<tr><td class = "bold">Low Voltage Permit</td><td id='lowVoltagePermit' class ="italics"></td><td id='lowVoltagePermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Temp Certificate of Occupation Permit</td><td id='tempCertOccupancyPermit' class ="italics"></td><td id='tempCertOccupancyPermitDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Certificate of Occupation Permit</td><td id='certOccupancyPermit' class ="italics"></td><td id='certOccupancyPermitDate' class ="italics"></td></tr>
+					
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Permits</button>
 			</div> <!-- Permits -->
@@ -261,6 +264,8 @@
 					<tr><td class = "bold">Fire Sprinkler Inspection</td><td id='sprinklerInspection' class ="italics"></td><td id='sprinklerInspectionDate' class ="italics"></td></tr>
 					<tr><td class = "bold">Fire Alarm Inspection</td><td id='fireAlarmInspection' class ="italics"></td><td id='fireAlarmInspectionDate' class ="italics"></td></tr>
 					<tr><td class = "bold">Low Voltage Inspection</td><td id='lowVoltageInspection' class ="italics"></td><td id='lowVoltageInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Temp Certificate of Occupation Inspection</td><td id='tempCertOccupancyInspection' class ="italics"></td><td id='tempCertOccupancyInspectionDate' class ="italics"></td></tr>
+					<tr><td class = "bold">Certificate of Occupation Inspection</td><td id='certOccupancyInspection' class ="italics"></td><td id='certOccupancyInspectionDate' class ="italics"></td></tr>
 				</table>	
 				<button onclick='editPermitsAndInspections()' type="button" class="project-edit btn btn-primary">Edit Inspections</button>
 			</div> <!-- Permits -->
@@ -293,7 +298,7 @@
 					<li class="list-group-item closeout-info-list-item" id="final-inspection-item">Final Inspections</li>
 					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters</li>	
 					<li class="list-group-item closeout-info-list-item" id="final-liens-item">Final Liens</li>
-					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA/MG2</li>
+					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA</li>
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
 				</ul>
 			</div> <!-- Closeout -->
@@ -877,7 +882,7 @@
 			<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters</a></li>
 			<li role='presentation' data-tab="finalLiens"><a>Final Liens</a></li>
-			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
+			<li role='presentation' data-tab="otherItems"><a>AIA</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
 	        <li onClick="saveProject_CLOSEOUT()" data-tab="saveButton">
 	        				<a>Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></a></li>
@@ -1153,7 +1158,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>HTI Warranty</td>
+	                <td class='bold'>Polymer Floor Warranty</td>
 	                <td>  
 	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input" id="HTIWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -1278,7 +1283,7 @@
 	                </td>   
 	            </tr>
 	            <tr>
-	                <td class='bold'>HTI Liens</td>
+	                <td class='bold'>Polymer Floor Liens</td>
 	                <td>  
 	                    <select data-associated-date='HTIDate' class="closeout-input" id="HTIStatus">
 	                        <option value="default">--Status--</option>

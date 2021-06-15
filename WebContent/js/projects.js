@@ -1445,6 +1445,12 @@ $(document).ready(function(){
 	$('#lowVoltagePermitLastUpdated_1').datepicker();
 	$('#lowVoltageInspectionLastUpdated_1').datepicker();
 	
+	$('#tempCertOccupancyPermitLastUpdated_1').datepicker();
+	$('#tempCertOccupancyInspectionLastUpdated_1').datepicker();
+	
+	$('#certOccupancyPermitLastUpdated_1').datepicker();
+	$('#certOccupancyInspectionLastUpdated_1').datepicker();
+	
 	$('#permitData').find("#buildingPermitLastUpdated").datepicker();
 	$('#permitData').find("#buildingInspectionLastUpdated").datepicker();
 	$('#permitData').find("#ceilingPermitLastUpdated").datepicker();
@@ -1463,6 +1469,12 @@ $(document).ready(function(){
 	$('#permitData').find("#fireAlarmPermitLastUpdated").datepicker();
 	$('#permitData').find("#voltagePermitLastUpdated").datepicker();
 	$('#permitData').find("#voltageInspectionLastUpdated").datepicker();
+	$('#permitData').find("#tempCertOccupancyPermitLastUpdated").datepicker();
+	$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").datepicker();
+	
+	
+	//$('#permitData').find("#certOccupancyPermitLastUpdated").datepicker();
+	//$('#permitData').find("#certOccupancyInspectionLastUpdated").datepicker();
 	$('#permitData').find("#otherAPermitLastUpdated").datepicker();
 	$('#permitData').find("#otherBPermitLastUpdated").datepicker();
 	$('#permitData').find("#otherAInspectionLastUpdated").datepicker();
@@ -1898,6 +1910,22 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#voltageInspectionStatus").val(convertUndefined(json.permits.voltageInspectionStatus));
 		$('#permitData').find("#voltageInspectionLastUpdated").val(json.permits.voltageInspectionLastUpdated);
 		
+		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(json.permits.tempCertOccupancy);
+		$('#permitData').find("#tempCertOccupancyPermitStatus").val(convertUndefined(json.permits.tempCertOccupancyPermitStatus));
+		$('#permitData').find("#tempCertOccupancyPermitReq").val(convertUndefined(json.permits.tempCertOccupancyPermitRequired));
+		$('#permitData').find("#tempCertOccupancyInspectionReq").val(convertUndefined(json.permits.tempCertOccupancyInspectionRequired));
+		$('#permitData').find("#tempCertOccupancyInspectionStatus").val(convertUndefined(json.permits.tempCertOccupancyInspectionStatus));
+		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(json.permits.tempCertOccupancyInspectionLastUpdated);
+		
+		/*
+		$('#permitData').find("#certOccupancyPermitLastUpdated").val(json.permits.certOccupancy);
+		$('#permitData').find("#certOccupancyPermitStatus").val(convertUndefined(json.permits.certOccupancyPermitStatus));
+		$('#permitData').find("#certOccupancyPermitReq").val(convertUndefined(json.permits.certOccupancyPermitRequired));
+		$('#permitData').find("#certOccupancyInspectionReq").val(convertUndefined(json.permits.certOccupancyInspectionRequired));
+		$('#permitData').find("#certOccupancyInspectionStatus").val(convertUndefined(json.permits.certOccupancyInspectionStatus));
+		$('#permitData').find("#certOccupancyInspectionLastUpdated").val(json.permits.certOccupancyInspectionLastUpdated);
+		*/
+		
 	    $('#permitData').find("#otherAPermitStatus").val(convertUndefined(json.permits.otherAPermitStatus));
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
 //	    $('#permitData').find("#otherAPermitReq").val(json.permits.otherAPermitRequired);
@@ -1994,6 +2022,21 @@ function fillTabs_PERMIT1(data)
 		$('#lowVoltageInspectionRequired_1').val(convertUndefined(json.permits.voltageInspectionRequired));
 		$('#lowVoltageInspectionStatus_1').val(convertUndefined(json.permits.voltageInspectionStatus));
 		$('#lowVoltageInspectionLastUpdated_1').val(json.permits.voltageInspectionLastUpdated);
+
+		$('#tempCertOccupancyPermitLastUpdated_1').val(json.permits.tempCertOccupancy);
+		$('#tempCertOccupancyPermitStatus_1').val(convertUndefined(json.permits.tempCertOccupancyPermitStatus));
+		$('#tempCertOccupancyPermitRequired_1').val(convertUndefined(json.permits.tempCertOccupancyPermitRequired));
+		$('#tempCertOccupancyInspectionRequired_1').val(convertUndefined(json.permits.tempCertOccupancyInspectionRequired));
+		$('#tempCertOccupancyInspectionStatus_1').val(convertUndefined(json.permits.tempCertOccupancyInspectionStatus));
+		$('#tempCertOccupancyInspectionLastUpdated_1').val(json.permits.tempCertOccupancyInspectionLastUpdated);
+
+		$('#certOccupancyPermitLastUpdated_1').val(json.permits.certOccupancy);
+		$('#certOccupancyPermitStatus_1').val(convertUndefined(json.permits.certOccupancyPermitStatus));
+		$('#certOccupancyPermitRequired_1').val(convertUndefined(json.permits.certOccupancyPermitRequired));
+		$('#certOccupancyInspectionRequired_1').val(convertUndefined(json.permits.certOccupancyInspectionRequired));
+		$('#certOccupancyInspectionStatus_1').val(convertUndefined(json.permits.certOccupancyInspectionStatus));
+		$('#certOccupancyInspectionLastUpdated_1').val(json.permits.certOccupancyInspectionLastUpdated);
+
 		
 	    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData"); //What is this doing (A.G)
 	    $('#permitNotes_1').val(json.permits.permitNotes);
@@ -2563,6 +2606,94 @@ function filllowVoltage1()
     }  
 }	
 
+/*
+function filltempCertOccupancy()
+{
+	if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 1)
+	{	
+		$('#permitData').find("#tempCertOccupancyPermitStatus").val("TBD");
+		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
+	    $('#permitData').find("#tempCertOccupancyInspectionReq").val(1);
+        $('#permitData').find("#tempCertOccupancyInspectionStatus").val("TBD");
+        $('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());
+	}    
+    else if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 2)
+    {	
+    	$('#permitData').find("#tempCertOccupancyPermitStatus").val("N/A");
+		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
+    	$('#permitData').find("#tempCertOccupancyInspectionReq").val(2);
+		$('#permitData').find("#tempCertOccupancyInspectionStatus").val("N/A");
+		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());    
+    }
+    else if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 0)
+    {	
+    	$('#permitData').find("#tempCertOccupancyPermitStatus").val("TBD");
+		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
+		$('#permitData').find("#tempCertOccupancyInspectionReq").val(0);
+		$('#permitData').find("#tempCertOccupancyInspectionStatus").val("TBD");
+		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());    
+    }  
+}
+*/
+
+function filltempCertOccupancy1()
+{	
+	if($('#tempCertOccupancyPermitRequired_1').val() == 1)
+	{	
+		$('#tempCertOccupancyPermitStatus_1').val("Preparing");
+		$('#tempCertOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#tempCertOccupancyInspectionRequired_1').val(1);
+        $('#tempCertOccupancyInspectionStatus_1').val("TBD");
+        $('#tempCertOccupancyInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#tempCertOccupancyPermitRequired_1').val() == 2)
+    {	$('#tempCertOccupancyPermitStatus_1').val("N/A");
+		$('#tempCertOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#tempCertOccupancyInspectionRequired_1').val(2);
+	    $('#tempCertOccupancyInspectionStatus_1').val("N/A");
+	    $('#tempCertOccupancyInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#tempCertOccupancyPermitRequired_1').val() == 0)
+    {	
+		$('#tempCertOccupancyPermitStatus_1').val("TBD");
+		$('#tempCertOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#tempCertOccupancyInspectionRequired_1').val(0);
+        $('#tempCertOccupancyInspectionStatus_1').val("TBD");
+        $('#tempCertOccupancyInspectionLastUpdated_1').val(getToday());  
+    }  
+}	
+
+function fillcertOccupancy1()
+{	
+	if($('#certOccupancyPermitRequired_1').val() == 1)
+	{	
+		$('#certOccupancyPermitStatus_1').val("Preparing");
+		$('#certOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#certOccupancyInspectionRequired_1').val(1);
+        $('#certOccupancyInspectionStatus_1').val("TBD");
+        $('#certOccupancyInspectionLastUpdated_1').val(getToday());
+	}    
+    else if($('#certOccupancyPermitRequired_1').val() == 2)
+    {	$('#certOccupancyPermitStatus_1').val("N/A");
+		$('#certOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#certOccupancyInspectionRequired_1').val(2);
+	    $('#certOccupancyInspectionStatus_1').val("N/A");
+	    $('#certOccupancyInspectionLastUpdated_1').val(getToday());
+    	
+    }
+    else if($('#certOccupancyPermitRequired_1').val() == 0)
+    {	
+		$('#certOccupancyPermitStatus_1').val("TBD");
+		$('#certOccupancyPermitLastUpdated_1').val(getToday());
+	    $('#certOccupancyInspectionRequired_1').val(0);
+        $('#certOccupancyInspectionStatus_1').val("TBD");
+        $('#certOccupancyInspectionLastUpdated_1').val(getToday());  
+    }  
+}	
+
+
+
 function fillOtherA()
 {
 	if($('#permitData').find("#otherAPermitReq").val() == 1)
@@ -2628,6 +2759,7 @@ function fillOtherB()
  * INNER FUNCTION CALLS: isValidInput_PERMIT(), updateFrontEnd()
  * @returns
  */
+/*
 function saveProject_PERMIT()
 {
     console.log("Saving Permit Information");
@@ -2695,6 +2827,14 @@ function saveProject_PERMIT()
     var voltageInspectionStatus = $('#permitData').find("#voltageInspectionStatus").val();
     var voltageInspectionLastUpdated = $('#permitData').find("#voltageInspectionLastUpdated").val();
     
+    //Temp Certificate of Occupancy
+    var tempCertOccupancyReq = $('#permitData').find("#tempCertOccupancyPermitReq").val();
+    var tempCertOccupancyStatus = $('#permitData').find("#tempCertOccupancyPermitStatus").val();
+    var tempCertOccupancyPermitLastUpdated = $('#permitData').find("#tempCertOccupancyPermitLastUpdated").val();
+    var tempCertOccupancyInspectionReq = $('#permitData').find("#tempCertOccupancyInspectionReq").val();
+    var tempCertOccupancyInspectionStatus = $('#permitData').find("#tempCertOccupancyInspectionStatus").val();
+    var tempCertOccupancyLastUpdated = $('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val();
+    
  //   var otherAPermitReq = $('#permitData').find("#otherAPermitReq").val();
     var otherAPermitStatus = $('#permitData').find("#otherAPermitStatus").val();
     var otherAPermitLastUpdated = $('#permitData').find("#otherAPermitLastUpdated").val();
@@ -2725,6 +2865,7 @@ function saveProject_PERMIT()
 				sprinklerPermitLastUpdated, sprinklerInspectionLastUpdated,
 				fireAlarmPermitLastUpdated, fireAlarmInspectionLastUpdated,
 				voltagePermitLastUpdated, voltageInspectionLastUpdated,
+				tempCertOccupancyPermitLastUpdated,tempCertOccupancyInspectionLastUpdated,
 				otherAPermitLastUpdated, otherAInspectionLastUpdated,
 				otherBPermitLastUpdated, otherBInspectionLastUpdated,
                 ];
@@ -2758,6 +2899,8 @@ function saveProject_PERMIT()
     		if(i == 19) otherAInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 20) otherBPermitLastUpdated = dates_PERMIT[i];
     		if(i == 21) otherBInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 22) tempCertOccupancyPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 23) tempCertOccupancyInspectionLastUpdated = dates_PERMIT[i];
     	}
 		var action = "editPermits";
 		var PERMIT_ID = 0;
@@ -2853,6 +2996,13 @@ function saveProject_PERMIT()
 				'gasInspectionStatus': gasInspectionStatus,
 				'gasInspectionLastUpdated': gasInspectionLastUpdated,
 				
+				'tempCertOccupancy_p': tempCertOccupancyLastUpdated,
+				'tempCertOccupancyStatus': tempCertOccupancyStatus,
+				'tempCertOccupancyReq': tempCertOccupancyReq,
+				'tempCertOccupancyInspectionReq': tempCertOccupancyInspectionReq,
+				'tempCertOccupancyInspectionStatus': tempCertOccupancyInspectionStatus,
+				'tempCertOccupancyLastUpdated': tempCertOccupancyLastUpdated,
+				
 				'otherPermitA': otherAPermitLastUpdated,
 				'otherAPermitStatus': otherAPermitStatus,
 	//			'otherAPermitReq': otherAPermitReq,
@@ -2877,22 +3027,10 @@ function saveProject_PERMIT()
 				
 				
 				//getProject_PROJECT_MANAGER(projectID , 1);
-				/*
-				$('#permitData').find('#saveButton > button').prop('disabled', false);
-				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active');
-
-				$(".editProject").hide();
-				$("#projectManager").show();
-				*/
-				
 				
 				//goToProjectManager();
 
 			},
-			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
-			 * Code works perfectly with error statement 
-			  Need to figure out how to fix this error to work 100 percent correctly*/
 			
 			 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			error: function(data)
@@ -2901,14 +3039,7 @@ function saveProject_PERMIT()
 				updateFrontEnd();
 				//getProject_PROJECT_MANAGER(projectID , 1);
 				alert('Save Complete!');
-				/*
-				$('#permitData').find('#saveButton > button').prop('disabled', false);
-				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active');
 
-				$(".editProject").hide();
-				$("#projectManager").show();
-				*/
 				//goToProjectManager();
 			
 				
@@ -2916,6 +3047,7 @@ function saveProject_PERMIT()
 		});
     }  
 }
+*/
 
 function saveProject_PERMIT1()
 {
@@ -2983,7 +3115,20 @@ function saveProject_PERMIT1()
     var voltageInspectionReq = $("#lowVoltageInspectionRequired_1").val();
     var voltageInspectionStatus = $("#lowVoltageInspectionStatus_1").val();
     var voltageInspectionLastUpdated = $("#lowVoltageInspectionLastUpdated_1").val();
+
+    var tempCertOccupancyPermitReq = $("#tempCertOccupancyPermitRequired_1").val();
+    var tempCertOccupancyPermitStatus = $("#tempCertOccupancyPermitStatus_1").val();
+    var tempCertOccupancyPermitLastUpdated = $("#tempCertOccupancyPermitLastUpdated_1").val();
+    var tempCertOccupancyInspectionReq = $("#tempCertOccupancyInspectionRequired_1").val();
+    var tempCertOccupancyInspectionStatus = $("#tempCertOccupancyInspectionStatus_1").val();
+    var tempCertOccupancyInspectionLastUpdated = $("#tempCertOccupancyInspectionLastUpdated_1").val();
     
+    var certOccupancyPermitReq = $("#certOccupancyPermitRequired_1").val();
+    var certOccupancyPermitStatus = $("#certOccupancyPermitStatus_1").val();
+    var certOccupancyPermitLastUpdated = $("#certOccupancyPermitLastUpdated_1").val();
+    var certOccupancyInspectionReq = $("#certOccupancyInspectionRequired_1").val();
+    var certOccupancyInspectionStatus = $("#certOccupancyInspectionStatus_1").val();
+    var certOccupancyInspectionLastUpdated = $("#certOccupancyInspectionLastUpdated_1").val();
     
     //Akash - Don't know why Lily or the previous developer commeneted some lines. It's working good without them. I am leaving them be.
     //I have given these otherA and otherB the same values as lowVoltage for now. So that in the future I can append the actual ones if they need these
@@ -3017,6 +3162,8 @@ function saveProject_PERMIT1()
 				sprinklerPermitLastUpdated, sprinklerInspectionLastUpdated,
 				fireAlarmPermitLastUpdated, fireAlarmInspectionLastUpdated,
 				voltagePermitLastUpdated, voltageInspectionLastUpdated,
+				tempCertOccupancyPermitLastUpdated, tempCertOccupancyInspectionLastUpdated,
+				certOccupancyPermitLastUpdated, certOccupancyInspectionLastUpdated,
 				otherAPermitLastUpdated, otherAInspectionLastUpdated,
 				otherBPermitLastUpdated, otherBInspectionLastUpdated,
                 ];
@@ -3050,6 +3197,10 @@ function saveProject_PERMIT1()
     		if(i == 19) otherAInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 20) otherBPermitLastUpdated = dates_PERMIT[i];
     		if(i == 21) otherBInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 22) tempCertOccupancyPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 23) tempCertOccupancyInspectionLastUpdated = dates_PERMIT[i];
+    		if(i == 24) certOccupancyPermitLastUpdated = dates_PERMIT[i];
+    		if(i == 25) certOccupancyInspectionLastUpdated = dates_PERMIT[i];
     	}
 		var action = "editPermits";
 		var PERMIT_ID = 0;
@@ -3144,6 +3295,21 @@ function saveProject_PERMIT1()
 				'gasInspectionReq': gasInspectionReq,
 				'gasInspectionStatus': gasInspectionStatus,
 				'gasInspectionLastUpdated': gasInspectionLastUpdated,
+				
+				'tempCertOccupancy_p': tempCertOccupancyPermitLastUpdated,
+				'tempCertOccupancyPermitStatus': tempCertOccupancyPermitStatus,
+				'tempCertOccupancyPermitReq': tempCertOccupancyPermitReq,
+				'tempCertOccupancyInspectionReq': tempCertOccupancyInspectionReq,
+				'tempCertOccupancyInspectionStatus': tempCertOccupancyInspectionStatus,
+				'tempCertOccupancyInspectionLastUpdated': tempCertOccupancyInspectionLastUpdated,
+				
+				'certOccupancy_p': certOccupancyPermitLastUpdated,
+				'certOccupancyPermitStatus': certOccupancyPermitStatus,
+				'certOccupancyPermitReq': certOccupancyPermitReq,
+				'certOccupancyInspectionReq': certOccupancyInspectionReq,
+				'certOccupancyInspectionStatus': certOccupancyInspectionStatus,
+				'certOccupancyInspectionLastUpdated': certOccupancyInspectionLastUpdated,
+				
 				
 				'otherPermitA': otherAPermitLastUpdated,
 				'otherAPermitStatus': otherAPermitStatus,
@@ -3217,7 +3383,8 @@ function saveProject_PERMIT1()
     console.log("S INS", sprinklerInspectionStatus);
     console.log("F INS", fireAlarmInspectionStatus);
     console.log("V INS", voltageInspectionStatus);    
-    
+    console.log("T INS", tempCertOccupancyInspectionStatus);
+    console.log("TC INS", certOccupancyInspectionStatus);
     
     
     
@@ -5090,6 +5257,16 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#lowVoltagePermitDate').text(tabData.low_voltage);
 	$('#projectManager').find('#lowVoltagePermit').text(convertStatus(tabData.voltagePermitStatus));
 	
+	$('#projectManager').find('#tempCertOccupancyPermitRequired').text(convertRequired(tabData.tempCertOccupancyPermitRequired));
+	$('#projectManager').find('#tempCertOccupancyPermitDate').text(tabData.tempCertOccupancy);
+	$('#projectManager').find('#tempCertOccupancyPermit').text(convertStatus(tabData.tempCertOccupancyPermitStatus));
+	
+	//Required
+	$('#projectManager').find('#certOccupancyPermitRequired').text(convertRequired(tabData.certOccupancyPermitRequired));
+	$('#projectManager').find('#certOccupancyPermitDate').text(tabData.certOccupancy);
+	$('#projectManager').find('#certOccupancyPermit').text(convertStatus(tabData.certOccupancyPermitStatus));
+	
+	
 	// inspections
 	$('#projectManager').find('#buildingInspectionRequired').text(convertRequired(tabData.buildingInspectionRequired));
 	$('#projectManager').find('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
@@ -5126,6 +5303,15 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#lowVoltageInspectionRequired').text(convertRequired(tabData.fireAlarmInspectionRequired));
 	$('#projectManager').find('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#projectManager').find('#lowVoltageInspection').text(convertStatus(tabData.voltageInspectionStatus));
+
+	$('#projectManager').find('#tempCertOccupancyInspectionRequired').text(convertRequired(tabData.tempCertOccupancyInspectionRequired));
+	$('#projectManager').find('#tempCertOccupancyInspectionDate').text(tabData.tempCertOccupancyInspectionLastUpdated);
+	$('#projectManager').find('#tempCertOccupancyInspection').text(convertStatus(tabData.tempCertOccupancyInspectionStatus));
+
+	//Required
+	$('#projectManager').find('#certOccupancyInspectionRequired').text(convertRequired(tabData.certOccupancyInspectionRequired));
+	$('#projectManager').find('#certOccupancyInspectionDate').text(tabData.certOccupancyInspectionLastUpdated);
+	$('#projectManager').find('#certOccupancyInspection').text(convertStatus(tabData.certOccupancyInspectionStatus));
 }
 
 function clearPermitsAndInspectionsOverview () {
@@ -12548,6 +12734,7 @@ function getScoreRules(project_id){
 				let tableCloseOut = document.getElementById('closeOutFailedTable').getElementsByTagName('tbody')[0];
 				
 				let scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders, scoreTasks, scoreCloseOut, scoreFinancial ;
+				
 				//GREEN 
 				scoreGeneral=scoreScheduling=scorePermits= scoreEquipment= scoreChangeOrders= scoreTasks= scoreCloseOut= scoreFinancial =["#59ba63", ""] ;
 				

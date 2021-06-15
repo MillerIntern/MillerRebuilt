@@ -110,6 +110,37 @@ public class PermitsFiller
 		permits.setVoltagePermitStatus(params.get("voltagePermitStatus"));
 		permits.setVoltagePermitRequired(params.get("voltagePermitReq"));
 
+		
+		//Temp certification of occupancy
+		Date tempCertOccupancyPermit = null;
+		if(!params.get("tempCertOccupancy_p").isEmpty())
+			tempCertOccupancyPermit = formatter.parse(params.get("tempCertOccupancy_p"));
+		permits.setTempCertOccupancyPermitDate(tempCertOccupancyPermit);
+		Date tempCertOccupancy = null;
+		if(!params.get("tempCertOccupancyInspectionLastUpdated").isEmpty())
+			tempCertOccupancy = formatter.parse(params.get("tempCertOccupancyInspectionLastUpdated"));
+		permits.setTempCertOccupancyInspectionLastUpdated(tempCertOccupancy);
+		permits.setTempCertOccupancyInspectionStatus(params.get("tempCertOccupancyInspectionStatus"));
+		permits.setTempCertOccupancyInspectionRequired(params.get("tempCertOccupancyInspectionReq"));
+		permits.setTempCertOccupancyPermitStatus(params.get("tempCertOccupancyPermitStatus"));
+		permits.setTempCertOccupancyPermitRequired(params.get("tempCertOccupancyPermitReq"));
+		
+		
+		//Temp certification of occupancy
+				Date certOccupancyPermit = null;
+				if(!params.get("certOccupancy_p").isEmpty())
+					certOccupancyPermit = formatter.parse(params.get("certOccupancy_p"));
+				permits.setCertOccupancyPermitDate(certOccupancyPermit);
+				Date certOccupancy = null;
+				if(!params.get("certOccupancyInspectionLastUpdated").isEmpty())
+					certOccupancy = formatter.parse(params.get("certOccupancyInspectionLastUpdated"));
+				permits.setCertOccupancyInspectionLastUpdated(certOccupancy);
+				permits.setCertOccupancyInspectionStatus(params.get("certOccupancyInspectionStatus"));
+				permits.setCertOccupancyInspectionRequired(params.get("certOccupancyInspectionReq"));
+				permits.setCertOccupancyPermitStatus(params.get("certOccupancyPermitStatus"));
+				permits.setCertOccupancyPermitRequired(params.get("certOccupancyPermitReq"));
+				
+		
 		Date ceilingPermit = null;
 		if(!params.get("ceilingPermit").isEmpty())
 			ceilingPermit = formatter.parse(params.get("ceilingPermit"));

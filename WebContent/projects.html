@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -19,9 +20,6 @@
 	<!-- <script src="js/autofill.js"></script> -->
 	
 	
-	
-	
-
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/findProjectNew.css" rel="stylesheet">
@@ -411,19 +409,43 @@
 						<td align="center" id='lowVoltageInspection' class ="italics inspectionTableData"></td>
 						<td align="center" id='lowVoltageInspectionDate' class ="italics inspectionTableData"></td>
 					</tr>
+					
+					<tr onclick="editSpecificPermitsAndInspections('sprinkler')">
+						<td class = "bold">Temp Cert Occupancy</td>
+						<td align="center" id='tempCertOccupancyPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='tempCertOccupancyPermit' class ="italics permitTableData"></td>
+						<td align="center" id='tempCertOccupancyPermitDate' class ="italics permitTableData"></td>	
+						<td align="center" id='tempCertOccupancyInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='tempCertOccupancyInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='tempCertOccupancyInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
+					
+					<tr onclick="editSpecificPermitsAndInspections('sprinkler')">
+						<td class = "bold">Cert Occupancy</td>
+						<td align="center" id='certOccupancyPermitRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='certOccupancyPermit' class ="italics permitTableData"></td>
+						<td align="center" id='certOccupancyPermitDate' class ="italics permitTableData"></td>	
+						<td align="center" id='certOccupancyInspectionRequired' class="italics inspectionTableData"></td>
+						<td align="center" id='certOccupancyInspection' class ="italics inspectionTableData"></td>
+						<td align="center" id='certOccupancyInspectionDate' class ="italics inspectionTableData"></td>
+					</tr>
 					</tbody>
 				</table>	
 				<table class='table table-hover'>
 					<tr>
-						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td align="left" class = "bold" width = 13%>Permit/Inspection Notes</td>
+						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 						<td width = 13%></td>
 					</tr>
+					
+					
+					<!-- Commenting out this field and just combining it with the one above to make one text field
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
 						<td><textarea id='inspectionNotes2' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>
 						<td><button class = "btn btn-success"onclick = "savePermitInspectionNotes()">Save Notes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button></td>
 					</tr>
+					 -->
 					
 				</table>		
 			</div> <!-- Permits and Inspections -->
@@ -480,9 +502,9 @@
 				-->
 				<ul id = "closeOutList" class="closeout-information list-group">
 					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
-					<li class="list-group-item closeout-info-list-item" id="final-inspection-item" >Final Inspections</li>
+					<!-- <li class="list-group-item closeout-info-list-item" id="final-inspection-item" >Final Inspections</li> -->
 					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
-					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA/MG2</li>
+					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA</li>
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
 				</ul>
 			</div> <!-- Closeout -->
@@ -504,57 +526,41 @@
 						</tr>
 					</thead>
 					<tbody class = "pointer">
-					
-					<!-- General Information -->
 					 <tr onclick ="getFailedRules('generalInfoFailedTable');">
 	   					<td>General Information</td>	    				
 	    				<td id = "generalInfoScore"> </td>
 	    				<td id = "generalIssues"></td>    				
 	 				 </tr>
-	 				 
-	 				 <!-- Scheduling  -->
 	 				  <tr onclick ="getFailedRules('schedulingFailedTable');">
 	   					<td>Scheduling</td>	    				
 	    				<td id = "schedulingScore"> </td>
 	    				<td id ="schedulingIssues"></td>    				
 	 				 </tr>
-	 				 
-	 				 <!-- Permits and Inspections -->
 	 				  <tr onclick ="getFailedRules('permitsFailedTable');">
 	   					<td>Permits & Inspections</td>	    				
 	    				<td id = "permitsAndInspectionsScore"> </td>
 	    				<td id ="permitsIssues"></td>    				
 	 				 </tr>
-	 				 
-	 				 <!-- Equipment -->
 	 				  <tr onclick = "getFailedRules('equipmentFailedTable');">
 	   					<td>Equipment</td>
 	    				<td id = "equipmentScore"> </td>
 	    				<td id ="equipmentIssues"></td>   				
 	 				 </tr>
-	 				 
-	 				 <!-- Change Order -->
 	 				  <tr onclick = "getFailedRules('changeOrdersFailedTable');">
 	   					<td>Change Order</td>	    			
 	    				<td id = "changeOrdersScore"> </td>
 	    				<td id ="changeordersIssues"></td>   				
 	 				 </tr>
-	 				 
-	 				 <!-- Tasks -->
 	 				  <tr onclick ="getFailedRules('tasksFailedTable');">
 	   					<td>Tasks</td>	    			
 	    				<td id = "tasksScore"> </td>
 	    				<td id ="tasksIssues"></td>    				
 	 				 </tr>
-	 				 
-	 				 <!-- Closeout -->
 	 				  <tr onclick ="getFailedRules('closeOutFailedTable');">
 	   					<td>Closeout</td>	    				
 	    				<td id = "closeoutScore"> </td>
 	    				<td id ="closeoutIssues"></td>   				
 	 				 </tr>
-	 				 
-	 				 <!-- Financial -->
 	 				  <tr onclick ="getFailedRules('financialFailedTable');">
 	   					<td>Financial</td>	   				
 	    				<td id = "financialScore"> </td>
@@ -1712,18 +1718,108 @@
 		            	<input type="text" placeholder="Select a Date" id="lowVoltageInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
 					</td>
 					</tr>
+					
+					<!-- Temp Certificate of Occupancy -->
+					<tr>
+						<td class = "bold" >Temp Cert Occupancy</td>
+
+						<td align="center">
+					    <select id='tempCertOccupancyPermitRequired_1' data-associated-date='tempCertOccupancyPermitLastUpdated_1' onchange="filltempCertOccupancy1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+						<select data-associated-date='tempCertOccupancyPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="tempCertOccupancyPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="tempCertOccupancyPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "tempCertOccupancyInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="tempCertOccupancyInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="tempCertOccupancyInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					</tr>
+
+					<!-- Certificate of Occupancy -->
+					<tr>
+						<td class = "bold" >Cert Occupancy</td>
+
+						<td align="center">
+					    <select id='certOccupancyPermitRequired_1' data-associated-date='certOccupancyPermitLastUpdated_1' onchange="fillcertOccupancy1()" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+
+					<td align="center">
+						<select data-associated-date='certOccupancyPermitLastUpdated_1' class="selectNoBorder permitStatus autofill-Permit-Status" id="certOccupancyPermitStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					
+				
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="certOccupancyPermitLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					
+						
+					<td align="center">
+					    <select id = "certOccupancyInspectionRequired_1" class = "selectNoBorder">
+					        <option value="default">--Required--</option>
+					        <option value="1">Yes</option>
+                            <option value="2">No</option>
+                            <option value="0">TBD</option>
+					    </select>
+					</td>
+					
+					<td align="center">
+						<select class="selectNoBorder inspectionStatus autofill-Inspection-Status" id="certOccupancyInspectionStatus_1">
+							<option value="default">--Status--</option>
+						</select>
+					</td>
+					<td align="center">
+		            	<input type="text" placeholder="Select a Date" id="certOccupancyInspectionLastUpdated_1" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+					</td>
+					</tr>
 					</tbody>
 				</table>
 				<table class='table table-hover'>
 					<tr>
-						<td align="left" class = "bold" width = 13%>Permit Notes</td>
-						<td><textarea style="width:100%" id='permitNotes_1' class="scrollTextBoxPermits" rows="5" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td align="left" class = "bold" width = 10%>Permit/Inspection Notes</td>
+						<td><textarea style = " width:800px;height:100px;" id='permitNotes_1' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 
 					</tr>
+					<!-- Removing this field and combining it with the one above to create one text field
 					<tr>
 						<td align="left" class = "bold">Inspection Notes</td>
 						<td><textarea id='inspectionNotes_1' class="scrollTextBoxPermits" rows='5' cols='30' maxlength = "500" ondblclick = "dateFillFunction(this)"></textarea></td>					
 					</tr>
+					 -->
 					
 				</table>		
 				
@@ -1763,79 +1859,109 @@
 	        id = "genFailedRules" class = "btn btn-success" onclick = "returnToFailedRules('general')" > 		 -->		
 		</ul>
 
+		
 		<div style= "position:relative" id="generalInformation" class="info-tab active">
 		 <div class="generalOverFlowScroll">
 			<table id="generalInformationTable" class='table table-hover'>
 		
+		
+		<!-- Row 1 -->
 			<tr>
 			
-			<!-- MCS PROJECT -->
+			<!-- MCS Project # -->
 	        <td style="width: 20%"><b>MCS Project #</b></td>
 	        <td><input id="mcsNumber" type="text" maxlength="5"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"></td>
 	        
-	        <!--  WAREHOUSE -->
+	        
+	        <!-- Warehouse -->
 	        <td><b>Warehouse</b></td>
 	        <td>
 	        <select id="warehouse" class="pointer"><option value="default">--Please select an option--</option></select>
 	        </td>
 	        
 	        </tr>
-
+	
 	        <tr>
 	        
-	        <!-- ITEM -->
+			<!-- Row 2 -->
+			
+			<!-- Item -->
 	        <td style="width: 20%"><b>Item</b></td>
 	        <td>
 	        <select id="project" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
-			
-			<!-- PROJECT -->
-			<td><b>Project</b></td>
+	        
+	        <!-- Project -->
+	        <td><b>Project</b></td>
 	       	<td>
 	        <select id="class"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Project?  NOTE: The Project-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillProjectClass(); }">
 	        	<option value="default">--Please specify the project type--</option>
 	        </select>
 			</td>
-			
+	        
+	        
 	        </tr>
 	
+			<!-- Row 3 -->
 	        <tr>
 	        
-	        <!-- MANAGER -->
+	        <!-- Manager -->
 	        <td><b>Manager</b></td>
 	        <td><select id="manager" class="pointer"><option value="default">--Please select an option--</option></select></td>
+	        
+	        <!-- Supervisor -->
 	        <td style="width: 20%"><b>Supervisor</b></td>
 	        <td style="width: 30%"><select id="supervisor" class="pointer"><option value="default">--Please select an option--</option></select></td>
+	        
+	        
 	        </tr>
 	
+			<!-- Row 4 -->
 	        <tr>
 	        
-	        <!-- STAGE -->
+	        <!-- Stage -->
 	        <td><b>Stage</b></td>
 	        <td><select id="stage" class="pointer" onChange = "changeStatus()" onLoad = "changeStatus()"><option value="default">--Please select an option--</option></select></td>
 	        
-	        <!-- STATUS -->
+	        
+	        <!-- Status -->
 	        <td><b>Status</b></td>
 	        <td><select id="status" class="pointer"><option value="default">--Please select an option--</option></select></td>
 			</tr>
-	
+			
+			
+			<!-- Row 5 -->
 	        <tr>
 	        
-	        <!-- TYPE -->
+	        <!-- Type -->
 	        <td><b>Type</b></td>
 	        <td>
 	        <select id="pType" class="pointer"><option value="default">--Please select an option--</option></select>
 			</td>
 			
-			<!-- CUSTOMER APPROVAL -->
+			
+			<!-- Customer Approval -->
 			<td><b>Customer Approval</b></td>
             <td><select id="customerApproval" class="pointer"><option value="default">--Please select an option--</option></select></td>
-	        			
+	        
+			
 			</tr>
 			
+			<!-- Row 6 -->
 			<tr>
-	         
-	         <!-- Refrigeration -->
+			
+			<!-- HVAC -->
+			<td><b>HVAC</b></td>
+			<td>
+			<select id="autofill-HVAC"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
+				<option value="default">--Does this project require an HVAC unit?--</option>
+				<option value="1">Yes</option>
+                <option value="0">No</option> 
+                <option value="2">TBD</option>   
+            </select>
+	        </td>
+	        
+	        <!-- Refrigeration -->
 	        <td><b>Refrigeration</b></td>
 	        <td>
 	        <select id="autofill-Refrigeration" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Refrigeration?  NOTE: The Refrigeration-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else{ autofillRefrigeration(); }">
@@ -1846,23 +1972,13 @@
             </select>
 	        </td>
 	        
-	        <!-- HVAC -->
-	        <td><b>HVAC</b></td>
-			<td>
-			<select id="autofill-HVAC"  class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of HVAC?  NOTE: The HVAC-related data in the Closeout tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; }  else { autofillHVAC(); }">
-				<option value="default">--Does this project require an HVAC unit?--</option>
-				<option value="1">Yes</option>
-                <option value="0">No</option> 
-                <option value="2">TBD</option>   
-            </select>
-	        </td>
-	        
 	        </tr>
 	        
-			<tr>
-    
-	        <!-- PERMITS -->
-	         <td><b>Permits</b></td>
+	        <!-- Row 7 -->
+	        <tr>
+	        
+	        <!-- Permits -->
+	        <td><b>Permits</b></td>
 	        <td>
 	        <select id="autofill-Permits" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if(confirm('Are you sure you want to change the value of Permits?  NOTE: All of the data in the Permits and Inspections tab will be auto-filled again.')==false){ this.value=this.getAttribute('PrvSelectedValue');return false; } else { autofillPermits(); }">
 	        	<option value="default">--Does this project require permits?--</option>
@@ -1871,35 +1987,38 @@
                 <option value="0">TBD</option>	        
 	        </select>
             </td>
-            
-            <!-- KEY STATUS -->
+	        
+	        <!-- Key status -->
 	        <td style="width: 20%"><b>Key Status</b></td>
 	        <td><input id="keyStatus" type="text" maxlength="30" style = "width:250px"></td>
 	        
-			</tr>
-			
-			<tr>
-	        
-	        <!-- SCOPE -->
-	        <td class="bold">Scope</td>
-	        <td><textarea style = width:280px;height:150px; class="scrollTextBox" maxlength="999" id="scope" rows="3" cols="50"></textarea></td>
-	        
-	        <!-- MCS NOTES -->
-	        <td class="bold">MCS Notes</td>
-	        <td rowspan="2"><textarea style = " width:600px;height:150px;" class="scrollTextBox" maxlength="999 id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
 	        
 	        </tr>
+	        
+	        <!-- Row 8 -->
+	        <tr>
+            
+            <!-- Scope -->
+            <tr>
+	        <td class="bold">Scope</td>
+	        <td><textarea class="scrollTextBox" maxlength="999" id="scope" rows="5" cols="40"></textarea></td>
+	        
+    	    <!-- MCS Notes -->
+	         <td class="bold">MCS Notes</td>
+	        <td rowspan="2"><textarea style = " width:600px;height:159px;" class="scrollTextBox" maxlength="999" id="notes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
+            </tr>
+	        
 	        
 	        <!-- This is an unused text field. If at some point someone would like to add a new text field for general information about a project, simply uncomment and rename this field.
 	        <tr>
 	        <td class="bold">Customer Notes TEST</td>
 	        <td><textarea  class="scrollTextBox" maxlength="999" id="zUpdates" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
-	        </tr>	 -->     
-	          
+	        </tr>	
+	  -->       
+			
 	        </table>
 	        </div>   
-		</div> 
-		<!-- End General Information -->
+		</div> <!-- End General Information -->
 		
 		<div id="schedulingInformation" class="info-tab info-tab-schedulingInformation"> 
 		    <table style="border-bottom: none" id="schedulingInformationTable" class='table table-hover'>
@@ -2767,9 +2886,9 @@
 	
 		<ul class="nav nav-tabs">
 			<li id = "closeout" role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
-			<li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li>
+			<!-- <li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li> -->
 	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
-			<li role='presentation' data-tab="otherItems"><a>AIA/MG2</a></li>
+			<li role='presentation' data-tab="otherItems"><a>AIA</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
 	        <li style="top:4px;float:right;" class="btn btn-success" onClick="saveProject_CLOSEOUT()" data-tab="saveButton" id = "save-closeout">
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
@@ -3204,7 +3323,7 @@
 	                </td>   
 	            </tr> 	           
 	            <tr>
-	                <td class='bold'>HTI Warranty</td>
+	                <td class='bold'>Polymer Floor Warranty</td>
 	                <td style="text-align: center">  
 	                    <select data-associated-date='HTIWarrantyDate' class="closeout-input autofill-Closeout" id="HTIWarrantyStatus">
 	                        <option value="default">--Status--</option>
@@ -3213,7 +3332,7 @@
 	                <td style="text-align: center">
 	                    <input type="text" placeholder="Select a Date" class="autofill-Closeout-Date" id="HTIWarrantyDate" />
 	                </td>   
-	                <td class='bold'>HTI Lien</td>
+	                <td class='bold'>Polymer Floor Lien</td>
 	                <td style="text-align: center">  
 	                    <select data-associated-date='HTIDate' class="closeout-input autofill-Closeout" id="HTIStatus">
 	                        <option value="default">--Status--</option>
@@ -3284,8 +3403,8 @@
 	        <table id='otherItemsTable' class='table table-hover'>
 	        <tr>
 	            	<td style="width: 12%"></td>
-	            	<td style="width: 2%; text-align: center"><b>AIA/MG2 Status</b></td>
-	            	<td style="width: 30%;"><b>AIA/MG2 Last Updated</b></td>
+	            	<td style="width: 2%; text-align: center"><b>AIA Status</b></td>
+	            	<td style="width: 30%;"><b>AIA Last Updated</b></td>
 	        </tr>
 	        <tr>
 	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
@@ -3381,7 +3500,7 @@
 				</table>	
 				<table id='closeoutSummaryCompletionTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
-					<tr><td width = 17% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr>
+					<!--  <tr><td width = 17% class="bold">Final Inspections</td><td id='finalInspectionsRequired'></td></tr> -->
 					<tr><td class="bold">Final Warranties</td><td id='finalWarrantiesRequired'></td></tr>
 					<tr><td class="bold">Final Liens</td><td id='finalLiensRequired'></td></tr>
 				</table>
@@ -4015,9 +4134,9 @@
 		 				
 		                <td>
 		                	<select style= "width: 158px;" class="closeout-input" id="mcsInvoiceStatus">
-		                        <option value="default">----</option>
-		                        <option value="1">Yes</option>
-				                <option value="0">No</option> 
+		                       <!-- <option value="default">----</option> -->
+		                        <option value="0">No</option>
+		                        <option value="1">Yes</option> 
 				                <option value="2">N/A</option>   
 		                    </select>	
 		                    
@@ -4026,9 +4145,9 @@
 		 				
 		                <span class = "subInvoiceStatus">
 		                	<select style= "width: 158px;" class="closeout-input" id="subInvoiceStatus">
-		                        <option value="default">----</option>
-		                        <option value="1">Yes</option>
-				                <option value="0">No</option> 
+		                        <!--  <option value="default">----</option> -->
+		                        <option value="0">No</option>
+		                        <option value="1">Yes</option> 
 				                <option value="2">N/A</option>   
 		                    </select>		                	
 		                </span>      	                	
@@ -4364,3 +4483,4 @@
 	
 	</body>
 </html>
+

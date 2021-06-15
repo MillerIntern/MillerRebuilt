@@ -584,6 +584,8 @@ public class ProjectNewRuleColorService {
 			String lowVoltageInspectionStatus = permits.getVoltageInspectionStatus();
 			Date lowVoltageInspectionLastUpdated = permits.getVoltageInspectionLastUpdated();
 			
+			
+			
 //			//OtherA
 //			String otherAPermitRequired = permits.getOtherAPermit();
 //			String otherAPermitStatus = permits.getOtherAPermitStatus();

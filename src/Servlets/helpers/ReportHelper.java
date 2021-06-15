@@ -474,6 +474,16 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("Low Voltage Permit");
 		}
+		else if(value.equals("tempCertOccupancyPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Temp Certificate of Occupation Permit");
+		}
+		else if(value.equals("certOccupancyPermit"))
+		{
+			sb.append("<th>");
+			sb.append("Certificate of Occupation Permit");
+		}
 		else if(value.equals("buildingInspection"))
 		{
 			sb.append("<th>");
@@ -513,6 +523,16 @@ public class ReportHelper
 		{
 			sb.append("<th>");
 			sb.append("Low Voltage Inspection");
+		}
+		else if(value.equals("tempCertOccupancyInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Temp Certificate of Occupation Inspection");
+		}
+		else if(value.equals("certOccupancyInspection"))
+		{
+			sb.append("<th>");
+			sb.append("Certificate of Occupation Inspection");
 		}
 		else if(value.equals("certificateOfSubstantialCompletion"))
 		{
@@ -1633,7 +1653,27 @@ public class ReportHelper
 					retVal = retVal + " " + dForm.format(p.getPermits().getLowVoltagePermitDate());
 			}
 			return retVal;
-		} else if(value.equals("permitNotes") && p.getPermits() != null && p.getPermits().getPermitNotes() != null) {
+		} 
+		
+		else if(value.equals("tempCertOccupancyPermit") && p.getPermits() != null && p.getPermits().getTempCertOccupancyPermitStatus() != null)
+		{
+			String retVal = convertStatusNumber(p.getPermits().getTempCertOccupancyPermitStatus()); 
+			if(p.getPermits().getTempCertOccupancyPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getTempCertOccupancyPermitDate());
+			}
+			return retVal;
+		}
+		else if(value.equals("certOccupancyPermit") && p.getPermits() != null && p.getPermits().getCertOccupancyPermitStatus() != null)
+		{
+			String retVal = convertStatusNumber(p.getPermits().getCertOccupancyPermitStatus()); 
+			if(p.getPermits().getCertOccupancyPermitDate() != null){
+				if(!retVal.equals("N/A") && !retVal.equals("tbd"))
+					retVal = retVal + " " + dForm.format(p.getPermits().getCertOccupancyPermitDate());
+			}
+			return retVal;
+		}
+		else if(value.equals("permitNotes") && p.getPermits() != null && p.getPermits().getPermitNotes() != null) {
 			return p.getPermits().getPermitNotes();
 		} else if(value.equals("inspectionNotes") && p.getPermits() != null && p.getPermits().getInspectionNotes() != null) {
 			return p.getPermits().getInspectionNotes();
@@ -1673,6 +1713,14 @@ public class ReportHelper
 		else if(value.equals("lowVoltageInspection") && p.getPermits() != null && p.getPermits().getVoltageInspectionStatus() != null)
 		{
 			return p.getPermits().getVoltageInspectionStatus();
+		}
+		else if(value.equals("tempCertOccupancyInspection") && p.getPermits() != null && p.getPermits().getTempCertOccupancyInspectionStatus() != null)
+		{
+			return p.getPermits().getTempCertOccupancyInspectionStatus();
+		}
+		else if(value.equals("certOccupancyInspection") && p.getPermits() != null && p.getPermits().getCertOccupancyInspectionStatus() != null)
+		{
+			return p.getPermits().getCertOccupancyInspectionStatus();
 		}
 		else if(value.equals("equipmentName") && p.getProjEquipment() != null) 
 		{

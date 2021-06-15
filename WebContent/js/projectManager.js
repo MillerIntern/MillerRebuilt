@@ -161,6 +161,11 @@ function fillPermitsAndInspecionts (data) {
 	$('#fireAlarmPermit').text(tabData.fireAlarmPermitStatus);
 	$('#lowVoltagePermitDate').text(tabData.low_voltage);
 	$('#lowVoltagePermit').text(tabData.voltagePermitStatus);
+	$('#tempCertOccupancyPermitDate').text(tabData.tempCertOccupancy);
+	$('#tempCertOccupancyPermit').text(tabData.tempCertOccupancyPermitStatus);
+	$('#certOccupancyPermitDate').text(tabData.certOccupancy);
+	$('#certOccupancyPermit').text(tabData.certOccupancyPermitStatus);
+	
 	
 	// inspections
 	$('#buildingInspectionDate').text(tabData.buildingInspectionLastUpdated);
@@ -179,6 +184,12 @@ function fillPermitsAndInspecionts (data) {
 	$('#fireAlarmInspection').text(tabData.fireAlarmInspectionStatus);
 	$('#lowVoltageInspectionDate').text(tabData.voltageInspectionLastUpdated);
 	$('#lowVoltageInspection').text(tabData.voltageInspectionStatus);
+	$('#tempCertOccupancyInspectionDate').text(tabData.tempCertOccupancyInspectionLastUpdated);
+	$('#tempCertOccupancyInspection').text(tabData.tempCertOccupancyInspectionStatus);
+	$('#certOccupancyInspectionDate').text(tabData.certOccupancyInspectionLastUpdated);
+	$('#certOccupancyInspection').text(tabData.certOccupancyInspectionStatus);
+
+	
 }
 
 function fillEquipment (data) {

@@ -349,11 +349,11 @@ const CLOSEOUT_KEYS_LIENS = new Array("warehouse", "item", "status","liensRequir
 										"sprinkleLiens", "roofingLiens", "htiLiens", "otherLiens", "finalLiensNotes");
 
 const PERMIT_KEYS = new Array('warehouse', 'item', 'status', 'buildingPermit', 'mechanicalPermit', 'electricalPermit', 
-							'plumbingPermit', 'roofingPermit', 'sprinklerPermit', 'fireAlarmPermit', 'lowVoltagePermit', 'permitNotes');
+							'plumbingPermit', 'roofingPermit', 'sprinklerPermit', 'fireAlarmPermit', 'lowVoltagePermit', 'tempCertOccupancyPermit', 'certOccupancyPermit', 'permitNotes');
 
 const INSPECTION_KEYS = new Array('warehouse', 'item', 'status', 'buildingInspection', 'mechanicalInspection', 'electricalInspection',
 									'plumbingInspection', 'roofingInspection', 'sprinklerInspection', 'fireAlarmInspection', 
-									'lowVoltageInspection', 'inspectionNotes');
+									'lowVoltageInspection', 'tempCertOccupancyInspection' , 'certOccupancyInspection' ,'inspectionNotes');
 
 const EQUIPMENT_KEYS = new Array('equipmentName'); /* The system handles creating all of the keys but we only pass in one*/
 

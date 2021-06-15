@@ -78,11 +78,14 @@ public class AutoFillService {
 			
 	}
 	
+	//This function should not have _value as a field as both PO and AIA Contract autofill this information
+	//This function autofills the first 4 fields in the "Closeout Documents" tab of a project
 	public static void autoFillCloseoutDocs(Project proj, String _value, Date today)
 	{
 		String value = null;
 		
-		value = "4";
+		//2 means "Incomplete" (check closeoutstatus table for reference)
+		value = "2";
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -105,16 +108,36 @@ public class AutoFillService {
 		proj.setCloseoutDetails(cd);
 	}
 	
+	
+	//This function autofills the "Warranty Letters and Final Liens" and "AIA" tab of a project
 	public static void autoFillCloseout(Project proj, String _value, Date today)
 	{
 		String value = null;
 		
+		/*
 		if(_value.equals("2"))
 			value = "6";
 		else
 			value = "3";
+		*/
+		
+		
+		//Get's the project type. If type is "AIA Contract" (2) then set closeout status to Incomplete(2)
+		if(_value.equals("2")) {
+			
+			value = "2";
+			
+			//set closeout status to N/A (3)
+		}else {
+			
+			value = "3";
+		}
 		
 		CloseoutDetails cd;
+		
+		//If the project is new and doesn't have closeout details, 
+		//create closeoutdetails object for the project 
+		//else get closeoutdetails
 		if(proj.getCloseoutDetails() == null)
 			cd = new CloseoutDetails();
 		else 
@@ -143,18 +166,20 @@ public class AutoFillService {
 		cd.setOtherFinalLeinsDate(today);
 		
 		cd.setOtherFinalLeinsBStatus(value);
-		cd.setOtherFinalLeinsBDate(today);
-		
+		cd.setOtherFinalLeinsBDate(today);		
+	
 		cd.setEquipmentSubmittalStatus(value);
 		cd.setEquipmentSubCL(today);
 		
 		cd.setManualStatus(value);
 		cd.setManualDate(today);
 		
+		/*
 		if(_value.equals("2"))
 			value = "4";
 		else
 			value = "3";
+		*/
 		
 		cd.setMCSWarrantyStatus(value);
 		cd.setMCSWarranty(today);
@@ -201,10 +226,12 @@ public class AutoFillService {
 		cd.setReleaseOfLiensStatus(value);
 		cd.setReleaseOfLiensDate(today);
 		
+		/*
 		if(_value.equals("2") || _value.equals("5"))
 			value = "4";
 		else
 			value = "3";
+		*/
 		
 		cd.setMulvannySignOffStatus(value);
 		cd.setMulvannySignOffDate(today);
@@ -216,12 +243,24 @@ public class AutoFillService {
 	{		
 		String value = null;
 		
+		/*
 		if(_value.equals("1"))
 			value = "4";
 		else if(_value.equals("0"))
 			value = "3";
 		else
 			value = "6";
+		*/
+		
+		//if HVAC is required in a project, set values to Incomplete
+		if(_value.equals("1")) {
+			value = "2";
+		}
+		
+		//if HVAC is not required in a project, set values to N/A
+		else {
+			value = "3";
+		}
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -243,18 +282,24 @@ public class AutoFillService {
 		String value = null;
 		double salVal = 0;
 		
+		//if refrigeration is required in the project, set values to Incomplete
 		if(_value.equals("1")) {
-			value = "4";
+			value = "2";
 			salVal = 0;
 		}
+		
+		//refrigetration is not required in the project, set values to N/A
 		else if(_value.equals("0")) {
 			value = "3";
 			salVal = -1;
 		}	
+		
+		/*
 		else {
 			value = "6";
 			salVal = -2;
 		}
+		*/
 	
 		
 		CloseoutDetails cd;
@@ -277,6 +322,7 @@ public class AutoFillService {
 	{
 		String value = null;
 		
+		//These conditionals are no longer correct because of projectclass table changes. 
 		if(_value.equals("0"))
 			value = "6";
 		else if(_value.equals("1"))
@@ -430,6 +476,25 @@ public class AutoFillService {
 		permits.setVoltageInspectionLastUpdated(today);
 		permits.setVoltageInspectionRequired(inspectionReq);
 		permits.setVoltageInspectionStatus(inspectionStatus);
+		
+		
+		//Temp Cert and Cert don't have permits so we default the requirement to No and they should never change from No
+		permitStatus = "N/A";
+		permitReq = "2";
+		
+		permits.setTempCertOccupancy(today);
+		permits.setTempCertOccupancyPermitRequired(permitReq);
+		permits.setTempCertOccupancyPermitStatus(permitStatus);
+		permits.setTempCertOccupancyInspectionLastUpdated(today);
+		permits.setTempCertOccupancyInspectionRequired(inspectionReq);
+		permits.setTempCertOccupancyInspectionStatus(inspectionStatus);
+		
+		permits.setCertOccupancy(today);
+		permits.setCertOccupancyPermitRequired(permitReq);
+		permits.setCertOccupancyPermitStatus(permitStatus);
+		permits.setCertOccupancyInspectionLastUpdated(today);
+		permits.setCertOccupancyInspectionRequired(inspectionReq);
+		permits.setCertOccupancyInspectionStatus(inspectionStatus);
 		
 		proj.setPermits(permits);
 		
