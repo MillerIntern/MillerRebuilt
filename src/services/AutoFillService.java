@@ -477,11 +477,6 @@ public class AutoFillService {
 		permits.setVoltageInspectionRequired(inspectionReq);
 		permits.setVoltageInspectionStatus(inspectionStatus);
 		
-		
-		//Temp Cert and Cert don't have permits so we default the requirement to No and they should never change from No
-		permitStatus = "N/A";
-		permitReq = "2";
-		
 		permits.setTempCertOccupancy(today);
 		permits.setTempCertOccupancyPermitRequired(permitReq);
 		permits.setTempCertOccupancyPermitStatus(permitStatus);
