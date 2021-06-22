@@ -2246,6 +2246,8 @@ function humanize(str)
 		result = "As-Built Drawings Last Updated";
 	else if( str == "alarmFormStatus")
 		result = "Alarm Form Status";
+	else if(str == "salvageStatus")
+		result = "Salvage Value Status";
 	else if( str == "alarmHvacForm")
 		result = "Alarm Form Last Updated";
 	else if( str == "HVACstartupFormDate")

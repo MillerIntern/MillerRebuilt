@@ -27,6 +27,7 @@ $(document).ready(function(){
 	    $("#otherFinalLiensDate").datepicker();
 	    
 	    	// Final Inspections //Move other fields here from above
+	   
 	    $("#tmpCertificateDate").datepicker();
 	    $("#mechFinalDate").datepicker();
 	    $("#elecFinalDate").datepicker();
@@ -143,7 +144,9 @@ function fillTabs(data)
 		$("#closeoutBook").val(json.closeoutDetails.closeoutBook);
 		$("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		
+		
 		$("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
+		
 		$("#closeoutPhotosCL").val(json.closeoutDetails.closeoutPhotosCL);
 		$("#MCSWarranty").val(json.closeoutDetails.mCSWarranty);
 		$("#equipmentSubCL").val(json.closeoutDetails.equipmentSubCL);
@@ -154,6 +157,8 @@ function fillTabs(data)
 		
 		$("#numOfMCSChangeOrders").val(json.closeoutDetails.numOfMCSChangeOrders);
 		$("#numOfMCSChangeOrdersCompleted").val(json.closeoutDetails.numOfMCSChangeOrdersCompleted);
+		
+		
 		
 		$("#tmpCertificateStatus").val(json.closeoutDetails.tmpCertificateStatus);
 		$("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
@@ -191,6 +196,12 @@ function fillTabs(data)
 		$("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
 		
 		$("#alarmFormStatus").val(json.closeoutDetails.alarmFormStatus);
+		
+		$("#pbnMTStatus").val(json.closeoutDetails.pbnMTStatus);
+		$("#pbnMTDate").val(json.closeoutDetails.pbnMTDate);
+		
+		
+		$("#salvageStatus").val(json.closeoutDetails.salvageStatus);
 		
 		$("#verisaeReportStatus").val(json.closeoutDetails.verisaeReportStatus);
 		
@@ -253,7 +264,9 @@ function fillTabs(data)
 		$("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
+		
 		$("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+		
 		$("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
 		$("#closeoutDocumentsNotes").val(json.closeoutDetails.closeoutDocumentsNotes);
 		$("#warrantyNotes").val(json.closeoutDetails.warrantyNotes);
@@ -310,7 +323,9 @@ function saveProject()
 	var verisae = $("#verisae").val();
 	var asBuilts = $("#asBuilts").val();
 	
+	
 	var buildingPermitCL = $("#buildingPermitCL").val();
+	
 	var closeoutPhotosCL = $("#closeoutPhotosCL").val();
 	var MCSWarranty = $("#MCSWarranty").val();
 	var equipmentSubCL = $("#equipmentSubCL").val();
@@ -358,7 +373,6 @@ function saveProject()
     var finalLiensNotes = $("#finalLiensNotes").val();
         
     	// INSPECTIONS
-    
     var tmpCertificateStatus = $("#tmpCertificateStatus").val();
     var tmpCertificateDate = $("#tmpCertificateDate").val();
     
@@ -377,11 +391,10 @@ function saveProject()
     var certificateStatus = $("#certificateStatus").val();
     var certificateDate = $("#certificateDate").val();
     
-    // buildingPermitCL = buildingFinalDate;
     var buildingFinalStatus = $("#buildFinalStatus").val();
     
     var finalInspectionNotes = $("#finalInspectionNotes").val();
-       
+      
     	// WARRANTIES
     
     var MCSWarrantyStatus = $("#MCSWarrantyStatus").val();
@@ -435,8 +448,13 @@ function saveProject()
     var HVACstartupFormStatus = $("#HVACstartupFormStatus").val();
     var HVACstartupFormDate = $("#HVACstartupFormDate").val();
     
+    var pbnMTStatus = $("#pbnMTStatus").val();
+    var pbnMTDate = $("#pbnMTDate").val();
+    
     var alarmFormStatus = $("#alarmFormStatus").val();
     // alarmHVAC = alarmFormDate
+    
+    var salvageStatus = $("#salvageStatus").val();
     
     var verisaeReportStatus = $("#verisaeReportStatus").val();
     // verisae = verisaeReportDate
@@ -460,9 +478,11 @@ function saveProject()
     ////////////// END NEW CONTENT
     
     var dates =[
+
 				buildingPermitCL,
-				 closeoutPhotosCL,
-				 MCSWarranty,//41
+
+				closeoutPhotosCL,
+				MCSWarranty,//41
 				equipmentSubCL,
 				
 				
@@ -472,7 +492,9 @@ function saveProject()
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, 
 				sprinkleDate, roofingDate, HTIDate, otherFinalLeinsDate,
 				
+				
 				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, tmpCertificateDate,
+				
 				
 				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, 
 				roofingWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
@@ -509,13 +531,10 @@ function saveProject()
 				'verisae':verisae,
 				
 				'buildingPermitCL':buildingPermitCL,
+				
 				'closeoutPhotosCL': closeoutPhotosCL,
 				'MCSWarranty': MCSWarranty,
 				'equipmentSubCL': equipmentSubCL, 
-				
-				// new closeout info
-				//'mg2CompletionStatus': mg2CompletionStatus,
-				//'mg2CompletionDate': mg2CompletionDate,
 				
 				'numOfChangeOrders': numOfChangeOrders,
 				'numOfChangeOrdersCompleted': numOfChangeOrdersCompleted,
@@ -573,7 +592,7 @@ function saveProject()
 				'certificateDate': certificateDate,
 				
 				'finalInspectionNotes': finalInspectionNotes,
-			
+
 				'MCSWarrantyStatus': MCSWarrantyStatus,
 				
 				'GCWarrantyStatus': GCWarrantyStatus,
@@ -619,7 +638,12 @@ function saveProject()
 				'HVACstartupFormStatus': HVACstartupFormStatus,
 				'HVACstartupFormDate': HVACstartupFormDate,
 				
+				'pbnMTStatus': pbnMTStatus,
+				'pbnMTDate': pbnMTDate,
+				
 				'alarmFormStatus': alarmFormStatus,
+				
+				'salvageStatus': salvageStatus,
 				
 				'verisaeReportStatus': verisaeReportStatus,
 				
@@ -707,11 +731,12 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
                 				"plumbingFinalStatus", "buildFinalStatus",
                 				
+                				
                 				"MCSWarrantyStatus", "GCWarrantyStatus", "mechanicalWarrantyStatus", "electricalWarrantyStatus", "sprinkleWarrantyStatus", 
                 				"plumbingWarrantyStatus", "roofingWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
                 				
                 				"equipmentSubmittalStatus", "manualStatus","punchListStatus", "asBuiltDrawingsStatus", 
-                                "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",   
+                                "closeOutPhotosStatus", "HVACstartupFormStatus", "pbnMTStatus", "salvageStatus", "alarmFormStatus", "verisaeReportStatus",   
                                 'substantialCompletionStatus', 'paymentOfDebtsAndClaimsStatus', 'releaseOfLiensStatus',
                                 'mulvannySignOffStatus'
                                                 ];

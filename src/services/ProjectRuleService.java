@@ -132,6 +132,33 @@ public class ProjectRuleService
 			}
 		}
 		
+		if(f1.equals("pbnMTStatus") && f2.equals("None"))
+		{
+			if(field1 == null )
+				return true;
+			
+			if(field1.equals("6"))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		if(f1.equals("salvageStatus") && f2.equals("None"))
+		{
+			if(field1 == null)
+				return true;
+			
+			if(field1.equals("6"))
+				return false;
+			
+			else
+				return true;
+		}
+		
 		if(f1.equals("salvageValue") && f2.equals("None"))
 		{
 			if(field1 == null )

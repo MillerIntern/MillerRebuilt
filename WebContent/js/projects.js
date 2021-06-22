@@ -252,6 +252,7 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#otherFinalLiensBDate").datepicker();
 	    
 	    	// Final Inspections //Move other fields here from above
+	    
 	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
 	    $('#closeoutData').find("#mechFinalDate").datepicker();
 	    $('#closeoutData').find("#elecFinalDate").datepicker();
@@ -492,7 +493,9 @@ function fillTabs_CLOSEOUT(data)
 	    formatRelativeTextAreas(json.closeoutDetails.closeoutNotes, "closeoutNotes", "closeoutData");
 		$('#closeoutData').find("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		
+		
 		$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
+
 		$('#closeoutData').find("#closeoutPhotosCL").val(json.closeoutDetails.closeoutPhotosCL);
 		$('#closeoutData').find("#MCSWarranty").val(json.closeoutDetails.mCSWarranty);
 		$('#closeoutData').find("#equipmentSubCL").val(json.closeoutDetails.equipmentSubCL);
@@ -516,6 +519,7 @@ function fillTabs_CLOSEOUT(data)
 		}	
 		
 		$('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val(completed);
+		
 		
 		$('#closeoutData').find("#tmpCertificateStatus").val(convertDefault(json.closeoutDetails.tmpCertificateStatus));
 		$('#closeoutData').find("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
@@ -701,11 +705,6 @@ function fillTabs_CLOSEOUT(data)
     
     	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
     	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
-    
-		
-		
-		
-		
 		
 		
 		console.log("CS D", json.closeoutDetails);
@@ -724,6 +723,13 @@ function fillTabs_CLOSEOUT(data)
 
 		$('#closeoutData').find("#HVACstartupFormStatus").val(convertDefault(json.closeoutDetails.HVACstartupFormStatus));
 		$('#closeoutData').find("#HVACstartupFormDate").val(json.closeoutDetails.HVACstartupFormDate);
+		
+		$('#closeoutData').find("#pbnMTStatus").val(convertDefault(json.closeoutDetails.pbnMTStatus));
+		$('#closeoutData').find("#pbnMTDate").val(json.closeoutDetails.pbnMTDate);
+		
+		
+		$('#closeoutData').find("#salvageStatus").val(convertDefault(json.closeoutDetails.salvageStatus));
+
 		
 		$('#closeoutData').find("#alarmFormStatus").val(convertDefault(json.closeoutDetails.alarmFormStatus));
 		
@@ -791,8 +797,10 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
+		
 	    formatRelativeTextAreas(json.closeoutDetails.finalInspectionNotes, "finalInspectionNotes", "closeoutData");
 		$('#closeoutData').find("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+	    
 	    formatRelativeTextAreas(json.closeoutDetails.finalLiensNotes, "finalLiensNotes", "closeoutData");
 		$('#closeoutData').find("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
 	    formatRelativeTextAreas(json.closeoutDetails.closeoutDocumentNotes, "closeoutDocumentNotes", "closeoutData");
@@ -869,7 +877,9 @@ function saveProject_CLOSEOUT()
 	var verisae = $('#closeoutData').find("#verisae").val();
 	var asBuilts = $('#closeoutData').find("#asBuilts").val();
 	
+	
 	var buildingPermitCL = $('#closeoutData').find("#buildingPermitCL").val();
+	
 	var closeoutPhotosCL = $('#closeoutData').find("#closeoutPhotosCL").val();
 	var MCSWarranty = $('#closeoutData').find("#MCSWarranty").val();
 	var equipmentSubCL = $('#closeoutData').find("#equipmentSubCL").val();
@@ -951,11 +961,10 @@ function saveProject_CLOSEOUT()
     var certificateStatus = $('#closeoutData').find("#certificateStatus").val();
     var certificateDate = $('#closeoutData').find("#certificateDate").val();
     
-    // buildingPermitCL = buildingFinalDate;
     var buildingFinalStatus = $('#closeoutData').find("#buildFinalStatus").val();
     
     var finalInspectionNotes = $('#closeoutData').find("#finalInspectionNotes").val();
-       
+    
     	// WARRANTIES
     
     var MCSWarrantyStatus = $('#closeoutData').find("#MCSWarrantyStatus").val();
@@ -1011,6 +1020,11 @@ function saveProject_CLOSEOUT()
     var HVACstartupFormStatus = $('#closeoutData').find("#HVACstartupFormStatus").val();
     var HVACstartupFormDate = $('#closeoutData').find("#HVACstartupFormDate").val();
     
+    var pbnMTStatus = $('#closeoutData').find("#pbnMTStatus").val();
+    var pbnMTDate = $('#closeoutData').find("#pbnMTDate").val();
+    
+    var salvageStatus = $('#closeoutData').find("#salvageStatus").val();
+    
     var alarmFormStatus = $('#closeoutData').find("#alarmFormStatus").val();
     // alarmHVAC = alarmFormDate
     
@@ -1043,9 +1057,11 @@ function saveProject_CLOSEOUT()
     ////////////// END NEW CONTENT
     
     var dates_CLOSEOUT =[
+				
 				buildingPermitCL,
-				 closeoutPhotosCL,
-				 MCSWarranty,//41
+    	
+				closeoutPhotosCL,
+				MCSWarranty,//41
 				equipmentSubCL,
 				
 				
@@ -1055,8 +1071,10 @@ function saveProject_CLOSEOUT()
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, gasDate,
 				sprinkleDate, HTIDate, otherFinalLeinsDate,
 				
+				
 				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
 				ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate, tmpCertificateDate,
+				
 				
 				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, plumbingWarrantyDate, 
 				gasWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
@@ -1072,6 +1090,7 @@ function saveProject_CLOSEOUT()
     	console.log("we got valid data now");
     	for(var i = 0; i < dates_CLOSEOUT.length; i++) {
     		if(dates_CLOSEOUT[i]) dates_CLOSEOUT[i] = dateCleaner(dates_CLOSEOUT[i]);
+    		
     		if(i == 0) buildingPermitCL = dates_CLOSEOUT[i];
     		if(i == 1) closeoutPhotosCL = dates_CLOSEOUT[i];
     		if(i == 2) MCSWarranty = dates_CLOSEOUT[i];
@@ -1154,6 +1173,8 @@ function saveProject_CLOSEOUT()
 				'verisae':verisae,
 				
 				'buildingPermitCL':buildingPermitCL,
+				
+				
 				'closeoutPhotosCL': closeoutPhotosCL,
 				'MCSWarranty': MCSWarranty,
 				'equipmentSubCL': equipmentSubCL, 
@@ -1200,6 +1221,7 @@ function saveProject_CLOSEOUT()
 				'otherFinalLeinsBStatus': otherFinalLeinsBStatus,
 				'otherFinalLeinsBDate': otherFinalLeinsBDate,
 				
+				
 				'mechFinalStatus': mechFinalStatus,
 				'mechFinalDate': mechFinalDate,
 				
@@ -1233,7 +1255,8 @@ function saveProject_CLOSEOUT()
 				'certificateDate': certificateDate,
 				
 				'finalInspectionNotes': finalInspectionNotes,
-			
+				
+				
 				'MCSWarrantyStatus': MCSWarrantyStatus,
 				
 				'GCWarrantyStatus': GCWarrantyStatus,
@@ -1279,6 +1302,11 @@ function saveProject_CLOSEOUT()
 				
 				'HVACstartupFormStatus': HVACstartupFormStatus,
 				'HVACstartupFormDate': HVACstartupFormDate,
+				
+				'pbnMTStatus': pbnMTStatus,
+				'pbnMTDate': pbnMTDate,
+				
+				'salvageStatus': salvageStatus,
 				
 				'alarmFormStatus': alarmFormStatus,
 				
@@ -1381,6 +1409,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", "gasStatus",
                 				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus", "otherFinalLiensBStatus",
                 				
+
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
                 				"plumbingFinalStatus", "gasFinalStatus", "buildFinalStatus", "ceilingFinalStatus", "fireAlarmFinalStatus", 
                 				"lowVolFinalStatus",
@@ -1389,7 +1418,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"plumbingWarrantyStatus", "gasWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
                 				
                 				"equipmentSubmittalStatus", "manualStatus", "costcoSignoffStatus", "punchListStatus", "asBuiltDrawingsStatus", 
-                                "closeOutPhotosStatus", "HVACstartupFormStatus", "alarmFormStatus", "verisaeReportStatus",   
+                                "closeOutPhotosStatus", "HVACstartupFormStatus", "pbnMTStatus", "salvageStatus", "alarmFormStatus", "verisaeReportStatus",   
                                 'substantialCompletionStatus', 'paymentOfDebtsAndClaimsStatus', 'releaseOfLiensStatus',
                                 'mulvannySignOffStatus'
                                                 ];
@@ -4843,12 +4872,14 @@ function prepareCloseout(source_id){
 		$('#closeoutData').find("#closeoutDocuments").addClass("active");
 
 	}
+
 	else if(source_id == "final-inspection-item")
 	{
 		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
 		$('#closeoutData').find("#finalInspections").addClass("active");
 
 	}
+	
 	else if(source_id == "warranty-letters-item")
 	{
 		$('#closeoutData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
@@ -5603,6 +5634,7 @@ function fillCloseout (data) {
 	
 	let required = 0;
 	let completed = 0;
+	
 	
 	switch (closeoutData.mechFinalStatus) {
 		case '1':

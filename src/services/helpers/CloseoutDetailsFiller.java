@@ -283,11 +283,22 @@ public class CloseoutDetailsFiller
 		cd.setHVACstartupFormDate(HVACstartupFormDate);
 		cd.setHVACstartupFormStatus(params.get("HVACstartupFormStatus"));
 
+		
 		Date alarmForm = null;
 		if(!params.get("alarmHvac").isEmpty())
 			alarmForm = formatter.parse(params.get("alarmHvac"));
 		cd.setAlarmHvacForm(alarmForm);
 		cd.setAlarmFormStatus(params.get("alarmFormStatus"));
+
+		
+		Date pbnMTDate = null;
+		if(!params.get("pbnMTDate").isEmpty())
+			pbnMTDate = formatter.parse(params.get("pbnMTDate"));
+		cd.setPbnMTDate(pbnMTDate);
+		cd.setPbnMTStatus(params.get("pbnMTStatus"));
+		
+		
+		cd.setSalvageStatus(params.get("salvageStatus"));
 
 		Date verisaeDate = null;
 		if(!params.get("verisae").isEmpty())

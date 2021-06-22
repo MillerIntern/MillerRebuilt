@@ -150,23 +150,11 @@ public class AutoFillService {
 		cd.setHTIWarrantyStatus(value);
 		cd.setHTIWarrantyDate(today);
 		
-		cd.setOtherWarrantyStatusA(value);
-		cd.setOtherWarrantyDateA(today);
-		
-		cd.setOtherWarrantyStatusB(value);
-		cd.setOtherWarrantyDateB(today);
-		
 		cd.setGasStatus(value);
 		cd.setGasDate(today);
 		
 		cd.setHTIStatus(value);
 		cd.setHTIDate(today);
-
-		cd.setOtherFinalLeinsStatus(value);
-		cd.setOtherFinalLeinsDate(today);
-		
-		cd.setOtherFinalLeinsBStatus(value);
-		cd.setOtherFinalLeinsBDate(today);		
 	
 		cd.setEquipmentSubmittalStatus(value);
 		cd.setEquipmentSubCL(today);
@@ -236,6 +224,22 @@ public class AutoFillService {
 		cd.setMulvannySignOffStatus(value);
 		cd.setMulvannySignOffDate(today);
 		
+		
+		//defaults these values to N/A
+		value = "3";
+		cd.setOtherWarrantyStatusA(value);
+		cd.setOtherWarrantyDateA(today);
+		
+		cd.setOtherWarrantyStatusB(value);
+		cd.setOtherWarrantyDateB(today);
+		
+		cd.setOtherFinalLeinsStatus(value);
+		cd.setOtherFinalLeinsDate(today);
+		
+		cd.setOtherFinalLeinsBStatus(value);
+		cd.setOtherFinalLeinsBDate(today);		
+		
+		
 		proj.setCloseoutDetails(cd);
 	}
 	
@@ -288,19 +292,12 @@ public class AutoFillService {
 			salVal = 0;
 		}
 		
-		//refrigetration is not required in the project, set values to N/A
+		//refrigeration is not required in the project, set values to N/A
 		else if(_value.equals("0")) {
 			value = "3";
 			salVal = -1;
 		}	
 		
-		/*
-		else {
-			value = "6";
-			salVal = -2;
-		}
-		*/
-	
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -311,6 +308,10 @@ public class AutoFillService {
 		cd.setAlarmHvacForm(today);
 		cd.setAlarmFormStatus(value);
 		
+		cd.setPbnMTDate(today);
+		cd.setPbnMTStatus(value);
+		
+		cd.setSalvageStatus(value);
 		projectObjects.SalvageValue salvageValue = new projectObjects.SalvageValue(today, salVal);
 		cd.setSalvageValue(salvageValue);
 		

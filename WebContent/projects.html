@@ -321,10 +321,10 @@
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Permit Required</th>
 						<th style="width: 10%; text-align: center">Permit Status</th>
-						<th style="width: 12%; text-align: center">Permit Last Updated</th>
+						<th style="width: 12%; text-align: center">Permit Updated</th>
 						<th style="width: 12%; text-align: center">Inspection Required</th>
 						<th style="width: 12%; text-align: center">Inspection Status</th>
-						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
+						<th style="width: 15%; text-align: center">Inspection Updated</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -1312,10 +1312,10 @@
 						<!-- <th><button class = "autofill_NA btn-danger btn-md" value = "false">N/A</button></th> -->
 						<th style="width: 10%; text-align: center">Permit Required</th>
 						<th style="width: 10%; text-align: center">Permit Status</th>
-						<th style="width: 12%; text-align: center">Permit Last Updated</th>
+						<th style="width: 12%; text-align: center">Permit Updated</th>
 						<th style="width: 12%; text-align: center">Inspection Required</th>
 						<th style="width: 12%; text-align: center">Inspection Status</th>
-						<th style="width: 15%; text-align: center">Inspection Last Updated</th>
+						<th style="width: 15%; text-align: center">Inspection Updated</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -2325,10 +2325,10 @@
 					<td></td>
 				    <td align="center" class = "bold permitEditHeader">Permit Required</td>
 					<td align="center" class = "bold permitEditHeader">Permit Status</td>
-					<td align="center" class = "bold">Permit Last Updated</td>
+					<td align="center" class = "bold">Permit Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
-					<td align="center" class = "bold">Inspection Last Updated</td>
+					<td align="center" class = "bold">Inspection Updated</td>
 				</tr>
 				<tr>
 					<td class = "bold">Building</td>
@@ -2414,10 +2414,10 @@
 					<td></td>
 					<td align="center" class = "bold permitEditHeader"> Permit Required</td> 
 					<td align="center" class = "bold permitEditHeader">Permit Status</td>
-					<td align="center" class = "bold">Permit Last Updated</td>
+					<td align="center" class = "bold">Permit Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
-					<td align="center" class = "bold">Inspection Last Updated</td>
+					<td align="center" class = "bold">Inspection Updated</td>
 				</tr>
 				<tr>
 					<td class = "bold">Mechanical</td>
@@ -2571,10 +2571,10 @@
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
 					<td align="center" class = "bold permitEditHeader">Permit Status</td>
-					<td align="center" class = "bold">Permit Last Updated</td>
+					<td align="center" class = "bold">Permit Updated</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Required</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
-					<td align="center" class = "bold">Inspection Last Updated</td>
+					<td align="center" class = "bold">Inspection Updated</td>
 				</tr>
 				<tr>
 					<td class = "bold">Sprinkler</td>
@@ -2695,10 +2695,10 @@
 					<td></td>
 					<td align="center" class = "bold permitEditHeader">Permit Required</td>
 					<td align="center" class = "bold permitEditHeader">Permit Status</td>
-					<td align="center" class = "bold">Permit Last Updated</td>
+					<td align="center" class = "bold">Permit Updated</td>
                     <td align="center" class = "bold permitEditHeader">Inspection Required</td>
 					<td align="center" class = "bold permitEditHeader">Inspection Status</td>
-					<td align="center" class = "bold">Inspection Last Updated</td>
+					<td align="center" class = "bold">Inspection Updated</td>
 				</tr>
 				<tr>
 					<td class = "bold">Other (A)</td>
@@ -2903,10 +2903,10 @@
 	            <tr>
 	            	<td style="width: 15%; text-align: center"></td>
 	            	<td style="width: 15%; text-align: center"><b>Closeout Document Status</b></td>
-	            	<td style="width: 70%; "><b>Closeout Document Last Updated</b></td>
+	            	<td style="width: 70%; "><b>Closeout Document Updated</b></td>
 	            </tr>
 				<tr>
-	                <td class='closeoutLabel'>Costco Closeout SignOff Form</td>
+	                <td class='closeoutLabel'>Costco Closeout SignOff</td>
 	                <td style="text-align: center">  
 	                    <select data-associated-date='costcoSignoff' class="closeout-input autofill-CloseoutDocs" id="costcoSignoffStatus">
 	                    <option value="default">--Status--</option>
@@ -2961,7 +2961,7 @@
                 </td>   
             </tr>
             <tr>
-                <td class='closeoutLabel'>Verisae Report</td>
+                <td class='closeoutLabel'>Shutdown Report</td>
                 <td style="text-align: center">  
                     <select data-associated-date='verisae' class="closeout-input autofill-HVAC" id="verisaeReportStatus">
                     <option value="default">--Status--</option>
@@ -2982,19 +2982,46 @@
                 <input type="text" placeholder="Select a Date" id="alarmHvac" class="autofill-Refrigeration-date"/>
                 </td>   
             </tr>
+            
+            <!-- Placeholder -->
+            <tr>
+                <td class='closeoutLabel'>PBN/MT Screenshot</td>
+                <td style="text-align: center">  
+                <select data-associated-date='pbnMTDate' class="closeout-input autofill-Refrigeration" id="pbnMTStatus">
+                    <option value="default">--Status--</option>
+                </select>
+                </td>
+                <td>
+                <input type="text" placeholder="Select a Date" id="pbnMTDate" class="autofill-Refrigeration-date"/>
+                </td>   
+            </tr>
         </table>
         
         <table id='otherItemsSalvageTable' class='table table-hover'>
 	        	<tr>
 	        		<td style="width: 15%"></td>
-	        		<td style="width: 15%;text-align: center" class='bold'>Amount</td>
-	        		<td style="width: 70%;" class='bold'>Date Last Updated</td>
+	        		
+	        		<td style="width: 15%;text-align: center" class='bold'>Salvage status</td>
+	        		<td style="width: 14%;text-align: center" class='bold'>Amount</td>
+	        		<td style="width: 70%;" class='bold'>Date Updated</td>
+	        		
 	        	</tr>
+	        	
 	        	<tr>
 	        		<td class='bold'>Salvage Value</td>
+	        		
+	        			<!-- WORKING ON THIS-->	
+	        		<td style="text-align: center">  
+                    	<select data-associated-date='salvageDate' class="autofill-Refrigeration-num" id="salvageStatus">
+                        	<option value="default">--Status--</option>
+                    	</select>
+                	</td>
+                
+	        		
 	        		<td style="text-align: center">
 						<input type="text" placeholder="Enter Salvage Value" id="salvageAmount" class="autofill-Refrigeration-num"/>
 	        		</td>
+                
 	        		<td>
 	        			<input type="text" placeholder="Select a Date" id="salvageDate" class="autofill-Refrigeration-date"/>
 	        		</td>
@@ -3032,7 +3059,7 @@
 	        	<tr>
 	            	<td style="width: 15%"></td>
 	            	<td style="width: 15%; text-align: center"><b>Final Inspection Status</b></td>
-	            	<td style="width: 70%;"><b>Final Inspection Last Updated</b></td>
+	            	<td style="width: 70%;"><b>Final Inspection Updated</b></td>
 	            </tr>
 	        	<tr>
 	                <td class='bold'>Building Final Inspection</td>
@@ -3167,7 +3194,7 @@
 	        
 	        </table>
 
-	    </div>
+	    </div> 
 	    <!-- End Final Inspections Tab --> 
 	    
 	    <!-- Warranty Letters and Final Liens Tab -->
@@ -3177,10 +3204,10 @@
 	        	<tr>
 	            	<td style="width: 13%"></td>
 	            	<td style="width: 13%; text-align: center"><b>Warranty Letter Status</b></td>
-	            	<td style="width: 18%; text-align: center"><b>Warranty Letter Last Updated</b></td>
+	            	<td style="width: 18%; text-align: center"><b>Warranty Letter Updated</b></td>
 	            	<td style="width: 13%"></td>
 	            	<td style="width: 13%; text-align: center"><b>Final Lien Status</b></td>
-	            	<td style="width: 18%; text-align: center"><b>Final Lien Last Updated</b></td>
+	            	<td style="width: 18%; text-align: center"><b>Final Lien Updated</b></td>
 	            </tr>
 	            <tr>
 	                <td  class='bold'>MCS Warranty</td>
@@ -3404,7 +3431,7 @@
 	        <tr>
 	            	<td style="width: 12%"></td>
 	            	<td style="width: 2%; text-align: center"><b>AIA Status</b></td>
-	            	<td style="width: 30%;"><b>AIA Last Updated</b></td>
+	            	<td style="width: 30%;"><b>AIA Updated</b></td>
 	        </tr>
 	        <tr>
 	                <td class='bold'>G704 - Certificate of Substantial Completion</td>
@@ -3496,7 +3523,7 @@
 					<tr><th class = "italics-closeout"><h5>Closeout Documents</h5></th><th></th></tr>
 					<tr><td width = 17% class="bold">MG2 Completion (G704 Form)</td><td id='mg2Completion'></td></tr>
 					<tr><td class="bold">Punch List</td><td id='punchList'></td></tr>
-					<tr><td class="bold">Verisae Report</td><td id='verisaeReport'></td></tr>
+					<tr><td class="bold">Shutdown Report</td><td id='verisaeReport'></td></tr>
 				</table>	
 				<table id='closeoutSummaryCompletionTable' class='table table-hover table-striped'>
 					<tr><th class = "italics-closeout"><h5>Closeout Completion</h5></th><th></th></tr>
@@ -4185,7 +4212,7 @@
 		             <tr>
 		                <td class="coLabel">CO Notes</td>
 		                <td>
-		                    <textarea id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="40" ondblclick = "dateFillFunction(this)"> </textarea>
+		                    <textarea style = " width:600px;" id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="100" ondblclick = "dateFillFunction(this)"> </textarea>
 		                </td>   
 		            </tr>
 				 </table>

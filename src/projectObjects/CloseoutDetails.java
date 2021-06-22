@@ -225,9 +225,14 @@ public class CloseoutDetails extends ProjectObject
 
 	
 	private String alarmFormStatus;
+	
+	private String salvageStatus;
 
 	
 	private String verisaeReportStatus;
+	
+	private String pbnMTStatus;
+	private Date pbnMTDate;
 
 	
 	private Date mg2CompletionDate;
@@ -280,7 +285,8 @@ public class CloseoutDetails extends ProjectObject
 			Date mechanicalDate, String GCStatus, String warrantyNotes, String finalLiensNotes, String finalInspectionNotes,
 			String closeoutDocumentsNotes, String substantialCompletionStatus, Date substantialCompletionDate,
 			String paymentOfDebtsAndClaimsStatus, Date paymentOfDebtsAndClaimsDate, String releaseOfLiensStatus,
-			Date releaseOfLiensDate, String mulvannySignOffStatus, Date mulvannySignOffDate) 
+			Date releaseOfLiensDate, String mulvannySignOffStatus, Date mulvannySignOffDate, String salvageStatus, String pbnMTStatus,
+			Date pbnMTDate) 
 	{
 		this.asBuilts = asBuilts;
 		this.salvageValue = salvageValue;
@@ -290,6 +296,11 @@ public class CloseoutDetails extends ProjectObject
 		this.airGas = airGas;
 		this.permitsClosed = permitsClosed;
 		this.verisaeShutdownReport = verisaeShutdownReport;
+		
+		this.salvageStatus = salvageStatus;
+		
+		this.pbnMTStatus = pbnMTStatus;
+		this.pbnMTDate = pbnMTDate;
 	
 		this.closeoutNotes = closeoutNotes;
 
@@ -443,6 +454,11 @@ public class CloseoutDetails extends ProjectObject
 		this.buildingPermitCL = null;
 		this.inspectionSOCL = null;
 		this.certCompletionCL = null;
+		
+		this.salvageStatus = null;
+		
+		this.pbnMTStatus = null;
+		this.pbnMTDate = null;
 
 		this.mPunchListCL = null;
 		this.closeoutPhotosCL = null;
@@ -592,6 +608,17 @@ public class CloseoutDetails extends ProjectObject
 	public synchronized void setCostcoSignoff(Date costcoSignoff) {
 		this.costcoSignoff = costcoSignoff;
 	}
+	
+	/*
+	 * Salvage status getters and setters
+	 */
+	public synchronized String getSalvageStatus() {
+		return salvageStatus;
+	}
+	
+	public synchronized void setSalvageStatus(String salvageStatus) {
+		this.salvageStatus= salvageStatus;
+	}
 
 	/**
 	 * This method sets the id of this closeoutdetail
@@ -714,6 +741,24 @@ public class CloseoutDetails extends ProjectObject
 	public synchronized void setVerisaeShutdownReport(Date verisaeShutdownReport) {
 		this.verisaeShutdownReport = verisaeShutdownReport;
 	}
+	
+	public String getPbnMTStatus() {
+		return pbnMTStatus;
+	}
+
+	public void setPbnMTStatus(String pbnMTStatus) {
+		this.pbnMTStatus = pbnMTStatus;
+	}
+
+	public Date getPbnMTDate() {
+		return pbnMTDate;
+	}
+
+	public void setPbnMTDate(Date pbnMTDate) {
+		this.pbnMTDate = pbnMTDate;
+	}
+
+	
 	
 	/**
 	 * This method gets the submission date of a closeout book
@@ -1657,6 +1702,9 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("numOfMCSChangeOrders" , "Number");
 		fields.put("numOfMCSChangeOrdersCompleted" , "Number");
 	    fields.put("salvageValue", "Number");
+	    fields.put("salvageStatus","String");
+	    fields.put("pbnMTStatus", "String");
+	    fields.put("pbnMTDate", "Date");
 		fields.put("MCSStatus" , "String");
 		fields.put("MCSDate" , "Date");
 		fields.put("GCStatus" , "String");
