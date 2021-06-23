@@ -175,6 +175,7 @@ public class CloseoutDetailsFiller
 		cd.setOtherWarrantyDateB(otherWarrantyDateB);
 		cd.setOtherWarrantyStatusB(params.get("otherWarrantyStatusB"));
 
+		/* tempholder
 		Date mechFinalDate = null;
 		if(!params.get("mechFinalDate").isEmpty())
 			mechFinalDate = formatter.parse(params.get("mechFinalDate"));
@@ -240,7 +241,7 @@ public class CloseoutDetailsFiller
 			certificateDate = formatter.parse(params.get("certificateDate"));
 		cd.setCertificateDate(certificateDate);
 		cd.setCertificateStatus(params.get("certificateStatus"));
-
+*/
 		Date equipmentSubmittal = null;
 		if(!params.get("equipmentSubCL").isEmpty())
 			equipmentSubmittal = formatter.parse(params.get("equipmentSubCL"));

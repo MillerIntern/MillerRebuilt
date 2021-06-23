@@ -433,6 +433,13 @@
 				</table>	
 				<table class='table table-hover'>
 					<tr>
+						
+						
+						<td align="left" class = "bold" width = 13%>Building Permit expiration date</td>
+						<td>
+                		<input type="text" placeholder="Select a Date" id="buildPermitExpire" class="autofill-Refrigeration-date"/>
+                		</td>
+					
 						<td align="left" class = "bold" width = 13%>Permit/Inspection Notes</td>
 						<td width = 74% ><textarea style="width:100%" id='permitNotes2' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 						<td width = 13%></td>
@@ -1810,8 +1817,14 @@
 				</table>
 				<table class='table table-hover'>
 					<tr>
+					
+						<td align="left" class = "bold" width = 20%>Building Permit expiration date</td>
+						<td>
+                		<input type="text" placeholder="Select a Date" id="buildPermitExpire" class="permitAndInspectionStatusDate autofill-Permit-date"/>
+                		</td>
+					
 						<td align="left" class = "bold" width = 10%>Permit/Inspection Notes</td>
-						<td><textarea style = " width:800px;height:100px;" id='permitNotes_1' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
+						<td><textarea style = " width:600px;height:100px;" id='permitNotes_1' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
 
 					</tr>
 					<!-- Removing this field and combining it with the one above to create one text field
@@ -3010,7 +3023,6 @@
 	        	<tr>
 	        		<td class='bold'>Salvage Value</td>
 	        		
-	        			<!-- WORKING ON THIS-->	
 	        		<td style="text-align: center">  
                     	<select data-associated-date='salvageDate' class="autofill-Refrigeration-num" id="salvageStatus">
                         	<option value="default">--Status--</option>
@@ -3053,6 +3065,7 @@
 	    <!-- End Closeout Documents Tab--> 
 	
 	    <!-- Final Inspections Tab -->
+	    <!-- 
 		<div style="width: 100%" id="finalInspections" class="info-tab info-tab-closeoutDocuments">
 	        <table id='finalInspectionsTable' class='table table-hover'>
 	        <tr style="height: 0px;"></tr>
@@ -3194,7 +3207,7 @@
 	        
 	        </table>
 
-	    </div> 
+	    </div> -> 
 	    <!-- End Final Inspections Tab --> 
 	    
 	    <!-- Warranty Letters and Final Liens Tab -->

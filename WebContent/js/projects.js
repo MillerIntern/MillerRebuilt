@@ -253,6 +253,7 @@ $(document).ready(function(){
 	    
 	    	// Final Inspections //Move other fields here from above
 	    
+	    /* Field not being used anymore
 	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
 	    $('#closeoutData').find("#mechFinalDate").datepicker();
 	    $('#closeoutData').find("#elecFinalDate").datepicker();
@@ -264,6 +265,7 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#sprinkleFinalDate").datepicker();
 	    $('#closeoutData').find("#certificateDate").datepicker();
 	    $('#closeoutData').find("#buildingPermitCL").datepicker();
+	    */
 	    
 	    
 	        // Warranty Letters
@@ -520,7 +522,7 @@ function fillTabs_CLOSEOUT(data)
 		
 		$('#closeoutData').find("#numOfMCSChangeOrdersCompleted").val(completed);
 		
-		
+		/* Field not being used anymore
 		$('#closeoutData').find("#tmpCertificateStatus").val(convertDefault(json.closeoutDetails.tmpCertificateStatus));
 		$('#closeoutData').find("#tmpCertificateDate").val(json.closeoutDetails.tmpCertificateDate);
 		
@@ -530,7 +532,7 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
 		
 		console.log("JSON P ", json.permits);
-		
+		*/
 //		if(json.permits.mechanicalPermitRequired == 1)
 //		{
 //			$('#closeoutData').find("#mechFinalDate").val(getToday());
@@ -677,7 +679,7 @@ function fillTabs_CLOSEOUT(data)
 //		
 		
 		
-
+		/* field not being used anymore
 		$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
 		$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
 		
@@ -708,6 +710,7 @@ function fillTabs_CLOSEOUT(data)
 		
 		
 		console.log("CS D", json.closeoutDetails);
+		*/
 		
 		$('#closeoutData').find("#equipmentSubmittalStatus").val(convertDefault(json.closeoutDetails.equipmentSubmittalStatus));
 		
@@ -797,9 +800,10 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
-		
+		/* field not being used anymore
 	    formatRelativeTextAreas(json.closeoutDetails.finalInspectionNotes, "finalInspectionNotes", "closeoutData");
 		$('#closeoutData').find("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
+	    */
 	    
 	    formatRelativeTextAreas(json.closeoutDetails.finalLiensNotes, "finalLiensNotes", "closeoutData");
 		$('#closeoutData').find("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
@@ -877,8 +881,9 @@ function saveProject_CLOSEOUT()
 	var verisae = $('#closeoutData').find("#verisae").val();
 	var asBuilts = $('#closeoutData').find("#asBuilts").val();
 	
-	
+	/* tempholder
 	var buildingPermitCL = $('#closeoutData').find("#buildingPermitCL").val();
+	*/
 	
 	var closeoutPhotosCL = $('#closeoutData').find("#closeoutPhotosCL").val();
 	var MCSWarranty = $('#closeoutData').find("#MCSWarranty").val();
@@ -931,6 +936,7 @@ function saveProject_CLOSEOUT()
         
     	// INSPECTIONS
     
+    /* Field not being used anymore
     var tmpCertificateStatus = $('#closeoutData').find("#tmpCertificateStatus").val();
     var tmpCertificateDate = $('#closeoutData').find("#tmpCertificateDate").val();
     
@@ -964,7 +970,7 @@ function saveProject_CLOSEOUT()
     var buildingFinalStatus = $('#closeoutData').find("#buildFinalStatus").val();
     
     var finalInspectionNotes = $('#closeoutData').find("#finalInspectionNotes").val();
-    
+    */
     	// WARRANTIES
     
     var MCSWarrantyStatus = $('#closeoutData').find("#MCSWarrantyStatus").val();
@@ -1057,8 +1063,9 @@ function saveProject_CLOSEOUT()
     ////////////// END NEW CONTENT
     
     var dates_CLOSEOUT =[
-				
+				/* Field not being used anymore
 				buildingPermitCL,
+    	*/
     	
 				closeoutPhotosCL,
 				MCSWarranty,//41
@@ -1071,10 +1078,10 @@ function saveProject_CLOSEOUT()
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, gasDate,
 				sprinkleDate, HTIDate, otherFinalLeinsDate,
 				
-				
+				/* Field not being used anymore
 				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
 				ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate, tmpCertificateDate,
-				
+				*/
 				
 				GCWarrantyDate, mechanicalWarrantyDate, electricalWarrantyDate, sprinkleWarrantyDate, plumbingWarrantyDate, 
 				gasWarrantyDate, HTIWarrantyDate, otherWarrantyDateA, otherWarrantyDateB,
@@ -1091,19 +1098,23 @@ function saveProject_CLOSEOUT()
     	for(var i = 0; i < dates_CLOSEOUT.length; i++) {
     		if(dates_CLOSEOUT[i]) dates_CLOSEOUT[i] = dateCleaner(dates_CLOSEOUT[i]);
     		
+    		/* Field not being used anymore
     		if(i == 0) buildingPermitCL = dates_CLOSEOUT[i];
-    		if(i == 1) closeoutPhotosCL = dates_CLOSEOUT[i];
-    		if(i == 2) MCSWarranty = dates_CLOSEOUT[i];
-    		if(i == 3) equipmentSubCL = dates_CLOSEOUT[i];
-    		if(i == 4) MCSDate = dates_CLOSEOUT[i];
-    		if(i == 5) GCDate = dates_CLOSEOUT[i];
-    		if(i == 6) mechanicalDate = dates_CLOSEOUT[i];
-    		if(i == 7) electricalDate = dates_CLOSEOUT[i];
-    		if(i == 8) plumbingDate = dates_CLOSEOUT[i];
-    		if(i == 9) gasDate = dates_CLOSEOUT[i];
-    		if(i == 10) sprinkleDate = dates_CLOSEOUT[i];
-    		if(i == 11) HTIDate = dates_CLOSEOUT[i];
-    		if(i == 12) otherFinalLeinsDate = dates_CLOSEOUT[i];
+    		
+    		*/
+    		if(i == 0) closeoutPhotosCL = dates_CLOSEOUT[i];
+    		if(i == 1) MCSWarranty = dates_CLOSEOUT[i];
+    		if(i == 2) equipmentSubCL = dates_CLOSEOUT[i];
+    		if(i == 3) MCSDate = dates_CLOSEOUT[i];
+    		if(i == 4) GCDate = dates_CLOSEOUT[i];
+    		if(i == 5) mechanicalDate = dates_CLOSEOUT[i];
+    		if(i == 6) electricalDate = dates_CLOSEOUT[i];
+    		if(i == 7) plumbingDate = dates_CLOSEOUT[i];
+    		if(i == 8) gasDate = dates_CLOSEOUT[i];
+    		if(i == 9) sprinkleDate = dates_CLOSEOUT[i];
+    		if(i == 10) HTIDate = dates_CLOSEOUT[i];
+    		if(i == 11) otherFinalLeinsDate = dates_CLOSEOUT[i];
+    		/* Field not being used anymore
     		if(i == 13) sprinkleFinalDate = dates_CLOSEOUT[i];
     		if(i == 14) certificateDate = dates_CLOSEOUT[i];
     		if(i == 15) mechFinalDate = dates_CLOSEOUT[i];
@@ -1114,27 +1125,28 @@ function saveProject_CLOSEOUT()
     		if(i == 20) fireAlarmFinalDate = dates_CLOSEOUT[i];
     		if(i == 21) lowVolFinalDate = dates_CLOSEOUT[i];
     		if(i == 22) tmpCertificateDate = dates_CLOSEOUT[i];
-    		if(i == 23) GCWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 24) mechanicalWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 25) electricalWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 26) sprinkleWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 27) plumbingWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 28) gasWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 29) HTIWarrantyDate = dates_CLOSEOUT[i];
-    		if(i == 30) otherWarrantyDateA = dates_CLOSEOUT[i];
-    		if(i == 31) otherWarrantyDateB = dates_CLOSEOUT[i];
-    		if(i == 32) manualDate = dates_CLOSEOUT[i];
-    		if(i == 33) HVACstartupFormDate = dates_CLOSEOUT[i];
-    		if(i == 34) salvageDate = dates_CLOSEOUT[i];
-    		if(i == 35) substantialCompletionDate = dates_CLOSEOUT[i];
-    		if(i == 36) paymentOfDebtsAndClaimsDate = dates_CLOSEOUT[i];
-    		if(i == 37) releaseOfLiensDate = dates_CLOSEOUT[i];
-    		if(i == 38) mulvannySignOffDate = dates_CLOSEOUT[i];
-    		if(i == 39) asBuilts = dates_CLOSEOUT[i];
-    		if(i == 40) costcoSignoff = dates_CLOSEOUT[i];
-    		if(i == 41) punchList = dates_CLOSEOUT[i];
-    		if(i == 42) alarmHvac = dates_CLOSEOUT[i];
-    		if(i == 43) verisae = dates_CLOSEOUT[i];
+    		*/
+    		if(i == 12) GCWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 13) mechanicalWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 14) electricalWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 15) sprinkleWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 16) plumbingWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 17) gasWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 18) HTIWarrantyDate = dates_CLOSEOUT[i];
+    		if(i == 19) otherWarrantyDateA = dates_CLOSEOUT[i];
+    		if(i == 20) otherWarrantyDateB = dates_CLOSEOUT[i];
+    		if(i == 21) manualDate = dates_CLOSEOUT[i];
+    		if(i == 22) HVACstartupFormDate = dates_CLOSEOUT[i];
+    		if(i == 23) salvageDate = dates_CLOSEOUT[i];
+    		if(i == 24) substantialCompletionDate = dates_CLOSEOUT[i];
+    		if(i == 25) paymentOfDebtsAndClaimsDate = dates_CLOSEOUT[i];
+    		if(i == 26) releaseOfLiensDate = dates_CLOSEOUT[i];
+    		if(i == 27) mulvannySignOffDate = dates_CLOSEOUT[i];
+    		if(i == 28) asBuilts = dates_CLOSEOUT[i];
+    		if(i == 29) costcoSignoff = dates_CLOSEOUT[i];
+    		if(i == 30) punchList = dates_CLOSEOUT[i];
+    		if(i == 31) alarmHvac = dates_CLOSEOUT[i];
+    		if(i == 32) verisae = dates_CLOSEOUT[i];
     	}
 		var action = "editCloseout";
 		var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
@@ -1172,8 +1184,9 @@ function saveProject_CLOSEOUT()
 				'alarmHvac':alarmHvac,
 				'verisae':verisae,
 				
+				/* field not being used anymore
 				'buildingPermitCL':buildingPermitCL,
-				
+				*/
 				
 				'closeoutPhotosCL': closeoutPhotosCL,
 				'MCSWarranty': MCSWarranty,
@@ -1221,7 +1234,7 @@ function saveProject_CLOSEOUT()
 				'otherFinalLeinsBStatus': otherFinalLeinsBStatus,
 				'otherFinalLeinsBDate': otherFinalLeinsBDate,
 				
-				
+				/* field not being used anymore
 				'mechFinalStatus': mechFinalStatus,
 				'mechFinalDate': mechFinalDate,
 				
@@ -1255,7 +1268,7 @@ function saveProject_CLOSEOUT()
 				'certificateDate': certificateDate,
 				
 				'finalInspectionNotes': finalInspectionNotes,
-				
+				*/
 				
 				'MCSWarrantyStatus': MCSWarrantyStatus,
 				
@@ -1409,10 +1422,11 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"MCSStatus", "GCStatus", "mechanicalStatus", "electricalStatus", "plumbingStatus", "gasStatus",
                 				"sprinkleStatus", "HTIStatus", "otherFinalLiensStatus", "otherFinalLiensBStatus",
                 				
-
+                				/* field not being used anymore
                 				"sprinkleFinalStatus", "certificateStatus", "tmpCertificateStatus", "mechFinalStatus", "elecFinalStatus",
                 				"plumbingFinalStatus", "gasFinalStatus", "buildFinalStatus", "ceilingFinalStatus", "fireAlarmFinalStatus", 
                 				"lowVolFinalStatus",
+                				*/
                 				
                 				"MCSWarrantyStatus", "GCWarrantyStatus", "mechanicalWarrantyStatus", "electricalWarrantyStatus", "sprinkleWarrantyStatus", 
                 				"plumbingWarrantyStatus", "gasWarrantyStatus", "HTIWarrantyStatus", "otherWarrantyStatusA", "otherWarrantyStatusB",
@@ -1946,14 +1960,6 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#tempCertOccupancyInspectionStatus").val(convertUndefined(json.permits.tempCertOccupancyInspectionStatus));
 		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(json.permits.tempCertOccupancyInspectionLastUpdated);
 		
-		/*
-		$('#permitData').find("#certOccupancyPermitLastUpdated").val(json.permits.certOccupancy);
-		$('#permitData').find("#certOccupancyPermitStatus").val(convertUndefined(json.permits.certOccupancyPermitStatus));
-		$('#permitData').find("#certOccupancyPermitReq").val(convertUndefined(json.permits.certOccupancyPermitRequired));
-		$('#permitData').find("#certOccupancyInspectionReq").val(convertUndefined(json.permits.certOccupancyInspectionRequired));
-		$('#permitData').find("#certOccupancyInspectionStatus").val(convertUndefined(json.permits.certOccupancyInspectionStatus));
-		$('#permitData').find("#certOccupancyInspectionLastUpdated").val(json.permits.certOccupancyInspectionLastUpdated);
-		*/
 		
 	    $('#permitData').find("#otherAPermitStatus").val(convertUndefined(json.permits.otherAPermitStatus));
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
@@ -2635,35 +2641,7 @@ function filllowVoltage1()
     }  
 }	
 
-/*
-function filltempCertOccupancy()
-{
-	if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 1)
-	{	
-		$('#permitData').find("#tempCertOccupancyPermitStatus").val("TBD");
-		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
-	    $('#permitData').find("#tempCertOccupancyInspectionReq").val(1);
-        $('#permitData').find("#tempCertOccupancyInspectionStatus").val("TBD");
-        $('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());
-	}    
-    else if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 2)
-    {	
-    	$('#permitData').find("#tempCertOccupancyPermitStatus").val("N/A");
-		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
-    	$('#permitData').find("#tempCertOccupancyInspectionReq").val(2);
-		$('#permitData').find("#tempCertOccupancyInspectionStatus").val("N/A");
-		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());    
-    }
-    else if($('#permitData').find("#tempCertOccupancyPermitReq").val() == 0)
-    {	
-    	$('#permitData').find("#tempCertOccupancyPermitStatus").val("TBD");
-		$('#permitData').find("#tempCertOccupancyPermitLastUpdated").val(getToday());
-		$('#permitData').find("#tempCertOccupancyInspectionReq").val(0);
-		$('#permitData').find("#tempCertOccupancyInspectionStatus").val("TBD");
-		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(getToday());    
-    }  
-}
-*/
+
 
 function filltempCertOccupancy1()
 {	
@@ -3415,21 +3393,7 @@ function saveProject_PERMIT1()
     console.log("T INS", tempCertOccupancyInspectionStatus);
     console.log("TC INS", certOccupancyInspectionStatus);
     
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
- 
-    
-    
-    
-    
 
 /*//	 INSPECTIONS
 
@@ -4873,13 +4837,14 @@ function prepareCloseout(source_id){
 
 	}
 
+	/* Field not being used anymore
 	else if(source_id == "final-inspection-item")
 	{
 		$('#closeoutData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
 		$('#closeoutData').find("#finalInspections").addClass("active");
 
 	}
-	
+	*/
 	else if(source_id == "warranty-letters-item")
 	{
 		$('#closeoutData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
@@ -5635,7 +5600,7 @@ function fillCloseout (data) {
 	let required = 0;
 	let completed = 0;
 	
-	
+	/* tempholder
 	switch (closeoutData.mechFinalStatus) {
 		case '1':
 			required++;
@@ -5717,7 +5682,8 @@ function fillCloseout (data) {
 			required++;
 			break;
 	}
-	$('#closeoutSummary').find('#finalInspectionsRequired').text(completed + ' / ' + required);
+	$('#closeoutSummary').find('#finalInspectionsRequired').text(completed + ' / ' + required); 
+	*/
 	required = 0;
 	completed = 0;
 	switch (closeoutData.GCWarrantyStatus) {
