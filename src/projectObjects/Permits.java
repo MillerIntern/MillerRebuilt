@@ -105,6 +105,8 @@ public class Permits extends ProjectObject
 		private String certOccupancyInspectionStatus;
 		private Date certOccupancyInspectionLastUpdated;
 		
+		private Date buildPermExpireDate;
+		
 	
 	public Permits()
 	{
@@ -112,7 +114,7 @@ public class Permits extends ProjectObject
 	}
 	
 	public Permits(Date buildingPermitDate,	Date mechanicalPermitDate, Date electricalPermitDate, Date plumbingPermitDate, Date gasPermitDate, Date fireSprinklerDate,
-				   Date fireAlarmPermitDate,Date lowVoltagePermitDate, Date tempCertOccupancyPermitDate, Date certOccupancyPermitDate)
+				   Date fireAlarmPermitDate,Date lowVoltagePermitDate, Date tempCertOccupancyPermitDate, Date certOccupancyPermitDate, Date buildPermExpireDatePermit)
 	 {
 		this.building = buildingPermitDate ;
 		this.mechanical = mechanicalPermitDate;
@@ -124,6 +126,7 @@ public class Permits extends ProjectObject
 		this.low_voltage = lowVoltagePermitDate;
 		this.tempCertOccupancy = tempCertOccupancyPermitDate;
 		this.certOccupancy = certOccupancyPermitDate;
+		this.buildPermExpireDate = buildPermExpireDatePermit;
 	 }
 
 	public synchronized void setBuildingPermitDate( Date a)
@@ -809,7 +812,14 @@ public class Permits extends ProjectObject
 	public void setCertOccupancyInspectionLastUpdated(Date certOccupancyInspectionLastUpdated) {
 		this.certOccupancyInspectionLastUpdated = certOccupancyInspectionLastUpdated;
 	}
+	
+	public Date getBuildPermExpireDate() {
+		return buildPermExpireDate;
+	}
 
+	public void setBuildPermExpireDate(Date buildPermExpireDate) {
+		this.buildPermExpireDate = buildPermExpireDate;
+	}
 
 	
 	public synchronized String getPermitNotes() {

@@ -782,6 +782,7 @@ public class ProjectNewRuleService {
 			Date lowVoltageInspectionLastUpdated = permits.getVoltageInspectionLastUpdated();
 			
 			//Temp Certificate of Occupation
+			
 			String tempCertOccupancyInspectionRequired = permits.getTempCertOccupancyInspectionRequired();
 			String tempCertOccupancyInspectionStatus = permits.getTempCertOccupancyInspectionStatus();
 			Date tempCertOccupancyInspectionLastUpdated = permits.getTempCertOccupancyInspectionLastUpdated();
@@ -790,6 +791,8 @@ public class ProjectNewRuleService {
 			String certOccupancyInspectionRequired = permits.getCertOccupancyInspectionRequired();
 			String certOccupancyInspectionStatus = permits.getCertOccupancyInspectionStatus();
 			Date certOccupancyInspectionLastUpdated = permits.getCertOccupancyInspectionLastUpdated();
+			
+			Date buildPermExpireDate = permits.getBuildPermExpireDate();
 			
 
 			
@@ -822,6 +825,45 @@ public class ProjectNewRuleService {
 				Date scheduledTurnoverDate = proj.getScheduledTurnover();
 				Date actualTurnoverDate = proj.getActualTurnover();
 				
+
+				//Building permit is issued but expire date has not been set
+				if((buildingPermitRequired != null) && (buildingPermitRequired.equals("1"))
+						&& (buildingPermitStatus != null && (buildingPermitStatus.equals("Issued")) 
+						&& buildPermExpireDate == null)) { 
+					
+					RuleDetails rd = new RuleDetails("Permits", "buildPermitExpireMonth", "Building Permit has been issued, set Building Permit Expiration Date", 1);
+					scoreRed = true;
+					al.add(rd);
+				
+				}
+				
+				//build permit is required and not closed and there is a building permit expiration date
+				else if(buildingPermitStatus!= null && !(buildingPermitStatus.equals("Closed")) 
+						&& buildingPermitRequired.equals("1") && buildPermExpireDate != null){
+				
+					//Gets current time in milliseconds
+					//using long because we could exceed the max integer length
+					long currentMillis = new Date().getTime();
+					
+					//counts how many milliseconds there are in 30 days. Important that l is with 30 since the compiler HAS to know
+					//we're using long numbers (using long because we could exceed the max integer length)
+					long millisIn30Days = 30l * 24 * 60 * 60 * 1000;
+				
+					//If the Building Permit Expiration Date has passed 
+					if(buildPermExpireDate.before(today)) {
+						
+						RuleDetails rd = new RuleDetails("Permits", "buildPermitExpireMonth", "The Building Permit Expiration Date has passed and building permit status is not closed", 1);
+						scoreRed = true;
+						al.add(rd);
+					}
+					
+					//if the Building Permit Expiration Date is within a month of today
+					else if(buildPermExpireDate.getTime() < (currentMillis + millisIn30Days)) {
+						RuleDetails rd = new RuleDetails("Permits", "buildPermitExpireMonth", "The Building Permit Expiration Date is within a month", 1);
+						scoreRed = true;
+						al.add(rd);
+					}	
+				}
 				
 				/* 
 				 * Permit Rules for 1st Timeline --> Scheduled Start Date has passed but not the Actual Turnover Date

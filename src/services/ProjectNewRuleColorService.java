@@ -584,6 +584,17 @@ public class ProjectNewRuleColorService {
 			String lowVoltageInspectionStatus = permits.getVoltageInspectionStatus();
 			Date lowVoltageInspectionLastUpdated = permits.getVoltageInspectionLastUpdated();
 			
+			//Temp Certificate of Occupation
+			String tempCertOccupancyInspectionRequired = permits.getTempCertOccupancyInspectionRequired();
+			String tempCertOccupancyInspectionStatus = permits.getTempCertOccupancyInspectionStatus();
+			Date tempCertOccupancyInspectionLastUpdated = permits.getTempCertOccupancyInspectionLastUpdated();
+			
+			//Certificate of Occupation
+			String certOccupancyInspectionRequired = permits.getCertOccupancyInspectionRequired();
+			String certOccupancyInspectionStatus = permits.getCertOccupancyInspectionStatus();
+			Date certOccupancyInspectionLastUpdated = permits.getCertOccupancyInspectionLastUpdated();
+			
+			
 			
 			
 //			//OtherA

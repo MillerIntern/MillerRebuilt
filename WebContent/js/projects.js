@@ -1494,6 +1494,8 @@ $(document).ready(function(){
 	$('#certOccupancyPermitLastUpdated_1').datepicker();
 	$('#certOccupancyInspectionLastUpdated_1').datepicker();
 	
+	$('#buildPermExpireDate_1').datepicker();
+	
 	$('#permitData').find("#buildingPermitLastUpdated").datepicker();
 	$('#permitData').find("#buildingInspectionLastUpdated").datepicker();
 	$('#permitData').find("#ceilingPermitLastUpdated").datepicker();
@@ -2071,6 +2073,9 @@ function fillTabs_PERMIT1(data)
 		$('#certOccupancyInspectionRequired_1').val(convertUndefined(json.permits.certOccupancyInspectionRequired));
 		$('#certOccupancyInspectionStatus_1').val(convertUndefined(json.permits.certOccupancyInspectionStatus));
 		$('#certOccupancyInspectionLastUpdated_1').val(json.permits.certOccupancyInspectionLastUpdated);
+		
+		
+		$('#buildPermExpireDate_1').val(json.permits.buildPermExpireDate);
 
 		
 	    formatRelativeTextAreas(json.permits.permitNotes , "permitNotes", "permitData"); //What is this doing (A.G)
@@ -3137,6 +3142,8 @@ function saveProject_PERMIT1()
     var certOccupancyInspectionStatus = $("#certOccupancyInspectionStatus_1").val();
     var certOccupancyInspectionLastUpdated = $("#certOccupancyInspectionLastUpdated_1").val();
     
+    var buildPermExpireDate = $("#buildPermExpireDate_1").val();
+    
     //Akash - Don't know why Lily or the previous developer commeneted some lines. It's working good without them. I am leaving them be.
     //I have given these otherA and otherB the same values as lowVoltage for now. So that in the future I can append the actual ones if they need these
  //   var otherAPermitReq = $("#lowVoltagePermitRequired_1").val();
@@ -3171,6 +3178,7 @@ function saveProject_PERMIT1()
 				voltagePermitLastUpdated, voltageInspectionLastUpdated,
 				tempCertOccupancyPermitLastUpdated, tempCertOccupancyInspectionLastUpdated,
 				certOccupancyPermitLastUpdated, certOccupancyInspectionLastUpdated,
+				//buildPermExpireDate,
 				otherAPermitLastUpdated, otherAInspectionLastUpdated,
 				otherBPermitLastUpdated, otherBInspectionLastUpdated,
                 ];
@@ -3208,6 +3216,7 @@ function saveProject_PERMIT1()
     		if(i == 23) tempCertOccupancyInspectionLastUpdated = dates_PERMIT[i];
     		if(i == 24) certOccupancyPermitLastUpdated = dates_PERMIT[i];
     		if(i == 25) certOccupancyInspectionLastUpdated = dates_PERMIT[i];
+    		//if(i == 26) buildPermExpireDate = dates_PERMIT[i];
     	}
 		var action = "editPermits";
 		var PERMIT_ID = 0;
@@ -3316,6 +3325,8 @@ function saveProject_PERMIT1()
 				'certOccupancyInspectionReq': certOccupancyInspectionReq,
 				'certOccupancyInspectionStatus': certOccupancyInspectionStatus,
 				'certOccupancyInspectionLastUpdated': certOccupancyInspectionLastUpdated,
+				
+				'buildPermExpireDate' : buildPermExpireDate,
 				
 				
 				'otherPermitA': otherAPermitLastUpdated,
@@ -5308,6 +5319,9 @@ function fillPermitsAndInspections (data) {
 	$('#projectManager').find('#certOccupancyInspectionRequired').text(convertRequired(tabData.certOccupancyInspectionRequired));
 	$('#projectManager').find('#certOccupancyInspectionDate').text(tabData.certOccupancyInspectionLastUpdated);
 	$('#projectManager').find('#certOccupancyInspection').text(convertStatus(tabData.certOccupancyInspectionStatus));
+	
+	
+	//$('#projectManager').find('#buildPermExpireDate').text(tabData.buildPermExpireDate);
 }
 
 function clearPermitsAndInspectionsOverview () {

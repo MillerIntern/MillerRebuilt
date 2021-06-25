@@ -188,6 +188,8 @@ function fillPermitsAndInspecionts (data) {
 	$('#tempCertOccupancyInspection').text(tabData.tempCertOccupancyInspectionStatus);
 	$('#certOccupancyInspectionDate').text(tabData.certOccupancyInspectionLastUpdated);
 	$('#certOccupancyInspection').text(tabData.certOccupancyInspectionStatus);
+	
+	$('#buildPermExpireDate').text(tabData.buildPermExpireDate);
 
 	
 }

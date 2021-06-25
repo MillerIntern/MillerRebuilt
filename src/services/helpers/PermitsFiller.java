@@ -140,6 +140,15 @@ public class PermitsFiller
 				permits.setCertOccupancyPermitStatus(params.get("certOccupancyPermitStatus"));
 				permits.setCertOccupancyPermitRequired(params.get("certOccupancyPermitReq"));
 				
+				
+				
+				Date buildPermExpire = null;
+				if(!params.get("buildPermExpireDate").isEmpty())
+					buildPermExpire = formatter.parse(params.get("buildPermExpireDate"));
+				permits.setBuildPermExpireDate(buildPermExpire);
+				
+				
+				
 		
 		Date ceilingPermit = null;
 		if(!params.get("ceilingPermit").isEmpty())

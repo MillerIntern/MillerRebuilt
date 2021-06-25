@@ -510,9 +510,12 @@
 				<ul id = "closeOutList" class="closeout-information list-group">
 					<li class="list-group-item closeout-info-list-item" id="closeout-documents-item">Closeout Documents</li>
 					<!-- <li class="list-group-item closeout-info-list-item" id="final-inspection-item" >Final Inspections</li> -->
-					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
 					<li class="list-group-item closeout-info-list-item" id="aia-mg2-item">AIA</li>
+					<li class="list-group-item closeout-info-list-item" id="warranty-letters-item">Warranty Letters and Final Liens</li>	
+					
+					<!-- 
 					<li class="list-group-item closeout-info-list-item" id="closeout-summary-item">Closeout Summary</li>
+					 -->
 				</ul>
 			</div> <!-- Closeout -->
 			
@@ -1286,9 +1289,13 @@
 					<td>
 					&emsp;&emsp;&emsp;&emsp;
 					</td>
+					
+					<!-- 
 					<td style="text-align: center">	
 						<h3> Danger Zone</h3>
 					</td>
+					
+					 -->
 				</tr>
 				<tr>
 					<td style="text-align: center">
@@ -1297,9 +1304,14 @@
 					<td>
 					&emsp;&emsp;&emsp;&emsp;
 					</td>
+					
+					<!-- 
+					
 					<td style="text-align: center">
 						<button onclick='permissionCheck()' type="button" class="btn btn-danger">Delete Project</button>
 					</td>
+					
+					 -->
 				</tr>
 				<tr>
 				<p></p>
@@ -1818,6 +1830,10 @@
 				<table class='table table-hover'>
 					<tr>
 					
+						
+		        		<td class = "bold">Building Permit Expiration Date</td>
+		        		<td style="text-align: center"><input type="text" id="buildPermExpireDate_1" placeholder="Select a Date"/></td>
+			
 					
 						<td align="left" class = "bold" width = 10%>Permit/Inspection Notes</td>
 						<td><textarea style = " width:600px;height:100px;" id='permitNotes_1' class="scrollTextBoxPermits" rows="10" cols="30" maxlength = "1000" ondblclick = "dateFillFunction(this)"></textarea></td>
@@ -2896,8 +2912,8 @@
 		<ul class="nav nav-tabs">
 			<li id = "closeout" role='presentation' class="active" data-tab="closeoutDocuments"><a>Closeout Documents</a></li>
 			<!-- <li role='presentation' data-tab="finalInspections"><a>Final Inspections</a></li> -->
-	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
 			<li role='presentation' data-tab="otherItems"><a>AIA</a></li>
+	        <li role='presentation' data-tab="warrantyLetters"><a>Warranty Letters and Final Liens</a></li>
 			<li role='presentation' data-tab="closeoutSummary"><a>Closeout Summary</a></li>
 	        <li style="top:4px;float:right;" class="btn btn-success" onClick="saveProject_CLOSEOUT()" data-tab="saveButton" id = "save-closeout">
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
@@ -3509,6 +3525,11 @@
                 </td>   
             </tr>
         </table>
+        
+        
+        
+        <!-- No longer needed  
+        
         <table id='otherItemsTable' class='table table-hover'>
             <tr>
                 <td style="width: 25.5%" class='bold'>Number of MG2 Change Orders</td>
@@ -3524,7 +3545,7 @@
             </tr>
 	    </table><br>
 	        
-	        
+	        -->
 	        
 	    </div>
 	    <div style="width:100%" id="closeoutSummary" class="info-tab info-tab-closeoutDocuments">
