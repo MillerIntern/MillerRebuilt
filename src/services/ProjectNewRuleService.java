@@ -62,25 +62,27 @@ public class ProjectNewRuleService {
 		 * Scheduling = 26
 		 * 
 		 * */
+				
 		//1
 		if(permits == null || permits.equals("0")) {
 			if(!(stage.equals("Budgetary")) && !(stage.equals("Proposal"))){
-				RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Permits must be either Yes or No", 0);
-				scoreYellow = true;
+				RuleDetails rd = new RuleDetails("GeneralInfo", "permits TBD", "Permits must be either Yes or No", 1);
+				scoreRed = true;
 				al.add(rd);
 			}
 			
 		}
+		
 		//2
 		if(hvac == null|| hvac.equals("2")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "HVAC TBD", "HVAC must be either Yes or No", 0);
-			scoreYellow = true;
+			RuleDetails rd = new RuleDetails("GeneralInfo", "HVAC TBD", "HVAC must be either Yes or No", 1);
+			scoreRed = true;
 			al.add(rd);
 		}
 		//3
 		if(refrigeration == null || refrigeration.equals("2")) {
-			RuleDetails rd = new RuleDetails("GeneralInfo", "Refrigeration TBD", "Refrigeration must be either Yes or No", 0);
-			scoreYellow = true;
+			RuleDetails rd = new RuleDetails("GeneralInfo", "Refrigeration TBD", "Refrigeration must be either Yes or No", 1);
+			scoreRed = true;
 			al.add(rd);
 		}
 		//4
@@ -795,38 +797,81 @@ public class ProjectNewRuleService {
 			Date buildPermExpireDate = permits.getBuildPermExpireDate();
 			
 
+			Date scheduledStartDate = proj.getScheduledStartDate();
+
+			//Gets current time in milliseconds
+			//using long because we could exceed the max integer length
+			long currentMillis = new Date().getTime();
 			
-//			//OtherA
-//			String otherAPermitRequired = permits.getOtherAPermit();
-//			String otherAPermitStatus = permits.getOtherAPermitStatus();
-//			Date otherAPermitLastUpdated = permits.getOtherA();
-//			String otherAInspectionRequired = permits.getOtherAInspectionRequired();
-//			String otherAInspectionStatus = permits.getOtherAInspectionStatus();
-//			Date otherAInspectionLastUpdated = permits.getOtherAInspectionLastUpdated();
-//			
-//			//Other
-//			String otherBPermitRequired = permits.getOtherBPermit();
-//			String otherBPermitStatus = permits.getOtherBPermitStatus();
-//			Date otherBPermitLastUpdated = permits.getOtherB();
-//			String otherBInspectionRequired = permits.getOtherBInspectionRequired();
-//			String otherBInspectionStatus = permits.getOtherBInspectionStatus();
-//			Date otherBInspectionLastUpdated = permits.getOtherBInspectionLastUpdated();
+			//counts how many milliseconds there are in 30 days. Important that l is with 30 since the compiler HAS to know
+			//we're using long numbers (using long because we could exceed the max integer length)
+			long millisIn30Days = 30l * 24 * 60 * 60 * 1000;
+			
+			
+			//schedule start date is within 30 days of today
+			if(scheduledStartDate != null && scheduledStartDate.getTime() < (currentMillis + millisIn30Days) && !scheduledStartDate.before(today)) {
+				
+				String permitsTBD = "";
+				if((buildingPermitRequired != null) && (buildingPermitRequired.equals("0"))) {
+					permitsTBD += "Building, ";
+				}
+				
+				if((ceilingPermitRequired != null) && (ceilingPermitRequired.equals("0"))) {
+					permitsTBD += "Ceiling, ";
+				}
+				
+				if((mechanicalPermitRequired != null) && (mechanicalPermitRequired.equals("0"))) {
+					permitsTBD += "Mechanical, ";
+				}
+				
+				if((electricalPermitRequired != null) && (electricalPermitRequired.equals("0"))) {
+					permitsTBD += "Electrical, ";
+				}
+				
+				if((plumbingPermitRequired != null) && (plumbingPermitRequired.equals("0"))) {
+					permitsTBD += "Plumbing, ";
+				}
+				
+				if((gasPermitRequired != null) && (gasPermitRequired.equals("0"))) {
+					permitsTBD += "Gas, ";
+				}
+				
+				if((sprinklerPermitRequired != null) && (sprinklerPermitRequired.equals("0"))) {
+					permitsTBD += "Sprinkler, ";
+				}
+				
+				if((fireAlarmPermitRequired != null) && (fireAlarmPermitRequired.equals("0"))) {
+					permitsTBD += "Fire Alarm, ";
+				}
+				
+				if((lowVoltagePermitRequired != null) && (lowVoltagePermitRequired.equals("0"))) {
+					permitsTBD += "Low Voltage, ";
+				}
+				
+				if(!permitsTBD.equals("")) {
+					String result = null;
+					if ((permitsTBD != null) && (permitsTBD.length() > 0)) {
+					      result = permitsTBD.substring(0, permitsTBD.length() - 2);
+					   }
+					
+					RuleDetails rd = new RuleDetails("Permits", "permitsTBD", "Scheduled start date is within a month of today, these permits are still TBD - "+result, 0);
+					scoreYellow = true;
+					al.add(rd);
+				}
+				
+				
+			}
+
 			
 			if(proj.getAutofillPermits()!=null && proj.getAutofillPermits().equals("1")) {
 				
-				/*
-				 * LATEST RULES 07/16/2020
-				 * akashgurram18@gmail.com
-				 * To-do -> Disable all the other old rules in permits and inspections
-				 * 
-				 */
-				
-				Date scheduledStartDate = proj.getScheduledStartDate();
+
+				scheduledStartDate = proj.getScheduledStartDate();
 				Date scheduledTurnoverDate = proj.getScheduledTurnover();
-				Date actualTurnoverDate = proj.getActualTurnover();
+				Date actualTurnoverDate = proj.getActualTurnover();				
 				
 
-				//Building permit is issued but expire date has not been set
+				//Building permit is issued but expiration date has not been set
 				if((buildingPermitRequired != null) && (buildingPermitRequired.equals("1"))
 						&& (buildingPermitStatus != null && (buildingPermitStatus.equals("Issued")) 
 						&& buildPermExpireDate == null)) { 
@@ -841,13 +886,6 @@ public class ProjectNewRuleService {
 				else if(buildingPermitStatus!= null && !(buildingPermitStatus.equals("Closed")) 
 						&& buildingPermitRequired.equals("1") && buildPermExpireDate != null){
 				
-					//Gets current time in milliseconds
-					//using long because we could exceed the max integer length
-					long currentMillis = new Date().getTime();
-					
-					//counts how many milliseconds there are in 30 days. Important that l is with 30 since the compiler HAS to know
-					//we're using long numbers (using long because we could exceed the max integer length)
-					long millisIn30Days = 30l * 24 * 60 * 60 * 1000;
 				
 					//If the Building Permit Expiration Date has passed 
 					if(buildPermExpireDate.before(today)) {
@@ -864,6 +902,16 @@ public class ProjectNewRuleService {
 						al.add(rd);
 					}	
 				}
+				
+				
+				/*
+				 * LATEST RULES 07/16/2020
+				 * akashgurram18@gmail.com
+				 * To-do -> Disable all the other old rules in permits and inspections
+				 * 
+				 */
+				
+				
 				
 				/* 
 				 * Permit Rules for 1st Timeline --> Scheduled Start Date has passed but not the Actual Turnover Date

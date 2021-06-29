@@ -3847,6 +3847,7 @@ function autofillPermits() {
 		alert("Server Error! (Project ID)");
 		return;
 	}
+	
 		
 	$.ajax({
 		type: 'POST',
@@ -14080,7 +14081,15 @@ function changeStatus(){
 	
 	//code to add multiple options at the same time depending on the stage
 	var projectStage = $('#stage').val();
+	
 	if(projectStage == "2"){//Active
+
+		//if the current Permit autofill is TBD, then display message
+		if($('#generalInformation').find('#autofill-Permits').val() == "0"){
+				
+			window.alert("Setting project to Active: Permits are still set to TBD");		
+		}
+		
 		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
 		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
 		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
