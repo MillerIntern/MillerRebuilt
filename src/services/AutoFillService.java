@@ -279,6 +279,21 @@ public class AutoFillService {
 		cd.setVerisaeReportStatus(value);
 		
 		proj.setCloseoutDetails(cd);
+		
+		
+		//if HVAC is yes
+		if(proj.getAutofillHVAC().equals("1")) {
+					
+			// No
+			value = "2";			
+		}
+		
+		else {
+			// N/A
+			value = "3";
+			}
+		
+		cd.setHvacCloseoutStatus(value);
 	}
 	
 	public static void autoFillRefrigeration(Project proj , String _value , Date today)
@@ -316,6 +331,20 @@ public class AutoFillService {
 		cd.setSalvageValue(salvageValue);
 		
 		proj.setCloseoutDetails(cd);
+		
+		//if refrigeration is yes
+		if(proj.getAutofillRefrigeration().equals("1")) {
+			
+			// No
+			value = "2";
+			
+		}
+		else {
+			// N/A
+			value = "3";
+		}
+			
+		cd.setRefrigerationCloseoutStatus(value);
 		
 	}
 	

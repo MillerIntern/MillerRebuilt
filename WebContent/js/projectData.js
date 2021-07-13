@@ -443,6 +443,7 @@ function saveProject() {
 				alert('Save Complete!');
 				document.getElementById("saveProjectLink").onclick = "";// Added it here by removing it at the top
 				$('#saveButton > button').prop('disabled', false);
+				
 			}
 			
 		});

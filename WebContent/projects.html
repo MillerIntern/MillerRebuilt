@@ -262,7 +262,8 @@
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
 					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
 					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>		
-					<li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li>				
+					<li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li>
+					<li class="list-group-item project-info-list-item" id="customerNotes-item">Customer Notes</li>
 				</ul>
 			</div> <!-- Project Information -->
 			<div class='info-tab info-tab-projectProposals' id='projectProposals'><!-- Project Cost -->
@@ -279,6 +280,8 @@
 				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
 				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="project-edit btn" disabled>Edit Change Order</button>
 				<button style = "float:right;margin-right:5px;" onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
+
+
 				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
 					<option value='all' selected="selected">All</option>
 					<option value='review'>Review</option>
@@ -1876,6 +1879,7 @@
 			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
 			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
 			<li role='presentation' data-tab='pendingInvoiceInformation'><a>Pending Invoices</a></li>
+			<li role='presentation' data-tab='customerNotesInformation'><a>Customer Notes</a></li>
 			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 	        <li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
@@ -2310,6 +2314,18 @@
 		      </div>
 		   </div>
 		</div>
+		
+		    <div id="customerNotesInformation" class="info-tab info-tab-customerNotesInformation"> 
+		    <table id="customerNotesInformationTable" class='table table-hover'>
+		
+		    <tr>
+	        <td class="bold">Customer Notes</td>
+	        <td><textarea  style = " width:600px;height:159px;" class="scrollTextBox" maxlength="999" id="customerNotes" rows="5" cols="40" ondblclick = "dateFillFunction(this)"></textarea></td>
+	        </tr>	
+	
+		</table>
+	    
+	    </div>
 									
 		<div class='info-tab' id='saveButton'>
 			<button onclick='goToProjectManager()' class='btn btn-primary' disabled>Go to Project Manager</button>
@@ -2317,9 +2333,10 @@
 			<button onclick='goHome()' class='btn btn-warning' disabled>Return Home</button>
 			
 		</div>
-	
-	    </div>  <!-- End Container -->
+
 		</div>	
+		
+		</div>  <!-- End Container -->
 		
 		
   <!-- THIS ENDS THE DIV FOR PROJECT DATA-->	
@@ -2932,18 +2949,46 @@
 	            <tr>
 	            	<td style="width: 15%; text-align: center"></td>
 	            	<td style="width: 15%; text-align: center"><b>Closeout Document Status</b></td>
-	            	<td style="width: 70%; "><b>Closeout Document Updated</b></td>
+	            	<td style="width: 15%; "><b>Closeout Document Updated</b></td>
+	            	<td style="width: 15%; text-align: center"></td>
+	            	<td style="width: 15%; text-align: center"><b>HVAC CO created?</b></td>
+	            	<td style="width: 15%; text-align: center"><b>Refrigeration CO created?</b></td>
 	            </tr>
 				<tr>
 	                <td class='closeoutLabel'>Costco Closeout SignOff</td>
 	                <td style="text-align: center">  
 	                    <select data-associated-date='costcoSignoff' class="closeout-input autofill-CloseoutDocs" id="costcoSignoffStatus">
 	                    <option value="default">--Status--</option>
+	                    <option value="1">Incomplete</option>
+	                    <option value="2">Complete</option>
+
 	                    </select>
 	                </td>
 	                <td>
 	                    <input type="text" placeholder="Select a Date" id="costcoSignoff" class="autofill-CloseoutDocs-Date" />
 	                </td>   
+	                
+	                <!-- CO STUFF -->
+	                
+	                <td class='bold'>Travel, Rentals, and Freight CO</td>
+                <td style="text-align: center">  
+                    <select class="closeout-input autofill-HVAC" onchange = "changeOrderOnChangeHVAC()" id="hvacCloseoutStatus">
+                        <option value="default">--Status--</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                        <option value="3">N/A</option>
+                    </select>
+                </td>
+                <td >  
+                    <select class="closeout-input autofill-Refrigeration" onchange = "changeOrderOnChangeRefrigeration()" id="refrigerationCloseoutStatus">
+                        <option value="default">--Status--</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                        <option value="3">N/A</option>
+                    </select>
+                </td>
+                <!--  -->
+	                
            		</tr>	            
 	            <tr>
                 <td class='closeoutLabel'>Punch List</td>
@@ -2987,7 +3032,16 @@
                 </td>
                 <td>
                     <input type="text" placeholder="Select a Date" id="HVACstartupFormDate" class="autofill-HVAC-date" />
-                </td>   
+                </td>
+                
+                <!-- 
+	        	<tr>
+	        		<td style="width: 15%; text-align: center"></td>
+	            	<td style="width: 15%; text-align: center"><b>HVAC CO</b></td>
+	            	<td style="width: 70%; "><b>Refrigeration CO</b></td>
+	        	</tr>
+	        	 -->	        	
+	    
             </tr>
             <tr>
                 <td class='closeoutLabel'>Shutdown Report</td>
@@ -3026,6 +3080,7 @@
             </tr>
         </table>
         
+        
         <table id='otherItemsSalvageTable' class='table table-hover'>
 	        	<tr>
 	        		<td style="width: 15%"></td>
@@ -3054,9 +3109,48 @@
 	        			<input type="text" placeholder="Select a Date" id="salvageDate" class="autofill-Refrigeration-date"/>
 	        		</td>
 	        	</tr>
+	        	
+	    </table>
+	    
+	    <!-- 
+	    <table id='otherItemsSalvageTable' class='table table-hover'>
+	        	<tr>
+	        		<td style="width: 15%; text-align: center"></td>
+	            	<td style="width: 15%; text-align: center"><b>HVAC CO</b></td>
+	            	<td style="width: 70%; "><b>Refrigeration CO</b></td>
+	        	</tr>
+	        	<tr>
+	        	
+	        	<td class='bold'>CO Status</td>
+                <td style="text-align: center">  
+                    <select class="closeout-input autofill-HVAC" id="hvacCloseoutStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+                <td >  
+                    <select class="closeout-input autofill-Refrigeration" id="refrigerationCloseoutStatus">
+                        <option value="default">--Status--</option>
+                    </select>
+                </td>
+	        	</tr>
+	        	
+	    </table>
+	     -->
+	    
+	    <table id ='closeoutDocumentsTable' class='table table-hover'>
+	    	
+	    	<tr>
+                <td style = "width: 15%" class='closeoutLabel'>Closeout Documents Notes</td>
+                <td>  
+                <textarea style = " width:600px;height:100px;" id="closeoutDocumentsNotes" class="scrollTextBoxCloseoutDocs"> </textarea>
+                </td> 
+            </tr>
 	    </table>
         
+        <!-- 
         <table id='closeoutDocumentsTable' class='table table-hover'>
+            
+           
             <tr>
                 <td style="width: 30%" class='closeoutLabel'>Number of MCS Change Orders</td>
                 <td style="width: 70%">  
@@ -3069,6 +3163,8 @@
             	<input type="text" id="numOfMCSChangeOrdersCompleted" />
                 </td> 
             </tr>
+            
+             
             <tr>
                 <td class='closeoutLabel'>Closeout Documents Notes</td>
                 <td>  
@@ -3076,6 +3172,8 @@
                 </td> 
             </tr>
 	        </table>
+	        
+	        -->
 
 		</div>
 	    <!-- End Closeout Documents Tab--> 
@@ -4138,6 +4236,8 @@
 		                <td>
 		                    <select class="closeout-input" id="status">
 		                        <option value="default">--Status--</option>
+		                        <option value="1">Preparing</option>
+	
 		                    </select>                  
 		                </td>   
 		            </tr>
@@ -4159,6 +4259,7 @@
 		                <td>
 		                	<select class="closeout-input" id="customerCO">
 		                        <option value="default">--Customer--</option>
+		                    	<option value="2">Costco Refrigeration</option>
 		                    </select>		                	
 		                </td>   
 		            </tr>		           

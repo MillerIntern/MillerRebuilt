@@ -23,7 +23,7 @@ const FIELDS_TO_SHOW = {"mcsNum" : "MCS Number","stage": "Project Stage", "wareh
 			"siteSurvey" : "Site Survey", "budgetarySubmitted" : "Budgetary Submitted" , "budgetaryDue" : "Budgetary Due" , "costcoDueDate" : "Costco Due Date", "proposalSubmitted" : "Proposal Submitted", "type" : "Type", 
 			"asBuilts" : "As-Builts", "punchList":"Punch List", "alarmHvacForm":"Alarm Form", "salvageValue" : "Salvage Value", 
 			"airGas" : "Air Gas", "permitsClosed" : "Permits Closed", "verisaeShutdownReport" : "Verisae/Shut Down Report", 
-			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", 
+			"shouldInvoice":"Should Invoice %", "invoiced":"Invoice %", "projectNotes" : "Project and Financial Notes", "customerNotes": "Customer Notes",
 			"cost" : "Project Cost", "zachNotes" : "Refrigeration Notes", "custNum" : "Customer Number", "permitApp" : "Permit Application", 
 			"person": "Project Manager", "closeout": "Closeout", 'equipment': "Equipment Report", 'change_order': 'Change Order Report',
 			"task_title":"Task Title", "task_assignee":"Task Assignee", "task_description":"Task Description", "task_created_date":"Task Created Date", "task_due_date":"Task Due Date",

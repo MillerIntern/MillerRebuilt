@@ -210,6 +210,11 @@ public class CloseoutDetails extends ProjectObject
 
 	
 	private String punchListStatus;
+	
+
+	private String hvacCloseoutStatus;
+	private String refrigerationCloseoutStatus;
+	
 
 	private String costcoSignoffStatus;
 	private Date costcoSignoff;
@@ -286,7 +291,7 @@ public class CloseoutDetails extends ProjectObject
 			String closeoutDocumentsNotes, String substantialCompletionStatus, Date substantialCompletionDate,
 			String paymentOfDebtsAndClaimsStatus, Date paymentOfDebtsAndClaimsDate, String releaseOfLiensStatus,
 			Date releaseOfLiensDate, String mulvannySignOffStatus, Date mulvannySignOffDate, String salvageStatus, String pbnMTStatus,
-			Date pbnMTDate) 
+			Date pbnMTDate, String hvacCloseoutStatus, String refrigerationCloseoutStatus) 
 	{
 		this.asBuilts = asBuilts;
 		this.salvageValue = salvageValue;
@@ -419,6 +424,9 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateStatus = certificateStatus;
 		this.costcoSignoffStatus = costcoSignoffStatus;
 		this.punchListStatus = punchListStatus;
+		
+		this.hvacCloseoutStatus = hvacCloseoutStatus;
+		this.refrigerationCloseoutStatus = refrigerationCloseoutStatus;
 		
 		
 		this.mg2CompletionDate = mg2CompletionDate;
@@ -574,6 +582,9 @@ public class CloseoutDetails extends ProjectObject
 		this.certificateStatus = null;
 		this.costcoSignoffStatus = null;
 		this.punchListStatus = null;
+		
+		this.hvacCloseoutStatus = null;
+		this.refrigerationCloseoutStatus = null;
 		
 		this.mg2CompletionDate = null;
 		this.mg2CompletionStatus = null;
@@ -1414,6 +1425,22 @@ public class CloseoutDetails extends ProjectObject
 	public synchronized void setPunchListStatus(String punchListStatus) {
 		this.punchListStatus = punchListStatus;
 	}
+	
+	public String getHvacCloseoutStatus() {
+		return hvacCloseoutStatus;
+	}
+
+	public void setHvacCloseoutStatus(String hvacCloseoutStatus) {
+		this.hvacCloseoutStatus = hvacCloseoutStatus;
+	}
+
+	public String getRefrigerationCloseoutStatus() {
+		return refrigerationCloseoutStatus;
+	}
+
+	public void setRefrigerationCloseoutStatus(String refrigerationCloseoutStatus) {
+		this.refrigerationCloseoutStatus = refrigerationCloseoutStatus;
+	}
 
 	public synchronized String getAsBuiltDrawingsStatus() {
 		return asBuiltDrawingsStatus;
@@ -1637,6 +1664,10 @@ public class CloseoutDetails extends ProjectObject
 			return co.getCostcoSignoffStatus();
 		else if(name.equalsIgnoreCase("punchListStatus"))
 			return co.getPunchListStatus();
+		else if(name.equalsIgnoreCase("hvacCloseoutStatus"))
+			return co.getHvacCloseoutStatus();
+		else if(name.equalsIgnoreCase("refrigerationCloseoutStatus"))
+			return co.getRefrigerationCloseoutStatus();
 		else if(name.equalsIgnoreCase("manualStatus"))
 			return co.getManualStatus();
 		else if(name.equalsIgnoreCase("equipmentSubmittalStatus"))
@@ -1750,6 +1781,8 @@ public class CloseoutDetails extends ProjectObject
 		fields.put("costcoSignoffStatus" , "String");
 		fields.put("costcoSignoff" , "Date");
 		fields.put("punchListStatus" , "String");
+		fields.put("hvacCloseoutStatus", "String");
+		fields.put("refrigerationCloseoutStatus", "String");
 		fields.put("punchList" , "Date");
 		fields.put("manualStatus" , "String");
 		fields.put("manualDate" , "Date");

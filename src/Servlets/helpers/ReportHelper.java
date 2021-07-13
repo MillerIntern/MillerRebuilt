@@ -209,10 +209,21 @@ public class ReportHelper
 			sb.append("Notes");
 		
 		}
+		else if (value.equals("customerNotes"))
+		{
+			sb.append("<th class = 'longText'>");
+			sb.append("Customer Notes");
+		}
 		else if(value.equals("custNum"))
 		{
 			sb.append("<th class>");
 			sb.append("Customer Number");
+		}
+		else if(value.equals("zUpdates")) {
+			
+			sb.append("<th class>");
+			sb.append("Customer Notes");
+			
 		}
 		else if(value.equals("cost"))
 		{
@@ -742,6 +753,9 @@ public class ReportHelper
 		
 		else if (value.equals("projectNotes"))
 			return String.valueOf(p.getProjectNotes());
+		
+		else if (value.equals("customerNotes"))
+			return String.valueOf(p.getCustomerNotes());
 		
 		else if (value.equals("custNum") && p.getCustomerNumber() != null)
 			return String.valueOf(p.getCustomerNumber());

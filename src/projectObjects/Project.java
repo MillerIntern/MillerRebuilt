@@ -56,6 +56,8 @@ public class Project extends ProjectObject
 	private Date scheduledStartDate;
 	private Date scheduledTurnover;
 	
+	private String customerNotes;
+	
 	private Date actualTurnover;
 	private ProjectStage stage;
 	private ProjectType projectType;
@@ -87,7 +89,7 @@ public class Project extends ProjectObject
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
 			Set<ChangeOrder> changeOrders, int shouldInvoice,
-			int invoiced, String projectNotes, Date scheduledStartDate,
+			int invoiced, String projectNotes, String customerNotes, Date scheduledStartDate,
 			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates, String keyStatus,
 			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
@@ -110,6 +112,7 @@ public class Project extends ProjectObject
 		this.shouldInvoice = shouldInvoice;
 		this.invoiced = invoiced;
 		this.projectNotes = projectNotes;
+		this.customerNotes = customerNotes;
 		this.scheduledStartDate = scheduledStartDate;
 		this.scheduledTurnover = scheduledTurnover;
 		this.actualTurnover = actualTurnover;
@@ -163,6 +166,7 @@ public class Project extends ProjectObject
 		this.shouldInvoice = 0;
 		this.invoiced = 0;
 		this.projectNotes = null;
+		this.customerNotes = null;
 		this.managerNotes = null;
 		this.scheduledStartDate = null;
 		this.scheduledTurnover = null;
@@ -415,6 +419,16 @@ public class Project extends ProjectObject
 
 	public synchronized void setProjectNotes(String projectNotes) {
 		this.projectNotes = projectNotes;
+	}
+	
+	
+	@Column(length = 1000)
+	public synchronized String getCustomerNotes() {
+		return customerNotes;
+	}
+
+	public synchronized void setCustomerNotes(String customerNotes) {
+		this.customerNotes = customerNotes;
 	}
 	
 	//TODO: A project should have multiple supervisors, but the GUI does not support this right now.

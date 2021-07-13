@@ -18,15 +18,7 @@
  * Navigational									5265	THRU	 5514
  */
 
-
-//$(document).on("click", ".circle_yellow", function(e){
-//	$('#scorecardTabLink').trigger('click');
-//	alert("hi");
-//});
-
-
-
-
+var noMove = 0;
 
 //can I create a function for all this - Akash
 $(document).on("click", "#equipmentFailedTable tbody tr", function(e){
@@ -54,7 +46,6 @@ $(document).on("click", "#changeOrdersFailedTable tbody tr", function(e){
 		var otherRow = $(this).text();
 		if( otherRow == row){
 			$(this).parent().click(); 
-			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
             this.scrollIntoView({behavior: "smooth"});
 		}
 			
@@ -70,7 +61,6 @@ $(document).on("click", "#tasksFailedTable tbody tr", function(e){
 		var otherRow = $(this).text();
 		if( otherRow == row){
 			$(this).parent().click(); 
-			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
             this.scrollIntoView({behavior: "smooth"});
 		}
 			
@@ -80,17 +70,14 @@ $(document).on("click", "#tasksFailedTable tbody tr", function(e){
 $(document).on("click", "#permitsFailedTable tbody tr", function(e){
 	
 	var row = $(this).children("td:nth-child(2)").text();
-	//row = row.split(" ")[0];
 	fixingRules('permits');
 	
 	$('#permitTable tbody tr td:nth-child(1)').each(function(){
 		var otherRow = $(this).text();
 		if( otherRow.includes(row)){
 			$(this).parent().click(); 
-			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
-            //this.scrollIntoView({behavior: "smooth"});
-		}
 			
+		}
 	});
 });
 
@@ -106,10 +93,7 @@ $(document).on("click", "#closeOutFailedTable tbody tr", function(e){
 		console.log("ROW IN LIST IS",row);
 		if( otherRow.includes(row)){
 			$(this).click(); 
-			//$(this).parent().effect("highlight", {color:'#DDDDDD'}, 20000); 
-            //this.scrollIntoView({behavior: "smooth"});
-		}
-			
+		}	
 	});
 });
 
@@ -131,63 +115,6 @@ $(document).ready(function(){$('.autofill_NA').click(function(){
 	fillPermitsAndInspectionsWithNA(this);
 })});
 
-
-
-//NEXT 3 FUNCTIONS CORRESPOND TO CHOSEN STUFF
-/*
-$(document).ready(function(){
-	$('.stageSelection').chosen({ width : "500px"});
-	$('.stageSelection').on('change' , function(evt , params) {
-    	
-    	if(params.selected) {
-    		if(params.selected == "All") 
-    			selectAllProjectStages();
-    		if(params.selected == "None")
-    			deselectAllProjectStages();
-    	}  
-    	
-    	updateFrontEnd();
-    });
-});
-
-function deselectAllProjectStages() {
-	let stageSelection = document.getElementById("stageSelector");
-	
-	for(var i = 0; i < stageSelection.options.length; i++) {
-		stageSelection.options[i].selected = false;
-	}
-	
-	$('#stageSelector').trigger('chosen:updated');
-
-	
-}
-
-function selectAllProjectStages() {
-	let stageSelection = document.getElementById("stageSelector");
-	
-	for(var i = 0; i < stageSelection.options.length; i++) {		
-		if(stageSelection.options[i].value == "None") {
-			continue;
-		}
-		else if(stageSelection.options[i].value == "All") {
-			stageSelection.options[i].selected = false;
-		}
-		else {
-			if(stageSelection.options[i].className == "commonStage")
-				stageSelection.options[i].selected = true;
-			else
-				stageSelection.options[i].selected = false;
-		}
-	}
-	
-	$('#stageSelector').trigger('chosen:updated');
-	
-}
-
-*/
-
-
-
 /**
 * THE FOLLOWING JAVASCRIPT CORRESPONDS TO THE CLOSEOUTDATA.JS FILE
 */
@@ -196,7 +123,6 @@ var PAGETYPE_CLOSEOUT = 'closeout';
 
 var PROJECT_DATA;
 var projectID;
-
 
 var currentDivLocation = 'findProject';
 let tasks;
@@ -212,16 +138,10 @@ let PENDINV_ACTION = "createPendInv";
 let CHANGE_ORDER_TYPES = new Array();
 let PERSONS;
 
-
-
-
 var PAGETYPE_EQUIP = "add";
 var projectID_EQUIP;
 var EQUIPMENT_ID_EQUIP;
-
 var PROJECT_DATA_EQUIP;
-
-
 
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function(){
@@ -251,24 +171,7 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#otherFinalLiensDate").datepicker();
 	    $('#closeoutData').find("#otherFinalLiensBDate").datepicker();
 	    
-	    	// Final Inspections //Move other fields here from above
-	    
-	    /* Field not being used anymore
-	    $('#closeoutData').find("#tmpCertificateDate").datepicker();
-	    $('#closeoutData').find("#mechFinalDate").datepicker();
-	    $('#closeoutData').find("#elecFinalDate").datepicker();
-	    $('#closeoutData').find("#plumbingFinalDate").datepicker();
-	    $('#closeoutData').find("#gasFinalDate").datepicker();
-	    $('#closeoutData').find("#ceilingFinalDate").datepicker();
-	    $('#closeoutData').find("#fireAlarmFinalDate").datepicker();
-	    $('#closeoutData').find("#lowVolFinalDate").datepicker();
-	    $('#closeoutData').find("#sprinkleFinalDate").datepicker();
-	    $('#closeoutData').find("#certificateDate").datepicker();
-	    $('#closeoutData').find("#buildingPermitCL").datepicker();
-	    */
-	    
-	    
-	        // Warranty Letters
+	    // Warranty Letters
 	    $('#closeoutData').find("#GCWarrantyDate").datepicker();
 	    $('#closeoutData').find("#mechanicalWarrantyDate").datepicker();
 	    $('#closeoutData').find("#electricalWarrantyDate").datepicker();
@@ -279,10 +182,9 @@ $(document).ready(function(){
 	    $('#closeoutData').find("#otherWarrantyDateA").datepicker();
 	    $('#closeoutData').find("#otherWarrantyDateB").datepicker();
 	    
-	        // Closeout documents
+	    // Closeout documents
 	    $('#closeoutData').find("#manualDate").datepicker();
 	    $('#closeoutData').find("#HVACstartupFormDate").datepicker();
-	    
 		$('#closeoutData').find("#mg2CompletionDate").datepicker();
 		$('#closeoutData').find("#MCSWarranty").datepicker();
 		$('#closeoutData').find("#equipmentSubCL").datepicker();
@@ -296,14 +198,12 @@ $(document).ready(function(){
 		$('#closeoutData').find('#paymentOfDebtsAndClaimsDate').datepicker();
 		$('#closeoutData').find('#releaseOfLiensDate').datepicker();
 		$('#closeoutData').find('#mulvannySignOffDate').datepicker();
-		
 		$('#closeoutData').find("#salvageDate").datepicker();
 		
 	$('#closeoutData').find('.closeout-input').change(function () {
 		console.log($(this).attr('data-associated-date'));
 		$('#closeoutData').find('#' + $(this).attr('data-associated-date')).val(getToday());
 	});
-	
 });
 
 function generateViewTableHeaders(){
@@ -361,16 +261,6 @@ function generateSortOptions(viewName){
 		createSortProjectOption("Schedule", "5");
 		createSortProjectOption("Due Date", "6");		
 	}
-	/*
-		<select class = "pointer" id = "sortProjectsValue" onChange="sortTable(this.value)">
-   		<option value = "-1">-- Select an option --</option>
-			<option value = "0">Warehouse</option>
-			<option value = "1">MCS Number</option>
-			<option value = "2"> Item</option>
-			<option value = "7">Manager</option>
-			<option value = "5">Start Date</option>
-			<option value = "6">End Date</option>
-			<option value = "4">Status</option>*/
 }
 
 function createSortProjectOption(text, value){
@@ -390,10 +280,8 @@ function createSortProjectOption(text, value){
  */
 function getProjectEnums_CLOSEOUT(edit)
 {
-	//console.log(getParameterByName("id"));
 	if (PAGETYPE_CLOSEOUT == 'closeout')
 	{
-		//projectID_CLOSEOUT = getParameterByName("id");
 		
 		$.ajax({
 			type: 'POST',
@@ -408,15 +296,9 @@ function getProjectEnums_CLOSEOUT(edit)
 			success: function(data)
 			{
 				PROJECT_DATA = data;
-				setProjectHeader(data, currentDivLocation);
-
-				
-				
+				setProjectHeader(data, currentDivLocation);				
 				getDropdownItems_CLOSEOUT();
 				
-				
-				
-				//getTasks();
 			}
 		});
 	}
@@ -448,8 +330,6 @@ function getDropdownItems_CLOSEOUT()
 		success: function(data)
 		{
 			fillDropdowns_CLOSEOUT(data);
-		//	fillTabs_CLOSEOUT(PROJECT_DATA);
-			
 		}
 	});
 }
@@ -492,20 +372,17 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#alarmHvac").val(json.closeoutDetails.alarmHvacForm);
 		$('#closeoutData').find("#verisae").val(json.closeoutDetails.verisaeShutdownReport);
 		$('#closeoutData').find("#closeoutBook").val(json.closeoutDetails.closeoutBook);
+		
 	    formatRelativeTextAreas(json.closeoutDetails.closeoutNotes, "closeoutNotes", "closeoutData");
-		$('#closeoutData').find("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		
-		
+	    $('#closeoutData').find("#closeoutNotes").val(json.closeoutDetails.closeoutNotes);
 		$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
-
 		$('#closeoutData').find("#closeoutPhotosCL").val(json.closeoutDetails.closeoutPhotosCL);
 		$('#closeoutData').find("#MCSWarranty").val(json.closeoutDetails.mCSWarranty);
 		$('#closeoutData').find("#equipmentSubCL").val(json.closeoutDetails.equipmentSubCL);
 		$('#closeoutData').find("#traneCL").val(json.closeoutDetails.traneCL);
-
 		$('#closeoutData').find("#numOfChangeOrders").val(json.closeoutDetails.numOfChangeOrders);
 		$('#closeoutData').find("#numOfChangeOrdersCompleted").val(json.closeoutDetails.numOfChangeOrdersCompleted);
-		
 		$('#closeoutData').find("#numOfMCSChangeOrders").val(json.changeOrders.length);
 		
 		var cos = json.changeOrders;
@@ -532,152 +409,7 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#elecFinalNotes").val(json.closeoutDetails.elecFinalNotes);
 		
 		console.log("JSON P ", json.permits);
-		*/
-//		if(json.permits.mechanicalPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#mechFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#mechFinalStatus").val(4);
-//		}
-//		else if(json.permits.mechanicalPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#mechFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#mechFinalStatus").val(3);
-//		}
-//		else
-//		{
-//			$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
-//			$('#closeoutData').find("#mechFinalDate").val(json.closeoutDetails.mechFinalDate);
-//		}
-//		
-//		if(json.permits.electricalPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#elecFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#elecFinalStatus").val(4);
-//		}
-//		else if(json.permits.electricalPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#elecFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#elecFinalStatus").val(3);
-//		}
-//		else
-//		{
-//			$('#closeoutData').find("#elecFinalDate").val(json.closeoutDetails.elecFinalDate);
-//			$('#closeoutData').find("#elecFinalStatus").val(convertDefault(json.closeoutDetails.elecFinalStatus));
-//		}
-//		
-//		if(json.permits.plumbingPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#plumbingFinalStatus").val(4);
-//		}
-//		else if(json.permits.plumbingPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#plumbingFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#plumbingFinalStatus").val(3);
-//		}
-//		else
-//		{
-//			$('#closeoutData').find("#plumbingFinalStatus").val(convertDefault(json.closeoutDetails.plumbingFinalStatus));
-//			$('#closeoutData').find("#plumbingFinalDate").val(json.closeoutDetails.plumbingFinalDate);
-//		}
-//		
-//		if(json.permits.gasPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#gasFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#gasFinalStatus").val(4);
-//		}
-//		else if(json.permits.gasPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#gasFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#gasFinalStatus").val(3);
-//		}
-//		else
-//		{
-//			$('#closeoutData').find("#gasFinalStatus").val(convertDefault(json.closeoutDetails.gasFinalStatus));
-//			$('#closeoutData').find("#gasFinalDate").val(json.closeoutDetails.gasFinalDate);
-//		}
-//		
-//		if(json.permits.ceilingPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#ceilingFinalStatus").val(4);
-//		}
-//		else if(json.permits.ceilingPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#ceilingFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#ceilingFinalStatus").val(3);
-//		}
-//	    else
-//	    {
-//	    	$('#closeoutData').find("#ceilingFinalStatus").val(convertDefault(json.closeoutDetails.ceilingFinalStatus));
-//			$('#closeoutData').find("#ceilingFinalDate").val(json.closeoutDetails.ceilingFinalDate);
-//		}	
-//		
-//		if(json.permits.fireAlarmPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(4);
-//		}
-//		else if(json.permits.fireAlarmPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#fireAlarmFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(3);
-//		}
-//	    else
-//	    {
-//	    	$('#closeoutData').find("#fireAlarmFinalStatus").val(convertDefault(json.closeoutDetails.fireAlarmFinalStatus));
-//	    	$('#closeoutData').find("#fireAlarmFinalDate").val(json.closeoutDetails.fireAlarmFinalDate);
-//	    }
-//		
-//		if(json.permits.voltagePermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#lowVolFinalStatus").val(4);
-//		}
-//		else if(json.permits.voltagePermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#lowVolFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#lowVolFinalStatus").val(3);
-//		}
-//	    else
-//	    {
-//	    	$('#closeoutData').find("#lowVolFinalStatus").val(convertDefault(json.closeoutDetails.lowVolFinalStatus));
-//			$('#closeoutData').find("#lowVolFinalDate").val(json.closeoutDetails.lowVolFinalDate);
-//	    }
-//		
-//		if(json.permits.sprinklerPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(4);
-//		}
-//		else if(json.permits.sprinklerPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#sprinkleFinalDate").val(getToday());
-//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(3);
-//		}
-//	    else
-//	    {
-//	    	$('#closeoutData').find("#sprinkleFinalStatus").val(convertDefault(json.closeoutDetails.sprinkleFinalStatus));
-//	    	$('#closeoutData').find("#sprinkleFinalDate").val(json.closeoutDetails.sprinkleFinalDate);
-//	    }
-//		
-//		if(json.permits.buildingPermitRequired == 1)
-//		{
-//			$('#closeoutData').find("#buildPermitCL").val(getToday());
-//	    	$('#closeoutData').find("#buildFinalStatus").val(4);
-//		}
-//		else if(json.permits.buildingPermitRequired == 2)
-//		{
-//			$('#closeoutData').find("#buildPermitCL").val(getToday());
-//	    	$('#closeoutData').find("#buildFinalStatus").val(3);
-//		}
-//	    else
-//	    {
-//	    	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
-//	    	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
-//	    }
-//		
-		
+		*/	
 		
 		/* field not being used anymore
 		$('#closeoutData').find("#mechFinalStatus").val(convertDefault(json.closeoutDetails.mechFinalStatus));
@@ -708,7 +440,6 @@ function fillTabs_CLOSEOUT(data)
     	$('#closeoutData').find("#buildFinalStatus").val(convertDefault(json.closeoutDetails.buildingFinalStatus));
     	$('#closeoutData').find("#buildingPermitCL").val(json.closeoutDetails.buildingPermitCL);
 		
-		
 		console.log("CS D", json.closeoutDetails);
 		*/
 		
@@ -719,6 +450,11 @@ function fillTabs_CLOSEOUT(data)
 		
 		$('#closeoutData').find("#costcoSignoffStatus").val(convertDefault(json.closeoutDetails.costcoSignoffStatus));
 		$('#closeoutData').find("#punchListStatus").val(convertDefault(json.closeoutDetails.punchListStatus));
+		
+		
+		$('#closeoutData').find("#hvacCloseoutStatus").val(convertDefault(json.closeoutDetails.hvacCloseoutStatus));
+		$('#closeoutData').find("#refrigerationCloseoutStatus").val(convertDefault(json.closeoutDetails.refrigerationCloseoutStatus));
+
 
 		$('#closeoutData').find("#asBuiltDrawingsStatus").val(convertDefault(json.closeoutDetails.asBuiltDrawingsStatus));
 
@@ -730,9 +466,7 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#pbnMTStatus").val(convertDefault(json.closeoutDetails.pbnMTStatus));
 		$('#closeoutData').find("#pbnMTDate").val(json.closeoutDetails.pbnMTDate);
 		
-		
 		$('#closeoutData').find("#salvageStatus").val(convertDefault(json.closeoutDetails.salvageStatus));
-
 		
 		$('#closeoutData').find("#alarmFormStatus").val(convertDefault(json.closeoutDetails.alarmFormStatus));
 		
@@ -800,11 +534,6 @@ function fillTabs_CLOSEOUT(data)
 		$('#closeoutData').find("#mg2CompletionDate").val(json.closeoutDetails.mg2CompletionDate);
 		$('#closeoutData').find("#mg2CompletionStatus").val(json.closeoutDetails.mg2CompletionStatus);
 		
-		/* field not being used anymore
-	    formatRelativeTextAreas(json.closeoutDetails.finalInspectionNotes, "finalInspectionNotes", "closeoutData");
-		$('#closeoutData').find("#finalInspectionNotes").val(json.closeoutDetails.finalInspectionNotes);
-	    */
-	    
 	    formatRelativeTextAreas(json.closeoutDetails.finalLiensNotes, "finalLiensNotes", "closeoutData");
 		$('#closeoutData').find("#finalLiensNotes").val(json.closeoutDetails.finalLiensNotes);
 	    formatRelativeTextAreas(json.closeoutDetails.closeoutDocumentNotes, "closeoutDocumentNotes", "closeoutData");
@@ -830,12 +559,9 @@ function fillTabs_CLOSEOUT(data)
 			$('#otherItemsSalvageTable').find("#salvageAmount").val(convertSalvage(json.closeoutDetails.salvageValue.value));
 		}
 		
-	    console.log("SALVAGE AMOUNT FILL" ,	$('#otherItemsSalvageTable').find("#salvageAmount").val());	
-		
+	    console.log("SALVAGE AMOUNT FILL" ,	$('#otherItemsSalvageTable').find("#salvageAmount").val());		
 	}
-	
 }
-
 
 /**
  * This function fills the dropdowns in the closeoutData div
@@ -863,9 +589,7 @@ function fillDropdowns_CLOSEOUT(data)
 	}
 	
 	fillTabs_CLOSEOUT(PROJECT_DATA);
-
 }
-
 
 /**
  * This function saves the current project to the server based off of the values that the user entered
@@ -1011,6 +735,10 @@ function saveProject_CLOSEOUT()
     
     var manualStatus = $('#closeoutData').find("#manualStatus").val();
     var manualDate = $('#closeoutData').find("#manualDate").val();
+    
+    
+    var hvacCloseoutStatus = $('#closeoutData').find("#hvacCloseoutStatus").val();
+    var refrigerationCloseoutStatus = $('#closeoutData').find("#refrigerationCloseoutStatus").val();
     
     var costcoSignoffStatus = $('#closeoutData').find("#costcoSignoffStatus").val();
     
@@ -1309,6 +1037,9 @@ function saveProject_CLOSEOUT()
 				'costcoSignoffStatus':costcoSignoffStatus,
 				'punchListStatus': punchListStatus,
 				
+				'hvacCloseoutStatus':hvacCloseoutStatus,
+				'refrigerationCloseoutStatus':refrigerationCloseoutStatus,
+				
 				'asBuiltDrawingsStatus': asBuiltDrawingsStatus,
 				
 				'closeOutPhotosStatus': closeOutPhotosStatus,
@@ -1344,12 +1075,11 @@ function saveProject_CLOSEOUT()
 			},
 			success:function(data){
 				updateFrontEnd();			
-				//getProject_PROJECT_MANAGER(projectID , 1);
+
 				alert('Project Saved');
 				console.log(data);
 				//UPDATE CLOSEOUT SUMMARY
 				$('#closeoutData').find('#saveButton > button').prop('disabled', false);
-				//goToProjectManager();
 
 			},
 			/*commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
@@ -1369,13 +1099,10 @@ function saveProject_CLOSEOUT()
 				   //alert("Error: " + errorThrown);
 			//error:function(xhr){
 				//alert(xhr.responceText);
-				//console.log(xhr.responseText);
-							
+				//console.log(xhr.responseText);				
 			}
 		});
-
     }
-    
 }
 /**
  * This function checks the closeout data to make sure it is all valid
@@ -1434,7 +1161,7 @@ var CLOSEOUTSTATUS_DROPDOWNS = [
                 				"equipmentSubmittalStatus", "manualStatus", "costcoSignoffStatus", "punchListStatus", "asBuiltDrawingsStatus", 
                                 "closeOutPhotosStatus", "HVACstartupFormStatus", "pbnMTStatus", "salvageStatus", "alarmFormStatus", "verisaeReportStatus",   
                                 'substantialCompletionStatus', 'paymentOfDebtsAndClaimsStatus', 'releaseOfLiensStatus',
-                                'mulvannySignOffStatus'
+                                'mulvannySignOffStatus'/*, 'hvacCloseoutStatus', 'refrigerationCloseoutStatus'*/
                                                 ];
 
 //END OF CLOSEOUT DATA JAVASCRIPT
@@ -1517,7 +1244,6 @@ $(document).ready(function(){
 	$('#permitData').find("#tempCertOccupancyPermitLastUpdated").datepicker();
 	$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").datepicker();
 	
-	
 	//$('#permitData').find("#certOccupancyPermitLastUpdated").datepicker();
 	//$('#permitData').find("#certOccupancyInspectionLastUpdated").datepicker();
 	$('#permitData').find("#otherAPermitLastUpdated").datepicker();
@@ -1536,7 +1262,6 @@ $(document).ready(function(){
 			//console.log($(this).attr('data-associated-date'));
 			$('#' + $(this).attr('data-associated-date')).val(getToday());
 		});
-	
 });
 
 /**
@@ -1576,7 +1301,6 @@ function getProject_PERMIT()
 				
 				else
 					fillPermitsAndInspectionsWithNA(PROJECT_DATA);
-				//getTasks();
 			}
 		});
 	} else {
@@ -1645,14 +1369,6 @@ function fillDropdowns_PERMIT(json)
 {
 	console.log("PERMIT/INSPECTION JSON = ", json);
 	
-//	var permitRequirement = JSON.parse(json["permitreq"]);
-//	permitRequirement.sort(function(a , b) {
-//		if(a.id < b.id) return -1;
-//		else if(a.id > b.id ) return 1;
-//		else return 0;
-//	});
-	
-	
 	var permitStage = JSON.parse(json["permitstage"]);
 	permitStage.sort(function(a , b) {
 		if(a.id < b.id) return -1;
@@ -1673,16 +1389,7 @@ function fillDropdowns_PERMIT(json)
 	//var inspectionStage = [{'name': 'Scheduled'}, {'name': 'Passed'}, {'name': 'Failed'}, {'name': 'N/A'} , {'name' : 'TBD'}];
 	
 	var d = document.createDocumentFragment();
-	
-//	for(var i = 0; i < permitRequirement.length; i++)
-//	{
-//		var option = document.createElement("option");
-//		option.innerHTML = permitRequirement[i].name;
-//		option.setAttribute("value", permitRequirement[i].name);
-//		d.appendChild(option);
-//	}
-	
-	
+		
 	/*
 		Akash
 		Writing this piece of code to swap some values. Andy wanted the below order
@@ -1733,14 +1440,6 @@ function fillDropdowns_PERMIT1(json)
 {
 	console.log("PERMIT/INSPECTION JSON = ", json);
 	
-//	var permitRequirement = JSON.parse(json["permitreq"]);
-//	permitRequirement.sort(function(a , b) {
-//		if(a.id < b.id) return -1;
-//		else if(a.id > b.id ) return 1;
-//		else return 0;
-//	});
-	
-	
 	var permitStage = JSON.parse(json["permitstage"]);
 	permitStage.sort(function(a , b) {
 		if(a.id < b.id) return -1;
@@ -1762,15 +1461,6 @@ function fillDropdowns_PERMIT1(json)
 	
 	var d = document.createDocumentFragment();
 	
-//	for(var i = 0; i < permitRequirement.length; i++)
-//	{
-//		var option = document.createElement("option");
-//		option.innerHTML = permitRequirement[i].name;
-//		option.setAttribute("value", permitRequirement[i].name);
-//		d.appendChild(option);
-//	}
-	
-	
 	/*
 		Akash
 		Writing this piece of code to swap some values. Andy wanted the below order
@@ -1778,6 +1468,8 @@ function fillDropdowns_PERMIT1(json)
 		However the table in the database has a different order with id's which are already in use.
 		That is why changing the order here on the front end.
 	*/
+	
+	
 	console.log("PERMIT STAGE IS", permitStage);
 	var temp1 = permitStage[2];
 	permitStage[2] = permitStage[4];
@@ -1800,13 +1492,10 @@ function fillDropdowns_PERMIT1(json)
 	defaultOption.innerHTML = "---Status---";
 
 	
-	
 	$('#permitTable_1').find('.permitStatus').find('option').remove();
 	$('#permitTable_1').find('.permitStatus').append(defaultOption);
 	$('#permitTable_1').find('.permitStatus').append(d);
 	
-
-
 	
 	var dd = document.createDocumentFragment();
 	for (var i = 0; i < inspectionStage.length; i++) {
@@ -1961,7 +1650,6 @@ function fillTabs_PERMIT(data)
 		$('#permitData').find("#tempCertOccupancyInspectionReq").val(convertUndefined(json.permits.tempCertOccupancyInspectionRequired));
 		$('#permitData').find("#tempCertOccupancyInspectionStatus").val(convertUndefined(json.permits.tempCertOccupancyInspectionStatus));
 		$('#permitData').find("#tempCertOccupancyInspectionLastUpdated").val(json.permits.tempCertOccupancyInspectionLastUpdated);
-		
 		
 	    $('#permitData').find("#otherAPermitStatus").val(convertUndefined(json.permits.otherAPermitStatus));
 	    $('#permitData').find("#otherAPermitLastUpdated").val(json.permits.otherAPermit);
@@ -3403,165 +3091,9 @@ function saveProject_PERMIT1()
     console.log("V INS", voltageInspectionStatus);    
     console.log("T INS", tempCertOccupancyInspectionStatus);
     console.log("TC INS", certOccupancyInspectionStatus);
-    
-
-
-/*//	 INSPECTIONS
-
-    var mechFinalStatus = $('#closeoutData').find("#mechFinalStatus").val();
-    var mechFinalDate = $('#closeoutData').find("#mechFinalDate").val();
-
-    var elecFinalDate = $('#closeoutData').find("#elecFinalDate").val();
-    var elecFinalStatus = $('#closeoutData').find("#elecFinalStatus").val();
-
-    var plumbingFinalDate = $('#closeoutData').find("#plumbingFinalDate").val();
-    var plumbingFinalStatus = $('#closeoutData').find("#plumbingFinalStatus").val();
-
-    var gasFinalDate = $('#closeoutData').find("#gasFinalDate").val();
-    var gasFinalStatus = $('#closeoutData').find("#gasFinalStatus").val();
-
-    var ceilingFinalDate = $('#closeoutData').find("#ceilingFinalDate").val();
-    var ceilingFinalStatus = $('#closeoutData').find("#ceilingFinalStatus").val();
-
-    var fireAlarmFinalDate = $('#closeoutData').find("#fireAlarmFinalDate").val();
-    var fireAlarmFinalStatus = $('#closeoutData').find("#fireAlarmFinalStatus").val();
-
-    var lowVolFinalDate = $('#closeoutData').find("#lowVolFinalDate").val();
-    var lowVolFinalStatus = $('#closeoutData').find("#lowVolFinalStatus").val();
-
-    var sprinkleFinalStatus = $('#closeoutData').find("#sprinkleFinalStatus").val();
-    var sprinkleFinalDate = $('#closeoutData').find("#sprinkleFinalDate").val();
-
-    // buildingPermitCL = buildingFinalDate;
-    var buildingFinalStatus = $('#closeoutData').find("#buildFinalStatus").val();
-       
-    var dates_CLOSEOUT =[
-    												
-    			sprinkleFinalDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
-    			ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate,
-    											
-                ];
-
-
-    if(isValidInput_CLOSEOUT(dates_CLOSEOUT))
-    {
-    	console.log("we got valid data now");
-    	for(var i = 0; i < dates_CLOSEOUT.length; i++) {
-    		if(dates_CLOSEOUT[i]) dates_CLOSEOUT[i] = dateCleaner(dates_CLOSEOUT[i]);
-
-    		if(i == 13) sprinkleFinalDate = dates_CLOSEOUT[i];
-    		if(i == 15) mechFinalDate = dates_CLOSEOUT[i];
-    		if(i == 16) elecFinalDate = dates_CLOSEOUT[i];
-    		if(i == 17) plumbingFinalDate = dates_CLOSEOUT[i];
-    		if(i == 18) gasFinalDate = dates_CLOSEOUT[i];
-    		if(i == 19) ceilingFinalDate = dates_CLOSEOUT[i];
-    		if(i == 20) fireAlarmFinalDate = dates_CLOSEOUT[i];
-    		if(i == 21) lowVolFinalDate = dates_CLOSEOUT[i];
-
-    	}
-    	var action = "editCloseout";
-    	var CLOSEOUT_ID = PROJECT_DATA.closeoutDetails.id
-    	var SALVAGE_ID = 0;
-    	if(PROJECT_DATA.closeoutDetails.salvageValue != null)
-    		SALVAGE_ID = PROJECT_DATA.closeoutDetails.salvageValue.id;
-    	
-    	if( (!PROJECT_DATA || !PROJECT_DATA.id))
-    	{
-    		alert("Server Error! (Project ID)");
-    		return;
-    	}
-    	
-    	if(!CLOSEOUT_ID)
-    	{
-    		alert("Server Error! (Closeout ID)");
-    		return;
-    	}
-    	
-    	$.ajax({
-    		type: 'POST',
-    		url: 'Project', 
-    		dataType: 'json',
-    		data: 
-    		{
-    			'domain': 'project',
-    			'action': action,
-    			'projectID':PROJECT_DATA.id,
-    			'closeoutID':CLOSEOUT_ID,
-    			'salvageID': SALVAGE_ID,
-
-
-    			
-    			'mechFinalStatus': mechFinalStatus,
-    			'mechFinalDate': mechFinalDate,
-    			
-    			'elecFinalStatus': elecFinalStatus,
-    			'elecFinalDate': elecFinalDate,
-    			
-    			'plumbingFinalStatus': plumbingFinalStatus,
-    			'plumbingFinalDate': plumbingFinalDate,
-    			
-    			'gasFinalStatus': gasFinalStatus,
-    			'gasFinalDate': gasFinalDate,
-    			
-    			'ceilingFinalStatus': ceilingFinalStatus,
-    			'ceilingFinalDate': ceilingFinalDate,
-    			
-    			'fireAlarmFinalStatus': fireAlarmFinalStatus,
-    			'fireAlarmFinalDate': fireAlarmFinalDate,
-    			
-    			'lowVolFinalStatus': lowVolFinalStatus,
-    			'lowVolFinalDate': lowVolFinalDate,
-    			
-    			'sprinkleFinalStatus': sprinkleFinalStatus,
-    			'sprinkleFinalDate': sprinkleFinalDate,
-    			
-    			'buildingFinalStatus': buildingFinalStatus,	
-    			
-    		},
-    		success:function(data){
-    			updateFrontEnd();			
-    			//getProject_PROJECT_MANAGER(projectID , 1);
-    			alert('Project Saved');
-    			console.log(data);
-    			//UPDATE CLOSEOUT SUMMARY
-    			$('#closeoutData').find('#saveButton > button').prop('disabled', false);
-    			//goToProjectManager();
-
-    		},
-    		commented out because of error. Error dictates that their is a parse error and unexpected end of input. 
-    		 * Code works perfectly with error statement 
-    		  Need to figure out how to fix this error to work 100 percent correctly
-    		
-    		 //error: function(XMLHttpRequest, textStatus, errorThrown) { 
-    		error: function()
-    		{
-    			alert('Project Saved');
-    			$('#closeoutData').find('#saveButton > button').prop('disabled', false);
-    			//UPDATE CLOSEOUT SUMMARY
-    			//getProject_PROJECT_MANAGER(projectID , 1);
-    			//goToProjectManager();
-
-    		       //alert("Status: " + textStatus); 
-    			   //alert("Error: " + errorThrown);
-    		//error:function(xhr){
-    			//alert(xhr.responceText);
-    			//console.log(xhr.responseText);
-    						
-    		}
-    	});
-
-    }
-*/    
+        
 }
 
-
-
-
-/*
-function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + projectID;
-}
-*/
 
 /**
  * This function checks to see that all permit dates are in "MM/DD/YYYY" format
@@ -3686,9 +3218,12 @@ function getProjectEnums_PROJECT_DATA(edit)
 			//PAGETYPE_PROJECT_DATA = getParameterByName("type");	
 			if(EDIT_INTENTION == true) {
 				getProject_PROJECT_DATA();
+				
+				
 			}
 			else {
 				$('#projectData').find("#projectHeader").text("New Project");
+				
 			}
 		}
 	});
@@ -3875,6 +3410,8 @@ function autofillHVAC() {
 
 	var autofill_HVAC = $('#projectData').find("#autofill-HVAC").val();
 	var action = 'autofillHVAC';
+	
+	
 				
 	if(!projectID)
 	{
@@ -3897,12 +3434,77 @@ function autofillHVAC() {
 				projectID = data.responseJSON;
 				
 				alert('Autofill HVAC Complete');				
-		}
-			
+				
+			   }
 	});
 }
 
+function changeOrderOnChangeHVAC(){
+	
+	//if HVAC is set to "Yes"
+	if($('#closeoutData').find("#hvacCloseoutStatus").val() == "1"){
+		changeOrderHVAC(1);
+	}	
+}
 
+function changeOrderOnChangeRefrigeration(){
+	
+	//If Refrigeration is set to "Yes"
+	if($('#closeoutData').find("#refrigerationCloseoutStatus").val() == "1"){
+		changeOrderRefrigeration(1);
+	}
+}
+
+//This function automatically generates a change order for HVAC
+function changeOrderHVAC(temp){
+		
+	//if HVAC is set to "Yes" or is being accessed through a drop down 
+	//The check if HVAC is set to "Yes" is still here in case we want to auto generate a change order when 
+	//HVAC is changed in general info
+	if($('#projectData').find("#autofill-HVAC").val() == "1" || temp == 1){
+		
+		var choice = window.confirm('Would you like to generate a change order for HVAC?');
+		
+		//user wants to make a change order
+		if(choice === true){
+			
+			//needed to ensure server doesn't crash
+			edit_CHANGE_ORDER = 'false';		
+			$('#deleteChangeOrderButton').hide();
+			
+			//sets change order title
+			$('#changeOrder').find("#title").val("HVAC Travel, Rentals, and Freight");
+			
+			//sets the status to "Preparing"
+			$('#changeOrder').find("#status").val("1");
+			
+			//sets the customer to "Costco Refrigeration
+			$('#changeOrder').find("#customerCO").val("2");
+			
+			//sets the description for change order  
+			$('#changeOrder').find("#briefDescription").val("Revisions for pass thru items");
+						
+			//if there are no change orders, set mcsCO to 1, otherwise set it to the next change order number
+			if(PROJECT_DATA.changeOrders.length != 0) {
+			
+				$('#changeOrder').find('#mcsCO').val(PROJECT_DATA.changeOrders.length + 1);	
+			}
+				
+			else{
+				
+				$('#changeOrder').find('#mcsCO').val(1);
+			}
+						
+			//noMove makes it so the user doesn't get kicked out HVAC is set to "Yes"
+			noMove = 1;
+			saveProject_CHANGE_ORDER();
+		}
+		else{
+			
+			window.alert('Change order not created');
+		}
+	}
+}
 
 function autofillRefrigeration() {
 
@@ -3930,9 +3532,60 @@ function autofillRefrigeration() {
 				projectID = data.responseJSON;
 				
 				alert('Autofill Refrigeration Complete');				
-		}
-			
+		
+			   }
 	});
+}
+
+//This function automatically generates a change order for Refrigeration
+function changeOrderRefrigeration(temp){
+
+	//if HVAC is set to "Yes" or is being accessed through a drop down
+	//The check if Refrigeration is set to "Yes" is still here in case we want to auto generate a change order when 
+	//Refrigeration is changed in general info
+	if($('#projectData').find("#autofill-Refrigeration").val() == "1" || temp == 1){
+		
+		var choice = window.confirm('Would you like to generate a change order for Refrigeration?');
+		
+		//user wants to make a change order
+		if(choice === true){
+			
+			//needed to ensure server doesn't crash
+			edit_CHANGE_ORDER = 'false';		
+			$('#deleteChangeOrderButton').hide();
+			
+			//sets change order title
+			$('#changeOrder').find("#title").val("Refrigeration Travel, Rentals, and Freight");
+			
+			//sets the status to "Preparing"
+			$('#changeOrder').find("#status").val("1");
+			
+			//sets the customer to "Costco Refrigeration
+			$('#changeOrder').find("#customerCO").val("2");
+			
+			//sets the description for change order  
+			$('#changeOrder').find("#briefDescription").val("Revisions for pass thru items");
+						
+			//if there are no change orders, set mcsCO to 1, otherwise set it to the next change order number
+			if(PROJECT_DATA.changeOrders.length != 0) {
+			
+				$('#changeOrder').find('#mcsCO').val(PROJECT_DATA.changeOrders.length + 1);	
+			}
+				
+			else{
+				
+				$('#changeOrder').find('#mcsCO').val(1);
+			}
+						
+			//noMove makes it so the user doesn't get kicked out when refrigeration is set to "Yes"
+			noMove = 1;
+			saveProject_CHANGE_ORDER();
+		}
+		else{
+			
+			window.alert('Change order not created');
+		}
+	}
 }
 
 function autofillProjectClass() {
@@ -4022,6 +3675,7 @@ function saveProject_PROJECT_DATA() {
 	var actualInvoice = $('#projectData').find("#actualInvoice").val();
 	var prevNotes = PROJECT_DATA.projectNotes;
 	var notes = $('#projectData').find("#notes").val();
+	var customerNotes = $('#projectData').find("#customerNotes").val();
 	var keyStatus = $('#projectData').find("#keyStatus").val();
 	var refrigNotes = $('#projectData').find("#zUpdates").val();
 	var cost = $('#projectData').find("#projectCost").val();
@@ -4106,6 +3760,7 @@ function saveProject_PROJECT_DATA() {
 				'shouldInvoice': shouldInvoice,
 				'actualInvoice': actualInvoice,
 				'notes': notes,
+				'customerNotes': customerNotes,
 				'keyStatus': keyStatus,
 				'refrigNotes': refrigNotes,
 				'cost': cost,
@@ -4441,6 +4096,10 @@ function fillForm_PROJECT_DATA(data)
     formatRelativeTextAreas(json.projectNotes , "notes", "projectData");
 	$('#projectData').find("#notes").val(json.projectNotes);
 	
+	formatRelativeTextAreas(json.customerNotes , "customerNotes", "projectData");
+	$('#projectData').find("#customerNotes").val(json.customerNotes);
+	
+	
 	$('#projectData').find("#keyStatus").val(json.keyStatus);
 	
     formatRelativeTextAreas(json.zachUpdates , "zUpdates", "projectData");
@@ -4464,8 +4123,6 @@ function fillForm_PROJECT_DATA(data)
 	else
 		$('#generalInformation').find('#autofill-Permits').val("default");
 }
-
-
 
 
 /**
@@ -4524,6 +4181,7 @@ $(document).ready(function () {
 		
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
+		
 	});	
 	
 	$('#scorecardTabLink').click(function() {
@@ -4759,6 +4417,7 @@ function prepareProjectData(source_id){
 	{
 		$('#projectData').find(".nav-tabs").find("[data-tab=generalInformation]").addClass("active");
 		$('#projectData').find("#generalInformation").addClass("active");
+		
 
 	}
 	else if(source_id == "scheduling-item")
@@ -4793,6 +4452,14 @@ function prepareProjectData(source_id){
 		$('#projectData').find(".nav-tabs").find("[data-tab=pendingInvoiceInformation]").addClass("active");
 		$('#projectData').find("#pendingInvoiceInformation").addClass("active");	
 	}
+	
+	else if(source_id == "customerNotes-item")
+		{
+		
+		$('#projectData').find(".nav-tabs").find("[data-tab=customerNotesInformation]").addClass("active");		
+		$('#projectData').find("#customerNotesInformation").addClass("active");
+		
+		}
 	
 	else console.log("Bad ID in prepareProjectData");
 }
@@ -4919,56 +4586,13 @@ function editCloseout (source_id) {
 	currentDivLocation = "closeoutData";
 	document.getElementById("closeoutData").style.display = 'inline';
 
-	//window.location.href = PROJECT_CLOSEOUT + '?id=' + projectID;
 }
-
-//
-//function editSmartSystem (source_id) {
-//	if(source_id) prepareSmartSystem(source_id);
-//	document.getElementById("projectManager").style.display = 'none';
-//	EDIT_INTENTION = true;
-//	currentDivLocation = "smartSystemData";
-//	document.getElementById("smartSystemData").style.display = 'inline';
-//
-//}
-//
-//function prepareSmartSystem(source_id){
-//	
-//	if(source_id && !(isNaN(source_id))) projectID = source_id;
-//	setCurrentDivLocation("smartSystemData");
-//	setProjectHeader(PROJECT_DATA, currentDivLocation);
-//
-//	
-//	$('#smartSystemData').find(".nav-tabs").find("[class~=active]").removeClass("active");
-//	$('#smartSystemData').find("[class~=active]").removeClass("active");
-//
-//	if(source_id == "scope-form-item")
-//	{
-//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=closeoutDocuments]").addClass("active");
-//		$('#smartSystemData').find("#scopeForm").addClass("active");
-//
-//	}
-//	else if(source_id == "cost-form-item")
-//	{
-//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=finalInspections]").addClass("active");
-//		$('#smartSystemData').find("#costForm").addClass("active");
-//
-//	}
-//	else if(source_id == "smart-system-item")
-//	{
-//		//$('#smartSystemData').find(".nav-tabs").find("[data-tab=warrantyLetters]").addClass("active");
-//		$('#smartSystemData').find("#smartSystemComparison").addClass("active");
-//
-//	}
-//	else console.log("Bad ID in prepareSmartSystem");
-//}
 
 function addChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=add&id=' + projectID;
 }
 
 function addEquipment () {
-	//window.location.href = PROJECT_EQUIPMENT + '?type=add&id=' + projectID;
 	
 	PAGETYPE_EQUIP = "add";	
 	projectID_EQUIP = projectID;
@@ -4992,7 +4616,6 @@ function addEquipment () {
 }
 
 function addEquipmentProposals () {
-	//window.location.href = PROJECT_EQUIPMENT + '?type=add&id=' + projectID;
 	
 	PAGETYPE_EQUIP = "add";	
 	projectID_EQUIP = projectID;
@@ -5075,9 +4698,6 @@ function fillChangeOrders (data) {
 		tableRow.onclick = function() {toggleChangeOrder(this)};
 		tableRow.ondblclick = function () {editSelectedChangeOrder(this.value)};
 
-		//var changeType = document.createElement('td');
-		//changeType.appendChild(document.createTextNode(parseChangeOrderType(changeOrder.type)));
-		
 		var coNumber = document.createElement('td');
 		coNumber.className = 'coNumber';
 		coNumber.width = "5%";
@@ -5156,15 +4776,6 @@ function fillChangeOrders (data) {
 		
 		var notes = document.createElement('td');
 		notes.innerHTML = addingBreaktoHTML(changeOrder.notes);		
-//		notes.appendChild(document.createTextNode(changeOrder.notes));
-		
-
-		
-		//var approvedDate = document.createElement('td');
-		//if (changeOrder.approvedDate === undefined)
-		//	approvedDate.appendChild(document.createTextNode("---"))
-		//else
-		//	approvedDate.appendChild(document.createTextNode(changeOrder.approvedDate));
 		
 		tableRow.appendChild(coNumber);
 		tableRow.appendChild(title);
@@ -5188,7 +4799,7 @@ function convertChangeOrderType(type , co) {
 	if(!type) return "---";
 	console.log("CO_TYPES = " , CHANGE_ORDER_TYPES , co);
 	for(var i = 0; i < CHANGE_ORDER_TYPES.length; i++) {
-		//console.log( " TYPE = " , type , CHANGE_ORDER_TYPES[i]);
+		
 		if(CHANGE_ORDER_TYPES[i].id == type)
 			return CHANGE_ORDER_TYPES[i].name;
 	}
@@ -5218,6 +4829,15 @@ function convertStatus( status )
 	
 	return status;
 }
+
+function convertCOStatus(status){
+	
+	if(status == "1")
+		return "Yes";
+	else
+		return;
+}
+
 
 /**
  * This function fills out the information on the page for the permits and inspections
@@ -5466,7 +5086,6 @@ function fillEquipment (data) {
 		tableRow.appendChild(equipmentQuantity);
 		tableRow.appendChild(equipmentTotalPrice);
 		$("#equipmentTable").find('tbody').append(tableRow);
-		//$("#equipmentTableProposals").find('tbody').append(tableRow);
 		
 	}
 }
@@ -5477,7 +5096,7 @@ function fillEquipment (data) {
  * @returns
  */
 function fillEquipmentProposals (data) {
-	//$('#equipmentTable').find('tbody').find('tr').remove();
+
 	$('#equipmentTableProposals').find('tbody').find('tr').remove();		
 	let equipmentList = data.projEquipment;
 
@@ -5555,7 +5174,7 @@ function fillEquipmentProposals (data) {
 			deliveryDate.appendChild(document.createTextNode(equipment.deliveryDate));
 		
 		var equipmentNotes = document.createElement('td');
-//		equipmentNotes.appendChild(document.createTextNode(addingSlashNtoHTML(equipment.notes)));
+		
 		equipmentNotes.innerHTML = addingBreaktoHTML(equipment.notes);
 		
 		var equipmentUnitPrice = document.createElement('td');
@@ -5595,7 +5214,6 @@ function fillEquipmentProposals (data) {
 		tableRow.appendChild(equipmentUnitPrice);
 		tableRow.appendChild(equipmentQuantity);
 		tableRow.appendChild(equipmentTotalPrice);
-		//$("#equipmentTable").find('tbody').append(tableRow);
 		$("#equipmentTableProposals").find('tbody').append(tableRow);
 		
 	}
@@ -5615,90 +5233,6 @@ function fillCloseout (data) {
 	let required = 0;
 	let completed = 0;
 	
-	/* tempholder
-	switch (closeoutData.mechFinalStatus) {
-		case '1':
-			required++;
-			completed++;
-			break;
-		case '2':
-			required++;
-			break;
-	} 
-	switch (closeoutData.elecFinalStatus) {
-		case '1': 
-			required++;
-			completed++;
-			break;
-		case '2': 
-			required++;
-			break;
-	}
-	switch (closeoutData.plumbingFinalStatus) {
-		case '1':
-			required++;
-			completed++;
-			break;
-		case '2': 
-			required++;
-			break;
-	}
-	switch (closeoutData.gasFinalStatus) {
-	case '1':
-		required++;
-		completed++;
-		break;
-	case '2': 
-		required++;
-		break;
-	}
-	switch (closeoutData.ceilingFinalStatus) {
-	case '1':
-		required++;
-		completed++;
-		break;
-	case '2': 
-		required++;
-		break;
-	}
-	switch (closeoutData.fireAlarmFinalStatus) {
-	case '1':
-		required++;
-		completed++;
-		break;
-	case '2': 
-		required++;
-		break;
-	}
-	switch (closeoutData.lowVolFinalStatus) {
-	case '1':
-		required++;
-		completed++;
-		break;
-	case '2': 
-		required++;
-		break;
-	}
-	switch (closeoutData.sprinkleFinalStatus) {
-		case '1':
-			required++;
-			completed++;
-			break;
-		case '2': 
-			required++;
-			break;
-	}
-	switch (closeoutData.buildingFinalStatus) {
-		case '1':
-			required++;
-			completed++;
-			break;
-		case '2': 
-			required++;
-			break;
-	}
-	$('#closeoutSummary').find('#finalInspectionsRequired').text(completed + ' / ' + required); 
-	*/
 	required = 0;
 	completed = 0;
 	switch (closeoutData.GCWarrantyStatus) {
@@ -5977,16 +5511,6 @@ function parseChangeOrderStatus (param) {
 	}
 }
 
-/*
-function toggleChangeOrder (source) {
-	$(source).siblings().css('background-color', 'white');
-	$(source).css('background-color', '#dddddd');
-	$('#editChangeOrder').prop('disabled', false);
-	selectedChangeOrder = $(source).attr('value');
-	CHANGE_ORDER_ID = selectedChangeOrder;
-}
-*/
-
 function editSelectedChangeOrder () {
 	window.location.href = PROJECT_CHANGE_ORDER + '?type=edit&id=' + projectID + '&changeOrderID=' + selectedChangeOrder;
 }
@@ -6008,7 +5532,6 @@ function toggleEquipmentProposals (source) {
 }
 
 function editSelectedEquipment (source) {
-	//window.location.href = PROJECT_EQUIPMENT + '?type=edit&id=' + projectID + '&equipmentID=' + selectedEquipment;	
 	
 	if(source) EQUIPMENT_ID_EQUIP = source;
 	else EQUIPMENT_ID_EQUIP = selectedEquipment;
@@ -6019,8 +5542,6 @@ function editSelectedEquipment (source) {
 	
 	setCurrentDivLocation("equipmentDiv");
 
-
-	
 	$('.editProject').hide();
 	$('#equipmentForm').addClass('active');
 	$('#equipmentDiv').find(".nav-tabs").find("[data-tab=saveButton]").removeClass("active");
@@ -6045,8 +5566,6 @@ function editSelectedEquipmentProposals (source) {
 	
 	setCurrentDivLocation("equipmentDivProposals");
 
-
-	
 	$('.editProject').hide();
 	$('#equipmentFormProposals').addClass('active');
 	$('#equipmentDivProposals').find(".nav-tabs").find("[data-tab=saveButtonProposals]").removeClass("active");
@@ -6061,8 +5580,7 @@ function editSelectedEquipmentProposals (source) {
 }
 
 function equipmentReport () {
-	//window.location.href = EQUIPMENT_PRINT + 'id=' + projectID;
-	//window.location.href = "Report?" + 'id=' + projectID + "&type=Equipment Report";
+
 	window.open("Report?" + 'id=' + projectID + "&type=Equipment Report");
 }
 
@@ -6085,7 +5603,7 @@ function permissionCheck(){
 			user = data;
 			console.log(user);
 			console.log("IT WORKED");
-			//console.log(tasks[0].status.status);
+
 			if(user.permission.canDeleteProjects == true)
 			{	//Delete the project if it does not have any tasks associated with it.
 				if(tasksExist == 0){
@@ -6141,7 +5659,6 @@ function deleteConfirm () {
 				if(data.responseJSON === "PROJECT_OBJECT_DELETED") {
 					//PROJECT_DELETED to PROJECT_OBJECT_DELETED
 					alert("Project Deleted!");
-					//window.location.href = 'findProject.html'; // This line was not showing the projects anymore once deleted
 					document.location.reload(true); //Is this a god fix ? I just have to reload this page to get the updated project list
 				} else
 					alert("Could not Delete Project");
@@ -6228,15 +5745,11 @@ function fillTasksTable(tasks) {
 		taskListing.appendChild(notes);
 		
 		$('#taskTable > tbody').append(taskListing);
-		
 	}
 
 	if (count === 0) {
 		clearAndAddSingleRowTask("No Tasks to Show");
-	}
-	
-	// $('#taskSelector2').val(selector);
-	
+	}	
 }
 
 
@@ -6269,7 +5782,6 @@ function displayTaskWell() {
 	document.getElementById('tasksInformation').style.width = "100%";
 }
 
-
 function fillTaskWell(source) {
 	let tmp_id = source;
 	
@@ -6294,15 +5806,13 @@ function fillTaskWell(source) {
 		$('#taskCreationZone').find('#employeeAssigneeTableElement').hide();
 		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
 		taskAssigneeType = TASK_SUB_ASSIGNEE;
-		//document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Employee";
-		//document.getElementById('toggleTaskAssignee').value = TASK_SUB_ASSIGNEE;
+		
 		$('#taskCreationZone').find('#subcontractorsDropdown').val(selected_task.subAssignee.name);
 	}
 	else {
 		$('#taskCreationZone').find('#employeeAssigneeTableElement').show();
 		$('#taskCreationZone').find('#subcontractorAssigneeTableElement').show();
-		//document.getElementById('toggleTaskAssignee').innerHTML = "Assign to Subcontractor";
-		//document.getElementById('toggleTaskAssignee').value = TASK_EMPLOYEE_ASSIGNEE;
+		
 		taskAssigneeType = TASK_EMPLOYEE_ASSIGNEE;
 		$('#taskCreationZone').find('#assigneeEntry').val(selected_task.assignee.firstName);
 		$('#taskCreationZone').find('#subcontractorsDropdown').val(selected_task.subAssignee.name);
@@ -7041,7 +6551,7 @@ function saveCostEstimate()
 			success:function(data)
 			{
 				console.log(data);
-				//updateFrontEnd();
+
 				alert('Save Complete!');
 				
 				goToProjectManager();
@@ -7052,7 +6562,7 @@ function saveCostEstimate()
 			error: function(data)
 			{
 				console.log(data);
-				//updateFrontEnd();
+
 				alert('Save Complete!');
 			
 				goToProjectManager();
@@ -8460,7 +7970,6 @@ function getProject_SCORECARD(edit)
 				'action': 'get',
 				'id': projectID
 			}, success: function (data) {
-				//getTheProjects();
 				
 				PROJECT_DATA = data;
 				projectID = data.id;
@@ -8567,255 +8076,6 @@ function saveEvaluatedRules()
 	console.log("evalRules" , RULES);
 	console.log(projectID, PROJECT_DATA);
 	
-//	var numAndStage = RULES[0].passed;
-//	var permits = RULES[1].passed;
-//	var hvac = RULES[2].passed;
-//	var refrigeration = RULES[3].passed;
-//	var permitsTBD = RULES[4].passed;
-//	var stageAndStatus = RULES[5].passed;
-//	var project = RULES[6].passed;
-//	
-//	var lateProposal = RULES[7].passed;
-//	var lateBudgetary = RULES[8].passed;
-//	var lateTurnover = RULES[9].passed;
-//	var emptyInitiation = RULES[10].passed;
-//	var earlierSchedTurnover = RULES[11].passed;
-//	var emptyCost = RULES[12].passed;
-//	var emptyCustNum = RULES[13].passed;
-//	var actualAndShouldInvoice = RULES[14].passed;
-//	var zeroShouldInvoice = RULES[15].passed;
-//	var zeroActualInvoice = RULES[16].passed;
-//	var earlierSiteSurvey = RULES[17].passed;
-//	
-//	var earlierDueDate = RULES[18].passed;
-//	
-//	var buildingReq = RULES[19].passed;
-//	var ceilingReq = RULES[20].passed;
-//	var mechanicalReq = RULES[21].passed;
-//	var electricalReq = RULES[22].passed;
-//	var plumbingReq = RULES[23].passed;
-//	var buildingPermitReqTBD = RULES[24].passed;
-//	var gasReq = RULES[25].passed;
-//	var sprinklerReq = RULES[26].passed;
-//	var fireAlarmReq = RULES[27].passed;
-//	var lowVoltageReq = RULES[28].passed;
-//	var ceilingPermitReqTBD = RULES[29].passed;
-//	var mechPermitReqTBD = RULES[30].passed;
-//	var elecPermitReqTBD = RULES[31].passed;
-//	var plumbingPermitReqTBD = RULES[32].passed;
-//	var gasPermitReqTBD = RULES[33].passed;
-//	var sprinklerPermitReqTBD = RULES[34].passed;
-//	var firePermitReqTBD = RULES[35].passed;
-//	var lowVolPermitReqTBD = RULES[36].passed;
-//	var buildingInspReqTBD = RULES[37].passed;
-//	var ceilingInspReqTBD = RULES[38].passed;
-//	var mechInspReqTBD = RULES[39].passed;
-//	var elecInspReqTBD = RULES[40].passed;
-//	var plumbingInspReqTBD = RULES[41].passed;
-//	var gasInspReqTBD = RULES[42].passed;
-//	var sprinklerInspReqTBD = RULES[43].passed;
-//	var fireInspReqTBD = RULES[44].passed;
-//	var lowVolInspReqTBD = RULES[45].passed;
-//	var buildingPermitStatTBD = RULES[46].passed;
-//	var ceilingPermitStatTBD = RULES[47].passed;
-//	var mechPermitStatTBD = RULES[48].passed;
-//	var elecPermitStatTBD = RULES[49].passed;
-//	var plumbingPermitStatTBD = RULES[50].passed;
-//	var gasPermitStatTBD = RULES[51].passed;
-//	var sprinklerPermitStatTBD = RULES[52].passed;
-//	var firePermitStatTBD = RULES[53].passed;
-//	var lowVolPermitStatTBD = RULES[54].passed;
-//	var buildingInspStatTBD = RULES[55].passed;
-//	var ceilingInspStatTBD = RULES[56].passed;
-//	var mechInspStatTBD = RULES[58].passed;
-//	var elecInspStatTBD = RULES[57].passed;
-//	var plumbingInspStatTBD = RULES[59].passed;
-//	var gasInspStatTBD = RULES[60].passed;
-//	var sprinklerInspStatTBD = RULES[61].passed;
-//	var fireInspStatTBD = RULES[62].passed;
-//	var lowVolInspStatTBD = RULES[63].passed;
-//
-//	var buildingPermitYesNa = RULES[64].passed;
-//	var ceilingPermitYesNa = RULES[65].passed;
-//	var mechPermitYesNa = RULES[66].passed;
-//	var elecPermitYesNa = RULES[67].passed;
-//	var plumbingPermitYesNa = RULES[68].passed;
-//	var gasPermitYesNa = RULES[69].passed;
-//	var sprinklerPermitYesNa = RULES[70].passed;
-//	var firePermitYesNa = RULES[71].passed;
-//	var lowVolPermitYesNa = RULES[72].passed;
-//	var buildingInspYesNa = RULES[73].passed;
-//	var ceilingInspYesNa = RULES[74].passed;
-//	var mechInspYesNa = RULES[75].passed;
-//	var elecInspYesNa = RULES[76].passed;
-//	var plumbingInspYesNa = RULES[77].passed;
-//	var gasInspYesNa = RULES[78].passed;
-//	var sprinklerInspYesNa = RULES[79].passed;
-//	var fireInspYesNa = RULES[80].passed;
-//	var lowVolInspYesNa = RULES[81].passed;
-//	var buildingPermitNoYes = RULES[82].passed;
-//	var ceilingPermitNoYes = RULES[83].passed;
-//	var mechPermitNoYes = RULES[84].passed;
-//	var elecPermitNoYes = RULES[85].passed;
-//	var plumbingPermitNoYes = RULES[86].passed;
-//	var gasPermitNoYes = RULES[87].passed;
-//	var sprinklerPermitNoYes = RULES[88].passed;
-//	var firePermitNoYes = RULES[89].passed;
-//	var lowVolPermitNoYes = RULES[90].passed;
-//	var buildingInspNoYes = RULES[91].passed;
-//	var ceilingInspNoYes = RULES[92].passed;
-//	var mechInspNoYes = RULES[93].passed;
-//	var elecInspNoYes = RULES[94].passed;
-//	var plumbingInspNoYes = RULES[95].passed;
-//	var gasInspNoYes = RULES[96].passed;
-//	var sprinklerInspNoYes = RULES[97].passed;
-//	var fireInspNoYes = RULES[98].passed;
-//	var lowVolInspNoYes = RULES[99].passed;
-	
-	//var OpenStatus = RULES[119].passed;
-	//var PassedDueDate = RULES[120].passed;
-	
-////	var punchList = RULES[].passed;
-////	var asBuilt = RULES[].passed;
-////	var closeoutPhotos = RULES[].passed;
-//		
-//	if(!projectID)
-//	{
-//		alert("Server Error! (Project ID)");
-//		return;
-//	}
-//	
-//	var domain = 'project';
-//	var action = 'saveEvalRules';
-//	
-//	$.ajax({
-//		type: 'POST',
-//		url: 'Project',
-//		data: {
-//			'domain': domain,
-//			'action': action,
-//			'projectID': projectID,
-//			
-//			'mcsNumberAndStage': numAndStage,
-//			'permits': permits,
-//			'hvac': hvac,
-//			'refrigeration': refrigeration,
-//			'permitsTBD': permitsTBD,
-//			'stageAndStatus': stageAndStatus,
-//			'project': project,
-//			
-//			'lateProposal': lateProposal,
-//		    'lateBudgetary': lateBudgetary,
-//			'lateTurnover': lateTurnover,
-//			'emptyInitiation': emptyInitiation,
-//			'earlierScheduledTurnover': earlierSchedTurnover,
-//			'earlierSiteSurvey': earlierSiteSurvey,
-//			
-//			'emptyCost': emptyCost,
-//			'emptyCustomerNumber': emptyCustNum,
-//			'actualAndShouldInvoice': actualAndShouldInvoice,
-//			'zeroShouldInvoice': zeroShouldInvoice,
-//			'zeroActualInvoice': zeroActualInvoice,
-//
-//			//'earlierDueDate': earlierDueDate,
-//			
-//			'buildingRequired': buildingReq,
-//			'ceilingRequired': ceilingReq,
-//			'mechanicalRequired': mechanicalReq,
-//			'electricalRequired': electricalReq,
-//			'plumbingRequired': plumbingReq,
-//			'buildingPermitReqTBD': buildingPermitReqTBD,
-//			'gasRequired': gasReq,
-//			'sprinklerRequired': sprinklerReq,
-//			'fireAlarmRequired': fireAlarmReq,
-//			'lowVoltageRequired': lowVoltageReq,
-//			'ceilingPermitReqTBD' : ceilingPermitReqTBD,
-//			'mechanicalPermitReqTBD' : mechPermitReqTBD,
-//			'electricalPermitReqTBD' : elecPermitReqTBD, 
-//			'plumbingPermitReqTBD' : plumbingPermitReqTBD,
-//			'gasPermitReqTBD' : gasPermitReqTBD,
-//			'sprinklerPermitReqTBD' : sprinklerPermitReqTBD,
-//			'fireAlarmPermitReqTBD' : firePermitReqTBD,
-//			'lowVoltagePermitReqTBD' : lowVolPermitReqTBD,
-//			'buildingInspReqTBD' : buildingInspReqTBD,
-//			'ceilingInspReqTBD' : ceilingInspReqTBD,
-//			'mechanicalInspReqTBD' : mechInspReqTBD,
-//			'electricalInspReqTBD' :elecInspReqTBD,
-//			'plumbingInspReqTBD' : plumbingInspReqTBD,
-//			'gasInspReqTBD' : gasInspReqTBD,
-//			'sprinklerInspReqTBD' : sprinklerInspReqTBD,
-//			'fireAlarmInspReqTBD' : fireInspReqTBD,
-//			'lowVoltageInspReqTBD' : lowVolInspReqTBD,
-//			'buildingPermitStatusTBD' : buildingPermitStatTBD,
-//			'ceilingPermitStatusTBD' : ceilingPermitStatTBD,
-//			'mechanicalPermitStatusTBD' : mechPermitStatTBD,
-//			'electricalPermitStatusTBD' : elecPermitStatTBD, 
-//			'plumbingPermitStatusTBD' : plumbingPermitStatTBD,
-//			'gasPermitStatusTBD' : gasPermitStatTBD,
-//			'sprinklerPermitStatusTBD' : sprinklerPermitStatTBD,
-//			'fireAlarmPermitStatusTBD' : firePermitStatTBD,
-//			'lowVoltagePermitStatusTBD' : lowVolPermitStatTBD,
-//			'buildingInspStatusTBD' : buildingInspStatTBD,
-//			'ceilingInspStatusTBD' : ceilingInspStatTBD,
-//			'mechanicalInspStatusTBD' : mechInspStatTBD,
-//			'electricalInspStatusTBD' :elecInspStatTBD,
-//			'plumbingInspStatusTBD' : plumbingInspStatTBD,
-//			'gasInspStatusTBD' : gasInspStatTBD,
-//			'sprinklerInspStatusTBD' : sprinklerInspStatTBD,
-//			'fireAlarmInspStatusTBD' : fireInspStatTBD,
-//			'lowVoltageInspStatusTBD' : lowVolInspStatTBD,
-//			'buildingPermitYesNa' : buildingPermitYesNa,
-//			'ceilingPermitYesNa' : ceilingPermitYesNa,
-//			'mechanicalPermitYesNa' : mechPermitYesNa, 
-//			'electricalPermitYesNa' : elecPermitYesNa,
-//			'plumbingPermitYesNa' : plumbingPermitYesNa, 
-//			'gasPermitYesNa' : gasPermitYesNa, 
-//			'sprinklerPermitYesNa' : sprinklerPermitYesNa,
-//			'fireAlarmPermitYesNa' : firePermitYesNa,
-//			'lowVoltagePermitYesNa' : lowVolPermitYesNa,
-//			'buildingInspYesNa' : buildingInspYesNa,
-//			'ceilingInspYesNa' : ceilingInspYesNa,
-//			'mechanicalInspYesNa' : mechInspYesNa,
-//			'electricalInspYesNa' : elecInspYesNa,
-//			'plumbingInspYesNa' : plumbingInspYesNa,
-//			'gasInspYesNa' : gasInspYesNa,
-//			'sprinklerInspYesNa' : sprinklerInspYesNa,
-//			'fireAlarmInspYesNa' : fireInspYesNa,
-//			'lowVoltageInspYesNa' : lowVolInspYesNa,
-//			'buildingPermitNoYes' : buildingPermitNoYes,
-//			'ceilingPermitNoYes' : ceilingPermitNoYes,
-//			'mechanicalPermitNoYes' : mechPermitNoYes,
-//			'electricalPermitNoYes' : elecPermitNoYes,
-//			'plumbingPermitNoYes' : plumbingPermitNoYes,
-//			'gasPermitNoYes' : gasPermitNoYes,
-//			'sprinklerPermitNoYes' : sprinklerPermitNoYes,
-//			'fireAlarmPermitNoYes' : firePermitNoYes,
-//			'lowVoltagePermitNoYes' : lowVolPermitNoYes,
-//			'buildingInspNoYes' : buildingInspNoYes,
-//			'ceilingInspNoYes' : ceilingInspNoYes,
-//			'mechanicalInspNoYes' : mechInspNoYes,
-//			'electricalInspNoYes' : elecInspNoYes,
-//			'plumbingInspNoYes' : plumbingInspNoYes,
-//			'gasInspNoYes' : gasInspNoYes,
-//			'sprinklerInspNoYes' : sprinklerInspNoYes,
-//			'fireAlarmInspNoYes' : fireInspNoYes,
-//			'lowVoltageInspNoYes' : lowVolInspNoYes,
-			//'OpenStatus' : OpenStatus,
-			//'PassedDueDate' : PassedDueDate
-//			
-////			'punchList' : punchList,
-////			'asBuilt' : asBuilt,
-////			'closeoutPhotos' : closeoutPhotos
-//			
-//		},
-//		complete: function (data) {
-//			
-//			console.log(data);
-//			projectID = data.responseJSON;	
-//			alert("Scorecard Updated");
-//			editScorecard(this.id);
-//		}
-//	});
 }
 
 function fillScorecard()
@@ -8844,337 +8104,7 @@ function fillScorecard()
 function adjustScore(data)
 {
 	console.log("adjustScore", PROJECT_DATA);
-	 
-//	var mcsNumAndStage = PROJECT_DATA.mcsNumberAndStage;
-//    var permits = PROJECT_DATA.permitsEval;
-//    var hvac = PROJECT_DATA.hvac;
-//    var refrigeration = PROJECT_DATA.refrigeration;
-//    var permitsTBD = PROJECT_DATA.permitsTBD;
-//    var stageAndStatus = PROJECT_DATA.stageAndStatus;
-//    var project = PROJECT_DATA.project;
-//    
-//    var lateProposal = PROJECT_DATA.lateProposal;
-//    var lateBudgetary = PROJECT_DATA.lateBudgetary;
-//    var lateTurnover = PROJECT_DATA.lateTurnover;
-//    var emptyInitiation = PROJECT_DATA.emptyInitiation;
-//    var earlierSchedTurnover = PROJECT_DATA.earlierSchedTurnover;
-//    var earlierSiteSurvey = PROJECT_DATA.earlierSiteSurvey;
-//   
-//    var emptyCost = PROJECT_DATA.emptyCost;
-//	var emptyCustNum = PROJECT_DATA.emptyCustNum;
-//	var actualAndShouldInvoice = PROJECT_DATA.actualAndShouldInvoice;
-//    var zeroShouldInvoice = PROJECT_DATA.zeroShouldInvoice;
-//    var zeroActualInvoice = PROJECT_DATA.zeroActualInvoice;
-//    
-//    var earlierDueDate = PROJECT_DATA.earlierDueDate;
-//    
-//    var buildingRequired = PROJECT_DATA.buildingReq;
-//    var ceilingRequired = PROJECT_DATA.ceilingReq;
-//    var mechanicalRequired = PROJECT_DATA.mechanicalReq;
-//    var electricalRequired = PROJECT_DATA.electricalReq;
-//    var plumbingRequired = PROJECT_DATA.plumbingReq;
-//    var gasRequired = PROJECT_DATA.gasReq;
-//    var sprinklerRequired = PROJECT_DATA.sprinklerReq;
-//    var fireAlarmRequired = PROJECT_DATA.fireAlarmReq;
-//    var lowVoltageRequired = PROJECT_DATA.lowVoltageReq;
-//    var buildingPermitReqTBD = PROJECT_DATA.buildingPermitReqTBD;
-//	var ceilingPermitReqTBD = PROJECT_DATA.ceilingPermitReqTBD;
-//	var mechPermitReqTBD = PROJECT_DATA.mechanicalPermitReqTBD;	
-//	var elecPermitReqTBD = PROJECT_DATA.electricalPermitReqTBD; 
-//	var plumbingPermitReqTBD = PROJECT_DATA.plumbingPermitReqTBD;
-//	var gasPermitReqTBD = PROJECT_DATA.gasPermitReqTBD; 
-//	var sprinklerPermitReqTBD = PROJECT_DATA.sprinklerPermitReqTBD; 
-//	var firePermitReqTBD = PROJECT_DATA.fireAlarmPermitReqTBD;
-//	var lowVolPermitReqTBD = PROJECT_DATA.lowVoltagePermitReqTBD;
-//	var buildingInspReqTBD = PROJECT_DATA.buildingInspReqTBD;
-//	var ceilingInspReqTBD = PROJECT_DATA.ceilingInspReqTBD;
-//	var mechInspReqTBD = PROJECT_DATA.mechanicalInspReqTBD;
-//	var elecInspReqTBD = PROJECT_DATA.electricalInspReqTBD;
-//	var plumbingInspReqTBD = PROJECT_DATA.plumbingInspReqTBD;
-//	var gasInspReqTBD = PROJECT_DATA.gasInspReqTBD;
-//	var sprinklerInspReqTBD = PROJECT_DATA.sprinklerInspReqTBD;
-//	var fireInspReqTBD = PROJECT_DATA.fireAlarmInspReqTBD; 
-//	var lowVolInspReqTBD = PROJECT_DATA.lowVoltageInspReqTBD;
-//	var buildingPermitStatTBD = PROJECT_DATA.buildingPermitStatusTBD;
-//	var ceilingPermitStatTBD = PROJECT_DATA.ceilingPermitStatusTBD;
-//	var mechPermitStatTBD = PROJECT_DATA.mechanicalPermitStatusTBD;
-//	var elecPermitStatTBD = PROJECT_DATA.electricalPermitStatusTBD; 
-//	var plumbingPermitStatTBD = PROJECT_DATA.plumbingPermitStatusTBD;
-//	var gasPermitStatTBD = PROJECT_DATA.gasPermitStatusTBD; 
-//	var sprinklerPermitStatTBD = PROJECT_DATA.sprinklerPermitStatusTBD; 
-//	var firePermitStatTBD = PROJECT_DATA.fireAlarmPermitStatusTBD;
-//	var lowVolPermitStatTBD = PROJECT_DATA.lowVoltagePermitStatusTBD;
-//	var buildingInspStatTBD = PROJECT_DATA.buildingInspStatusTBD;
-//	var ceilingInspStatTBD = PROJECT_DATA.ceilingInspStatusTBD;
-//	var mechInspStatTBD = PROJECT_DATA.mechanicalInspStatusTBD;
-//	var elecInspStatTBD = PROJECT_DATA.electricalInspStatusTBD;
-//	var plumbingInspStatTBD = PROJECT_DATA.plumbingInspStatusTBD;
-//	var gasInspStatTBD = PROJECT_DATA.gasInspStatusTBD;
-//	var sprinklerInspStatTBD = PROJECT_DATA.sprinklerInspStatusTBD;
-//	var fireInspStatTBD = PROJECT_DATA.fireAlarmInspStatusTBD; 
-//	var lowVolInspStatTBD = PROJECT_DATA.lowVoltageInspStatusTBD;
-//	var buildingPermitYesNa = PROJECT_DATA.buildingPermitYesNa;
-//	var ceilingPermitYesNa = PROJECT_DATA.ceilingPermitYesNa;
-//	var mechPermitYesNa = PROJECT_DATA.mechanicalPermitYesNa;
-//	var elecPermitYesNa = PROJECT_DATA.electricalPermitYesNa;
-//	var plumbingPermitYesNa = PROJECT_DATA.plumbingPermitYesNa;
-//	var gasPermitYesNa = PROJECT_DATA.gasPermitYesNa;
-//	var sprinklerPermitYesNa = PROJECT_DATA.sprinklerPermitYesNa;
-//	var firePermitYesNa = PROJECT_DATA.fireAlarmPermitYesNa;
-//	var lowVolPermitYesNa = PROJECT_DATA.lowVoltagePermitYesNa;
-//	var buildingInspYesNa = PROJECT_DATA.buildingInspYesNa;
-//	var ceilingInspYesNa = PROJECT_DATA.ceilingInspYesNa;
-//	var mechInspYesNa = PROJECT_DATA.mechanicalInspYesNa;
-//	var elecInspYesNa = PROJECT_DATA.electricalInspYesNa;
-//	var plumbingInspYesNa = PROJECT_DATA.plumbingInspYesNa;
-//	var gasInspYesNa = PROJECT_DATA.gasInspYesNa;
-//	var sprinklerInspYesNa = PROJECT_DATA.sprinklerInspYesNa;
-//	var fireInspYesNa = PROJECT_DATA.fireAlarmInspYesNa;
-//	var lowVolInspYesNa = PROJECT_DATA.lowVoltageInspYesNa;
-//	var buildingPermitNoYes = PROJECT_DATA.buildingPermitNoYes;
-//	var ceilingPermitNoYes = PROJECT_DATA.ceilingPermitNoYes;
-//	var mechPermitNoYes = PROJECT_DATA.mechanicalPermitNoYes;
-//	var elecPermitNoYes = PROJECT_DATA.electricalPermitNoYes;
-//	var plumbingPermitNoYes = PROJECT_DATA.plumbingPermitNoYes;
-//	var gasPermitNoYes = PROJECT_DATA.gasPermitNoYes;
-//	var sprinklerPermitNoYes = PROJECT_DATA.sprinklerPermitNoYes;
-//	var firePermitNoYes = PROJECT_DATA.fireAlarmPermitNoYes;
-//	var lowVolPermitNoYes = PROJECT_DATA.lowVoltagePermitNoYes;
-//	var buildingInspNoYes = PROJECT_DATA.buildingInspNoYes;
-//	var ceilingInspNoYes = PROJECT_DATA.ceilingInspNoYes;
-//	var mechInspNoYes = PROJECT_DATA.mechanicalInspNoYes;
-//	var elecInspNoYes = PROJECT_DATA.electricalInspNoYes;
-//	var plumbingInspNoYes = PROJECT_DATA.plumbingInspNoYes;
-//	var gasInspNoYes = PROJECT_DATA.gasInspNoYes;
-//	var sprinklerInspNoYes = PROJECT_DATA.sprinklerInspNoYes;
-//	var fireInspNoYes = PROJECT_DATA.fireAlarmInspNoYes;
-//	var lowVolInspNoYes = PROJECT_DATA.lowVoltageInspNoYes;
-	
-	//var OpenStatus = PROJECT_DATA.OpenStatus;
-	//var PassedDueDate = PROJECT_DATA.PassedDueDate;
-	
-//	//	var punchList = PROJECT_DATA.punchList;
-////	var asBuilt = PROJECT_DATA.asBuilt;
-////	var closeoutPhotos = PROJECT_DATA.closeoutPhotos;
-
-//	SCORE.McsNumberAndStage.passed = mcsNumAndStage;
-//	SCORE.Permits.passed = permits;
-//	SCORE.HVAC.passed = hvac;
-//	SCORE.Refrigeration.passed = refrigeration;
-//	SCORE.PermitsTBD.passed = permitsTBD;
-//	SCORE.StageAndStatus.passed = stageAndStatus;
-//	SCORE.Project.passed = project;
-//	SCORE.LateProposal.passed = lateProposal;
-//	SCORE.LateBudgetary.passed = lateBudgetary;
-//	SCORE.LateTurnover.passed = lateTurnover;
-//	SCORE.EmptyInitiation.passed = emptyInitiation;
-//	SCORE.EarlierScheduledTurnover.passed = earlierSchedTurnover;
-//	SCORE.EmptyCost.passed = emptyCost;
-//	SCORE.EmptyCustomerNumber.passed = emptyCustNum;
-//	SCORE.ActualAndShouldInvoice.passed = actualAndShouldInvoice;
-//	SCORE.ZeroShouldInvoice.passed = zeroShouldInvoice;
-//	SCORE.ZeroActualInvoice.passed = zeroActualInvoice;
-//	SCORE.EarlierSiteSurvey.passed = earlierSiteSurvey;
-//	//SCORE.EarlierDueDate.passed = earlierDueDate;
-//	SCORE.EarlierDueDate.passed = "true";
-//	SCORE.BuildingRequired.passed = buildingRequired;
-//	SCORE.CeilingRequired.passed = ceilingRequired;
-//	SCORE.MechanicalRequired.passed = mechanicalRequired;
-//	SCORE.ElectricalRequired.passed = electricalRequired;
-//	SCORE.PlumbingRequired.passed = plumbingRequired;
-//	SCORE.BuildingPermitReqTBD.passed = buildingPermitReqTBD;
-//	SCORE.GasRequired.passed = gasRequired;
-//	SCORE.SprinklerRequired.passed = sprinklerRequired;
-//	SCORE.FireAlarmRequired.passed = fireAlarmRequired;
-//	SCORE.LowVoltageRequired.passed = lowVoltageRequired;
-//	SCORE.CeilingPermitReqTBD.passed = ceilingPermitReqTBD;
-//	SCORE.MechPermitReqTBD.passed = mechPermitReqTBD;
-//	SCORE.ElecPermitReqTDB.passed = elecPermitReqTBD;
-//	SCORE.PlumbingPermitReqTBD.passed = plumbingPermitReqTBD;
-//	SCORE.GasPermitReqTBD.passed = gasPermitReqTBD;
-//	SCORE.SprinklerPermitReqTBD.passed = sprinklerPermitReqTBD;
-//	SCORE.FirePermitReqTBD.passed = firePermitReqTBD;
-//	SCORE.LowVolPermitReqTBD.passed = lowVolPermitReqTBD;
-//	SCORE.BuildingInspReqTBD.passed = buildingInspReqTBD;
-//	SCORE.CeilingInspReqTBD.passed = ceilingInspReqTBD;
-//	SCORE.MechInspReqTBD.passed = mechInspReqTBD;
-//	SCORE.ElecInspReqTBD.passed = elecInspReqTBD;
-//	SCORE.PlumbingInspReqTBD.passed = plumbingInspReqTBD;
-//	SCORE.GasInspReqTBD.passed = gasInspReqTBD;
-//	SCORE.SprinklerInspReqTBD.passed = sprinklerInspReqTBD;
-//	SCORE.FireInspReqTBD.passed = fireInspReqTBD;
-//	SCORE.LowVolInspReqTBD.passed = lowVolInspReqTBD;
-//	SCORE.BuildingPermitStatusTBD.passed = buildingPermitStatTBD;
-//	SCORE.CeilingPermitStatusTBD.passed = ceilingPermitStatTBD;
-//	SCORE.MechPermitStatusTBD.passed = mechPermitStatTBD;
-//	SCORE.ElecPermitStatusTBD.passed = elecPermitStatTBD;
-//	SCORE.PlumbingPermitStatusTBD.passed = plumbingPermitStatTBD;
-//	SCORE.GasPermitStatusTBD.passed = gasPermitStatTBD;
-//	SCORE.SprinklerPermitStatusTBD.passed = sprinklerPermitStatTBD;
-//	SCORE.FirePermitStatusTBD.passed = firePermitStatTBD;
-//	SCORE.LowVolPermitStatusTBD.passed = lowVolPermitStatTBD;
-//	SCORE.BuildingInspStatusTBD.passed = buildingInspStatTBD;
-//	SCORE.CeilingInspStatusTBD.passed = ceilingInspStatTBD;
-//	SCORE.MechInspStatusTBD.passed = mechInspStatTBD;
-//	SCORE.ElecInspStatusTBD.passed = elecInspStatTBD;
-//	SCORE.PlumbingInspStatusTBD.passed = plumbingInspStatTBD;
-//	SCORE.GasInspStatusTBD.passed = gasInspStatTBD;
-//	SCORE.SprinklerInspStatusTBD.passed = sprinklerInspStatTBD;
-//	SCORE.FireInspStatusTBD.passed = fireInspStatTBD;
-//	SCORE.LowVolInspStatusTBD.passed = lowVolInspStatTBD;
-//	SCORE.BuildingPermitYesNa.passed = buildingPermitYesNa;
-//	SCORE.CeilingPermitYesNa.passed = ceilingPermitYesNa;
-//	SCORE.MechPermitYesNa.passed = mechPermitYesNa;
-//	SCORE.ElecPermitYesNa.passed = elecPermitYesNa;
-//	SCORE.PlumbingPermitYesNa.passed = plumbingPermitYesNa;
-//	SCORE.GasPermitYesNa.passed = gasPermitYesNa;
-//	SCORE.SprinklerPermitYesNa.passed = sprinklerPermitYesNa;
-//	SCORE.FirePermitYesNa.passed = firePermitYesNa; 
-//	SCORE.LowVolPermitYesNa.passed = lowVolPermitYesNa;
-//	SCORE.BuildingInspYesNa.passed = buildingInspYesNa;
-//	SCORE.CeilingInspYesNa.passed = ceilingInspYesNa;
-//	SCORE.MechInspYesNa.passed = mechInspYesNa;
-//	SCORE.ElecInspYesNa.passed = elecInspYesNa;
-//	SCORE.PlumbingInspYesNa.passed = plumbingInspYesNa;
-//	SCORE.GasInspYesNa.passed = gasInspYesNa;
-//	SCORE.SprinklerInspYesNa.passed = sprinklerInspYesNa;
-//	SCORE.FireInspYesNa.passed = fireInspYesNa;
-//	SCORE.LowVolInspYesNa.passed = lowVolInspYesNa;
-//	SCORE.BuildingPermitNoYes.passed = buildingPermitNoYes;
-//	SCORE.CeilingPermitNoYes.passed = ceilingPermitNoYes;
-//	SCORE.MechPermitNoYes.passed = mechPermitNoYes;
-//	SCORE.ElecPermitNoYes.passed = elecPermitNoYes;
-//	SCORE.PlumbingPermitNoYes.passed = plumbingPermitNoYes;
-//	SCORE.GasPermitNoYes.passed = gasPermitNoYes;
-//	SCORE.SprinklerPermitNoYes.passed = sprinklerPermitNoYes;
-//	SCORE.FirePermitNoYes.passed = firePermitNoYes;
-//	SCORE.LowVolPermitNoYes.passed = lowVolPermitNoYes;
-//	SCORE.BuildingInspNoYes.passed = buildingInspNoYes;
-//	SCORE.CeilingInspNoYes.passed = ceilingInspNoYes;
-//	SCORE.MechInspNoYes.passed = mechInspNoYes;
-//	SCORE.ElecInspNoYes.passed = elecInspNoYes;
-//	SCORE.PlumbingInspNoYes.passed = plumbingInspNoYes;
-//	SCORE.GasInspNoYes.passed = gasInspNoYes;
-//	SCORE.SprinklerInspNoYes.passed = sprinklerInspNoYes;
-//	SCORE.FireInspNoYes.passed = fireInspNoYes;
-//	SCORE.LowVolInspNoYes.passed = lowVolInspNoYes;
-	
-//	SCORE.OpenStatus.passed = OpenStatus;
-//	SCORE.PassedDueDate.passed = PassedDueDate;
-//	
-////	SCORE.PunchList.passed = punchList;
-////	SCORE.AsBuilt.passed = asBuilt;
-////	SCORE.CloseoutPhotos.passed = closeoutPhotos;
-//	
-//	SCORE.applicableRules[0].passed = mcsNumAndStage;
-//	SCORE.applicableRules[1].passed = permits;
-//	SCORE.applicableRules[2].passed = hvac;
-//	SCORE.applicableRules[3].passed = refrigeration;
-//	SCORE.applicableRules[4].passed = permitsTBD;
-//	SCORE.applicableRules[5].passed = stageAndStatus;
-//	SCORE.applicableRules[6].passed = project;
-//	SCORE.applicableRules[7].passed = lateProposal;
-//	SCORE.applicableRules[8].passed = lateBudgetary;
-//	SCORE.applicableRules[9].passed = lateTurnover;
-//	SCORE.applicableRules[10].passed = emptyInitiation;
-//	SCORE.applicableRules[11].passed = earlierSchedTurnover;
-//	SCORE.applicableRules[12].passed = emptyCost;
-//	SCORE.applicableRules[13].passed = emptyCustNum;
-//	SCORE.applicableRules[14].passed = actualAndShouldInvoice;
-//	SCORE.applicableRules[15].passed = zeroShouldInvoice;
-//	SCORE.applicableRules[16].passed = zeroActualInvoice;
-//	SCORE.applicableRules[17].passed = earlierSiteSurvey;
-//	SCORE.applicableRules[18].passed = "true";
-//	SCORE.applicableRules[19].passed = buildingRequired;
-//	SCORE.applicableRules[20].passed = ceilingRequired;
-//	SCORE.applicableRules[21].passed = mechanicalRequired;
-//	SCORE.applicableRules[22].passed = electricalRequired;
-//	SCORE.applicableRules[23].passed = plumbingRequired;
-//	SCORE.applicableRules[24].passed = buildingPermitReqTBD;
-//	SCORE.applicableRules[25].passed = gasRequired;
-//	SCORE.applicableRules[26].passed = sprinklerRequired;
-//	SCORE.applicableRules[27].passed = fireAlarmRequired;
-//	SCORE.applicableRules[28].passed = lowVoltageRequired;
-//	SCORE.applicableRules[29].passed = ceilingPermitReqTBD;
-//	SCORE.applicableRules[30].passed = mechPermitReqTBD;
-//	SCORE.applicableRules[31].passed = elecPermitReqTBD; 
-//	SCORE.applicableRules[32].passed = plumbingPermitReqTBD;
-//	SCORE.applicableRules[33].passed = gasPermitReqTBD; 
-//	SCORE.applicableRules[34].passed = sprinklerPermitReqTBD; 
-//	SCORE.applicableRules[35].passed = firePermitReqTBD;
-//	SCORE.applicableRules[36].passed = lowVolPermitReqTBD;
-//	SCORE.applicableRules[37].passed = buildingInspReqTBD;
-//	SCORE.applicableRules[38].passed = ceilingInspReqTBD;
-//	SCORE.applicableRules[39].passed = mechInspReqTBD;
-//	SCORE.applicableRules[40].passed = elecInspReqTBD;
-//	SCORE.applicableRules[41].passed = plumbingInspReqTBD;
-//	SCORE.applicableRules[42].passed = gasInspReqTBD;
-//	SCORE.applicableRules[43].passed = sprinklerInspReqTBD;
-//	SCORE.applicableRules[44].passed = firePermitReqTBD;
-//	SCORE.applicableRules[45].passed = lowVolInspReqTBD;
-//	SCORE.applicableRules[46].passed = buildingPermitStatTBD;
-//	SCORE.applicableRules[47].passed = ceilingPermitStatTBD;
-//	SCORE.applicableRules[48].passed = mechPermitStatTBD;
-//	SCORE.applicableRules[49].passed = elecPermitStatTBD; 
-//	SCORE.applicableRules[50].passed = plumbingPermitStatTBD;
-//	SCORE.applicableRules[51].passed = gasPermitStatTBD; 
-//	SCORE.applicableRules[52].passed = sprinklerPermitStatTBD; 
-//	SCORE.applicableRules[53].passed = firePermitStatTBD;
-//	SCORE.applicableRules[54].passed = lowVolPermitStatTBD;
-//	SCORE.applicableRules[55].passed = buildingInspStatTBD;
-//	SCORE.applicableRules[56].passed = ceilingInspStatTBD;
-//	SCORE.applicableRules[58].passed = mechInspStatTBD;
-//	SCORE.applicableRules[57].passed = elecInspStatTBD;
-//	SCORE.applicableRules[59].passed = plumbingInspStatTBD;
-//	SCORE.applicableRules[60].passed = gasInspStatTBD;
-//	SCORE.applicableRules[61].passed = sprinklerInspStatTBD;
-//	SCORE.applicableRules[62].passed = firePermitStatTBD;
-//	SCORE.applicableRules[63].passed = lowVolInspStatTBD;
-//	SCORE.applicableRules[64].passed = buildingPermitYesNa;
-//	SCORE.applicableRules[65].passed = ceilingPermitYesNa;
-//	SCORE.applicableRules[66].passed = mechPermitYesNa;
-//	SCORE.applicableRules[67].passed = elecPermitYesNa;
-//	SCORE.applicableRules[68].passed = plumbingPermitYesNa;
-//	SCORE.applicableRules[69].passed = gasPermitYesNa;
-//	SCORE.applicableRules[70].passed = sprinklerPermitYesNa;
-//	SCORE.applicableRules[71].passed = firePermitYesNa;
-//	SCORE.applicableRules[72].passed = lowVolPermitYesNa;
-//	SCORE.applicableRules[73].passed = buildingInspYesNa;
-//	SCORE.applicableRules[74].passed = ceilingInspYesNa;
-//	SCORE.applicableRules[75].passed = mechInspYesNa;
-//	SCORE.applicableRules[76].passed = elecInspYesNa;
-//	SCORE.applicableRules[77].passed = plumbingInspYesNa;	
-//	SCORE.applicableRules[78].passed = gasInspYesNa;
-//	SCORE.applicableRules[79].passed = sprinklerInspYesNa;
-//	SCORE.applicableRules[80].passed = fireInspYesNa;
-//	SCORE.applicableRules[81].passed = lowVolInspYesNa;
-//	SCORE.applicableRules[82].passed = buildingPermitNoYes;
-//	SCORE.applicableRules[83].passed = ceilingPermitNoYes;
-//	SCORE.applicableRules[84].passed = mechPermitNoYes;	
-//	SCORE.applicableRules[85].passed = elecPermitNoYes;
-//	SCORE.applicableRules[86].passed = plumbingPermitNoYes;	
-//	SCORE.applicableRules[87].passed = gasPermitNoYes;
-//	SCORE.applicableRules[88].passed = sprinklerPermitNoYes;
-//	SCORE.applicableRules[89].passed = firePermitNoYes;
-//	SCORE.applicableRules[90].passed = lowVolPermitNoYes;
-//	SCORE.applicableRules[91].passed = buildingInspNoYes;
-//	SCORE.applicableRules[92].passed = ceilingInspNoYes;
-//	SCORE.applicableRules[93].passed = mechInspNoYes;	
-//	SCORE.applicableRules[94].passed = elecInspNoYes;
-//	SCORE.applicableRules[95].passed = plumbingInspNoYes;	
-//	SCORE.applicableRules[96].passed = gasInspNoYes;
-//	SCORE.applicableRules[97].passed = sprinklerInspNoYes;
-//	SCORE.applicableRules[98].passed = fireInspNoYes;
-//	SCORE.applicableRules[99].passed = lowVolInspNoYes;
-	
-//	SCORE.applicableRules[119].passed = OpenStatus;
-//	SCORE.applicableRules[120].passed = PassedDueDate;
-	
-		
-////	SCORE.applicableRules[64].passed = punchList;
-////	SCORE.applicableRules[65].passed = asBuilt;
-////	SCORE.applicableRules[66].passed = closeoutPhotos;
-//	
+	 	
 	console.log("add Passed", SCORE);
 	prepareScorecardView(SCORE);
 }
@@ -9467,7 +8397,6 @@ function fillScoreTableView(domain)
 	
 	for(var i = 0; i < SCORE.length; i++)
 	{
-		//console.log("RULES EYE" , RULES[i] , domain);
 		if(SCORE[i].domain != domain)
 			continue;
 		if(SCORE[i].passed == "true")
@@ -10054,12 +8983,9 @@ function updateFrontEnd() {
 			$('#param-field').before('<h3>Select a Project to Create Task for:</h3>');
 			taskFinder = true;
 		} else taskFinder = false;
-		
-		
+			
 		filterProjects();
 	}
-	
-	
 }
 
 /**
@@ -10140,10 +9066,6 @@ function getSearchCriteria(_stopServerCalls) {
 			$('#paramID1').val('Warehouse');
 			$('#paramVal1').empty();
 			$('#paramVal1').append(warehouseOptions.cloneNode(true));
-			
-			//$('#paramID2').val('Stage');
-			//$('#paramVal2').empty();
-			//$('#paramVal2').append(stageOptions.cloneNode(true));
 			
 			checkInitFilter();
 			filterProjects();
@@ -10228,11 +9150,7 @@ function checkInitFilter () {
 							else if(obj.value == '1') obj.checked = true;
 							else obj.checked = false;
 						});
-						//$('#stageSelector').trigger('chosen:updated');
 
-						//document.getElementById('AllStages').checked = false;
-						//document.getElementById('NoStages').checked = false;
-						
 				 } else {
 					$('#paramID1').val('Manager');
 					$('#paramVal1').empty(); 
@@ -10253,9 +9171,6 @@ function checkInitFilter () {
 			if(obj.value == '2') obj.checked = true;
 			else obj.checked = false;
 		});
-		
-		//$('#stageSelector').trigger('chosen:updated');
-
 		
 		removeParam(document.getElementById('paramID2'));
 		filterProjects();
@@ -10280,15 +9195,11 @@ function checkInitFilter () {
 							else if(obj.value == '1') obj.checked = true;
 							else obj.checked = false;
 						});
-						//document.getElementById('AllStages').checked = false;
-						//document.getElementById('NoStages').checked = false;
 				 }
 				 
 
-				 matchUsernameToPerson(user.firstName);
-				 
-				 //$('#stageSelector').trigger('chosen:updated');
-				 
+				matchUsernameToPerson(user.firstName);
+								 
 				var parent = document.getElementById('param2')
 				var child1 = document.getElementById('paramID2');
 				var child2 = document.getElementById('paramVal2');
@@ -10331,7 +9242,6 @@ function matchUsernameToPersonID(userFirstName, paramNum){
 }
 
 
-
 function fillDropdowns_FIND_PROJECT(data) {
 	let d = document.createDocumentFragment();
 	
@@ -10352,7 +9262,6 @@ function fillDropdowns_FIND_PROJECT(data) {
 	supervisorOptions = generateDropdowns_FIND_PROJECTS(data['person'], parameterFields[4]);
 	typeOptions = generateDropdowns_FIND_PROJECTS(data['type'], parameterFields[5]);
 	statusOptions = generateDropdowns_FIND_PROJECTS(data['status'], parameterFields[6]);
-	//stageOptions = generateDropdowns_FIND_PROJECTS(data['stage'], parameterFields[7]);
 	console.log(parameterFields[6]);
 }
 
@@ -10402,7 +9311,6 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 					else if(json[q].id == 9) {sortedStages[7] = json[q];}
 					else if(json[q].id == 15) {sortedStages[8] = json[q];}
 				}
-
 				
 				for(var q = 0; q < sortedStages.length; q++){
 					var optionStage = document.createElement('option');
@@ -10420,7 +9328,6 @@ function generateDropdowns_FIND_PROJECTS(jsonData, field) {
 			}	
 		} else {
 			option.innerHTML = json[i].name;
-			//console.log(json[i].name);
 		}
 		
 		if(field == 'Stage') continue;
@@ -10589,11 +9496,9 @@ function filterProjects (filter) {
 		console.log(filter);
 	
 	updateDisplayableProjects();
-	//let json = JSON.parse(projects['projects']);
+
 	let json = DISPLAYABLE_PROJECTS.slice(0);	
-	let outputs = new Array();
-	//console.log("DISPLAYABLE OUT" , DISPLAYABLE_PROJECTS , DISPLAYABLE_PROJECTS.length);
-	//console.log("Debug Retrieved: " , RETRIEVED_PROJECTS , RETRIEVED_PROJECTS.length);
+	let outputs = new Array();	
 	let parameters = $('.paramHolder').children('select');
 	
 	
@@ -10610,7 +9515,6 @@ function filterProjects (filter) {
 		console.log("VAL = ", val , id);
 		
 		for (var j = 0; j < json.length; j++) {
-			//console.log(json[j]);
 
 			if(id === 'Warehouse') { 
 				if(json[j] != null && json[j].warehouse.id != val) {
@@ -10633,7 +9537,7 @@ function filterProjects (filter) {
 					remaining = remaining -1;
 				} 
 			} else if (id === 'Supervisor') {
-				//console.log("ID VAL: ", json[j].supervisors);
+
 				if (json[j] != null && json[j].supervisors != null && json[j].supervisors[0].id != val) {
 					json[j] = null
 					remaining = remaining - 1;
@@ -10655,21 +9559,7 @@ function filterProjects (filter) {
 					remaining = remaining - 1;
 				}
 			}
-		}
-		
-
-
-	//	var i = 0;
-		
-		/*
-		for(var i = 0; i < json.length; i++)
-		{
-			if(json[i] == null)
-			{
-				json.shift();
-			}
 		}	
-		*/			
 		
 		if(filter == "mcsNumber")
 		{
@@ -10787,7 +9677,6 @@ function fillProjectViewData(json){
 		navigateTo(projectListing);
 	}
 
-	//if(json[k].warehouse.city.name == "APANA") 
 	if(json.warehouse && json.warehouse.city && json.warehouse.city.name && json.warehouse.city.name.includes("APANA")) {
 		listDetails0.innerHTML = json.warehouse.city.name + ', ' +
 		json.warehouse.region;
@@ -10886,9 +9775,6 @@ function fillProposalViewData(json){
 	$(projectListing).append(listDetails7);
 	
 	$('#results > tbody').append(projectListing);
-	
-
-	
 }
 
 
@@ -10922,12 +9808,10 @@ function navigateTo(source) {
 
 		
 		currentDivLocation = "projectManager";
-		document.getElementById("projectManager").style.display = 'inline';
-		//window.location.href = PROJECTMANAGER + '?id=' + 
-			
+		document.getElementById("projectManager").style.display = 'inline';			
 	}
-
 }
+
 //This enables the user to filter tasks based off status
 $(document).on('change', '#taskSelector2', function () {
 	clearTaskTable();
@@ -10959,14 +9843,14 @@ function getTasks(stopServerCalls) {
 		}, success: function (data) {
 			console.log("proj tasks!!!!", data);
 			let type = getParameterByName("from");
-			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
+			
 			tasks = data;
 			if (data) {
 				clearTaskTable();
 				fillTasksTable(data);
 			}
 			if(!stopServerCalls) getUserData();
-		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
+
 		}, error: function (data) {
 			alert('Server Error!10');
 		}
@@ -11047,9 +9931,6 @@ function getProject_CHANGE_ORDER()
 					console.log("MCS CO = ", mcsCO);
 					$('#changeOrder').find('#mcsCO').val(mcsCO);
 				}
-				//getTasks();
-
-	
 			}
 		});
 	} else {
@@ -11064,14 +9945,11 @@ function getProject_CHANGE_ORDER()
  */
 function getDropdownInfo_CHANGE_ORDER()
 {
-	//PAGETYPE = getParameterByName("type");	
-	//projectID = getParameterByName("id");
 	if(projectID === null) {
 		alert('Invalid URL. Try returning to this page again.');
 		return;
 	}
-	
-	//if(projectID !== null) {}
+
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
@@ -11137,7 +10015,6 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find("#sell").val(changeOrderToEdit.sell);
 	
 	$('#changeOrder').find("#status").val(changeOrderToEdit.status);
-	//$('#changeOrder').find("#submittedTo").val(changeOrderToEdit.submittedTo);
 	$('#changeOrder').find("#submittedDate").val(changeOrderToEdit.submittedDate);
 	$('#changeOrder').find("#approvedDate").val(changeOrderToEdit.approvedDate);
     formatRelativeTextAreas(changeOrderToEdit.notes , "notes", "changeOrder");
@@ -11150,8 +10027,6 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
 	
 	$('#changeOrder').find('#subInvoiceNumber').val(changeOrderToEdit.subInvoiceNumber);
-
-	
 	}
 }
 
@@ -11188,7 +10063,6 @@ function cleanNumericValueForDisplaying(num)
 	if(num<0) neg = true;
 	else neg = false;
 	num = Math.abs(num);
-	//console.log("BEFORE: ", num);
 	var str = num.toString();
 	
 	var price, cleanPrice;
@@ -11200,7 +10074,6 @@ function cleanNumericValueForDisplaying(num)
 	if(str.indexOf(".") != -1) 
 	{
 		price = str.split(".");
-		//console.log("PRICE = ", price);
 		dollars = price[0];
 		cents = price[1];
 		if(cents.length == 1) cleanCents = cents + "0";
@@ -11227,7 +10100,6 @@ function cleanNumericValueForDisplaying(num)
 		}
 		
 		cleanPrice = "$" + correctOrder + "." + cleanCents;
-		//console.log("AFTER: ", cleanPrice);
 		if(neg){
 			cleanPrice = "(-" + cleanPrice + ")";
 		}
@@ -11243,33 +10115,27 @@ function cleanNumericValueForDisplaying(num)
 			dollarArray.push(str[i]);
 			if(commaCount % 3 == 0 && i != 0) dollarArray.push("-");
 		}
-		//console.log("D ARRAY = ", dollarArray);
 		cleanDollars = dollarArray.toString();
 
 		while(cleanDollars.indexOf(",") != -1) {
 			cleanDollars = cleanDollars.replace(",","");
 		}
-		
-		//console.log("CLEAN DOLLARS = ", cleanDollars);
-		
+				
 		while(cleanDollars.indexOf("-") != -1) {
 		cleanDollars = cleanDollars.replace("-",",");
 		}
-		
 		
 		for(var i = cleanDollars.length -1; i > -1; i--) {
 			correctOrder += cleanDollars[i];
 		}
 		
 		cleanPrice = "$" + correctOrder;
-		//console.log("AFTER: ", cleanPrice);
+
 		if(neg){
 			cleanPrice = "(-" + cleanPrice + ")";
 		}
-		return cleanPrice;
-		
+		return cleanPrice;	
 	}
-	
 }
 
 /**
@@ -11377,10 +10243,8 @@ function sortChangeOrderStatus(json)
 	tmp[4] = json[3];
 	tmp[5] = json[4];
    
-	return tmp;
-	
+	return tmp;	
 }
-
 
 /**
  * This function saves a project with the current chnage order values
@@ -11478,46 +10342,45 @@ function saveProject_CHANGE_ORDER()
 			success:function(data){
 				
 				alert('Saved Change Order');
-				goToProjectManager();
+				
+				//noMove makes it so the user doesn't get kicked out of General info when setting refrigeration or HVAC to "Yes"
+				if(noMove == 0){
+				
+					
+					goToProjectManager();
+				}
+				else{
+					
+					noMove = 0;
+				}
+				
+					
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
 				console.log(data);
+				
+				
 			},
 			error: function(data)
 			{
 				alert('Saved Change Order');
 				
-/*				$.ajax({
-					type: 'POST',
-					url: 'Project', 
-					dataType: 'json',
-					data: 
-					{
-						'domain': 'project',
-						'action': 'countChangeOrders',
-						
-						'projectID': projectID,
-
-
-					},
-					success:function(){
-						
-						
-
-					},
-					error: function(data)
-					{
+				//noMove makes it so the user doesn't get kicked out of General info when setting refrigeration or HVAC to "Yes"
+				if(noMove == 0){
+					
+					goToProjectManager();
+				}
+				else{
+					
+					noMove = 0;
+				}				
 				
-					}
-				});*/
-				goToProjectManager();
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
 				$('#changeOrder').find('#saveButton > button').prop('disabled', false);
+				
 			}
-		});
-
-		
-		
+		});		
 }
+
 /**
  * This function checks to see if the entered date is in valid form
  * @param an array of dates
@@ -11606,19 +10469,11 @@ function deleteChangeOrder() {
 			console.log("Response From Change Order Deletion", data);
 			alert('Deleted Change Order');
 			goToProjectManager();
-			//$('#changeOrder').find('#saveButton > button').prop('disabled', false);
-
-			//console.log(data);
 		}
 	});
 	
 	
 }
-/*
-function returnToProjectManager () {
-	window.location.href = PROJECTMANAGER + '?id=' + projectID;
-}
-*/
 
 /**
  * This function alters how a change order is displayed in the changeOrderTable
@@ -11633,7 +10488,7 @@ function toggleChangeOrder (source) {
 }
 
 function changeOrderReport () {
-	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
+
 	window.open("Report?" + 'id=' + projectID + "&type=Change Order Report");
 }
 
@@ -11673,14 +10528,11 @@ $(document).ready(function()
 
 function getDropdownInfo_EQUIP()
 {
-	//PAGETYPE_EQUIP = getParameterByName("type");	
-	//projectID_EQUIP = getParameterByName("id");
 	if(projectID_EQUIP === null) {
 		alert('Invalid URL. Try returning to this page again.');
 		return;
 	}
 	
-	//if(projectID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
@@ -11707,7 +10559,6 @@ function getDropdownInfo_EQUIP_PROP()
 		return;
 	}
 	
-	//if(projectID !== null) {}
 	$.ajax({
 		type: 'POST',
 		url: 'Project', 
@@ -11748,12 +10599,10 @@ function getProject_EQUIP()
 				if(PAGETYPE_EQUIP == 'edit')
 				{
 					$('#equipmentForm #poNum').val('');
-					//EQUIPMENT_ID_EQUIP = getParameterByName("equipmentID");
 					PROJECT_DATA_EQUIP = data;
 					fillTabs_EQUIP(PROJECT_DATA_EQUIP);
 					
 				}
-				//getTasks();
 			}
 		});
 	} else {
@@ -11784,12 +10633,10 @@ function getProject_EQUIP_PROP()
 				if(PAGETYPE_EQUIP == 'edit')
 				{
 					$('#equipmentFormProposals #poNumProposals').val('');
-					//EQUIPMENT_ID_EQUIP = getParameterByName("equipmentID");
 					PROJECT_DATA_EQUIP = data;
 					fillTabs_EQUIP_PROP(PROJECT_DATA_EQUIP);
 					
 				}
-				//getTasks();
 			}
 		});
 	} else {
@@ -11815,7 +10662,6 @@ function fillDropdowns_EQUIP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentVendor[i].name;
-		//option.setAttribute("value", equipmentVendor[i].name);
 		option.setAttribute("value", equipmentVendor[i].id);
 		d.appendChild(option);
 	}
@@ -11836,7 +10682,6 @@ function fillDropdowns_EQUIP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentDeliveryStatus[i].name;
-//		option.setAttribute("value", equipmentDeliveryStatus[i].name);
 		option.setAttribute("value", equipmentDeliveryStatus[i].id);
 
 		d.appendChild(option);
@@ -11850,7 +10695,6 @@ function fillDropdowns_EQUIP_PROP(json)
 {
 	$('#equipmentFormProposals').find('#supplierProposals').find('option').remove();
 
-	//console.log(json);
 	var equipmentVendor = JSON.parse(json["equipmentvendor"]);
 	var d = document.createDocumentFragment();
 	
@@ -11863,7 +10707,6 @@ function fillDropdowns_EQUIP_PROP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentVendor[i].name;
-		//option.setAttribute("value", equipmentVendor[i].name);
 		option.setAttribute("value", equipmentVendor[i].id);
 		d.appendChild(option);
 	}
@@ -11871,7 +10714,6 @@ function fillDropdowns_EQUIP_PROP(json)
 	
 	$('#equipmentFormProposals').find('#deliveryStatusEquipmentProposals').find('option').remove();
 
-	//console.log(json);
 	var equipmentDeliveryStatus = JSON.parse(json["equipmentstatus"]);
 	var d = document.createDocumentFragment();
 	
@@ -11884,14 +10726,11 @@ function fillDropdowns_EQUIP_PROP(json)
 	{
 		var option = document.createElement("option");
 		option.innerHTML = equipmentDeliveryStatus[i].name;
-//		option.setAttribute("value", equipmentDeliveryStatus[i].name);
 		option.setAttribute("value", equipmentDeliveryStatus[i].id);
 
 		d.appendChild(option);
 	}
 	$("#equipmentFormProposals #deliveryStatusEquipmentProposals").append(d);
-	
-	
 }
 
 function fillTabs_EQUIP(json)
@@ -11907,7 +10746,6 @@ function fillTabs_EQUIP(json)
 	console.log(equipmentToEdit);
 	$('#equipmentForm #poNum').val(equipmentToEdit.poNum);
 	$('#equipmentForm #equipmentName').val(equipmentToEdit.equipmentName);
-	//$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
 	
 	if(equipmentToEdit.eqSupplier)
 		$('#equipmentForm #supplier').val(equipmentToEdit.eqSupplier.id);
@@ -11919,7 +10757,7 @@ function fillTabs_EQUIP(json)
 	$('#equipmentForm #orderedDate').val(equipmentToEdit.orderedDate);
 	$('#equipmentForm #equipProposalDate').val(equipmentToEdit.equipProposalDate);
 	$('#equipmentForm #notes').val(equipmentToEdit.notes);
-	//$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
+
 	if(equipmentToEdit.eqStatus)
 		$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.eqStatus.id);
 	else
@@ -11944,7 +10782,6 @@ function fillTabs_EQUIP_PROP(json)
 	console.log(equipmentToEdit);
 	$('#equipmentFormProposals #poNumProposals').val(equipmentToEdit.poNum);
 	$('#equipmentFormProposals #equipmentNameProposals').val(equipmentToEdit.equipmentName);
-	//$('#equipmentForm #supplier').val(equipmentToEdit.vendor);
 	
 	if(equipmentToEdit.eqSupplier)
 		$('#equipmentFormProposals #supplierProposals').val(equipmentToEdit.eqSupplier.id);
@@ -11956,7 +10793,7 @@ function fillTabs_EQUIP_PROP(json)
 	$('#equipmentFormProposals #orderedDateProposals').val(equipmentToEdit.orderedDate);
 	$('#equipmentFormProposals #equipProposalDateProposals').val(equipmentToEdit.equipProposalDate);
 	$('#equipmentFormProposals #notesProposals').val(equipmentToEdit.notes);
-	//$('#equipmentForm #deliveryStatusEquipment').val(equipmentToEdit.deliveryStatus);
+
 	if(equipmentToEdit.eqStatus)
 		$('#equipmentFormProposals #deliveryStatusEquipmentProposals').val(equipmentToEdit.eqStatus.id);
 	else
@@ -12163,9 +11000,6 @@ function deleteEquipment() {
 			goToProjectManager();
 		}
 	});
-
-	
-	
 }
 
 function toggleTaskAssignee() {
@@ -12186,8 +11020,6 @@ function toggleTaskAssignee() {
 
 	}
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////
 //////////////////////////Navigational ////////////////////////////////
@@ -12210,7 +11042,8 @@ function goToFindProject() {
 			$('#projectData').find('.info-tab').removeClass('active');
 			$('#projectData').find('.nav-tabs > li.active').removeClass('active');
 			$('#projectData').find('#generalInformation').addClass('active');
-			$('#projectData').find('#generalInformationTabLink').addClass('active');			
+			$('#projectData').find('#generalInformationTabLink').addClass('active');
+			
 			break;
 		case "permitData":
 			$('#permitData').find('.info-tab').removeClass('active');
@@ -12244,8 +11077,6 @@ function goToFindProject() {
 	}
 	$(".editProject").hide();
 	$("#findProject").show();
-	
-	
 	
 }
 
@@ -12307,7 +11138,6 @@ function goToProjectManager() {
 		case "smartSystemData":
 			getProject_PROJECT_MANAGER(projectID, 1);
 			$('#smartSystemData').find('.info-tab').removeClass('active');
-		//	$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
 			$('#smartSystemData').find('#closeout').addClass('active');
 			$('#smartSystemData').find('#scopeForm').addClass('active');
 			$('#projectManager').find('#smartSystemTabLink').addClass('active');
@@ -12396,7 +11226,6 @@ function goToProjectManager1() {
 		case "smartSystemData":
 			getProject_PROJECT_MANAGER1(projectID, 1);
 			$('#smartSystemData').find('.info-tab').removeClass('active');
-		//	$('#closeoutData').find('.nav-tabs > li.active').removeClass('active');
 			$('#smartSystemData').find('#closeout').addClass('active');
 			$('#smartSystemData').find('#scopeForm').addClass('active');
 			$('#projectManager').find('#smartSystemTabLink').addClass('active');
@@ -12553,7 +11382,6 @@ function preparePage() {
 	} else {
 		$('.projectNavigator').show();
 		$('.projectNavigator-projectFinder').hide();
-		//getAllProjects();
 		getTheProjects();
 		$('#findProject').show();
 	}
@@ -12562,11 +11390,11 @@ function preparePage() {
 
 //This is the function that sorts the table of projects based on some criteria 
 function sortTable(n){
-	//alert($('#dashboardViewValue').val());
 	if($('#dashboardViewValue').val() == "0"){
 		var table, rows, switching, i, x, y, shouldSwitch;
 		  table = document.getElementById("results");
 		  switching = true;
+		  
 		  /*Make a loop that will continue until
 		  no switching has been done:*/
 		  while (switching) {
@@ -12734,14 +11562,11 @@ function getScoreRules(project_id){
 			}, success: function (data) {
 				
 				console.log("DATA FROM GETSCORERULES IS " , data);
-				//var listDiv = document.getElementById('someData');
 				let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
 				let tableScheduling = document.getElementById('schedulingFailedTable').getElementsByTagName('tbody')[0];
-				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
 				let tableEquipment = document.getElementById('equipmentFailedTable').getElementsByTagName('tbody')[0];
 				let tableChangeOrders = document.getElementById('changeOrdersFailedTable').getElementsByTagName('tbody')[0];
 				let tableTasks = document.getElementById('tasksFailedTable').getElementsByTagName('tbody')[0];
-				//let tableGeneral = document.getElementById('generalInfoFailedTable').getElementsByTagName('tbody')[0];
 				let tableFinancial = document.getElementById('financialFailedTable').getElementsByTagName('tbody')[0];
 				let tablePermits = document.getElementById('permitsFailedTable').getElementsByTagName('tbody')[0];
 				let tableCloseOut = document.getElementById('closeOutFailedTable').getElementsByTagName('tbody')[0];
@@ -12963,7 +11788,6 @@ function getScoreRules(project_id){
 				}
 				scoreBackground(scoreGeneral,scoreScheduling,scorePermits, scoreEquipment, scoreChangeOrders,scoreTasks, scoreCloseOut, scoreFinancial);
 				issuesNumberSetter(generalIssues,schedulingIssues,permitsIssues, equipmentIssues, changeordersIssues, tasksIssues, closeoutIssues, financialIssues);
-				//document.getElementById("projectManager").style.display = 'none';  					
 			}, error: function (data) {
 				alert('Server Error!11');
 			}
@@ -13081,8 +11905,7 @@ function fixingRules(category,text){
 		$("#permFailedRules").show();
 		$("#backToFailedRules").html("Permit Rules");
 		$("#permFailedRules").html("Permit Rules");
-//		$('.permFailedRules').show();
-		break;
+ 		break;
 	case "closeout":
 	$('#closeoutTabLink').trigger('click');
 	$("#backToFailedRulesCloseOut").show();
@@ -13176,34 +11999,18 @@ function savePermitInspectionNotes(){
 			},
 			success:function(data){
 				console.log(data);
-				//updateFrontEnd();
+
 				alert('Save Complete!');
-							
-				//goToProjectManager();
 
 			},
  
 			error: function(data)
 			{
 				console.log(data);
-				//updateFrontEnd();
-				//getProject_PROJECT_MANAGER(projectID , 1);
-				alert('Save Complete!');
-				/*
-				$('#permitData').find('#saveButton > button').prop('disabled', false);
-				$('#permitData').find('.active').removeClass('active');
-				$('#permitData').find('#buildingPermit').addClass('active');
-
-				$(".editProject").hide();
-				$("#projectManager").show();
-				*/
-				//goToProjectManager();
-			
 				
+				alert('Save Complete!');			
 			}
 		});
-     
-	
 }
 
 function returnToFailedRules(){
@@ -13213,13 +12020,10 @@ function returnToFailedRules(){
 		$('#scorecardTabLink').trigger('click');
 
 		console.log("General issues count is ", generalIssues);
-		//setTimeout(function(){
-			//if(generalIssues > 0)//{ 
+		
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('generalInfoFailedTable');
-			//}	
-	//	}, 500);
 
 		$('#backToFailedRules').hide();
 		break;
@@ -13227,13 +12031,10 @@ function returnToFailedRules(){
 	case "Financial Rules":
 		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(financialIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('financialFailedTable');
-			//}	
-	//	},500);
 
 		$('#backToFailedRules').hide();
 		break;
@@ -13241,39 +12042,30 @@ function returnToFailedRules(){
 	case "Scheduling Rules":
 		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('schedulingFailedTable');
-			//}	
-	//	},500);
 
 		$('#backToFailedRules').hide();
 		break;
 		
 	case "Equipment Rules":
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('equipmentFailedTable');
-			//}	
-	//	},500);
-
+				
 		$('#eqpFailedRules').hide();
 		break;
 
 	case "ChangeOrder Rules":
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('changeOrdersFailedTable');
-			//}	
-	//	},500);
 
 		$('#choFailedRules').hide();
 		break;
@@ -13281,42 +12073,35 @@ function returnToFailedRules(){
 	case "Task Rules":
 		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('tasksFailedTable');
-			//}	
-	//	},500);
-
+			
 		$('#backToFailedRules').hide();
 		break;
 		
 	case "Permit Rules":
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('permitsFailedTable');
-			//}	
-	//	},500);
+			
 				$('#backToFailedRulesPermits').hide();
-		//$('.permFailedRules').hide();
+		
 		break;
 		
 	case "CloseOut Rules":
 		goToProjectManager1();
 		$('#scorecardTabLink').trigger('click');
-	//	setTimeout(function(){
-			//if(schedulingIssues > 0){ 
+	
 				$("#scoreCardTopDiv").hide();
 				$("#scoreCardFailedRulesDiv").show();
 				hidingTables('closeOutFailedTable');
-			//}	
-	//	},500);
+			
 				$('#backToFailedRulesCloseOut').hide();
-		//$('.permFailedRules').hide();
+		
 		break;
 	}
 	
@@ -13338,7 +12123,7 @@ function refreshProjects(){
 			t1 = new Date().getTime();
 			console.log('took: ' + (t1 - t0) + 'ms');
 			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
-			//getSearchCriteria();
+			
 		}
 	});
 
@@ -13369,7 +12154,6 @@ function sendInvoiceAlert()
 }
 
 function projectTaskReport() {
-	//window.location.href = "Report?" + 'id=' + projectID + "&type=Change Order Report";
 	
 	window.open("Report?" + 'id=' + projectID + "&type=Project Task Report "+"~"+$('#taskSelector2').val());
 }
@@ -13394,7 +12178,6 @@ function submitTask () {
 	else if(taskStatus == "Completed") taskStatus = 2;
 	else taskStatus = 3;
 	
-//	let projectID = getParameterByName('id');
 	console.log("PID", projectID);
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 	
@@ -13452,13 +12235,11 @@ function submitTask () {
 					getTasks(1);
 					$('#tasks-item').trigger('click');
 					if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
-//					window.location.href='taskBrowser.html'
 				}
 			}
 		});
-
-		
 	}
+	
 	else if(TASK_ACTION == "updateTask"){
 		$.ajax({
 			type: 'POST',
@@ -13489,14 +12270,11 @@ function submitTask () {
 					clearTaskTable();
 					getTasks(1);
 					$('#tasks-item').trigger('click');
-//					if(type == TASK_EMPLOYEE_ASSIGNEE) sendTaskAlert(taskData);
-//					window.location.href='taskBrowser.html'
+
 				}
 			}
 		});
-
 	}
-		
 }
 
 function sendTaskAlert(taskData)
@@ -13571,7 +12349,6 @@ function submitPendInv () {
 	if (typeof description === 'undefined' || description === '') return alert('Description is Mandatory');
 	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Status is Mandatory');
 	
-
 	let pendInvData = {
 		'action': 'createPendInv',
 		'project': projectID,
@@ -13589,9 +12366,7 @@ function submitPendInv () {
 		'pendingInvoice_item' : pendingInvoice_item,
 		'pendingInvoice_manager' : pendingInvoice_manager,
 		'pendingInvoice_state' : pendingInvoice_state,
-		'pendingInvoice_stateabbr' : pendingInvoice_stateabbr,
-		
-		
+		'pendingInvoice_stateabbr' : pendingInvoice_stateabbr,		
 	};
 
 	console.log("PROJECT == ", project);	
@@ -13632,10 +12407,9 @@ function submitPendInv () {
 					$('#pendingInvoice-item').trigger('click');					
 				}
 			}
-		});
-
-		
+		});		
 	}
+	
 	else if(PENDINV_ACTION == "updatePendInv"){
 		$.ajax({
 			type: 'POST',
@@ -13676,9 +12450,7 @@ function submitPendInv () {
 				}
 			}
 		});
-
-	}
-		
+	}	
 }
 
 /**
@@ -13699,7 +12471,6 @@ function getSubcontractorsPend() {
 
 			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
 		}
-		
 	});
 }
 
@@ -13751,7 +12522,6 @@ function fillPendInvsTable(pendInvs) {
 			editSelectedPendInv(this);
 		};
 		
-
 		count++;
 		
 		pendInvListing.value = pendInvs[i].id;
@@ -13782,9 +12552,7 @@ function fillPendInvsTable(pendInvs) {
 		dbCoNum.innerHTML = pendInvs[i].dbCONum;
 		poNum.innerHTML = pendInvs[i].poNum;
 		notes.innerHTML = addingBreaktoHTML(pendInvs[i].notes);
-		
-		
-		
+				
 		pendInvListing.appendChild(itemNum);
 		pendInvListing.appendChild(invoiceNum);
 		pendInvListing.appendChild(invoiceAmt);
@@ -13981,14 +12749,14 @@ function getPendInvs(stopServerCalls) {
 		}, success: function (data) {
 			console.log("proj pendingInvoices!!!!", data);
 			let type = getParameterByName("from");
-			//if(type && type == "taskForm" && !RETRIEVED_PROJECTS) getTheProjects();
+
 			pendInvs = data;
 			if (data) {
 				clearPendingInvoiceTable();
 				fillPendInvsTable(data);
 			}
 			if(!stopServerCalls) getUserData();
-		//	if(PAGE_ENTRY == "fromTask") getAllProjects();
+
 		}, error: function (data) {
 			alert('Server Error!10');
 		}
@@ -14071,8 +12839,6 @@ var state_dict = {
 		"WISCONSIN" : {"state" : "Wisconsin", "abbr" : "WI" },
 		"WYOMING" : {"state" : "Wyoming", "abbr" : "WY" },
 		"UNKNOWN" : {"state" : "Unknown", "abbr" : "" },
-		
-
 };
 
 function changeStatus(){		
@@ -14129,22 +12895,6 @@ function changeStatus(){
 		$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
 		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
 	}
-	
-	/*
-	//List of all the options so far.
-	$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
-	$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
-	$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
-	$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
-	$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
-	$('#status ').append($('<option>', {value:35, text:'Closeout'}));
-	$('#status ').append($('<option>', {value:34, text:'Lost'}));
-	$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
-	$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
-	$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
-	$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
-	*/
-	
 }
 
 function totalEquipmentCost(){

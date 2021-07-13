@@ -58,6 +58,8 @@ public class ProjectInformationFiller {
 		}
 		currentProject.setScope(params.get("scope"));
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		
+		currentProject.setCustomerNotes(params.get("customerNotes"));
 
 		// Additional fields
 		currentProject.setShouldInvoice(Integer.parseInt(params.get("shouldInvoice")));

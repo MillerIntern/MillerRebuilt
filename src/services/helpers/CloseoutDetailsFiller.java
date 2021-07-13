@@ -265,6 +265,9 @@ public class CloseoutDetailsFiller
 			punchList = formatter.parse(params.get("punchList"));
 		cd.setPunchList(punchList);
 		cd.setPunchListStatus(params.get("punchListStatus"));
+		
+		cd.setHvacCloseoutStatus(params.get("hvacCloseoutStatus"));
+		cd.setRefrigerationCloseoutStatus(params.get("refrigerationCloseoutStatus"));
 
 		Date asBuilts = null;
 		if(!params.get("asBuilts").isEmpty())

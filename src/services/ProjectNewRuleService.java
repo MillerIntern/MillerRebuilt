@@ -1134,6 +1134,34 @@ public class ProjectNewRuleService {
 	public static ArrayList<RuleDetails> closeOutEvaluate( Project proj) {
 		Date scheduledTurnoverDate = proj.getScheduledTurnover();
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
+		
+		CloseoutDetails closeout = proj.getCloseoutDetails();
+		
+		String hvacCloseoutStatus = closeout.getHvacCloseoutStatus();
+		String refrigerationCloseoutStatus = closeout.getRefrigerationCloseoutStatus();
+		
+		//if the project is currently in the active stage
+		if(proj.getStage().getName().equals("Active")) {
+			
+			//if HVAC is set to "Yes" and hvacCloseoutStatus is "No" 
+			if(hvacCloseoutStatus != null &&proj.getAutofillHVAC().equals("1") && hvacCloseoutStatus.equals("2")) {
+				
+				RuleDetails rd = new RuleDetails("CloseOut", "hvacCloseoutStatusNotSet", "Project is in active stage, HVAC is set to Yes but change order hasn't been made ", 0);
+				scoreYellow = true;
+				al.add(rd);	
+			}
+			
+			//if Refrigeration is set to "Yes" and refrigerationCloseoutStatus is "No" 
+			if(refrigerationCloseoutStatus != null && proj.getAutofillRefrigeration().equals("1") && refrigerationCloseoutStatus.equals("2")) {
+				
+				RuleDetails rd = new RuleDetails("CloseOut", "refrigerationCloseoutStatusNotSet", "Project is in active stage, Refrigeration is set to Yes but change order hasn't been made ", 0);
+				scoreYellow = true;
+				al.add(rd);	
+			}
+			
+		}
+		
+		
 		if(scheduledTurnoverDate != null && scheduledTurnoverDate.before(today)) {
 			
 			Long status = proj.getStatus().getId();
