@@ -20,6 +20,7 @@ import projectObjects.RuleDetails;
 import projectObjects.SalvageValue;
 import projectObjects.Task;
 import projectObjects.TaskStatus;
+import projectObjects.CustomerApproval;
 
 //used to get the project type
 import projectObjects.ProjectClass;
@@ -41,6 +42,8 @@ public class ProjectNewRuleService {
 		String hvac = proj.getAutofillHVAC();
 		String refrigeration = proj.getAutofillRefrigeration();
 		String permits = proj.getAutofillPermits();
+		String customerApproval = proj.getCustomerApproval().getName();
+		
 		/* STAGE VALUES  
 		 * Active = 2 
 		 * Budgetary = 8
@@ -62,6 +65,15 @@ public class ProjectNewRuleService {
 		 * Scheduling = 26
 		 * 
 		 * */
+		
+		//if customer approval is "Pending" && stage is "Active"
+		if(customerApproval.equals("Pending") && stage.equals("Active")) {
+			
+			RuleDetails rd = new RuleDetails("GeneralInfo", "CustomerApprovalActive", "Stage is active but Customer Approval is still pending", 1);
+			scoreRed = true;
+			al.add(rd);
+		}
+		
 				
 		//1
 		if(permits == null || permits.equals("0")) {
@@ -1144,7 +1156,7 @@ public class ProjectNewRuleService {
 		if(proj.getStage().getName().equals("Active")) {
 			
 			//if HVAC is set to "Yes" and hvacCloseoutStatus is "No" 
-			if(hvacCloseoutStatus != null &&proj.getAutofillHVAC().equals("1") && hvacCloseoutStatus.equals("2")) {
+			if(hvacCloseoutStatus != null && proj.getAutofillHVAC().equals("1") && hvacCloseoutStatus.equals("2")) {
 				
 				RuleDetails rd = new RuleDetails("CloseOut", "hvacCloseoutStatusNotSet", "Project is in active stage, HVAC is set to Yes but change order hasn't been made ", 0);
 				scoreYellow = true;
