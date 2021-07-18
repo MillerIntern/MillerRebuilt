@@ -1483,7 +1483,7 @@ public class ProjectNewRuleService {
 			*/
 			
 			//if the project is an AIA contract and in closeout, make extra aia score card check
-			if(projectType.getName().equals("AIA Contract") && status != null && status == 35) {
+			if(projectType != null && projectType.getName().equals("AIA Contract") && status != null && status == 35) {
 				
 				
 				//If MCS Warranty status is not Complete or N/A, creates a red score card 
