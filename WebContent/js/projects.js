@@ -574,6 +574,14 @@ function fillDropdowns_CLOSEOUT(data)
 	var json = JSON.parse(data["closeoutstatus"]);
 	var d = document.createDocumentFragment();
     console.log("CLOSEOUT DATA = ", data);
+    
+    //sorts drop downs by id instead of alphabetical 
+    json.sort(function(a , b) {
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id ) return 1;
+		else return 0;
+	});
+    
 	for (var i = 0; i < json.length; i++)
 	{	
 		var option = document.createElement("option");
@@ -806,7 +814,7 @@ function saveProject_CLOSEOUT()
 				MCSDate, GCDate, mechanicalDate, electricalDate, plumbingDate, gasDate,
 				sprinkleDate, HTIDate, otherFinalLeinsDate,
 				
-				/* Field not being used anymore
+				/* Fields not being used anymore
 				sprinkleFinalDate, certificateDate, mechFinalDate, elecFinalDate, plumbingFinalDate, gasFinalDate, 
 				ceilingFinalDate, fireAlarmFinalDate, lowVolFinalDate, tmpCertificateDate,
 				*/
