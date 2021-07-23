@@ -12357,6 +12357,9 @@ function submitPendInv () {
 	if (typeof description === 'undefined' || description === '') return alert('Description is Mandatory');
 	if (typeof pendStatus === 'undefined' || pendStatus === '') return alert('Status is Mandatory');
 	
+	//Removes a $ prior to saving to prevent a display error
+	invoiceAmt = invoiceAmt.replace('$', '');
+	
 	let pendInvData = {
 		'action': 'createPendInv',
 		'project': projectID,
@@ -12681,6 +12684,7 @@ function fillPendInvWell(source) {
 	for(var i = 0; i < pendInvs.length; i++) {
 		if(pendInvs[i].id == tmp_id) {
 			selected_pendInv = pendInvs[i];
+			
 			SELECTED_PENDINV_ID = pendInvs[i].id;
 		}	
 	}
@@ -12689,6 +12693,10 @@ function fillPendInvWell(source) {
 		console.log("IMPROPER PENDINV SELECTION");
 		return;
 	}	
+	
+	//Adds a $ to the invoice amount when it is loaded
+	selected_pendInv.invoiceAmount = "$" + selected_pendInv.invoiceAmount; 
+	
 	$('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val(selected_pendInv.invoiceNumber);
 	$('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val(selected_pendInv.invoiceAmount);
 	$('#pendingInvoiceCreationZone').find('#subNamesPend').val(selected_pendInv.subNames);
