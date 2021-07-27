@@ -1259,7 +1259,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
+					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus1", "Costco Closeout SignOff Form status needs to be \"Complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);		
@@ -1267,7 +1267,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("1") || costcoCloseoutFormStatus.equals("3"))) {
+					&& (costcoCloseoutFormStatus != null) && !(costcoCloseoutFormStatus.equals("2") || costcoCloseoutFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidcostcoCloseoutFormStatus2", "Costco Closeout SignOff Form status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
@@ -1277,7 +1277,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (punchListStatus != null) && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
+					&& (punchListStatus != null) && !(punchListStatus.equals("2") || punchListStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus1", "Punch list status needs to be \"Complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);		
@@ -1286,7 +1286,7 @@ public class ProjectNewRuleService {
 			
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (punchListStatus != null) && !(punchListStatus.equals("1") || punchListStatus.equals("3"))) {
+					&& (punchListStatus != null) && !(punchListStatus.equals("2") || punchListStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidPunchListStatus2", "Punch list status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
@@ -1296,7 +1296,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
+					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus1", "As Built Drawing status needs to be \"Complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);		
@@ -1304,7 +1304,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("1") || asBuiltDrawingStatus.equals("3"))) {
+					&& (asBuiltDrawingStatus != null) && !(asBuiltDrawingStatus.equals("2") || asBuiltDrawingStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAsBuildDrwaingStatus2", "As Built Drawing status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);		
@@ -1314,7 +1314,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
+					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus1", "Close Out photo status needs to be \"Complete\" ", 0);
 				scoreYellow = true;
 				al.add(rd);	
@@ -1322,7 +1322,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("1") || closeOutPhotosStatus.equals("3"))) {
+					&& (closeOutPhotosStatus != null) && !(closeOutPhotosStatus.equals("2") || closeOutPhotosStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidCloseOutPhotoStatus2", "Close Out photo status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
@@ -1332,7 +1332,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
+					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("2") || hvacStartUpFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm1", "Hvac Startup form status needs to be \"Complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
@@ -1341,7 +1341,7 @@ public class ProjectNewRuleService {
 			
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("1") || hvacStartUpFormStatus.equals("3"))) {
+					&& (hvacStartUpFormStatus != null) && !(hvacStartUpFormStatus.equals("2") || hvacStartUpFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidHvacStartUpForm2", "Hvac Startup form status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
@@ -1351,7 +1351,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
+					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("2") || verisaeReportStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus1", "Verisae Report status needs to be \"Complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
@@ -1359,7 +1359,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("1") || verisaeReportStatus.equals("3"))) {
+					&& (verisaeReportStatus != null) && !(verisaeReportStatus.equals("2") || verisaeReportStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidVerisaeReportStatus2", "Verisae Report status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
@@ -1369,7 +1369,7 @@ public class ProjectNewRuleService {
 			
 			if(status != null && status == 35 && !(actualTurnoverDate != null && actualTurnoverDate.before(today)) 
 					&& scheduledStartDate != null && scheduledStartDate.before(today) 
-					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
+					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("2") || alarmFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus1", "Alarm form status needs to be updated \"Complete\"", 0);
 				scoreYellow = true;
 				al.add(rd);	
@@ -1377,7 +1377,7 @@ public class ProjectNewRuleService {
 			}
 			
 			if(status != null && status == 35 && actualTurnoverDate != null && actualTurnoverDate.before(today) 
-					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("1") || alarmFormStatus.equals("3"))) {
+					&& (alarmFormStatus != null) && !(alarmFormStatus.equals("2") || alarmFormStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidAlarmFormStatus2", "Alarm form status needs to be \"Complete\"", 1);
 				scoreRed = true;
 				al.add(rd);	
@@ -1386,14 +1386,14 @@ public class ProjectNewRuleService {
 			
 
 			//If refrigeration is yes and salvage status is incomplete
-			if(status != null && status == 35 && proj.getAutofillRefrigeration() != null && !(proj.getAutofillRefrigeration().equals("0")) && salvageStatus != null && !(salvageStatus.equals("1") || salvageStatus.equals("3"))) {
+			if(status != null && status == 35 && proj.getAutofillRefrigeration() != null && !(proj.getAutofillRefrigeration().equals("0")) && salvageStatus != null && !(salvageStatus.equals("2") || salvageStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidsalvageStatus", "Salvage status needs to be \"Complete\" ", 1);
 				scoreRed = true;
 				al.add(rd);
 			}
 			
 			//If refrigeration is yes and PBN/MT Status is incomplete
-			if(status != null && status == 35 && proj.getAutofillRefrigeration() != null && !(proj.getAutofillRefrigeration().equals("0")) && pbnMTStatus != null && !(pbnMTStatus.equals("1") || pbnMTStatus.equals("3"))) {
+			if(status != null && status == 35 && proj.getAutofillRefrigeration() != null && !(proj.getAutofillRefrigeration().equals("0")) && pbnMTStatus != null && !(pbnMTStatus.equals("2") || pbnMTStatus.equals("3"))) {
 				RuleDetails rd = new RuleDetails("CloseOut", "invalidpbnMTStatus", "PBN/MT Screenshot status needs to be \"Complete\" ", 1);
 				scoreRed = true;
 				al.add(rd);
@@ -1487,7 +1487,7 @@ public class ProjectNewRuleService {
 				
 				
 				//If MCS Warranty status is not Complete or N/A, creates a red score card 
-				if(!(mcsWarrantyStatus.equals("1") || mcsWarrantyStatus.equals("3"))) {
+				if(!(mcsWarrantyStatus.equals("2") || mcsWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "mcsWarrantyRequired", "MCS Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1496,7 +1496,7 @@ public class ProjectNewRuleService {
 				}
 
 				//If GC Warranty status is not Complete or N/A, creates a red score card 
-				if(!(gcWarrantyStatus.equals("1") || gcWarrantyStatus.equals("3"))) {
+				if(!(gcWarrantyStatus.equals("2") || gcWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "GCWarrantyRequired", "GC Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1506,7 +1506,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Electrical Warranty status is not Complete or N/A, creates a red score card 
-				if(!(mechanicalWarrantyStatus.equals("1") || mechanicalWarrantyStatus.equals("3"))) {
+				if(!(mechanicalWarrantyStatus.equals("2") || mechanicalWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "MechanicalWarrantyRequired", "Mechanical Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1516,7 +1516,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Electrical Warranty status is not Complete or N/A, creates a red score card 
-				if(!(electricalWarrantyStatus.equals("1") || electricalWarrantyStatus.equals("3"))) {
+				if(!(electricalWarrantyStatus.equals("2") || electricalWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "ElectricalWarrantyRequired", "Electrical Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1526,7 +1526,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Plumbing Warranty status is not Complete or N/A, creates a red score card 
-				if(!(plumbingWarrantyStatus.equals("1") || plumbingWarrantyStatus.equals("3"))) {
+				if(!(plumbingWarrantyStatus.equals("2") || plumbingWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "PlumbingWarrantyRequired", "Plumbing Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1536,7 +1536,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Gas Warranty status is not Complete or N/A, creates a red score card 
-				if(!(gasWarrantyStatus.equals("1") || gasWarrantyStatus.equals("3"))) {
+				if(!(gasWarrantyStatus.equals("2") || gasWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "GasWarrantyRequired", "Gas Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1546,7 +1546,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Sprinkler Warranty status is not Complete or N/A, creates a red score card 
-				if(!(sprinklerWarrantyStatus.equals("1") || sprinklerWarrantyStatus.equals("3"))) {
+				if(!(sprinklerWarrantyStatus.equals("2") || sprinklerWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "SprinklerWarrantyRequired", "Sprinkler Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1556,7 +1556,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Polymer Floors Warranty status is not Complete or N/A, creates a red score card 
-				if(!(htiWarrantyStatus.equals("1") || htiWarrantyStatus.equals("3"))) {
+				if(!(htiWarrantyStatus.equals("2") || htiWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "PolymerFloorsWarrantyRequired", "Polymer Floors Warranty status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1566,7 +1566,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Other Warranty (B) status is not Complete or N/A, creates a red score card 
-				if(!(otherAWarrantyStatus.equals("1") || otherAWarrantyStatus.equals("3"))) {
+				if(!(otherAWarrantyStatus.equals("2") || otherAWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "OtherWarrantyARequired", "Other Warranty (A) status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1576,7 +1576,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Other Warranty (B) status is not Complete or N/A, creates a red score card 
-				if(!(otherBWarrantyStatus.equals("1") || otherBWarrantyStatus.equals("3"))) {
+				if(!(otherBWarrantyStatus.equals("2") || otherBWarrantyStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "OtherWarrantyBRequired", "Other Warranty (B) status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1586,7 +1586,7 @@ public class ProjectNewRuleService {
 				
 
 				//If MCS Lien status is not Complete or N/A, creates a red score card 
-				if(!(mcsLienStatus.equals("1") || mcsLienStatus.equals("3"))) {
+				if(!(mcsLienStatus.equals("2") || mcsLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "mcsLienRequired", "MCS Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1596,7 +1596,7 @@ public class ProjectNewRuleService {
 				
 
 				//If GC Lien status is not Complete or N/A, creates a red score card 
-				if(!(gcLienStatus.equals("1") || gcLienStatus.equals("3"))) {
+				if(!(gcLienStatus.equals("2") || gcLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "gcLienRequired", "GC Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1606,7 +1606,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Mechanical Lien status is not Complete or N/A, creates a red score card 
-				if(!(mechanicalLienStatus.equals("1") || mechanicalLienStatus.equals("3"))) {
+				if(!(mechanicalLienStatus.equals("2") || mechanicalLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "mechanicalLienRequired", "Mechanical Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1616,7 +1616,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Electrical Lien status is not Complete or N/A, creates a red score card 
-				if(!(electricalLienStatus.equals("1") || electricalLienStatus.equals("3"))) {
+				if(!(electricalLienStatus.equals("2") || electricalLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "ElectricalLienRequired", "Electrical Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1626,7 +1626,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Plumbing Lien status is not Complete or N/A, creates a red score card 
-				if(!(plumbingLienStatus.equals("1") || plumbingLienStatus.equals("3"))) {
+				if(!(plumbingLienStatus.equals("2") || plumbingLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "PlumbingLienRequired", "Plumbing Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1636,7 +1636,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Gas Lien status is not Complete or N/A, creates a red score card 
-				if(!(gasLienStatus.equals("1") || gasLienStatus.equals("3"))) {
+				if(!(gasLienStatus.equals("2") || gasLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "gasLienRequired", "Gas Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1646,7 +1646,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Sprinkler Lien status is not Complete or N/A, creates a red score card 
-				if(!(sprinklerLienStatus.equals("1") || sprinklerLienStatus.equals("3"))) {
+				if(!(sprinklerLienStatus.equals("2") || sprinklerLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "sprinklerLienRequired", "Sprinkler Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1656,7 +1656,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Polymer Floor Lien status is not Complete or N/A, creates a red score card 
-				if(!(htiLienStatus.equals("1") || htiLienStatus.equals("3"))) {
+				if(!(htiLienStatus.equals("2") || htiLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "polymerFloorLienRequired", "Polymer Floor Lien status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1666,7 +1666,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Other Lien status (A) is not Complete or N/A, creates a red score card 
-				if(!(otherALienStatus.equals("1") || otherALienStatus.equals("3"))) {
+				if(!(otherALienStatus.equals("2") || otherALienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusARequired", "Other Lien status (A) needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1676,7 +1676,7 @@ public class ProjectNewRuleService {
 				
 
 				//If Other Lien status (B) is not Complete or N/A, creates a red score card 
-				if(!(otherBLienStatus.equals("1") || otherBLienStatus.equals("3"))) {
+				if(!(otherBLienStatus.equals("2") || otherBLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "Other Lien status (B) needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1686,7 +1686,7 @@ public class ProjectNewRuleService {
 
 				
 				//If G704 - Certificate of Substantial Completion  is not Complete or N/A, creates a red score card 
-				if(!(substantialComplete.equals("1") || substantialComplete.equals("3"))) {
+				if(!(substantialComplete.equals("2") || substantialComplete.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "G704 - Certificate of Substantial Completion status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1695,7 +1695,7 @@ public class ProjectNewRuleService {
 				}
 
 				//If G706 - Affidavit of Payment of Debts and Claims is not Complete or N/A, creates a red score card 
-				if(!(paymentOfDebtsAndClaimStatus.equals("1") || paymentOfDebtsAndClaimStatus.equals("3"))) {
+				if(!(paymentOfDebtsAndClaimStatus.equals("2") || paymentOfDebtsAndClaimStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "G706 - Affidavit of Payment of Debts and Claims status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1703,7 +1703,7 @@ public class ProjectNewRuleService {
 					
 				}
 				//If G706A - Contractor's Lien Releases  is not Complete or N/A, creates a red score card 
-				if(!(releaseOfLienStatus.equals("1") || releaseOfLienStatus.equals("3"))) {
+				if(!(releaseOfLienStatus.equals("2") || releaseOfLienStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "G706A - Contractor's Lien Releases needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1711,7 +1711,7 @@ public class ProjectNewRuleService {
 					
 				}
 				//If MG2 Project Sign-off is not Complete or N/A, creates a red score card 
-				if(!(mulvannySignOffStatus.equals("1") || mulvannySignOffStatus.equals("3"))) {
+				if(!(mulvannySignOffStatus.equals("2") || mulvannySignOffStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "MG2 Project Sign-off needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1719,7 +1719,7 @@ public class ProjectNewRuleService {
 					
 				}
 				//If Equipment Submittal status is not Complete or N/A, creates a red score card 
-				if(!(equipmentSubmittalStatus.equals("1") || equipmentSubmittalStatus.equals("3"))) {
+				if(!(equipmentSubmittalStatus.equals("2") || equipmentSubmittalStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "Equipment Submittal status needs to be \"Complete\" ", 1);
 					scoreRed = true;
@@ -1727,7 +1727,7 @@ public class ProjectNewRuleService {
 					
 				}
 				//If Operations and Maintenance Manuals status is not Complete or N/A, creates a red score card 
-				if(!(manualStatus.equals("1") || manualStatus.equals("3"))) {
+				if(!(manualStatus.equals("2") || manualStatus.equals("3"))) {
 				
 					RuleDetails rd = new RuleDetails("CloseOut", "otherLienStatusBRequired", "Operations and Maintenance Manuals status needs to be \"Complete\" ", 1);
 					scoreRed = true;
