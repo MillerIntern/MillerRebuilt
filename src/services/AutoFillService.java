@@ -85,7 +85,7 @@ public class AutoFillService {
 		String value = null;
 		
 		//2 means "Incomplete" (check closeoutstatus table for reference)
-		value = "2";
+		value = "1";
 		
 		CloseoutDetails cd;
 		if(proj.getCloseoutDetails() == null)
@@ -125,7 +125,7 @@ public class AutoFillService {
 		//Get's the project type. If type is "AIA Contract" (2) then set closeout status to Incomplete(2)
 		if(_value.equals("2")) {
 			
-			value = "2";
+			value = "1";
 			
 			//set closeout status to N/A (3)
 		}else {
@@ -258,7 +258,7 @@ public class AutoFillService {
 		
 		//if HVAC is required in a project, set values to Incomplete
 		if(_value.equals("1")) {
-			value = "2";
+			value = "1";
 		}
 		
 		//if HVAC is not required in a project, set values to N/A
@@ -285,7 +285,7 @@ public class AutoFillService {
 		if(proj.getAutofillHVAC().equals("1")) {
 					
 			// No
-			value = "2";			
+			value = "1";			
 		}
 		
 		else {
@@ -303,7 +303,7 @@ public class AutoFillService {
 		
 		//if refrigeration is required in the project, set values to Incomplete
 		if(_value.equals("1")) {
-			value = "2";
+			value = "1";
 			salVal = 0;
 		}
 		
@@ -336,7 +336,7 @@ public class AutoFillService {
 		if(proj.getAutofillRefrigeration().equals("1")) {
 			
 			// No
-			value = "2";
+			value = "1";
 			
 		}
 		else {
