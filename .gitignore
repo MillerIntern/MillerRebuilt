@@ -41,7 +41,7 @@ WebContent/homepage.html
 src/projectObjects/Project.java
 src/projectObjects/Project.java
 WebContent/homepage.html
-*.java
+
 src/projectObjects/Project.java
 WebContent/projectData.html
 WebContent/homepage.html
