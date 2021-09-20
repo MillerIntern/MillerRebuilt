@@ -3480,6 +3480,23 @@ function changeOrderHVAC(temp){
 			edit_CHANGE_ORDER = 'false';		
 			$('#deleteChangeOrderButton').hide();
 			
+			//clears extra fields
+			$('#changeOrder').find("#briefDescription").val("");
+			$('#changeOrder').find("#subNames").val("");
+			$('#changeOrder').find("#proposalDate").val(null);
+			$('#changeOrder').find("#submittedDate").val(null);
+			$('#changeOrder').find("#approvedDate").val(null);
+			$('#changeOrder').find("#cost").val("");
+			$('#changeOrder').find("#sell").val("");
+			$('#changeOrder').find("#invoiceNumber").val("");
+			$('#changeOrder').find("#customerCOPnum").val("");
+			$('#changeOrder').find("#subInvoiceNumber").val("");
+			$('#changeOrder').find("#subCO").val("");
+			$('#changeOrder').find("#notes").val("");
+			$('#changeOrder').find("#mcsInvoiceStatus").val("0");
+			$('#changeOrder').find("#subInvoiceStatus").val("0");
+						
+			
 			//sets change order title
 			$('#changeOrder').find("#title").val("HVAC Travel, Rentals, and Freight");
 			
@@ -3561,6 +3578,23 @@ function changeOrderRefrigeration(temp){
 			//needed to ensure server doesn't crash
 			edit_CHANGE_ORDER = 'false';		
 			$('#deleteChangeOrderButton').hide();
+			
+			//clears extra fields
+			$('#changeOrder').find("#briefDescription").val("");
+			$('#changeOrder').find("#subNames").val("");
+			$('#changeOrder').find("#proposalDate").val(null);
+			$('#changeOrder').find("#submittedDate").val(null);
+			$('#changeOrder').find("#approvedDate").val(null);
+			$('#changeOrder').find("#cost").val("");
+			$('#changeOrder').find("#sell").val("");
+			$('#changeOrder').find("#invoiceNumber").val("");
+			$('#changeOrder').find("#customerCOPnum").val("");
+			$('#changeOrder').find("#subInvoiceNumber").val("");
+			$('#changeOrder').find("#subCO").val("");
+			$('#changeOrder').find("#notes").val("");
+			$('#changeOrder').find("#mcsInvoiceStatus").val("0");
+			$('#changeOrder').find("#subInvoiceStatus").val("0");
+						
 			
 			//sets change order title
 			$('#changeOrder').find("#title").val("Refrigeration Travel, Rentals, and Freight");
