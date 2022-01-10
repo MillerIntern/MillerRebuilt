@@ -13,6 +13,7 @@ import projectObjects.EquipmentStatus;
 import projectObjects.EquipmentVendor;
 import projectObjects.NewEquipment;
 import projectObjects.PendingInvoice;
+import projectObjects.Invoice;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectStatus;
@@ -132,7 +133,7 @@ public class ProjectNewRuleService {
 		
 	}
 	
-	public static ArrayList<RuleDetails> financialEvaluate(Project proj, List<PendingInvoice> pendInvs){
+	public static ArrayList<RuleDetails> financialEvaluate(Project proj, List<PendingInvoice> pendInvs, List<Invoice> invoice){
 		ArrayList<RuleDetails> al=new ArrayList<RuleDetails>();
 		int actualInvoice = proj.getInvoiced();
 		int shouldInvoice = proj.getShouldInvoice();

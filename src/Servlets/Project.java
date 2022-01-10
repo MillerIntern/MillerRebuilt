@@ -23,6 +23,7 @@ import projectObjects.ChangeOrder;
 import projectObjects.City;
 import projectObjects.NewEquipment;
 import projectObjects.PendingInvoice;
+import projectObjects.Invoice;
 import projectObjects.ProjectRule;
 import projectObjects.Region;
 import projectObjects.RuleDetails;
@@ -42,6 +43,7 @@ import services.ProjectRuleService;
 import services.ProjectService;
 import services.QueryService;
 import services.helpers.PendInvFiller;
+import services.helpers.InvoiceFiller;
 import services.helpers.TaskFiller;
 import objects.HashGen;
 import java.util.*;
@@ -593,6 +595,24 @@ public class Project extends HttpServlet
 			if(successfulAddition) 	response = " SUCCESSFULLY ADDED CHANGE ORDER\n";
 			else response = " ERROR ADDING CHANGE ORDER\n";
 		}
+		else if(action.equals("addInvoice"))
+		{
+			boolean successfulAddition = true;
+
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				successfulAddition = ProjectService.addInvoice(projectID, parameters);
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				successfulAddition = false;
+				e.printStackTrace();
+			}
+			
+			if(successfulAddition) 	response = " SUCCESSFULLY ADDED CHANGE ORDER\n";
+			else response = " ERROR ADDING CHANGE ORDER\n";
+		}
 		else if(action.equals("editChangeOrder"))
 		{
 			boolean successfulEdit = true;
@@ -984,6 +1004,43 @@ public class Project extends HttpServlet
 
 			response =  "UPDATED_PENDINV";
 			
+			/////////////////////////////////////////////////////////////
+			//creates invoice
+		}  else if (action.equals("createInvoice")) {
+			
+			try {
+			response = ProjectService.createInvoice(parameters, (String) req.getSession().getAttribute("user"));
+			} catch(ClassNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+			
+			//updates invoice
+		} else if (action.equals("updateInvoice")) {
+			
+			Invoice currentInvoice = null;			
+			try {
+				long invoice_ID = Long.parseLong(parameters.get("currInvoice"));
+				currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
+			} catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				InvoiceFiller.fillInvoiceInformation(currentInvoice, parameters, (String) req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
+			session.clear();
+			session.update(currentInvoice);
+			tx.commit();
+
+			response =  "UPDATED_INVOICE";
+			
+			///////////////////////////////////////////////////////
 		} else if (action.equals("getTasks")) {
 			try {
 				//System.out.println("Getting Tasks");
@@ -1041,6 +1098,9 @@ public class Project extends HttpServlet
 		} else if (action.equals("getProjectPendInvs")) {
 			//System.out.println("getting Project Pending Invoices");
 			response = ProjectObjectService.getProjectPendInvsAsJSON(Long.parseLong(parameters.get("id")));
+		} else if (action.equals("getProjectInvs")) {
+			//System.out.println("getting Project Pending Invoices");
+			response = ProjectObjectService.getProjectInvsAsJSON(Long.parseLong(parameters.get("id")));
 		}else if (action.equals("getCompCostEst")) {
 			//System.out.println("getting comparable cost ests");
 			response = ProjectObjectService.getComparableCostEst(Integer.parseInt(parameters.get("id")));
@@ -1256,10 +1316,12 @@ public class Project extends HttpServlet
 			List<ChangeOrder> changeOrders = ProjectObjectService.getAllChangeOrders(Long.parseLong(parameters.get("projectId")));
 			List<NewEquipment> equipment = ProjectObjectService.getAllNewEquipment(Long.parseLong(parameters.get("projectId")));
 			List<PendingInvoice> pendInvs = ProjectObjectService.getAllPendInvs(Long.parseLong(parameters.get("projectId")));
+			List<Invoice> invoice = ProjectObjectService.getAllInvoices(Long.parseLong(parameters.get("projectId")));
+			
 			System.out.println("equipment size is "+ equipment.size());
 			ArrayList<RuleDetails> result = new ArrayList<>();
 			result.addAll(ProjectNewRuleService.generalInfoEvaluate(project));
-			result.addAll(ProjectNewRuleService.financialEvaluate(project, pendInvs));
+			result.addAll(ProjectNewRuleService.financialEvaluate(project, pendInvs,invoice));
 			result.addAll(ProjectNewRuleService.schedulingEvaluate(project));
 			result.addAll(ProjectNewRuleService.tasksEvaluate(task));
 			result.addAll(ProjectNewRuleService.changeOrdersEvaluate(project, changeOrders));

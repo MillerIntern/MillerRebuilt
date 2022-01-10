@@ -232,7 +232,7 @@
 				<li role='presentation' class='active' data-tab='projectInformation' id="projectInformationTabLink"><a>Project Info</a></li>
 				<li role='presentation' data-tab='projectProposals' id="projectProposalsTabLink"><a>Proposals</a></li>
 				<li role='presentation' data-tab='equipment' id="equipmentTabLink"><a>Equipment</a></li>
-				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Change Orders</a></li>
+				<li role='presentation' data-tab='changeOrders' id="changeOrdersTabLink" onClick="scrollSmoothToBottom()"><a>Pricing Element</a></li>
 <!-- 				<li role='presentation' data-tab='permits' id="permitsTabLink"><a>Permits/Inspections</a></li> -->
 				<li role='presentation' data-tab='permitsnew' id="permits_1TabLink" onclick = "getProjectEnums_PERMIT1()"><a>Permits/Inspections</a></li>
 				<li role='presentation' data-tab='projectScope' id="projectScopeTabLink"><a>Project Scope</a></li>
@@ -262,7 +262,7 @@
 					<li class="list-group-item project-info-list-item" id="scheduling-item">Scheduling</li>
 					<li class="list-group-item project-info-list-item" id="tasks-item">Tasks</li>
 					<li class="list-group-item project-info-list-item" id="financial-item">Financial</li>		
-					<li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li>
+					<!-- <li class="list-group-item project-info-list-item" id="pendingInvoice-item">Pending Invoices</li> -->
 					<li class="list-group-item project-info-list-item" id="customerNotes-item">Customer Notes</li>
 				</ul>
 			</div> <!-- Project Information -->
@@ -277,9 +277,9 @@
 			</div> <!-- Project Cost -->
 			<div class='info-tab' id='changeOrders'>
 				<button  id = "choFailedRules" class = "btn project-edit" style = "display:none;float:right;" onclick = "returnToFailedRules('changeorders')" > Back to Failed Rules</button>
-				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Change Orders</button>
-				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="project-edit btn" disabled>Edit Change Order</button>
-				<button style = "float:right;margin-right:5px;" onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Change Order</button>
+				<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='changeOrderReport()'>Print Pricing Elements</button>
+				<button style = "float:right;margin-right:5px;background-color: #3f662e;" id='editChangeOrder' onclick='goToChangeOrder(1)' type="button" class="project-edit btn" disabled>Edit Pricing Element</button>
+				<button style = "float:right;margin-right:5px;" onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Pricing Element</button>
 
 
 				<select id ='changeOrderSelector' class='form-control' onchange="fillChangeOrders()">
@@ -296,7 +296,7 @@
 				<table id='changeOrderTable' class='table'>				
 					<thead class="changeOrderTableHead">
 					  <tr>
-						<th width = 4% >CO #</th>
+						<th width = 4% >PE #</th>
 						<th width = 12%>Title</th>
 						<th width = 12%>Description</th>
 						<th width = 8% >Status</th>
@@ -306,7 +306,7 @@
 						<th width = 11%>Submit Date</th>
 						<th width = 7% >Cost</th>
 						<th width = 7% >Sell</th>
-						<th width = 15%>CO Notes</th>
+						<th width = 15%>PE Notes</th>
 					  </tr>
 					</thead>
 					<tbody>
@@ -1871,15 +1871,15 @@
 	<div class='container'> 
 		<p id ='pageLocation'> <small id ='projectHeader'>---</small><p>
 
-		<button class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
+		<button id = 'returnProjectManager' class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToProjectManager();">Return to Project Manager</button>
 		<ul class="pointer nav nav-tabs">
 
 			<li id='generalInformationTabLink' role='presentation' class="active" data-tab="generalInformation"><a>General Information</a></li>
-			<li role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
-			<li role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
-			<li role='presentation' data-tab='financialInformation'><a>Financial</a></li>
-			<li role='presentation' data-tab='pendingInvoiceInformation'><a>Pending Invoices</a></li>
-			<li role='presentation' data-tab='customerNotesInformation'><a>Customer Notes</a></li>
+			<li id = 'schedulingInformationTabLink' role='presentation' data-tab="schedulingInformation"><a>Scheduling</a></li>
+			<li id = 'tasksInformationTabLink' role='presentation' data-tab='tasksInformation'><a>Tasks</a></li>
+			<li id = 'financialInformationTabLink' role='presentation' data-tab='financialInformation'><a>Financial</a></li>
+			<!-- <li id = 'pendingInformationTabLink' role='presentation' data-tab='pendingInvoiceInformation'><a>Pending Invoices</a></li>  -->
+			<li id = 'customerInformationTabLink' role='presentation' data-tab='customerNotesInformation'><a>Customer Notes</a></li>
 			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
 	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
 	        <li style = "display:none;top:4px;float:right;margin-right:7px;background-color: #172a56;border-color: #172a56;"class = "btn btn-success" 
@@ -2206,6 +2206,7 @@
 			<div id='financialInformation' class='info-tab info-tab-financialInformation'>
 			<table id="financialInformationTable" class='table table-hover'>
 	
+				
 	            <tr>
 	            <td style="width: 15%" class = "bold">Should Invoice %</td>
 	            <td><input type="text" id="shouldInvoice" value="0"/></td>
@@ -2225,11 +2226,283 @@
 	            <td class = "bold">Customer Number</td>
 	            <td><input type="text" id="custNum" value="" /></td>
 	            </tr>
-	    	</table>   	    		
+	    	</table> 
+	    	 
+	    	<!-- Temp holder -->
+	    	<li class="list-group-item project-info-list-item" id="pricingInfo-item">Pricing Info</li>
+	    	<li class="list-group-item project-info-list-item" id="accountsReceivable-item">Accounts Receivable</li>
+	    	<li class="list-group-item project-info-list-item" id="accountsPayable-item">Accounts Payable</li>
+	    	<li class="list-group-item project-info-list-item" id="aiaCostItems-item">AIA Cost Items</li>
+	    	  	    		
 		</div> <!-- End Financial Information -->
+		
+		<!-- temp holder -->
+		<!-- AREA TO PLACE CODE FOR PRICING INFO -->
+		
+		<div id = 'financialSection' class='container'> 
+
+		<button id = 'returnFinancial' class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToFinancial();">Return to Financial</button>
+		<ul class="pointer nav nav-tabs">
+
+			<li id='pricingInfoTabLink' role='presentation' class="active" data-tab="pricingInfo"><a>Pricing Info</a></li>
+			<li id = 'accountsReceivableTabLink' role='presentation' data-tab='peInvoiceInformation'><a>Accounts Receivable</a></li>
+			<li id = 'accountsPayableTabLink' role='presentation' data-tab='pendingInvoiceInformation'><a>Accounts Payable</a></li>
+			<li id = 'aiaCostItemsTabLink' role='presentation' data-tab='aiaCostItems'><a>AIA Cost Items</a></li>
+			
+			<!-- 
+			<li style = "top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
+	        				Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+			 -->
+		</ul>
+		
+		<div id='pricingInfo' class='info-tab info-tab-pricingInfo'>
+		
+		<li style = "background-color: blue; top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
+	        				Read Only&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+		
+			<table id="pricingInfoTable" class='table table-hover'>
+	 
+	 			<tr>
+	 			<td style="width: 15%" class = "bold">Summary</td>
+	 			<td style="width: 15%" class = "bold">Total</td>
+	 			<td style="width: 15%" class = "bold">Amount Invoiced</td>
+	 			<td style="width: 15%" class = "bold">Amount to Invoice</td>
+	 			<td style="width: 15%" class = "bold">% Invoiced</td>
+	 			
+	 			</tr>
+	 
+				<tr id = "hideLabor">
+	            <td class = "bold">Labor</td>
+	            <td><input type="text" id="laborTotal" value="" readonly></td>
+	            <td><input type="text" id="laborInvoiced" value="" readonly></td>
+	            <td><input type="text" id="laborToInvoice" value="" readonly></td>
+	            <td><input type="text" id="laborPercentInvoiced" value="" readonly></td>
+	            </tr>
+	            
+	            <tr id = "hideMaterials">
+	            <td class = "bold">Materials</td>
+	            <td><input type="text" id="materialCosts" value="" readonly></td>
+	            <td><input type="text" id="materialInvoiced" value="" readonly></td>
+	            <td><input type="text" id="materialToInvoice" value="" readonly></td>
+	            <td><input type="text" id="materialPercentInvoiced" value="" readonly></td>
+	            </tr>
+	            
+	            <tr id = "hideProject">
+	            <td style="width: 15%" class = "bold">Project</td>
+	            <td><input type="text" id="projectAmount" value="0" readonly></td>
+	            <td><input type="text" id="projectInvoiced" value="" readonly></td>
+	            <td><input type="text" id="projectToInvoice" value="" readonly></td>
+	            <td><input type="text" id="projectPercentInvoiced" value="" readonly></td>
+	            </tr>		
+	
+	            <tr id = "hideAIA">
+	            <td class = "bold">AIA</td>
+	            <td><input type="text" id="aiaTotal" value="0" readonly></td>
+	            <td><input type="text" id="aiaInvoiced" value="" readonly></td>
+	            <td><input type="text" id="aiaToInvoice" value="" readonly></td>
+	            <td><input type="text" id="aiaPercentInvoiced" value="" readonly></td>
+	            </tr>		
+	
+	            <tr id = "hideTotal">
+	            <td class = "bold">Total</td>
+	            <td><input type="text" id="totalProject" value="" readonly></td>
+	            <td><input type="text" id="totalInvoiced" value="" readonly></td>
+	            <td><input type="text" id="totalToInvoice" value="" readonly></td>
+	            <td><input type="text" id="totalPercentInvoiced" value="" readonly></td>
+	            </tr>		
+	
+	    	</table> 
+		</div>
+	
+	</div>
+	
+	
+		<!-- --------------------------------------------- -->
+	
+	
+		<!-- AREA TO PLACE CODE FOR INVOICES -->
+		
+		<div style="width:100%" id='peInvoiceInformation' class='info-tab info-tab-peInformation'>		
+		   <div class = "changeOrderTableDiv" id = 'peInvoiceDisplay'>
+		   		   
+        	  <!--<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Pricing Elements</button>
+        	  <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="goToInvoice" type="button" onclick="goToInvoices()" disabled> Edit Pending Invoice </button> 
+		       --><!-- <button style = "float:right;margin-right:5px;" onclick='goToChangeOrder(0);' type='button' class='project-edit btn'>Add Invoice</button> -->
+		      		
+		      <select id ='peInvoiceSelector2' class='form-control' onchange="fillPeInvsTable()">
+					<option value='all' selected = "selected">All</option>
+					<option value='preparing'>Preparing</option>
+					<option value='submitted'>Submitted</option>
+					<option value='approved'>Approved</option>
+					<option value='rejected'>Rejected</option>
+					<option value='complete'>Complete</option>
+			 </select>
+		      <div class="generalOverFlowScroll">
+		         <table class='table' id='peInvoiceTable'>
+		            <tr class='head'>
+					  	<th>PE #</th>
+						<th>Title</th>
+						<th>PE Type</th>
+						<th>Customer</th>
+						<th>Status</th>
+						<th>Amount</th>
+						<th>Invoiced To Date</th>
+						<th>Balance</th>
+						
+		            </tr>
+		         </table>
+		      </div>		      
+		   </div>
+		   
+		   </div>
+		   
+		   
+		    <!-- INVOICES -=------------------------------------------------------------------------------------------------------------------------------ -->
+				
+		<div style="width:100%" id='invoiceInformation' class='info-tab info-tab-invoiceInformation'>		
+		
+		
+		   <button id = 'returnAccountsReceivable' class="btn-info btn-block btn-lg projectNavigator projectNavigator-projectManager project-edit" onclick="goToAccRec();">Return to Accounts Receivable</button>
+		
+			<!-- Used to add padding between buttons for cleaner UI design -->
+	 		<td>&nbsp;</td>
+		
+		   <div class = "changeOrderTableDiv" id = 'invoiceDisplay'>
+		   
+		   <td>
+		   	<label for='invoiceBalance1'>Balance: </label>
+		   	<input type='text' id='invoiceBalance1' style="color:#FF0000" readonly/>
+		   	
+		   </td>
+		   
+        	  <!--<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Invoices</button>
+        	    <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editInvoice" type="button" onclick="editSelectedInv()" disabled> Edit Invoice </button>			  
+			  --><button style="float:right;margin-right:5px;" class ="project-edit btn" onclick = "createInv()"> Add Invoice </button>			  
+		      	  		      										
+		      <select id ='invoiceSelector2' class='form-control'>
+					<option value='all'>All</option>
+					<option value='open_complete' selected = "selected">Open &amp; Complete </option>
+					<option value='open'>Open</option>
+					<option value='complete'>Complete</option>
+					<option value='closed'>Closed</option>
+					<option value='rejected'>Rejected</option>
+			 </select>
+		      <div class="generalOverFlowScroll">
+		         <table class='table' id='invoiceTable'>
+		            <tr class='head'>
+						
+						<th>PE #</th>
+						<th>PE Invoice #</th>
+						<th>Title</th>
+						<th>Invoice Type</th>
+						<th>Invoice Amount</th>
+						<th>Customer</th>
+						<th>Approval</th>
+						<th>Status</th>											
+						<th>Invoice #</th>						
+						<th>Notes</th>
+		            </tr>
+		         </table>
+		      </div>		      
+		   </div>
+		   <div style = "width:100%;padding:5px; "id = 'invoiceCreationZone' class = 'well'>
+		   
+		   <td><label for='associatedPE'>PE # <span style="color:#FF0000"></span></label></td>
+			<td><input type='text' id='associatedPE'></td>
+			
+		   	<td><label for='invTotal'>PE Total: </label>
+		   	<input type='text' id='invTotal' style="color:#FF0000" readonly/>
+		   	
+		   	<label for='invoiceBalance'>Balance: </label>
+		   	<input type='text' id='invoiceBalance' style="color:#FF0000" readonly/>
+		   	
+		   </td>
+		   
+		      <button style = "float:right" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:right; margin-right:5px;" onclick='viewInv()' class='btn btn-danger'>Back to Invoice View</button>
+		      <div class='base-field'>
+		         <table class='table invCreationTable'>
+		            <tr>
+		               <td><label for='invoiceID'>PE Invoice # <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceID' readonly/>
+		               
+		               <td><label for='invoiceNumber'>Invoice # <span style="color:#FF0000"></span></label></td>
+		               <td><input type='text' id='invoiceNumber'></td>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceTitle'/>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='invoiceType'>Type:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceType' readonly/>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='submittedDateInv'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
+		               <td><input type='text' id='submittedDateInv'/>
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceAmount'/>
+		            </tr>
+		            
+
+    		         <tr>
+		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
+		               <td>
+		               	<select id = "invoiceCustomer">
+		               	
+		               	</select>
+		               
+		               </td>
+		            </tr>
+		            
+		            <tr id = "invoiceStatusSelectionRow" style = "display : none">
+		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
+		               <td>
+		                  <select id = "invoiceStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
+		                     <option value="Open"> Open </option>
+		                     <option value="Completed"> Completed </option>
+		                     <option id="closedStatus"  value="Closed"> Closed </option>
+		                     <option id="Rejected"  value="Rejected"> Rejected </option>
+		                  </select>
+		               </td>
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='invoiceApproval'>Approval:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='invoiceApproval'/>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='notes'/>
+		               
+		            </tr>
+		                 		         
+		         </table>
+		      </div>
+		   </div>
+		</div>
+		   
+			
+		
+		
+		<!-- --------------------------------------------- -->
+		
+		
 		
 		<div style="width:100%" id='pendingInvoiceInformation' class='info-tab info-tab-pendingInvoiceInformation'>		
 		   <div class = "changeOrderTableDiv" id = 'pendingInvoiceDisplay'>
+		   
         	  <button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Pending Invoices</button>
         	  <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editPendingInvoice" type="button" onclick="editSelectedPendInv()" disabled> Edit Pending Invoice </button>			  
 			  <button style="float:right;margin-right:5px;" class ="project-edit btn" onclick = "createPendInv()"> Add Pending Invoice </button>			  
@@ -4190,7 +4463,7 @@
 
 		
 			<ul class="nav nav-tabs">
-				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Change Order</a></li>
+				<li role='presentation' class="active" data-tab="changeOrderInfo" id="changeOrderTab"><a>Pricing Element</a></li>
 		        
 		      
 		         <!-- <li class = "adminContent" role='presentation'  onclick ="deleteChangeOrder()" data-tab="deleteButton" id="deleteChangeOrderButton">
@@ -4200,7 +4473,7 @@
 		
 		    <!-- Closeout Documents Tab--> 
 			<div style="width: 100%" id="changeOrderInfo" class="info-tab active">
-			<button style = "float:right" class = "adminContent btn btn-danger" id = "deleteChangeOrderButton" onclick = "deleteChangeOrder()"> Delete Change Order </button>
+			<button style = "float:right" class = "adminContent btn btn-danger" id = "deleteChangeOrderButton" onclick = "deleteChangeOrder()"> Delete Pricing Element </button>
 			 <button style = "float:right;margin-right:5px" role='presentation' onClick="saveProject_CHANGE_ORDER()" data-tab="saveButton" id = 'save-change-order' class = "btn btn-success" >Save Changes&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></button>				 
 		        <table class="table table-hover">
 		        
@@ -4211,9 +4484,23 @@
 		     
 		        	<tr style="height: 0px;"></tr>
 		            <tr>
-		                <td class="coLabel">MCS CO #</td>
+		                <td class="coLabel">MCS PE #</td>
 		                <td>
 		                    <input id="mcsCO"></input>
+		                    
+		                    
+		                <span style = "padding:50px" class="coLabel">PE Type</span>
+		 				
+		                <span class = "peType">
+		                	<select style= "width: 158px;" class="closeout-input" id="peType">
+		                        <option value="0">Project</option>
+		                        <option value="1">Labor</option> 
+				                <option value="2">Materials</option>   
+		                    	<option value="3">AIA</option>
+		                    	
+		                    </select>		                	
+		                </span>
+		                
 		                </td>   
 		            </tr>
 		            <tr>
@@ -4331,7 +4618,7 @@
 		            </tr>
 
 		            <tr>
-		                <td  class="coLabel">Customer COP #</td>
+		                <td  class="coLabel">AIA COP #</td>
 		                <td>
 		                    <input type="text" id="customerCOPnum" />               
 		                </td>
@@ -4343,7 +4630,7 @@
 		                </td>   
 		            </tr>
 		             <tr>
-		                <td class="coLabel">CO Notes</td>
+		                <td class="coLabel">PE Notes</td>
 		                <td>
 		                    <textarea style = " width:600px;" id="notes" class="scrollTextBoxCO" maxlength="998" rows="4" cols="100" ondblclick = "dateFillFunction(this)"> </textarea>
 		                </td>   

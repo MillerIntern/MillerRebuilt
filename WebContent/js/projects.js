@@ -19,6 +19,7 @@
  */
 
 var noMove = 0;
+var DATA = null;
 
 //can I create a function for all this - Akash
 $(document).on("click", "#equipmentFailedTable tbody tr", function(e){
@@ -135,6 +136,7 @@ let TASK_EMPLOYEE_ASSIGNEE = "EMPLOYEE";
 let TASK_SUB_ASSIGNEE = "SUBCONTRACTOR";
 let TASK_ACTION = "createTask";
 let PENDINV_ACTION = "createPendInv";
+let INV_ACTION = "createInv";
 let CHANGE_ORDER_TYPES = new Array();
 let PERSONS;
 
@@ -3187,6 +3189,8 @@ $(document).ready(function()
 	$('#projectData').find("#taskCreationZone").find('#initDate').datepicker();
 	$('#projectData').find("#taskCreationZone").find('#dueDate').datepicker();
 	$('#projectData').find("#pendingInvoiceCreationZone").find('#submittedDatePend').datepicker();
+	$('#projectData').find("#invoiceCreationZone").find('#submittedDateInv').datepicker();
+
 });
 
 /**
@@ -3464,6 +3468,7 @@ function changeOrderOnChangeRefrigeration(){
 }
 
 //This function automatically generates a change order for HVAC
+//Author: Fardeen Yaqub
 function changeOrderHVAC(temp){
 		
 	//if HVAC is set to "Yes" or is being accessed through a drop down 
@@ -3495,7 +3500,8 @@ function changeOrderHVAC(temp){
 			$('#changeOrder').find("#notes").val("");
 			$('#changeOrder').find("#mcsInvoiceStatus").val("0");
 			$('#changeOrder').find("#subInvoiceStatus").val("0");
-						
+			
+			
 			
 			//sets change order title
 			$('#changeOrder').find("#title").val("HVAC Travel, Rentals, and Freight");
@@ -3531,6 +3537,7 @@ function changeOrderHVAC(temp){
 	}
 }
 
+
 function autofillRefrigeration() {
 
 	var autofill_Refrigeration = $('#projectData').find("#autofill-Refrigeration").val();
@@ -3563,6 +3570,7 @@ function autofillRefrigeration() {
 }
 
 //This function automatically generates a change order for Refrigeration
+//Author: Fardeen Yaqub
 function changeOrderRefrigeration(temp){
 
 	//if HVAC is set to "Yes" or is being accessed through a drop down
@@ -3594,7 +3602,6 @@ function changeOrderRefrigeration(temp){
 			$('#changeOrder').find("#notes").val("");
 			$('#changeOrder').find("#mcsInvoiceStatus").val("0");
 			$('#changeOrder').find("#subInvoiceStatus").val("0");
-						
 			
 			//sets change order title
 			$('#changeOrder').find("#title").val("Refrigeration Travel, Rentals, and Freight");
@@ -3724,6 +3731,38 @@ function saveProject_PROJECT_DATA() {
 	if(cost) {cost = cleanNumericValueForSaving($('#projectData').find("#projectCost")[0].value); cost = parseFloat(cost);}
 	var customerNumber = $('#projectData').find("#custNum").val();
 	
+	/*
+	//labor total
+	var laborTotal = $('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val();
+	var laborInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val();
+	var laborToInvoice = $('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val();
+	var laborPercentInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").val();
+	
+
+	var materialCosts = $('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val();
+	var materialInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val();
+	var materialToInvoice = $('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val();
+	var materialPercentInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").val();
+	
+	
+	var projectAmount = $('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val();
+	var projectInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val();
+	var projectToInvoice = $('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val();
+	var projectPercentInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").val();
+	
+	
+	var aiaTotal = $('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val();
+	var aiaInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val();
+	var aiaToInvoice = $('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val();
+	var aiaPercentInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").val();
+	
+	
+	var totalProject = $('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val();
+	var totalInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val();
+	var totalToInvoice = $('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val();
+	var totalPercentInvoiced = $('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").val();
+	*/
+	
 	var autofill_HVAC = $('#projectData').find("#autofill-HVAC").val();
 	var autofill_Refrigeration = $('#projectData').find("#autofill-Refrigeration").val();
 	var autofill_Permits = $('#projectData').find("#autofill-Permits").val();
@@ -3810,6 +3849,31 @@ function saveProject_PROJECT_DATA() {
 				'budgetaryDue' : budgetaryDue , 
 				'budgetarySubmitted' : budgetarySubmitted,
 				
+		/*		'laborTotal': laborTotal,
+				'laborInvoiced': laborInvoiced,
+				'laborToInvoice': laborToInvoice,
+				'laborPercentInvoiced': laborPercentInvoiced,
+				
+				'materialCosts': materialCosts,
+				'materialInvoiced': materialInvoiced,
+				'materialToInvoice': materialToInvoice,
+				'materialPercentInvoiced': materialPercentInvoiced,
+				
+				'projectAmount': projectAmount,
+				'projectInvoiced': projectInvoiced,
+				'projectToInvoice': projectToInvoice,
+				'projectPercentInvoiced': projectPercentInvoiced,
+				
+				'aiaTotal': aiaTotal,
+				'aiaInvoiced': aiaInvoiced,
+				'aiaToInvoice': aiaToInvoice,
+				'aiaPercentInvoiced': aiaPercentInvoiced,
+				
+				'totalProject': totalProject,
+				'totalInvoiced': totalInvoiced,
+				'totalToInvoice': totalToInvoice,
+				'totalPercentInvoiced': totalPercentInvoiced,
+	*/			
 				'autofill-HVAC': autofill_HVAC,
 				'autofill-Refrigeration': autofill_Refrigeration,
 		        'autofill-Permits': autofill_Permits
@@ -3824,6 +3888,7 @@ function saveProject_PROJECT_DATA() {
 				updateFrontEnd();
 				}
 				//updateProjectManager();
+				
 				
 				alert('Save Complete!');		
 				$('#saveButton > button').prop('disabled', false);
@@ -4141,6 +4206,35 @@ function fillForm_PROJECT_DATA(data)
 	formatRelativeTextAreas(json.customerNotes , "customerNotes", "projectData");
 	$('#projectData').find("#customerNotes").val(json.customerNotes);
 	
+	/*
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val("$" + json.laborTotal);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val(json.laborInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val(json.laborToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").val(json.laborPercentInvoiced);
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val("$" + json.materialCosts);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val(json.materialInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val(json.materialToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").val(json.materialPercentInvoiced);
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val("$" + json.projectAmount);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val(json.projectInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val(json.projectToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").val(json.projectPercentInvoiced);
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val("$" + json.aiaTotal);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val(json.aiaInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val(json.aiaToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").val(json.aiaPercentInvoiced);
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val("$" + json.totalProject);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val(json.totalInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val(json.totalToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").val(json.totalPercentInvoiced);
+	*/
+	
+	//updates the pricing info values dynamically
+	updatePricingInfo();
 	
 	$('#projectData').find("#keyStatus").val(json.keyStatus);
 	
@@ -4346,6 +4440,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				
 				getTasks(stopServerCalls);
 				getPendInvs(stopServerCalls);
+				getInvs(stopServerCalls);
 				getSubcontractorsPend();
 				getProjCostEstimate(stopServerCalls)
 				getProjSpecScopes(stopServerCalls);
@@ -4355,7 +4450,7 @@ function getProject_PROJECT_MANAGER(project_id , stopServerCalls) {
 				setCostCompTitle();
 				getComparableCostEsts();
 			}, error: function (data) {
-				alert('Server Error1!');
+				alert('Server Error1! DASDAS');
 				console.log(data);
 			}
 		});
@@ -4415,6 +4510,10 @@ function getProject_PROJECT_MANAGER1(project_id , stopServerCalls) {
  * 						 fillEquipment(), fillCloseout()
  * @returns
  */
+
+//temp holder
+
+
 function fillTabs_PROJECT_MANAGER (data) {
 	fillProjectInformation(data);
 	fillChangeOrders(data);
@@ -4423,6 +4522,8 @@ function fillTabs_PROJECT_MANAGER (data) {
 	fillEquipmentProposals(data);
 	fillCloseout(data);
 	fillProjectDetails(data);
+	
+	DATA = data;
 }
 
 /**
@@ -4453,7 +4554,13 @@ function prepareProjectData(source_id){
 	$('#taskDisplay').show();
 	$('#pendingInvoiceDisplay').show();
 	
+	//clears accounts receivable table
+	clearPeInvoiceTable();
 	
+	$('#projectData').find('#financialInformation').find('#financialInformationTable').hide();
+	
+	//hides data inside financial so it only appears when selected
+	hideFinancialInfo();
 	
 	if(source_id == "general-info-item")
 	{
@@ -4476,23 +4583,27 @@ function prepareProjectData(source_id){
 		$('#taskCreationZone').hide();
 		$('#projectData').find(".nav-tabs").find("[data-tab=tasksInformation]").addClass("active");
 		$('#projectData').find("#tasksInformation").addClass("active");
-		
 
 	}
 	else if(source_id == "financial-item")
 	{
 		$('#projectData').find(".nav-tabs").find("[data-tab=financialInformation]").addClass("active");
 		$('#projectData').find("#financialInformation").addClass("active");
+		
+		//hides financial sub section headers and information
+		$('#projectData').find('#financialSection').hide();
 
 	}
 	
-	else if(source_id == "pendingInvoice-item")
+	//makes account payable active
+	else if(source_id == "accountsPayable-item")
 	{
 		document.getElementById('pendingInvoiceInformation').style.width = "100%";
 		$('#pendingInvoiceDisplay').show();
 		$('#pendingInvoiceCreationZone').hide();
 		$('#projectData').find(".nav-tabs").find("[data-tab=pendingInvoiceInformation]").addClass("active");
 		$('#projectData').find("#pendingInvoiceInformation").addClass("active");	
+		financialSection();
 	}
 	
 	else if(source_id == "customerNotes-item")
@@ -4503,7 +4614,284 @@ function prepareProjectData(source_id){
 		
 		}
 	
+	//temp holder
+	//makes pricing info active
+	else if(source_id == "pricingInfo-item")
+		{
+		
+		$('#projectData').find(".nav-tabs").find("[data-tab=pricingInfo]").addClass("active");		
+		$('#projectData').find("#pricingInfo").addClass("active");
+		financialSection();
+		
+		}
+	
+	//makes accounts receivable active
+	else if(source_id == "accountsReceivable-item")
+		{
+		
+		document.getElementById('peInvoiceInformation').style.width = "100%";
+		$('#peInvoiceDisplay').show();
+		//$('#peInvoiceCreationZone').hide();
+		$('#projectData').find(".nav-tabs").find("[data-tab=peInvoiceInformation]").addClass("active");
+		$('#projectData').find("#peInvoiceInformation").addClass("active");	
+		financialSection();
+		
+		//clears and accounts receivable table
+		clearPeInvoiceTable();
+		fillPeInvsTable(DATA);
+		
+		}
+	
+	
 	else console.log("Bad ID in prepareProjectData");
+}
+
+//Dynamically updates pricing info section
+// Author: Fardeen yaqub
+function updatePricingInfo(){
+		
+	var laborInvoiced = Number(0);
+	var laborToInvoice = Number(0);
+	var laborPercentInvoiced = Number(0);
+	
+	var laborTotal = Number(0);
+	
+	//populates the laborTotal section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a laborTotal CO
+		if(DATA.changeOrders[i].peType == "1" && DATA.changeOrders[i].sell != null){
+
+			laborTotal += Number(DATA.changeOrders[i].sell);		
+		}
+	}
+	
+	//populates the laborInvoiced section
+	for(var i = 0; i < invs.length; i++) {
+		
+		//checks if the invoice is a project invoice
+		if(invs[i].invoiceType == "Labor" && invs[i].invoiceAmount != null){
+
+			laborInvoiced += Number(invs[i].invoiceAmount);		
+		}
+	}
+	
+	laborToInvoice = laborTotal - laborInvoiced;
+	
+	if(laborTotal > 0){
+		laborPercentInvoiced = (laborInvoiced/laborTotal) * 100;
+	}
+
+	var materialInvoiced = Number(0);
+	var materialToInvoice = Number(0);
+	var materialPercentInvoiced = Number(0);
+
+	var materialCosts = Number(0);
+	
+	//populates the materialCosts section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a materialCosts CO
+		if(DATA.changeOrders[i].peType == "2" && DATA.changeOrders[i].sell != null){
+
+			materialCosts += Number(DATA.changeOrders[i].sell);		
+		}
+	}
+	
+	//populates the materialInvoiced section
+	for(var i = 0; i < invs.length; i++) {
+		
+		//checks if the invoice is a project invoice
+		if(invs[i].invoiceType == "Materials" && invs[i].invoiceAmount != null){
+
+			materialInvoiced += Number(invs[i].invoiceAmount);		
+		}
+	}
+	
+	materialToInvoice = materialCosts - materialInvoiced;
+	
+	if(materialCosts > 0){
+		materialPercentInvoiced = ((materialInvoiced/materialCosts) * 100).toFixed(2);
+	}
+		
+	var projectInvoiced = Number(0);
+	var projectToInvoice = Number(0);
+	var projectPercentInvoiced = Number(0);
+
+	var projectAmount = Number(0);
+	
+	
+	//populates the projectAmount section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a projectAmount CO
+		if(DATA.changeOrders[i].peType == "0" && DATA.changeOrders[i].sell != null){
+
+			projectAmount += Number(DATA.changeOrders[i].sell);		
+		}
+	}
+	
+	//populates the projectInvoiced section
+	for(var i = 0; i < invs.length; i++) {
+		
+		//checks if the invoice is a project invoice
+		if(invs[i].invoiceType == "Project" && invs[i].invoiceAmount != null){
+
+			projectInvoiced += Number(invs[i].invoiceAmount);		
+		}
+	}
+	
+	projectToInvoice = projectAmount - projectInvoiced;
+	
+	if(projectAmount > 0){
+		projectPercentInvoiced = ((projectInvoiced/projectAmount) * 100).toFixed(2);
+	}
+	
+	var aiaInvoiced = Number(0);
+	var aiaToInvoice = Number(0);
+	var aiaPercentInvoiced = Number(0);
+
+	var aiaTotal = Number(0);
+	
+	//populates the aiaTotal section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a aiaTotal CO
+		if(DATA.changeOrders[i].peType == "3" && DATA.changeOrders[i].sell != null){
+
+			aiaTotal += Number(DATA.changeOrders[i].sell);		
+		}
+	}
+	
+	
+	//populates the aiaInvoiced section
+	for(var i = 0; i < invs.length; i++) {
+		
+		//checks if the invoice is a project invoice
+		if(invs[i].invoiceType == "AIA" && invs[i].invoiceAmount != null){
+
+			aiaInvoiced += Number(invs[i].invoiceAmount);		
+		}
+	}
+	
+	aiaToInvoice = aiaTotal - aiaInvoiced;
+	
+	if(aiaTotal > 0){
+		aiaPercentInvoiced = ((aiaInvoiced/aiaTotal) * 100).toFixed(2);
+	}
+	
+	var totalProject = Number(0);
+	var totalInvoiced = Number(0);
+	var totalToInvoice = Number(0);
+	var totalPercentInvoiced = Number(0);
+
+	//calculates total cost of entire project
+	totalProject = Number(laborTotal) + Number(materialCosts) + Number(projectAmount) + Number(aiaTotal);
+	totalInvoiced = Number(laborInvoiced) + Number(materialInvoiced) + Number(projectInvoiced) + Number(aiaInvoiced);
+	totalToInvoice = Number(laborToInvoice) + Number(materialToInvoice) + Number(projectToInvoice) + Number(aiaToInvoice);
+	totalPercentInvoiced = Number(laborPercentInvoiced) + Number(materialPercentInvoiced) + Number(projectPercentInvoiced) + Number(aiaPercentInvoiced);
+
+	totalPercentInvoiced = totalPercentInvoiced.toFixed(2);
+	
+	//fills in the fields 
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val('$' + laborTotal);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val('$' +laborInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val('$' + laborToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").val(laborPercentInvoiced + '%');
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val('$' + materialCosts);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val('$' + materialInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val('$' + materialToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").val(materialPercentInvoiced + '%');
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val('$' + projectAmount);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val('$' + projectInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val('$' + projectToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").val(projectPercentInvoiced + '%');
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val('$' + aiaTotal);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val('$' + aiaInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val('$' + aiaToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").val(aiaPercentInvoiced + '%');
+	
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val('$' + totalProject);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val('$' + totalInvoiced);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val('$' + totalToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").val(totalPercentInvoiced + '%');
+	
+}
+
+//shows data for financial section
+//Author: Fardeen Yaqub
+function financialSection(){
+	
+	//hides unnecessary data
+	$('#projectData').find("#generalInformationTabLink").hide();
+	$('#projectData').find("#schedulingInformationTabLink").hide();
+	$('#projectData').find("#tasksInformationTabLink").hide();
+	$('#projectData').find("#financialInformationTabLink").hide();
+	$('#projectData').find("#pendingInformationTabLink").hide();
+	$('#projectData').find("#customerInformationTabLink").hide();
+	$('#projectData').find("#saveProjectLink").hide();
+	$('#projectData').find("#returnProjectManager").hide();
+	
+	$('#projectData').find('#financialSection').show();
+	showFinancialInfo();
+	fillPeInvsTable(DATA);
+	
+}
+
+//temp holder
+//goes back to main financial menu
+//Author: Fardeen Yaqub
+function goToFinancial(){
+	
+	$('#projectData').find(".nav-tabs").find("[data-tab=financialInformation]").addClass("active");
+	$('#projectData').find("#generalInformationTabLink").show();
+	$('#projectData').find("#schedulingInformationTabLink").show();
+	$('#projectData').find("#tasksInformationTabLink").show();
+	$('#projectData').find("#financialInformationTabLink").show();
+	$('#projectData').find("#pendingInformationTabLink").show();
+	$('#projectData').find("#customerInformationTabLink").show();
+	$('#projectData').find("#saveProjectLink").show();
+	$('#projectData').find("#returnProjectManager").show();
+	$('#projectData').find("#peInvoiceDisplay").hide();
+	$('#projectData').find(".nav-tabs").find("[data-tab=financialInformation]").addClass("active");
+	$('#projectData').find("#financialInformation").addClass("active");
+	
+	//hides financial sub section header
+	$('#projectData').find('#financialSection').hide();
+	$('#pendingInvoiceDisplay').hide();
+	$('#pendingInvoiceCreationZone').hide();
+
+}
+
+//hides main financial info
+//Author: Fardeen Yaqub
+function hideFinancialInfo(){
+	
+	$('#projectData').find("#returnFinancial").hide();
+	$('#projectData').find("#pricingInfoTabLink").hide();
+	$('#projectData').find("#accountsReceivableTabLink").hide();
+	$('#projectData').find("#accountsPayableTabLink").hide();
+	$('#projectData').find("#accountsPayableTabLink").hide();
+	$('#projectData').find("#aiaCostItemsTabLink").hide();
+	$('#projectData').find("#financialSection").find("#saveProjectLink").hide();
+	
+}
+
+//shows main financial info
+//Author: Fardeen Yaqub
+function showFinancialInfo(){
+	
+	$('#projectData').find("#returnFinancial").show();
+	$('#projectData').find("#pricingInfoTabLink").show();
+	$('#projectData').find("#accountsReceivableTabLink").show();
+	$('#projectData').find("#accountsPayableTabLink").show();
+	$('#projectData').find("#aiaCostItemsTabLink").show();
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#saveProjectLink").show();
+	$('#projectData').find("#peInvoiceDisplay").show();
+	
 }
 
 function editProposals (source_id) {
@@ -10022,6 +10410,8 @@ function getDropdownInfo_CHANGE_ORDER()
  * data for a specific change order
  * @param the specific change order data
  */
+
+//temp holder
 function fillTabs_CHANGE_ORDER(json)
 {
 	
@@ -10068,7 +10458,9 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find('#mcsInvoiceStatus').val(changeOrderToEdit.mcsInvoiceStatus);
 	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
 	
-	$('#changeOrder').find('#subInvoiceNumber').val(changeOrderToEdit.subInvoiceNumber);
+	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
+	
+	$('#changeOrder').find('#peType').val(changeOrderToEdit.peType);
 	}
 }
 
@@ -10325,7 +10717,113 @@ function saveProject_CHANGE_ORDER()
 	
 	var customerCOPnum = $('#changeOrder').find("#customerCOPnum").val();
 	
+	var peType = $('#changeOrder').find("#peType").val();
+	
 	var dates = [proposalDate, submittedDate, approvedDate];
+	
+	
+	
+	/*FOR THE FINANCIAL INFO SECTION*/
+	var laborInvoiced = Number(0);
+	var laborToInvoice = Number(0);
+	var laborPercentInvoiced = Number(0);
+	
+	var laborTotal = Number(0);
+	
+	//populates the laborTotal section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a laborTotal CO
+		if(DATA.changeOrders[i].peType == "1" && DATA.changeOrders[i].cost != null){
+
+			if(mcsCO == DATA.changeOrders[i].mcsCO){
+				laborTotal+=Number(cost);
+			}
+			else{
+				
+			
+			laborTotal += Number(DATA.changeOrders[i].cost);		
+			}
+			}
+	}
+	
+	//financial stuff
+	var materialInvoiced = Number(0);
+	var materialToInvoice = Number(0);
+	var materialPercentInvoiced = Number(0);
+
+	var materialCosts = Number(0);
+	
+	//populates the materialCosts section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a materialCosts CO
+		if(DATA.changeOrders[i].peType == "2" && DATA.changeOrders[i].cost != null){
+
+			if(mcsCO == DATA.changeOrders[i].mcsCO){
+				materialCosts+=Number(cost);
+			}
+			else{
+			
+			materialCosts += Number(DATA.changeOrders[i].cost);		
+			}
+			}
+	}
+	
+	
+	var projectInvoiced = Number(0);
+	var projectToInvoice = Number(0);
+	var projectPercentInvoiced = Number(0);
+
+	var projectAmount = Number(0);
+	
+	//populates the projectAmount section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a projectAmount CO
+		if(DATA.changeOrders[i].peType == "0" && DATA.changeOrders[i].cost != null){
+			
+			if(mcsCO == DATA.changeOrders[i].mcsCO){
+				projectAmount+=Number(cost);
+			}
+			else{
+				projectAmount += Number(DATA.changeOrders[i].cost);		
+			
+			}
+			}
+	}
+	
+	
+	var aiaInvoiced = Number(0);
+	var aiaToInvoice = Number(0);
+	var aiaPercentInvoiced = Number(0);
+
+	var aiaTotal = Number(0);
+	
+	//populates the aiaTotal section
+	for(var i = 0; i < DATA.changeOrders.length; i++) {
+		
+		//checks if the CO is a aiaTotal CO
+		if(DATA.changeOrders[i].peType == "3" && DATA.changeOrders[i].cost != null){
+
+			if(mcsCO == DATA.changeOrders[i].mcsCO){
+				aiaTotal+=Number(cost);
+			}
+			else{
+				aiaTotal += Number(DATA.changeOrders[i].cost);		
+			}
+			}
+	}	
+	
+	var totalProject = Number(0);
+	var totalInvoiced = Number(0);
+	var totalToInvoice = Number(0);
+	var totalPercentInvoiced = Number(0);
+
+	//calculates total cost of entire project
+	var totalProject = Number(laborTotal) + Number(materialCosts) + Number(projectAmount) + Number(aiaTotal);
+
+	//end financial stuff
 	
 	var action = "addChangeOrder";
 	if(edit_CHANGE_ORDER == 'true')
@@ -10376,14 +10874,40 @@ function saveProject_CHANGE_ORDER()
 				'sell': sell,
 				'mcsInvoiceStatus': mcsInvoiceStatus,
 				'subInvoiceStatus': subInvoiceStatus,
+				'peType': peType,
 				'title':title,
 				'invoiceNumber' : invoiceNumber,
 				'subInvoiceNumber' : subInvoiceNumber,
 				'customerCOPnum' : customerCOPnum ,
+				
+				'laborTotal': laborTotal,
+				'laborInvoiced': laborInvoiced,
+				'laborToInvoice': laborToInvoice,
+				'laborPercentInvoiced': laborPercentInvoiced,
+				
+				'materialCosts': materialCosts,
+				'materialInvoiced': materialInvoiced,
+				'materialToInvoice': materialToInvoice,
+				'materialPercentInvoiced': materialPercentInvoiced,
+				
+				'projectAmount': projectAmount,
+				'projectInvoiced': projectInvoiced,
+				'projectToInvoice': projectToInvoice,
+				'projectPercentInvoiced': projectPercentInvoiced,
+				
+				'aiaTotal': aiaTotal,
+				'aiaInvoiced': aiaInvoiced,
+				'aiaToInvoice': aiaToInvoice,
+				'aiaPercentInvoiced': aiaPercentInvoiced,
+				
+				'totalProject': totalProject,
+				'totalInvoiced': totalInvoiced,
+				'totalToInvoice': totalToInvoice,
+				'totalPercentInvoiced': totalPercentInvoiced,
 			},
 			success:function(data){
 				
-				alert('Saved Change Order');
+				alert('Saved Pricing Element');
 				
 				//noMove makes it so the user doesn't get kicked out of General info when setting refrigeration or HVAC to "Yes"
 				if(noMove == 0){
@@ -10404,7 +10928,7 @@ function saveProject_CHANGE_ORDER()
 			},
 			error: function(data)
 			{
-				alert('Saved Change Order');
+				alert('Saved Saved Pricing Element');
 				
 				//noMove makes it so the user doesn't get kicked out of General info when setting refrigeration or HVAC to "Yes"
 				if(noMove == 0){
@@ -10483,7 +11007,7 @@ function goToChangeOrder(edit){
  * @returns
  */
 function deleteChangeOrder() {
-	if(!confirm("Are you sure you want to permanently delete this change order?")) return;
+	if(!confirm("Are you sure you want to permanently delete this pricing element?")) return;
 	
 	
 	console.log("PROJECT = ", PROJECT_DATA);
@@ -10508,8 +11032,8 @@ function deleteChangeOrder() {
 
 		},
 		complete:function(data){
-			console.log("Response From Change Order Deletion", data);
-			alert('Deleted Change Order');
+			console.log("Response From Pricing Element Deletion", data);
+			alert('Deleted Pricing Element');
 			goToProjectManager();
 		}
 	});
@@ -10531,7 +11055,7 @@ function toggleChangeOrder (source) {
 
 function changeOrderReport () {
 
-	window.open("Report?" + 'id=' + projectID + "&type=Change Order Report");
+	window.open("Report?" + 'id=' + projectID + "&type=Pricing Element Report");
 }
 
 //
@@ -11346,7 +11870,7 @@ function convertCurrentDivLocation (currentDivLocation){
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Scorecard <small id='projectHeader'>---</small></p>");
 			break;
 		case "changeOrder":
-			$('#'+currentDivLocation).find("#pageLocation").html("<p>Change Order <small id='projectHeader'>---</small></p>");
+			$('#'+currentDivLocation).find("#pageLocation").html("<p>Pricing Element <small id='projectHeader'>---</small></p>");
 			break;
 		case "equipmentDiv":
 			$('#'+currentDivLocation).find("#pageLocation").html("<p>Equipment <small id='projectHeader'>---</small></p>");
@@ -12365,7 +12889,7 @@ function projectPendInvReport() {
  * This function creates a new or updates an older pending invoice.
  *  
  */
-function submitPendInv () {
+function submitPendInv() {
 	let invoiceNum = $('#pendingInvoiceCreationZone').find('#invoiceNumberPend').val();
 	let invoiceAmt = $('#pendingInvoiceCreationZone').find('#invoiceAmtPend').val();
 	let subNames = $('#pendingInvoiceCreationZone').find('#subNamesPend').val();
@@ -12443,13 +12967,19 @@ function submitPendInv () {
 				let response = $.trim(serverResponse.responseText);
 				if (response === 'PENDINV_ADDED') {
 					alert('Pending Invoice Added Successfully');
-					$(".editProject").hide();
-					$("#projectManager").show();
+					//$(".editProject").hide();
+					//$("#projectManager").show();
+					//$('#pendingInvoiceCreationZone').hide();
+					//$('#pendingInvoiceDisplay').show();
+					
+					//Makes the user return to the pending invoice screen rather than project manager screen
+					document.getElementById('pendingInvoiceInformation').style.width = "100%";
 					$('#pendingInvoiceCreationZone').hide();
 					$('#pendingInvoiceDisplay').show();
 					clearPendingInvoiceTable();
 					getPendInvs(1);
-					$('#pendingInvoice-item').trigger('click');					
+					
+					//$('#pendingInvoice-item').trigger('click');					
 				}
 			}
 		});		
@@ -12485,13 +13015,18 @@ function submitPendInv () {
 				let response = $.trim(serverResponse.responseText);
 				if (response === 'UPDATED_PENDINV') {
 					alert('Pending Invoice Updated Successfully');
-					$(".editProject").hide();
-					$("#projectManager").show();
+					//$(".editProject").hide();
+					//$("#projectManager").show();
+					//$('#pendingInvoiceCreationZone').hide();
+					//$('#pendingInvoiceDisplay').show();
+					
+					//Makes the user return to the pending invoice screen rather than project manager screen
+					document.getElementById('pendingInvoiceInformation').style.width = "100%";
 					$('#pendingInvoiceCreationZone').hide();
 					$('#pendingInvoiceDisplay').show();
 					clearPendingInvoiceTable();
 					getPendInvs(1);
-					$('#pendingInvoice-item').trigger('click');
+					//$('#pendingInvoice-item').trigger('click');
 				}
 			}
 		});
@@ -12512,6 +13047,7 @@ function getSubcontractorsPend() {
 		}, complete: function (data) {			
 			if (data.responseJSON) {
 				createSubDropdownPend(data.responseJSON);
+				createSubDropdownInv(data.responseJSON);
 			}
 
 			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
@@ -12787,6 +13323,9 @@ function clearPendingInvoiceTable () {
  * This function retrieves all of the pendingInvoices from the server
  * INNER FUNCTION CALLS: fillPendInvTable()
  */
+
+
+
 function getPendInvs(stopServerCalls) {
 	console.log(projectID);
 	$.ajax({
@@ -12969,4 +13508,660 @@ function totalEquipmentCostProposals(){
 	else{
 		$("#totalPriceProposals").val("");
 	}
+}
+
+// Invoicing section functions (Invoices)
+// Author: Fardeen Yaqub
+
+function clearPeInvoiceTable () {
+	$('#peInvoiceDisplay').find('#peInvoiceTable').find('tr:not(.head)').remove();
+}
+
+/**
+ * This function converts the peType values to a string
+ * Author: Fardeen Yaqub
+ */
+function parsePETypeStatus (param) {
+	switch (param) {
+		case "0":
+			return "Project";
+		case "1":
+			return "Labor";
+		case "2":
+			return "Materials";
+		case "3":
+			return "AIA";
+		default:
+			return "---";
+	}
+}
+
+/**
+ * This function fills the Invoices Table based on the filer selected (Open, Complete, Open & Complete, Closed) 
+ * Author: Fardeen Yaqub
+ */
+function fillPeInvsTable(data) {
+	
+	clearPeInvoiceTable();
+	console.log("CALLED FILL PE" , data);
+	if(data) CHANGE_ORDERS = data.changeOrders;
+	let changeOrders = CHANGE_ORDERS;
+	
+	//sorts PE's
+	changeOrders.sort(function(a, b){
+		if(!a.id) return -1;
+		if(!b.id) return 1;
+		
+		if(a.id < b.id) return -1;
+		else if(a.id > b.id) return 1;
+		else return 0;
+		
+	});
+	console.log("PE's = ", changeOrders);
+		
+	//Loops through Pricing Elements (Change orders) to pull required values
+	for (var i = 0; i < changeOrders.length; i++) {
+		let changeOrder = changeOrders[i];
+		
+		if($('#peInvoiceSelector2').val() == "preparing" && changeOrders[i].status != "1") continue;
+		else if($('#peInvoiceSelector2').val() == "submitted" && changeOrders[i].status != "2") continue;
+		else if($('#peInvoiceSelector2').val() == "approved" && changeOrders[i].status != "3") continue;
+		else if($('#peInvoiceSelector2').val() == "rejected" && changeOrders[i].status != "4") continue;
+		else if($('#peInvoiceSelector2').val() == "complete" && changeOrders[i].status != "5") continue;
+		else if($('#peInvoiceSelector2').val() == "review" && changeOrders[i].status != "6") continue;
+		
+		var tableRow = document.createElement('tr');
+		tableRow.setAttribute("value", changeOrder.id);
+		
+		//takes user to invoices
+		tableRow.onclick = function() {goToInvoices(changeOrder)};
+		tableRow.ondblclick = function () {displayInvDisplay(changeOrder)};
+
+		//CO Number
+		var coNumber = document.createElement('td');
+		coNumber.className = 'coNumber';
+		coNumber.width = "5%";
+		coNumber.appendChild(document.createTextNode(changeOrder.mcsCO));
+		
+		//Title
+		var title = document.createElement('td');
+		title.width = "20%";
+		if(changeOrder.title) title.appendChild(document.createTextNode(changeOrder.title));
+		else  title.appendChild(document.createTextNode("---"));
+
+		//PE Type
+		var peType = document.createElement('td');
+		peType.width = "10%";
+		peType.appendChild(document.createTextNode(parsePETypeStatus(changeOrder.peType)));
+		
+		//Customer
+		var customer = document.createElement('td');
+		customer.width = "15%";
+		customer.appendChild(document.createTextNode(convertChangeOrderType(changeOrder.type)));
+		
+		//Status
+		var status = document.createElement('td');
+		status.width = "9%";
+		status.appendChild(document.createTextNode(parseChangeOrderStatus(changeOrder.status)));
+
+		//Sell
+		var sell = document.createElement('td');
+		sell.width = "10%";
+		if(changeOrder.sell)
+			sell.appendChild(document.createTextNode(cleanNumericValueForDisplaying(changeOrder.sell)));
+		else 
+			sell.appendChild(document.createTextNode("---"));
+		
+		//Amount Invoiced
+		var amountInvoiced = document.createElement('td');
+		var invoiced = Number(0);
+		amountInvoiced.width = "10%";
+		
+		//sums up invoices for the PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(changeOrder.mcsCO == invs[j].associatedPE){
+				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
+		
+		amountInvoiced.appendChild(document.createTextNode('$' + invoiced));
+
+		//Amount To Invoice
+		var amountToInvoice = document.createElement('td');
+		amountToInvoice.width = "10%";
+		
+		if(changeOrder.sell){
+			amountToInvoice.appendChild(document.createTextNode('$' + (changeOrder.sell - invoiced)));		
+		}
+		else{
+			amountToInvoice.appendChild(document.createTextNode("---"));
+		}
+			
+		tableRow.appendChild(coNumber);
+		
+		tableRow.appendChild(title);
+
+		tableRow.appendChild(peType);
+		
+		tableRow.appendChild(customer);
+		
+		tableRow.appendChild(status);
+		
+		tableRow.appendChild(sell);
+		
+		tableRow.appendChild(amountInvoiced);
+		
+		tableRow.appendChild(amountToInvoice);
+				
+		tableRow.ondblclick = function() {
+			goToChangeOrder(1);
+		};
+		
+		//adds all PE rows to frontend
+		$('#peInvoiceInformation').find("#peInvoiceTable").append(tableRow);
+	}
+	
+}
+
+let SELECTED_PE_ID;
+
+//takes user to invoices
+function goToInvoices(source)
+{
+	//sets the selected PE to a global var
+	SELECTED_PE_ID = source;
+	displayInvDisplay();
+	
+}
+
+//displays invoices
+function displayInvDisplay() {
+		
+	$('#peInvoiceInformation').hide();
+	$('#invoiceInformation').show();
+	$('#invoiceInformation').find('#invoiceCreationZone').hide();
+	$('#financialSection').hide();
+	
+	document.getElementById('invoiceInformation').style.width = "100%";
+	getInvs(1);
+}
+
+
+//returns user to Account's Receivable
+function goToAccRec(){
+	
+	$('#peInvoiceInformation').show();
+	$('#invoiceInformation').hide();
+	$('#financialSection').show();
+	updatePricingInfo();
+	fillPeInvsTable(DATA);
+	
+}
+
+function clearInvoiceTable () {
+	$('#invoiceDisplay').find('#invoiceTable').find('tr:not(.head)').remove();
+}
+
+let INVOICES_STORED;
+
+//global var for invoices
+let invs;
+
+//gets list of invoices for project
+function getInvs(stopServerCalls) {
+	console.log(projectID);
+		
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getProjectInvs',
+			'id': projectID
+		}, success: function (data) {
+			console.log("proj Invoices!!!!", data);
+			let type = getParameterByName("from");
+
+			invs = data;
+			if (data) {
+				clearInvoiceTable();
+
+				fillInvsTable(data);
+			}
+			if(!stopServerCalls) getUserData();
+
+		}, error: function (data) {
+			alert('Server Error!10 INVOICES');
+		}
+	});
+}
+
+
+//creates an invoice
+function createInv() {
+
+	INV_ACTION = "createInv";
+	clearInvForm();	
+	document.getElementById('invoiceInformation').style.width = "100%";
+	$('#returnAccountsReceivable').hide();
+	$('#invoiceDisplay').hide();
+	$('#invoiceCreationZone').show();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
+
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val((invs.length+1).toString());
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Open");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#associatedPE').val(SELECTED_PE_ID.mcsCO);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceType').val(parsePETypeStatus(SELECTED_PE_ID.peType));
+	
+	var invoiced = Number(0);
+	
+	//sums all invoices for the selected PE
+	for(var j=0; j < invs.length; j++){
+		
+		if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+			
+			invoiced = invoiced + Number(invs[j].invoiceAmount);
+		}
+	}
+	
+	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
+	
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
+	
+}
+
+//clears invoice form
+function clearInvForm()
+{
+	$('#invoiceCreationZone').find('#invoiceID').val('');
+	$('#invoiceCreationZone').find('#associatedPE').val('');
+	$('#invoiceCreationZone').find('#invoiceTitle').val('');
+	$('#invoiceCreationZone').find('#invoiceNumber').val('');
+	$('#invoiceCreationZone').find('#invoiceType').val('');
+	$('#invoiceCreationZone').find('#invoiceStatus').val('Open');
+	$('#invoiceCreationZone').find('#submittedDateInv').val('');
+	$('#invoiceCreationZone').find('#invoiceAmount').val('');
+	$('#invoiceCreationZone').find('#invoiceCustomer').val('');		
+	$('#invoiceCreationZone').find('#invoiceApproval').val('');	
+	$('#invoiceCreationZone').find('#notes').val('');	
+	$('#invoiceCreationZone').find('#invTotal').val('');
+	$('#invoiceCreationZone').find('#currInvoiced').val('');
+}
+
+//prompts user when they want to back out of invoice
+function viewInv() {
+	
+	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
+	let createMessage = "This Invoice will not be added, are you sure you want to leave this screen?";
+	let displayedMessage;
+	
+	if(INV_ACTION == "createInv")
+		displayedMessage = createMessage;
+	else 
+		displayedMessage = updateMessage;
+	
+	if(confirm(displayedMessage))
+	{
+		document.getElementById('invoiceInformation').style.width = "100%";
+		$('#invoiceCreationZone').hide();
+		$('#invoiceDisplay').show();
+		$('#returnAccountsReceivable').show();
+	}
+}
+
+
+function toggleInv (source) {
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editInvoice').prop('disabled', false);
+	editSelectedInv(source);
+	
+}
+
+//allows user to edit invoice
+function editSelectedInv(source)
+{
+	INV_ACTION = "updateInv";
+	clearInvForm();
+	displayInvWell();
+	fillInvWell(source);
+}
+
+//creates customer dropdown menu for invoices
+function createSubDropdownInv(json) {
+	let d = document.createDocumentFragment();
+	
+	json.sort(function(a,b){
+		if(a.name < b.name) return -1;
+		else if(a.name > b.name) return 1;
+		return 0;
+	});
+	
+	for (var i = 0; i < json.length; i++) {
+		let option = document.createElement('option');
+		option.innerHTML = json[i].name;
+		option.setAttribute("value", json[i].name);
+		option.setAttribute("id", json[i].name + "Option");
+		d.appendChild(option);
+	}
+	$('#invoiceCustomer').append(d);
+}
+
+/**
+ * This function shows the form. 
+ */
+function displayInvWell() {
+
+	document.getElementById('invoiceInformation').style.width = "100%";
+	$('#invoiceDisplay').hide();
+	$('#invoiceCreationZone').show();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
+	$('#returnAccountsReceivable').hide();
+
+}
+/**
+ * This function fills the form using the old data. i.e., it is called in edit invoice so that older values are filled. 
+ */
+
+function fillInvWell(source) {
+	
+	clearInvForm();
+	let tmp_id = source;	
+	let selected_Inv;
+		
+	for(var i = 0; i < invs.length; i++) {
+		
+		//compares all invoices to find the one selected
+		if("Inv_"+invs[i].id == tmp_id.id) {
+			
+			selected_Inv = invs[i];
+			INVOICES_STORED = invs[i].id;
+		
+			break;
+		}	
+	}
+	
+	if(!selected_Inv) {
+		console.log("IMPROPER INV SELECTION");
+		return;
+	}	
+		
+	$('#invoiceCreationZone').find('#invoiceID').val(selected_Inv.invoiceID);
+	$('#invoiceCreationZone').find('#associatedPE').val(selected_Inv.associatedPE);
+	$('#invoiceCreationZone').find('#invoiceNumber').val(selected_Inv.invoiceNumber);
+	$('#invoiceCreationZone').find('#invoiceTitle').val(selected_Inv.invoiceTitle);
+	$('#invoiceCreationZone').find('#invoiceType').val(selected_Inv.invoiceType);
+	$('#invoiceCreationZone').find('#submittedDateInv').val(selected_Inv.submittedDate);
+	$('#invoiceCreationZone').find('#invoiceCustomer').val(selected_Inv.invoiceCustomer);
+	$('#invoiceCreationZone').find('#invoiceStatus').val(selected_Inv.invoiceStatus);
+	$('#invoiceCreationZone').find('#invoiceApproval').val(selected_Inv.invoiceApproval);	
+	$('#invoiceCreationZone').find('#notes').val(selected_Inv.notes);	
+			
+	var invoiced = Number(0);
+	
+	//sums up all invoices for PE
+	for(var j=0; j < invs.length; j++){
+		
+		if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+			
+			invoiced = invoiced + Number(invs[j].invoiceAmount);
+		}
+	}
+	
+	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
+	
+	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
+	$('#invoiceCreationZone').find('#invoiceAmount').val('$' + selected_Inv.invoiceAmount);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
+
+}
+
+
+//This enables the user to filter invoices based off status
+$(document).on('change', '#invoiceSelector2', function () {	
+	clearInvoiceTable();
+	fillInvsTable(invs);
+});
+
+
+//fills invoice table 
+function fillInvsTable(data) {
+	
+	let selector = $('#invoiceSelector2').val();	
+	clearInvoiceTable();
+	let invs = data;
+	let count = 0;
+	
+	var invoiced = Number(0);
+	
+	//sums up all invoices for PE
+	for(var j=0; j < invs.length; j++){
+		
+		if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+			
+			invoiced = invoiced + Number(invs[j].invoiceAmount);
+		}
+	}
+	
+	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
+	
+	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
+	$('#invoiceInformation').find('#invoiceBalance1').val('$' + balance);
+	
+	
+	//shows invoices based on filter selection
+	for (var i = 0; i < invs.length; i++) {
+		if((selector == 'open' && invs[i].invoiceStatus != "Open") || 
+				(selector == 'complete' && invs[i].invoiceStatus != "Completed") ||
+				(selector == 'open_complete' && (invs[i].invoiceStatus == "Closed" || invs[i].invoiceStatus == "Rejected")) ||
+				(selector == 'closed' && invs[i].invoiceStatus != "Closed") ||
+				(selector == 'rejected' && invs[i].invoiceStatus != "Rejected") ||
+				(SELECTED_PE_ID.mcsCO != invs[i].associatedPE)) 
+				continue; // do nothing
+				
+		var inv = invs[i];
+		
+		var invListing = document.createElement('tr');
+		invListing.setAttribute("value", inv);
+		
+		//allows invoice to be edited
+		invListing.onclick = function() {
+			toggleInv(this);
+		};
+		
+		invListing.ondblclick = function(){
+
+			editSelectedInv(this);
+		};
+				
+		count++;
+		
+		invListing.value = invs[i].id;
+		invListing.id = "Inv_" + invs[i].id;
+		
+		let invoiceID = document.createElement('td');
+		let associatedPE = document.createElement('td');
+		let invoiceTitle = document.createElement('td');
+		let invoiceType = document.createElement('td');		
+		let invoiceAmount = document.createElement('td');
+		let invoiceCustomer = document.createElement('td');
+		let invoiceApproval = document.createElement('td');
+		let invoiceStatus = document.createElement('td');
+		let invoiceNumber = document.createElement('td');
+		let notes = document.createElement('td');
+		
+		invoiceID.innerHTML = i+1;
+		invoiceTitle.innerHTML = invs[i].invoiceTitle;
+		invoiceNumber.innerHTML = invs[i].invoiceNumber;
+		invoiceType.innerHTML = invs[i].invoiceType;
+		
+		if(invs[i].invoiceAmount)
+			invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
+		else
+			invoiceAmount.innerHTML = "---";		
+		
+		invoiceCustomer.innerHTML = invs[i].invoiceCustomer;
+		invoiceStatus.innerHTML = invs[i].invoiceStatus;
+		invoiceApproval.innerHTML = invs[i].invoiceApproval;
+		
+		associatedPE.innerHTML = invs[i].associatedPE;
+		notes.innerHTML = invs[i].notes;
+		
+		invListing.appendChild(invoiceID);
+		invListing.appendChild(associatedPE);
+		invListing.appendChild(invoiceTitle);
+		invListing.appendChild(invoiceType);
+		invListing.appendChild(invoiceAmount);
+		invListing.appendChild(invoiceCustomer);
+		invListing.appendChild(invoiceApproval);
+		invListing.appendChild(invoiceStatus);
+		invListing.appendChild(invoiceNumber);
+		invListing.appendChild(notes);
+
+		$('#invoiceTable > tbody').append(invListing);
+		
+	}
+	//This adds No Invoices to Show to the table if there are none in that filter or category (Ex: Open, Complete)
+	if (count === 0) {
+		clearAndAddSingleRowInvs("No Invoices to Show");		
+	}		
+}
+
+function clearAndAddSingleRowInvs(msg) {
+	$('#invoiceTable > tbody').children('tr:not(.head)').remove();
+	
+	let placeHolder = document.createElement('tr');
+	let listDetails0 = document.createElement('td');
+	let listDetails1 = document.createElement('td');
+	let listDetails2 = document.createElement('td');	
+	let listDetails3 = document.createElement('td');
+	let listDetails4 = document.createElement('td');
+	let listDetails5 = document.createElement('td');
+	let listDetails6 = document.createElement('td');
+	let listDetails7 = document.createElement('td');
+	let listDetails9 = document.createElement('td');
+	let listDetails8 = document.createElement('td');
+
+	listDetails0.innerHTML = msg;
+	
+	$(placeHolder).append(listDetails0);
+	$(placeHolder).append(listDetails1);
+	$(placeHolder).append(listDetails2);
+	$(placeHolder).append(listDetails3);
+	$(placeHolder).append(listDetails4);
+	$(placeHolder).append(listDetails5);
+	$(placeHolder).append(listDetails6);
+	$(placeHolder).append(listDetails7);
+	$(placeHolder).append(listDetails8);
+	$(placeHolder).append(listDetails9);
+	
+	$('#invoiceTable > tbody').append(placeHolder);
+}
+
+//submits invoice with user creating or editing an invoice
+function submitInv() {
+	let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
+	let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
+	let invoiceTitle = $('#invoiceCreationZone').find('#invoiceTitle').val();
+	let invoiceNumber = $('#invoiceCreationZone').find('#invoiceNumber').val();
+	let invoiceType = $('#invoiceCreationZone').find('#invoiceType').val();
+
+	let invoice_id = projectID;
+	
+	let submittedDate = $('#invoiceCreationZone').find('#submittedDateInv').val();		
+	let invoiceAmount = $('#invoiceCreationZone').find('#invoiceAmount').val();
+	let invoiceCustomer = $('#invoiceCreationZone').find('#invoiceCustomer').val();
+	let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
+	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
+	let notes = $('#invoiceCreationZone').find('#notes').val();
+	
+	//invoiceAmount.replace('$','');
+	
+	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+
+	//Removes a $ prior to saving to prevent a display error
+	invoiceAmount = invoiceAmount.replace('$', '');
+
+	console.log("PROJECT == ", project);	
+	if(INV_ACTION == "createInv"){		
+				
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				'action': 'createInvoice',
+				'project': projectID,
+				'invoiceID': invoiceID,
+				'associatedPE': associatedPE,
+				'invoiceTitle': invoiceTitle,
+				'invoiceNumber': invoiceNumber,
+				'invoiceType': invoiceType,
+				'submittedDate': submittedDate,
+				'invoiceAmount': invoiceAmount,
+				'invoiceCustomer': invoiceCustomer,
+				'invoiceStatus': invoiceStatus,
+				'invoiceApproval' : invoiceApproval,				
+				'notes' : notes,
+				'invoice_id' : invoice_id,
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'INVOICE_ADDED') {
+					alert('Invoice Added Successfully');
+					
+					//Makes the user return to the invoice screen 
+					document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					$('#returnAccountsReceivable').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});		
+	}
+	
+	else if(INV_ACTION == "updateInv"){
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				
+				'action': 'updateInvoice',
+				'project': projectID,
+				'currInvoice':INVOICES_STORED,
+				'invoiceID': invoiceID,
+				'associatedPE': associatedPE,
+				'invoiceTitle': invoiceTitle,
+				'invoiceNumber': invoiceNumber,
+				'invoiceType': invoiceType,
+				'submittedDate': submittedDate,
+				'invoiceAmount': invoiceAmount,
+				'invoiceCustomer': invoiceCustomer,
+				'invoiceStatus': invoiceStatus,
+				'invoiceApproval' : invoiceApproval,				
+				'notes' : notes,
+				'invoice_id' : invoice_id,
+																																																				
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'UPDATED_INVOICE') {
+					alert('Pending Invoice Updated Successfully');
+				
+					//Makes the user return to the invoice screen 
+					document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					$('#returnAccountsReceivable').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});
+	}	
 }

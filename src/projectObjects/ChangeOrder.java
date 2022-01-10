@@ -45,8 +45,35 @@ public class ChangeOrder extends ProjectObject
 	private String mcsInvoiceStatus;
 	private String subInvoiceStatus;
 	
+	private String peType;
+	
 	private String invoiceNumber;
 	private String subInvoiceNumber;
+	
+	private int laborTotal;
+	private int laborInvoiced;
+	private int laborToInvoice;
+	private int laborPercentInvoiced;
+	
+	private int materialCosts;
+	private int materialInvoiced;
+	private int materialToInvoice;
+	private int materialPercentInvoiced;
+	
+	private int projectAmount;
+	private int projectInvoiced;
+	private int projectToInvoice;
+	private int projectPercentInvoiced;
+	
+	private int aiaTotal;
+	private int aiaInvoiced;
+	private int aiaToInvoice;
+	private int aiaPercentInvoiced;
+	
+	private int totalProject;
+	private int totalInvoiced;
+	private int totalToInvoice;
+	private int totalPercentInvoiced;
 	
 	
 	
@@ -60,8 +87,13 @@ public class ChangeOrder extends ProjectObject
 	 * @param amount the amount of money that the change order is associated with
 	 */
 	public ChangeOrder(String status, Date apprvDate, String mcsCO, String subNames, Date proposalDate, Date submittedDate,
-					   String briefDescription, String notes, double cost, double sell, String mcsInvoiceStatus, String type,
-					   String subInvoiceStatus, String customerCOPnum, String subCO, String title, String invoiceNumber, String subInvoiceNumber)
+					   String briefDescription, String notes, double cost, double sell, String mcsInvoiceStatus, String type, String peType,
+					   String subInvoiceStatus, String customerCOPnum, String subCO, String title, String invoiceNumber, String subInvoiceNumber,
+					   int laborTotal, int laborInvoiced, int laborToInvoice, int laborPercentInvoiced, 
+						int materialCosts, int materialInvoiced, int materialToInvoice, int materialPercentInvoiced,
+						int projectAmount, int projectInvoiced, int projectToInvoice, int projectPercentInvoiced,
+						int aiaTotal, int aiaInvoiced, int aiaToInvoice, int aiaPercentInvoiced,
+						int totalProject, int totalInvoiced, int totalToInvoice, int totalPercentInvoiced)
 	{
 		this.status = status;
 		this.approvedDate = apprvDate;
@@ -82,7 +114,36 @@ public class ChangeOrder extends ProjectObject
 		this.mcsInvoiceStatus = mcsInvoiceStatus;
 		this.subInvoiceStatus = subInvoiceStatus;
 		this.subInvoiceNumber = subInvoiceNumber;
+		
+		this.peType = peType;
+		
+		this.laborTotal = laborTotal;
+		this.laborInvoiced = laborInvoiced;
+		this.laborToInvoice = laborToInvoice;
+		this.laborPercentInvoiced = laborPercentInvoiced;
+		
+		this.materialCosts = materialCosts;
+		this.materialInvoiced = materialInvoiced;
+		this.materialToInvoice = materialToInvoice;
+		this.materialPercentInvoiced = materialPercentInvoiced;
+		
+		this.projectAmount = projectAmount;
+		this.projectInvoiced = projectInvoiced;
+		this.projectToInvoice = projectToInvoice;
+		this.projectPercentInvoiced = projectPercentInvoiced;
+		
+		this.aiaTotal = aiaTotal;
+		this.aiaInvoiced = aiaInvoiced;
+		this.aiaToInvoice = aiaToInvoice;
+		this.aiaPercentInvoiced = aiaPercentInvoiced;
+		
+		this.totalProject = totalProject;
+		this.totalInvoiced = totalInvoiced;
+		this.totalToInvoice = totalToInvoice;
+		this.totalPercentInvoiced = totalPercentInvoiced;
+	
 	}
+	
 	
 	public ChangeOrder()
 	{
@@ -104,6 +165,32 @@ public class ChangeOrder extends ProjectObject
 		this.mcsInvoiceStatus = null;
 		this.subInvoiceStatus = null;
 		this.subInvoiceNumber = null;
+		this.peType = null;
+		
+		this.laborTotal = 0;
+		this.laborInvoiced = 0;
+		this.laborToInvoice = 0;
+		this.laborPercentInvoiced = 0;
+		
+		this.materialCosts = 0;
+		this.materialInvoiced = 0;
+		this.materialToInvoice = 0;
+		this.materialPercentInvoiced = 0;
+		
+		this.projectAmount = 0;
+		this.projectInvoiced = 0;
+		this.projectToInvoice = 0;
+		this.projectPercentInvoiced = 0;
+		
+		this.aiaTotal = 0;
+		this.aiaInvoiced = 0;
+		this.aiaToInvoice = 0;
+		this.aiaPercentInvoiced = 0;
+		
+		this.totalProject = 0;
+		this.totalInvoiced = 0;
+		this.totalToInvoice = 0;
+		this.totalPercentInvoiced = 0;
 	}
 
 
@@ -272,7 +359,176 @@ public class ChangeOrder extends ProjectObject
 		this.subInvoiceNumber = subInvoiceNumber;
 	}
 	
+	public String getPeType() {
+		return peType;
+	}
+
+
+	public void setPeType(String peType) {
+		this.peType = peType;
+	}
 	
+	//New financial getters and setters
+		public int getLaborTotal() {
+			return laborTotal;
+		}
+
+		public void setLaborTotal(int laborTotal) {
+			this.laborTotal = laborTotal;
+		}
+
+		public int getLaborInvoiced() {
+			return laborInvoiced;
+		}
+
+		public void setLaborInvoiced(int laborInvoiced) {
+			this.laborInvoiced = laborInvoiced;
+		}
+
+		public int getLaborToInvoice() {
+			return laborToInvoice;
+		}
+
+		public void setLaborToInvoice(int laborToInvoice) {
+			this.laborToInvoice = laborToInvoice;
+		}
+
+		public int getLaborPercentInvoiced() {
+			return laborPercentInvoiced;
+		}
+
+		public void setLaborPercentInvoiced(int laborPercentInvoiced) {
+			this.laborPercentInvoiced = laborPercentInvoiced;
+		}
+
+		public int getMaterialCosts() {
+			return materialCosts;
+		}
+
+		public void setMaterialCosts(int materialCosts) {
+			this.materialCosts = materialCosts;
+		}
+
+		public int getMaterialInvoiced() {
+			return materialInvoiced;
+		}
+
+		public void setMaterialInvoiced(int materialInvoiced) {
+			this.materialInvoiced = materialInvoiced;
+		}
+
+		public int getMaterialToInvoice() {
+			return materialToInvoice;
+		}
+
+		public void setMaterialToInvoice(int materialToInvoice) {
+			this.materialToInvoice = materialToInvoice;
+		}
+
+		public int getMaterialPercentInvoiced() {
+			return materialPercentInvoiced;
+		}
+
+		public void setMaterialPercentInvoiced(int materialPercentInvoiced) {
+			this.materialPercentInvoiced = materialPercentInvoiced;
+		}
+
+		public int getProjectAmount() {
+			return projectAmount;
+		}
+
+		public void setProjectAmount(int projectAmount) {
+			this.projectAmount = projectAmount;
+		}
+
+		public int getProjectInvoiced() {
+			return projectInvoiced;
+		}
+
+		public void setProjectInvoiced(int projectInvoiced) {
+			this.projectInvoiced = projectInvoiced;
+		}
+
+		public int getProjectToInvoice() {
+			return projectToInvoice;
+		}
+
+		public void setProjectToInvoice(int projectToInvoice) {
+			this.projectToInvoice = projectToInvoice;
+		}
+
+		public int getProjectPercentInvoiced() {
+			return projectPercentInvoiced;
+		}
+
+		public void setProjectPercentInvoiced(int projectPercentInvoiced) {
+			this.projectPercentInvoiced = projectPercentInvoiced;
+		}
+		
+		public int getAiaTotal() {
+			return aiaTotal;
+		}
+
+		public void setAiaTotal(int aiaTotal) {
+			this.aiaTotal = aiaTotal;
+		}
+
+		public int getAiaInvoiced() {
+			return aiaInvoiced;
+		}
+
+		public void setAiaInvoiced(int aiaInvoiced) {
+			this.aiaInvoiced = aiaInvoiced;
+		}
+
+		public int getAiaToInvoice() {
+			return aiaToInvoice;
+		}
+
+		public void setAiaToInvoice(int aiaToInvoice) {
+			this.aiaToInvoice = aiaToInvoice;
+		}
+
+		public int getAiaPercentInvoiced() {
+			return aiaPercentInvoiced;
+		}
+
+		public void setAiaPercentInvoiced(int aiaPercentInvoiced) {
+			this.aiaPercentInvoiced = aiaPercentInvoiced;
+		}
+
+		public int getTotalProject() {
+			return totalProject;
+		}
+
+		public void setTotalProject(int totalProject) {
+			this.totalProject = totalProject;
+		}
+
+		public int getTotalInvoiced() {
+			return totalInvoiced;
+		}
+
+		public void setTotalInvoiced(int totalInvoiced) {
+			this.totalInvoiced = totalInvoiced;
+		}
+
+		public int getTotalToInvoice() {
+			return totalToInvoice;
+		}
+
+		public void setTotalToInvoice(int totalToInvoice) {
+			this.totalToInvoice = totalToInvoice;
+		}
+
+		public int getTotalPercentInvoiced() {
+			return totalPercentInvoiced;
+		}
+
+		public void setTotalPercentInvoiced(int totalPercentInvoiced) {
+			this.totalPercentInvoiced = totalPercentInvoiced;
+		}
+
 	
 	public static Object getChangeOrderFields(String name , ChangeOrder co)
 	{
@@ -314,6 +570,7 @@ public class ChangeOrder extends ProjectObject
 		fields.put("mcsInvoiceStatus" , "String");
 		fields.put("subInvoiceStatus" , "String");
 		fields.put("subInvoiceNumber" , "String");
+		fields.put("peType", "String");
 		return fields;
 	}
 	

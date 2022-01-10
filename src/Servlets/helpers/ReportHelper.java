@@ -128,6 +128,118 @@ public class ReportHelper
 			sb.append("<th>");
 			sb.append("Should Invoice %");
 		}
+		
+		//Labor
+		else if (value.equals("laborTotal"))
+		{	
+			sb.append("<th>");
+			sb.append("Labor Total");
+		}
+		else if (value.equals("laborInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Labor Invoiced");
+		}
+		else if (value.equals("laborToInvoice"))
+		{	
+			sb.append("<th>");
+			sb.append("Labor to Invoice ");
+		}
+		else if (value.equals("laborPercentInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Labor Percent Invoiced %");
+		}
+
+		//materials
+		else if (value.equals("materialCosts"))
+		{	
+			sb.append("<th>");
+			sb.append("Material Costs");
+		}
+		else if (value.equals("materialInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Material Invoiced");
+		}
+		else if (value.equals("materialToInvoice"))
+		{	
+			sb.append("<th>");
+			sb.append("Material to Invoice");
+		}
+		else if (value.equals("materialPercentInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Material Percent Invoiced %");
+		}
+
+		//project
+		else if (value.equals("projectAmount"))
+		{	
+			sb.append("<th>");
+			sb.append("Project Amount");
+		}
+		else if (value.equals("projectInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Project Invoiced");
+		}
+		else if (value.equals("projectToInvoice"))
+		{	
+			sb.append("<th>");
+			sb.append("Project to Invoice");
+		}
+		else if (value.equals("projectPercentInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Project Percent Invoiced %");
+		}
+		
+		//AIA
+		else if (value.equals("aiaTotal"))
+		{	
+			sb.append("<th>");
+			sb.append("AIA total");
+		}
+		else if (value.equals("aiaInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("AIA Invoiced");
+		}
+		else if (value.equals("aiaToInvoice"))
+		{	
+			sb.append("<th>");
+			sb.append("AIA to Invoice");
+		}
+		else if (value.equals("aiaPercentInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("AIA Percent Invoiced %");
+		}
+
+		//total
+		else if (value.equals("totalProject"))
+		{	
+			sb.append("<th>");
+			sb.append("Total Project");
+		}
+		else if (value.equals("totalInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Total invoiced");
+		}
+		else if (value.equals("totalToInvoice"))
+		{	
+			sb.append("<th>");
+			sb.append("Total to Invoice");
+		}
+		else if (value.equals("totalPercentInvoiced"))
+		{	
+			sb.append("<th>");
+			sb.append("Total Percent Invoiced %");
+		}
+		
+		
 		else if (value.equals("invoiced"))
 		{	
 			sb.append("<th>");

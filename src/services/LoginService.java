@@ -20,6 +20,8 @@ public class LoginService
 		String hashedPass = null;
 		try {
 			hashedPass = hG.getHash(password);
+			
+			System.out.println(hashedPass);
 		} catch(Exception e) {
 			System.out.println("Hashing went wrong");
 		}

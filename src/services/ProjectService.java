@@ -28,6 +28,7 @@ import projectObjects.CostEstimate;
 import projectObjects.Inspections;
 import projectObjects.NewEquipment;
 import projectObjects.PendingInvoice;
+import projectObjects.Invoice;
 import projectObjects.Permits;
 import projectObjects.Project;
 import projectObjects.ProjectMasterScope;
@@ -46,6 +47,7 @@ import projectObjects.City;
 import projectObjects.MasterScope;
 import services.helpers.MasterScopeFiller;
 import services.helpers.PendInvFiller;
+import services.helpers.InvoiceFiller;
 import services.helpers.ChangeOrderFiller;
 import services.helpers.CloseoutDetailsFiller;
 import services.helpers.CostEstimateFiller;
@@ -1053,7 +1055,47 @@ public class ProjectService extends ProjectObjectService
 		return true;
 	}
 
-	
+	public synchronized static boolean addInvoice(Long projectID, Map<String, String> params) throws ClassNotFoundException, ParseException
+	{
+		//System.out.println("In Add Pending Invoice:");
+
+		if(projectID == null) return false;
+		
+		Project currentProject = null;
+		try
+		{
+			currentProject = (Project)ProjectObjectService.get(projectID,  "Project");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		Set<NewEquipment> newEquipment = currentProject.getProjEquipment();
+		Iterator<NewEquipment> eqiter = newEquipment.iterator();
+		while(eqiter.hasNext())
+		{
+			eqiter.next().setId(null);
+		}
+
+
+		Set<ChangeOrder> changeOrders = currentProject.getChangeOrders();
+		Iterator<ChangeOrder> iter = changeOrders.iterator();
+		while(iter.hasNext())
+		{
+			iter.next().setId(null);
+		}
+
+		ChangeOrder co = new ChangeOrder();
+		ChangeOrderFiller.fillChangeOrder(co, params);
+		changeOrders.add(co);
+		currentProject.setChangeOrders(changeOrders);
+		int k;
+
+		//ProjectObjectService.addToSet("ChangeOrder", projectID, co);
+		k = 1;
+		ProjectObjectService.editObject("Project",projectID,currentProject,k);
+		ProjectObjectService.deleteNullSetObjects();
+		return true;
+	}
 	
 	
 	/**
@@ -1327,6 +1369,19 @@ public class ProjectService extends ProjectObjectService
 		return "PENDINV_ADDED";
 	}
 	
+	/**
+	 * @param parameters
+	 * @return
+	 */
+	public synchronized static String createInvoice(Map<String, String> parameters, String username) throws ClassNotFoundException, ParseException {
+		Invoice i = new Invoice();
+
+		InvoiceFiller.fillInvoiceInformation(i, parameters, username);
+
+		ProjectObjectService.addObject("Invoice", i);
+		
+		return "INVOICE_ADDED";
+	}
 	
 	
 	/**

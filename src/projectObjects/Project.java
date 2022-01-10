@@ -56,6 +56,33 @@ public class Project extends ProjectObject
 	private Date scheduledStartDate;
 	private Date scheduledTurnover;
 	
+	/*
+	private int laborTotal;
+	private int laborInvoiced;
+	private int laborToInvoice;
+	private int laborPercentInvoiced;
+	
+	private int materialCosts;
+	private int materialInvoiced;
+	private int materialToInvoice;
+	private int materialPercentInvoiced;
+	
+	private int projectAmount;
+	private int projectInvoiced;
+	private int projectToInvoice;
+	private int projectPercentInvoiced;
+	
+	private int aiaTotal;
+	private int aiaInvoiced;
+	private int aiaToInvoice;
+	private int aiaPercentInvoiced;
+	
+	private int totalProject;
+	private int totalInvoiced;
+	private int totalToInvoice;
+	private int totalPercentInvoiced;
+	*/
+	
 	private String customerNotes;
 	
 	private Date actualTurnover;
@@ -88,9 +115,14 @@ public class Project extends ProjectObject
 			Person projectManagers, Set<Person> supervisors,
 			Region region, ProjectStatus status, Date projectInitiatedDate,
 			Date siteSurvey, Date costcoDueDate, Date proposalSubmitted, CloseoutDetails closeoutDetails,
-			Set<ChangeOrder> changeOrders, int shouldInvoice,
+			Set<ChangeOrder> changeOrders, int shouldInvoice, 
+			/*int laborTotal, int laborInvoiced, int laborToInvoice, int laborPercentInvoiced, 
+			int materialCosts, int materialInvoiced, int materialToInvoice, int materialPercentInvoiced,
+			int projectAmount, int projectInvoiced, int projectToInvoice, int projectPercentInvoiced,
+			int aiaTotal, int aiaInvoiced, int aiaToInvoice, int aiaPercentInvoiced,
+			int totalProject, int totalInvoiced, int totalToInvoice, int totalPercentInvoiced,*/
 			int invoiced, String projectNotes, String customerNotes, Date scheduledStartDate,
-			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates, String keyStatus,
+			Date scheduledTurnover, Date actualTurnover, ProjectType pType, String zUpdates, String keyStatus, 
 			String cst, String custNum, Equipment equipList, String DrawingsDue, 
 			Inspections inspections, Permits permits, Set<NewEquipment> projEquipment, String managerNotes, 
             Date budgetaryDue, Date budgetarySubmitted, String autofill_HVAC, String autofill_Refrigeration,
@@ -143,6 +175,33 @@ public class Project extends ProjectObject
 		this.draftScheduleDate = draftScheduleDate;
 		
 		this.customerApproval = customerApproval;
+		
+		/*
+		this.laborTotal = laborTotal;
+		this.laborInvoiced = laborInvoiced;
+		this.laborToInvoice = laborToInvoice;
+		this.laborPercentInvoiced = laborPercentInvoiced;
+		
+		this.materialCosts = materialCosts;
+		this.materialInvoiced = materialInvoiced;
+		this.materialToInvoice = materialToInvoice;
+		this.materialPercentInvoiced = materialPercentInvoiced;
+		
+		this.projectAmount = projectAmount;
+		this.projectInvoiced = projectInvoiced;
+		this.projectToInvoice = projectToInvoice;
+		this.projectPercentInvoiced = projectPercentInvoiced;
+		
+		this.aiaTotal = aiaTotal;
+		this.aiaInvoiced = aiaInvoiced;
+		this.aiaToInvoice = aiaToInvoice;
+		this.aiaPercentInvoiced = aiaPercentInvoiced;
+		
+		this.totalProject = totalProject;
+		this.totalInvoiced = totalInvoiced;
+		this.totalToInvoice = totalToInvoice;
+		this.totalPercentInvoiced = totalPercentInvoiced;
+		*/
 	}
 	
 	public Project() 
@@ -194,6 +253,33 @@ public class Project extends ProjectObject
 		this.draftScheduleDate = null;
 		
 		this.customerApproval = null;
+		
+		/*
+		this.laborTotal = 0;
+		this.laborInvoiced = 0;
+		this.laborToInvoice = 0;
+		this.laborPercentInvoiced = 0;
+		
+		this.materialCosts = 0;
+		this.materialInvoiced = 0;
+		this.materialToInvoice = 0;
+		this.materialPercentInvoiced = 0;
+		
+		this.projectAmount = 0;
+		this.projectInvoiced = 0;
+		this.projectToInvoice = 0;
+		this.projectPercentInvoiced = 0;
+		
+		this.aiaTotal = 0;
+		this.aiaInvoiced = 0;
+		this.aiaToInvoice = 0;
+		this.aiaPercentInvoiced = 0;
+		
+		this.totalProject = 0;
+		this.totalInvoiced = 0;
+		this.totalToInvoice = 0;
+		this.totalPercentInvoiced = 0;
+		*/
 	}
 
 
@@ -411,6 +497,169 @@ public class Project extends ProjectObject
 	public synchronized void setInvoiced(int invoiced) {
 		this.invoiced = invoiced;
 	}
+	
+	/*
+	//New financial getters and setters
+	public int getLaborTotal() {
+		return laborTotal;
+	}
+
+	public void setLaborTotal(int laborTotal) {
+		this.laborTotal = laborTotal;
+	}
+
+	public int getLaborInvoiced() {
+		return laborInvoiced;
+	}
+
+	public void setLaborInvoiced(int laborInvoiced) {
+		this.laborInvoiced = laborInvoiced;
+	}
+
+	public int getLaborToInvoice() {
+		return laborToInvoice;
+	}
+
+	public void setLaborToInvoice(int laborToInvoice) {
+		this.laborToInvoice = laborToInvoice;
+	}
+
+	public int getLaborPercentInvoiced() {
+		return laborPercentInvoiced;
+	}
+
+	public void setLaborPercentInvoiced(int laborPercentInvoiced) {
+		this.laborPercentInvoiced = laborPercentInvoiced;
+	}
+
+	public int getMaterialCosts() {
+		return materialCosts;
+	}
+
+	public void setMaterialCosts(int materialCosts) {
+		this.materialCosts = materialCosts;
+	}
+
+	public int getMaterialInvoiced() {
+		return materialInvoiced;
+	}
+
+	public void setMaterialInvoiced(int materialInvoiced) {
+		this.materialInvoiced = materialInvoiced;
+	}
+
+	public int getMaterialToInvoice() {
+		return materialToInvoice;
+	}
+
+	public void setMaterialToInvoice(int materialToInvoice) {
+		this.materialToInvoice = materialToInvoice;
+	}
+
+	public int getMaterialPercentInvoiced() {
+		return materialPercentInvoiced;
+	}
+
+	public void setMaterialPercentInvoiced(int materialPercentInvoiced) {
+		this.materialPercentInvoiced = materialPercentInvoiced;
+	}
+
+	public int getProjectAmount() {
+		return projectAmount;
+	}
+
+	public void setProjectAmount(int projectAmount) {
+		this.projectAmount = projectAmount;
+	}
+
+	public int getProjectInvoiced() {
+		return projectInvoiced;
+	}
+
+	public void setProjectInvoiced(int projectInvoiced) {
+		this.projectInvoiced = projectInvoiced;
+	}
+
+	public int getProjectToInvoice() {
+		return projectToInvoice;
+	}
+
+	public void setProjectToInvoice(int projectToInvoice) {
+		this.projectToInvoice = projectToInvoice;
+	}
+
+	public int getProjectPercentInvoiced() {
+		return projectPercentInvoiced;
+	}
+
+	public void setProjectPercentInvoiced(int projectPercentInvoiced) {
+		this.projectPercentInvoiced = projectPercentInvoiced;
+	}
+
+	public int getAiaTotal() {
+		return aiaTotal;
+	}
+
+	public void setAiaTotal(int aiaTotal) {
+		this.aiaTotal = aiaTotal;
+	}
+
+	public int getAiaInvoiced() {
+		return aiaInvoiced;
+	}
+
+	public void setAiaInvoiced(int aiaInvoiced) {
+		this.aiaInvoiced = aiaInvoiced;
+	}
+
+	public int getAiaToInvoice() {
+		return aiaToInvoice;
+	}
+
+	public void setAiaToInvoice(int aiaToInvoice) {
+		this.aiaToInvoice = aiaToInvoice;
+	}
+
+	public int getAiaPercentInvoiced() {
+		return aiaPercentInvoiced;
+	}
+
+	public void setAiaPercentInvoiced(int aiaPercentInvoiced) {
+		this.aiaPercentInvoiced = aiaPercentInvoiced;
+	}
+
+	public int getTotalProject() {
+		return totalProject;
+	}
+
+	public void setTotalProject(int totalProject) {
+		this.totalProject = totalProject;
+	}
+
+	public int getTotalInvoiced() {
+		return totalInvoiced;
+	}
+
+	public void setTotalInvoiced(int totalInvoiced) {
+		this.totalInvoiced = totalInvoiced;
+	}
+
+	public int getTotalToInvoice() {
+		return totalToInvoice;
+	}
+
+	public void setTotalToInvoice(int totalToInvoice) {
+		this.totalToInvoice = totalToInvoice;
+	}
+
+	public int getTotalPercentInvoiced() {
+		return totalPercentInvoiced;
+	}
+
+	public void setTotalPercentInvoiced(int totalPercentInvoiced) {
+		this.totalPercentInvoiced = totalPercentInvoiced;
+	}
+	*/
 
 	@Column(length = 1000)
 	public synchronized String getProjectNotes() {
@@ -654,6 +903,8 @@ public class Project extends ProjectObject
 		scoreLastUpdated = date;
 	}
 	
+	
+	
 	public static Date getSchedulingFields(String name , Project project)
 	{
 		if(name.equalsIgnoreCase("projectInitiatedDate"))
@@ -746,6 +997,57 @@ public class Project extends ProjectObject
 			else
 				return (Double) (double) Double.parseDouble(project.getCost());
 		}
+		/*
+		//labor 
+		else if(name.equalsIgnoreCase("laborTotal"))
+			return (Double) (double) project.getLaborTotal();
+		else if(name.equalsIgnoreCase("laborInvoiced"))
+			return (Double) (double) project.getLaborInvoiced();
+		else if(name.equalsIgnoreCase("laborToInvoice"))
+			return (Double) (double) project.getLaborToInvoice();
+		else if(name.equalsIgnoreCase("laborPercentInvoiced"))
+			return (Double) (double) project.getLaborPercentInvoiced();
+		
+		//material
+		else if(name.equalsIgnoreCase("materialCosts"))
+			return (Double) (double) project.getMaterialCosts();
+		else if(name.equalsIgnoreCase("materialInvoiced"))
+			return (Double) (double) project.getMaterialInvoiced();
+		else if(name.equalsIgnoreCase("materialToInvoice"))
+			return (Double) (double) project.getMaterialToInvoice();
+		else if(name.equalsIgnoreCase("materialPercentInvoiced"))
+			return (Double) (double) project.getMaterialPercentInvoiced();
+		
+		//project
+		else if(name.equalsIgnoreCase("projectAmount"))
+			return (Double) (double) project.getProjectAmount();
+		else if(name.equalsIgnoreCase("projectInvoiced"))
+			return (Double) (double) project.getProjectInvoiced();
+		else if(name.equalsIgnoreCase("projectToInvoice"))
+			return (Double) (double) project.getProjectToInvoice();
+		else if(name.equalsIgnoreCase("projectPercentInvoiced"))
+			return (Double) (double) project.getProjectPercentInvoiced();
+		
+		//aia
+		else if(name.equalsIgnoreCase("aiaTotal"))
+			return (Double) (double) project.getAiaTotal();
+		else if(name.equalsIgnoreCase("aiaInvoiced"))
+			return (Double) (double) project.getAiaInvoiced();
+		else if(name.equalsIgnoreCase("aiaToInvoice"))
+			return (Double) (double) project.getAiaToInvoice();
+		else if(name.equalsIgnoreCase("aiaPercentInvoiced"))
+			return (Double) (double) project.getAiaPercentInvoiced();
+		
+		//total
+		else if(name.equalsIgnoreCase("totalProject"))
+			return (Double) (double) project.getTotalProject();
+		else if(name.equalsIgnoreCase("totalInvoiced"))
+			return (Double) (double) project.getTotalInvoiced();
+		else if(name.equalsIgnoreCase("totalToInvoice"))
+			return (Double) (double) project.getTotalToInvoice();
+		else if(name.equalsIgnoreCase("totalPercentInvoiced"))
+			return (Double) (double) project.getTotalPercentInvoiced();
+		*/
 		
 		return null;
 	}
@@ -757,7 +1059,32 @@ public class Project extends ProjectObject
 		fields.put("actualInvoice" , "Number");
 		fields.put("cost" , "Number");
 		fields.put("customerNumber", "Number");
-
+		
+		fields.put("laborTotal", "Number");
+		fields.put("laborInvoiced", "Number");
+		fields.put("laborToInvoice", "Number");
+		fields.put("laborPercentInvoiced", "Number");
+		
+		fields.put("materialCosts", "Number");
+		fields.put("materialInvoiced", "Number");
+		fields.put("materialToInvoice", "Number");
+		fields.put("materialPercentInvoiced", "Number");
+		
+		fields.put("projectAmount", "Number");
+		fields.put("projectInvoiced", "Number");
+		fields.put("projectToInvoice", "Number");
+		fields.put("projectPercentInvoiced", "Number");
+		
+		fields.put("aiaTotal", "Number");
+		fields.put("aiaInvoiced", "Number");
+		fields.put("aiaToInvoice", "Number");
+		fields.put("aiaPercentInvoiced", "Number");
+		
+		fields.put("totalProject", "Number");
+		fields.put("totalInvoiced", "Number");
+		fields.put("totalToInvoice", "Number");
+		fields.put("totalPercentInvoiced", "Number");
+		
 		return fields;
 	}
 	

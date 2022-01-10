@@ -70,6 +70,209 @@ public class ProjectInformationFiller {
 		currentProject.setZachUpdates(params.get("refrigNotes"));
 		currentProject.setCost(params.get("cost"));
 		currentProject.setCustomerNumber(params.get("customerNumber"));
+		
+		/*
+		String laborTotalString = params.get("laborTotal");
+		try {
+			int laborTotal = Integer.parseInt(laborTotalString);
+			currentProject.setLaborTotal(laborTotal);
+		}catch (NumberFormatException e) {
+			currentProject.setLaborTotal(0);
+		}
+		//currentProject.setLaborTotal(Integer.parseInt(params.get("laborTotal")));
+		
+		String laborInvoicedString = params.get("laborInvoiced");
+		try {
+			int laborInvoiced = Integer.parseInt(laborInvoicedString);
+			currentProject.setLaborInvoiced(laborInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setLaborInvoiced(0);
+
+		}
+		//currentProject.setLaborInvoiced(Integer.parseInt(params.get("laborInvoiced")));
+		
+		String laborToInvoiceString = params.get("laborToInvoice");
+		try {
+			int laborToInvoice = Integer.parseInt(laborToInvoiceString);
+			currentProject.setLaborToInvoice(laborToInvoice);
+		} catch (NumberFormatException e) {
+			currentProject.setLaborToInvoice(0);
+
+		}
+		//currentProject.setLaborToInvoice(Integer.parseInt(params.get("laborToInvoice")));
+		
+		String laborPercentInvoicedString = params.get("laborPercentInvoiced");
+		try {
+			int laborPercentInvoiced = Integer.parseInt(laborPercentInvoicedString);
+			currentProject.setLaborPercentInvoiced(laborPercentInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setLaborPercentInvoiced(0);
+
+		}		
+		//currentProject.setLaborPercentInvoiced(Integer.parseInt(params.get("laborPercentInvoiced")));
+		
+		String materialCostsString = params.get("materialCosts");
+		try {
+			int materialCosts = Integer.parseInt(materialCostsString);
+			currentProject.setMaterialCosts(materialCosts);
+		} catch (NumberFormatException e) {
+			currentProject.setMaterialCosts(0);
+
+		}		
+		//currentProject.setMaterialCosts(Integer.parseInt(params.get("materialCosts")));
+		
+		String materialInvoicedString = params.get("materialInvoiced");
+		try {
+			int materialInvoiced = Integer.parseInt(materialInvoicedString);
+			currentProject.setMaterialInvoiced(materialInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setMaterialInvoiced(0);
+
+		}		
+		//currentProject.setMaterialInvoiced(Integer.parseInt(params.get("materialInvoiced")));
+		
+		String materialToInvoiceString = params.get("materialToInvoice");
+		try {
+			int materialToInvoice = Integer.parseInt(materialToInvoiceString);
+			currentProject.setMaterialToInvoice(materialToInvoice);
+		} catch (NumberFormatException e) {
+			currentProject.setMaterialToInvoice(0);
+
+		}		
+		//currentProject.setMaterialToInvoice(Integer.parseInt(params.get("materialToInvoice")));
+		
+		String materialPercentInvoicedString = params.get("materialPercentInvoiced");
+		try {
+			int materialPercentInvoiced = Integer.parseInt(materialPercentInvoicedString);
+			currentProject.setMaterialPercentInvoiced(materialPercentInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setMaterialPercentInvoiced(0);
+
+		}		
+		//currentProject.setMaterialPercentInvoiced(Integer.parseInt(params.get("materialPercentInvoiced")));
+		
+		String projectAmountString = params.get("projectAmount");
+		try {
+			int projectAmount = Integer.parseInt(projectAmountString);
+			currentProject.setProjectAmount(projectAmount);
+		} catch (NumberFormatException e) {
+			currentProject.setProjectAmount(0);
+
+		}	
+		//currentProject.setProjectAmount(Integer.parseInt(params.get("projectAmount")));
+
+		String projectInvoicedString = params.get("projectInvoiced");
+		try {
+			int projectInvoiced = Integer.parseInt(projectInvoicedString);
+			currentProject.setProjectInvoiced(projectInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setProjectInvoiced(0);
+
+		}
+		//currentProject.setProjectInvoiced(Integer.parseInt(params.get("projectInvoiced")));
+		
+		String projectToInvoiceString = params.get("projectToInvoice");
+		try {
+			int projectToInvoice = Integer.parseInt(projectToInvoiceString);
+			currentProject.setProjectToInvoice(projectToInvoice);
+		} catch (NumberFormatException e) {
+			currentProject.setProjectToInvoice(0);
+
+		}		
+		//currentProject.setProjectToInvoice(Integer.parseInt(params.get("projectToInvoice")));
+
+		String projectPercentInvoicedString = params.get("projectPercentInvoiced");
+		try {
+			int projectPercentInvoiced = Integer.parseInt(projectPercentInvoicedString);
+			currentProject.setProjectPercentInvoiced(projectPercentInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setProjectPercentInvoiced(0);
+
+		}
+		//currentProject.setProjectPercentInvoiced(Integer.parseInt(params.get("projectPercentInvoiced")));
+		
+		
+		String aiaTotalString = params.get("aiaTotal");
+		try {
+			int aiaTotal = Integer.parseInt(aiaTotalString);
+			currentProject.setAiaTotal(aiaTotal);
+		} catch (NumberFormatException e) {
+			currentProject.setAiaTotal(0);
+
+		}
+		//currentProject.setAiaTotal(Integer.parseInt(params.get("aiaTotal")));
+		
+		String aiaInvoicedString = params.get("aiaInvoiced");
+		try {
+			int aiaInvoiced = Integer.parseInt(aiaInvoicedString);
+			currentProject.setAiaInvoiced(aiaInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setAiaInvoiced(0);
+
+		}	
+		//currentProject.setAiaInvoiced(Integer.parseInt(params.get("aiaInvoiced")));
+		
+		String aiaToInvoiceString = params.get("aiaToInvoice");
+		try {
+			int aiaToInvoice = Integer.parseInt(aiaToInvoiceString);
+			currentProject.setAiaToInvoice(aiaToInvoice);
+		} catch (NumberFormatException e) {
+			currentProject.setAiaToInvoice(0);
+
+		}
+		//currentProject.setAiaToInvoice(Integer.parseInt(params.get("aiaToInvoice")));
+		
+		String aiaPercentInvoicedString = params.get("aiaPercentInvoiced");
+		try {
+			int aiaPercentInvoiced = Integer.parseInt(aiaPercentInvoicedString);
+			currentProject.setAiaPercentInvoiced(aiaPercentInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setAiaPercentInvoiced(0);
+
+		}
+		//currentProject.setAiaPercentInvoiced(Integer.parseInt(params.get("aiaPercentInvoiced")));
+
+		String totalProjectString = params.get("totalProject");
+		try {
+			int totalProject = Integer.parseInt(totalProjectString);
+			currentProject.setTotalProject(totalProject);
+		} catch (NumberFormatException e) {
+			currentProject.setTotalProject(0);
+
+		}
+		//currentProject.setTotalProject(Integer.parseInt(params.get("totalProject")));
+		
+		String totalInvoicedString = params.get("totalInvoiced");
+		try {
+			int totalInvoiced = Integer.parseInt(totalInvoicedString);
+			currentProject.setTotalInvoiced(totalInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setTotalInvoiced(0);
+
+		}		
+		//currentProject.setTotalInvoiced(Integer.parseInt(params.get("totalInvoiced")));
+		
+		String totalToInvoiceString = params.get("totalToInvoice");
+		try {
+			int totalToInvoice = Integer.parseInt(totalToInvoiceString);
+			currentProject.setTotalToInvoice(totalToInvoice);
+		} catch (NumberFormatException e) {
+			currentProject.setTotalToInvoice(0);
+
+		}			
+		//currentProject.setTotalToInvoice(Integer.parseInt(params.get("totalToInvoice")));
+		
+		String totalPercentInvoicedString = params.get("totalPercentInvoiced");
+		try {
+			int totalPercentInvoiced = Integer.parseInt(totalPercentInvoicedString);
+			currentProject.setTotalPercentInvoiced(totalPercentInvoiced);
+		} catch (NumberFormatException e) {
+			currentProject.setTotalPercentInvoiced(0);
+
+		}
+		*/
+		//currentProject.setTotalPercentInvoiced(Integer.parseInt(params.get("totalPercentInvoiced")));
+		
 
 		Date finitiatedDate = null;
 		if (!(params.get("initiated")).isEmpty())

@@ -46,7 +46,7 @@ import projectObjects.Task;
 import projectObjects.ChangeOrder;
 import projectObjects.CostEstimate;
 import projectObjects.Customer;
-
+import projectObjects.Invoice;
 import java.util.Set;
 
 
@@ -425,6 +425,42 @@ public class ProjectObjectService
         return list;
 	}
 	
+	/////////////////
+	
+	public synchronized static List<projectObjects.Invoice> getAllInvoices(Long projectId)
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Invoice where invoice_id = " + projectId);
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Invoice> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	public synchronized static List<projectObjects.Invoice> getAllInvoices()
+	{
+		//Begin transaction
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Get all objects of type "domain"
+        Query q = session.createQuery("from Invoice");
+        @SuppressWarnings("unchecked")
+		List<projectObjects.Invoice> list = q.list();
+   
+        tx.commit();
+        
+        return list;
+	}
+	
+	
+	////////////////////
 	
 	/**
 	 * This function returns all Projects from the database.
@@ -1248,6 +1284,37 @@ public class ProjectObjectService
 		return "";
 	}
 	
+	public synchronized static String getProjectInvsAsJSON(long projectID) {
+        Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+		} catch(TransactionException ex) {	
+			tx.commit();
+			return "ERROR";
+		}
+		Class<?> c;
+		
+		try {
+			c = Class.forName("projectObjects.Invoice");
+			
+			Criteria criteria = session.createCriteria(c);
+
+			Criterion projectIDRestriction = Restrictions.sqlRestriction("invoice_id = " + projectID);
+			criteria.add(projectIDRestriction);
+			
+	        List<?> list = criteria.list();
+	        
+	        tx.commit();
+
+	        return gson.toJson(list);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
 	
 	
 
