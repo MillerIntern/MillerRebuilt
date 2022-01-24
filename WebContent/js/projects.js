@@ -4794,29 +4794,29 @@ function updatePricingInfo(){
 	totalPercentInvoiced = totalPercentInvoiced.toFixed(2);
 	
 	//fills in the fields 
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val('$' + laborTotal);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val('$' +laborInvoiced);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val('$' + laborToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val(cleanNumericValueForDisplaying(laborTotal.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val(cleanNumericValueForDisplaying(laborInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val(cleanNumericValueForDisplaying(laborToInvoice.toFixed(2)));
 	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").val(laborPercentInvoiced + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val('$' + materialCosts);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val('$' + materialInvoiced);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val('$' + materialToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val(cleanNumericValueForDisplaying(materialCosts.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val(cleanNumericValueForDisplaying(materialInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val(cleanNumericValueForDisplaying(materialToInvoice.toFixed(2)));
 	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").val(materialPercentInvoiced + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val('$' + projectAmount);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val('$' + projectInvoiced);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val('$' + projectToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val(cleanNumericValueForDisplaying(projectAmount.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val(cleanNumericValueForDisplaying(projectInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val(cleanNumericValueForDisplaying(projectToInvoice.toFixed(2)));
 	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").val(projectPercentInvoiced + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val('$' + aiaTotal);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val('$' + aiaInvoiced);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val('$' + aiaToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val(cleanNumericValueForDisplaying(aiaTotal.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val(cleanNumericValueForDisplaying(aiaInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val(cleanNumericValueForDisplaying(aiaToInvoice.toFixed(2)));
 	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").val(aiaPercentInvoiced + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val('$' + totalProject);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val('$' + totalInvoiced);
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val('$' + totalToInvoice);
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val(cleanNumericValueForDisplaying(totalProject.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val(cleanNumericValueForDisplaying(totalInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val(cleanNumericValueForDisplaying(totalToInvoice.toFixed(2)));
 	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").val(totalPercentInvoiced + '%');
 	
 }
@@ -13047,7 +13047,7 @@ function getSubcontractorsPend() {
 		}, complete: function (data) {			
 			if (data.responseJSON) {
 				createSubDropdownPend(data.responseJSON);
-				createSubDropdownInv(data.responseJSON);
+				//createSubDropdownInv(data.responseJSON);
 			}
 
 			else{console.log("NO RESPONSE JSON FROM getSubcontractors()");}
@@ -13286,7 +13286,7 @@ function clearAndAddSingleRowPendInvs(msg) {
 	$('#pendingInvoiceTable > tbody').children('tr:not(.head)').remove();
 	
 	let placeHolder = document.createElement('tr');
-	let listDetails0 = document.createElement('td');
+	let listDetails0 = document.createElement('td contenteditable');
 	let listDetails1 = document.createElement('td');
 	let listDetails2 = document.createElement('td');	
 	let listDetails3 = document.createElement('td');
@@ -13447,6 +13447,7 @@ function changeStatus(){
 		
 		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
 		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:39, text:'Awaiting Equipment'}));
 		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
 		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
 		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
@@ -13626,14 +13627,14 @@ function fillPeInvsTable(data) {
 			}
 		}
 		
-		amountInvoiced.appendChild(document.createTextNode('$' + invoiced));
+		amountInvoiced.appendChild(document.createTextNode(cleanNumericValueForDisplaying(invoiced.toFixed(2))));
 
 		//Amount To Invoice
 		var amountToInvoice = document.createElement('td');
 		amountToInvoice.width = "10%";
 		
 		if(changeOrder.sell){
-			amountToInvoice.appendChild(document.createTextNode('$' + (changeOrder.sell - invoiced)));		
+			amountToInvoice.appendChild(document.createTextNode(cleanNumericValueForDisplaying((changeOrder.sell - invoiced).toFixed(2))));		
 		}
 		else{
 			amountToInvoice.appendChild(document.createTextNode("---"));
@@ -13744,16 +13745,22 @@ function createInv() {
 
 	INV_ACTION = "createInv";
 	clearInvForm();	
-	document.getElementById('invoiceInformation').style.width = "100%";
-	$('#returnAccountsReceivable').hide();
-	$('#invoiceDisplay').hide();
-	$('#invoiceCreationZone').show();
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
+	displayInvWell();
 
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	today = mm + '/' + dd + '/' + yyyy;
+	
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val((invs.length+1).toString());
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Open");
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#associatedPE').val(SELECTED_PE_ID.mcsCO);
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceType').val(parsePETypeStatus(SELECTED_PE_ID.peType));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceCustomer').val(convertChangeOrderType(SELECTED_PE_ID.type));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#submittedDateInv').val(today);
+
+	
 	
 	var invoiced = Number(0);
 	
@@ -13768,8 +13775,8 @@ function createInv() {
 	
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell.toFixed(2)));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance.toFixed(2)));
 	
 }
 
@@ -13851,16 +13858,18 @@ function createSubDropdownInv(json) {
 }
 
 /**
- * This function shows the form. 
+ * This function shows the invoice form. 
  */
 function displayInvWell() {
 
+	/*
 	document.getElementById('invoiceInformation').style.width = "100%";
 	$('#invoiceDisplay').hide();
 	$('#invoiceCreationZone').show();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
 	$('#returnAccountsReceivable').hide();
-
+*/
+	document.querySelector('.bg-modal').style.display = "flex";
 }
 /**
  * This function fills the form using the old data. i.e., it is called in edit invoice so that older values are filled. 
@@ -13914,9 +13923,9 @@ function fillInvWell(source) {
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
 	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
-	$('#invoiceCreationZone').find('#invoiceAmount').val('$' + selected_Inv.invoiceAmount);
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance.toFixed(2)));
+	$('#invoiceCreationZone').find('#invoiceAmount').val(cleanNumericValueForDisplaying(selected_Inv.invoiceAmount.toFixed(2)));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell.toFixed(2)));
 
 }
 
@@ -13950,7 +13959,9 @@ function fillInvsTable(data) {
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
 	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
-	$('#invoiceInformation').find('#invoiceBalance1').val('$' + balance);
+	$('#invoiceInformation').find('#invoiceBalance1').val(cleanNumericValueForDisplaying(balance.toFixed(2)));
+	$('#invoiceInformation').find('#invTotal1').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell.toFixed(2)));
+
 	
 	
 	//shows invoices based on filter selection
@@ -14011,8 +14022,8 @@ function fillInvsTable(data) {
 		associatedPE.innerHTML = invs[i].associatedPE;
 		notes.innerHTML = invs[i].notes;
 		
-		invListing.appendChild(invoiceID);
 		invListing.appendChild(associatedPE);
+		invListing.appendChild(invoiceID);
 		invListing.appendChild(invoiceTitle);
 		invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
