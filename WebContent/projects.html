@@ -27,14 +27,10 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/projects.css" rel="stylesheet">
     <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
-    <link href="css/modal.css" rel="stylesheet">
-    
     
     
     
     <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
-    
-    
 	
 	</head>
 	<body id= "dom_body" onload = "preparePage()">
@@ -2266,7 +2262,6 @@
 		
 			<table id="pricingInfoTable" class='table table-hover'>
 	 
-	 			
 	 			<tr>
 	 			<td style="width: 15%" class = "bold">Summary</td>
 	 			<td style="width: 15%" class = "bold">Total</td>
@@ -2275,14 +2270,6 @@
 	 			<td style="width: 15%" class = "bold">% Invoiced</td>
 	 			
 	 			</tr>
-	 			
-	 			<tr id = "hideProject">
-	            <td style="width: 15%" class = "bold">Project</td>
-	            <td><input type="text" id="projectAmount" value="0" readonly></td>
-	            <td><input type="text" id="projectInvoiced" value="" readonly></td>
-	            <td><input type="text" id="projectToInvoice" value="" readonly></td>
-	            <td><input type="text" id="projectPercentInvoiced" value="" readonly></td>
-	            </tr>
 	 
 				<tr id = "hideLabor">
 	            <td class = "bold">Labor</td>
@@ -2298,6 +2285,14 @@
 	            <td><input type="text" id="materialInvoiced" value="" readonly></td>
 	            <td><input type="text" id="materialToInvoice" value="" readonly></td>
 	            <td><input type="text" id="materialPercentInvoiced" value="" readonly></td>
+	            </tr>
+	            
+	            <tr id = "hideProject">
+	            <td style="width: 15%" class = "bold">Project</td>
+	            <td><input type="text" id="projectAmount" value="0" readonly></td>
+	            <td><input type="text" id="projectInvoiced" value="" readonly></td>
+	            <td><input type="text" id="projectToInvoice" value="" readonly></td>
+	            <td><input type="text" id="projectPercentInvoiced" value="" readonly></td>
 	            </tr>		
 	
 	            <tr id = "hideAIA">
@@ -2375,10 +2370,6 @@
 		   <div class = "changeOrderTableDiv" id = 'invoiceDisplay'>
 		   
 		   <td>
-		   
-		   	<label for='invTotal'>PE Total: </label>
-		   	<input type='text' id='invTotal1' style="color:#FF0000" readonly/>
-		   	
 		   	<label for='invoiceBalance1'>Balance: </label>
 		   	<input type='text' id='invoiceBalance1' style="color:#FF0000" readonly/>
 		   	
@@ -2414,12 +2405,8 @@
 		         </table>
 		      </div>		      
 		   </div>
+		   <div style = "width:100%;padding:5px; "id = 'invoiceCreationZone' class = 'well'>
 		   
-		   
-		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone' class = 'bg-modal'>
-		   
-		   <div class = "modal-contents">
-		   <!-- 
 		   <td><label for='associatedPE'>PE # <span style="color:#FF0000"></span></label></td>
 			<td><input type='text' id='associatedPE'></td>
 			
@@ -2428,57 +2415,13 @@
 		   	
 		   	<label for='invoiceBalance'>Balance: </label>
 		   	<input type='text' id='invoiceBalance' style="color:#FF0000" readonly/>
-		   	 
 		   	
 		   </td>
-		   -->
 		   
 		      <button style = "float:right" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
 		      <button style = "float:right; margin-right:5px;" onclick='viewInv()' class='btn btn-danger'>Back to Invoice View</button>
 		      <div class='base-field'>
 		         <table class='table invCreationTable'>
-		         
-		          <tr>
-		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceTitle'/>
-		               
-		              </tr>
-		              
-		              <tr>
-		               <td><label for='invoiceAmount'>Amount:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceAmount'/>
-		               
-		               </tr>
-		               
-		               <tr>
-		                <td><label>Status <span style="color:#FF0000">*</span></label></td>
-		               <td>
-		                  <select id = "invoiceStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
-		                     <option value="Open"> Open </option>
-		                     <option value="Completed"> Completed </option>
-		                     <option id="closedStatus"  value="Closed"> Closed </option>
-		                     <option id="Rejected"  value="Rejected"> Rejected </option>
-		                  </select>
-		               </td>
-		               
-		               </tr>
-		               
-		               <tr>
-		               <td><label for='invoiceApproval'>Approval:  <span style="color:#FF0000"></span></label>
-		               <td><input type='text' id='invoiceApproval'/>
-		               
-		               </tr>
-		               
-		               
-		               <tr>
-		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
-		               <td><input type='text' id='notes'/>
-		               
-		            </tr>
-		            
-		         
-		         
-		         <!-- 
 		            <tr>
 		               <td><label for='invoiceID'>PE Invoice # <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceID' readonly/>
@@ -2502,7 +2445,7 @@
 		            
 		            <tr>
 		               <td><label for='submittedDateInv'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
-		               <td><input type='text' id='submittedDateInv' readonly/>
+		               <td><input type='text' id='submittedDateInv'/>
 		            </tr>
 		            
 		            <tr>
@@ -2513,7 +2456,10 @@
 
     		         <tr>
 		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
-		               <td><input type='text' id='invoiceCustomer' readonly/>
+		               <td>
+		               	<select id = "invoiceCustomer">
+		               	
+		               	</select>
 		               
 		               </td>
 		            </tr>
@@ -2541,13 +2487,9 @@
 		               <td><input type='text' id='notes'/>
 		               
 		            </tr>
-		              
-		               -->
-		              
 		                 		         
 		         </table>
 		      </div>
-		   </div>
 		   </div>
 		</div>
 		   
