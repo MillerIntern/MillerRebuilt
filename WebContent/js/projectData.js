@@ -602,3 +602,59 @@ function dateFillFunction(x){
 	
 }
 
+function changeStatus(){		
+	//code to remove all options
+	$('#status').empty();
+	
+	//code to add multiple options at the same time depending on the stage
+	var projectStage = $('#stage').val();
+	
+	if(projectStage == "2"){//Active
+
+		//if the current Permit autofill is TBD, then display message
+		if($('#generalInformation').find('#autofill-Permits').val() == "0"){
+				
+			window.alert("Setting project to Active: Permits are still set to TBD");		
+		}
+		
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:39, text:'Awaiting Equipment'}));
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
+		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
+		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
+	}
+	else if(projectStage == "8"){//Budgetary)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
+		$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
+	}
+	else if(projectStage == "15"){//Canceled)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:34, text:'Lost'}));
+	}
+	else if(projectStage == "4"){//Closed)
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
+	}
+	else if(projectStage == "9"){//On Hold)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:38, text:'Budgetary - Preparing'}));
+		$('#status ').append($('<option>', {value:37, text:'Budgetary - Submitted'}));
+		$('#status ').append($('<option>', {value:35, text:'Closeout'}));		
+		$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
+		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
+		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
+		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
+	}
+	else if(projectStage == "1"){//Proposal)
+		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
+		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
+		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:1, text:'Proposal - Preparing'}));
+		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
+	}
+}

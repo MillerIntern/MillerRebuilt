@@ -27,7 +27,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/projects.css" rel="stylesheet">
     <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
-    
+    <link href="css/modal.css" rel="stylesheet">
     
     
     <link href="https://fonts.googleapis.com/css?family=Rubik|Kanit" rel="stylesheet">
@@ -2338,7 +2338,7 @@
 					<option value='complete'>Complete</option>
 			 </select>
 		      <div class="generalOverFlowScroll">
-		         <table class='table' id='peInvoiceTable'>
+		         <table class='table table-striped permitsAndInspectionsHovering' id='peInvoiceTable'>
 		            <tr class='head'>
 					  	<th>PE #</th>
 						<th>Title</th>
@@ -2405,8 +2405,11 @@
 		         </table>
 		      </div>		      
 		   </div>
-		   <div style = "width:100%;padding:5px; "id = 'invoiceCreationZone' class = 'well'>
+		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone' class = 'bg-modal'>
 		   
+		   <div class = "modal-contents">
+		   
+		   <!--  
 		   <td><label for='associatedPE'>PE # <span style="color:#FF0000"></span></label></td>
 			<td><input type='text' id='associatedPE'></td>
 			
@@ -2417,19 +2420,12 @@
 		   	<input type='text' id='invoiceBalance' style="color:#FF0000" readonly/>
 		   	
 		   </td>
+		   -->
 		   
 		      <button style = "float:right" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
 		      <button style = "float:right; margin-right:5px;" onclick='viewInv()' class='btn btn-danger'>Back to Invoice View</button>
 		      <div class='base-field'>
-		         <table class='table invCreationTable'>
-		            <tr>
-		               <td><label for='invoiceID'>PE Invoice # <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceID' readonly/>
-		               
-		               <td><label for='invoiceNumber'>Invoice # <span style="color:#FF0000"></span></label></td>
-		               <td><input type='text' id='invoiceNumber'></td>
-		               
-		            </tr>
+		         <table class='table invCreationTable table table-striped permitsAndInspectionsHovering'>
 		            
 		            <tr>
 		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000">*</span></label>
@@ -2438,30 +2434,8 @@
 		            </tr>
 		            
 		            <tr>
-		               <td><label for='invoiceType'>Type:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceType' readonly/>
-		               
-		            </tr>
-		            
-		            <tr>
-		               <td><label for='submittedDateInv'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
-		               <td><input type='text' id='submittedDateInv'/>
-		            </tr>
-		            
-		            <tr>
 		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount'/>
-		            </tr>
-		            
-
-    		         <tr>
-		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
-		               <td>
-		               	<select id = "invoiceCustomer">
-		               	
-		               	</select>
-		               
-		               </td>
 		            </tr>
 		            
 		            <tr id = "invoiceStatusSelectionRow" style = "display : none">
@@ -2476,13 +2450,51 @@
 		               </td>
 		            </tr>
 		            
-		            <tr>
+		            
+		            <tr id = hide1>
+		            <td><label for='associatedPE'>Associated PE #<span style="color:#FF0000">*</span></label>
+		            <td><input type='text' id='associatedPE' readonly/>
+		            </tr>  
+		            
+		            <tr id = hide2>
+		               <td><label for='invoiceID'>PE Invoice # <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceID' readonly/>
+		            </tr>
+		            
+		            <tr id = hide3>
+		               <td><label for='invoiceNumber'>Invoice # <span style="color:#FF0000"></span></label></td>
+		               <td><input type='text' id='invoiceNumber'></td>
+		               </tr>
+		           
+		            
+		            <tr id = hide4>
+		               <td><label for='invoiceType'>Type:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceType' readonly/>
+		               
+		            </tr>
+		            
+		            <tr id = hide5>
+		               <td><label for='submittedDateInv'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
+		               <td><input type='text' id='submittedDateInv'/ readonly>
+		            </tr>
+	
+
+    		         <tr id = hide6>
+		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
+		               
+		               	<td><input type='text' id='invoiceCustomer'/ readonly>
+		               
+		               
+		            </tr>
+		            
+		            
+		            <tr id = hide7>
 		               <td><label for='invoiceApproval'>Approval:  <span style="color:#FF0000"></span></label>
 		               <td><input type='text' id='invoiceApproval'/>
 		               
 		            </tr>
 		            
-		            <tr>
+		            <tr id = hide8>
 		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
 		               <td><input type='text' id='notes'/>
 		               
@@ -2490,6 +2502,7 @@
 		                 		         
 		         </table>
 		      </div>
+		   </div>
 		   </div>
 		</div>
 		   

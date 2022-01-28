@@ -13448,6 +13448,7 @@ function changeStatus(){
 		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
 		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
 		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
+		$('#status ').append($('<option>', {value:39, text:'Awaiting Equipment'}));
 		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
 		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
 		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	
@@ -13574,8 +13575,22 @@ function fillPeInvsTable(data) {
 		tableRow.setAttribute("value", changeOrder.id);
 		
 		//takes user to invoices
-		tableRow.onclick = function() {goToInvoices(changeOrder)};
-		tableRow.ondblclick = function () {displayInvDisplay(changeOrder)};
+		//tableRow.onclick = function() {goToInvoices(changeOrder)};
+		//tableRow.ondblclick = function () {displayInvDisplay(changeOrder)};
+		
+		var btn = document.createElement('button');
+		//btn.type = "button";
+		//btn.className = "btn";
+		
+		//btn.setAttribute('content', 'test content');
+		btn.setAttribute('class', 'btn');
+		btn.style.color="black";
+		btn.style.background="#DCDCDC";
+
+		btn.innerHTML = 'Add Invoice';
+		btn.onclick = function() {
+
+		};
 
 		//CO Number
 		var coNumber = document.createElement('td');
@@ -13654,9 +13669,12 @@ function fillPeInvsTable(data) {
 		tableRow.appendChild(amountInvoiced);
 		
 		tableRow.appendChild(amountToInvoice);
+		
+		tableRow.appendChild(btn);
+
 				
 		tableRow.ondblclick = function() {
-			goToChangeOrder(1);
+			goToInvoices(changeOrder);
 		};
 		
 		//adds all PE rows to frontend
@@ -13670,10 +13688,27 @@ let SELECTED_PE_ID;
 //takes user to invoices
 function goToInvoices(source)
 {
+	
+	hideExtraInvoiceValues();
+	
 	//sets the selected PE to a global var
 	SELECTED_PE_ID = source;
 	displayInvDisplay();
 	
+}
+
+function hideExtraInvoiceValues(){
+	
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
+
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide1').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide2').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide3').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide4').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide5').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide6').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide7').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide8').hide();
 }
 
 //displays invoices
@@ -13744,16 +13779,26 @@ function createInv() {
 
 	INV_ACTION = "createInv";
 	clearInvForm();	
+	displayInvWell();
+	/*
 	document.getElementById('invoiceInformation').style.width = "100%";
 	$('#returnAccountsReceivable').hide();
 	$('#invoiceDisplay').hide();
 	$('#invoiceCreationZone').show();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
-
+*/
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	today = mm + '/' + dd + '/' + yyyy;
+	
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val((invs.length+1).toString());
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Open");
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#associatedPE').val(SELECTED_PE_ID.mcsCO);
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceType').val(parsePETypeStatus(SELECTED_PE_ID.peType));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceCustomer').val(convertChangeOrderType(SELECTED_PE_ID.type));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#submittedDateInv').val(today);
 	
 	var invoiced = Number(0);
 	
@@ -13829,7 +13874,7 @@ function editSelectedInv(source)
 	displayInvWell();
 	fillInvWell(source);
 }
-
+/*
 //creates customer dropdown menu for invoices
 function createSubDropdownInv(json) {
 	let d = document.createDocumentFragment();
@@ -13849,18 +13894,20 @@ function createSubDropdownInv(json) {
 	}
 	$('#invoiceCustomer').append(d);
 }
-
+*/
 /**
  * This function shows the form. 
  */
 function displayInvWell() {
 
+	/*
 	document.getElementById('invoiceInformation').style.width = "100%";
 	$('#invoiceDisplay').hide();
 	$('#invoiceCreationZone').show();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
 	$('#returnAccountsReceivable').hide();
-
+*/
+	document.querySelector('.bg-modal').style.display = "flex";
 }
 /**
  * This function fills the form using the old data. i.e., it is called in edit invoice so that older values are filled. 
@@ -14005,14 +14052,15 @@ function fillInvsTable(data) {
 			invoiceAmount.innerHTML = "---";		
 		
 		invoiceCustomer.innerHTML = invs[i].invoiceCustomer;
+		
 		invoiceStatus.innerHTML = invs[i].invoiceStatus;
 		invoiceApproval.innerHTML = invs[i].invoiceApproval;
 		
 		associatedPE.innerHTML = invs[i].associatedPE;
 		notes.innerHTML = invs[i].notes;
 		
-		invListing.appendChild(invoiceID);
 		invListing.appendChild(associatedPE);
+		invListing.appendChild(invoiceID);
 		invListing.appendChild(invoiceTitle);
 		invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
@@ -14151,7 +14199,7 @@ function submitInv() {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
 				if (response === 'UPDATED_INVOICE') {
-					alert('Pending Invoice Updated Successfully');
+					alert('Invoice Updated Successfully');
 				
 					//Makes the user return to the invoice screen 
 					document.getElementById('invoiceInformation').style.width = "100%";
