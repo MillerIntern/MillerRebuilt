@@ -797,9 +797,9 @@ public class ProjectRuleService
 			ProjectStatus fd4 = (ProjectStatus) field2;
 			String statusName = fd4.getName();
 			
-			if(stageName.equals("Active") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Closeout") || statusName.equals("Scheduling") || statusName.equals("Scheduled")))			
+			if(stageName.equals("Active") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Awaiting Permit") || statusName.equals("Awaiting Equipment") || statusName.equals("Closeout") || statusName.equals("Scheduling") || statusName.equals("Scheduled")))			
 			{
-				_rule.setFailMessage("Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Closeout, Scheduled, or Scheduling if Stage is Active");
+				_rule.setFailMessage("Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Awaiting Equipment, Closeout, Scheduled, or Scheduling if Stage is Active");
 				return false;
 			}
 			else if(stageName.equals("Budgetary") && !(statusName.equals("Awaiting Direction") || statusName.equals("Awaiting Drawings") || statusName.equals("Preparing Proposal") || statusName.equals("Proposal Submitted")))			

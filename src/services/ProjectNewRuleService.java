@@ -57,6 +57,7 @@ public class ProjectNewRuleService {
 		 * Awaiting Direction = 4
 		 * Awaiting Drawings = 11
 		 * Awaiting Permits = 30
+		 * Awaiting Equipment = 12
 		 * Budgetary Submitted = 37
 		 * CloseOut = 35
 		 * Lost = 34
@@ -111,7 +112,7 @@ public class ProjectNewRuleService {
 			al.add(rd);
 		}
 		//6
-		if((stage.equals("Active")) && !(status == 4 || status == 11 || status == 30 || status == 35 || status == 29 || status == 26)) {
+		if((stage.equals("Active")) && !(status == 4 || status == 11 || status == 30 || status == 35 || status == 29 || status == 26 || status == 12)) {
 			RuleDetails rd = new RuleDetails("GeneralInfo", " InvalidaActiveStage", "Status must be either Awaiting Direction, Awaiting Drawings, Awaiting Permit, Closeout, Scheduled, or Scheduling if the Stage is Active", 0);
 			scoreYellow = true;
 			al.add(rd);

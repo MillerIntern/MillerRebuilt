@@ -2257,8 +2257,8 @@
 		
 		<div id='pricingInfo' class='info-tab info-tab-pricingInfo'>
 		
-		<li style = "background-color: blue; top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="saveProject_PROJECT_DATA()" >
-	        				Read Only&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-saved"></span></li>
+		<li style = "background-color: #6495ED; top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="dataReadOnly()" >
+	        				Read Only&nbsp;&nbsp;<span class="glyphicon"></span></li>
 		
 			<table id="pricingInfoTable" class='table table-hover'>
 	 
@@ -2348,10 +2348,113 @@
 						<th>Amount</th>
 						<th>Invoiced To Date</th>
 						<th>Balance</th>
+						<th>Add Invoice</th>
 						
 		            </tr>
 		         </table>
 		      </div>		      
+		   </div>
+		   
+		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone1' class = 'bg-modal1'>
+		   
+		   <div class = "modal-contents1">
+		 
+		   
+		      <button style = "float:right" onclick='submitInv1()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:right; margin-right:5px;" onclick='viewInv1()' class='btn btn-danger'>Back to Invoice View</button>
+		      <div class='base-field'>
+		         <table class='table invCreationTable table table-striped permitsAndInspectionsHovering'>
+		            
+		            <tr>
+		               <td><label for='invoiceTitle1'>Title:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceTitle1'/>
+		               
+		            </tr>
+		            
+		            <tr id = "percentOrAmountRow1" style = "display : none">
+		            <td><label>Amount<span style="color:#FF0000">*</span></label></td>
+		            <td>
+		            <select id="percentOrAmount1" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="showAmountBox1()">
+	        	
+	        			<option value="0">Custom $</option>
+                		<option value="1">Custom %</option>  
+                		<option value="2">Balance</option>   
+            		</select>
+            		</td>
+            		</tr>
+		            
+		            
+		            <tr id = 'invoiceAmountHide1'>
+		               <td><label for='invoiceAmount1'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceAmount1'/>
+		            </tr>
+		            
+		            
+		            <tr id = "invoiceStatusSelectionRow1" style = "display : none">
+		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
+		               <td>
+		                  <select id = "invoiceStatus1" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
+		                     <option value="Open"> Open </option>
+		                     <option value="Completed"> Completed </option>
+		                     <option id="closedStatus"  value="Closed"> Closed </option>
+		                     <option id="Rejected"  value="Rejected"> Rejected </option>
+		                  </select>
+		               </td>
+		            </tr>
+		            
+		            
+		            <tr id = hide1>
+		            <td><label for='associatedPE1'>Associated PE #<span style="color:#FF0000">*</span></label>
+		            <td><input type='text' id='associatedPE1' readonly/>
+		            </tr>  
+		            
+		            <tr id = hide2>
+		               <td><label for='invoiceID1'>PE Invoice # <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceID1' readonly/>
+		            </tr>
+		            
+		            <tr id = hide3>
+		               <td><label for='invoiceNumber1'>Invoice # <span style="color:#FF0000"></span></label></td>
+		               <td><input type='text' id='invoiceNumber1'></td>
+		               </tr>
+		           
+		            
+		            <tr id = hide4>
+		               <td><label for='invoiceType1'>Type:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceType1' readonly/>
+		               
+		            </tr>
+		            
+		            <tr id = hide5>
+		               <td><label for='submittedDateInv1'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
+		               <td><input type='text' id='submittedDateInv1'/ readonly>
+		            </tr>
+	
+
+    		         <tr id = hide6>
+		               <td><label for='invoiceCustomer1'>Customer <span style="color:#FF0000">*</span></label></td>
+		               
+		               	<td><input type='text' id='invoiceCustomer1'/ readonly>
+		               
+		               
+		            </tr>
+		            
+		            
+		            <tr id = hide7>
+		               <td><label for='invoiceApproval1'>Approval:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='invoiceApproval1'/>
+		               
+		            </tr>
+		            
+		            <tr id = hide8>
+		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='notes1'/>
+		               
+		            </tr>
+		                 		         
+		         </table>
+		      </div>
+		   </div>
 		   </div>
 		   
 		   </div>
@@ -2408,19 +2511,7 @@
 		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone' class = 'bg-modal'>
 		   
 		   <div class = "modal-contents">
-		   
-		   <!--  
-		   <td><label for='associatedPE'>PE # <span style="color:#FF0000"></span></label></td>
-			<td><input type='text' id='associatedPE'></td>
-			
-		   	<td><label for='invTotal'>PE Total: </label>
-		   	<input type='text' id='invTotal' style="color:#FF0000" readonly/>
-		   	
-		   	<label for='invoiceBalance'>Balance: </label>
-		   	<input type='text' id='invoiceBalance' style="color:#FF0000" readonly/>
-		   	
-		   </td>
-		   -->
+		 
 		   
 		      <button style = "float:right" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
 		      <button style = "float:right; margin-right:5px;" onclick='viewInv()' class='btn btn-danger'>Back to Invoice View</button>
@@ -2433,7 +2524,19 @@
 		               
 		            </tr>
 		            
-		            <tr>
+		            <tr id = "percentOrAmountRow" style = "display : none">
+		            <td><label>Amount<span style="color:#FF0000">*</span></label></td>
+		            <td>
+		            <select id="percentOrAmount" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="showAmountBox()">
+	        	
+	        			<option value="0">Custom $</option>
+                		<option value="1">Custom %</option>  
+                		<option value="2">Balance</option>   
+            		</select>
+            		</td>
+            		</tr>
+		            
+		            <tr id = "invoiceAmountHide">
 		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount'/>
 		            </tr>
