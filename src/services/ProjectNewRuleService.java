@@ -148,12 +148,13 @@ public class ProjectNewRuleService {
 //			al.add(rd);
 //		}
 		//2
+		/*
 		if(status != null && status == 35 && shouldInvoice == 0) {
 			RuleDetails rd = new RuleDetails("Financial", "ShouldInvoiceZero", "Should Invoice needs a value other than 0", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
-		
+		*/
 		//Removing this rule for now as per Andy's Instruction
 //		//3
 //		if(cost.isEmpty()) {
@@ -163,12 +164,13 @@ public class ProjectNewRuleService {
 //		}
 
 		//4
+		/*
 		if((status != null && status == 35) && (actualInvoice != shouldInvoice)) {
 			RuleDetails rd = new RuleDetails("Financial", "ActualShouldNotEqual", "Need to invoice "+shouldInvoice +" %", 0);
 			scoreYellow = true;
 			al.add(rd);
 		}
-		
+		*/
 		
 		/*
 		 * //5 Need to review if customerNumber is needed if(customerNumber.isEmpty()) {

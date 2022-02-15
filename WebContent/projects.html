@@ -2359,9 +2359,6 @@
 		   
 		   <div class = "modal-contents1">
 		 
-		   
-		      <button style = "float:right" onclick='submitInv1()' class='btn btn-success'>Save Invoice</button>
-		      <button style = "float:right; margin-right:5px;" onclick='viewInv1()' class='btn btn-danger'>Back to Invoice View</button>
 		      <div class='base-field'>
 		         <table class='table invCreationTable table table-striped permitsAndInspectionsHovering'>
 		            
@@ -2451,9 +2448,13 @@
 		               <td><input type='text' id='notes1'/>
 		               
 		            </tr>
-		                 		         
+		            		         
 		         </table>
 		      </div>
+		      
+		      <button style = "float:center" onclick='submitInv1()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:right; margin-right:5px;background-color: #4169E1;color: white;" onclick='viewInv1()' class='btn'>Back to Invoice View</button>
+		      
 		   </div>
 		   </div>
 		   
@@ -2512,14 +2513,11 @@
 		   
 		   <div class = "modal-contents">
 		 
-		   
-		      <button style = "float:right" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
-		      <button style = "float:right; margin-right:5px;" onclick='viewInv()' class='btn btn-danger'>Back to Invoice View</button>
 		      <div class='base-field'>
 		         <table class='table invCreationTable table table-striped permitsAndInspectionsHovering'>
 		            
 		            <tr>
-		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000">*</span></label>
+		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000;">*</span></label>
 		               <td><input type='text' id='invoiceTitle'/>
 		               
 		            </tr>
@@ -2605,6 +2603,10 @@
 		                 		         
 		         </table>
 		      </div>
+		      <button style = "float:center" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:right; margin-right:5px;background-color: #4169E1;color: white;" onclick='viewInv()' class='btn'>Back to Invoice View</button>
+		      
+		      
 		   </div>
 		   </div>
 		</div>

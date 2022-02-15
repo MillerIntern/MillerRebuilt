@@ -14234,8 +14234,20 @@ function submitInv() {
 	//user picks to invoice %
 	if(amountType == "1"){
 		
-		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell).toFixed(2);
+		var invoiced = Number(0);
 		
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
+		
+	
+		
+		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
 	}
 	
 	//user picks to invoice the remaining balance
@@ -14365,8 +14377,20 @@ function submitInv1(){
 	//user picks to invoice %
 	if(amountType == "1"){
 		
-		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell).toFixed(2);
+		var invoiced = Number(0);
 		
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
+		
+	
+		
+		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
 	}
 	
 	//user picks to invoice the remaining balance
