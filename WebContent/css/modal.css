@@ -3,7 +3,7 @@
 	width: 100%;
 	height: 100%;
 	position: relative;
-	top: -200px;
+	top: -300px;
 	right: -920px;
 	display: none;
 	justify-content: center;
@@ -12,8 +12,8 @@
 }
 
 .modal-contents {
-	height: 215px;
-	width: 800px;
+	height: 275px;
+	width: 910px;
 	background-color: white;
 	text-align: center;
 	padding: 10px;
@@ -41,7 +41,7 @@
 
 .modal-contents1 {
 	height: 215px;
-	width: 800px;
+	width: 850px;
 	background-color: white;
 	text-align: center;
 	padding: 10px;

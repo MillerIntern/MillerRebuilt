@@ -17,6 +17,7 @@ public class Invoice extends ProjectObject {
 	private String invoiceNumber;
 	private String invoiceType;
 	private Date submittedDate;
+	private Date submitRejectDate;
 	private double invoiceAmount;
 	private String invoiceCustomer;
 	private String invoiceStatus;
@@ -42,7 +43,7 @@ public class Invoice extends ProjectObject {
 	
 	
 	public Invoice(String invoiceID, String associatedPE, String invoiceTitle, String invoiceNumber, String invoiceType, Date submittedDate, double invoiceAmount,
-			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id,
+			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id, Date submitRejectDate,
 			double laborInvoiced, double laborToInvoice, double laborPercentInvoiced, 
 			double materialInvoiced, double materialToInvoice, double materialPercentInvoiced,
 			double projectInvoiced, double projectToInvoice, double projectPercentInvoiced,
@@ -56,6 +57,7 @@ public class Invoice extends ProjectObject {
 		this.invoiceNumber = invoiceNumber;
 		this.invoiceType = invoiceType;
 		this.submittedDate = submittedDate;
+		this.submitRejectDate = submitRejectDate;
 		this.invoiceAmount = invoiceAmount;
 		this.invoiceCustomer = invoiceCustomer;
 		this.invoiceStatus = invoiceStatus;
@@ -90,6 +92,7 @@ public class Invoice extends ProjectObject {
 		this.invoiceNumber = null;
 		this.invoiceType = null;
 		this.submittedDate = null;
+		this.submitRejectDate = null;
 		this.invoiceAmount = 0;
 		this.invoiceCustomer = null;
 		this.invoiceStatus = null;
@@ -115,6 +118,14 @@ public class Invoice extends ProjectObject {
 		
 	}
 	
+	public Date getSubmitRejectDate() {
+		return submitRejectDate;
+	}
+
+	public void setSubmitRejectDate(Date submitRejectDate) {
+		this.submitRejectDate = submitRejectDate;
+	}
+
 	public String getInvoice_id() {
 		return invoice_id;
 	}

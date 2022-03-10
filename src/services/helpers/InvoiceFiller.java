@@ -35,6 +35,12 @@ public class InvoiceFiller {
 			submittedDate = formatter.parse(params.get("submittedDate"));
 		i.setSubmittedDate(submittedDate);
 		
+		formatter = new SimpleDateFormat("MM/dd/yyyy");		
+		Date submitRejectDate = null;
+		if(params.get("submitRejectDate") != null && !params.get("submitRejectDate").isEmpty())
+			submitRejectDate = formatter.parse(params.get("submitRejectDate"));
+		i.setSubmitRejectDate(submitRejectDate);
+		
 		i.setInvoice_id(params.get("invoice_id"));
 		
 		i.setInvoiceNumber(params.get("invoiceNumber"));

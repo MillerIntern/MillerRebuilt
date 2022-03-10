@@ -3190,6 +3190,7 @@ $(document).ready(function()
 	$('#projectData').find("#taskCreationZone").find('#dueDate').datepicker();
 	$('#projectData').find("#pendingInvoiceCreationZone").find('#submittedDatePend').datepicker();
 	$('#projectData').find("#invoiceCreationZone").find('#submittedDateInv').datepicker();
+	$('#projectData').find("#invoiceCreationZone").find('#submitRejectDate').datepicker();
 
 });
 
@@ -10442,7 +10443,7 @@ function fillTabs_CHANGE_ORDER(json)
 	
 	if(changeOrderToEdit.cost) changeOrderToEdit.cost = cleanNumericValueForDisplaying(changeOrderToEdit.cost);
 	$('#changeOrder').find("#cost").val(changeOrderToEdit.cost);
-	
+	 
 	if(changeOrderToEdit.sell) changeOrderToEdit.sell = cleanNumericValueForDisplaying(changeOrderToEdit.sell);
 	$('#changeOrder').find("#sell").val(changeOrderToEdit.sell);
 	
@@ -10458,7 +10459,7 @@ function fillTabs_CHANGE_ORDER(json)
 	$('#changeOrder').find('#mcsInvoiceStatus').val(changeOrderToEdit.mcsInvoiceStatus);
 	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
 	
-	$('#changeOrder').find('#subInvoiceStatus').val(changeOrderToEdit.subInvoiceStatus);
+	$('#changeOrder').find('#subInvoiceNumber').val(changeOrderToEdit.subInvoiceNumber);
 	
 	$('#changeOrder').find('#peType').val(changeOrderToEdit.peType);
 	}
@@ -10592,6 +10593,8 @@ function clearTabs_CHANGE_ORDER(){
 	$('#changeOrder').find("#notes").val("");
 	$('#changeOrder').find("#title").val("");
 	$('#changeOrder').find("#invoiceNumber").val("");
+	$('#changeOrder').find("#subInvoiceNumber").val("");
+	
 }
 
 
@@ -13700,12 +13703,14 @@ function hideExtraInvoiceValues(){
 
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide1').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide2').hide();
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide3').hide();
+	//$('#invoiceInformation').find('#invoiceCreationZone').find('#hide3').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide4').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide5').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide6').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide7').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide8').hide();
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide9').hide();
+	//$('#invoiceInformation').find('#invoiceCreationZone').find('#hide10').hide();
 }
 
 //displays invoices
@@ -13719,7 +13724,6 @@ function displayInvDisplay() {
 	document.getElementById('invoiceInformation').style.width = "100%";
 	getInvs(1);
 }
-
 
 //returns user to Account's Receivable
 function goToAccRec(){
@@ -13742,32 +13746,63 @@ function clearInvoiceTable () {
 
 function showAmountBox1(){
 	
+	//user chooses to invoice balance
 	if($('#peInvoiceInformation').find('#percentOrAmountRow1').find('#percentOrAmount1').val() == "2"){
+				
+		var invoiced = Number(0);
+		var invoiceAmount = Number(0);
 		
-		$('#peInvoiceInformation').find('#invoiceAmountHide1').hide();
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
 		
+		invoiceAmount = Number(SELECTED_PE_ID.sell) - Number(invoiced);
+		
+		$('#peInvoiceInformation').find('#invoiceAmount1').val(cleanNumericValueForDisplaying(invoiceAmount));
 	}
 	
 	else{
 		$('#peInvoiceInformation').find('#invoiceAmountHide1').show();
+		$('#peInvoiceInformation').find('#invoiceAmount1').val('');
 
 	}
 }
 
 function showAmountBox(){
 	
+	//user chooses to invoice balance
 	if($('#invoiceInformation').find('#percentOrAmountRow').find('#percentOrAmount').val() == "2"){
+				
+		var invoiced = Number(0);
+		var invoiceAmount = Number(0);
 		
-		$('#invoiceInformation').find('#invoiceAmountHide').hide();
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
+				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
 		
+		invoiceAmount = Number(SELECTED_PE_ID.sell) - Number(invoiced);
+		
+		$('#invoiceInformation').find('#invoiceAmount').val(cleanNumericValueForDisplaying(invoiceAmount));
 	}
 	
 	else{
 		$('#invoiceInformation').find('#invoiceAmountHide').show();
+		$('#invoiceInformation').find('#invoiceAmount').val('');
 
 	}
 }
 
+//global var for invoices
 let INVOICES_STORED;
 
 //global var for invoices
@@ -13815,8 +13850,8 @@ function createInv1() {
 	var yyyy = today.getFullYear();
 	today = mm + '/' + dd + '/' + yyyy;
 	
-	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceID1').val((invs.length+1).toString());
-	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceStatusSelectionRow1').find('#invoiceStatus1').val("Open");
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceID1').val(invs.length+1);
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceStatusSelectionRow1').find('#invoiceStatus1').val("Requested");
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#associatedPE1').val(SELECTED_PE_ID.mcsCO);
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceType1').val(parsePETypeStatus(SELECTED_PE_ID.peType));
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceCustomer1').val(convertChangeOrderType(SELECTED_PE_ID.type));
@@ -13835,10 +13870,8 @@ function createInv1() {
 	
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
-	
 	//$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceStatusSelectionRow1').show();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#percentOrAmountRow1').show();
-
 
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide1').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide2').hide();
@@ -13848,6 +13881,7 @@ function createInv1() {
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide6').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide7').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide8').hide();
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#titleHide1').hide();
 	
 }
 
@@ -13869,7 +13903,6 @@ function clearInvForm1()
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#currInvoiced1').val('');
 }
 
-
 function viewInv1(){
 	
 	let createMessage = "This Invoice will not be added, are you sure you want to leave this screen?";
@@ -13885,7 +13918,6 @@ function viewInv1(){
 		$('#invoiceCreationZone1').hide();
 		$('#peInvoiceInformation').show();
 	}
-
 }
 
 //displays invoice screen using a modal popup
@@ -13902,14 +13934,15 @@ function createInv() {
 	clearInvForm();	
 	displayInvWell();
 
+	//generates a new date
 	var today = new Date();
 	var dd = String(today.getDate()).padStart(2, '0');
 	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 	var yyyy = today.getFullYear();
 	today = mm + '/' + dd + '/' + yyyy;
 	
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val((invs.length+1).toString());
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Open");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val(invs.length+1);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Requested");
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#associatedPE').val(SELECTED_PE_ID.mcsCO);
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceType').val(parsePETypeStatus(SELECTED_PE_ID.peType));
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceCustomer').val(convertChangeOrderType(SELECTED_PE_ID.type));
@@ -13926,15 +13959,45 @@ function createInv() {
 		}
 	}
 	
+	//hide status when creating an invoice
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').hide();
 	
+	//show percent or amount selection dropdown
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#percentOrAmountRow').show();
 	
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance));
 	
+	//Clears the submit/reject date field
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#submitRejectDate').val('');
+	
+}
+
+//Checks to see if a submit/reject date should be added
+//A date is added when the status is changed to Rejected or Submitted. It then sets it to the day the status was changed
+function submitRejectDateCheck(){
+
+	//Status is set to "Rejected" or "Submitted"
+	if(($('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val() == "Rejected" || 
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val() == "Submitted")){
+			
+		//Generates today's date
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		today = mm + '/' + dd + '/' + yyyy;
+		
+		$('#invoiceInformation').find('#invoiceCreationZone').find('#submitRejectDate').val(today);
+
+	}
+	
+	//Status is not Rejected or Submitted, make it blank
+	else{
+		$('#invoiceInformation').find('#invoiceCreationZone').find('#submitRejectDate').val('');
+	}
 }
 
 //clears invoice form
@@ -13974,8 +14037,11 @@ function viewInv() {
 		$('#invoiceDisplay').show();
 		$('#returnAccountsReceivable').show();
 	}
+	
+	$('#invoiceCreationZone').find('#percentOrAmountRow').hide();
+	
+	$('#invoiceCreationZone').find('#invoiceStatusSelectionRow').show();
 }
-
 
 function toggleInv (source) {
 	$(source).siblings().css('background-color', 'white');
@@ -14005,7 +14071,6 @@ function displayInvWell() {
 /**
  * This function fills the form using the old data. i.e., it is called in edit invoice so that older values are filled. 
  */
-
 function fillInvWell(source) {
 	
 	clearInvForm();
@@ -14038,6 +14103,7 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#invoiceCustomer').val(selected_Inv.invoiceCustomer);
 	$('#invoiceCreationZone').find('#invoiceStatus').val(selected_Inv.invoiceStatus);
 	$('#invoiceCreationZone').find('#invoiceApproval').val(selected_Inv.invoiceApproval);	
+	$('#invoiceCreationZone').find('#submitRejectDate').val(selected_Inv.submitRejectDate);
 	$('#invoiceCreationZone').find('#notes').val(selected_Inv.notes);	
 			
 	var invoiced = Number(0);
@@ -14054,19 +14120,17 @@ function fillInvWell(source) {
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
 	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val('$' + balance);
-	$('#invoiceCreationZone').find('#invoiceAmount').val('$' + selected_Inv.invoiceAmount);
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val('$' + SELECTED_PE_ID.sell);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance));
+	$('#invoiceCreationZone').find('#invoiceAmount').val(cleanNumericValueForDisplaying(selected_Inv.invoiceAmount));
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell));
 
 }
-
 
 //This enables the user to filter invoices based off status
 $(document).on('change', '#invoiceSelector2', function () {	
 	clearInvoiceTable();
 	fillInvsTable(invs);
 });
-
 
 //fills invoice table 
 function fillInvsTable(data) {
@@ -14090,15 +14154,17 @@ function fillInvsTable(data) {
 	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	
 	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
-	$('#invoiceInformation').find('#invoiceBalance1').val('$' + balance);
-	
+	$('#invoiceInformation').find('#invoiceBalance1').val(cleanNumericValueForDisplaying(balance));
+	$('#invoiceInformation').find('#amountInvoiced1').val(cleanNumericValueForDisplaying(invoiced));
+	$('#invoiceInformation').find('#totalAmount1').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell));
 	
 	//shows invoices based on filter selection
 	for (var i = 0; i < invs.length; i++) {
-		if((selector == 'open' && invs[i].invoiceStatus != "Open") || 
-				(selector == 'complete' && invs[i].invoiceStatus != "Completed") ||
-				(selector == 'open_complete' && (invs[i].invoiceStatus == "Closed" || invs[i].invoiceStatus == "Rejected")) ||
-				(selector == 'closed' && invs[i].invoiceStatus != "Closed") ||
+		if((selector == 'requested' && invs[i].invoiceStatus != "Requested") || 
+				(selector == 'processing' && invs[i].invoiceStatus != "Processing") ||
+				(selector == 'review' && invs[i].invoiceStatus == "Review") ||
+				(selector == 'approved' && invs[i].invoiceStatus != "Approved") ||
+				(selector == 'submitted' && invs[i].invoiceStatus != "Submitted") ||
 				(selector == 'rejected' && invs[i].invoiceStatus != "Rejected") ||
 				(SELECTED_PE_ID.mcsCO != invs[i].associatedPE)) 
 				continue; // do nothing
@@ -14126,23 +14192,32 @@ function fillInvsTable(data) {
 		let invoiceID = document.createElement('td');
 		let associatedPE = document.createElement('td');
 		let invoiceTitle = document.createElement('td');
-		let invoiceType = document.createElement('td');		
+		//let invoiceType = document.createElement('td');		
 		let invoiceAmount = document.createElement('td');
+		let submittedDate = document.createElement('td');
+		let submitRejectDate = document.createElement('td');
 		let invoiceCustomer = document.createElement('td');
 		let invoiceApproval = document.createElement('td');
 		let invoiceStatus = document.createElement('td');
 		let invoiceNumber = document.createElement('td');
 		let notes = document.createElement('td');
 		
-		invoiceID.innerHTML = i+1;
+		invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
 		invoiceNumber.innerHTML = invs[i].invoiceNumber;
-		invoiceType.innerHTML = invs[i].invoiceType;
+		//invoiceType.innerHTML = invs[i].invoiceType;
 		
 		if(invs[i].invoiceAmount)
 			invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
 		else
 			invoiceAmount.innerHTML = "---";		
+		
+		submittedDate.innerHTML = invs[i].submittedDate;
+		
+		if(invs[i].submitRejectDate)
+			submitRejectDate.innerHTML = invs[i].submitRejectDate;
+		else
+			submitRejectDate.innerHTML = "TBD";
 		
 		invoiceCustomer.innerHTML = invs[i].invoiceCustomer;
 		
@@ -14152,13 +14227,15 @@ function fillInvsTable(data) {
 		associatedPE.innerHTML = invs[i].associatedPE;
 		notes.innerHTML = invs[i].notes;
 		
-		invListing.appendChild(associatedPE);
+		//invListing.appendChild(associatedPE);
 		invListing.appendChild(invoiceID);
-		invListing.appendChild(invoiceTitle);
-		invListing.appendChild(invoiceType);
+		//invListing.appendChild(invoiceTitle);
+		//invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
+		invListing.appendChild(submittedDate);
+		invListing.appendChild(submitRejectDate);
 		invListing.appendChild(invoiceCustomer);
-		invListing.appendChild(invoiceApproval);
+		//invListing.appendChild(invoiceApproval);
 		invListing.appendChild(invoiceStatus);
 		invListing.appendChild(invoiceNumber);
 		invListing.appendChild(notes);
@@ -14203,7 +14280,7 @@ function clearAndAddSingleRowInvs(msg) {
 	$('#invoiceTable > tbody').append(placeHolder);
 }
 
-//submits invoice with user creating or editing an invoice
+//submits invoice with user creating or editing an invoice in the invoice menu
 function submitInv() {
 	let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
 	let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
@@ -14215,16 +14292,14 @@ function submitInv() {
 	
 	let amountType = $('#invoiceCreationZone').find('#percentOrAmount').val();	
 
-	
 	let submittedDate = $('#invoiceCreationZone').find('#submittedDateInv').val();		
+	let submitRejectDate = $('#invoiceCreationZone').find('#submitRejectDate').val();		
 	let invoiceAmount = $('#invoiceCreationZone').find('#invoiceAmount').val();
 	let invoiceCustomer = $('#invoiceCreationZone').find('#invoiceCustomer').val();
 	let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
 	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
 	let notes = $('#invoiceCreationZone').find('#notes').val();
-	
-	//invoiceAmount.replace('$','');
-	
+		
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 
 	//Removes a $ prior to saving to prevent a display error
@@ -14244,8 +14319,6 @@ function submitInv() {
 				invoiced = invoiced + Number(invs[j].invoiceAmount);
 			}
 		}
-		
-	
 		
 		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
 	}
@@ -14269,7 +14342,42 @@ function submitInv() {
 	
 	console.log("PROJECT == ", project);	
 	if(INV_ACTION == "createInv"){		
+		
+		//stops user from invoicing a rejected PE
+		if(SELECTED_PE_ID.status == 4){
+			
+			alert("Cannot invoice for a rejected PE");
+			return;
+		}
+		
+		//stops user from invoicing for MCS (non-billable)
+		if(invoiceCustomer == 'MCS (non-billable)'){
+			
+			alert("Cannot invoice for MCS (non-billable)!");
+			return;
+		}
+		
+		var invoiced = Number(0);
+		
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
 				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
+				
+		//validates invoice amount to make sure it isn't negative or too much
+		if(invoiceAmount > Number(SELECTED_PE_ID.sell) - Number(invoiced) || invoiceAmount < 1){
+			
+			alert("Invoice amount is invalid, please enter a valid invoice amount.");
+			return;
+		}
+		
+		//checks if submit/reject date should be added
+		submitRejectDateCheck();	
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14282,6 +14390,7 @@ function submitInv() {
 				'invoiceNumber': invoiceNumber,
 				'invoiceType': invoiceType,
 				'submittedDate': submittedDate,
+				'submitRejectDate': submitRejectDate,
 				'invoiceAmount': invoiceAmount,
 				'invoiceCustomer': invoiceCustomer,
 				'invoiceStatus': invoiceStatus,
@@ -14321,6 +14430,7 @@ function submitInv() {
 				'invoiceNumber': invoiceNumber,
 				'invoiceType': invoiceType,
 				'submittedDate': submittedDate,
+				'submitRejectDate':submitRejectDate,
 				'invoiceAmount': invoiceAmount,
 				'invoiceCustomer': invoiceCustomer,
 				'invoiceStatus': invoiceStatus,
@@ -14347,7 +14457,7 @@ function submitInv() {
 	}	
 }
 
-
+//submits invoice from pe summary menu
 function submitInv1(){
 	
 	let invoiceID = $('#invoiceCreationZone1').find('#invoiceID1').val();
@@ -14388,8 +14498,6 @@ function submitInv1(){
 			}
 		}
 		
-	
-		
 		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
 	}
 	
@@ -14409,11 +14517,45 @@ function submitInv1(){
 		
 		invoiceAmount = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 	}
-	
 
 	console.log("PROJECT == ", project);	
-	if(INV_ACTION == "createInv"){		
+	if(INV_ACTION == "createInv"){	
+		
+		//stops user from invoicing a rejected PE
+		if(SELECTED_PE_ID.status == 4){
+			
+			alert("Cannot invoice for a rejected PE");
+			return;
+		}
+		
+		//stops user from invoicing for MCS (non-billable)
+		if(invoiceCustomer == 'MCS (non-billable)'){
+			
+			alert("Cannot invoice for MCS (non-billable)!");
+			return;
+		}
+		
+		var invoiced = Number(0);
+		
+		//sums all invoices for the selected PE
+		for(var j=0; j < invs.length; j++){
+			
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE){
 				
+				invoiced = invoiced + Number(invs[j].invoiceAmount);
+			}
+		}
+				
+		//validates invoice amount to make sure it isn't negative or too much
+		if(invoiceAmount > Number(SELECTED_PE_ID.sell) - Number(invoiced) || invoiceAmount < 1){
+			
+			alert("Invoice amount is invalid, please enter a valid invoice amount.");
+			return;	
+		}
+		
+		//checks if submit/reject date should be added
+		submitRejectDateCheck();
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
