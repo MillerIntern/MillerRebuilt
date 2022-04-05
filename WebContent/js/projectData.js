@@ -620,7 +620,7 @@ function changeStatus(){
 		$('#status ').append($('<option>', {value:4, text:'Awaiting Direction'}));
 		$('#status ').append($('<option>', {value:11, text:'Awaiting Drawing'}));
 		$('#status ').append($('<option>', {value:30, text:'Awaiting Permit'}));
-		$('#status ').append($('<option>', {value:39, text:'Awaiting Equipment'}));
+		$('#status ').append($('<option>', {value:12, text:'Awaiting Equipment'}));
 		$('#status ').append($('<option>', {value:35, text:'Closeout'}));
 		$('#status ').append($('<option>', {value:29, text:'Scheduled'}));
 		$('#status ').append($('<option>', {value:26, text:'Scheduling'}));	

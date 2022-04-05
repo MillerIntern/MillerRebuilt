@@ -1301,8 +1301,12 @@ public class ProjectObjectService
 			
 			Criteria criteria = session.createCriteria(c);
 
+			if(projectID != -1) {
+				
+			
 			Criterion projectIDRestriction = Restrictions.sqlRestriction("invoice_id = " + projectID);
 			criteria.add(projectIDRestriction);
+			}
 			
 	        List<?> list = criteria.list();
 	        

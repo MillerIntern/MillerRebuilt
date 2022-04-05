@@ -70,7 +70,11 @@
 	      		
 	      	</ul>
 	      </li>
+	      
+	      <li><a href="invoices.html">Invoices</a></li>
+	      
 		      <li><a href="query.html">Reports</a></li>
+		      
 		   <!--  <li class='dropdown'>
 	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Scope
 	      		<span class='caret'></span>
@@ -2348,6 +2352,7 @@
 						<th>Amount</th>
 						<th>Invoiced To Date</th>
 						<th>Balance</th>
+						<th>Invoices Pending</th>
 						<th>Add Invoice</th>
 						
 		            </tr>
@@ -2382,7 +2387,7 @@
 		            
 		            
 		            <tr id = 'invoiceAmountHide1'>
-		               <td><label for='invoiceAmount1'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
+		               <td><label for='invoiceAmount1'>Invoice Amount/Percent:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount1'/>
 		            </tr>
 		            
@@ -2390,10 +2395,12 @@
 		            <tr id = "invoiceStatusSelectionRow1" style = "display : none">
 		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
 		               <td>
-		                  <select id = "invoiceStatus1" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="if( this.value == 'Closed' && user.permission.canAccessAdminPage == false){ alert('You cannot select the Closed option if you do not have administrator status. Please select another option.'); this.value=this.getAttribute('PrvSelectedValue'); return false; }">
-		                     <option value="Open"> Open </option>
-		                     <option value="Completed"> Completed </option>
-		                     <option id="closedStatus"  value="Closed"> Closed </option>
+		                  <select id = "invoiceStatus1" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="">
+		                     <option value="Requested"> Requested </option>
+		                     <option value="Processing"> Processing</option>
+		                     <option id="Review"  value="Review"> Review</option>
+		                     <option id="Approved"  value="Approved"> Approved</option>
+		                     <option id="Submitted"  value="Submitted"> Submitted </option>
 		                     <option id="Rejected"  value="Rejected"> Rejected </option>
 		                  </select>
 		               </td>
@@ -2474,22 +2481,29 @@
 		   <div class = "changeOrderTableDiv" id = 'invoiceDisplay'>
 		   
 		   <td>
+		   	<label for='totalPending1'>Invoices Pending: </label>
+		   	<input type='text' id='totalPending1' style="color:#FF0000" readonly/>
+		   	
+		   </td>
+		   
+		   <td>
 		   	<label for='invoiceBalance1'>Balance: </label>
-		   	<input type='text' id='invoiceBalance1' style="color:#FF0000" readonly/>
+		   	<input type='text' id='invoiceBalance1' style="color:black" readonly/>
 		   	
 		   </td>
 		   
 		   <td>
 		   	<label for='amountInvoiced1'>Invoiced To Date: </label>
-		   	<input type='text' id='amountInvoiced1' style="color:#FF0000" readonly/>
+		   	<input type='text' id='amountInvoiced1' style="color:green" readonly/>
 		   	
 		   </td>
 		   
 		   <td>
 		   	<label for='totalAmount1'>Total: </label>
-		   	<input type='text' id='totalAmount1' style="color:#FF0000" readonly/>
+		   	<input type='text' id='totalAmount1' style="color:blue" readonly/>
 		   	
 		   </td>
+		   
 		   
         	  <!--<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Invoices</button>
         	    <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editInvoice" type="button" onclick="editSelectedInv()" disabled> Edit Invoice </button>			  
@@ -2550,7 +2564,7 @@
             		</tr>
 		            
 		            <tr id = "invoiceAmountHide">
-		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
+		               <td><label for='invoiceAmount'>Invoice Amount/Percent:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount'/>
 		            </tr>
 		            

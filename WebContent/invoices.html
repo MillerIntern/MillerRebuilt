@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Miller Home</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/contentControl.js"></script>
+    <script src="js/projectRetrieval.js"></script>
+    <script src="js/invoices.js"></script>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/findProjectNew.css" rel="stylesheet">
+    <link href="css/projectManagerNew.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/projects.css" rel="stylesheet">
+    <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
+    <link href="css/modal.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
+  </head>	
+  
+  <body onload="getInvs(1)">
+	
+	<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Miller Construction Services</a>
+		    </div>
+		    <ul class="nav navbar-nav">
+		      <li><a href="homepage.html">Home</a></li>
+		      <li class="active dropdown">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+		        <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="projectData.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Add Project</a></li>
+		          <li><a href="projects.html" onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+		      		onmouseout="style='background-color: none;'">Find Projects</a></li>
+		        </ul>
+		      </li>
+		   <li class='dropdown'>
+	      	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tasks
+	      		<span class='caret'></span>
+	      	</a>
+	      	<ul class='dropdown-menu'>
+	      	
+	      		<li><a href='taskBrowser.html'  
+	      		onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Your Tasks</a></li>
+	      		
+	      		<li><a href='projects.html?type=findTaskProject'
+	      		 onmouseover="style='background-color: rgb(42, 112, 224); color: white'"
+	      		onmouseout="style='background-color: none;'">Create Task</a></li>
+	      		
+	      	</ul>
+	      </li>
+	      
+	      <li><a href="invoices.html">Invoices</a></li>
+	      
+		      <li><a href="query.html">Reports</a></li>
+		      
+		      <li class="adminContent"><a href="additions.html">Tools</a></li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		      <li><a href="logout.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+		    </ul>
+		  </div>
+		</nav>
+		
+		<div class = "container info-tab-peInformation">
+		
+		    <div style="width:100%" class = "changeOrderTableDiv" id = 'invoiceDisplay'>
+		    										
+		      <select id ='invoiceSelector2' class='form-control'>
+					<option value='all' selected = "selected">All</option>
+					<option value='requested'>Requested</option>
+					<option value='processing'>Processing</option>
+					<option value='review'>Review</option>
+					<option value='approved'>Approved</option>
+					<option value='submitted'>Submitted</option>
+					<option value='rejected'>Rejected</option>
+			 </select>
+		      <div class="generalOverFlowScroll">
+		         <table class='table table-striped permitsAndInspectionsHovering' id='invoiceTable'>
+		            <tr class='head'>
+						
+						<!--  <th>PE #</th>-->
+						<th>PE Invoice #</th>
+						<!--  <th>Title</th>-->
+						<!--  <th>Invoice Type</th>-->
+						<th>Invoice Amount</th>
+						<th>Requested Date</th>
+						<th>Submitted/Rejected Date</th>
+						<th>Customer</th>
+						<!--  <th>Approval</th>-->
+						<th>Status</th>											
+						<th>WS Invoice #</th>					
+						<th>Notes</th>
+		            </tr>
+		         </table>
+		      </div>		      
+		   </div>
+		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone' class = 'bg-modal'>
+		   
+		   <div class = "modal-contents">
+		 
+		      <div class='base-field'>
+		         <table class='table invCreationTable table table-striped permitsAndInspectionsHovering'>
+		            
+		            <tr id = hide9>
+		               <td><label for='invoiceTitle'>Title:  <span style="color:#FF0000;">*</span></label>
+		               <td><input type='text' id='invoiceTitle'/>
+		               
+		            </tr>
+		            
+		            <tr id = "percentOrAmountRow" style = "display : none">
+		            <td><label>Amount<span style="color:#FF0000">*</span></label></td>
+		            <td>
+		            <select id="percentOrAmount" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="showAmountBox()">
+	        	
+	        			<option value="0">Custom $</option>
+                		<option value="1">Custom %</option>  
+                		<option value="2">Balance</option>   
+            		</select>
+            		</td>
+            		</tr>
+		            
+		            <tr id = "invoiceAmountHide">
+		               <td><label for='invoiceAmount'>Invoice Amount/Percent:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceAmount'/>
+		            </tr>
+		            
+		            
+		            
+		            <tr id = "invoiceStatusSelectionRow" style = "display : none">
+		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
+		               <td>
+		                  <select id = "invoiceStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="submitRejectDateCheck()">
+		                     <option value="Requested"> Requested </option>
+		                     <option value="Processing"> Processing</option>
+		                     <option id="Review"  value="Review"> Review</option>
+		                     <option id="Approved"  value="Approved"> Approved</option>
+		                     <option id="Submitted"  value="Submitted"> Submitted </option>
+		                     <option id="Rejected"  value="Rejected"> Rejected </option>
+		                  </select>
+		               </td>
+		            </tr>
+		            
+		            
+		            <tr id = hide1>
+		            <td><label for='associatedPE'>Associated PE #<span style="color:#FF0000">*</span></label>
+		            <td><input type='text' id='associatedPE' readonly/>
+		            </tr>  
+		            
+		            <tr id = hide2>
+		               <td><label for='invoiceID'>PE Invoice # <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceID' readonly/>
+		            </tr>
+		            
+		            <tr id = hide3>
+		               <td><label for='invoiceNumber'>WS Invoice # <span style="color:#FF0000"></span></label></td>
+		               <td><input type='text' id='invoiceNumber'></td>
+		               </tr>
+		           
+		            
+		            <tr id = hide4>
+		               <td><label for='invoiceType'>Type:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceType' readonly/>
+		               
+		            </tr>
+		            
+		            <tr id = hide5>
+		               <td><label for='submittedDateInv'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
+		               <td><input type='text' id='submittedDateInv' readonly>
+		            </tr>
+		            
+		            <tr id = hide10>
+		               <td><label for='submitRejectDate'>Submit/Reject Date: <span style="color:#FF0000">*</span></label></td>
+		               <td><input type='text' id='submitRejectDate'>
+		            </tr>
+	
+
+    		         <tr id = hide6>
+		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
+		               
+		               	<td><input type='text' id='invoiceCustomer'/ readonly>
+		               
+		               
+		            </tr>
+		            
+		            
+		            <tr id = hide7>
+		               <td><label for='invoiceApproval'>Approval:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='invoiceApproval'/>
+		               
+		            </tr>
+		            
+		            <tr id = hide8>
+		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='notes'/>
+		               
+		            </tr>
+		            
+		            <tr id = hide11>
+		               <td><label for='invoiceID'>Invoice ID:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='invoiceID'/>
+		               
+		            </tr>
+		            
+		            <tr id = hide12>
+		               <td><label for='projID'>projID:  <span style="color:#FF0000"></span></label>
+		               <td><input type='text' id='projID'/>
+		               
+		            </tr>
+		                 		         
+		         </table>
+		         
+		      </div>
+		      <button style = "float:center" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:right; margin-right:5px;background-color: #4169E1;color: white;" onclick='viewInv()' class='btn'>Back to Invoice View</button>
+		      
+		      </div>
+		   </div>
+		   </div>
+
+</body>
+</html>
