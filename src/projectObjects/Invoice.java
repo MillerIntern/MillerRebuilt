@@ -25,6 +25,11 @@ public class Invoice extends ProjectObject {
 	private String notes;
 	private String invoice_id;
 	
+	private String approval1;
+	private String approval2;
+	private String approval3;
+
+	
 	private double laborInvoiced;
 	private double laborToInvoice;
 	private double laborPercentInvoiced;
@@ -43,7 +48,8 @@ public class Invoice extends ProjectObject {
 	
 	
 	public Invoice(String invoiceID, String associatedPE, String invoiceTitle, String invoiceNumber, String invoiceType, Date submittedDate, double invoiceAmount,
-			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id, Date submitRejectDate,
+			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id, Date submitRejectDate, String approval1, String approval2,
+			String approval3, 
 			double laborInvoiced, double laborToInvoice, double laborPercentInvoiced, 
 			double materialInvoiced, double materialToInvoice, double materialPercentInvoiced,
 			double projectInvoiced, double projectToInvoice, double projectPercentInvoiced,
@@ -64,6 +70,10 @@ public class Invoice extends ProjectObject {
 		this.invoiceApproval = invoiceApproval;
 		this.notes = notes;
 		this.invoice_id = invoice_id;
+		
+		this.approval1 = approval1;
+		this.approval2 = approval2;
+		this.approval3 = approval3;
 		
 		this.laborInvoiced = laborInvoiced;
 		this.laborToInvoice = laborToInvoice;
@@ -99,6 +109,10 @@ public class Invoice extends ProjectObject {
 		this.invoiceApproval = null;
 		this.notes = null;
 		this.invoice_id = null;
+		
+		this.approval1 = null;
+		this.approval2 = null;
+		this.approval3 = null;
 		
 		this.laborInvoiced = 0;
 		this.laborToInvoice = 0;
@@ -317,6 +331,30 @@ public class Invoice extends ProjectObject {
 
 	public void setAiaPercentInvoiced(double aiaPercentInvoiced) {
 		this.aiaPercentInvoiced = aiaPercentInvoiced;
+	}
+	
+	public String getApproval1() {
+		return approval1;
+	}
+
+	public void setApproval1(String approval1) {
+		this.approval1 = approval1;
+	}
+
+	public String getApproval2() {
+		return approval2;
+	}
+
+	public void setApproval2(String approval2) {
+		this.approval2 = approval2;
+	}
+
+	public String getApproval3() {
+		return approval3;
+	}
+
+	public void setApproval3(String approval3) {
+		this.approval3 = approval3;
 	}
 
 	

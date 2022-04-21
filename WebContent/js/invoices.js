@@ -3,6 +3,9 @@ let invs;
 //gets list of invoices for project
 function getInvs(stopServerCalls) {
 		
+	//getAllProjects();
+
+	
 	$.ajax({
 		type: 'POST',
 		url: 'Project',
@@ -16,8 +19,9 @@ function getInvs(stopServerCalls) {
 			invs = data;
 			if (data) {
 				clearInvoiceTable();
-
+								
 				fillInvsTable(data);
+				
 			}
 			if(!stopServerCalls) getUserData();
 
@@ -27,9 +31,112 @@ function getInvs(stopServerCalls) {
 	});	
 }
 
+let projects;
+let RETRIEVED_PROJECTS;
+let lengthProjects;
+
+function getAllProjects() {
+	
+	t0 = new Date().getTime();
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getAllProjects'
+		}, success: function (data) {
+			projects = data;
+			RETRIEVED_PROJECTS = JSON.parse(projects['projects']);
+			lengthProjects = RETRIEVED_PROJECTS.length;
+			establishRetrievedProjects();
+			if(RETRIEVED_PROJECTS) console.log("getAllProjects() - PROJECTS HAVE BEEN RETRIEVED");
+			t1 = new Date().getTime();
+			console.log('took: ' + (t1 - t0) + 'ms');
+			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
+			//getSearchCriteria();
+			getInvs(1);
+		}
+	});
+}
+
+
+function establishRetrievedProjects()
+{
+	
+	
+	for(var i = 0; i < RETRIEVED_PROJECTS.length; i++){
+		RETRIEVED_PROJECTS[i].id = RETRIEVED_PROJECTS[i][0];
+		RETRIEVED_PROJECTS[i].McsNumber = RETRIEVED_PROJECTS[i][1];
+		RETRIEVED_PROJECTS[i].projectItem = RETRIEVED_PROJECTS[i][2];
+		RETRIEVED_PROJECTS[i].projectType = RETRIEVED_PROJECTS[i][3];
+		RETRIEVED_PROJECTS[i].stage = RETRIEVED_PROJECTS[i][4];
+		RETRIEVED_PROJECTS[i].status = RETRIEVED_PROJECTS[i][5];
+		RETRIEVED_PROJECTS[i].warehouse = RETRIEVED_PROJECTS[i][6];
+		RETRIEVED_PROJECTS[i].projectManagers = RETRIEVED_PROJECTS[i][7];
+		RETRIEVED_PROJECTS[i].projectClass = RETRIEVED_PROJECTS[i][8];
+		RETRIEVED_PROJECTS[i].mediumScore = RETRIEVED_PROJECTS[i][9];
+		if(RETRIEVED_PROJECTS[i][10]!=null)
+			RETRIEVED_PROJECTS[i].scheduledStartDate = RETRIEVED_PROJECTS[i][10];
+		else
+			RETRIEVED_PROJECTS[i].scheduledStartDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][11]!=null)
+			RETRIEVED_PROJECTS[i].scheduledTurnover = RETRIEVED_PROJECTS[i][11];
+		else
+			RETRIEVED_PROJECTS[i].scheduledTurnover = "Unavailable";
+		
+		
+		
+		if(RETRIEVED_PROJECTS[i][12]!=null)
+			RETRIEVED_PROJECTS[i].budgetaryDueDate = RETRIEVED_PROJECTS[i][12];
+		else
+			RETRIEVED_PROJECTS[i].budgetaryDueDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][13]!=null)
+			RETRIEVED_PROJECTS[i].budgetarySubmittedDate = RETRIEVED_PROJECTS[i][13];
+		else
+			RETRIEVED_PROJECTS[i].budgetarySubmittedDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][14]!=null)
+			RETRIEVED_PROJECTS[i].proposalDueDate = RETRIEVED_PROJECTS[i][14];
+		else
+			RETRIEVED_PROJECTS[i].proposalDueDate = "Unavailable";
+
+		if(RETRIEVED_PROJECTS[i][15]!=null)
+			RETRIEVED_PROJECTS[i].proposalSubmittedDate = RETRIEVED_PROJECTS[i][15];
+		else
+			RETRIEVED_PROJECTS[i].proposalSubmittedDate = "Unavailable";	
+		
+		if(RETRIEVED_PROJECTS[i][16]!=null)
+			RETRIEVED_PROJECTS[i].keyStatus = RETRIEVED_PROJECTS[i][16];
+		else
+			RETRIEVED_PROJECTS[i].keyStatus = "     ----------     ";		
+		
+		if(RETRIEVED_PROJECTS[i][17]!=null)
+			RETRIEVED_PROJECTS[i].proposalScopeDate = RETRIEVED_PROJECTS[i][17];
+		else
+			RETRIEVED_PROJECTS[i].proposalScopeDate = "Unavailable";
+		
+		if(RETRIEVED_PROJECTS[i][18]!=null)
+			RETRIEVED_PROJECTS[i].draftScheduleDate = RETRIEVED_PROJECTS[i][18];
+		else
+			RETRIEVED_PROJECTS[i].draftScheduleDate = "Unavailable";
+		
+		
+		
+		for(var q = 0; q < 9; q++){
+			var num = 8 - q;
+			RETRIEVED_PROJECTS[i].splice(num, 1);
+		}
+	}
+}
+
 
 //This enables the user to filter invoices based off status
 $(document).on('change', '#invoiceSelector2', function () {	
+	
+	//getAllProjects();
+
 	clearInvoiceTable();
 	fillInvsTable(invs);
 });
@@ -37,6 +144,9 @@ $(document).on('change', '#invoiceSelector2', function () {
 
 //fills invoice table 
 function fillInvsTable(data) {
+	
+	
+	alert(data.length);
 	
 	let selector = $('#invoiceSelector2').val();	
 		
@@ -76,6 +186,8 @@ function fillInvsTable(data) {
 		invListing.value = invs[i].id;
 		invListing.id = "Inv_" + invs[i].id;
 		
+		let projectDetails = document.createElement('td');
+		let mcsNumber = document.createElement('td');
 		let invoiceID = document.createElement('td');
 		let associatedPE = document.createElement('td');
 		let invoiceTitle = document.createElement('td');
@@ -89,10 +201,36 @@ function fillInvsTable(data) {
 		let invoiceNumber = document.createElement('td');
 		let notes = document.createElement('td');
 		
-		invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
+		invoiceID.innerHTML = invs[i].associatedPE + '-' + invs[i].invoiceID;
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
 		invoiceNumber.innerHTML = invs[i].invoiceNumber;
 		//invoiceType.innerHTML = invs[i].invoiceType;
+		
+		/*
+		alert(RETRIEVED_PROJECTS[4].warehouse.city.name);
+		alert(RETRIEVED_PROJECTS[4].warehouse.state);
+		alert(RETRIEVED_PROJECTS[4].projectItem.name);
+		*/
+		
+		for(var j = 0; j < lengthProjects; j++){
+			
+			if(RETRIEVED_PROJECTS[j].id == invs[i].invoice_id){
+				
+				var projItem = RETRIEVED_PROJECTS[j].projectItem.name;
+				if(projItem.length > 15){
+					
+					projItem = projItem.substring(0,16);
+				}
+				
+				projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  "-" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
+				
+				mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber;
+				break;
+			}
+			}
+		
+		//alert(RETRIEVED_PROJECTS[j].mcsnumber);
+		
 		
 		if(invs[i].invoiceAmount)
 			invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
@@ -114,7 +252,8 @@ function fillInvsTable(data) {
 		associatedPE.innerHTML = invs[i].associatedPE;
 		notes.innerHTML = invs[i].notes;
 		
-		//invListing.appendChild(associatedPE);
+		invListing.appendChild(projectDetails);
+		invListing.appendChild(mcsNumber);
 		invListing.appendChild(invoiceID);
 		//invListing.appendChild(invoiceTitle);
 		//invListing.appendChild(invoiceType);
@@ -212,6 +351,32 @@ function displayInvWell() {
 	document.querySelector('.bg-modal').style.display = "flex";
 }
 
+//Checks to see if a submit/reject date should be added
+//A date is added when the status is changed to Rejected or Submitted. It then sets it to the day the status was changed
+function submitRejectDateCheck(){
+
+	//Status is set to "Rejected" or "Submitted"
+	if(($('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val() == "Rejected" || 
+	$('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val() == "Submitted")){
+			
+		//Generates today's date
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		today = mm + '/' + dd + '/' + yyyy;
+		
+		$('#invoiceCreationZone').find('#submitRejectDate').val(today);
+
+	}
+	
+	//Status is not Rejected or Submitted, make it blank
+	else{
+		$('#invoiceInformation').find('#invoiceCreationZone').find('#submitRejectDate').val('');
+	}
+}
+
+
 function fillInvWell(source) {
 	
 	clearInvForm();
@@ -250,26 +415,6 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
 
 
-			
-	/*
-	var invoiced = Number(0);
-	
-	//sums up all invoices for PE
-	for(var j=0; j < invs.length; j++){
-		
-		if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected"){
-			
-			invoiced = invoiced + Number(invs[j].invoiceAmount);
-		}
-	}
-	
-	var balance = Number(SELECTED_PE_ID.sell) - Number(invoiced);
-	
-	//these values with dollar amounts are put at bottom as not to intefere with invoice calculation
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance));
-	$('#invoiceCreationZone').find('#invoiceAmount').val(cleanNumericValueForDisplaying(selected_Inv.invoiceAmount));
-	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell));
-*/
 }
 
 //prompts user when they want to back out of invoice
@@ -315,8 +460,14 @@ function hideExtraValues(){
 	$('#invoiceCreationZone').find('#hide11').hide();
 	$('#invoiceCreationZone').find('#hide12').hide();
 
+	
 
+	alert(RETRIEVED_PROJECTS[4].warehouse.city.name);
+	alert(RETRIEVED_PROJECTS[4].warehouse.state);
+	alert(RETRIEVED_PROJECTS[4].projectItem.name);
+	
 }
+
 
 function submitInv() {
 	let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
@@ -341,6 +492,7 @@ function submitInv() {
 		
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 
+	submitRejectDateCheck();
 	
 	if(INV_ACTION == "updateInv"){
 		$.ajax({

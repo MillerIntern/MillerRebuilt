@@ -61,6 +61,8 @@ public class InvoiceFiller {
 		
 		i.setInvoiceApproval(params.get("invoiceApproval"));
 		
+		
+		
 		i.setNotes(params.get("notes"));
 		
 		//finanical stuff
