@@ -61,7 +61,11 @@ public class InvoiceFiller {
 		
 		i.setInvoiceApproval(params.get("invoiceApproval"));
 		
+		i.setApproval1(params.get("approval1"));
+		i.setApproval2(params.get("approval2"));
+		i.setApproval3(params.get("approval3"));
 		
+		i.setPeInvNum(params.get("peInvNum"));
 		
 		i.setNotes(params.get("notes"));
 		

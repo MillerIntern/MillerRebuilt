@@ -145,9 +145,6 @@ $(document).on('change', '#invoiceSelector2', function () {
 //fills invoice table 
 function fillInvsTable(data) {
 	
-	
-	alert(data.length);
-	
 	let selector = $('#invoiceSelector2').val();	
 		
 	clearInvoiceTable();
@@ -160,7 +157,7 @@ function fillInvsTable(data) {
 				invs[i].invoiceStatus != "Review" && invs[i].invoiceStatus != "Approved")) ||
 				(selector == 'requested' && invs[i].invoiceStatus != "Requested") || 
 				(selector == 'processing' && invs[i].invoiceStatus != "Processing") ||
-				(selector == 'review' && invs[i].invoiceStatus == "Review") ||
+				(selector == 'review' && invs[i].invoiceStatus != "Review") ||
 				(selector == 'approved' && invs[i].invoiceStatus != "Approved") ||
 				(selector == 'submitted' && invs[i].invoiceStatus != "Submitted") ||
 				(selector == 'rejected' && invs[i].invoiceStatus != "Rejected")) 
@@ -201,7 +198,8 @@ function fillInvsTable(data) {
 		let invoiceNumber = document.createElement('td');
 		let notes = document.createElement('td');
 		
-		invoiceID.innerHTML = invs[i].associatedPE + '-' + invs[i].invoiceID;
+		//invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
+		invoiceID.innerHTML = invs[i].peInvNum;
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
 		invoiceNumber.innerHTML = invs[i].invoiceNumber;
 		//invoiceType.innerHTML = invs[i].invoiceType;
@@ -222,7 +220,7 @@ function fillInvsTable(data) {
 					projItem = projItem.substring(0,16);
 				}
 				
-				projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  "-" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
+				projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  " #" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
 				
 				mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber;
 				break;
@@ -252,17 +250,20 @@ function fillInvsTable(data) {
 		associatedPE.innerHTML = invs[i].associatedPE;
 		notes.innerHTML = invs[i].notes;
 		
+		
+		invListing.appendChild(invoiceCustomer);
 		invListing.appendChild(projectDetails);
 		invListing.appendChild(mcsNumber);
 		invListing.appendChild(invoiceID);
 		//invListing.appendChild(invoiceTitle);
 		//invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
+		invListing.appendChild(invoiceStatus);
 		invListing.appendChild(submittedDate);
 		invListing.appendChild(submitRejectDate);
-		invListing.appendChild(invoiceCustomer);
+		
 		//invListing.appendChild(invoiceApproval);
-		invListing.appendChild(invoiceStatus);
+		
 		invListing.appendChild(invoiceNumber);
 		invListing.appendChild(notes);
 
@@ -344,6 +345,10 @@ function clearInvForm()
 	$('#invoiceCreationZone').find('#notes').val('');	
 	$('#invoiceCreationZone').find('#invTotal').val('');
 	$('#invoiceCreationZone').find('#currInvoiced').val('');
+	
+	$('#invoiceCreationZone').find('#approval1').val('2');
+	$('#invoiceCreationZone').find('#approval2').val('2');
+	$('#invoiceCreationZone').find('#approval3').val('2');
 }
 
 function displayInvWell() {
@@ -413,7 +418,14 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#notes').val(selected_Inv.notes);	
 	$('#invoiceCreationZone').find('#projID').val(selected_Inv.invoice_id);	
 	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
-
+	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
+	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
+	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
+	
+	$('#invoiceCreationZone').find('#approval1').val(selected_Inv.approval1);	
+	$('#invoiceCreationZone').find('#approval2').val(selected_Inv.approval2);	
+	$('#invoiceCreationZone').find('#approval3').val(selected_Inv.approval3);	
+			
 
 }
 
@@ -459,13 +471,19 @@ function hideExtraValues(){
 	$('#invoiceCreationZone').find('#hide10').hide();
 	$('#invoiceCreationZone').find('#hide11').hide();
 	$('#invoiceCreationZone').find('#hide12').hide();
-
 	
-
-	alert(RETRIEVED_PROJECTS[4].warehouse.city.name);
-	alert(RETRIEVED_PROJECTS[4].warehouse.state);
-	alert(RETRIEVED_PROJECTS[4].projectItem.name);
 	
+	if($('#invoiceCreationZone').find('#invoiceStatus').val() != "Approved"){
+		$('#invoiceCreationZone').find('#hide13').hide();
+		$('#invoiceCreationZone').find('#hide14').hide();
+		$('#invoiceCreationZone').find('#hide15').hide();
+	}
+	else{
+		$('#invoiceCreationZone').find('#hide13').show();
+		$('#invoiceCreationZone').find('#hide14').show();
+		$('#invoiceCreationZone').find('#hide15').show();
+	}
+
 }
 
 
@@ -489,6 +507,10 @@ function submitInv() {
 	let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
 	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
 	let notes = $('#invoiceCreationZone').find('#notes').val();
+	
+	let approval1 = $('#invoiceCreationZone').find('#approval1').val();
+	let approval2 = $('#invoiceCreationZone').find('#approval2').val();
+	let approval3 = $('#invoiceCreationZone').find('#approval3').val();
 		
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 
@@ -515,6 +537,9 @@ function submitInv() {
 				'invoiceStatus': invoiceStatus,
 				'invoiceApproval' : invoiceApproval,				
 				'notes' : notes,
+				'approval1' : approval1,
+				'approval2' : approval2,
+				'approval3' : approval3,
 				'invoice_id' : invoice_id,
 																																																				
 			}, complete: function (serverResponse) {

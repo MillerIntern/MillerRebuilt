@@ -25,6 +25,8 @@ public class Invoice extends ProjectObject {
 	private String notes;
 	private String invoice_id;
 	
+	private String peInvNum;
+	
 	private String approval1;
 	private String approval2;
 	private String approval3;
@@ -49,7 +51,7 @@ public class Invoice extends ProjectObject {
 	
 	public Invoice(String invoiceID, String associatedPE, String invoiceTitle, String invoiceNumber, String invoiceType, Date submittedDate, double invoiceAmount,
 			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id, Date submitRejectDate, String approval1, String approval2,
-			String approval3, 
+			String approval3, String peInvNum,
 			double laborInvoiced, double laborToInvoice, double laborPercentInvoiced, 
 			double materialInvoiced, double materialToInvoice, double materialPercentInvoiced,
 			double projectInvoiced, double projectToInvoice, double projectPercentInvoiced,
@@ -70,6 +72,8 @@ public class Invoice extends ProjectObject {
 		this.invoiceApproval = invoiceApproval;
 		this.notes = notes;
 		this.invoice_id = invoice_id;
+		
+		this.peInvNum = peInvNum; 
 		
 		this.approval1 = approval1;
 		this.approval2 = approval2;
@@ -110,6 +114,8 @@ public class Invoice extends ProjectObject {
 		this.notes = null;
 		this.invoice_id = null;
 		
+		this.peInvNum = null;
+		
 		this.approval1 = null;
 		this.approval2 = null;
 		this.approval3 = null;
@@ -132,6 +138,14 @@ public class Invoice extends ProjectObject {
 		
 	}
 	
+	public String getPeInvNum() {
+		return peInvNum;
+	}
+
+	public void setPeInvNum(String peInvNum) {
+		this.peInvNum = peInvNum;
+	}
+
 	public Date getSubmitRejectDate() {
 		return submitRejectDate;
 	}

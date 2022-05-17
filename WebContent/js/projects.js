@@ -13736,6 +13736,7 @@ function hideExtraInvoiceValues(){
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide8').hide();
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#hide9').hide();
 	//$('#invoiceInformation').find('#invoiceCreationZone').find('#hide10').hide();
+	//$('#invoiceInformation').find('#invoiceCreationZone').find('#hide13').hide();
 }
 
 //displays invoices
@@ -13869,6 +13870,11 @@ function createInv1() {
 	clearInvForm1();	
 	displayInvWell1();
 	
+	fillInvsTable(invs);
+	alert(SELECTED_PE_ID.mcsCO + "-" + CURR_INV_MAX);
+	
+	var newInvMax = CURR_INV_MAX + 1;
+	
 	var today = new Date();
 	var dd = String(today.getDate()).padStart(2, '0');
 	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -13881,6 +13887,13 @@ function createInv1() {
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceType1').val(parsePETypeStatus(SELECTED_PE_ID.peType));
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invoiceCustomer1').val(convertChangeOrderType(SELECTED_PE_ID.type));
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#submittedDateInv1').val(today);
+	
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#peInvNum1').val(SELECTED_PE_ID.mcsCO + "-" + newInvMax);
+
+	
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval11').val("2");
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval21').val("2");
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval31').val("2");
 	
 	var invoiced = Number(0);
 	
@@ -13907,7 +13920,7 @@ function createInv1() {
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide7').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide8').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#titleHide1').hide();
-	
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide13').hide();
 }
 
 //clears invoice form
@@ -13926,6 +13939,9 @@ function clearInvForm1()
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#notes1').val('');	
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#invTotal1').val('');
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#currInvoiced1').val('');
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval11').val('2');
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval21').val('2');
+	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval31').val('2');
 }
 
 function viewInv1(){
@@ -13958,6 +13974,8 @@ function createInv() {
 	INV_ACTION = "createInv";
 	clearInvForm();	
 	displayInvWell();
+	
+	alert(SELECTED_PE_ID.mcsCO + "-" + CURR_INV_MAX);
 
 	//generates a new date
 	var today = new Date();
@@ -13966,12 +13984,19 @@ function createInv() {
 	var yyyy = today.getFullYear();
 	today = mm + '/' + dd + '/' + yyyy;
 	
+	var newInvMax = CURR_INV_MAX + 1;
+	
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceID').val(invs.length+1);
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceStatusSelectionRow').find('#invoiceStatus').val("Requested");
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#associatedPE').val(SELECTED_PE_ID.mcsCO);
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceType').val(parsePETypeStatus(SELECTED_PE_ID.peType));
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceCustomer').val(convertChangeOrderType(SELECTED_PE_ID.type));
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#submittedDateInv').val(today);
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#peInvNum').val(SELECTED_PE_ID.mcsCO + "-" + newInvMax);
+	
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval1').val("2");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval2').val("2");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval3').val("2");
 	
 	var invoiced = Number(0);
 	
@@ -14041,6 +14066,9 @@ function clearInvForm()
 	$('#invoiceCreationZone').find('#notes').val('');	
 	$('#invoiceCreationZone').find('#invTotal').val('');
 	$('#invoiceCreationZone').find('#currInvoiced').val('');
+	$('#invoiceCreationZone').find('#approval1').val('2');
+	$('#invoiceCreationZone').find('#approval2').val('2');
+	$('#invoiceCreationZone').find('#approval3').val('2');
 }
 
 //prompts user when they want to back out of invoice
@@ -14130,6 +14158,11 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#invoiceApproval').val(selected_Inv.invoiceApproval);	
 	$('#invoiceCreationZone').find('#submitRejectDate').val(selected_Inv.submitRejectDate);
 	$('#invoiceCreationZone').find('#notes').val(selected_Inv.notes);	
+	$('#invoiceCreationZone').find('#peInvNum').val(selected_Inv.peInvNum);
+	
+	$('#invoiceCreationZone').find('#approval1').val(selected_Inv.approval1);	
+	$('#invoiceCreationZone').find('#approval2').val(selected_Inv.approval2);	
+	$('#invoiceCreationZone').find('#approval3').val(selected_Inv.approval3);	
 			
 	var invoiced = Number(0);
 	
@@ -14156,6 +14189,9 @@ $(document).on('change', '#invoiceSelector2', function () {
 	clearInvoiceTable();
 	fillInvsTable(invs);
 });
+
+
+var CURR_INV_MAX;
 
 //fills invoice table 
 function fillInvsTable(data) {
@@ -14215,15 +14251,18 @@ function fillInvsTable(data) {
 		
 		//allows invoice to be edited
 		invListing.onclick = function() {
+			alert(count);
 			toggleInv(this);
 		};
 		
 		invListing.ondblclick = function(){
-
+			
+			alert(count);
 			editSelectedInv(this);
 		};
 				
 		count++;
+		CURR_INV_MAX = count;
 		
 		invListing.value = invs[i].id;
 		invListing.id = "Inv_" + invs[i].id;
@@ -14241,7 +14280,7 @@ function fillInvsTable(data) {
 		let invoiceNumber = document.createElement('td');
 		let notes = document.createElement('td');
 		
-		invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
+		invoiceID.innerHTML = invs[i].associatedPE + '-' + (count);
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
 		invoiceNumber.innerHTML = invs[i].invoiceNumber;
 		//invoiceType.innerHTML = invs[i].invoiceType;
@@ -14284,7 +14323,9 @@ function fillInvsTable(data) {
 	}
 	//This adds No Invoices to Show to the table if there are none in that filter or category (Ex: Open, Complete)
 	if (count === 0) {
-		clearAndAddSingleRowInvs("No Invoices to Show");		
+		clearAndAddSingleRowInvs("No Invoices to Show");
+		
+		CURR_INV_MAX = 0;
 	}		
 }
 
@@ -14338,7 +14379,13 @@ function submitInv() {
 	let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
 	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
 	let notes = $('#invoiceCreationZone').find('#notes').val();
-		
+	
+	let peInvNum = $('#invoiceInformation').find('#invoiceCreationZone').find('#peInvNum').val();
+	
+	let approval1 = $('#invoiceCreationZone').find('#approval1').val();
+	let approval2 = $('#invoiceCreationZone').find('#approval2').val();
+	let approval3 = $('#invoiceCreationZone').find('#approval3').val();
+	
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
 
 	//Removes a $ prior to saving to prevent a display error
@@ -14346,7 +14393,7 @@ function submitInv() {
 	invoiceAmount = invoiceAmount.replace('%', '');
 	
 	//user picks to invoice %
-	if(amountType == "1"){
+	if(amountType == "1" && INV_ACTION == "createInv"){
 		
 		var invoiced = Number(0);
 		
@@ -14363,7 +14410,7 @@ function submitInv() {
 	}
 	
 	//user picks to invoice the remaining balance
-	else if(amountType == "2"){
+	else if(amountType == "2" && INV_ACTION == "createInv"){
 		
 		var invoiced = Number(0);
 		
@@ -14440,6 +14487,10 @@ function submitInv() {
 				'invoiceStatus': invoiceStatus,
 				'invoiceApproval' : invoiceApproval,				
 				'notes' : notes,
+				'peInvNum': peInvNum,
+				'approval1' : approval1,
+				'approval2' : approval2,
+				'approval3' : approval3,
 				'invoice_id' : invoice_id,
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
@@ -14460,6 +14511,7 @@ function submitInv() {
 	}
 	
 	else if(INV_ACTION == "updateInv"){
+		
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14480,6 +14532,10 @@ function submitInv() {
 				'invoiceStatus': invoiceStatus,
 				'invoiceApproval' : invoiceApproval,				
 				'notes' : notes,
+				'peInvNum': peInvNum,
+				'approval1' : approval1,
+				'approval2' : approval2,
+				'approval3' : approval3,
 				'invoice_id' : invoice_id,
 																																																				
 			}, complete: function (serverResponse) {
@@ -14521,6 +14577,13 @@ function submitInv1(){
 	
 	let invoiceApproval = $('#invoiceCreationZone1').find('#invoiceApproval1').val();
 	let notes = $('#invoiceCreationZone1').find('#notes1').val();
+	
+	let peInvNum = $('#peInvoiceInformation').find('#invoiceCreationZone1').find('#peInvNum1').val();
+	
+	let approval1 = $('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval11').val();
+	let approval2 = $('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval21').val();
+	let approval3 = $('#peInvoiceInformation').find('#invoiceCreationZone1').find('#approval31').val();
+
 	
 	  
 	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
@@ -14623,6 +14686,10 @@ function submitInv1(){
 				'invoiceStatus': invoiceStatus,
 				'invoiceApproval' : invoiceApproval,				
 				'notes' : notes,
+				'peInvNum': peInvNum,
+				'approval1' : approval1,
+				'approval2' : approval2,
+				'approval3' : approval3,
 				'invoice_id' : invoice_id,
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);

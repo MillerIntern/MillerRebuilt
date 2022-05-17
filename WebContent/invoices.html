@@ -96,17 +96,19 @@
 		            <tr class='head'>
 						
 						<!--  <th>PE #</th>-->
+						<th>Customer</th>
 						<th>Project</th>
 						<th>MCS #</th>
-						<th>PE Invoice #</th>
+						<th>PE #</th>
 						<!--  <th>Title</th>-->
 						<!--  <th>Invoice Type</th>-->
-						<th>Invoice Amount</th>
+						<th>Amount</th>
+						
+						<th>Status</th>	
 						<th>Requested</th>
-						<th>Submitted/Rejected</th>
-						<th>Customer</th>
-						<!--  <th>Approval</th>-->
-						<th>Status</th>											
+						<th>Completed</th>
+						
+						<!--  <th>Approval</th>-->					
 						<th>WS Invoice #</th>					
 						<th>Notes</th>
 		            </tr>
@@ -213,6 +215,44 @@
 		               <td><input type='text' id='notes'/>
 		               
 		            </tr>
+		            
+		            
+		             <tr id = hide13>
+		            <td><b>Approval 1</b></td>
+		             <td >  
+                    <select class="closeout-input" id="approval1">
+                        <option value="default">--Status--</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </td>
+                </tr>
+                
+                
+                <tr id = hide14>
+                <td><b>Approval 2</b></td>
+		             <td >  
+                    <select class="closeout-input" id="approval2">
+                        <option value="default">--Status--</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </td>
+                </tr>
+                
+                
+                <tr id = hide15>
+                <td><b>Approval 3</b></td>
+		             <td >  
+                    <select class="closeout-input" id="approval3">
+                        <option value="default">--Status--</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </td>
+                </tr>
+		            
+		            
 		            
 		            <tr id = hide11>
 		               <td><label for='invoiceID'>Invoice ID:  <span style="color:#FF0000"></span></label>
