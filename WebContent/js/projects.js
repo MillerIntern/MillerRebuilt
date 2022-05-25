@@ -14023,6 +14023,12 @@ function createInv() {
 	//Clears the submit/reject date field
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#submitRejectDate').val('');
 	
+	
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval1').val("2");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval2').val("2");
+	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval3').val("2");
+	
+	
 }
 
 //Checks to see if a submit/reject date should be added
@@ -14181,6 +14187,20 @@ function fillInvWell(source) {
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invoiceBalance').val(cleanNumericValueForDisplaying(balance));
 	$('#invoiceCreationZone').find('#invoiceAmount').val(cleanNumericValueForDisplaying(selected_Inv.invoiceAmount));
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#invTotal').val(cleanNumericValueForDisplaying(SELECTED_PE_ID.sell));
+	
+	if(selected_Inv.invoiceStatus == "Review"){
+		
+		$('#invoiceCreationZone').find('#hide10').show();	
+		$('#invoiceCreationZone').find('#hide11').show();	
+		$('#invoiceCreationZone').find('#hide12').show();
+	}
+	
+	else{
+		
+		$('#invoiceCreationZone').find('#hide10').hide();	
+		$('#invoiceCreationZone').find('#hide11').hide();	
+		$('#invoiceCreationZone').find('#hide12').hide();
+	}
 
 }
 

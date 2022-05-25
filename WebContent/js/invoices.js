@@ -199,7 +199,7 @@ function fillInvsTable(data) {
 		let notes = document.createElement('td');
 		
 		//invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
-		invoiceID.innerHTML = invs[i].peInvNum;
+		//invoiceID.innerHTML = invs[i].peInvNum;
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
 		invoiceNumber.innerHTML = invs[i].invoiceNumber;
 		//invoiceType.innerHTML = invs[i].invoiceType;
@@ -222,7 +222,7 @@ function fillInvsTable(data) {
 				
 				projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  " #" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
 				
-				mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber;
+				mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber + "-" + invs[i].peInvNum;
 				break;
 			}
 			}
@@ -254,7 +254,7 @@ function fillInvsTable(data) {
 		invListing.appendChild(invoiceCustomer);
 		invListing.appendChild(projectDetails);
 		invListing.appendChild(mcsNumber);
-		invListing.appendChild(invoiceID);
+		//invListing.appendChild(invoiceID);
 		//invListing.appendChild(invoiceTitle);
 		//invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
