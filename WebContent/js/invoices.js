@@ -201,7 +201,8 @@ function fillInvsTable(data) {
 		//invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
 		//invoiceID.innerHTML = invs[i].peInvNum;
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
-		invoiceNumber.innerHTML = invs[i].invoiceNumber;
+		//invoiceNumber.innerHTML = invs[i].invoiceNumber;
+		invoiceNumber.innerHTML = invs[i].invoiceNumber != undefined ? invs[i].invoiceNumber : '';
 		//invoiceType.innerHTML = invs[i].invoiceType;
 		
 		/*
@@ -559,4 +560,6 @@ function submitInv() {
 		});
 	}	
 }
+
+
 

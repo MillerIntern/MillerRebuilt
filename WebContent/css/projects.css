@@ -516,6 +516,14 @@ table.permitsAndInspectionsHovering tbody tr:hover{
 	cursor:pointer;
 }
 
+#pricingInfoTable tbody td{
+	border-right: none;
+}
+
+#hideTotal td:nth-child(6) {
+  background-color: #D6EEEE;
+} 
+
 /* #results td:nth-child(4){
 	display:none;
 }

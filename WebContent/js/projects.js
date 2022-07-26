@@ -4795,30 +4795,30 @@ function updatePricingInfo(){
 	totalPercentInvoiced = totalPercentInvoiced.toFixed(2);
 	
 	//fills in the fields 
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").val(cleanNumericValueForDisplaying(laborTotal.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").val(cleanNumericValueForDisplaying(laborInvoiced.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").val(cleanNumericValueForDisplaying(laborToInvoice.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").val(Math.trunc(laborPercentInvoiced) + '%');
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborTotal").html(cleanNumericValueForDisplaying(laborTotal.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborInvoiced").html(cleanNumericValueForDisplaying(laborInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborToInvoice").html(cleanNumericValueForDisplaying(laborToInvoice.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#laborPercentInvoiced").html(Math.trunc(laborPercentInvoiced) + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").val(cleanNumericValueForDisplaying(materialCosts.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").val(cleanNumericValueForDisplaying(materialInvoiced.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").val(cleanNumericValueForDisplaying(materialToInvoice.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").val(Math.trunc(materialPercentInvoiced) + '%');
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialCosts").html(cleanNumericValueForDisplaying(materialCosts.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialInvoiced").html(cleanNumericValueForDisplaying(materialInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialToInvoice").html(cleanNumericValueForDisplaying(materialToInvoice.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#materialPercentInvoiced").html(Math.trunc(materialPercentInvoiced) + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").val(cleanNumericValueForDisplaying(projectAmount.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").val(cleanNumericValueForDisplaying(projectInvoiced.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").val(cleanNumericValueForDisplaying(projectToInvoice.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").val(Math.trunc(projectPercentInvoiced) + '%');
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectAmount").html(cleanNumericValueForDisplaying(projectAmount.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectInvoiced").html(cleanNumericValueForDisplaying(projectInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectToInvoice").html(cleanNumericValueForDisplaying(projectToInvoice.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#projectPercentInvoiced").html(Math.trunc(projectPercentInvoiced) + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").val(cleanNumericValueForDisplaying(aiaTotal.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").val(cleanNumericValueForDisplaying(aiaInvoiced.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").val(cleanNumericValueForDisplaying(aiaToInvoice.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").val(Math.trunc(aiaPercentInvoiced) + '%');
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaTotal").html(cleanNumericValueForDisplaying(aiaTotal.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaInvoiced").html(cleanNumericValueForDisplaying(aiaInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaToInvoice").html(cleanNumericValueForDisplaying(aiaToInvoice.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#aiaPercentInvoiced").html(Math.trunc(aiaPercentInvoiced) + '%');
 	
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").val(cleanNumericValueForDisplaying(totalProject.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").val(cleanNumericValueForDisplaying(totalInvoiced.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").val(cleanNumericValueForDisplaying(totalToInvoice.toFixed(2)));
-	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").val(Math.trunc(totalPercentInvoiced) + '%');
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalProject").html(cleanNumericValueForDisplaying(totalProject.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalInvoiced").html(cleanNumericValueForDisplaying(totalInvoiced.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalToInvoice").html(cleanNumericValueForDisplaying(totalToInvoice.toFixed(2)));
+	$('#projectData').find("#financialSection").find("#pricingInfo").find("#totalPercentInvoiced").html(Math.trunc(totalPercentInvoiced) + '%');
 	
 }
 
@@ -5228,7 +5228,7 @@ function fillChangeOrders (data) {
 
 function convertChangeOrderType(type , co) {
 	if(!type) return "---";
-	console.log("CO_TYPES = " , CHANGE_ORDER_TYPES , co);
+	//console.log("CO_TYPES = " , CHANGE_ORDER_TYPES , co);
 	for(var i = 0; i < CHANGE_ORDER_TYPES.length; i++) {
 		
 		if(CHANGE_ORDER_TYPES[i].id == type)
@@ -13589,6 +13589,11 @@ function fillPeInvsTable(data) {
 			SELECTED_PE_ID = changeOrder;
 			clearInvForm1();
 			createInv1();
+			//Adding this line here so that the background color of the row changes when Add Invoic is clicked.
+			//Would've been much better if the button was created in a different way
+			
+			$(this).parent().css('background-color', "#CCCCCC");
+			
 		};
 
 		//CO Number
@@ -13668,7 +13673,7 @@ function fillPeInvsTable(data) {
 			}
 		}
 		
-		invoicesPending.appendChild(document.createTextNode(cleanNumericValueForDisplaying(pendingInvoices)));
+		invoicesPending.appendChild(document.createTextNode(cleanNumericValueForDisplaying(pendingInvoices.toFixed(2))));
 		
 			
 		tableRow.appendChild(coNumber);
@@ -13696,6 +13701,7 @@ function fillPeInvsTable(data) {
 				
 		tableRow.ondblclick = function() {
 			
+			$('#invoiceInformation').find('#invoiceTitle').val(changeOrder.title);
 			//if the PE is MCS not (non-billable) or MCS(no-cost)
 			if(changeOrder.type != 8 && changeOrder.type != 7 && parseChangeOrderStatus(changeOrder.status) != "Rejected"){
 				goToInvoices(changeOrder);
@@ -13778,6 +13784,8 @@ function showAmountBox1(){
 		var invoiced = Number(0);
 		var invoiceAmount = Number(0);
 		
+		$('#peInvoiceInformation').find('#invoicePercentHide1').hide();
+		
 		//sums all invoices for the selected PE
 		for(var j=0; j < invs.length; j++){
 			
@@ -13792,10 +13800,16 @@ function showAmountBox1(){
 		$('#peInvoiceInformation').find('#invoiceAmount1').val(cleanNumericValueForDisplaying(invoiceAmount));
 	}
 	
+	else if($('#peInvoiceInformation').find('#percentOrAmountRow1').find('#percentOrAmount1').val() == "1"){
+		$('#peInvoiceInformation').find('#invoiceAmount1').val('');
+		$('#peInvoiceInformation').find('#invoicePercent1').val('');
+		$('#peInvoiceInformation').find('#invoicePercentHide1').show();
+	}
+	
 	else{
 		$('#peInvoiceInformation').find('#invoiceAmountHide1').show();
 		$('#peInvoiceInformation').find('#invoiceAmount1').val('');
-
+		$('#peInvoiceInformation').find('#invoicePercentHide1').hide();
 	}
 }
 
@@ -13806,6 +13820,8 @@ function showAmountBox(){
 				
 		var invoiced = Number(0);
 		var invoiceAmount = Number(0);
+		
+		$('#invoiceInformation').find('#invoicePercentHide').hide();
 		
 		//sums all invoices for the selected PE
 		for(var j=0; j < invs.length; j++){
@@ -13821,11 +13837,33 @@ function showAmountBox(){
 		$('#invoiceInformation').find('#invoiceAmount').val(cleanNumericValueForDisplaying(invoiceAmount));
 	}
 	
+	else if($('#invoiceInformation').find('#percentOrAmountRow').find('#percentOrAmount').val() == "1"){
+		$('#invoiceInformation').find('#invoiceAmount').val('');
+		$('#invoiceInformation').find('#invoicePercent').val('');
+		$('#invoiceInformation').find('#invoicePercentHide').show();
+	}
+	
 	else{
 		$('#invoiceInformation').find('#invoiceAmountHide').show();
 		$('#invoiceInformation').find('#invoiceAmount').val('');
-
+		$('#invoiceInformation').find('#invoicePercentHide').hide();
 	}
+}
+
+function populateInvoiceAmt(percentValue){
+	
+	//+SELECTED_PE_ID.sell
+	var invoicedAmount = (SELECTED_PE_ID.sell*percentValue)/100;
+	invoicedAmount = invoicedAmount.toFixed(2);
+	$('#invoiceInformation').find('#invoiceAmount').val(cleanNumericValueForDisplaying(invoicedAmount));
+}
+
+function populateInvoiceAmt1(percentValue1){
+	
+	//+SELECTED_PE_ID.sell
+	var invoicedAmount1 = (SELECTED_PE_ID.sell*percentValue1)/100;
+	invoicedAmount1 = invoicedAmount1.toFixed(2);
+	$('#peInvoiceInformation').find('#invoiceAmount1').val(cleanNumericValueForDisplaying(invoicedAmount1));
 }
 
 //global var for invoices
@@ -13851,6 +13889,7 @@ function getInvs(stopServerCalls) {
 
 			invs = data;
 			if (data) {
+				fillPeInvsTable(DATA);
 				clearInvoiceTable();
 
 				fillInvsTable(data);
@@ -13871,7 +13910,7 @@ function createInv1() {
 	displayInvWell1();
 	
 	fillInvsTable(invs);
-	alert(SELECTED_PE_ID.mcsCO + "-" + CURR_INV_MAX);
+	
 	
 	var newInvMax = CURR_INV_MAX + 1;
 	
@@ -13921,6 +13960,9 @@ function createInv1() {
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide8').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#titleHide1').hide();
 	$('#peInvoiceInformation').find('#invoiceCreationZone1').find('#hide13').hide();
+	
+	$('#peInvoiceInformation').find('#invoicePercentHide1').hide();
+	$('#peInvoiceInformation').find('#percentOrAmount1').val("0");
 }
 
 //clears invoice form
@@ -13959,6 +14001,7 @@ function viewInv1(){
 		$('#invoiceCreationZone1').hide();
 		$('#peInvoiceInformation').show();
 	}
+	$("#peInvoiceTable tr").css('background-color', "");
 }
 
 //displays invoice screen using a modal popup
@@ -13975,7 +14018,7 @@ function createInv() {
 	clearInvForm();	
 	displayInvWell();
 	
-	alert(SELECTED_PE_ID.mcsCO + "-" + CURR_INV_MAX);
+	//alert(SELECTED_PE_ID.mcsCO + "-" + CURR_INV_MAX);
 
 	//generates a new date
 	var today = new Date();
@@ -14028,7 +14071,8 @@ function createInv() {
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval2').val("2");
 	$('#invoiceInformation').find('#invoiceCreationZone').find('#approval3').val("2");
 	
-	
+	$('#invoiceInformation').find('#invoicePercentHide').hide();
+	$('#invoiceInformation').find('#percentOrAmount').val("0");
 }
 
 //Checks to see if a submit/reject date should be added
@@ -14079,6 +14123,8 @@ function clearInvForm()
 
 //prompts user when they want to back out of invoice
 function viewInv() {
+	
+	$("#invoiceTable tr").css('background-color', "");
 	
 	let updateMessage = "These changes will not be saved, are you sure you want to leave the screen?";
 	let createMessage = "This Invoice will not be added, are you sure you want to leave this screen?";
@@ -14248,10 +14294,11 @@ function fillInvsTable(data) {
 		if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus == "Requested"){
 			
 			pendingInvoiced = pendingInvoiced + Number(invs[j].invoiceAmount);
+			
 		}
 	}
 	
-	$('#invoiceInformation').find('#totalPending1').val(cleanNumericValueForDisplaying(pendingInvoiced));
+	$('#invoiceInformation').find('#totalPending1').val(cleanNumericValueForDisplaying(pendingInvoiced.toFixed(2)));
 	
 	//shows invoices based on filter selection
 	for (var i = 0; i < invs.length; i++) {
@@ -14297,8 +14344,8 @@ function fillInvsTable(data) {
 		let invoiceCustomer = document.createElement('td');
 		let invoiceApproval = document.createElement('td');
 		let invoiceStatus = document.createElement('td');
-		let invoiceNumber = document.createElement('td');
-		let notes = document.createElement('td');
+	//	let invoiceNumber = document.createElement('td');
+		let notes = document.createElement('td');	
 		
 		invoiceID.innerHTML = invs[i].associatedPE + '-' + (count);
 		invoiceTitle.innerHTML = invs[i].invoiceTitle;
@@ -14330,12 +14377,12 @@ function fillInvsTable(data) {
 		//invListing.appendChild(invoiceTitle);
 		//invListing.appendChild(invoiceType);
 		invListing.appendChild(invoiceAmount);
-		invListing.appendChild(submittedDate);
-		invListing.appendChild(submitRejectDate);
 		invListing.appendChild(invoiceCustomer);
-		//invListing.appendChild(invoiceApproval);
 		invListing.appendChild(invoiceStatus);
-		invListing.appendChild(invoiceNumber);
+		invListing.appendChild(submittedDate);
+		invListing.appendChild(submitRejectDate);		
+		//invListing.appendChild(invoiceApproval);		
+	//	invListing.appendChild(invoiceNumber);
 		invListing.appendChild(notes);
 
 		$('#invoiceTable > tbody').append(invListing);
@@ -14413,24 +14460,9 @@ function submitInv() {
 	invoiceAmount = invoiceAmount.replace('%', '');
 	
 	//user picks to invoice %
-	if(amountType == "1" && INV_ACTION == "createInv"){
-		
-		var invoiced = Number(0);
-		
-		//sums all invoices for the selected PE
-		for(var j=0; j < invs.length; j++){
-			
-			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected"){
-				
-				invoiced = invoiced + Number(invs[j].invoiceAmount);
-			}
-		}
-		
-		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
-	}
 	
 	//user picks to invoice the remaining balance
-	else if(amountType == "2" && INV_ACTION == "createInv"){
+	if(amountType == "2" && INV_ACTION == "createInv"){
 		
 		var invoiced = Number(0);
 		
@@ -14474,15 +14506,14 @@ function submitInv() {
 			}
 		}
 				
+				
 		//validates invoice amount to make sure it isn't negative or too much
-		if(invoiceAmount > Number(SELECTED_PE_ID.sell) - Number(invoiced) || invoiceAmount < 1){
+		if(invoiceAmount >( Number(SELECTED_PE_ID.sell) - Number(invoiced)) || invoiceAmount < 1){
 			
 			var allowedInvoiceAmount = Number(SELECTED_PE_ID.sell) - Number(invoiced);
-			
 			var allowedInvoicePercent = (allowedInvoiceAmount/Number(SELECTED_PE_ID.sell)) *100;
 			
-			
-			alert("Invoice amount is invalid, please enter an amount less than or equal to: $"+ allowedInvoiceAmount+ " or enter a percent less than or equal to: "+ allowedInvoicePercent.toFixed(2)+"%");
+			alert("Invoice amount is invalid, please enter an amount less than or equal to: $"+ allowedInvoiceAmount.toFixed(2)+ " or enter a percent less than or equal to: "+ allowedInvoicePercent.toFixed(2)+"%");
 			return;
 		}
 		
@@ -14613,7 +14644,7 @@ function submitInv1(){
 	invoiceAmount = invoiceAmount.replace('%', '');
 	
 	//user picks to invoice %
-	if(amountType == "1"){
+/*	if(amountType == "1"){
 		
 		var invoiced = Number(0);
 		
@@ -14627,17 +14658,17 @@ function submitInv1(){
 		}
 		
 		invoiceAmount = ((invoiceAmount/100)*SELECTED_PE_ID.sell - invoiced).toFixed(2);
-	}
+	} */
 	
 	//user picks to invoice the remaining balance
-	else if(amountType == "2"){
+	if(amountType == "2" && INV_ACTION == "createInv"){
 		
 		var invoiced = Number(0);
 		
 		//sums all invoices for the selected PE
 		for(var j=0; j < invs.length; j++){
 			
-			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected" && invs[j].invoiceStatus != "Rejected"){
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected"){
 				
 				invoiced = invoiced + Number(invs[j].invoiceAmount);
 			}
@@ -14668,21 +14699,21 @@ function submitInv1(){
 		//sums all invoices for the selected PE
 		for(var j=0; j < invs.length; j++){
 			
-			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected" && invs[j].invoiceStatus != "Requested"){
+			if(SELECTED_PE_ID.mcsCO == invs[j].associatedPE && invs[j].invoiceStatus != "Rejected"){
 				
 				invoiced = invoiced + Number(invs[j].invoiceAmount);
 			}
 		}
 				
 		//validates invoice amount to make sure it isn't negative or too much
-		if(invoiceAmount > Number(SELECTED_PE_ID.sell) - Number(invoiced) || invoiceAmount < 1){
+		if(invoiceAmount >( Number(SELECTED_PE_ID.sell) - Number(invoiced)) || invoiceAmount < 1){
 			
 			var allowedInvoiceAmount = Number(SELECTED_PE_ID.sell) - Number(invoiced);
 			
 			var allowedInvoicePercent = (allowedInvoiceAmount/Number(SELECTED_PE_ID.sell)) *100;
 			
 			
-			alert("Please enter an amount or percent less than or equal to: \n$" + allowedInvoiceAmount+ " or "+ Math.trunc(allowedInvoicePercent) +"%");
+			alert("Invoice amount is invalid, please enter an amount less than or equal to: $"+ allowedInvoiceAmount.toFixed(2)+ " or enter a percent less than or equal to: "+ allowedInvoicePercent.toFixed(2)+"%");
 			return;	
 		}
 		

@@ -12,14 +12,15 @@
 }
 
 .modal-contents {
-	height: 275px;
+/*	height: 285px; */
 	width: 910px;
 	background-color: white;
-	text-align: center;
+	text-align: left;
 	padding: 10px;
 	position: relative;
 	border-radius: 4px;
 }
+
 
 .buttonFormat{
 	
@@ -39,11 +40,12 @@
 	border: 3px solid #223f82;
 }
 
+
 .modal-contents1 {
-	height: 215px;
+/*	height: 215px; */
 	width: 850px;
 	background-color: white;
-	text-align: center;
+	text-align: left;
 	padding: 10px;
 	position: relative;
 	border-radius: 4px;

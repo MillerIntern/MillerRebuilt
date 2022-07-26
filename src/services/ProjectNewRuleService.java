@@ -580,13 +580,13 @@ public class ProjectNewRuleService {
 				
 				//placeholder
 				//If the status is approved it needs to be updated to Complete
-				if(status != null && status.equals("3")) { // 3 = "Approved"
+				/*if(status != null && status.equals("3")) { // 3 = "Approved"
 					
 					RuleDetails rd = new RuleDetails("ChangeOrders", "ChangeOrderNeedsUpdate", String.format("%s~Status needs to be updated", currentChangeOrder.getTitle()), 0);
 					scoreYellow = true;
 					al.add(rd);
 					
-				}
+				}*/
 				
 				if(projectStatus != null && projectStatus == 35 && status != null && (status.equals("3"))){ // 3 = "Approved"
 					RuleDetails rd = new RuleDetails("ChangeOrders", "NeedToCompleteProposal", String.format("%s~Need to Complete the Change Order", currentChangeOrder.getTitle()), changeOrderColorCode);

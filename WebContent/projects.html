@@ -564,7 +564,7 @@
 	    				<td id ="equipmentIssues"></td>   				
 	 				 </tr>
 	 				  <tr onclick = "getFailedRules('changeOrdersFailedTable');">
-	   					<td>Change Order</td>	    			
+	   					<td>Pricing Element</td>	    			
 	    				<td id = "changeOrdersScore"> </td>
 	    				<td id ="changeordersIssues"></td>   				
 	 				 </tr>
@@ -655,7 +655,7 @@
 					<table id = "changeOrdersFailedTable" class="table table-bordered permitsAndInspectionsHovering BrownBgWhiteColor">
 						<thead>
 							<tr>
-								<th style="text-align: center" colspan = "3">CHANGE ORDER DISCREPANCIES</th>
+								<th style="text-align: center" colspan = "3">PRICING ELEMENT DISCREPANCIES</th>
 							</tr>
 							<tr>
 								<th style="text-align: center">SEVERITY</th>
@@ -2261,8 +2261,8 @@
 		
 		<div id='pricingInfo' class='info-tab info-tab-pricingInfo'>
 		
-		<li style = "background-color: #6495ED; top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="dataReadOnly()" >
-	        				Info&nbsp;&nbsp;<span class="glyphicon"></span></li>
+	<!--<li style = "background-color: #6495ED; top:4px;float:right;"class = "btn btn-success"id='saveProjectLink' onclick="dataReadOnly()" >
+	        				Info&nbsp;&nbsp;<span class="glyphicon"></span></li> -->
 		
 			<table id="pricingInfoTable" class='table table-hover'>
 	 
@@ -2277,42 +2277,42 @@
 	 
 				<tr id = "hideLabor">
 	            <td class = "bold">Labor</td>
-	            <td><input type="text" id="laborTotal" value="" readonly></td>
-	            <td><input type="text" id="laborInvoiced" value="" readonly></td>
-	            <td><input type="text" id="laborToInvoice" value="" readonly></td>
-	            <td><input type="text" id="laborPercentInvoiced" value="" readonly></td>
+	            <td id = "laborTotal"></td>
+	            <td id="laborInvoiced"></td>
+	            <td id="laborToInvoice"></td>
+	            <td id="laborPercentInvoiced"></td>
 	            </tr>
 	            
 	            <tr id = "hideMaterials">
 	            <td class = "bold">Materials</td>
-	            <td><input type="text" id="materialCosts" value="" readonly></td>
-	            <td><input type="text" id="materialInvoiced" value="" readonly></td>
-	            <td><input type="text" id="materialToInvoice" value="" readonly></td>
-	            <td><input type="text" id="materialPercentInvoiced" value="" readonly></td>
+	            <td id="materialCosts"></td>
+	            <td id="materialInvoiced"></td>
+	            <td id="materialToInvoice"></td>
+	            <td id="materialPercentInvoiced"></td>
 	            </tr>
 	            
 	            <tr id = "hideProject">
 	            <td style="width: 15%" class = "bold">Project</td>
-	            <td><input type="text" id="projectAmount" value="0" readonly></td>
-	            <td><input type="text" id="projectInvoiced" value="" readonly></td>
-	            <td><input type="text" id="projectToInvoice" value="" readonly></td>
-	            <td><input type="text" id="projectPercentInvoiced" value="" readonly></td>
+	            <td id="projectAmount"></td>
+	            <td id="projectInvoiced"></td>
+	            <td id="projectToInvoice"></td>
+	            <td id="projectPercentInvoiced"></td>
 	            </tr>		
 	
 	            <tr id = "hideAIA">
 	            <td class = "bold">AIA</td>
-	            <td><input type="text" id="aiaTotal" value="0" readonly></td>
-	            <td><input type="text" id="aiaInvoiced" value="" readonly></td>
-	            <td><input type="text" id="aiaToInvoice" value="" readonly></td>
-	            <td><input type="text" id="aiaPercentInvoiced" value="" readonly></td>
+	            <td id="aiaTotal"></td>
+	            <td id="aiaInvoiced"></td>
+	            <td id="aiaToInvoice"></td>
+	            <td id="aiaPercentInvoiced"></td>
 	            </tr>		
 	
-	            <tr id = "hideTotal">
+	            <tr id = "hideTotal" style="background-color:#DDDDDD">
 	            <td class = "bold">Total</td>
-	            <td><input type="text" id="totalProject" value="" readonly></td>
-	            <td><input type="text" id="totalInvoiced" value="" readonly></td>
-	            <td><input type="text" id="totalToInvoice" value="" readonly></td>
-	            <td><input type="text" id="totalPercentInvoiced" value="" readonly></td>
+	            <td id="totalProject"></td>
+	            <td id="totalInvoiced"></td>
+	            <td id="totalToInvoice"></td>
+	            <td id="totalPercentInvoiced"></td>
 	            </tr>		
 	
 	    	</table> 
@@ -2360,7 +2360,7 @@
 		      </div>		      
 		   </div>
 		   
-		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone1' class = 'bg-modal1'>
+		   <div style = "height:25%;width:26%;padding:2px;right:-38%;"id = 'invoiceCreationZone1' class = 'bg-modal1'>
 		   
 		   <div class = "modal-contents1">
 		 
@@ -2385,9 +2385,13 @@
             		</td>
             		</tr>
 		            
+		            <tr id = "invoicePercentHide1">
+		               <td><label for='invoicePercent1'>Invoice Percent:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoicePercent1' onkeyup='populateInvoiceAmt1(this.value)'/>
+		            </tr>
 		            
 		            <tr id = 'invoiceAmountHide1'>
-		               <td><label for='invoiceAmount1'>Invoice Amount/Percent:  <span style="color:#FF0000">*</span></label>
+		               <td><label for='invoiceAmount1'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount1'/>
 		            </tr>
 		            
@@ -2431,14 +2435,14 @@
 		            
 		            <tr id = hide5>
 		               <td><label for='submittedDateInv1'>Invoice Prep Date: <span style="color:#FF0000">*</span></label></td>
-		               <td><input type='text' id='submittedDateInv1'/ readonly>
+		               <td><input type='text' id='submittedDateInv1' readonly/>
 		            </tr>
 	
 
     		         <tr id = hide6>
 		               <td><label for='invoiceCustomer1'>Customer <span style="color:#FF0000">*</span></label></td>
 		               
-		               	<td><input type='text' id='invoiceCustomer1'/ readonly>
+		               	<td><input type='text' id='invoiceCustomer1' readonly/>
 		               
 		               
 		            </tr>
@@ -2456,7 +2460,7 @@
 		               
 		            </tr>
 		            
-		            <tr id = hide10>
+	<!--          <tr id = hide10>
 		            <td><b>Approval 1</b></td>
 		             <td >  
                     <select class="closeout-input" id="approval11">
@@ -2489,7 +2493,7 @@
                         <option value="2">No</option>
                     </select>
                 </td>
-                </tr>
+                </tr>  -->
                 
                 <tr id = hide13>
 		               <td><label for='peInvNum1'>PE #:  <span style="color:#FF0000">*</span></label>
@@ -2521,30 +2525,36 @@
 		
 		   <div class = "changeOrderTableDiv" id = 'invoiceDisplay'>
 		   
+		   <tr>
+		   <td ><label for='invoiceTitle'>Title: </label>
+		       <input type='text' id='invoiceTitle' style="width:500px; border-color:transparent;" readonly/>
+		   </td>
+		   </tr>
+		   </br>
+		   
 		   <td>
+		   
 		   	<label for='totalPending1'>Invoices Pending: </label>
-		   	<input type='text' id='totalPending1' style="color:#FF0000" readonly/>
-		   	
+		   	<input type='text' id='totalPending1' style="color:#FF0000; border-color:transparent;" readonly/>
+		   
 		   </td>
 		   
 		   <td>
 		   	<label for='invoiceBalance1'>Balance: </label>
-		   	<input type='text' id='invoiceBalance1' style="color:black" readonly/>
+		   	<input type='text' id='invoiceBalance1' style="color:black; border-color:transparent;" readonly/>
 		   	
 		   </td>
 		   
 		   <td>
 		   	<label for='amountInvoiced1'>Invoiced To Date: </label>
-		   	<input type='text' id='amountInvoiced1' style="color:green" readonly/>
-		   	
+		   	<input type='text' id='amountInvoiced1' style="color:green; border-color:transparent;" readonly/>
 		   </td>
 		   
 		   <td>
 		   	<label for='totalAmount1'>Total: </label>
-		   	<input type='text' id='totalAmount1' style="color:blue" readonly/>
+		   	<input type='text' id='totalAmount1' style="color:blue; border-color:transparent;" readonly/>
 		   	
 		   </td>
-		   
 		   
         	  <!--<button style = "float:right;margin-right:5px;" type='button' class='project-edit btn' onclick='projectPendInvReport()'>Print Invoices</button>
         	    <button style= "float:right;margin-right:5px;background-color: #3f662e;" class ="project-edit btn" id="editInvoice" type="button" onclick="editSelectedInv()" disabled> Edit Invoice </button>			  
@@ -2568,18 +2578,18 @@
 						<!--  <th>Title</th>-->
 						<!--  <th>Invoice Type</th>-->
 						<th>Invoice Amount</th>
-						<th>Requested Date</th>
-						<th>Submitted/Rejected Date</th>
 						<th>Customer</th>
+						<th>Status</th>	
+						<th>Requested Date</th>
+						<th>Completed Date</th>
 						<!--  <th>Approval</th>-->
-						<th>Status</th>											
-						<th>WS Invoice #</th>					
-						<th>Notes</th>
+				<!--		<th>WS Invoice #</th>			-->		
+						<th>Notes</th> 
 		            </tr>
 		         </table>
 		      </div>		      
 		   </div>
-		   <div style = "height:60%;width:26%;padding:2px; "id = 'invoiceCreationZone' class = 'bg-modal'>
+		   <div style = "height:25%;width:26%;padding:2px;right:-38%;"id = 'invoiceCreationZone' class = 'bg-modal'>
 		   
 		   <div class = "modal-contents">
 		 
@@ -2592,8 +2602,14 @@
 		               
 		            </tr>
 		            
+		            <tr id = hide13>
+		               <td><label for='peInvNum'>PE #:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='peInvNum' />
+		               
+		            </tr>
+		            
 		            <tr id = "percentOrAmountRow" style = "display : none">
-		            <td><label>Amount<span style="color:#FF0000">*</span></label></td>
+		            <td><label>Amount Type: <span style="color:#FF0000">*</span></label></td>
 		            <td>
 		            <select id="percentOrAmount" class="pointer" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="showAmountBox()">
 	        	
@@ -2603,12 +2619,16 @@
             		</select>
             		</td>
             		</tr>
-		            
-		            <tr id = "invoiceAmountHide">
-		               <td><label for='invoiceAmount'>Invoice Amount/Percent:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceAmount'/>
+            		
+            		<tr id = "invoicePercentHide">
+		               <td><label for='invoicePercent'>Invoice Percent:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoicePercent' onkeyup='populateInvoiceAmt(this.value)'/>
 		            </tr>
 		            
+		            <tr id = "invoiceAmountHide">
+		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
+		               <td><input type='text' id='invoiceAmount'/>
+		            </tr>
 		            
 		            
 		            <tr id = "invoiceStatusSelectionRow" style = "display : none">
@@ -2636,10 +2656,13 @@
 		               <td><input type='text' id='invoiceID' readonly/>
 		            </tr>
 		            
-		            <tr id = hide3>
+		            
+		      <!-- 		<tr id = hide3>
 		               <td><label for='invoiceNumber'>WS Invoice # <span style="color:#FF0000"></span></label></td>
 		               <td><input type='text' id='invoiceNumber'></td>
-		               </tr>
+		               </tr> -->
+		               
+		               
 		           
 		            
 		            <tr id = hide4>
@@ -2653,16 +2676,18 @@
 		               <td><input type='text' id='submittedDateInv' readonly>
 		            </tr>
 		            
+		            <!-- 
 		            <tr id = hide10>
 		               <td><label for='submitRejectDate'>Submit/Reject Date: <span style="color:#FF0000">*</span></label></td>
 		               <td><input type='text' id='submitRejectDate'>
 		            </tr>
+		            -->
 	
 
     		         <tr id = hide6>
 		               <td><label for='invoiceCustomer'>Customer <span style="color:#FF0000">*</span></label></td>
 		               
-		               	<td><input type='text' id='invoiceCustomer'/ readonly>
+		               	<td><input type='text' id='invoiceCustomer' readonly/>
 		               
 		               
 		            </tr>
@@ -2675,12 +2700,12 @@
 		            </tr>
 		            
 		            <tr id = hide8>
-		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label>
-		               <td><input type='text' id='notes'/>
+		               <td><label for='notes'>Notes:  <span style="color:#FF0000"></span></label></td>
+		               <td><input type='text' id='notes'/></td>
 		               
 		            </tr>
 		            
-		            <tr id = hide10>
+		<!--        <tr id = hide10>
 		            <td><b>Approval 1</b></td>
 		             <td >  
                     <select class="closeout-input" id="approval1">
@@ -2713,17 +2738,13 @@
                         <option value="2">No</option>
                     </select>
                 </td>
-                </tr>
+                </tr>  -->
                 
-                <tr id = hide13>
-		               <td><label for='peInvNum'>PE #:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='peInvNum' />
-		               
-		            </tr>
+
 		                 		         
 		         </table>
 		      </div>
-		      <button style = "float:center" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
+		      <button style = "float:center;" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
 		      <button style = "float:right; margin-right:5px;background-color: #4169E1;color: white;" onclick='viewInv()' class='btn'>Back to Invoice View</button>
 		      
 		      
