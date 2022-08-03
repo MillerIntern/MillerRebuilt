@@ -24,6 +24,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.TransactionException;
+import org.hibernate.annotations.Sort;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
@@ -47,6 +48,7 @@ import projectObjects.ChangeOrder;
 import projectObjects.CostEstimate;
 import projectObjects.Customer;
 import projectObjects.Invoice;
+import projectObjects.InvoiceApproval;
 import java.util.Set;
 
 
@@ -1300,18 +1302,22 @@ public class ProjectObjectService
 			c = Class.forName("projectObjects.Invoice");
 			
 			Criteria criteria = session.createCriteria(c);
+			
+			criteria.addOrder(Order.desc("submittedDate"));
 
 			if(projectID != -1) {
 				
 			
 			Criterion projectIDRestriction = Restrictions.sqlRestriction("invoice_id = " + projectID);
 			criteria.add(projectIDRestriction);
+			
 			}
 			
 	        List<?> list = criteria.list();
 	        
 	        tx.commit();
 
+	        System.out.println("List of invoices- " + gson.toJson(list));
 	        return gson.toJson(list);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

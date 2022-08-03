@@ -379,7 +379,6 @@ function saveProject() {
 	var autoFillRefrigeration = determineAutofillValue($('#autofill-Refrigeration').val());
 	var autoFillPermits = determineAutofillValue($('#autofill-Permits').val());
 	
-	
 	var dates = [initiated, survey, costco, proposalDate, startDate, scheduledTurnover, actualTurnover];
 	
 	if(isValidInput(dates)) {
@@ -440,6 +439,7 @@ function saveProject() {
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
+				addInvoiceApproval(projectID);
 				alert('Save Complete!');
 				document.getElementById("saveProjectLink").onclick = "";// Added it here by removing it at the top
 				$('#saveButton > button').prop('disabled', false);
@@ -447,7 +447,58 @@ function saveProject() {
 			}
 			
 		});
+		
+		
+		
+		
 	}
+}
+
+//function to add invoiceapprovals to the table
+function addInvoiceApproval(projID){
+	
+	alert("add invoice approvals called");
+	
+	//for invoice approval thing
+	var noOfApprovers = document.getElementById("autofill-approvers");
+	
+	var name1 = document.getElementById("approver_0").value;
+	
+	var name2 = document.getElementById("approver_1");
+	if(name2){
+		name2 = name2.value;
+	}
+	var name3 = document.getElementById("approver_2");
+	if(name3) name3.value;
+	var name4 = document.getElementById("approver_3");
+	if(name4) name4.value;
+	var name5 = document.getElementById("approver_4");
+	if (name5) name5.value;
+	
+	//ajax call for inserting data into invoice approvals table
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': addInvoiceApproval,
+			'projectID': projID,
+			'name1' : name1,
+			'name2' : name2,
+			'name3' : name3,
+			'name4' : name4,
+			'name5' : name5,			
+			
+		}, complete: function (data) {
+			console.log(data);
+			projectID = data.responseJSON;
+			alert('Approvals added');
+			//document.getElementById("saveProjectLink").onclick = "";// Added it here by removing it at the top
+			//$('#saveButton > button').prop('disabled', false);
+			
+		}
+		
+	});
 }
 
 function determineAutofillValue(value)
@@ -658,3 +709,110 @@ function changeStatus(){
 		$('#status ').append($('<option>', {value:3, text:'Proposal - Submitted'}));
 	}
 }
+
+//function to load approvers into the approver area based on the number of approvers
+function loadApproverSelection(){
+	var approverCount = document.getElementById("autofill-approvers");
+	
+	$.ajax({
+			type: 'POST',
+			url: 'Project',
+			data: {
+				'domain': 'project',
+				'action': 'getUsers',
+			}, complete: function (data) {
+				console.log(data);
+				if (data.responseJSON) {
+					createDropdown(data.responseJSON);
+				}
+			}
+			
+		});
+	
+}
+
+
+function createDropdown (json) {
+		var projectManagers = getProjectManagers();
+		const setProjectManagers = new Set();
+		for (var i = 0; i < projectManagers.length; i++){
+			setProjectManagers.add(projectManagers[i].name);
+		}
+		let d = document.createDocumentFragment();
+		
+		json.sort(function(a,b){
+			if(a.firstName < b.firstName) return -1;
+			else if(a.firstName > b.firstName) return 1;
+			return 0;
+		});
+
+		var assigneeVal;
+		
+		var x = document.getElementById("autofill-approvers").value;
+		
+		//alert(x);	
+		var y = parseInt(x); 
+		var z = document.getElementById("approverNames");
+		z.innerHTML = "";
+		
+		for (let j = 0; j < y; j++) {
+			//alert("inside loop");
+			let selectApprovers = document.createElement("select");
+			selectApprovers.id = "approver_" + j;
+		
+			for (var i = 0; i < json.length; i++)
+			{
+				if(setProjectManagers.has(json[i].firstName)){
+					if(json[i].name == "bart")
+					{
+						continue;
+					}
+					
+					let option = document.createElement('option');
+					if(user.firstName == json[i].firstName) 
+						assigneeVal = json[i].firstName;
+					// when users store both username and name, access the user's name and username fields
+					console.log(json[i].name);
+					option.innerHTML = json[i].firstName;
+					option.setAttribute("value", json[i].firstName);
+					//alert(option.value);
+					d.appendChild(option);
+				}
+			
+			}
+			
+			selectApprovers.appendChild(d)
+  			//$('#approverNames').append(d);
+			//$('#approverNames').val(assigneeVal);
+			
+			z.appendChild(selectApprovers);
+		
+		//console.log(d);
+		
+		
+		//alert(y);
+		
+		
+		}
+		
+	}
+	
+function getProjectManagers () {
+		var result;
+		$.ajax({
+			type: 'POST',
+			url: 'Project',
+			async: false,
+			data: {
+				'domain': 'project',
+				'action': 'getProjectManagers',
+			}, complete: function (data) {
+				if (data.responseJSON) {
+					result = data.responseJSON;
+					console.log("project managers are ", result);
+				}
+			}
+			
+		});
+		return result;
+	}

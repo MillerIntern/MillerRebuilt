@@ -10,6 +10,7 @@ let CURRENT_INTENT = {
 		EDIT : 2 ,
 		REMOVE : 3,
 		REMOVE_DUPLICATE : 4,
+		DELETE : 5,
 		INTENT : 1,
 }
 
@@ -76,6 +77,7 @@ $(document).ready(function()
 				        if($(this).hasClass('editButton')) intentSwitch(2);
 				        if($(this).hasClass('removeButton')) intentSwitch(3);
 				        if($(this).hasClass('removeDuplicateButton')) intentSwitch(4);
+				        if($(this).hasClass('removedelete')) intentSwitch(5);
 				        
 
 				        
@@ -262,6 +264,7 @@ function getCustomers() {
 				customers = data.responseJSON;
 				console.log("CUSTOMERS = ",customers);
 				fillCustomerDropdown(customers);
+				fillCustomerDropdownEmail(customers);
 				fillLocationCustomerDropdown(customers);
 				fillEditCustomerDropdown(customers);
 			}
@@ -274,6 +277,7 @@ function getCustomers() {
 function fillCustomerDropdown(customers){
 	console.log("filling customer dropdown");
 	$('#customerDropdown').find('option').remove();
+	$('#customerDropdownEmail').find('option').remove();
 	
 	customers.sort(function(a,b){
 		if(!a.name) return -1;
@@ -293,6 +297,7 @@ function fillCustomerDropdown(customers){
 		option.text = customers[i].name;
 		option.value = customers[i].id;
 		$('#customerDropdown').append(option);
+		//$('#customerDropdownEmail').append(option);
 		
 //		option = document.createElement('option');
 //		option.text = customers[i].name;
@@ -300,6 +305,39 @@ function fillCustomerDropdown(customers){
 	}
 //	$('#customerDropdown').selectmenu().selectmenu('refresh', true);
 	$('#customerDropdown').chosen({width : '200px'});
+	//$('#customerDropdownEmail').chosen({width : '200px'});
+
+}
+
+function fillCustomerDropdownEmail(customers){
+	console.log("filling customer dropdown");
+	$('#customerDropdownEmail').find('option').remove();
+	
+	customers.sort(function(a,b){
+		if(!a.name) return -1;
+		if(!b.name) return 1;
+		
+		if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		
+		return 0;
+	});
+	
+	
+	for(var i = 0; i < customers.length; i++) 
+	{
+		console.log("Adding the option: ", customers[i].name);
+		let option = document.createElement('option');
+		option.text = customers[i].name;
+		option.value = customers[i].id;
+		$('#customerDropdownEmail').append(option);
+		
+//		option = document.createElement('option');
+//		option.text = customers[i].name;
+//		option.value = customers[i].id;
+	}
+//	$('#customerDropdown').selectmenu().selectmenu('refresh', true);
+	$('#customerDropdownEmail').chosen({width : '200px'});
 
 }
 

@@ -1,0 +1,22 @@
+/* Forces content onto a single line, and truncates with ellipsis */
+.truncate {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Primitive tooltip */
+.hover-truncated {
+  position: absolute;
+  z-index: 1000;
+  display: block;
+  visibility: visible;
+  line-height: 1.4;
+  white-space: normal;
+  background: #333;
+  border: 1px solid #333;
+  padding: 2px 3px;
+  max-width: 400px;
+  color: #fff;
+}

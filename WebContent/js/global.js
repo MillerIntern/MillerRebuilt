@@ -15,8 +15,12 @@ const NEW_MASTER_SCOPE = 'newMasterScope.html'
 const MASTER_SCOPE = 'masterScope.html'
 
 loginWork();	
-function setJavaScriptCookie(){
-	document.cookie="millerLoginCookie_Status=loggedIn";
+function setJavaScriptCookie(userType){
+	//alert("usertype during setting cookie is " + userType );
+	document.cookie="millerLoginCookie_Status=loggedIn;usertype="+userType;
+	document.cookie="usertype="+userType;
+	let username = getJavaScriptCookie("usertype");
+	//alert("cookie from javascript is" + username);	
 }
 
 function getJavaScriptCookie(Name){
@@ -35,6 +39,38 @@ function getJavaScriptCookie(Name){
 	      }
 	   }
 	  return returnvalue;
+}
+
+function getUserType(){
+	
+	//alert("get user type called");
+	
+	$.ajax({
+			type: 'POST',
+			url: 'GetUser', 
+			data: {
+				'action': 'getUserType',
+			},
+			 complete: function (serverResponse) {
+				console.log(serverResponse);
+				
+				let response = $.trim(serverResponse.responseText);
+				//alert(response);
+				
+				return response;
+				
+				if (response === 'UPDATED_INVOICE') {
+					alert('Invoice Updated Successfully');
+				
+					//Makes the user return to the invoice screen 
+					//document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});
 }
 
 function unSetJavaScriptCookie(){
@@ -86,6 +122,11 @@ jQuery.fn.center = function () {
 //Output: the value of the parameter
 function getParameterByName(name) 
 {
+	
+	//new lines added by saurabh
+	//console.log("Value of id in loading page is", name);
+	//window.alert("Value of id in loading page is", name);
+	
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);

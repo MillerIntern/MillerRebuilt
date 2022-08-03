@@ -1,15 +1,23 @@
 package services;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Criteria;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
 import objects.HashGen;
 import objects.HibernateUtil;
+import objects.RequestHandler;
 import projectObjects.User;
 
 public class LoginService 
@@ -81,4 +89,62 @@ public class LoginService
 		
 		return "false";
 	}
+	
+	public synchronized static int userType(String username) {
+		
+		int userType = 0;
+		
+		Properties prop = new Properties();
+    	try {
+    	    //load a properties file from class path, inside static method
+    		
+    		Configuration configuration= new Configuration().configure("hibernate.cfg.xml");
+    		
+    		String myDriver = configuration.getProperty("hibernate.connection.driver_class");
+    		String myUrl = configuration.getProperty("hibernate.connection.url");
+    		String dbuser = configuration.getProperty("hibernate.connection.username");
+    		String password = configuration.getProperty("hibernate.connection.password");
+    		Class.forName(myDriver);
+    		Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+    		// create our mysql database connection
+    		
+    		
+
+    		
+		    	    
+			System.out.println("Username is " + username);
+			String query = "SELECT status_id FROM user where name = '" + username + "'";
+				
+			Statement st = conn.createStatement();
+			
+			// execute the query, and get a java resultset
+		    ResultSet rs = st.executeQuery(query);
+		    
+		    while (rs.next())
+		      {
+		        int id = rs.getInt("status_id");
+		        System.out.println("Status id is " + id);
+		        
+		        userType = id;
+		        
+		      }
+				
+			
+		
+    		//InputStream in = new FileInputStream("../hibernate.cfg.xml");
+    		
+    	    //prop.load(in);
+
+    	    //get the property value and print it out
+    	    //System.out.println(prop.getProperty("hibernate.connection.password"));
+    	    //System.out.println(prop.getProperty("dbuser"));
+    	    //System.out.println(prop.getProperty("dbpassword"));
+		    //return userType;
+    	} 
+    	catch (Exception ex) {
+    	    ex.printStackTrace();
+    	}
+		return userType;
+	}
+
 }

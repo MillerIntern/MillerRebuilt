@@ -942,6 +942,7 @@ public class Project extends HttpServlet
 			// TODO: WHEN PEOPLE HAVE FIRST NAMES response = ProjectObjectService.getAllAsJsonString("User");
 			Gson gson = new Gson();
 			response = gson.toJson(users);
+			System.out.println(response);
 		} else if (action.equals("getCustomers")) {			
 			// TODO: Store User's name under User.class this implementation is really bad
 			List<Object> customers= ProjectObjectService.getAll("Customer");
@@ -1500,12 +1501,34 @@ public class Project extends HttpServlet
 //			}
 //			
 //			ProjectObjectService.updateProjectScores(projects);
-//
+//f
 //			
 //			
 //			Gson gson = new Gson();
 //			response = gson.toJson(allResults);
 //		}
+		
+		else if(action.equals("addApprovals")) {
+			
+			/*boolean successfulAddition = true;
+
+			Long projectID = Long.parseLong(parameters.get("projectID"));
+			try
+			{
+				successfulAddition = ProjectService.addInvoiceApprovals(projectID, parameters, (String) req.getSession().getAttribute("user"));
+			}
+			catch(ClassNotFoundException | ParseException e)
+			{
+				successfulAddition = false;
+				e.printStackTrace();
+			}
+			 */
+			try {
+				response = ProjectService.addInvoiceApprovals(parameters, (String) req.getSession().getAttribute("user"));
+				} catch(ClassNotFoundException | ParseException e) {
+					e.printStackTrace();
+				}
+		}
 
 		
 		/*

@@ -10,8 +10,9 @@
 		<script type="text/javascript" src="js/additions.js"></script>
 		<script type="text/javascript" src="js/contentControl.js"></script>
 		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+		<script type="text/javascript" src="js/delete.js"></script>
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/additions.css" rel="stylesheet">
         <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
  	    <link href="css/style.css" rel="stylesheet">
@@ -101,6 +102,8 @@
 <div class="container">
 	<ul class="tabs categoriesToEdit">
 		<li class="tab-link current" data-tab="customer">Customer</li>
+		<li class="tab-link" data-tab="customerGroup">Customer Group</li>
+		<li class="tab-link" data-tab="customeremail">Customer Email</li>
 		<li style="width: 10.5%" class="tab-link" data-tab="warehouse">Location</li>
 		<li style="width: 11.4%" class="tab-link" data-tab="item">Project Item</li>
 		<li style="width: 16.6%" class="tab-link" data-tab="equipmentSupplier">Equipment Supplier</li>
@@ -157,6 +160,59 @@
 
 		    </div>
 	  </div>
+	</div>
+	
+	<div style="width: 55%" id="customerGroup" class="tab-content">
+		<table>
+			<tr>
+				<td style="width: 35.55%">Customer</td>
+				<td>
+					<select id = "customerDropdowGroup" >
+				    </select> 
+				</td>
+			</tr>
+			
+				
+			<tr>
+				<td>Customer Group Name: </td>        					
+				<td><input style="width: 300px" id="customerNameEmail" type="text"></td>
+			</tr>		
+		</table>
+		<button class = "btn btn-primary makeChanges" onclick="createCustomerEmail()">Create New Customer Email</button>	
+		<button id = "editCustomerModalButtonEmail" class = "btn btn-primary editButton">Edit Customer Email</button>
+	  	
+	</div>
+	
+	
+	<div style="width: 55%" id="customeremail" class="tab-content">
+		<table>
+			<tr>
+				<td style="width: 35.55%">Customer</td>
+				<td>
+					<select id = "customerDropdownEmail" >
+				    </select> 
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 35.55%">Customer Group</td>
+				<td>
+					<select id = "customerGroupDropdownEmail" >
+				    </select> 
+				</td>
+			</tr>
+				
+			<tr>
+				<td>Name: </td>        					
+				<td><input style="width: 300px" id="customerNameEmail" type="text"></td>
+			</tr>
+			<tr>
+				<td>Email: </td>        					
+				<td><input style="width: 300px" id="customerEmail" type="email"></td>
+			</tr>		
+		</table>
+		<button class = "btn btn-primary makeChanges" onclick="createCustomerEmail()">Create New Customer Email</button>	
+		<button id = "editCustomerModalButtonEmail" class = "btn btn-primary editButton">Edit Customer Email</button>
+	  	
 	</div>
 	
 	<div style="width: 55%" id="warehouse" class="tab-content editable">
@@ -300,7 +356,8 @@
 			<button type = "button" class = "btn btn-primary addButton intentChangeIndicator">Add</button>
 			<button type = "button" class = "btn btn-primary editButton intentChangeIndicator">Edit</button>
 			<button type = "button" class = "btn btn-primary removeButton intentChangeIndicator">Remove</button>
-			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>		
+			<button type = "button" class = "btn btn-primary removeDuplicateButton intentChangeIndicator">Remove Duplicate</button>
+			<button type = "button" class = "btn btn-primary delete intentChangeIndicator" id = "deleteSubContractor">Delete</button>					
 		</div>	
 	</div>
 	<div style="width: 52.5%" id="equipmentSupplier" class="tab-content editable">

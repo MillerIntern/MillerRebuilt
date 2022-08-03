@@ -45,6 +45,7 @@ import projectObjects.ChangeOrder;
 import projectObjects.Subcontractor;
 import projectObjects.City;
 import projectObjects.MasterScope;
+import projectObjects.InvoiceApproval;
 import services.helpers.MasterScopeFiller;
 import services.helpers.PendInvFiller;
 import services.helpers.InvoiceFiller;
@@ -62,6 +63,7 @@ import services.helpers.SubcontractorFiller;
 import services.helpers.CityFiller;
 import services.helpers.ProjectRuleFiller;
 import services.helpers.ProjectSpecScopeFiller;
+import services.helpers.InvoiceApprovalFiller;
 
 
 /**
@@ -1097,6 +1099,18 @@ public class ProjectService extends ProjectObjectService
 		return true;
 	}
 	
+	public synchronized static String addInvoiceApprovals(Map<String, String> params, String username) throws ClassNotFoundException, ParseException
+	{
+		//System.out.println("In Add Pending Invoice:");
+
+		InvoiceApproval ia = new InvoiceApproval();
+		InvoiceApprovalFiller.fillInvoiceApprovalInfoormation(ia, params, username);
+
+		ProjectObjectService.addObject("InvoiceApproval", ia);
+		
+		return "INVOICE_APPROVALS_ADDED";
+	}
+	
 	
 	/**
 	 * @param projectID
@@ -1442,4 +1456,6 @@ public class ProjectService extends ProjectObjectService
 		session.update(currentProject);
 		tx.commit();
 	}
+	
+	
 }

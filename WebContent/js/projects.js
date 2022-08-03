@@ -11912,6 +11912,9 @@ function preparePage() {
 	let id = getParameterByName("id");
 	let from = getParameterByName("from");
 	let type = getParameterByName("type");
+	
+	//new lines added by me
+	//window.alert("Saurabh");
 
 	$('#findProject').hide();
 	$('.editProject').hide();
@@ -14559,6 +14562,7 @@ function submitInv() {
 				}
 			}
 		});		
+		
 	}
 	
 	else if(INV_ACTION == "updateInv"){
@@ -14758,5 +14762,31 @@ function submitInv1(){
 				}
 			}
 		});		
+		//add the information in the approvals part too
+		$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				'action': 'createApprovals',
+				'project': projectID,
+				'invoiceID': invoiceID,
+				
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'INVOICE_ADDED') {
+					alert('Approvals Added Successfully');
+					
+					//Makes the user return to the invoice screen 
+					document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					$('#returnAccountsReceivable').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});		
+		
 	}
 }

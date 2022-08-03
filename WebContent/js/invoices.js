@@ -1,10 +1,85 @@
 let invs;
+var userType;
+
+//this runs upon loading of all the page
+$(document).ready(function(){
+	
+	
+	//open the default invoicemain tab
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+
+	
+	$('.addmore').on('click', function() {
+        $(".mytemplate").clone().removeClass("mytemplate").show().appendTo(".dates");
+    });
+    $(document).on("focus", ".datepicker", function(){
+        $(this).datepicker();
+    });
+    
+   
+	 $("#btnSubmit").click(function (event) {
+
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+
+        // Get form
+        var form = $('#fileUploadForm')[0];
+
+		// Create an FormData object 
+        var data = new FormData(form);
+
+		// If you want to add an extra field for the FormData
+        data.append("CustomField", "This is some extra data, testing");
+        data.append("fileName", fileName);
+
+		// disabled the submit button
+        $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "fileuploadservlet",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                $("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+        });
+
+    });
+    
+    
+    fetchNoOfApprovals();
+
+});
+
 
 //gets list of invoices for project
 function getInvs(stopServerCalls) {
 		
 	//getAllProjects();
-
+	
+	//var userType = getUserType();
+	//alert()
+	/*while(userType == undefined){
+		alert("user type is " + userType);
+		continue;
+	} */
 	
 	$.ajax({
 		type: 'POST',
@@ -37,6 +112,11 @@ let lengthProjects;
 
 function getAllProjects() {
 	
+	//executeTasks();
+	//alert("usertype is " + userType);
+	
+	userType = getJavaScriptCookie("usertype");
+	
 	t0 = new Date().getTime();
 	$.ajax({
 		type: 'POST',
@@ -54,6 +134,9 @@ function getAllProjects() {
 			console.log('took: ' + (t1 - t0) + 'ms');
 			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
 			//getSearchCriteria();
+			
+			
+			
 			getInvs(1);
 		}
 	});
@@ -142,6 +225,9 @@ $(document).on('change', '#invoiceSelector2', function () {
 });
 
 
+//set the color of icons based on the availability of file of the invoice
+
+
 //fills invoice table 
 function fillInvsTable(data) {
 	
@@ -154,7 +240,8 @@ function fillInvsTable(data) {
 	//shows invoices based on filter selection
 	for (var i = 0; i < invs.length; i++) {
 		if(	(selector == 'all' && (invs[i].invoiceStatus != "Requested" && invs[i].invoiceStatus != "Processing" && 
-				invs[i].invoiceStatus != "Review" && invs[i].invoiceStatus != "Approved")) ||
+				invs[i].invoiceStatus != "Review" && invs[i].invoiceStatus != "Approved" 
+				&& invs[i].invoiceStatus != "Submitted" && invs[i].invoiceStatus != "Rejected")) ||	//adding this part for testing purpose only
 				(selector == 'requested' && invs[i].invoiceStatus != "Requested") || 
 				(selector == 'processing' && invs[i].invoiceStatus != "Processing") ||
 				(selector == 'review' && invs[i].invoiceStatus != "Review") ||
@@ -169,23 +256,39 @@ function fillInvsTable(data) {
 		invListing.setAttribute("value", inv);
 		
 		//allows invoice to be edited
-		invListing.onclick = function() {
+		//disabling this temporarily
+		/*invListing.onclick = function() {
 			toggleInv(this);
 		};
 		
 		invListing.ondblclick = function(){
-
-			editSelectedInv(this);
-		};
+			alert(this);
+			//editSelectedInv(this);
+		}; */ 
 				
 		count++;
 		
 		invListing.value = invs[i].id;
 		invListing.id = "Inv_" + invs[i].id;
+		//invListing.value = invs[i].invoiceID;
+		//invListing.id = "Inv_" + invs[i].invoiceID;
 		
-		let projectDetails = document.createElement('td');
+		//alert(invListing.id);
+		
+		let projectDetails = document.createElement('td'); 
+		projectDetails.width = "10%";
+		
+		//variable for showing fully project details
+		let projDetailsHover = document.createElement("div");
+		
+		//projectDetails.style.width = "10px";
+		//projectDetails.className = "text"
+		let projectLocation = document.createElement('td');
+		projectLocation.width = "10%";
 		let mcsNumber = document.createElement('td');
+		mcsNumber.width = "10%";
 		let invoiceID = document.createElement('td');
+		invoiceID.width = "10%";
 		let associatedPE = document.createElement('td');
 		let invoiceTitle = document.createElement('td');
 		//let invoiceType = document.createElement('td');		
@@ -194,9 +297,48 @@ function fillInvsTable(data) {
 		let submitRejectDate = document.createElement('td');
 		let invoiceCustomer = document.createElement('td');
 		let invoiceApproval = document.createElement('td');
-		let invoiceStatus = document.createElement('td');
-		let invoiceNumber = document.createElement('td');
+		let invoicePdf = document.createElement('td');
 		let notes = document.createElement('td');
+		let invoiceSubmitBtn = document.createElement('td');
+		
+		//add the save button to the laste column
+		
+		//<li style="top:4px;float:right;" class="btn btn-success" id="saveProjectLink" onclick="saveProject_PROJECT_DATA()">
+	     //   				Save<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	     
+	    /*<button class="btn" style="color: white; background: rgb(23, 42, 86);">Add Invoice</button> */
+	        				
+	    let btn = document.createElement('button');
+	    //btn.style = "top:4px;float:right;";
+	    btn.style = "color:white; background-color : #039c0a; border:#014704; border-radius: 3px;";
+	    btn
+	    btn.class = "btn btn-success";
+	    btn.id = "btn_" + invListing.id;
+	    //alert(btn.id);
+	    //btn.onclick = function(){};
+	    btn.innerHTML = "Save";
+	    btn.disabled = "true";
+		
+		btn.onclick = function() {
+			//toggleInv(this);
+			//let value = invListing
+			//alert(this.id);
+			editSelectedInvBtn(this.id.split('_').pop());
+		};
+		
+		/*invListing.ondblclick = function(){
+
+			editSelectedInv(this);
+		};  */
+		
+		//invoiceSubmitBtn.appendChild(submitBtn);
+		invoiceSubmitBtn.appendChild(btn);
+		
+		
+		
+		
+		let invoiceNumber = document.createElement('td');
+		
 		
 		//invoiceID.innerHTML = invs[i].associatedPE + '-' + (i+1);
 		//invoiceID.innerHTML = invs[i].peInvNum;
@@ -216,14 +358,67 @@ function fillInvsTable(data) {
 			if(RETRIEVED_PROJECTS[j].id == invs[i].invoice_id){
 				
 				var projItem = RETRIEVED_PROJECTS[j].projectItem.name;
+				var projItemComp = projItem;
 				if(projItem.length > 15){
 					
-					projItem = projItem.substring(0,16);
+					projItem = projItem.substring(0,14);
+					projItem = projItem + "...";
+				} 
+				
+				projectDetails.id = "project_" + invListing.value;
+				
+				//truncate and show full item on hover part
+				let projItemHover = document.createElement("div");
+				projItemHover.id = "hover_project_" + invListing.value;
+				//alert(notesHover.id);
+				projItemHover.innerHTML = projItemComp;
+				projItemHover.style.backgroundColor = "#f7f5a8";
+				projItemHover.style.display = "none";
+				projItemHover.style.position = "absolute";
+				projItemHover.style.border = "1px solid #ccc";
+        		projItemHover.style.border = "2px solid black";
+        		projItemHover.style.margin.top = "-5em";
+        		projItemHover.style.margin.left = "-5em";
+			
+				
+			
+				//projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  " #" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
+				projectDetails.innerHTML = projItem;
+				
+				//call function to show entire name of project details as pop up but only when length is greater than a particular value
+				if(projItem.length > 15){
+					projectDetails.onmouseover = function () {
+						showFullProjectName(projectDetails.id);
+					}
+					
+					//call the function to remove pop up on mouse leave
+					//call fucntion on mouse not hover to hide div
+					projectDetails.onmouseleave = function() {
+						hideProjectPopup(projectDetails.id);
+					}
+				
 				}
 				
-				projectDetails.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name +  " #" + RETRIEVED_PROJECTS[j].warehouse.warehouseID + " " + projItem;
+				projectDetails.appendChild(projItemHover);
 				
+				//projectDetails.className = "tooltip";
+				projectLocation.innerHTML = RETRIEVED_PROJECTS[i].warehouse.city.name + " " + RETRIEVED_PROJECTS[j].warehouse.warehouseID ;
+				
+				
+				
+				//setting the mcsNumber id and value
+				mcsNumber.id = "mcs_pe_" + invListing.value;
 				mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber + "-" + invs[i].peInvNum;
+				//mcsNumber.innerHTML = RETRIEVED_PROJECTS[j].McsNumber + "-" + invs[i].peInvNum;
+				
+				//alert(invs[i].peInvNum);
+				
+				var hovertext = document.createElement("div");
+				hovertext.class = "tooltiptext";
+				hovertext.innerHTML = projItemComp;
+				
+				
+				
 				break;
 			}
 			}
@@ -236,28 +431,598 @@ function fillInvsTable(data) {
 		else
 			invoiceAmount.innerHTML = "---";		
 		
+		//doing the date part, loading the invoice date and adding the date input too
 		submittedDate.innerHTML = invs[i].submittedDate;
 		
-		if(invs[i].submitRejectDate)
-			submitRejectDate.innerHTML = invs[i].submitRejectDate;
-		else
-			submitRejectDate.innerHTML = "TBD";
+		let submittedDateElement = document.createElement("input");
+		submittedDateElement.type = "text";
+		//submittedDateElement.placeholder = invs[i].submittedDate;
+		submittedDateElement.placeholder = "---";
+		submittedDateElement.id = "submitted_date_" + invListing.id; 
 		
-		invoiceCustomer.innerHTML = invs[i].invoiceCustomer;
+		let dateComp = document.createElement("input");
+		dateComp.type = "date";
 		
-		invoiceStatus.innerHTML = invs[i].invoiceStatus;
+		if(invs[i].submitRejectDate) {
+			//submitRejectDate.innerHTML = invs[i].submitRejectDate;
+			
+			
+			/*const d = new Date(invs[i].submitRejectDate)
+			
+			const str = invs[i].submitRejectDate;
+
+			const [day, month, year] = str.split('/');
+
+			const date = `${year}-${month}-${day}`; */
+			
+			
+			//alert(invs[i].submitRejectDate);
+			submittedDateElement.value = invs[i].submitRejectDate;
+			//submittedDateElement.value = date;
+	
+			//dateComp.value = invs[i].submitRejectDate;
+			//submittedDateElement.max = date;
+			//submittedDateElement.min = invs[i].submitRejectDate;
+		
+			//submitRejectDate.innerHTML = "---";
+			//submittedDateElement.placeholder = "---";
+		}
+		
+		//submittedDateElement.style.zIndex = 9999;
+		submittedDateElement.size = "9";
+		
+		
+		
+		//submittedDateElement.className = "datepicker";
+		//alert(submittedDateElement.id);
+		submittedDateElement.classList.add("datepicker");
+		
+		//call the enable button function on change of date
+		submittedDateElement.onchange = function(){
+			enableSubmitButton(this.id.split('_').pop());
+		}
+		
+		
+		//alert(submittedDateElement.id);
+		
+		//$('#submitted_date_Inv_3').datepicker();
+		//$('#'+ submittedDateElement.id).datepicker();
+		
+		
+		
+		//var name = this.name;
+		//$("input[name=" + name + "]").hide();
+		
+		let dateId = submittedDateElement.id;
+		$("input[name=" + dateId + "]").datepicker();
+		$(submittedDateElement.id).datepicker();
+		$('#' + submittedDateElement.id).datepicker();
+		$('#' + dateId).datepicker();
+		//$(`${submittedDateElement.id}`).datepicker();
+		//$('#' + submittedDateElement.id).datepicker(); 
+		//$(submittedDateElement.id).datepicker();
+		
+		submitRejectDate.appendChild(submittedDateElement);
+		
+		//html date function
+		
+		
+		
+		//submitRejectDate.appendChild(dateComp);
+		
+		//Setting the customer value and also adding the truncate if length exceeds particular value
+		invoiceCustomer.id = "invoice_customer_" + invListing.value;
+		
+		
+
+		//call function to show entire name of project details as pop up but only when length is greater than a particular value
+		let invoiceCustomerVal = invs[i].invoiceCustomer;
+		let invoiceCustomerValFull = invs[i].invoiceCustomer;
+		if(invoiceCustomerValFull.length > 15){
+			//first truncate the value
+			invoiceCustomerVal = invoiceCustomerVal.substring(0,15);
+			invoiceCustomerVal = invoiceCustomerVal + "...";
+			
+			invoiceCustomer.onmouseover = function () {
+				showFullCustomerName(invoiceCustomer.id);
+			}
+					
+			//call the function to remove pop up on mouse leave
+			//call fucntion on mouse not hover to hide div
+			invoiceCustomer.onmouseleave = function() {
+				hideInvoiceCustomerPopup(invoiceCustomer.id);
+			}		
+		}
+		
+		//truncate and show full item on hover part
+		let invoiceCustomerHover = document.createElement("div");
+		invoiceCustomerHover.id = "hover_" + invoiceCustomer.id;
+		//alert(invoiceCustomerHover  .id);
+		invoiceCustomerHover.innerHTML = invoiceCustomerValFull;
+		invoiceCustomerHover.style.backgroundColor = "#f7f5a8";
+		invoiceCustomerHover.style.display = "none";
+		invoiceCustomerHover.style.position = "absolute";
+		invoiceCustomerHover.style.border = "1px solid #ccc";
+		invoiceCustomerHover.style.border = "2px solid black";
+		invoiceCustomerHover.style.margin.top = "-5em";
+		invoiceCustomerHover.style.margin.left = "-5em";
+		invoiceCustomer.innerHTML = invoiceCustomerVal;
+		invoiceCustomer.appendChild(invoiceCustomerHover)
+		
+		//selecting the dropdown value of inovice status based on value fetched from the database
+		//invoiceStatus.innerHTML = invs[i].invoiceStatus;
+		
+		//alert(invs[i].invoiceStatus);
+		
+		//$("#invoiceStatus_" + invListing.id).val(invs[i].invoiceStatus);
+		var invoiceIDdropdown = "invoiceStatus_" + invListing.id;
+		//alert(invoiceIDdropdown);
+		
+		
+		
+		var setdropdown = document.getElementById(invoiceIDdropdown);
+		var myEle = document.getElementById(invoiceIDdropdown);
+    		if(myEle){
+        		alert("value exists");
+    	}
+    	
+    	//adding dropdown in the status
+		let invoiceStatus = document.createElement('td');
+		
+	
+		let selectStatus = document.createElement("select");
+		selectStatus.id = "invoiceStatus_" + invListing.id;
+		//select.onchange = "enableSubmitBtn(invListing.id)";
+		//select.onchange = function(){enableSubmitBtn(select)}
+		
+		var opt = document.createElement("Option");
+		opt.value = "Requested";
+		opt.textContent = "Requested";
+		selectStatus.appendChild(opt);
+		//invoiceStatus.appendChild(opt);
+		var opt2 = document.createElement("Option");
+		opt2.value = "Processing";
+		opt2.textContent = "Processing";
+		selectStatus.appendChild(opt2)
+		var opt3 = document.createElement("Option");
+		opt3.value = "Review";
+		opt3.textContent = "Review";
+		selectStatus.appendChild(opt3);
+		var opt4 = document.createElement("Option");
+		opt4.value = "Approved";
+		opt4.textContent = "Approved";
+		selectStatus.appendChild(opt4);
+		var opt5 = document.createElement("Option");
+		opt5.value = "Submitted";
+		opt5.textContent = "Submitted";
+		selectStatus.appendChild(opt5);
+		var opt6 = document.createElement("Option");
+		opt6.value = "Rejected";
+		opt6.textContent = "Rejected";
+		selectStatus.appendChild(opt6);
+		
+		selectStatus.onchange = function() {
+			//alert(invListing.value);
+			//enableSubmitButton(invListing.id);
+			//enableSubmitButton(this.id.substring(this.id.length - 1));
+			enableSubmitButton(this.id.split('_').pop());
+			//id = id.split('_').pop();
+			
+		}; 
+		
+		invoiceStatus.appendChild(selectStatus);
+		
+		selectStatus.value = invs[i].invoiceStatus;
+		selectStatus.setAttribute("original", invs[i].invoiceStatus);
+		
+		
+		
+		
+		//alert("user type is " + userType);
+		//disable select if user is basic user
+		if(userType == 1){
+			//alert("usertype");
+			//selectStatus.disabled = true;
+		}
+		permissionCheckforStatus(invListing.value);
+		//selectStatus.disabled = true;
+		
 		invoiceApproval.innerHTML = invs[i].invoiceApproval;
 		
 		associatedPE.innerHTML = invs[i].associatedPE;
-		notes.innerHTML = invs[i].notes;
+		
+		//alert(invs[i].associatedPE);
 		
 		
+		//doing the notes part
+		//add notes icon to each row
+		let notesIcon = document.createElement('img');
+		notesIcon.id = "notes_" + invListing.value;
+		//alert(notesIcon.id);
+		notesIcon.src = "icons/notes.png";
+		notesIcon.width = "22";
+		notesIcon.height = "22";
+		
+		//call function to display div on mouse hover
+		notesIcon.onmouseover = function(){
+			//alert(notesIcon.id);
+			displayNotes(notesIcon.id);		
+		}
+		
+		//call fucntion on mouse not hover to hide div
+		notesIcon.onmouseleave = function() {
+			hideNotes(notesIcon.id);
+		}
+		
+		//double click notes icon to edit it
+		notesIcon.ondblclick = function() {
+			//alert("icon double clicked");
+			editNotes2(notesIcon.id);
+		}
+		
+		//notesIcon.innerHTML = "image";
+		notes.appendChild(notesIcon);
+		//alert(notesIcon.src);
+		//console.log(notesIcon);
+		//notes.innerHTML = invs[i].notes;
+		let notesHover = document.createElement("div");
+		notesHover.id = "hover_" + notesIcon.id;
+		//alert(notesHover.id);
+		notesHover.innerHTML = invs[i].notes;
+		notesHover.style.backgroundColor = "#f7f5a8";
+		notesHover.style.display = "none";
+		notesHover.style.position = "absolute";
+		notesHover.style.border = "1px solid #ccc";
+        notesHover.style.border = "2px solid black";
+        notesHover.style.margin.top = "-5em";
+        notesHover.style.margin.left = "-5em";
+		
+		notes.appendChild(notesHover);
+		
+		//edit notes modal box
+		let notesEdit = document.createElement("div");
+		notesEdit.id = "edit_" + notesIcon.id;
+		notesEdit.style.backgroundColor = "white";
+		notesEdit.style.position = "absolute";
+		notesEdit.style.float = "Left";
+		notesEdit.style.overflow = "auto";
+		notesEdit.style.right = "150px";
+		notesEdit.style.borderRadius = "5px";
+		notesEdit.style.width = "200px";
+		notesEdit.style.height = "100px";
+		notesEdit.style.display = "none";
+		notesEdit.style.border = "1px solid blue";
+        notesEdit.style.border = "2px solid black";
+        notesEdit.style.margin.top = "-5em";
+        notesEdit.style.margin.left = "-5em";
+        notesEdit.style.padding = "3px";
+        
+        let notesEditTable = document.createElement("table");
+        notesEditTable.id = "notes_edit_modal_" + invListing.value;
+        let notesEditTableBody = document.createElement("tbody")
+        notesEditTable.appendChild(notesEditTableBody);
+        let notesEditTableRow = document.createElement("tr");
+        
+        //notesEditTable.insertRow();
+        
+        let notesEditTitle = document.createElement("td");
+        notesEditTitle.innerHTML = "Update notes";
+        notesEditTitle.colSpan = "2";
+        notesEditTitle.align = "center";
+        notesEditTitle.height = "20";
+        notesEditTableRow.appendChild(notesEditTitle);
+        notesEditTableBody.appendChild(notesEditTableRow);
+        
+        let notesEditTableRow2 = document.createElement("tr");
+        let notesEditTableSelectTd = document.createElement("td");
+        notesEditTableSelectTd.height = "30";
+        notesEditTableSelectTd.colSpan = "2";
+        notesEditTableSelectTd.align = "center";
+        let notesEditSelect = document.createElement("select");
+        notesEditSelect.id = "notes_edit_" + invListing.value;
+        notesEditSelect.setAttribute("original", invs[i].notes);
+        var opt = document.createElement("Option");
+		opt.value = "Incorrect Amount";
+		opt.textContent = "Incorrect Amount";
+		notesEditSelect.appendChild(opt);
+		var opt2 = document.createElement("Option");
+		opt2.value = "Incorrect Customer";
+		opt2.textContent = "Incorrect Customer";
+		notesEditSelect.appendChild(opt2);
+		var opt3 = document.createElement("Option");
+		opt3.value = "Customer Rejected";
+		opt3.textContent = "Customer Rejected";
+		notesEditSelect.appendChild(opt3);
+		var opt3 = document.createElement("Option");
+		opt3.value = "Incomplete Work";
+		opt3.textContent = "Incomplete Work";
+		notesEditSelect.appendChild(opt3);
+		var opt4 = document.createElement("Option");
+		opt4.value = "Others";
+		opt4.textContent = "Others (Please describe)";
+		notesEditSelect.appendChild(opt4);
+		notesEditTableSelectTd.appendChild(notesEditSelect);
+		notesEditTableRow2.append(notesEditTableSelectTd);
+		notesEditTableBody.appendChild(notesEditTableRow2);
+		
+		
+		
+		//only show the notesEditTableRow3 when the selected value is others
+		let notesEditTableRow3 = document.createElement("tr");
+		//notesEditTableRow3.id = id;
+		notesEditTableRow3.id = "notes_edit_text_" + invListing.value;
+		let notesEditTableTextTd = document.createElement("td");
+		notesEditTableTextTd.colSpan = "2";
+        notesEditTableTextTd.align = "center";
+        notesEditTableTextTd.height = "20";
+        let notesEditText = document.createElement("textarea");
+        //notesEditText.type = "text";
+        notesEditText.rows = "2";
+        notesEditText.id = "notes_edit_text_field_" + invListing.value;
+        notesEditText.maxLength = "30";
+        //notesEditText.size = "10";
+        notesEditText.placeholder = "Please describe";
+        
+        notesEditTableTextTd.append(notesEditText);
+        notesEditTableRow3.append(notesEditTableTextTd);
+        
+  		notesEditTableRow3.style.display = "none";
+        
+        //also set the value of notes dropdown to the value from the database
+		if(invs[i].notes == "Incorrect Amount") {
+			notesEditSelect.value = "Incorrect Amount";
+		}
+		else if(invs[i].notes == "Incorrect Customer") {
+			notesEditSelect.value = "Incorrect Customer";
+		}
+		else if(invs[i].notes == "Customer Rejected") {
+			notesEditSelect.value = "Customer Rejected";
+		}
+		else if(invs[i].notes == "Incomplete Work") {
+			notesEditSelect.value = "Incomplete Work";
+		}
+		else {
+			//if the value is others also display the text field with the value
+			notesEditSelect.value = "Others";			
+			notesEditTableRow3.style.display = "table-row";
+			notesEditText.value = invs[i].notes;
+			notesEdit.style.height = "155px";
+		}
+        
+        notesEditTableBody.appendChild(notesEditTableRow3);
+		
+		//show the text box only when select option is others
+		notesEditSelect.onchange = function (){
+			addNotesEditTextField(this.id);
+		}
+		
+		
+        
+        
+        let notesEditTableRow4 = document.createElement("tr");
+        let notesEditTableBtnSave = document.createElement("td");
+        notesEditTableBtnSave.height = "30";
+        notesEditTableBtnSave.align = "center"
+        var saveNotesBtn = document.createElement("button");
+		saveNotesBtn.createTextNode = "Save Changes";
+		saveNotesBtn.type = "submit";
+		saveNotesBtn.name = "submit";
+		saveNotesBtn.class = "btn btn-success";
+		//saveNotesBtn.style = "background-color: #33e307; text-color:blue;";
+		saveNotesBtn.style = "background-color: #5e5e5e; color:white;";
+		saveNotesBtn.onmouseover = function(){
+			this.style = "background-color: green;"
+		}
+		saveNotesBtn.onmouseleave = function() {
+			this.style = "background-color: #5e5e5e; color:white;";
+		}
+		//saveNotesBtn.disabled = true;
+		saveNotesBtn.class = "project-edit btn";
+		saveNotesBtn.innerHTML = "Save Notes";
+		saveNotesBtn.id = "save_notes_btn_" + invListing.value;
+		notesEditTableBtnSave.appendChild(saveNotesBtn);
+		notesEditTableRow4.appendChild(notesEditTableBtnSave);
+		
+		//set selected on notes save button
+		saveNotesBtn.onclick = function () {
+			var id = this.id;
+			id = id.split('_').pop();
+			editId = "edit_notes_" + id;
+			
+			// set the selected value of the notes modal box
+			//var selectedValue = document.getElementbyId = "edit_notes_" + id;
+					
+			document.getElementById(editId).style.display = "none";
+			
+			enableSubmitButton(id);
+		}
+		
+		let notesEditTableBtnCancel = document.createElement("td");
+		notesEditTableBtnCancel.height = "30";
+		notesEditTableBtnCancel.align = "center"
+		var cancelNotesBtn = document.createElement("button");
+		cancelNotesBtn.id = "cancel_notes_btn_" + invListing.value;
+		cancelNotesBtn.type = "submit";
+		cancelNotesBtn.name = "submit";
+		//saveNotesBtn.style = "background-color: #33e307; text-color:blue;";
+		cancelNotesBtn.style = "background-color: #5e5e5e; color:white;";
+		//cancelNotesBtn.disabled = true;
+		cancelNotesBtn.class = "project-edit btn";
+		cancelNotesBtn.innerHTML = "Cancel";
+		
+		cancelNotesBtn.onmouseover = function(){
+			this.style = "background-color: red;"
+		}
+		cancelNotesBtn.onmouseleave = function() {
+			this.style = "background-color: #5e5e5e; color:white;";
+		}
+		
+		//close model on cancel notesBtn
+		cancelNotesBtn.onclick = function () {
+			var id = this.id;
+			id = id.split('_').pop();
+			
+			modalId = "edit_notes_" + id;
+			
+			modalDropdownId = "notes_edit_" + id;
+			
+			
+			var x = document.getElementById(modalDropdownId);
+			
+			//alert(x.getAttribute("original"));
+			
+			//set the value back to the value from the database
+			if(x.getAttribute("original") == "Incorrect Amount") {
+				x.value = "Incorrect Amount";
+			}
+			else if(x.getAttribute("original") == "Incorrect Customer") {
+				x.value = "Incorrect Customer";
+			}
+			else if(x.getAttribute("original") == "Customer Rejected") {
+				x.value = "Customer Rejected";
+			}
+			else if(x.getAttribute("original") == "Incomplete Work") {
+				x.value = "Incomplete Work";
+			}
+			else {
+				//alert("inside else");
+				x.value = "Others";			
+			}
+			
+			//alert(id);
+			document.getElementById(modalId).style.display = "none";
+		}
+		
+		
+		notesEditTableBtnCancel.appendChild(cancelNotesBtn);
+		notesEditTableRow4.appendChild(notesEditTableBtnCancel);
+		
+		notesEditTableBody.appendChild(notesEditTableRow4);
+                
+        notesEdit.appendChild(notesEditTable)
+        notes.appendChild(notesEdit);
+        
+        
+        
+		
+		
+		let invIcon = document.createElement('img');
+		invIcon.id = "inv_att_" + invListing.value;
+		invIcon.src = "icons/invattachment.png";
+		invIcon.width = "22";
+		invIcon.height = "22";
+		
+		fetchApprovals(invs[i].invoiceID, invs[i].id);
+		//alert(invs[i].invoiceID);
+		
+		//call function to display div on mouse hover
+		invIcon.onmouseover = function(){
+			//alert(notesIcon.id);
+			displayApprovals(invIcon.id.split('_').pop());		
+		}
+		
+		//call fucntion on mouse not hover to hide div
+		invIcon.onmouseleave = function() {
+			hideApprovals(invIcon.id.split('_').pop());
+		}
+		
+		//notesIcon.innerHTML = "image";
+		
+		//alert(notesIcon.src);
+		//console.log(notesIcon);
+		//notes.innerHTML = invs[i].notes;
+		let approvalsHover = document.createElement("div");
+		approvalsHover.id = "approvals_" + invListing.value;
+		//alert(notesHover.id);
+		//approvalsHover.innerHTML = invs[i].notes;
+		approvalsHover.style.backgroundColor = "#cfcbca";
+		approvalsHover.style.display = "none";
+		approvalsHover.style.position = "absolute";
+		approvalsHover.style.border = "1px solid #ccc";
+        approvalsHover.style.border = "2px solid black";
+        approvalsHover.style.margin.top = "-5em";
+        approvalsHover.style.margin.left = "-5em";
+		
+		//invIcon.appendChild(approvalsHover);
+		
+		invoicePdf.appendChild(approvalsHover);
+		
+		//getInvoiceAttStatus(invIcon.id, invs[i].invoiceStatus, mcsNumber.innerHTML);
+		
+		invIcon.onclick = function () {
+			var id = this.id;
+			
+			var pdf = document.getElementById("filepdf");
+			pdf.accept = ".pdf";
+			pdf.click();
+			
+			//alert("file selection called");
+			
+			id = id.split('_').pop();
+			
+			pdf.onchange = function() {
+				
+				//alert("onchange function called");
+				enableSubmitButton(id);
+				
+				//if file selecteds change status of dropdown to review
+				var x = document.getElementById("invoiceStatus_Inv_" + id);
+				//alert(x.id);
+				//x.disabled = false;
+				x.value = "Review";
+			}
+		}
+		
+		
+		//create a form for file 
+		let fileDiv = document.createElement("div");
+		//let file = new FormData();
+		let file = document.createElement("form");
+		file.setAttribute('method', 'POST');
+		file.setAttribute('enctype', 'multipart/form-data')
+		
+		file.id = "form_file_" + invListing.value;
+		//file.setAttribute
+		fileDiv.style.display = "none";
+
+		invoicePdf.appendChild(invIcon);
+		
+		//showing the approvals based on users
+		
+		let approvals = document.createElement("div");
+		approvals.id = "approvalsBox";
+		approvals.style.width = "50px";
+		approvals.style.display = "inline-block";
+		approvals.style.verticalAlign = "middle";
+		let approval1 = document.createElement("input");
+		approval1.type = "checkbox";
+		approval1.id = "approval1";
+		approval1.style.display = "inline-block";
+		approval1.style.verticalAlign = "middle";
+		let approval2 = document.createElement("input");
+		approval2.type = "checkbox";
+		approval2.id = "approval2";
+		approval2.style.display = "inline-block";
+		approval2.style.verticalAlign = "middle";
+		let approval3 = document.createElement("input");
+		approval3.type = "checkbox";
+		approval3.id = "approval3";
+		approval3.style.display = "inline-block";
+		approval3.style.verticalAlign = "middle";
+		approvals.appendChild(approval1);
+		approvals.appendChild(approval2);
+		approvals.appendChild(approval3);
+		
+		//var userType = getUserType();
+		
+			
 		invListing.appendChild(invoiceCustomer);
+		invListing.appendChild(projectLocation);
 		invListing.appendChild(projectDetails);
 		invListing.appendChild(mcsNumber);
 		//invListing.appendChild(invoiceID);
 		//invListing.appendChild(invoiceTitle);
-		//invListing.appendChild(invoiceType);
+		//invListing.appendChi ld(invoiceType);
 		invListing.appendChild(invoiceAmount);
 		invListing.appendChild(invoiceStatus);
 		invListing.appendChild(submittedDate);
@@ -265,8 +1030,12 @@ function fillInvsTable(data) {
 		
 		//invListing.appendChild(invoiceApproval);
 		
-		invListing.appendChild(invoiceNumber);
+		//invListing.appendChild(invoiceNumber);
+		
+		invListing.appendChild(invoicePdf);
+		//invListing.appendChild(approvals);
 		invListing.appendChild(notes);
+		invListing.appendChild(invoiceSubmitBtn);
 
 		$('#invoiceTable > tbody').append(invListing);
 		
@@ -276,6 +1045,466 @@ function fillInvsTable(data) {
 		clearAndAddSingleRowInvs("No Invoices to Show");		
 	}		
 }
+
+//function to display approvals on mouse over on invoice icon
+function displayApprovals(id){
+	var displayApprovalsID = "approvals_" + id;
+	//alert(displayApprovalsID);
+	
+	var approvals = document.getElementById(displayApprovalsID);
+	approvals.style.zIndex = "100";
+	approvals.style.display = "block";
+	
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(displayApprovalsID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 72; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "block";
+	document.getElementById('PopUpTextApprovals').innerHTML = displayApprovalsID.innerHTML;
+	
+}
+
+//function to hide approvals on mouse leave
+function hideApprovals(id) {
+	var approvalsID = "approvals_" + id;
+	//alert(notesHoverID);
+	var approval = document.getElementById(approvalsID);
+	approval.style.display = "none";
+	
+	document.getElementById("PopUpTextApprovals").style.display = "none";
+
+}
+
+//function to show text input in notes edit modal box when the value in dropdown is selected to others
+function addNotesEditTextField(id) {
+	//let id = this.id;
+	id = id.split('_').pop();
+	let notesEditSelectId = "notes_edit_" + id;
+	
+	//alert(id);
+	
+	let notesEditTable = document.getElementById("notes_edit_modal_" + id);
+	
+	//alert(notesEditTable.id);
+	
+	let notesEditText = document.getElementById("notes_edit_text_" + id);
+	
+	
+	let x = document.getElementById(notesEditSelectId);
+	
+	if (x.value == "Others"){
+		
+		notesEditText.style.display = "table-row";
+		//change size of modal
+		
+		var modal = document.getElementById("edit_notes_" + id);
+		//alert(modal.id);
+		//modal.style.width = "200px";
+		modal.style.height = "155px";
+	}
+	else {
+		notesEditText.style.display = "none";
+	}
+	
+	
+}
+
+//function to upload the pdf file
+function uploadInvoice(id) {
+	
+	id = id.split('_').pop();
+	
+	let mcsPE = document.getElementById("mcs_pe_" + id);
+	let fileName = mcsPE.innerHTML;
+	
+	//alert("file to be uploaded is - " + fileName);
+	
+	//$("btnSubmit").click();
+	
+	//$("#btnSubmit").click(function (event) {
+
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+
+        // Get form
+        var form = $('#fileUploadForm')[0];
+
+		// Create an FormData object 
+        var data = new FormData(form);
+
+		// If you want to add an extra field for the FormData
+        //data.append("CustomField", "This is some extra data, testing");
+
+		//appending the file name
+		data.append("fileName", fileName);
+		
+		// disabled the submit button
+        $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "fileuploadservlet",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+				//alert(data);
+                //$("#result").text(data);
+                console.log("SUCCESS : ", data);
+                //$("#btnSubmit").prop("disabled", false);
+                
+                return true;
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+				return false;
+            }
+        });
+
+    //});
+}
+
+
+//function to show full project name on hover
+function showFullCustomerName(invoice_customer_id){
+	
+	var invoiceCustomerNameID = "hover_" + invoice_customer_id;
+	//alert(invoiceCustomerNameID);
+	
+	var notes = document.getElementById(invoiceCustomerNameID);
+	notes.style.zIndex = "100";
+	notes.style.display = "block";
+	
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(invoiceCustomerNameID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 2; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "block";
+	document.getElementById('PopUpTextInvoiceCustomer').innerHTML = invoiceCustomerNameID.innerHTML;
+}
+
+//function to hide project name pop up on mouse leave
+function hideInvoiceCustomerPopup (invoice_customer_id) {
+	var invoiceCustomerID = "hover_" + invoice_customer_id;
+	//alert(projectID);
+	var project = document.getElementById(invoiceCustomerID);
+	project.style.display = "none";
+	
+	document.getElementById("PopUpTextInvoiceCustomer").style.display = "none";
+
+}
+
+//function to show full project name on hover
+function showFullProjectName(project_id){
+	
+	var projectNameID = "hover_" + project_id;
+	//alert(projectNameID);
+	
+	var notes = document.getElementById(projectNameID);
+	notes.style.zIndex = "100";
+	notes.style.display = "block";
+	
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(projectNameID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 2; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "block";
+	document.getElementById('PopUpTextProject').innerHTML = projectNameID.innerHTML;
+}
+
+//function to hide project name pop up on mouse leave
+function hideProjectPopup (project_id) {
+	var projectID = "hover_" + project_id;
+	//alert(projectID);
+	var project = document.getElementById(projectID);
+	project.style.display = "none";
+	
+	document.getElementById("PopUpTextProject").style.display = "none";
+
+}
+
+//Enable submit button on change of dropdown of invoice status
+function enableSubmitButton(id) {
+	//alert(id);
+	//alert("onchange called");
+	var x = document.getElementById("invoiceStatus_Inv_" + id);
+	//alert(invStatus_id);
+	
+	var selectValue = x.value;
+	//alert(selectValue);
+	
+	//Set completed date to today if the value is Submitted or Rejected
+	if(selectValue === "Rejected"){
+		//alert("Rejected selected");		
+		var dateCompleted = x.element
+	}
+	
+	//invId = invStatus_id.substring(invStatus_id.length - 5);
+	invId = "Inv_" + id;
+	//alert(invId);
+	
+	//var buttonId = invId.substring(id);
+	var buttonId = "btn_Inv_" + id;
+	//alert(buttonId);
+	
+	var button = document.getElementById(buttonId);
+	//alert(button.id);
+	//button.style = "background-color: #02de18;";
+	//alert("Button enabling function called");
+	button.disabled = false;
+	
+	//also set the date to current date
+	//var dateId = x.id;
+	//alert(dateId);
+	
+	//dateId = dateId.substring(dateId.length - 1);
+	var dateId = "submitted_date_Inv_" + id;
+	//alert(dateId);
+	
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = mm + '/' + dd + '/' + yyyy;
+	//alert(today);
+	document.getElementById(dateId).value = today; 
+	
+}
+
+//set date to today's date
+function setTodayDate(id){
+	var x = document.getElementById(invStatus_id);
+	var dateId = x.id;
+	//alert(dateId);
+	
+	dateId = dateId.substring(dateId.length - 1);
+	dateId = "submitted_date_Inv_" + dateId;
+	//alert(dateId);
+	
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = yyyy + '-' + mm + '-' + dd;
+	//alert(today);
+	document.getElementById(dateId).value = today;
+}
+
+
+//function to display notes on Hover
+function displayNotes(notesID){
+	var notesHoverID = "hover_" + notesID;
+	//alert(notesHoverID);
+	
+	var notes = document.getElementById(notesHoverID);
+	notes.style.zIndex = "100";
+	notes.style.display = "block";
+	
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(notesHoverID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 2; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "block";
+	document.getElementById('PopUpText').innerHTML = notesHoverID.innerHTML;
+	
+}
+
+//function to hide notes on mouse leave
+function hideNotes(notesID) {
+	var notesHoverID = "hover_" + notesID;
+	//alert(notesHoverID);
+	var notes = document.getElementById(notesHoverID);
+	notes.style.display = "none";
+	
+	document.getElementById("PopUpText").style.display = "none";
+
+}
+
+//function to edit notes no double click
+function editNotes2(notesID){
+	var notesEditID = "edit_" + notesID;
+	//alert(notesEditID);
+	
+	var notes = document.getElementById(notesEditID);
+	//notes.style.zIndex = "100";
+	//notes.style.display = "block";
+	
+	//remove on hover effect to edit it properly
+	//var remove = notesID;
+	//var remove = document.getElementById(remove);
+	//remove.onmouseover = null;
+	
+	document.getElementById("PopUpText").style.display = "none";
+	
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(notesEditID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 100; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "flex";
+	
+	document.getElementById('editNotesText').innerHTML = notesEditID.innerHTML;
+	
+	//close the dropdown box when clicked outside
+	/*window.addEventListener('click', function(e){   
+		if (document.getElementById('editNotesText').contains(e.target)){
+    		// Clicked in box
+    		alert("inside box");
+		}
+		else{
+    		// Clicked outside the box
+    		alert("function called");
+    		document.getElementById('editNotesText').style.display = "none";
+		}
+	}); */
+}
+
+
+
+//function to edit notes
+function editNotes(notesID) {
+
+	//get the notes id
+	var notesHoverID = "hover_" + notesID;
+	
+	var selectNotes = document.createElement("select");
+	
+	selectNotes.id = "select_" + notesID;	
+	var opt = document.createElement("Option");
+	opt.value = "Option 1 for notes";
+	opt.textContent = "Option 1 for notes";
+	selectNotes.appendChild(opt);
+	var opt2 = document.createElement("Option");
+	opt2.value = "Option 2 for notes";
+	opt2.textContent = "Option 2 for notes";
+	selectNotes.appendChild(opt2);
+	
+	// Get the modal
+	var modal = document.getElementById("notesModal");
+	modal.appendChild(selectNotes);
+	// Get the button that opens the modal
+	//var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	//position the modal box
+	//new method
+	var el, x, y;
+
+	el = document.getElementById(notesHoverID);
+	if (window.event) {
+		x = window.event.clientX + document.documentElement.scrollLeft
+		+ document.body.scrollLeft;
+		y = window.event.clientY + document.documentElement.scrollTop +
+		+ document.body.scrollTop;
+	}
+	else {
+		x = event.clientX + window.scrollX;
+		y = event.clientY + window.scrollY;
+	}
+	x -= 2; y -= 2;
+	y = y+15
+	el.style.left = x + "px";
+	el.style.top = y + "px";
+	el.style.display = "block";
+
+	// When the user clicks the button, open the modal 
+	modal.style.display = "block";
+
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+ 		if (event.target == modal) {
+    		modal.style.display = "none";
+		}
+	}
+}
+
 
 function clearInvoiceTable () {
 	$('#invoiceTable').find('tr:not(.head)').remove();
@@ -323,12 +1552,42 @@ function toggleInv (source) {
 //allows user to edit invoice
 function editSelectedInv(source)
 {
+	//alert(source.id);
 	INV_ACTION = "updateInv";
 	clearInvForm();
 	displayInvWell();
 	fillInvWell(source);
 	hideExtraValues();
 }
+
+//allow user to save invoice using the button
+function editSelectedInvBtn(id)
+{
+	//alert(id);
+	//var invListingId = source.id;
+	var invListingId = "Inv_" + id;
+	//invListingId = invListingId.substring(invListingId.length - 5);
+	
+	//alert("edit selected inv button "+invListingId);
+	
+	var invListing = document.getElementById(invListingId);
+	
+	//alert("id of invListing of button clicked is- " + invListing.id);
+	
+	//projItem = projItem.substring(0,16);
+	
+	INV_ACTION = "updateInv";
+	clearInvForm();
+	//displayInvWell();
+	
+	//updating source to invListing
+	//fillInvWell(source);
+	//fillInvWell(invListing);
+	fillInvWell(invListing);
+	hideExtraValues();
+	submitInvBtn(id);
+}
+
 
 //clears invoice form
 function clearInvForm()
@@ -355,6 +1614,21 @@ function clearInvForm()
 function displayInvWell() {
 
 	document.querySelector('.bg-modal').style.display = "flex";
+	
+	$('.bg-modal').show();
+	$('.bg-modal').css({top: '200', left: '200', position:'absolute'});
+	
+	var vertical = event.clientY;
+	
+	//alert(vertical);
+	
+	var width = $('#invoiceCreationZone').width();
+	//alert("width is-  "+ width);
+	
+	$("#invoiceCreationZone").css({postion: 'absolute', left: '50%', top: '-15px',
+									 'margin-left' : (-$('.className').outerWidth()/2) - width/2, 
+									 'margin-top': 'width'});
+	
 }
 
 //Checks to see if a submit/reject date should be added
@@ -387,6 +1661,8 @@ function fillInvWell(source) {
 	
 	clearInvForm();
 	let tmp_id = source;	
+	//alert(tmp_id.id);
+	
 	let selected_Inv;
 		
 	for(var i = 0; i < invs.length; i++) {
@@ -418,6 +1694,12 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#submitRejectDate').val(selected_Inv.submitRejectDate);
 	$('#invoiceCreationZone').find('#notes').val(selected_Inv.notes);	
 	$('#invoiceCreationZone').find('#projID').val(selected_Inv.invoice_id);	
+	//testing purpose only
+	//alert(selected_Inv.invoice_id);
+	
+	
+	//testing over
+	
 	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
 	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
 	$('#invoiceCreationZone').find('#invoiceAmount').val(selected_Inv.invoiceAmount);
@@ -428,6 +1710,7 @@ function fillInvWell(source) {
 	$('#invoiceCreationZone').find('#approval3').val(selected_Inv.approval3);	
 			
 
+	
 }
 
 //prompts user when they want to back out of invoice
@@ -489,13 +1772,21 @@ function hideExtraValues(){
 
 
 function submitInv() {
+		
 	let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
+	
+	//for testing purpose
+	//alert(invoiceID);
+	
 	let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
+	//alert(associatedPE);
 	let invoiceTitle = $('#invoiceCreationZone').find('#invoiceTitle').val();
 	let invoiceNumber = $('#invoiceCreationZone').find('#invoiceNumber').val();
 	let invoiceType = $('#invoiceCreationZone').find('#invoiceType').val();
 
-	let invoice_id = $('#invoiceCreationZone').find('#invoiceID').val();
+	let invoice_id = $('#invoiceCreationZone').find('#projID').val();
+	//for testing purpose
+	//alert(invoice_id);
 	
 	let projectID = $('#invoiceCreationZone').find('#projID').val();
 
@@ -505,7 +1796,10 @@ function submitInv() {
 	let submitRejectDate = $('#invoiceCreationZone').find('#submitRejectDate').val();		
 	let invoiceAmount = $('#invoiceCreationZone').find('#invoiceAmount').val();
 	let invoiceCustomer = $('#invoiceCreationZone').find('#invoiceCustomer').val();
+	
+	
 	let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
+	
 	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
 	let notes = $('#invoiceCreationZone').find('#notes').val();
 	
@@ -561,5 +1855,745 @@ function submitInv() {
 	}	
 }
 
+function submitInvBtn(id) {
+	
+	
+	
+	//alert("Called from button - " +  btnId);
+	//alert("btnId");
+	
+	let invId = id.split('_').pop();
+	let Id = invId;
+	//alert(invId);
+	
+	invId = "Inv_"+invId;	
+	let invoiceIDForm = invId;
+	let invStatus = "invoiceStatus_" + invoiceIDForm;
+	
+	let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
+	//alert("invoice ID id - " + invoiceID);
+	let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
+	//alert("associated pe number is - " + associatedPE);
+	
+	//let peInvNum = invoiceID + "-" + associatedPE;
+	let peInvNum = document.getElementById("mcs_pe_" + id).innerHTML;
+	peInvNum = peInvNum.substring(6);
+	
+	let invoiceTitle = $('#invoiceCreationZone').find('#invoiceTitle').val();
+	let invoiceNumber = $('#invoiceCreationZone').find('#invoiceNumber').val();
+	let invoiceType = $('#invoiceCreationZone').find('#invoiceType').val();
+
+	let invoice_id = $('#invoiceCreationZone').find('#projID').val();
+	
+	let projectID = $('#invoiceCreationZone').find('#projID').val();
+
+	let amountType = $('#invoiceCreationZone').find('#percentOrAmount').val();	
+
+	let submittedDate = $('#invoiceCreationZone').find('#submittedDateInv').val();		
+	
+	//this is the date which is automatically generated when status is changed from requested to any other,
+	// need to get it from the invoice que rather than the modal box
+	//let submitRejectDate = $('#invoiceCreationZone').find('#submitRejectDate').val();		
+	let submitRejectDate = document.getElementById("submitted_date_" + invId);
+	submitRejectDate = submitRejectDate.value;
+	
+	//convert html date todd-mm-yyyy format
+	//submitRejectDate.innerHTML = invs[i].submitRejectDate;
+	/*const d = new Date(submitRejectDate)
+	
+	const str = submitRejectDate;
+
+	const [year, month, day] = str.split('-');
+
+	submitRejectDate = `${day}/${month}/${year}`;
+	
+	alert(submitRejectDate); */
+	
+	let invoiceAmount = $('#invoiceCreationZone').find('#invoiceAmount').val();
+	let invoiceCustomer = $('#invoiceCreationZone').find('#invoiceCustomer').val();
+	
+	//this is the status variable, need to take the value from the invoice queue rather than the modal form
+	//let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
+	let invoiceStatus = document.getElementById(invStatus);
+	invoiceStatus = invoiceStatus.value;
+	//invoiceStatus = invoiceStatus.getAttribute("original");
+	
+	//invoiceStatus = $(invStatus).val()
+	//alert(invoiceStatus);
+	
+	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
+	
+	
+	
+	let notes = document.getElementById("notes_edit_" + id).value;
+	
+	//alert("notes_edit_text_field_" + id);
+	
+	if(notes == "Others"){
+		notes = document.getElementById("notes_edit_text_field_" + id).value;
+	}
+	
+	//alert(notes);
+	
+	let approval1 = $('#invoiceCreationZone').find('#approval1').val();
+	let approval2 = $('#invoiceCreationZone').find('#approval2').val();
+	let approval3 = $('#invoiceCreationZone').find('#approval3').val();
+		
+	if (typeof projectID === 'undefined') return alert("Project ID Failed. Find Another Project");
+
+	//submitRejectDateCheck();
+	
+	let file = document.getElementById("filepdf");
+	
+	
+	
+	if(file.value != "" ){
+		/*if(uploadInvoice(invId)){
+			alert("File uploaded successfully"); 
+		}*/
+		
+		var x = uploadInvoice(invId);
+		//alert(x);
+		
+		
+	}
+	else{
+		//alert("file not selected");
+	}
+	
+	
+	//now handling the variables for the approvals part
+	let approvalStatus = document.getElementById("invoiceStatus_Inv_" + id).value;
+	let statusDate = getToday();
+	
+	if(INV_ACTION == "updateInv"){
+		$.ajax({
+			type: 'POST',
+			url: 'Project', 
+			data: {
+				
+				'action': 'updateInvoice',
+				'project': projectID,
+				'currInvoice':INVOICES_STORED,
+				'invoiceID': invoiceID,
+				'associatedPE': associatedPE,
+				'invoiceTitle': invoiceTitle,
+				'invoiceNumber': invoiceNumber,
+				'invoiceType': invoiceType,
+				'submittedDate': submittedDate,
+				'submitRejectDate':submitRejectDate,
+				'invoiceAmount': invoiceAmount,
+				'invoiceCustomer': invoiceCustomer,
+				'invoiceStatus': invoiceStatus,
+				'invoiceApproval' : invoiceApproval,				
+				'notes' : notes,
+				'approval1' : approval1,
+				'approval2' : approval2,
+				'approval3' : approval3,
+				'invoice_id' : invoice_id,
+				'peInvNum' : peInvNum,
+																																																				
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'UPDATED_INVOICE') {
+					alert('Invoice Updated Successfully');
+				
+					//Makes the user return to the invoice screen 
+					//document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});
+		
+		$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				
+				'action': 'updateInvoiceApprovals',
+				'project': projectID,
+				'currInvoice':INVOICES_STORED,
+				'invoiceID': invoiceID,
+				'approvalStatus' : approvalStatus,
+				'statusDate' : statusDate,
+																																																				
+			}, complete: function (serverResponse) {
+				console.log(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				if (response === 'UPDATED_APPROVALS') {
+					alert('Approvals Updated Successfully');
+				
+					//Makes the user return to the invoice screen 
+					//document.getElementById('invoiceInformation').style.width = "100%";
+					$('#invoiceCreationZone').hide();
+					$('#invoiceDisplay').show();
+					clearInvoiceTable();
+					getInvs(1);
+				}
+			}
+		});
+	}	
+	
+}
+
+//check whether the file exists for a particular invoice queue or not
+function getInvoiceAttStatus(id, status, mcsPE){
+	//id = id.substring(id.length-1);
+	id = id.split('_').pop();
+	
+	//alert("id after splitting is - " + id);
+	//alert(mcsPE);
+	//const result = str.split(',').pop();
+	
+	//let status = document.getElementById("invoiceStatus_Inv_"+id);
+	
+	//alert(status.id);
+	
+	
+	$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvAttStatus",
+				invStatus: status,
+				invId: id,	
+				mcsPE: mcsPE,
+			},
+			complete: function (serverResponse) {
+				//console.log(serverResponse);
+				//alert(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				
+				//alert(response);
+				
+				let invIcon = document.getElementById("inv_att_" + id);
+				
+				
+				
+				if (response === 'true') {
+					//alert('File Exists for id - ' + id);
+					
+					//return "true";
+					invIcon.setAttribute("invoiceavailable", "yes");
+					
+					var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+					
+					switch(invStatus.value){
+						case "Submitted":
+						    invIcon.src = "icons/green_pdf.png";
+						    
+						break;
+						case "Requested":
+							invIcon.src = "icons/grey_pdf.png";
+						break;
+						case "Review":
+							invIcon.src = "icons/blue_pdf.png";
+						case "Rejected":
+							invIcon.src = "icons/red_pdf.png";
+						default:
+					}
+					
+				}
+				else{
+					invIcon.setAttribute("invoiceavailable", "no");
+					invIcon.src = "icons/grey_pdf.png";
+					
+					
+				}
+				 
+			}
+		});
+	
+}
+
+//function to check permission for each user type and populate the page based on that
+function permissionCheckforStatus(id){
+	//alert(id);
+	let user;
+	
+	
+	
+	//first call for user type
+	$.ajax({
+		type: 'POST',
+		url: 'Project',
+		data: {
+			'domain': 'project',
+			'action': 'getUserInfo'
+		}, success: function (data) {
+			user = data;
+			
+			if (user.permission.name == "basic")
+			{
+				//alert("basic user");
+				let status = document.getElementById("invoiceStatus_Inv_" + id).value;
+				//alert(status.value);
+				let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+				//alert(mcsPE);
+				//need to do a nested call to the server to see whether the file exists or not
+				$.ajax({
+					type: 'POST',
+					url: 'GetInvAttStatus', 
+					data: {
+						action: "GetInvAttStatus",
+						invStatus: status,
+						invId: id,	
+						mcsPE: mcsPE,
+					},
+					complete: function (serverResponse) {
+						//console.log(serverResponse);
+						//alert(serverResponse);
+						let response = $.trim(serverResponse.responseText);
+						
+						//alert(response);
+						
+						let invIcon = document.getElementById("inv_att_" + id);
+						
+						
+						
+						if (response === 'true') {
+							//alert('Inside true for invoice available - ' + id);
+							
+							//return "true";
+							invIcon.setAttribute("invoiceavailable", "yes");
+							let link = document.createElement("a");
+							link.href = "#";
+							invIcon.appendChild(link);	
+							
+							var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+							
+							switch(invStatus.value){
+								case "Submitted":
+								    invIcon.src = "icons/green_pdf.png";
+									break;
+								case "Approved":
+								    invIcon.src = "icons/green_pdf.png";
+									break;
+								case "Rejected":
+								    invIcon.src = "icons/red_pdf.png";
+									break;
+								case "Review":
+									invIcon.src = "icons/yellow_pdf.png";
+									break;
+								case "Processing":
+									invIcon.src = "icons/yellow_pdf.png";
+									break;
+								case "Requested":
+									invIcon.src = "icons/grey_pdf.png";
+									break;
+								default:
+							}
+							
+							//invIcon.setAttribute("invoiceavailable", "no");
+							invIcon.onclick = function () {
+							//link.onclick = function (){ 
+							var id = this.id;
+							
+								openInvoice(mcsPE, id);
+							
+							}
+							
+							
+							
+						}
+						else{
+							//invIcon.setAttribute("invoiceavailable", "yes");
+							
+							invIcon.src = "icons/grey_pdf.png";
+							invIcon.onmouseover = function() {
+						
+					}
+							/*
+							invIcon.onclick = function () {
+							var id = this.id;
+							
+							var pdf = document.getElementById("filepdf");
+							pdf.accept = ".pdf";
+							pdf.click();
+							
+							pdf.onchange = function(){
+								enableSubmitButton(id.split('_').pop());
+							}
+			
+			
+							}
+							*/
+						}
+						 
+					}
+				});
+	
+				document.getElementById("invoiceStatus_Inv_" + id).disabled = true;
+					
+			
+			}
+		
+		
+			else //(user.permission.name == "admin")
+			{
+				//alert("admin user");
+				let status = document.getElementById("invoiceStatus_Inv_" + id).value;
+				//alert(status.value);
+				let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+				//alert(mcsPE);
+				//need to do a nested call to the server to see whether the file existx or not
+				$.ajax({
+					type: 'POST',
+					url: 'GetInvAttStatus', 
+					data: {
+						action: "GetInvAttStatus",
+						invStatus: status,
+						invId: id,	
+						mcsPE: mcsPE,
+					},
+					complete: function (serverResponse) {
+						//console.log(serverResponse);
+						//alert(serverResponse);
+						let response = $.trim(serverResponse.responseText);
+						
+						//alert(response);
+						
+						let invIcon = document.getElementById("inv_att_" + id);
+						
+						
+						
+						if (response === 'true') {
+							//alert('Inside true for invoice available - ' + id);
+							
+							//return "true";
+							invIcon.setAttribute("invoiceavailable", "no");
+							let link = document.createElement("a");
+							link.href = "#";
+							invIcon.appendChild(link);	
+							
+							var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+							
+							switch(invStatus.value){
+								case "Submitted":
+								    invIcon.src = "icons/green_pdf.png";
+									break;
+								case "Review":
+									invIcon.src = "icons/yellow_pdf.png";
+									break;
+								case "Processing":
+									invIcon.src = "icons/yellow_pdf.png";
+									break;
+								case "Rejected":
+								    invIcon.src = "icons/red_pdf.png";
+									break;
+								case "Requested":
+								    invIcon.src = "icons/grey_pdf.png";
+									break;
+								case "Approved":
+								    invIcon.src = "icons/green_pdf.png";
+									break;
+								default:
+									invIcon.src = "icons/green_pdf.png";
+									break;
+							}
+							
+							invIcon.setAttribute("invoiceavailable", "no");
+							invIcon.onclick = function () {
+							//link.onclick = function (){ 
+							var id = this.id;
+							
+								openInvoice(mcsPE, id);
+							
+							}
+							
+						}
+						else{
+							
+							invIcon.src = "icons/grey_pdf.png";
+							invIcon.onclick = function() {
+								this.disabled = true;
+							}
+							//invIcon.setAttribute("invoiceavailable", "yes");
+							
+							/*
+							invIcon.src = "icons/red_pdf.png";
+							invIcon.onclick = function () {
+							var id = this.id;
+							
+							var pdf = document.getElementById("filepdf");
+							pdf.accept = ".pdf";
+							pdf.click();
+							
+							pdf.onchange = function(){
+								enableSubmitButton(id.split('_').pop());
+							}
+			
+			
+							}
+							*/
+						}
+						 
+					}
+				});
+	
+				//document.getElementById("invoiceStatus_Inv_" + id).disabled = true;
+					
+			}
+			
+			}
+	});
+	
+}
+
+function openInvoice(mcsPE, id){
+	$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvoice",
+				mcsPE: mcsPE,
+			},
+			complete: function (data) {
+				//console.log(serverResponse);
+				//alert(data);
+				//window.location = 'GetInvAttStatus';
+				
+				var host = location.host;
+				
+				//alert(host);
+				
+				var loc = host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
+				//alert(loc);
+				
+				window.open("http://" + host + "/MillerRebuilt/upload/" + mcsPE + ".pdf");
+				
+				//var pdfWin= window.open(data);
+				//window.open(data, '_blank', 'fullscreen=yes');
+				//window.open("data:application/pdf," + data);
+				// ADD OPEN WHIT WINDOW JAVASCRIPT
+				//var pdfData = convertDataURIToBinary('data:application/pdf;base64,' + data);
+				//window.open(pdfData);
+				//let response = $.trim(serverResponse.responseText);
+				
+				//var blob = new Blob([data], { type: 'application/pdf' }),
+				//fileURL = URL.createObjectURL(blob);
+				
+				//var blob = new Blob([data], {type: 'application/pdf'});
+				//var blobURL = URL.createObjectURL(blob);
+				//window.open(blobURL);
+				
+				
+				//var file = new File( [blob], 'a_name.pdf', { type: 'application/pdf' } )
+				//iframe.src = URL.createObjectURL( file )
+ 	
+				// open new URL
+				//window.open(fileURL);
+				
+				//alert(response);
+				
+				               
+                       
+				
+				//let invIcon = document.getElementById("inv_att_" + id);
+				//let link = document.createElement("a");
+				
+				
+				
+				
+				
+				 
+			}
+		});
+	
+}
+
+//function to fetch approvals frome the database
+function fetchApprovals(invoiceID, id){
+	$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				action: "FetchApprovals",
+				invoiceID: invoiceID,
+			},
+			complete: function (data) {
+				let response = $.trim(data.responseText);
+				console.log("Invoice approval data is- ", response);
+				
+				response = JSON.parse(response);
+				
+				//alert(response.length);
+				
+				let invIcon = document.getElementById("inv_att_" + id);
+				
+				if(response.length == 1){
+					console.log("Number of approvals- ", response[0].noOfApprovals);
+					
+					
+				}
+				
+				
+				
+				//const approvalusers = [response[0].user_1, response[0].user_2. response[0].user_3, response[0].user_4, response[0].user_5 ];
+				//const approvaldates = [response[0].date_1, response[0].date_2, response[0].date_3, response[0].date_4, response[0].date_5];
+				//const approvalstatus = [response[0].status_1, response[0].status_2, response[0].status_3, response[0].status_4, response[0].status_5];
+				
+				let x = document.getElementById("approvals_"+ id );
+				const approvalusers = [];
+				const approvaldates = [];
+				const approvalstatus = [];
+				
+				
+				
+				if(response[0].user_1 != undefined){
+					approvalusers.push(response[0].user_1);
+					approvaldates.push(response[0].date_1)
+					approvalstatus.push(response[0].status_1);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[0].toUpperCase() + ": " + approvalstatus[0] + " - " + approvaldates[0].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[0] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[0] == "Approved"){
+						values.style.color = "green";
+					}
+					
+					
+					
+				}
+				//also dont show that small onhover box without data
+				else{
+					invIcon.onmouseover = function() {
+						
+					}
+				}
+				
+				if(response[0].user_2 != undefined){
+					approvalusers.push(response[0].user_2);
+					approvaldates.push(response[0].date_2)
+					approvalstatus.push(response[0].status_2);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[1].toUpperCase() + ": " + approvalstatus[1] + " - " + approvaldates[1].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[1] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[1] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(response[0].user_3 != undefined){
+					approvalusers.push(response[0].user_3);
+					approvaldates.push(response[0].date_3)
+					approvalstatus.push(response[0].status_3);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[2].toUpperCase() + ": " + approvalstatus[2] + " - " + approvaldates[2].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[2] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[2] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(response[0].user_4 != undefined){
+					approvalusers.push(response[0].user_4);
+					approvaldates.push(response[0].date_4)
+					approvalstatus.push(response[0].status_4);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[3].toUpperCase() + ": " + approvalstatus[3] + " - " + approvaldates[3]; 
+					x.appendChild(values);
+					if(approvalstatus[3] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[3] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+					
+				if(response[0].user_5 != undefined){
+					approvalusers.push(response[0].user_5);
+					approvaldates.push(response[0].date_5)
+					approvalstatus.push(response[0].status_5);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[4].toUpperCase() + ": " + approvalstatus[4] + " - " + approvaldates[4]; 
+					x.appendChild(values);
+					if(approvalstatus[4] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[4] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+					
+			}
+			
+		});
+}
 
 
+function openTab(evt, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";  
+  
+}
+
+
+//function to modify number of approvals in the system level
+function modifyNoOfApprovals(){
+	var x  = document.getElementById("noOfApprovals").value;
+	
+	$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				action: "modifyNoOfApprovals",
+				noOfApprovals: x,
+			},
+			complete: function (data) {
+			
+			
+			}
+	});
+
+}
+
+function fetchNoOfApprovals(){
+	var x = document.getElementById("noOpApprovals");
+	
+	//code to fetch number of approvals
+	$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				action: "fetchNoOfApprovals",
+			},
+			complete: function (data) {
+				
+				let response = $.trim(data.responseText);
+				console.log("Current number of approvals is- ", response);
+				
+				response = JSON.parse(response);
+			
+			}
+	});
+}

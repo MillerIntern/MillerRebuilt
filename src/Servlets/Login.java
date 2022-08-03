@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
+import objects.RequestHandler;
+import projectObjects.State;
 import services.LoginService;
 
 /**
@@ -45,6 +51,10 @@ public class Login extends HttpServlet
 		
 		String serverResponse = "";
 
+		Map<String, String> output = new HashMap<String, String>();
+		
+		Gson gson = new Gson();
+		
 		if (LoginService.Login(username, password))
 		{
 			HttpSession session = req.getSession(true);
@@ -52,15 +62,31 @@ public class Login extends HttpServlet
 			session.setAttribute("verified", "true");
 			session.setAttribute("isAdmin", LoginService.isAdmin(username));
 			session.setMaxInactiveInterval(-1);	// A negative time indicates the session should never timeout.
-			serverResponse = "true";
+			
+			int userType = LoginService.userType(username);
+			
+			System.out.println("Usertype is- " + userType);
+			
+			output.put("Login", "true");
+			output.put("userType", Integer.toString(userType));
+			
+			serverResponse = gson.toJson(output);
+			
+			System.out.println(serverResponse);
+			
+			//serverResponse = "true";
 		}
 		else
 			serverResponse = "false";
 		
-		resp.setContentType("text/plain");
-		out = resp.getWriter();
-		out.println(serverResponse);
+		//resp.setContentType("text/plain");
+			
 		
+		resp.setContentType("application/json");
+	    resp.setCharacterEncoding("UTF-8");
+		
+	    out = resp.getWriter();	
+		out.println(serverResponse);
 		
 	}
 }

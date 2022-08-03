@@ -7,18 +7,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Miller Home</title>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/homepage.js"></script>
-    <script src="js/global.js"></script>
-    <script src="js/contentControl.js"></script>
-    <script src="js/projectRetrieval.js"></script>
-    <script src="js/invoices.js"></script>
-  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
 
-    <!-- Bootstrap -->
+	<!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/findProjectNew.css" rel="stylesheet">
     <link href="css/projectManagerNew.css" rel="stylesheet">
@@ -26,12 +16,36 @@
     <link href="css/projects.css" rel="stylesheet">
     <link href="css/theme/currentTheme/chosen.min.css" rel="stylesheet"/>
     <link href="css/modal.css" rel="stylesheet">
+    <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" rel="stylesheet"/>
+    <link href="css/invoices.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery.hovertruncated.css" />
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/contentControl.js"></script>
+    <script src="js/projectRetrieval.js"></script>
+    <script src="js/invoices.js"></script>
+    <script src="js/chosen.jquery.min.js"></script>
+    <!-- <script src="js/jquery.hovertruncated.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>  -->
+    
+    
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>  -->
+	
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script> -->
+
+    
     
     <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
   </head>	
   
   <body onload="getAllProjects()">
-	
+  
+  
 	<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
@@ -39,7 +53,7 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 		      <li><a href="homepage.html">Home</a></li>
-		      <li class="active dropdown">
+		      <li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
@@ -66,7 +80,7 @@
 	      	</ul>
 	      </li>
 	      
-	      <li><a href="invoices.html">Invoices</a></li>
+	      <li class = "active"><a href="invoices.html">Invoices</a></li>
 	      
 		      <li><a href="query.html">Reports</a></li>
 		      
@@ -78,7 +92,18 @@
 		  </div>
 		</nav>
 		
-		<div class = "container info-tab-peInformation">
+		
+	<!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'invoiceMain')" id = "defaultOpen">Invoice Queue</button>
+  <button class="tablinks" onclick="openTab(event, 'changeApprovals')">Change Number of Approvals</button>
+</div>
+		
+		
+		<div class = "container info-tab-peInformation tabcontent active" id = "invoiceMain">
+		
+		
+		
 		
 		    <div style="width:100%" class = "changeOrderTableDiv" id = 'invoiceDisplay'>
 		    										
@@ -91,26 +116,31 @@
 					<option value='submitted'>Submitted</option>
 					<option value='rejected'>Rejected</option>
 			 </select>
-		      <div class="generalOverFlowScroll">
+		      <div class="generalOverFlowScroll" style:="max-height:820px ! important; ">
 		         <table class='table table-striped permitsAndInspectionsHovering' id='invoiceTable'>
 		            <tr class='head'>
 						
 						<!--  <th>PE #</th>-->
-						<th>Customer</th>
-						<th>Project</th>
-						<th>MCS-PE #</th>
+						<th width = "10%" >Customer</th>
+						<th width = "10%" >Location</th>
+						<th width = "10%" >Project</th>
+						
+						<th width = "10%" >MCS-PE #</th>
 						<!--  <th>PE #</th>-->
 						<!--  <th>Title</th>-->
 						<!--  <th>Invoice Type</th>-->
-						<th>Amount</th>
+						<th width = "10%" >Amount</th>
 						
-						<th>Status</th>	
-						<th>Requested</th>
-						<th>Completed</th>
+						<th width = "10%" >Status</th>	
+						<th width = "10%" >Requested</th>
+						<th width = "10%" >Completed</th>
 						
 						<!--  <th>Approval</th>-->					
-						<th>WS Invoice #</th>					
-						<th>Notes</th>
+						<!--  <th>WS Invoice #</th>  -->	
+						<!-- <th>&nbsp;</th>	-->			
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 		            </tr>
 		         </table>
 		      </div>		      
@@ -280,6 +310,90 @@
 		      </div>
 		   </div>
 		   </div>
+	
+		<!--approval count tab -->
+		<div id="changeApprovals" class="tabcontent">
+		
+			<form>
+				<table>
+		  		<tbody>
+		  			<tr>
+		  				<td>
+		  					Current number of Approvals: 
+		  				</td>
+		  				<td colspan = "2" id = "noOfApprovals">
+		  					 
+		  				</td>
+		  				
+		  			</tr>
+		  			<tr>
+		  				<td>
+		  					Number of Approvals:
+		  				</td>
+		  				<td>
+		  					 <input type="text" id="noOfApprovals">
+		  				</td>
+		  				<td></td>
+		  				<td>
+		  					<input type="button" value="Submit" onClick = "modifyNoOfApprovals()">
+		  				</td>
+		  			</tr>
+		  		
+		  		</tbody>
+		  		</table>  
+			  
+			</form>	
+		  
+		</div>
+		
+	<!--  NOTES MODAL BOX -->
+	<DIV id='PopUp' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
+	<SPAN id='PopUpText'>TEXT</SPAN>
+	</DIV>
+	
+	<!--  Approvals MODAL BOX -->
+	<DIV id='PopUp' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
+	<SPAN id='PopUpTextApprovals'>TEXT</SPAN>
+	</DIV>
+
+	<!--  Project full name modal box -->
+	<DIV id='PopUpProject' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
+		<SPAN id='PopUpTextProject'>TEXT</SPAN>
+	</DIV>
+
+	<!--  Customer full name modal box -->
+	<DIV id='PopUpInvoiceCustomer' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
+		<SPAN id='PopUpTextInvoiceCustomer'>TEXT</SPAN>
+	</DIV>
+
+	
+	<!--  NOTES EDIT MODAL BOX -->
+	<DIV id='editNotes' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('editNotes').style.display = 'none' ">
+		<SPAN id='editNotesText' >
+			TEXT</SPAN>
+	</DIV>
+
+
+	<!-- model box for notes addition  -->
+	<!-- The Modal -->
+<div id="notesModal" class="modal-notes">
+
+</div>
+	
+	
+<form method="post" action="fileuploadservlet" enctype="multipart/form-data" id = "fileForm" style= "display:none;">
+    <input type="file" name="file" id = "file" accept = ".pdf"/>
+    <input type="submit" value="Upload" id = "uploadFile"/>
+    
+ </form>
+
+<form method="POST" enctype="multipart/form-data" id="fileUploadForm" style = "display:none;" >
+    <input type="text" name="extraField"/><br/><br/>
+    <input type="file" name="filepdf" id = "filepdf" accpet = ".pdf"/><br/><br/>
+    <input type="submit" value="Submit" id="btnSubmit"/>
+</form>
+
+<input id='username' type='hidden' value='${sessionScope.user}'/> 
 
 </body>
 </html>
