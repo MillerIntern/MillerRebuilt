@@ -13914,7 +13914,6 @@ function createInv1() {
 	
 	fillInvsTable(invs);
 	
-	
 	var newInvMax = CURR_INV_MAX + 1;
 	
 	var today = new Date();

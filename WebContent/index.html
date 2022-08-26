@@ -70,8 +70,11 @@
     				
     				if(data.Login === 'false') {
     					$('#invalidLogin').slideDown();
-    				} else {    					
-    					setJavaScriptCookie(obj.userType);
+    				} else {    				
+    					//alert(obj.name);
+    					if(typeof obj.permission !== 'undefined'){
+    						setJavaScriptCookie(obj.name, obj.permission.name);	
+    					}
     					document.location.href = HOMEPAGE;
     				}
     				

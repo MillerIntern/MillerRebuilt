@@ -55,7 +55,6 @@ import java.util.Set;
 /**
  * This class performs actions on the database, such as adding,
  * updating, and deleting objects in the database.
-
  *
  */
 public class ProjectObjectService 
@@ -95,7 +94,7 @@ public class ProjectObjectService
 		}
 		catch(TransactionException ex)
 		{		
-			tx.commit();
+			//tx.commit();
 		}
 		
 		Class<?> c;
@@ -1638,4 +1637,3 @@ public class ProjectObjectService
 		tx.commit();
 	}
 }
-

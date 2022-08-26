@@ -15,12 +15,14 @@ const NEW_MASTER_SCOPE = 'newMasterScope.html'
 const MASTER_SCOPE = 'masterScope.html'
 
 loginWork();	
-function setJavaScriptCookie(userType){
+function setJavaScriptCookie(name, userType){
 	//alert("usertype during setting cookie is " + userType );
-	document.cookie="millerLoginCookie_Status=loggedIn;usertype="+userType;
+	//alert(name);
+	document.cookie="millerLoginCookie_Status=loggedIn;usertype="+userType+";name="+name;
 	document.cookie="usertype="+userType;
-	let username = getJavaScriptCookie("usertype");
-	//alert("cookie from javascript is" + username);	
+	document.cookie="name="+name;
+	let name1 = getJavaScriptCookie("name");
+	//alert("cookie from javascript is " + name1);	
 }
 
 function getJavaScriptCookie(Name){
@@ -47,28 +49,15 @@ function getUserType(){
 	
 	$.ajax({
 			type: 'POST',
-			url: 'GetUser', 
+			url: 'Project',
 			data: {
-				'action': 'getUserType',
+				'domain': 'project',
+				'action': 'getUserInfo'
 			},
-			 complete: function (serverResponse) {
-				console.log(serverResponse);
+			success: function (data) {
+			user = data;
 				
-				let response = $.trim(serverResponse.responseText);
-				//alert(response);
-				
-				return response;
-				
-				if (response === 'UPDATED_INVOICE') {
-					alert('Invoice Updated Successfully');
-				
-					//Makes the user return to the invoice screen 
-					//document.getElementById('invoiceInformation').style.width = "100%";
-					$('#invoiceCreationZone').hide();
-					$('#invoiceDisplay').show();
-					clearInvoiceTable();
-					getInvs(1);
-				}
+			return user.permission.name;
 			}
 		});
 }

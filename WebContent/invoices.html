@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="css/jquery.hovertruncated.css" />
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>  -->
+	<script src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js" ></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/homepage.js"></script>
@@ -96,7 +97,7 @@
 	<!-- Tab links -->
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'invoiceMain')" id = "defaultOpen">Invoice Queue</button>
-  <button class="tablinks" onclick="openTab(event, 'changeApprovals')">Change Number of Approvals</button>
+  <button class="tablinks" onclick="openTab(event, 'changeApprovals')">Invoice Approval List</button>
 </div>
 		
 		
@@ -107,7 +108,7 @@
 		
 		    <div style="width:100%" class = "changeOrderTableDiv" id = 'invoiceDisplay'>
 		    										
-		      <select id ='invoiceSelector2' class='form-control'>
+		      <select id ='invoiceSelector2' class='form-control' style = "width:200px;display:inline;">
 					<option value='all' selected = "selected">All</option>
 					<option value='requested'>Requested</option>
 					<option value='processing'>Processing</option>
@@ -116,12 +117,21 @@
 					<option value='submitted'>Submitted</option>
 					<option value='rejected'>Rejected</option>
 			 </select>
+			 
+			 <div style = "display:inline;">&nbsp&nbsp Invoice Reviewers</div>
+			 
+			 <div style = "display:inline;">&nbsp&nbsp</div>
+			 <div id = "usersSelection" style = "display:inline;">
+			 	
+			 
+			 
+			 </div>
 		      <div class="generalOverFlowScroll" style:="max-height:820px ! important; ">
 		         <table class='table table-striped permitsAndInspectionsHovering' id='invoiceTable'>
 		            <tr class='head'>
 						
 						<!--  <th>PE #</th>-->
-						<th width = "10%" >Customer</th>
+						<th width = "10%" >Customer Group</th>
 						<th width = "10%" >Location</th>
 						<th width = "10%" >Project</th>
 						
@@ -312,21 +322,35 @@
 		   </div>
 	
 		<!--approval count tab -->
-		<div id="changeApprovals" class="tabcontent">
+		<div id="changeApprovals" class="tabcontent container info-tab-peInformation">
+		
+		<div style="width:100%" class = "changeOrderTableDiv" id = 'invoiceSystemDetails'>
 		
 			<form>
 				<table>
 		  		<tbody>
-		  			<tr>
+		  			<tr height = "30">
 		  				<td>
 		  					Current number of Approvals: 
 		  				</td>
-		  				<td colspan = "2" id = "noOfApprovals">
+		  				<td colspan = "2" id = "noOfApprovalsCurrent">
 		  					 
 		  				</td>
 		  				
 		  			</tr>
-		  			<tr>
+		  			<tr height = "30">
+		  				<td>
+		  					Members:
+		  				</td>
+		  				<td colspan = "2" id = "approvingMembers">
+		  					 
+		  				</td>
+		  				
+		  				<td>
+		  					<input type="button" value="Submit" onClick = "modifyApprovingMembers()">
+		  				</td>
+		  			</tr>
+		  			<tr height = "30">
 		  				<td>
 		  					Number of Approvals:
 		  				</td>
@@ -343,7 +367,7 @@
 		  		</table>  
 			  
 			</form>	
-		  
+		</div>
 		</div>
 		
 	<!--  NOTES MODAL BOX -->

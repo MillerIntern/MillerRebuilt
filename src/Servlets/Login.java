@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import objects.RequestHandler;
 import projectObjects.State;
+import projectObjects.User;
 import services.LoginService;
 
 /**
@@ -67,10 +68,15 @@ public class Login extends HttpServlet
 			
 			System.out.println("Usertype is- " + userType);
 			
-			output.put("Login", "true");
-			output.put("userType", Integer.toString(userType));
+			System.out.println(User.mapNameToUser((String)req.getSession().getAttribute("user")));
+			Gson g = new Gson();
+			serverResponse = g.toJson(User.mapNameToUser((String) req.getSession().getAttribute("user")));
+			System.out.println("response = " +serverResponse);
 			
-			serverResponse = gson.toJson(output);
+			//output.put("Login", "true");
+			//output.put("userType", Integer.toString(userType));
+			
+			//serverResponse = gson.toJson(output);
 			
 			System.out.println(serverResponse);
 			

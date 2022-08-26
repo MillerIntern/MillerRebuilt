@@ -82,6 +82,9 @@ function getUser() {
 		}, complete: function (data) {
 			if(data.responseJSON) {
 			  console.log("USER = ", data.responseJSON);
+			  
+			  //alert(data.responseJSON.permission.name);
+			  
 		      if(data.responseJSON.permission.canAccessAdminPage == false) hideAdminContent();	 
 
 				

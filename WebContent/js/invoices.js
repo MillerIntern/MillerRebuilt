@@ -1,5 +1,23 @@
-let invs;
+/*
+Order of functions being called in order to maintain consistency
+1. getAllProjects() - this is called form invoices.html file to fetch all the projects
+2. approvingMembers() - This it so fetch the list of approving members and all the users who can be approving members
+3. getInvs(1) - function to fetch the invoices
+4. fetchApprovalsAll() - fetch all the invoice approval details
+5. fetchCustomerEmails()- This is to fetch the emails of customer group
+6. 
+7. 
+
+*/
+
+var invs;
+var invApprovals;
 var userType;
+var noOfApprovals;
+var customerEmails
+var approvingMembers;
+var name;
+var userApprovalIndex;
 
 //this runs upon loading of all the page
 $(document).ready(function(){
@@ -65,6 +83,8 @@ $(document).ready(function(){
     
     
     fetchNoOfApprovals();
+    
+    //approvingMembers();
 
 });
 
@@ -94,8 +114,14 @@ function getInvs(stopServerCalls) {
 			invs = data;
 			if (data) {
 				clearInvoiceTable();
+				
+				name = getJavaScriptCookie("name");
+				
+				fetchCustomerEmails();
 								
-				fillInvsTable(data);
+				fillInvsTable();
+				
+				
 				
 			}
 			if(!stopServerCalls) getUserData();
@@ -116,6 +142,7 @@ function getAllProjects() {
 	//alert("usertype is " + userType);
 	
 	userType = getJavaScriptCookie("usertype");
+	//alert(userType);
 	
 	t0 = new Date().getTime();
 	$.ajax({
@@ -135,9 +162,13 @@ function getAllProjects() {
 			console.log("PROJECTS ARE : ", RETRIEVED_PROJECTS);
 			//getSearchCriteria();
 			
+			//fetchApprovalsAll();
+								
+			//fillInvsTable(data);
 			
+			approvingMembers();
 			
-			getInvs(1);
+			//getInvs(1);
 		}
 	});
 }
@@ -229,15 +260,17 @@ $(document).on('change', '#invoiceSelector2', function () {
 
 
 //fills invoice table 
-function fillInvsTable(data) {
+//function fillInvsTable(data) {
+function fillInvsTable() {
 	
 	let selector = $('#invoiceSelector2').val();	
 		
 	clearInvoiceTable();
-	let invs = data;
+	//let invs = data;
 	let count = 0;
 	
 	//shows invoices based on filter selection
+	mainLoop:
 	for (var i = 0; i < invs.length; i++) {
 		if(	(selector == 'all' && (invs[i].invoiceStatus != "Requested" && invs[i].invoiceStatus != "Processing" && 
 				invs[i].invoiceStatus != "Review" && invs[i].invoiceStatus != "Approved" 
@@ -249,7 +282,131 @@ function fillInvsTable(data) {
 				(selector == 'submitted' && invs[i].invoiceStatus != "Submitted") ||
 				(selector == 'rejected' && invs[i].invoiceStatus != "Rejected")) 
 				continue; // do nothing
-				
+		
+		let individualStatus = 0;
+		//if the top selector is all or requested or processing then don't do the invdividual approvers thing
+		if( selector == 'all' || selector == 'requested' || selector == 'processing') {
+			//alert('inside');
+			invividualStatus = 0;
+			
+			for(var j = 0; j < noOfApprovals; j++){
+			
+				//alert("Inside user checked");
+			
+				let checkedUser = document.getElementById("invoice_sort_user_" + j)
+				//alert(checkedUser.id);
+			
+				checkedUser.setAttribute('checked', true);
+				checkedUser.disabled = true;
+				//alert(skip);
+			}
+			
+		}
+		
+		else{
+			individualStatus = 1;
+			for(var j = 0; j < noOfApprovals; j++){
+			
+				//alert("Inside user checked");
+			
+				let checkedUser = document.getElementById("invoice_sort_user_" + j)
+			
+				//checkedUser.setAttribute('checked', true);
+				checkedUser.disabled = false;
+				//alert(skip);
+			}
+		}
+		
+		//set the variable if the user is in the approvers list
+		let userInApprovers = 0;
+		//let userApprovalIndex = 0;
+		for(let a = 0; a < noOfApprovals; a++){
+			
+			//alert(name+approvingMembers[0][a].name);
+			
+			if(name.toLowerCase() == approvingMembers[0][a].name.toLowerCase()){
+				userApprovalIndex = a;
+				userInApprovers = 1;
+			}
+			//alert(approvingMembers[0][a].name);
+		}
+		
+		let skip = 0;
+		
+		
+		
+		
+		//filtering the invoices based on the checked users
+		//invApprovals;
+		/*for(var j = 0; j < noOfApprovals; j++){
+			
+			//alert("Inside user checked");
+			
+			let checkedUser = document.getElementById("invoice_sort_user_" + j)
+			//let currUserStatus = invApprovals[j].
+			//alert(checkedUser.checked);
+			
+			let bool = 0;
+			
+			for (var keyUser in invApprovals[j]){
+				if(keyUser == "status_" + j){
+					
+					//console.log(keyUser);	
+					
+					//if(selector   == 'all' && checkedUser.checked != true){
+					if(checkedUser.checked != 1){
+						//alert("selcted all");
+						bool = 1;
+						break;
+					}
+					else{
+						bool = 0;
+					}
+				}
+			}
+			//alert(checkedUser.checked);
+			skip = bool;
+			//alert(skip);
+		}
+		//alert(skip);
+		if(skip) continue; */
+		
+		if(selector == 'review'){
+			let checkContinue = 0;
+			for(let k = 0; k < invApprovals.length; k++){
+				if(invs[i].invoiceID == invApprovals[k].invoice_id){
+					
+					for (var keyUser in invApprovals[k]){
+					
+						for(let z = 0; z< noOfApprovals; z++){
+							
+							let checkedUser = document.getElementById("invoice_sort_user_" + z);
+							
+							let checkedUserStatus = checkedUser.getAttribute('checked');
+							//alert(checkedUserStatus);
+							if(keyUser == "status_" + z && checkedUserStatus == 'true'){
+								
+								//alert(invApprovals[k][keyUser]);
+								//add one to know if theres is any user 
+								if(selector.toLowerCase() == invApprovals[k][keyUser].toLowerCase()){
+									alert(invApprovals[k][keyUser]);
+									checkContinue += 1;
+								}
+								else{
+									
+								}	
+							}
+						}
+					}
+				}		
+			}
+			if(checkContinue == 0) {
+				continue mainLoop;
+			} 
+			
+		}
+		
+		
 		var inv = invs[i];
 		
 		var invListing = document.createElement('tr');
@@ -267,7 +424,6 @@ function fillInvsTable(data) {
 		}; */ 
 				
 		count++;
-		
 		invListing.value = invs[i].id;
 		invListing.id = "Inv_" + invs[i].id;
 		//invListing.value = invs[i].invoiceID;
@@ -300,6 +456,7 @@ function fillInvsTable(data) {
 		let invoicePdf = document.createElement('td');
 		let notes = document.createElement('td');
 		let invoiceSubmitBtn = document.createElement('td');
+		let emailSendBtn = document.createElement('td');
 		
 		//add the save button to the laste column
 		
@@ -311,7 +468,6 @@ function fillInvsTable(data) {
 	    let btn = document.createElement('button');
 	    //btn.style = "top:4px;float:right;";
 	    btn.style = "color:white; background-color : #039c0a; border:#014704; border-radius: 3px;";
-	    btn
 	    btn.class = "btn btn-success";
 	    btn.id = "btn_" + invListing.id;
 	    //alert(btn.id);
@@ -424,7 +580,7 @@ function fillInvsTable(data) {
 			}
 		
 		//alert(RETRIEVED_PROJECTS[j].mcsnumber);
-		
+
 		
 		if(invs[i].invoiceAmount)
 			invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
@@ -536,7 +692,7 @@ function fillInvsTable(data) {
 		
 		//truncate and show full item on hover part
 		let invoiceCustomerHover = document.createElement("div");
-		invoiceCustomerHover.id = "hover_" + invoiceCustomer.id;
+		invoiceCustomerHover.id = "hover_invoice_customer_" + invListing.value;
 		//alert(invoiceCustomerHover  .id);
 		invoiceCustomerHover.innerHTML = invoiceCustomerValFull;
 		invoiceCustomerHover.style.backgroundColor = "#f7f5a8";
@@ -555,7 +711,7 @@ function fillInvsTable(data) {
 		//alert(invs[i].invoiceStatus);
 		
 		//$("#invoiceStatus_" + invListing.id).val(invs[i].invoiceStatus);
-		var invoiceIDdropdown = "invoiceStatus_" + invListing.id;
+		var invoiceIDdropdown = "invoiceStatus_Inv_" + invListing.value;
 		//alert(invoiceIDdropdown);
 		
 		
@@ -610,9 +766,11 @@ function fillInvsTable(data) {
 			
 		}; 
 		
+		invoiceStatus.innerHTML = invs[i].invoiceStatus
 		invoiceStatus.appendChild(selectStatus);
 		
-		selectStatus.value = invs[i].invoiceStatus;
+		//selectStatus.value = invs[i].invoiceStatus;
+		//alert(invs[i].invoiceStatus);
 		selectStatus.setAttribute("original", invs[i].invoiceStatus);
 		
 		
@@ -620,19 +778,56 @@ function fillInvsTable(data) {
 		
 		//alert("user type is " + userType);
 		//disable select if user is basic user
-		if(userType == 1){
+		if(userType == "basic"){
 			//alert("usertype");
-			//selectStatus.disabled = true;
+			selectStatus.disabled = true;
 		}
-		permissionCheckforStatus(invListing.value);
-		//selectStatus.disabled = true;
 		
+		//disable the select if user is not in the approvers list
+		if(userInApprovers == 0) {
+			//alert("inside");
+			selectStatus.disabled = true;
+		}
+		
+		//set the dropdown value based on the type of user, for basic set it to main value, for approvers set it to
+		// their value of dropdown
+		if(userType=="basic"){
+			selectStatus.value = invs[i].invoiceStatus;
+		}
+		
+		//if user is no the basic user
+		else{
+			
+			//if the individual user status is not on because of the stauts bar then show the universal status
+			if(userInApprovers == 0) {
+				//alert("inside");
+				selectStatus.value = invs[i].invoiceStatus;
+			}
+			//now in this case, when the top status is review, then show the individual users status based on checkbos
+			else{
+				approvingMembers[0][userApprovalIndex];
+				for(let k = 0; k < invApprovals.length; k++){
+					if(invs[i].invoiceID == invApprovals[k].invoice_id){
+						//alert(true);
+						
+						//if(invApprovals[k].hasOwnProperty)
+						//alert(invApprovals[k]["status_" + (userApprovalIndex + 1)]);
+			
+						selectStatus.value = invApprovals[k]["status_" + (userApprovalIndex + 1)];
+					}
+				}
+			}
+		}
+					
+		//permissionCheckforStatus(invListing.value);
+		//permissionCheckforStatus1(invListing.value);
+		
+
 		invoiceApproval.innerHTML = invs[i].invoiceApproval;
 		
 		associatedPE.innerHTML = invs[i].associatedPE;
 		
 		//alert(invs[i].associatedPE);
-		
 		
 		//doing the notes part
 		//add notes icon to each row
@@ -668,7 +863,8 @@ function fillInvsTable(data) {
 		let notesHover = document.createElement("div");
 		notesHover.id = "hover_" + notesIcon.id;
 		//alert(notesHover.id);
-		notesHover.innerHTML = invs[i].notes;
+		//alert(invs[i].notes);
+		notesHover.innerHTML = invs[i].notes.substring(0, invs[i].notes.length-4);
 		notesHover.style.backgroundColor = "#f7f5a8";
 		notesHover.style.display = "none";
 		notesHover.style.position = "absolute";
@@ -681,15 +877,15 @@ function fillInvsTable(data) {
 		
 		//edit notes modal box
 		let notesEdit = document.createElement("div");
-		notesEdit.id = "edit_" + notesIcon.id;
+		notesEdit.id = "edit_notes_" + invListing.value;
 		notesEdit.style.backgroundColor = "white";
 		notesEdit.style.position = "absolute";
 		notesEdit.style.float = "Left";
 		notesEdit.style.overflow = "auto";
 		notesEdit.style.right = "150px";
 		notesEdit.style.borderRadius = "5px";
-		notesEdit.style.width = "200px";
-		notesEdit.style.height = "100px";
+		notesEdit.style.width = "210px";
+		notesEdit.style.height = "auto";
 		notesEdit.style.display = "none";
 		notesEdit.style.border = "1px solid blue";
         notesEdit.style.border = "2px solid black";
@@ -796,14 +992,11 @@ function fillInvsTable(data) {
 			addNotesEditTextField(this.id);
 		}
 		
-		
-        
-        
         let notesEditTableRow4 = document.createElement("tr");
         let notesEditTableBtnSave = document.createElement("td");
         notesEditTableBtnSave.height = "30";
         notesEditTableBtnSave.align = "center"
-        var saveNotesBtn = document.createElement("button");
+        let saveNotesBtn = document.createElement("button");
 		saveNotesBtn.createTextNode = "Save Changes";
 		saveNotesBtn.type = "submit";
 		saveNotesBtn.name = "submit";
@@ -899,12 +1092,277 @@ function fillInvsTable(data) {
 		
 		notesEditTableBody.appendChild(notesEditTableRow4);
                 
-        notesEdit.appendChild(notesEditTable)
+        //notesEdit.appendChild(notesEditTable)
+        notesEdit.appendChild(document.createElement('br'));
+        
+        
+        //new notes section
+        let notesEditT = document.createElement("table");
+        let notesEditTB = document.createElement("tbody");
+        
+        
+        let notesEditTR1 = document.createElement("tr");
+        let notesEditTRTD11 = document.createElement("td");
+        notesEditTRTD11.colSpan = "2";
+        //notesEditTRTD11.style.width = "20px";
+        let notesEditCheckBox1 = document.createElement('input');
+        notesEditCheckBox1.type = 'checkbox';
+        //notesEditCheckBox1.setAttribute('checked', false);
+        notesEditCheckBox1.id = 'notes_check_box_incorrectAmount_' + invListing.value;
+        //notesEditCheckBox1.value = "Incorrect Amount";
+        //notesEditCheckBox1.setAttribute('checked', true);
+        //set the value
+        if(invs[i].notes[invs[i].notes.length-4] == "1"){
+			//alert(true);
+			notesEditCheckBox1.setAttribute('checked', true);
+			notesEditCheckBox1.setAttribute('original', true);
+		}
+		else{
+			//alert(false);
+			//notesEditCheckBox1.setAttribute('checked', false);
+			notesEditCheckBox1.checked = false;
+			notesEditCheckBox1.setAttribute('original', false);
+		}
+        
+        notesEditTRTD11.appendChild(notesEditCheckBox1);
+        //let notesEditTRTD12 = document.createElement("td");
+        //notesEditTRTD12.style.width = "180px";
+        notesEditTRTD11.innerHTML += "&nbsp&nbspIncorrect Amount";
+        notesEditTR1.appendChild(notesEditTRTD11);
+        //notesEditTR1.appendChild(notesEditTRTD12);
+        notesEditTB.appendChild(notesEditTR1);
+        //notesEditT.appendChild(notesEditTB);
+        
+        let notesEditTR2 = document.createElement("tr");
+        let notesEditTRTD21 = document.createElement("td");
+        notesEditTRTD21.colSpan = "2";
+        let notesEditCheckBox2 = document.createElement('input');
+        notesEditCheckBox2.type = 'checkbox';
+        //notesEditCheckBox2.setAttribute('checked', false);
+        notesEditCheckBox2.id = 'notes_check_box_incorrectCustomer_' + invListing.value;
+        //notesEditCheckBox2.value = "Incorrect Customer";
+        notesEditTRTD21.appendChild(notesEditCheckBox2);
+        if(invs[i].notes[invs[i].notes.length-3] == "1"){
+			//alert(true);
+			notesEditCheckBox2.setAttribute('checked', true);
+			notesEditCheckBox2.setAttribute('original', true);
+		}
+		else{
+			//alert(false);
+			//notesEditCheckBox2.setAttribute('checked', false);
+			notesEditCheckBox2.checked = false;
+			notesEditCheckBox2.setAttribute('original', false);
+		}
+        
+        //let notesEditTRTD22 = document.createElement("td");
+        notesEditTRTD21.innerHTML += "&nbsp&nbspIncorrect Customer";
+        notesEditTR2.appendChild(notesEditTRTD21);
+        //notesEditTR2.appendChild(notesEditTRTD22);
+        notesEditTB.appendChild(notesEditTR2);
+        //notesEditT.appendChild(notesEditTB);
+        
+        let notesEditTR3 = document.createElement("tr");
+        let notesEditTRTD31 = document.createElement("td");
+        notesEditTRTD31.colSpan = "2";
+        let notesEditCheckBox3 = document.createElement('input');
+        notesEditCheckBox3.type = 'checkbox';
+        notesEditCheckBox3.id = 'notes_check_box_customerRejected_' + invListing.value;
+        notesEditCheckBox3.value = "Customer Rejected";
+        if(invs[i].notes[invs[i].notes.length-2] == "1"){
+			//alert(true);
+			notesEditCheckBox3.setAttribute('checked', true);
+			notesEditCheckBox3.setAttribute('original', true);
+		}
+		else{
+			//alert(false);
+			//notesEditCheckBox3.setAttribute('checked', false);
+			notesEditCheckBox3.checked = false;
+			notesEditCheckBox3.setAttribute('original', false);
+		}
+        notesEditTRTD31.appendChild(notesEditCheckBox3);
+        //let notesEditTRTD32 = document.createElement("td");
+        notesEditTRTD31.innerHTML += "&nbsp&nbspCustomer Rejected";
+        notesEditTR3.appendChild(notesEditTRTD31);
+        //notesEditTR3.appendChild(notesEditTRTD32);
+        notesEditTB.appendChild(notesEditTR3);
+        //notesEditT.appendChild(notesEditTB);
+        
+        let notesEditTR4 = document.createElement("tr");
+        let notesEditTRTD41 = document.createElement("td");
+        notesEditTRTD41.colSpan = "2";
+        let notesEditCheckBox4 = document.createElement('input');
+        notesEditCheckBox4.type = 'checkbox';
+        notesEditCheckBox4.id = 'notes_check_box_incompleteWork_' + invListing.value;
+        notesEditCheckBox4.value = "Incomplete Work";
+        if(invs[i].notes[invs[i].notes.length-1] == "1"){
+			//alert(true);
+			notesEditCheckBox4.setAttribute('checked', true);
+			notesEditCheckBox4.setAttribute('original', true);
+		}
+		else{
+			//alert(false);
+			//notesEditCheckBox4.setAttribute('checked', false);
+			notesEditCheckBox4.checked = false;
+			notesEditCheckBox4.setAttribute('original', false);
+		}
+        notesEditTRTD41.appendChild(notesEditCheckBox4);
+        //let notesEditTRTD42 = document.createElement("td");
+        notesEditTRTD41.innerHTML += "&nbsp&nbspIncomplete Work";
+        notesEditTR4.appendChild(notesEditTRTD41);
+        //notesEditTR4.appendChild(notesEditTRTD42);
+        notesEditTB.appendChild(notesEditTR4);
+        
+        //new text field
+        let notesEditTR5 = document.createElement("tr");
+		//notesEditTableRow3.id = id;
+		notesEditTR5.id = "notes_checkbox_edit_text_" + invListing.value;
+		let notesEditTTextD = document.createElement("td");
+		notesEditTTextD.colSpan = "2";
+        notesEditTTextD.align = "center";
+        notesEditTTextD.height = "20";
+        let notesEditTextT = document.createElement("textarea");
+        //notesEditText.type = "text";
+        notesEditTextT.rows = "2";
+        notesEditTextT.id = "notes_text_field_" + invListing.value;
+        notesEditTextT.maxLength = "30";
+        //notesEditText.size = "10";
+        notesEditTextT.placeholder = "Please describe";
+        
+        notesEditTTextD.append(notesEditTextT);
+        notesEditTR5.append(notesEditTTextD);
+        notesEditTB.appendChild(notesEditTR5);
+        
+        //new save buttons
+        let notesEditTR6 = document.createElement("tr");
+        //notesEditTR5.style.width = "200px";
+        let notesEditTBtnSave = document.createElement("td");
+        notesEditTBtnSave.height = "30";
+        notesEditTBtnSave.align = "center"
+        
+        let saveNotesTBtn = document.createElement("button");
+		saveNotesTBtn.createTextNode = "Save Changes";
+		saveNotesTBtn.type = "submit";
+		saveNotesTBtn.name = "submit";
+		saveNotesTBtn.class = "btn btn-success";
+		//saveNotesBtn.style = "background-color: #33e307; text-color:blue;";
+		saveNotesTBtn.style = "background-color: #5e5e5e; color:white;";
+		saveNotesTBtn.onmouseover = function(){
+			this.style = "background-color: green;"
+		}
+		saveNotesTBtn.onmouseleave = function() {
+			this.style = "background-color: #5e5e5e; color:white;";
+		}
+		//saveNotesBtn.disabled = true;
+		saveNotesTBtn.class = "project-edit btn";
+		saveNotesTBtn.innerHTML = "Save Notes";
+		saveNotesTBtn.id = "save_notes_checkbox_btn_" + invListing.value;
+		notesEditTBtnSave.appendChild(saveNotesTBtn);
+		notesEditTR6.appendChild(notesEditTBtnSave);
+		
+		//set selected on notes save button
+		saveNotesTBtn.onclick = function () {
+			var id = this.id;
+			id = id.split('_').pop();
+			let editId = "edit_notes_" + id;
+			
+			// set the selected value of the notes modal box
+			//var selectedValue = document.getElementbyId = "edit_notes_" + id;
+					
+			document.getElementById(editId).style.display = "none";
+			
+			enableSubmitButton(id);
+		}
+        
+        
+        //new cancel button
+        let notesEditTBtnCancel = document.createElement("td");
+		notesEditTBtnCancel.height = "30";
+		notesEditTBtnCancel.align = "center"
+		var cancelNotesTBtn = document.createElement("button");
+		cancelNotesTBtn.id = "cancel_notes_checkbox_btn_" + invListing.value;
+		cancelNotesTBtn.type = "submit";
+		cancelNotesTBtn.name = "submit";
+		//saveNotesBtn.style = "background-color: #33e307; text-color:blue;";
+		cancelNotesTBtn.style = "background-color: #5e5e5e; color:white;";
+		//cancelNotesBtn.disabled = true;
+		cancelNotesTBtn.class = "project-edit btn";
+		cancelNotesTBtn.innerHTML = "Cancel";
+		
+		cancelNotesTBtn.onmouseover = function(){
+			this.style = "background-color: red;"
+		}
+		cancelNotesTBtn.onmouseleave = function() {
+			this.style = "background-color: #5e5e5e; color:white;";
+		}
+		notesEditTBtnCancel.appendChild(cancelNotesTBtn);
+		notesEditTR6.appendChild(notesEditTBtnCancel);
+		
+		//close model on cancel notesBtn
+		cancelNotesTBtn.onclick = function () {
+			let id = this.id;
+			id = id.split('_').pop();
+			
+			modalId = "edit_notes_" + id;
+			
+			var incAmt = document.getElementById("notes_check_box_incorrectAmount_" + id);
+			var incCus = document.getElementById("notes_check_box_incorrectCustomer_" + id);
+			var cusRej = document.getElementById("notes_check_box_customerRejected_" + id);
+			var incWor = document.getElementById("notes_check_box_incompleteWork_" + id);
+			//alert(incWor.id);
+			
+			//let note = invs[i].notes;
+			//var x = document.getElementById(modalDropdownId);
+			
+			//alert(x.getAttribute("original"));
+			
+			//set the value back to the value from the original database
+			//alert(incAmt.getAttribute('original'));
+			
+			if(incAmt.getAttribute('original') == 'true') {
+				//alert("inside");
+				incAmt.setAttribute('checked', true);
+			}
+			else{
+				//incAmt.setAttribute('checked', false);
+				incAmt.checked = false;
+			} 
+			if(incCus.getAttribute('original') == 'true') {
+				//alert("inside");
+				incCus.setAttribute('checked', true);
+			}
+			else{
+				//incCus.setAttribute('checked', false);
+				incCus.checked = false;
+			} 
+			if(cusRej.getAttribute('original') == 'true') {
+				cusRej.setAttribute('checked', true);
+			}
+			else{
+				//cusRej.setAttribute('checked', false);
+				cusRej.checked = false;
+			} 
+			if(incWor.getAttribute('original') == 'true') {
+				incWor.setAttribute('checked', true);
+			}
+			else {
+				//incWor.setAttribute('checked', false);
+				incWor.checked = false;
+			} 
+			
+			//alert(id);
+			document.getElementById(modalId).style.display = "none";
+		}
+		
+		
+        
+        notesEditTB.appendChild(notesEditTR6);
+        notesEditT.appendChild(notesEditTB);
+        
+        notesEdit.appendChild(notesEditT);
         notes.appendChild(notesEdit);
         
         
-        
-		
+
 		
 		let invIcon = document.createElement('img');
 		invIcon.id = "inv_att_" + invListing.value;
@@ -912,7 +1370,7 @@ function fillInvsTable(data) {
 		invIcon.width = "22";
 		invIcon.height = "22";
 		
-		fetchApprovals(invs[i].invoiceID, invs[i].id);
+		//fetchApprovals(invs[i].invoiceID, invs[i].id);
 		//alert(invs[i].invoiceID);
 		
 		//call function to display div on mouse hover
@@ -1015,6 +1473,28 @@ function fillInvsTable(data) {
 		
 		//var userType = getUserType();
 		
+		//Sending email button part
+		let emailBtn = document.createElement('button');
+	    //btn.style = "top:4px;float:right;";
+	    emailBtn.style = "color:white; background-color : #039c0a; border:#014704; border-radius: 3px;";
+	    emailBtn.class = "btn btn-success";
+	    emailBtn.id = "email_btn_" + invListing.id;
+	    //alert(btn.id);
+	    //btn.onclick = function(){};
+	    emailBtn.innerHTML = "Email";
+	    	
+		emailBtn.onclick = function() {
+			sendEmail(this.id.split('_').pop())
+		};
+		
+		/*invListing.ondblclick = function(){
+
+			editSelectedInv(this);
+		};  */
+		
+		//invoiceSubmitBtn.appendChild(submitBtn);
+		emailSendBtn.appendChild(emailBtn);
+		
 			
 		invListing.appendChild(invoiceCustomer);
 		invListing.appendChild(projectLocation);
@@ -1035,15 +1515,78 @@ function fillInvsTable(data) {
 		invListing.appendChild(invoicePdf);
 		//invListing.appendChild(approvals);
 		invListing.appendChild(notes);
-		invListing.appendChild(invoiceSubmitBtn);
+		//invListing.appendChild(invoiceSubmitBtn);
+		
+		
+		if(userType == 'basic' && invs[i].invoiceStatus == 'Approved'){
+			invListing.appendChild(emailSendBtn);	
+		}
+		else{
+			invListing.appendChild(invoiceSubmitBtn);
+		}
+		
 
 		$('#invoiceTable > tbody').append(invListing);
 		
+		//need to put in in the end othervise it'll show it doesnt exist
+		permissionCheckforStatus1(invListing.value);
+		
+		
+		//finally add the approvals
+		addApproval(invs[i].invoiceID, invListing.value);
+		
 	}
+	
+	//fillInvoiceApprovals();
+	
 	//This adds No Invoices to Show to the table if there are none in that filter or category (Ex: Open, Complete)
 	if (count === 0) {
 		clearAndAddSingleRowInvs("No Invoices to Show");		
 	}		
+}
+
+//function to send email
+function sendEmail(id){
+	
+	var emailLink = "mailto:";
+	
+	let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+	
+	for(var i = 0; i<customerEmails.length; i++){
+		//alert(i);
+		let y = customerEmails[i];
+		
+		if(y[1]){
+			//alert(y[y.length-1].id);
+			//only add email to the particular row with the same invlistin id otherwise contines
+			if(id == y[y.length-1].id){
+				//alert(y.length);
+				console.log(y.length);
+				for(var c = 0; c<y.length-1; c++){
+					console.log(c);
+					if(c == y.length-2){
+						//alert("false");
+						emailLink += y[c].email;
+					}
+					else{
+						//alert("true");
+						emailLink += y[c].email + ";";
+					}
+					
+				}	
+			}	
+		}		
+	}
+	emailLink += "?subject=" + encodeURIComponent("This is my subject")
+     	+ "&body=" + "This is email";
+    emailLink += "&attachment=";
+    //alert(mcsPE);
+    let fileLoc = location.host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
+	emailLink += fileLoc;     	
+	console.log("Email link is- " + emailLink);
+	
+	//window.location.href = link;
+	window.location.href = emailLink;
 }
 
 //function to display approvals on mouse over on invoice icon
@@ -1190,6 +1733,7 @@ function uploadInvoice(id) {
 //function to show full project name on hover
 function showFullCustomerName(invoice_customer_id){
 	
+	//(invoice_customer_id);
 	var invoiceCustomerNameID = "hover_" + invoice_customer_id;
 	//alert(invoiceCustomerNameID);
 	
@@ -1857,8 +2401,6 @@ function submitInv() {
 
 function submitInvBtn(id) {
 	
-	
-	
 	//alert("Called from button - " +  btnId);
 	//alert("btnId");
 	
@@ -1914,18 +2456,29 @@ function submitInvBtn(id) {
 	
 	//this is the status variable, need to take the value from the invoice queue rather than the modal form
 	//let invoiceStatus = $('#invoiceCreationZone').find('#invoiceStatus').val();
-	let invoiceStatus = document.getElementById(invStatus);
-	invoiceStatus = invoiceStatus.value;
-	//invoiceStatus = invoiceStatus.getAttribute("original");
+	
+	
+	
 	
 	//invoiceStatus = $(invStatus).val()
 	//alert(invoiceStatus);
 	
 	let invoiceApproval = $('#invoiceCreationZone').find('#invoiceApproval').val();
 	
+	//let notes = document.getElementById("notes_edit_" + id).value;
+	//redoing the notes based on the checkbox parts
+	let notes = document.getElementById("notes_text_field_" + id).value;;
+	let incAmt = document.getElementById("notes_check_box_incorrectAmount_" + id).checked;
+	let incCus = document.getElementById("notes_check_box_incorrectCustomer_" + id).checked;
+	let cusRej = document.getElementById("notes_check_box_customerRejected_" + id).checked;
+	let incWor = document.getElementById("notes_check_box_incompleteWork_" + id).checked;
 	
+	if(incAmt) notes+= "1"; else notes+= "0";
+	if(incCus) notes+= "1"; else notes+= "0";
+	if(cusRej) notes+= "1"; else notes+= "0";
+	if(incWor) notes+= "1"; else notes+= "0";
 	
-	let notes = document.getElementById("notes_edit_" + id).value;
+	//alert(notes);
 	
 	//alert("notes_edit_text_field_" + id);
 	
@@ -1944,6 +2497,22 @@ function submitInvBtn(id) {
 	//submitRejectDateCheck();
 	
 	let file = document.getElementById("filepdf");
+	
+	//if the basic user is attaching the invoice then get the changed Review dropdown
+	let invoiceStatus = document.getElementById(invStatus);
+	if(userType == 'basic'){
+		if(file.value != ""){
+			invoiceStatus = invoiceStatus.value;
+			
+		}
+		else{
+			invoiceStatus = invoiceStatus.getAttribute("original");
+		}
+	}
+	
+	else{
+		invoiceStatus = invoiceStatus.value;
+	}
 	
 	
 	
@@ -2020,6 +2589,7 @@ function submitInvBtn(id) {
 				'invoiceID': invoiceID,
 				'approvalStatus' : approvalStatus,
 				'statusDate' : statusDate,
+				'userApprovalIndex' : userApprovalIndex,
 																																																				
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
@@ -2344,6 +2914,197 @@ function permissionCheckforStatus(id){
 	
 }
 
+function permissionCheckforStatus1(id){
+	//alert(id);
+	//if (user.permission.name == "basic")
+	if(userType == "basic")
+	{
+		//alert("basic user");
+		let status = document.getElementById("invoiceStatus_Inv_" + id).value;
+		//alert(status.value);
+		let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+		$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvAttStatus",
+				invStatus: status,
+				invId: id,	
+				mcsPE: mcsPE,
+			},
+			complete: function (serverResponse) {
+				//console.log("Customer emails response is- ", serverResponse);
+				//alert(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				
+				//alert(response);
+				
+				//console.log("Customer emails response is- ", response);
+				
+				let invIcon = document.getElementById("inv_att_" + id);
+				
+				
+				
+				if (response === 'true') {
+					//alert('Inside true for invoice available - ' + id);
+					
+					//return "true";
+					invIcon.setAttribute("invoiceavailable", "yes");
+					let link = document.createElement("a");
+					link.href = "#";
+					invIcon.appendChild(link);	
+					
+					var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+					
+					switch(invStatus.value){
+						case "Submitted":
+						    invIcon.src = "icons/green_pdf.png";
+							break;
+						case "Approved":
+						    invIcon.src = "icons/green_pdf.png";
+							break;
+						case "Rejected":
+						    invIcon.src = "icons/red_pdf.png";
+							break;
+						case "Review":
+							invIcon.src = "icons/yellow_pdf.png";
+							break;
+						case "Processing":
+							invIcon.src = "icons/yellow_pdf.png";
+							break;
+						case "Requested":
+							invIcon.src = "icons/grey_pdf.png";
+							break;
+						default:
+					}
+					
+					//invIcon.setAttribute("invoiceavailable", "no");
+					invIcon.onclick = function () {
+					//link.onclick = function (){ 
+						var id = this.id;
+					
+						openInvoice(mcsPE, id);
+					
+					}
+					
+					
+					
+				}
+				else{
+					//invIcon.setAttribute("invoiceavailable", "yes");
+					
+					invIcon.src = "icons/grey_pdf.png";
+					invIcon.onmouseover = function() {
+						var x = 0;
+					}
+						
+					
+				}	 
+			}
+				
+			});
+
+			document.getElementById("invoiceStatus_Inv_" + id).disabled = true;
+				
+		
+		}
+	
+		
+	else //(user.permission.name == "admin")
+	{
+		//alert("admin user");
+		let status = document.getElementById("invoiceStatus_Inv_" + id).value;
+		//alert(status.value);
+		let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+		//alert(mcsPE);
+		//need to do a nested call to the server to see whether the file existx or not
+		$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvAttStatus",
+				invStatus: status,
+				invId: id,	
+				mcsPE: mcsPE,
+			},
+			complete: function (serverResponse) {
+				//console.log(serverResponse);
+				//alert(serverResponse);
+				let response = $.trim(serverResponse.responseText);
+				
+				//alert(response);
+				
+				let invIcon = document.getElementById("inv_att_" + id);
+				
+				
+				
+				if (response === 'true') {
+					//alert('Inside true for invoice available - ' + id);
+					
+					//return "true";
+					invIcon.setAttribute("invoiceavailable", "no");
+					let link = document.createElement("a");
+					link.href = "#";
+					invIcon.appendChild(link);	
+					
+					var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+					
+					switch(invStatus.value){
+						case "Submitted":
+						    invIcon.src = "icons/green_pdf.png";
+							break;
+						case "Review":
+							invIcon.src = "icons/yellow_pdf.png";
+							break;
+						case "Processing":
+							invIcon.src = "icons/yellow_pdf.png";
+							break;
+						case "Rejected":
+						    invIcon.src = "icons/red_pdf.png";
+							break;
+						case "Requested":
+						    invIcon.src = "icons/grey_pdf.png";
+							break;
+						case "Approved":
+						    invIcon.src = "icons/green_pdf.png";
+							break;
+						default:
+							invIcon.src = "icons/green_pdf.png";
+							break;
+					}
+					
+					invIcon.setAttribute("invoiceavailable", "no");
+					invIcon.onclick = function () {
+					//link.onclick = function (){ 
+					var id = this.id;
+					
+						openInvoice(mcsPE, id);
+					
+					}
+					
+				}
+				else{
+					
+					invIcon.src = "icons/grey_pdf.png";
+					invIcon.onclick = function() {
+						this.disabled = true;
+					}
+					
+				}
+				 
+			}
+		});
+
+		//document.getElementById("invoiceStatus_Inv_" + id).disabled = true;
+			
+	}
+	
+	
+
+
+	
+}
+
 function openInvoice(mcsPE, id){
 	$.ajax({
 			type: 'POST',
@@ -2533,6 +3294,295 @@ function fetchApprovals(invoiceID, id){
 		});
 }
 
+//function to fetch all the approvals of invoice approvals
+function fetchApprovalsAll(){
+	$.ajax({
+		type: 'POST',
+		url: 'UpdateApprovals', 
+		data: {
+			action: "FetchApprovalsAll",
+			//invoiceID: invoiceID,
+		},
+		complete: function (data) {
+			let response = $.trim(data.responseText);
+			console.log("Invoice approval data is- ", response);
+			
+			response = JSON.parse(response);
+			
+			invApprovals = response;
+			
+			//alert(response.length);
+			
+			//let invIcon = document.getElementById("inv_att_" + id);
+			
+			if(response.length == 1){
+				console.log("Number of approvals- ", response[0].noOfApprovals);
+				
+				
+			}	
+			getInvs(1);
+	
+		}
+			
+	});
+}
+
+function addApproval(invoiceID, id){
+	for(var j = 0; j < invApprovals.length; j++){
+			if(invApprovals[j].invoice_id == invoiceID){
+				//alert("equal");
+				
+				//let id = invs[i].id;
+				
+				//alert(id);
+				
+				let x = document.getElementById("approvals_"+ id );
+				const approvalusers = [];
+				const approvaldates = [];
+				const approvalstatus = [];
+				
+				if(invApprovals[j].user_1 != undefined){
+					approvalusers.push(invApprovals[j].user_1);
+					approvaldates.push(invApprovals[j].date_1)
+					approvalstatus.push(invApprovals[j].status_1);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[0].toUpperCase() + ": " + approvalstatus[0] + " - " + approvaldates[0].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[0] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[0] == "Approved"){
+						values.style.color = "green";
+					}
+					
+					
+					
+				}
+				//also dont show that small onhover box without data
+				else{
+					invIcon.onmouseover = function() {
+						
+					}
+				}
+				
+				if(invApprovals[j].user_2 != undefined){
+					approvalusers.push(invApprovals[j].user_2);
+					approvaldates.push(invApprovals[j].date_2)
+					approvalstatus.push(invApprovals[j].status_2);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[1].toUpperCase() + ": " + approvalstatus[1] + " - " + approvaldates[1].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[1] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[1] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(invApprovals[j].user_3 != undefined){
+					approvalusers.push(invApprovals[j].user_3);
+					approvaldates.push(invApprovals[j].date_3)
+					approvalstatus.push(invApprovals[j].status_3);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[2].toUpperCase() + ": " + approvalstatus[2] + " - " + approvaldates[2].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[2] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[2] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(invApprovals[j].user_4 != undefined){
+					approvalusers.push(invApprovals[j].user_4);
+					approvaldates.push(invApprovals[j].date_4)
+					approvalstatus.push(invApprovals[j].status_4);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[3].toUpperCase() + ": " + approvalstatus[3] + " - " + approvaldates[3]; 
+					x.appendChild(values);
+					if(approvalstatus[3] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[3] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+					
+				if(invApprovals[j].user_5 != undefined){
+					approvalusers.push(invApprovals[j].user_5);
+					approvaldates.push(invApprovals[j].date_5)
+					approvalstatus.push(invApprovals[j].status_5);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[4].toUpperCase() + ": " + approvalstatus[4] + " - " + approvaldates[4]; 
+					x.appendChild(values);
+					if(approvalstatus[4] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[4] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				 
+			}
+		}
+}
+
+//function for showing approval data
+function fillInvoiceApprovals(){
+	
+	//alert(invs.length);
+	//alert(invApprovals.length);
+	
+	for (var i = 0; i < invs.length; i++){
+		for(var j = 0; j < invApprovals.length; j++){
+			if(invApprovals[j].invoice_id == invs[i].invoiceID){
+				alert("equal");
+				
+				let id = invs[i].id;
+				
+				alert(id);
+				
+				let x = document.getElementById("approvals_"+ id );
+				const approvalusers = [];
+				const approvaldates = [];
+				const approvalstatus = [];
+				
+				if(invApprovals[j].user_1 != undefined){
+					approvalusers.push(invApprovals[j].user_1);
+					approvaldates.push(invApprovals[j].date_1)
+					approvalstatus.push(invApprovals[j].status_1);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[0].toUpperCase() + ": " + approvalstatus[0] + " - " + approvaldates[0].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[0] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[0] == "Approved"){
+						values.style.color = "green";
+					}
+					
+					
+					
+				}
+				//also dont show that small onhover box without data
+				else{
+					invIcon.onmouseover = function() {
+						
+					}
+				}
+				
+				if(invApprovals[j].user_2 != undefined){
+					approvalusers.push(invApprovals[j].user_2);
+					approvaldates.push(invApprovals[j].date_2)
+					approvalstatus.push(invApprovals[j].status_2);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[1].toUpperCase() + ": " + approvalstatus[1] + " - " + approvaldates[1].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[1] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[1] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(invApprovals[j].user_3 != undefined){
+					approvalusers.push(invApprovals[j].user_3);
+					approvaldates.push(invApprovals[j].date_3)
+					approvalstatus.push(invApprovals[j].status_3);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[2].toUpperCase() + ": " + approvalstatus[2] + " - " + approvaldates[2].slice(0, -2); 
+					x.appendChild(values);
+					if(approvalstatus[2] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[2] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				if(invApprovals[j].user_4 != undefined){
+					approvalusers.push(invApprovals[j].user_4);
+					approvaldates.push(invApprovals[j].date_4)
+					approvalstatus.push(invApprovals[j].status_4);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[3].toUpperCase() + ": " + approvalstatus[3] + " - " + approvaldates[3]; 
+					x.appendChild(values);
+					if(approvalstatus[3] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[3] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+					
+				if(invApprovals[j].user_5 != undefined){
+					approvalusers.push(invApprovals[j].user_5);
+					approvaldates.push(invApprovals[j].date_5)
+					approvalstatus.push(invApprovals[j].status_5);
+					let values = document.createElement("p");
+					values.innerHTML = approvalusers[4].toUpperCase() + ": " + approvalstatus[4] + " - " + approvaldates[4]; 
+					x.appendChild(values);
+					if(approvalstatus[4] == "Rejected"){
+						values.style.color = "red";
+					}
+					if(approvalstatus[4] == "Approved"){
+						values.style.color = "green";
+					}
+				}
+				
+				 
+			}
+		}
+	}
+	
+	//approvingMembers();
+}
+
+//function to fetch customer emails from customer group
+function fetchCustomerEmails(){
+	
+	console.log("data being sent to server for group is", invs);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'Customers', 
+		data: {
+			action: "fetchCustomerEmails",
+			customerGroups: JSON.stringify(invs),
+		},
+		complete: function (data) {
+			let response = $.trim(data.responseText);
+			console.log("Customer Email data- ", response);
+			
+			customerEmails = JSON.parse(response);
+			
+			for(var i = 0; i<customerEmails.length; i++){
+				//alert(i);
+				let y = customerEmails[i];
+				
+				if(y[1]){
+					//alert(y[1].id);
+					let x = document.getElementById("hover_invoice_customer_" + y[y.length-1].id)
+					
+					//alert(y.length);
+					
+					for(var c = 0; c<y.length-1; c++){
+						//alert("Value of c is- " + c);
+						let details = document.createElement("div");
+						details.innerHTML = "Name- " + y[c].name + "<br>" +
+										"Email- " + y[c].email;
+						//x.appendChild(details);
+					}
+				}
+			} 
+		}
+	});
+}
+
 
 function openTab(evt, tabName) {
   // Declare all variables
@@ -2550,7 +3600,6 @@ function openTab(evt, tabName) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
   
-
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";  
@@ -2560,7 +3609,9 @@ function openTab(evt, tabName) {
 
 //function to modify number of approvals in the system level
 function modifyNoOfApprovals(){
-	var x  = document.getElementById("noOfApprovals").value;
+	var x = document.getElementById("noOfApprovals").value;
+	
+	alert(x);
 	
 	$.ajax({
 			type: 'POST',
@@ -2570,7 +3621,7 @@ function modifyNoOfApprovals(){
 				noOfApprovals: x,
 			},
 			complete: function (data) {
-			
+				
 			
 			}
 	});
@@ -2578,7 +3629,7 @@ function modifyNoOfApprovals(){
 }
 
 function fetchNoOfApprovals(){
-	var x = document.getElementById("noOpApprovals");
+	var x = document.getElementById("noOfApprovalsCurrent");
 	
 	//code to fetch number of approvals
 	$.ajax({
@@ -2593,7 +3644,163 @@ function fetchNoOfApprovals(){
 				console.log("Current number of approvals is- ", response);
 				
 				response = JSON.parse(response);
-			
+				
+				x.innerHTML = "&nbsp" + response[0].noofapprovals;
+				noOfApprovals = response[0].noofapprovals;
+				
 			}
 	});
+}
+
+function approvingMembers(){
+	
+	//alert("approving members called");
+	
+	//var noOfApprovals = document.getElementById("noOfApprovalsCurrent").value;
+	
+	//alert(noOfApprovals);
+	
+	//code to fetch current approving members
+	$.ajax({
+		type: 'POST',
+		url: 'UpdateApprovals', 
+		data: {
+			action: "approvalMembersFetch",
+		},
+		complete: function (data) {
+			
+			let response = $.trim(data.responseText);
+			console.log("Approving users are- ", response);
+			
+			response = JSON.parse(response);
+			approvingMembers = response;
+			
+			console.log("Users list is - ", response[1] );
+			
+			var approving = document.getElementById("approvingMembers");
+			
+			//alert(response[0].id);
+			
+			var usersSelection = document.getElementById("usersSelection");
+			
+			for(let i = 0; i<noOfApprovals; i++){
+				
+				//alert("inside i loop");
+				
+				let member = document.createElement("select");
+			    member.id = "approving_updated_user_" + i;
+			    
+			    for (let j = 0; j<response[1].length; j++){
+					let opt = document.createElement("Option");
+					opt.value = response[1][j].id
+					opt.textContent = response[1][j].firstname;
+					member.appendChild(opt);
+				}
+				
+				member.value = response[0][i].userid;	
+				
+				
+				
+			    approving.appendChild(member);
+			    
+			    let userCheck = document.createElement("input");
+				userCheck.type = "checkbox";
+				userCheck.id = "invoice_sort_user_" + i;
+				userCheck.name = response[0][i].name;
+				userCheck.label = response[0][i].name;
+				userCheck.value = response[0][i].id;
+				userCheck.setAttribute('checked', true);
+				
+				userCheck.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    //alert('checked');
+				    fillInvsTable();
+				  } else {
+				    //alert('not checked');
+				    fillInvsTable();
+				  }
+				}) 
+				
+				usersSelection.appendChild(userCheck);
+				let label = document.createElement('label')
+				//label.htmlFor = response[0][i].name;
+				label.innerHTML =  response[0][i].name + "&nbsp&nbsp&nbsp&nbsp";
+			    //label.appendChild(document.createTextNode(response[0][i].name));
+			 
+			    let br = document.createElement('br');
+			    
+			    //let container = document.getElementById('usersSelection');
+			    usersSelection.appendChild(userCheck);
+			    usersSelection.appendChild(label);
+			    //container.appendChild(br);
+				
+			}
+			fetchApprovalsAll();
+			
+		}
+		
+	});
+}
+
+function modifyApprovingMembers(){
+	//alert("Modifying approving members called");
+	
+	//var noOfApprovals = document.getElementById("noOfApprovalsCurrent").value;
+	
+	const arr = [];
+	
+	for(let i = 0; i < noOfApprovals; i++){
+		let userApp = document.getElementById("approving_updated_user_" + i);
+		//alert(userApp.id);
+		//alert(userApp.value);
+		
+		var obj = new Object();
+		obj.id = userApp.value;
+		obj.name = userApp.options[userApp.selectedIndex].text;
+		//alert(obj.name);
+		
+		arr.push(obj)
+		
+	}
+	
+	var json = JSON.stringify(arr);
+	//alert(json);
+	
+	$.ajax({
+			type: 'POST',
+			url: 'UpdateApprovals', 
+			data: {
+				action: "approvalMembersUpdateData",
+				users: json,
+			},
+			complete: function (data) {
+				
+				let response = $.trim(data.responseText);
+				console.log("Approving users are- ", response);
+				
+				response = JSON.parse(response);
+				
+				console.log("Users list is - ", response[1] );
+				
+				var approvingMembers = document.getElementById("approvingMembers");
+				
+				for(let i = 0; i<noOfApprovals; i++){
+					
+					//alert("inside i loop");
+					
+					let member = document.createElement("select");
+				    member.id = "approving_updated_user_" + i;
+				    
+				    for (let j = 0; j<response[1].length; j++){
+						let opt = document.createElement("Option");
+						opt.value = response[1][j].id
+						opt.textContent = response[1][j].firstname;
+						member.appendChild(opt);
+					}
+				    approvingMembers.appendChild(member);
+					
+					
+				}
+			}
+	}); 
 }
