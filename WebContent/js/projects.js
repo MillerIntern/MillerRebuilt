@@ -9167,6 +9167,14 @@ $(document).on('click', '.commonStage', function(){
 });
 
 
+//RITVIK - Types of Interest Logic
+//Keeps track of type selections
+$(document).on('click', '.commonType', function(){
+	//if(this.checked == false) document.getElementById('AllStages').checked = false;
+    //document.getElementById('NoStages').checked = false;
+    updateFrontEnd();
+});
+
 //UNCOMMENT FOR MULTIPLE CHOSEN SELECT
 /*
 $(document).on('click', '.stageSelection', function(){
@@ -9432,9 +9440,18 @@ function updateDisplayableProjects(){
 	
 	
 	var stagesOfInterest = new Array();
-			$('.stage').each(function(i, obj) {
-				if(obj.checked == true) stagesOfInterest.push(obj);
-			}); 
+	$('.stage').each(function(i, obj) {
+		if(obj.checked == true) stagesOfInterest.push(obj);
+	}); 
+		
+			
+	//RITVIK - Adding TypesOfInterest logic
+	var typesOfInterest = new Array();
+		$('.projectType').each(function(i, obj) {
+		if(obj.checked == true) typesOfInterest.push(obj);
+	}); 
+	
+	
 		
 	/*	
 	UNCOMMENT FOR CHOSEN	
@@ -9452,14 +9469,25 @@ function updateDisplayableProjects(){
 		{
 			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id)
 			{
-				DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
-				break;
+				if(typesOfInterest.length == 0 || typesOfInterestMatch(typesOfInterest, RETRIEVED_PROJECTS[i].projectType.id) == true){
+					DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
+					break;	
+				}
 			}
 		}
 	}	
 	
 	console.log("FINISHED UPDATING DISPLAYABLE PROJECTS");
 	console.log(DISPLAYABLE_PROJECTS);
+}
+
+function typesOfInterestMatch(typesOfInterest, projectTypeId){
+	for(var q = 0; q < typesOfInterest.length; q++)
+	{
+		if(typesOfInterest[q].value == projectTypeId)
+			return true;
+	}
+	return false;
 }
 
 
@@ -14521,7 +14549,7 @@ function submitInv() {
 		
 		//checks if submit/reject date should be added
 		submitRejectDateCheck();	
-		
+		alert("Are you sure you want to add the inovoice of amount- $"+invoiceAmount);
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14551,13 +14579,43 @@ function submitInv() {
 				if (response === 'INVOICE_ADDED') {
 					alert('Invoice Added Successfully');
 					
+					//add the information in the approvals part too
+					$.ajax({
+						type: 'POST',
+						url: 'UpdateApprovals', 
+						data: {
+							'action': 'createApprovals',
+							'project': projectID,
+							'invoiceID': invoiceID,
+							
+						}, complete: function (serverResponse) {
+							console.log(serverResponse);
+							let response = $.trim(serverResponse.responseText);
+							if (response === 'INVOICE_ADDED') {
+								alert('Approvals Added Successfully');
+								
+								//Makes the user return to the invoice screen 
+								document.getElementById('invoiceInformation').style.width = "100%";
+								$('#invoiceCreationZone').hide();
+								$('#invoiceDisplay').show();
+								$('#returnAccountsReceivable').show();
+								
+								
+								clearPeInvoiceTable();
+								getInvs(1);
+								fillPeInvsTable(DATA);
+							}
+						}
+					});		
+					
+					
 					//Makes the user return to the invoice screen 
-					document.getElementById('invoiceInformation').style.width = "100%";
+					/*document.getElementById('invoiceInformation').style.width = "100%";
 					$('#invoiceCreationZone').hide();
 					$('#invoiceDisplay').show();
 					$('#returnAccountsReceivable').show();
 					clearInvoiceTable();
-					getInvs(1);
+					getInvs(1); */
 				}
 			}
 		});		
@@ -14599,6 +14657,9 @@ function submitInv() {
 					alert('Invoice Updated Successfully');
 				
 					//Makes the user return to the invoice screen 
+					
+					
+					
 					document.getElementById('invoiceInformation').style.width = "100%";
 					$('#invoiceCreationZone').hide();
 					$('#invoiceDisplay').show();
@@ -14626,6 +14687,7 @@ function submitInv1(){
 	
 	let submittedDate = $('#invoiceCreationZone1').find('#submittedDateInv1').val();		
 	let invoiceAmount = $('#invoiceCreationZone1').find('#invoiceAmount1').val();
+	
 	let invoiceCustomer = $('#invoiceCreationZone1').find('#invoiceCustomer1').val();
 	let invoiceStatus = $('#invoiceCreationZone1').find('#invoiceStatus1').val();
 	
@@ -14645,6 +14707,7 @@ function submitInv1(){
 	//Removes a $ prior to saving to prevent a display error
 	invoiceAmount = invoiceAmount.replace('$', '');
 	invoiceAmount = invoiceAmount.replace('%', '');
+	invoiceAmount = invoiceAmount.replace(',', '')
 	
 	//user picks to invoice %
 /*	if(amountType == "1"){
@@ -14722,7 +14785,7 @@ function submitInv1(){
 		
 		//checks if submit/reject date should be added
 		submitRejectDateCheck();
-		
+		alert("Are you sure you want to add the inovoice of amount- $"+invoiceAmount);
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14748,44 +14811,46 @@ function submitInv1(){
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
+				//alert(response);
 				if (response === 'INVOICE_ADDED') {
 					alert('Invoice Added Successfully');
 					
 					$('#invoiceCreationZone1').hide();		
 					
-					clearPeInvoiceTable();
-					getInvs(1);
-					fillPeInvsTable(DATA);
+					//add the information in the approvals part too
+					$.ajax({
+						type: 'POST',
+						url: 'UpdateApprovals', 
+						data: {
+							'action': 'createApprovals',
+							'project': projectID,
+							'invoiceID': invoiceID,
+							
+						}, complete: function (serverResponse) {
+							console.log(serverResponse);
+							let response = $.trim(serverResponse.responseText);
+							if (response === 'INVOICE_ADDED') {
+								alert('Approvals Added Successfully');
+								
+								//Makes the user return to the invoice screen 
+								document.getElementById('invoiceInformation').style.width = "100%";
+								$('#invoiceCreationZone').hide();
+								$('#invoiceDisplay').show();
+								$('#returnAccountsReceivable').show();
+								
+								
+								clearPeInvoiceTable();
+								getInvs(1);
+								fillPeInvsTable(DATA);
+							}
+						}
+					});		
+					
 					
 					
 				}
 			}
-		});		
-		//add the information in the approvals part too
-		$.ajax({
-			type: 'POST',
-			url: 'UpdateApprovals', 
-			data: {
-				'action': 'createApprovals',
-				'project': projectID,
-				'invoiceID': invoiceID,
-				
-			}, complete: function (serverResponse) {
-				console.log(serverResponse);
-				let response = $.trim(serverResponse.responseText);
-				if (response === 'INVOICE_ADDED') {
-					alert('Approvals Added Successfully');
-					
-					//Makes the user return to the invoice screen 
-					document.getElementById('invoiceInformation').style.width = "100%";
-					$('#invoiceCreationZone').hide();
-					$('#invoiceDisplay').show();
-					$('#returnAccountsReceivable').show();
-					clearInvoiceTable();
-					getInvs(1);
-				}
-			}
-		});		
+		});
 		
 	}
 }

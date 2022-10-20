@@ -46,6 +46,7 @@ public class InvUpload extends HttpServlet {
 
 	    // Create path components to save the file
 	  	
+	  	System.out.println("Servletn: InvUpload.java");  	
 	  	Configuration configuration= new Configuration().configure("hibernate.cfg.xml");
 		String invoiceLocation = configuration.getProperty("hibernate.invoice.location");
 	  	
@@ -74,6 +75,8 @@ public class InvUpload extends HttpServlet {
 	        out = new FileOutputStream(new File(path + File.separator
 	                + fileName));
 	        filecontent = filePart.getInputStream();
+	        
+	        System.out.println("Invoice uploaded successfully");
 
 	        int read = 0;
 	        final byte[] bytes = new byte[1024];
@@ -84,7 +87,7 @@ public class InvUpload extends HttpServlet {
 	        //writer.println("New file " + fileName + " created at " + path);
 	        writer.println("true");
 
-	    } catch (FileNotFoundException fne) {
+	    } catch (Exception fne) {
 	        writer.println("You either did not specify a file to upload or are "
 	                + "trying to upload a file to a protected or nonexistent "
 	                + "location.");

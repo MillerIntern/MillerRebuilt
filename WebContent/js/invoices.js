@@ -371,25 +371,32 @@ function fillInvsTable() {
 		//alert(skip);
 		if(skip) continue; */
 		
-		if(selector == 'review'){
+		//if the selector is in review then only do the individual user reviews thing
+		/*if(selector == 'review'){
 			let checkContinue = 0;
+			
+			//the next two lines is there to match the same invoice with invoice approvals
 			for(let k = 0; k < invApprovals.length; k++){
 				if(invs[i].invoiceID == invApprovals[k].invoice_id){
 					
+					//iterate over the invoice approvals json data to find the ones with status
 					for (var keyUser in invApprovals[k]){
 					
-						for(let z = 0; z< noOfApprovals; z++){
+						//this checks for the number of apprvals
+						for(let z = 0; z < noOfApprovals; z++){
 							
 							let checkedUser = document.getElementById("invoice_sort_user_" + z);
 							
 							let checkedUserStatus = checkedUser.getAttribute('checked');
 							//alert(checkedUserStatus);
-							if(keyUser == "status_" + z && checkedUserStatus == 'true'){
+							if((keyUser == "status_" + z) && (checkedUserStatus == 'true')){
 								
 								//alert(invApprovals[k][keyUser]);
 								//add one to know if theres is any user 
-								if(selector.toLowerCase() == invApprovals[k][keyUser].toLowerCase()){
-									alert(invApprovals[k][keyUser]);
+								//if(selector == 'review' && invApprovals[k][keyUser] == "Review" ){
+								if(invApprovals[k][keyUser] == "Review") {
+									//alert(invApprovals[k][keyUser]);
+									//alert(invs[i].invoiceID);
 									checkContinue += 1;
 								}
 								else{
@@ -401,11 +408,57 @@ function fillInvsTable() {
 				}		
 			}
 			if(checkContinue == 0) {
+				alert(invs[i].invoiceID);
 				continue mainLoop;
 			} 
 			
+		} */
+		
+		//variable to continue loop or not
+		let checkContinue = 1;
+		
+		//first of all make sure selector is at review
+		if(selector == 'review'){
+			
+			checkContinue = 0;
+		
+			//first iterate through all the users of approvals, i.e. all the check boxes
+			for(let z = 0; z < noOfApprovals; z++){
+				
+				//check whether the approving user is checked or not
+				let checkedUser = document.getElementById("invoice_sort_user_" + z);				
+				let checkedUserStatus = checkedUser.getAttribute('checked');
+				//alert(checkedUserStatus);
+				
+						
+				//the next two lines is there to match the same invoice with invoice approvals
+				for(let k = 0; k < invApprovals.length; k++){
+					if(invs[i].invoiceID == invApprovals[k].invoice_id){
+						
+						
+						//if the user is checked then....
+						if(checkedUserStatus == 'true'){
+							//alert(true);
+							
+							//check if the status is review or not for that user
+							if(invApprovals[k]["status_" + (z+1)] == "Review"){
+								
+								//alert(true);
+								
+								//if status is review then set checkContinue to 1 to include the invoice in the invoice queue to show
+								checkContinue = 1;
+							} 
+						}
+						
+					}
+					
+				}
+			}
 		}
 		
+		if(checkContinue == 0){
+			continue mainLoop;
+		}
 		
 		var inv = invs[i];
 		
@@ -458,39 +511,7 @@ function fillInvsTable() {
 		let invoiceSubmitBtn = document.createElement('td');
 		let emailSendBtn = document.createElement('td');
 		
-		//add the save button to the laste column
-		
-		//<li style="top:4px;float:right;" class="btn btn-success" id="saveProjectLink" onclick="saveProject_PROJECT_DATA()">
-	     //   				Save<span class="glyphicon glyphicon-floppy-saved"></span></li>
-	     
-	    /*<button class="btn" style="color: white; background: rgb(23, 42, 86);">Add Invoice</button> */
-	        				
-	    let btn = document.createElement('button');
-	    //btn.style = "top:4px;float:right;";
-	    btn.style = "color:white; background-color : #039c0a; border:#014704; border-radius: 3px;";
-	    btn.class = "btn btn-success";
-	    btn.id = "btn_" + invListing.id;
-	    //alert(btn.id);
-	    //btn.onclick = function(){};
-	    btn.innerHTML = "Save";
-	    btn.disabled = "true";
-		
-		btn.onclick = function() {
-			//toggleInv(this);
-			//let value = invListing
-			//alert(this.id);
-			editSelectedInvBtn(this.id.split('_').pop());
-		};
-		
-		/*invListing.ondblclick = function(){
-
-			editSelectedInv(this);
-		};  */
-		
-		//invoiceSubmitBtn.appendChild(submitBtn);
-		invoiceSubmitBtn.appendChild(btn);
-		
-		
+				
 		
 		
 		let invoiceNumber = document.createElement('td');
@@ -558,8 +579,9 @@ function fillInvsTable() {
 				projectDetails.appendChild(projItemHover);
 				
 				//projectDetails.className = "tooltip";
-				projectLocation.innerHTML = RETRIEVED_PROJECTS[i].warehouse.city.name + " " + RETRIEVED_PROJECTS[j].warehouse.warehouseID ;
+				projectLocation.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name + " " + RETRIEVED_PROJECTS[j].warehouse.warehouseID ;
 				
+				//alert(RETRIEVED_PROJECTS[i].warehouse.city.name);
 				
 				
 				//setting the mcsNumber id and value
@@ -766,7 +788,7 @@ function fillInvsTable() {
 			
 		}; 
 		
-		invoiceStatus.innerHTML = invs[i].invoiceStatus
+		//invoiceStatus.innerHTML = invs[i].invoiceStatus
 		invoiceStatus.appendChild(selectStatus);
 		
 		//selectStatus.value = invs[i].invoiceStatus;
@@ -798,29 +820,37 @@ function fillInvsTable() {
 		//if user is no the basic user
 		else{
 			
-			//if the individual user status is not on because of the stauts bar then show the universal status
+			//if the individual user status is not on because of the status bar then show the universal status
 			if(userInApprovers == 0) {
 				//alert("inside");
 				selectStatus.value = invs[i].invoiceStatus;
 			}
 			//now in this case, when the top status is review, then show the individual users status based on checkbos
 			else{
-				approvingMembers[0][userApprovalIndex];
-				for(let k = 0; k < invApprovals.length; k++){
-					if(invs[i].invoiceID == invApprovals[k].invoice_id){
-						//alert(true);
-						
-						//if(invApprovals[k].hasOwnProperty)
-						//alert(invApprovals[k]["status_" + (userApprovalIndex + 1)]);
-			
-						selectStatus.value = invApprovals[k]["status_" + (userApprovalIndex + 1)];
+				
+				if( invs[i].invoiceStatus == "Requested" || invs[i].invoiceStatus == "Completed" || invs[i].invoiceStatus == "Rejected" 
+				|| invs[i].invoiceStatus == "Approved"){
+					selectStatus.value = invs[i].invoiceStatus;
+				}
+				else{
+					approvingMembers[0][userApprovalIndex];
+					for(let k = 0; k < invApprovals.length; k++){
+						if(invs[i].invoiceID == invApprovals[k].invoice_id){
+							//alert(true);
+							
+							//if(invApprovals[k].hasOwnProperty)
+							//alert(invApprovals[k]["status_" + (userApprovalIndex + 1)]);
+				
+							selectStatus.value = invApprovals[k]["status_" + (userApprovalIndex + 1)];
+						}
 					}
 				}
+				
 			}
 		}
 					
 		//permissionCheckforStatus(invListing.value);
-		//permissionCheckforStatus1(invListing.value);
+		//setInvoiceIcon(invListing.value);
 		
 
 		invoiceApproval.innerHTML = invs[i].invoiceApproval;
@@ -838,6 +868,20 @@ function fillInvsTable() {
 		notesIcon.width = "22";
 		notesIcon.height = "22";
 		
+		if(invs[i].notes.length > 4){
+			notesIcon.src = "icons/notes_red.png";
+		}
+		else{
+			for(let x = 0; x<4; x++){
+				if(invs[i].notes[x] == 1) {
+					notesIcon.src = "icons/notes_red.png";
+					break;
+				}
+			}	
+		}
+		
+		
+		
 		//call function to display div on mouse hover
 		notesIcon.onmouseover = function(){
 			//alert(notesIcon.id);
@@ -850,7 +894,7 @@ function fillInvsTable() {
 		}
 		
 		//double click notes icon to edit it
-		notesIcon.ondblclick = function() {
+		notesIcon.onclick = function() {
 			//alert("icon double clicked");
 			editNotes2(notesIcon.id);
 		}
@@ -873,7 +917,7 @@ function fillInvsTable() {
         notesHover.style.margin.top = "-5em";
         notesHover.style.margin.left = "-5em";
 		
-		notes.appendChild(notesHover);
+		//notes.appendChild(notesHover);
 		
 		//edit notes modal box
 		let notesEdit = document.createElement("div");
@@ -885,7 +929,7 @@ function fillInvsTable() {
 		notesEdit.style.right = "150px";
 		notesEdit.style.borderRadius = "5px";
 		notesEdit.style.width = "210px";
-		notesEdit.style.height = "auto";
+		notesEdit.style.height = "200px";
 		notesEdit.style.display = "none";
 		notesEdit.style.border = "1px solid blue";
         notesEdit.style.border = "2px solid black";
@@ -982,7 +1026,7 @@ function fillInvsTable() {
 			notesEditSelect.value = "Others";			
 			notesEditTableRow3.style.display = "table-row";
 			notesEditText.value = invs[i].notes;
-			notesEdit.style.height = "155px";
+			//notesEdit.style.height = "155px";
 		}
         
         notesEditTableBody.appendChild(notesEditTableRow3);
@@ -1096,7 +1140,7 @@ function fillInvsTable() {
         notesEdit.appendChild(document.createElement('br'));
         
         
-        //new notes section
+        //new notes section with checkbox
         let notesEditT = document.createElement("table");
         let notesEditTB = document.createElement("tbody");
         
@@ -1361,6 +1405,40 @@ function fillInvsTable() {
         notesEdit.appendChild(notesEditT);
         notes.appendChild(notesEdit);
         
+        //doing the new notes hover part
+        let notesHoverNew = document.createElement("div");
+		notesHoverNew.id = "hover_new_" + notesIcon.id;
+		notesHoverNew.style.backgroundColor = "#f7f5a8";
+		notesHoverNew.style.display = "none";
+		notesHoverNew.style.position = "absolute";
+		notesHoverNew.style.border = "1px solid #ccc";
+        notesHoverNew.style.border = "2px solid black";
+        notesHoverNew.style.margin.top = "-5em";
+        notesHoverNew.style.margin.left = "-5em";
+		
+		//alert(notesHover.id);
+		//alert(invs[i].notes[0]);
+		if(invs[i].notes[0] == 1){
+			//alert(true);
+			notesHoverNew.innerHTML += "Incorrect Amount  <br>";
+		}
+		if(invs[i].notes[1] == "1"){
+			notesHoverNew.innerHTML += "Incorrect Customer  <br>\n";
+		}
+		if(invs[i].notes[2] == "1"){
+			notesHoverNew.innerHTML += "Customer Rejected  <br>\n";
+		}
+		if(invs[i].notes[3] == "1"){
+			notesHoverNew.innerHTML += "Incomplete Work  <br>\n";
+		}
+				
+		notesHoverNew.innerHTML += invs[i].notes.substring(0, invs[i].notes.length-4);
+		
+		//alert(notesHoverNew.innerHTML);
+		
+		
+		
+        notes.appendChild(notesHoverNew);
         
 
 		
@@ -1422,7 +1500,7 @@ function fillInvsTable() {
 				
 				//alert("onchange function called");
 				enableSubmitButton(id);
-				
+				alert("Please make sure to click save otherwise the invoice will not be saved");
 				//if file selecteds change status of dropdown to review
 				var x = document.getElementById("invoiceStatus_Inv_" + id);
 				//alert(x.id);
@@ -1473,6 +1551,43 @@ function fillInvsTable() {
 		
 		//var userType = getUserType();
 		
+		
+		
+		
+		//add the save button to the laste column
+		
+		//<li style="top:4px;float:right;" class="btn btn-success" id="saveProjectLink" onclick="saveProject_PROJECT_DATA()">
+	     //   				Save<span class="glyphicon glyphicon-floppy-saved"></span></li>
+	     
+	    /*<button class="btn" style="color: white; background: rgb(23, 42, 86);">Add Invoice</button> */
+	        				
+	    let btn = document.createElement('button');
+	    //btn.style = "top:4px;float:right;";
+	    btn.style = "color:white; background-color : #039c0a; border:#014704; border-radius: 3px;";
+	    btn.class = "btn btn-success";
+	    btn.id = "btn_" + invListing.id;
+	    //alert(btn.id);
+	    //btn.onclick = function(){};
+	    btn.innerHTML = "Save";
+	    btn.disabled = "true";
+		
+		btn.onclick = function() {
+			//toggleInv(this);
+			//let value = invListing
+			//alert(this.id);
+			editSelectedInvBtn(this.id.split('_').pop());
+		};
+		
+		/*invListing.ondblclick = function(){
+
+			editSelectedInv(this);
+		};  */
+		
+		//invoiceSubmitBtn.appendChild(submitBtn);
+		invoiceSubmitBtn.appendChild(btn);
+		
+
+		
 		//Sending email button part
 		let emailBtn = document.createElement('button');
 	    //btn.style = "top:4px;float:right;";
@@ -1518,7 +1633,7 @@ function fillInvsTable() {
 		//invListing.appendChild(invoiceSubmitBtn);
 		
 		
-		if(userType == 'basic' && invs[i].invoiceStatus == 'Approved'){
+		if(invs[i].invoiceStatus == 'Approved'){
 			invListing.appendChild(emailSendBtn);	
 		}
 		else{
@@ -1529,7 +1644,12 @@ function fillInvsTable() {
 		$('#invoiceTable > tbody').append(invListing);
 		
 		//need to put in in the end othervise it'll show it doesnt exist
-		permissionCheckforStatus1(invListing.value);
+		//setInvoiceIcon(invListing.value);
+		
+		//set the color of invoice Icon
+		
+		
+		setInvoiceIconColor(invListing.value, invs[i].invoiceID);
 		
 		
 		//finally add the approvals
@@ -1680,51 +1800,54 @@ function uploadInvoice(id) {
 	
 	//$("#btnSubmit").click(function (event) {
 
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
+    //stop submit the form, we will post it manually.
+    event.preventDefault();
 
-        // Get form
-        var form = $('#fileUploadForm')[0];
+    // Get form
+    var form = $('#fileUploadForm')[0];
 
-		// Create an FormData object 
-        var data = new FormData(form);
+	// Create an FormData object 
+    var data = new FormData(form);
 
-		// If you want to add an extra field for the FormData
-        //data.append("CustomField", "This is some extra data, testing");
+	// If you want to add an extra field for the FormData
+    //data.append("CustomField", "This is some extra data, testing");
 
-		//appending the file name
-		data.append("fileName", fileName);
-		
-		// disabled the submit button
-        $("#btnSubmit").prop("disabled", true);
+	//appending the file name
+	data.append("fileName", fileName);
+	
+	// disabled the submit button
+    $("#btnSubmit").prop("disabled", true);
+	
+	alert("File is being uploaded, Please wait for some time for file to be copied properly");
+	
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "fileuploadservlet",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+			//alert(data);
+            //$("#result").text(data);
+            console.log("SUCCESS : ", data);
+            //$("#btnSubmit").prop("disabled", false);
+            alert("Invoice uploaded successfully");
+            submitInvBtn(id, 1);
+            return true;
 
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "fileuploadservlet",
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-				//alert(data);
-                //$("#result").text(data);
-                console.log("SUCCESS : ", data);
-                //$("#btnSubmit").prop("disabled", false);
-                
-                return true;
+        },
+        error: function (e) {
 
-            },
-            error: function (e) {
-
-                $("#result").text(e.responseText);
-                console.log("ERROR : ", e);
-                $("#btnSubmit").prop("disabled", false);
-
-				return false;
-            }
-        });
+            $("#result").text(e.responseText);
+            console.log("ERROR : ", e);
+            $("#btnSubmit").prop("disabled", false);
+			alert("Unable to upload invoice due to system error");
+			return false;
+        }
+    });
 
     //});
 }
@@ -1889,7 +2012,7 @@ function setTodayDate(id){
 
 //function to display notes on Hover
 function displayNotes(notesID){
-	var notesHoverID = "hover_" + notesID;
+	var notesHoverID = "hover_new_" + notesID;
 	//alert(notesHoverID);
 	
 	var notes = document.getElementById(notesHoverID);
@@ -1921,7 +2044,7 @@ function displayNotes(notesID){
 
 //function to hide notes on mouse leave
 function hideNotes(notesID) {
-	var notesHoverID = "hover_" + notesID;
+	var notesHoverID = "hover_new_" + notesID;
 	//alert(notesHoverID);
 	var notes = document.getElementById(notesHoverID);
 	notes.style.display = "none";
@@ -2129,7 +2252,26 @@ function editSelectedInvBtn(id)
 	//fillInvWell(invListing);
 	fillInvWell(invListing);
 	hideExtraValues();
-	submitInvBtn(id);
+	
+	//if the pdf is being uploaded then upload the pdf invoice otherwise call the invoice submit button
+	let file = document.getElementById("filepdf");
+	if(file.value != "" ){
+		/*if(uploadInvoice(invId)){
+			alert("File uploaded successfully"); 
+		}*/
+		//alert("File is being uploaded, Please make sure to click save otherwise file will not be saved");
+		var x = uploadInvoice(invId);
+		//alert(x);
+		
+		
+	}
+	else{
+		//alert("file not selected");
+		submitInvBtn(id, 0);
+	}
+	
+	
+	
 }
 
 
@@ -2399,9 +2541,9 @@ function submitInv() {
 	}	
 }
 
-function submitInvBtn(id) {
+function submitInvBtn(id, invAvailable) {
 	
-	//alert("Called from button - " +  btnId);
+	//alert("Invoice pdf uploaded or not? " +  invAvailable);
 	//alert("btnId");
 	
 	let invId = id.split('_').pop();
@@ -2496,40 +2638,17 @@ function submitInvBtn(id) {
 
 	//submitRejectDateCheck();
 	
-	let file = document.getElementById("filepdf");
-	
-	//if the basic user is attaching the invoice then get the changed Review dropdown
+	//if the user is attaching the invoice then get the changed Review dropdown
 	let invoiceStatus = document.getElementById(invStatus);
-	if(userType == 'basic'){
-		if(file.value != ""){
-			invoiceStatus = invoiceStatus.value;
-			
-		}
-		else{
-			invoiceStatus = invoiceStatus.getAttribute("original");
-		}
-	}
+	//invoiceStatus = invoiceStatus.value;
 	
+	//if one of the approving members is changing the status from review to anything else then do not change the value in original invoice queue
+	if(invoiceStatus.getAttribute('original') == "Review"){
+		invoiceStatus = invoiceStatus.getAttribute('original');
+	}
 	else{
 		invoiceStatus = invoiceStatus.value;
 	}
-	
-	
-	
-	if(file.value != "" ){
-		/*if(uploadInvoice(invId)){
-			alert("File uploaded successfully"); 
-		}*/
-		
-		var x = uploadInvoice(invId);
-		//alert(x);
-		
-		
-	}
-	else{
-		//alert("file not selected");
-	}
-	
 	
 	//now handling the variables for the approvals part
 	let approvalStatus = document.getElementById("invoiceStatus_Inv_" + id).value;
@@ -2572,8 +2691,8 @@ function submitInvBtn(id) {
 					//document.getElementById('invoiceInformation').style.width = "100%";
 					$('#invoiceCreationZone').hide();
 					$('#invoiceDisplay').show();
-					clearInvoiceTable();
-					getInvs(1);
+					//clearInvoiceTable();
+					//getInvs(1);
 				}
 			}
 		});
@@ -2590,6 +2709,7 @@ function submitInvBtn(id) {
 				'approvalStatus' : approvalStatus,
 				'statusDate' : statusDate,
 				'userApprovalIndex' : userApprovalIndex,
+				'invAvailable' : invAvailable,
 																																																				
 			}, complete: function (serverResponse) {
 				console.log(serverResponse);
@@ -2810,7 +2930,7 @@ function permissionCheckforStatus(id){
 				//alert(status.value);
 				let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
 				//alert(mcsPE);
-				//need to do a nested call to the server to see whether the file existx or not
+				//need to do a nested call to the server to see whether the file exists or not
 				$.ajax({
 					type: 'POST',
 					url: 'GetInvAttStatus', 
@@ -2879,9 +2999,9 @@ function permissionCheckforStatus(id){
 						else{
 							
 							invIcon.src = "icons/grey_pdf.png";
-							invIcon.onclick = function() {
+							/*invIcon.onclick = function() {
 								this.disabled = true;
-							}
+							} */
 							//invIcon.setAttribute("invoiceavailable", "yes");
 							
 							/*
@@ -2914,7 +3034,7 @@ function permissionCheckforStatus(id){
 	
 }
 
-function permissionCheckforStatus1(id){
+function setInvoiceIcon(id){
 	//alert(id);
 	//if (user.permission.name == "basic")
 	if(userType == "basic")
@@ -2955,8 +3075,10 @@ function permissionCheckforStatus1(id){
 					invIcon.appendChild(link);	
 					
 					var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+					//var invStatus = invStatus.getAttribute('original')
+					//alert(invStatus.getAttribute('original'));
 					
-					switch(invStatus.value){
+					switch(invStatus.getAttribute('original')){
 						case "Submitted":
 						    invIcon.src = "icons/green_pdf.png";
 							break;
@@ -3049,11 +3171,14 @@ function permissionCheckforStatus1(id){
 					
 					var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
 					
-					switch(invStatus.value){
+					//switch(invStatus.value){
+					switch(invStatus.getAttribute('original')){
 						case "Submitted":
+							//alert(invStatus.value);
 						    invIcon.src = "icons/green_pdf.png";
 							break;
 						case "Review":
+							//alert(invStatus.value);
 							invIcon.src = "icons/yellow_pdf.png";
 							break;
 						case "Processing":
@@ -3069,7 +3194,7 @@ function permissionCheckforStatus1(id){
 						    invIcon.src = "icons/green_pdf.png";
 							break;
 						default:
-							invIcon.src = "icons/green_pdf.png";
+							//invIcon.src = "icons/green_pdf.png";
 							break;
 					}
 					
@@ -3086,9 +3211,9 @@ function permissionCheckforStatus1(id){
 				else{
 					
 					invIcon.src = "icons/grey_pdf.png";
-					invIcon.onclick = function() {
-						this.disabled = true;
-					}
+					/*invIcon.onclick = function() {
+						//this.disabled = true;
+					} */
 					
 				}
 				 
@@ -3097,36 +3222,116 @@ function permissionCheckforStatus1(id){
 
 		//document.getElementById("invoiceStatus_Inv_" + id).disabled = true;
 			
+	}	
+}
+
+//set the color fo the invoice icon
+function setInvoiceIconColor(id, invoiceID){
+	
+	let invIcon = document.getElementById("inv_att_" + id);
+	let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+	
+	
+	for(var j = 0; j < invApprovals.length; j++){
+		if(invApprovals[j].approval_id == id) {
+			if (invApprovals[j].invavailable == 1) {
+				//alert('Inside true for invoice available - ' + id);
+				
+				//return "true";
+				//invIcon.setAttribute("invoiceavailable", "no");
+				let link = document.createElement("a");
+				link.href = "#";
+				invIcon.appendChild(link);	
+				
+				var invStatus = document.getElementById("invoiceStatus_Inv_" + id);
+				
+				//alert(invStatus.getAttribute('original'));
+				
+				//switch(invStatus.value){
+				switch(invStatus.getAttribute('original')){
+					case "Submitted":
+						//alert(invStatus.value);
+					    invIcon.src = "icons/green_pdf.png";
+						break;
+					case "Review":
+						//alert(invStatus.value);
+						invIcon.src = "icons/yellow_pdf.png";
+						break;
+					case "Processing":
+						invIcon.src = "icons/yellow_pdf.png";
+						break;
+					case "Rejected":
+					    invIcon.src = "icons/red_pdf.png";
+						break;
+					case "Requested":
+					    invIcon.src = "icons/yellow_pdf.png";
+						break;
+					case "Approved":
+					    invIcon.src = "icons/green_pdf.png";
+						break;
+					default:
+						//invIcon.src = "icons/green_pdf.png";
+						break;
+				}
+				
+				invIcon.setAttribute("invoiceavailable", "no");
+				invIcon.onclick = function () {
+				//link.onclick = function (){ 
+					var id = this.id;
+				
+					openInvoice(mcsPE, id);
+				
+				}
+				
+			}
+			else{
+				
+				invIcon.src = "icons/grey_pdf.png";
+				/*invIcon.onclick = function() {
+					//this.disabled = true;
+				} */
+				
+			}
+		}
 	}
-	
-	
-
-
 	
 }
 
 function openInvoice(mcsPE, id){
+	
+	var host = location.host;
 	$.ajax({
 			type: 'POST',
 			url: 'GetInvAttStatus', 
 			data: {
 				action: "GetInvoice",
 				mcsPE: mcsPE,
+				host : host,
 			},
 			complete: function (data) {
 				//console.log(serverResponse);
 				//alert(data);
 				//window.location = 'GetInvAttStatus';
 				
-				var host = location.host;
 				
-				//alert(host);
 				
-				var loc = host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
+				var href = location.href;
+				var pathname = location.pathname;				
+				pathname = pathname.substring(0, pathname.lastIndexOf("/"));
+				//alert(pathname);
+				
+				//var loc = host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
+				var loc = host + pathname + "/upload/" + mcsPE + ".pdf";
+				
 				//alert(loc);
 				
-				window.open("http://" + host + "/MillerRebuilt/upload/" + mcsPE + ".pdf");
+				//window.open("http://" + host + "/MillerRebuilt/upload/" + mcsPE + ".pdf");
 				
+				//window.open("http://" + host + "/MillerRebuilt_tester/upload/" + mcsPE + ".pdf");
+				
+				window.open("http://" + loc);
+				
+				//window.open("http://192.168.0.250/users2/Saurabh/Invoices/" +mcsPE + ".pdf");
 				//var pdfWin= window.open(data);
 				//window.open(data, '_blank', 'fullscreen=yes');
 				//window.open("data:application/pdf," + data);
@@ -3205,7 +3410,7 @@ function fetchApprovals(invoiceID, id){
 				
 				
 				
-				if(response[0].user_1 != undefined){
+				if((response[0].user_1 != undefined) & (noOfApprovals >= 1)){
 					approvalusers.push(response[0].user_1);
 					approvaldates.push(response[0].date_1)
 					approvalstatus.push(response[0].status_1);
@@ -3218,9 +3423,7 @@ function fetchApprovals(invoiceID, id){
 					if(approvalstatus[0] == "Approved"){
 						values.style.color = "green";
 					}
-					
-					
-					
+	
 				}
 				//also dont show that small onhover box without data
 				else{
@@ -3229,7 +3432,7 @@ function fetchApprovals(invoiceID, id){
 					}
 				}
 				
-				if(response[0].user_2 != undefined){
+				if((response[0].user_2 != undefined) & (noOfApprovals >= 2)){
 					approvalusers.push(response[0].user_2);
 					approvaldates.push(response[0].date_2)
 					approvalstatus.push(response[0].status_2);
@@ -3244,7 +3447,7 @@ function fetchApprovals(invoiceID, id){
 					}
 				}
 				
-				if(response[0].user_3 != undefined){
+				if((response[0].user_3 != undefined) & (noOfApprovals >= 3)){
 					approvalusers.push(response[0].user_3);
 					approvaldates.push(response[0].date_3)
 					approvalstatus.push(response[0].status_3);
@@ -3259,7 +3462,7 @@ function fetchApprovals(invoiceID, id){
 					}
 				}
 				
-				if(response[0].user_4 != undefined){
+				if((response[0].user_4 != undefined) & (noOfApprovals >= 4)){
 					approvalusers.push(response[0].user_4);
 					approvaldates.push(response[0].date_4)
 					approvalstatus.push(response[0].status_4);
@@ -3274,7 +3477,7 @@ function fetchApprovals(invoiceID, id){
 					}
 				}
 					
-				if(response[0].user_5 != undefined){
+				if((response[0].user_5 != undefined) & (noOfApprovals >= 5)){
 					approvalusers.push(response[0].user_5);
 					approvaldates.push(response[0].date_5)
 					approvalstatus.push(response[0].status_5);
@@ -3329,7 +3532,7 @@ function fetchApprovalsAll(){
 
 function addApproval(invoiceID, id){
 	for(var j = 0; j < invApprovals.length; j++){
-			if(invApprovals[j].invoice_id == invoiceID){
+			if(invApprovals[j].approval_id == id){
 				//alert("equal");
 				
 				//let id = invs[i].id;
@@ -3341,7 +3544,7 @@ function addApproval(invoiceID, id){
 				const approvaldates = [];
 				const approvalstatus = [];
 				
-				if(invApprovals[j].user_1 != undefined){
+				if((invApprovals[j].user_1 != undefined) & (noOfApprovals >= 1)){
 					approvalusers.push(invApprovals[j].user_1);
 					approvaldates.push(invApprovals[j].date_1)
 					approvalstatus.push(invApprovals[j].status_1);
@@ -3365,7 +3568,7 @@ function addApproval(invoiceID, id){
 					}
 				}
 				
-				if(invApprovals[j].user_2 != undefined){
+				if((invApprovals[j].user_2 != undefined) & (noOfApprovals >= 2)){
 					approvalusers.push(invApprovals[j].user_2);
 					approvaldates.push(invApprovals[j].date_2)
 					approvalstatus.push(invApprovals[j].status_2);
@@ -3380,7 +3583,7 @@ function addApproval(invoiceID, id){
 					}
 				}
 				
-				if(invApprovals[j].user_3 != undefined){
+				if((invApprovals[j].user_3 != undefined) & (noOfApprovals >= 3)){
 					approvalusers.push(invApprovals[j].user_3);
 					approvaldates.push(invApprovals[j].date_3)
 					approvalstatus.push(invApprovals[j].status_3);
@@ -3395,11 +3598,11 @@ function addApproval(invoiceID, id){
 					}
 				}
 				
-				if(invApprovals[j].user_4 != undefined){
+				if((invApprovals[j].user_4 != undefined) & (noOfApprovals >= 4)){
 					approvalusers.push(invApprovals[j].user_4);
 					approvaldates.push(invApprovals[j].date_4)
 					approvalstatus.push(invApprovals[j].status_4);
-					let values = document.createElement("p");
+					let values = document.createElement("p")
 					values.innerHTML = approvalusers[3].toUpperCase() + ": " + approvalstatus[3] + " - " + approvaldates[3]; 
 					x.appendChild(values);
 					if(approvalstatus[3] == "Rejected"){
@@ -3410,7 +3613,7 @@ function addApproval(invoiceID, id){
 					}
 				}
 					
-				if(invApprovals[j].user_5 != undefined){
+				if((invApprovals[j].user_5 != undefined) & (noOfApprovals >= 5)){
 					approvalusers.push(invApprovals[j].user_5);
 					approvaldates.push(invApprovals[j].date_5)
 					approvalstatus.push(invApprovals[j].status_5);
@@ -3438,12 +3641,12 @@ function fillInvoiceApprovals(){
 	
 	for (var i = 0; i < invs.length; i++){
 		for(var j = 0; j < invApprovals.length; j++){
-			if(invApprovals[j].invoice_id == invs[i].invoiceID){
-				alert("equal");
+			if(invApprovals[j].approval_id == invs[i].id){
+				//alert("equal");
 				
 				let id = invs[i].id;
 				
-				alert(id);
+				//alert(id);
 				
 				let x = document.getElementById("approvals_"+ id );
 				const approvalusers = [];
@@ -3713,13 +3916,15 @@ function approvingMembers(){
 				
 				userCheck.addEventListener('change', (event) => {
 				  if (event.currentTarget.checked) {
-				    //alert('checked');
+					event.currentTarget.setAttribute('checked', true);
+				    //alert(event.currentTarget.checked);
 				    fillInvsTable();
 				  } else {
-				    //alert('not checked');
+					event.currentTarget.removeAttribute('checked');
+				    //alert(event.currentTarget.checked);
 				    fillInvsTable();
 				  }
-				}) 
+				})  
 				
 				usersSelection.appendChild(userCheck);
 				let label = document.createElement('label')

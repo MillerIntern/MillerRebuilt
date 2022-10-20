@@ -45,10 +45,17 @@ import com.google.gson.Gson;
 
 import org.apache.commons.io.FileUtils;
 
-
+import objects.HibernateUtil;
 import objects.RequestHandler;
 import projectObjects.User;
 import services.ProjectObjectService;
+
+
+import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 
 /**
  * Servlet implementation class GetInvAttStatus
@@ -105,8 +112,32 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		if(action.equals("createApprovals")) {
 			int projID = Integer.parseInt(parameters.get("project"));
 			int invoiceID = Integer.parseInt(parameters.get("invoiceID"));
-			
+			int approval_id = 0;
 			int noOfApprovals = fetcnNoOfApprovals();
+			
+			//get the recently inserted id of invoice
+			String getid = "Select MAX(id) from invoice";
+
+			try {
+				Class.forName(myDriver);
+				Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+				Statement st = conn.createStatement();
+				
+				// execute the query, and get a java resultset
+			    ResultSet rs = st.executeQuery(getid);
+			    
+			    while (rs.next())
+			    {
+			    	System.out.println(rs);
+			    	approval_id = rs.getInt(1);
+			    	System.out.println("Id from invoice is- " + approval_id);
+			        
+			    }
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			Date now = new Date();
 			String pattern = "yyyy-MM-dd HH:mm:ss";
@@ -118,9 +149,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			
 			JSONArray approvingusers = fetchApprovingMembers();
 			
-			String query_start = "INSERT INTO invoiceapproval (project_id, invoice_id";
+			String query_start = "INSERT INTO invoiceapproval (approval_id, project_id, invoice_id";
 			
-			String query_end =  ") VALUES (" + projID +" , " + invoiceID + " ";
+			String query_end =  ") VALUES ("+ approval_id + ", " + projID +" , " + invoiceID + " ";
 			
 			String query_end_2 = ")";
 			
@@ -209,10 +240,13 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			else {
 				int projID = Integer.parseInt(parameters.get("project"));
 				int invoiceID = Integer.parseInt(parameters.get("invoiceID"));
+				
 				String approvalStatus = parameters.get("approvalStatus");
 				String statusDate = parameters.get("statusDate");
 				int userApprovalIndex = Integer.parseInt(parameters.get("userApprovalIndex")) + 1;
 				
+				int invUploaded = Integer.parseInt(parameters.get("invAvailable"));		
+				System.out.println("Invoice pdf availability " + invUploaded);
 				//Date statusDate = parameters.get("statusDate");
 				//System.out.println("Date is- " + statusDate);
 				
@@ -241,6 +275,16 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		        			+ ", date_" + userApprovalIndex + " = '" + mysqlDateString + "'" 
 		        			+  " where invoice_id = "+ invoiceID;
 		   			
+		        	// make the invoice available field to 1 if
+		        	if(invUploaded == 1) {
+		        		query = "Update invoiceapproval set user_" + userApprovalIndex + " = '" + username
+			        			+ "', status_" + userApprovalIndex + " = '" + approvalStatus + "'"
+			        			+ ", date_" + userApprovalIndex + " = '" + mysqlDateString + "'" 
+			        			+ ", invavailable = " + invUploaded + " "
+			        			+  " where invoice_id = "+ invoiceID;;
+		        		
+		        	}
+		        	
 		   			System.out.println("Query is- " + query);
 		   			
 		   			Boolean x = st.execute(query);
@@ -739,6 +783,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			// execute the query, and get a java resultset
 		    ResultSet rs = st.executeQuery(query);
 		    
+		    //whether to update the invoice status in the original invoice queue or not
+		    String updateOrNot = "false";
+		    
 		    while (rs.next())
 		    {
 		    	System.out.println("inside while");
@@ -752,13 +799,17 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	
 		    	System.out.println("Approvals data- " + status1);
 		    	System.out.println("Approvals data- " + status2);
+		    	System.out.println("Approvals data- " + status3);
 		    	
 		    	//System.out.println("User in database is- " + status1);
 		    	
+		    	
+		    	
 		    	//for each number of approvals
 		    	if(noOfApprovals == 1) {
-		    		if(status1 == "Approved") {
+		    		if(status1.equals("Approved")) {
 		    			status = "Approved";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -770,6 +821,7 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    		
 		    		if(status1.equals("Approved") && status2.equals("Approved")) {
 		    			status = "Approved";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -777,8 +829,11 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 3) {
-		    		if(status1 == "Approved" && status2 == "Approved" && status3 == "Approved") {
+		    		//if(status1 == "Approved" && status2 == "Approved" && status3 == "Approved") {
+		    		if(status1.equals("Approved") && status2.equals("Approved") && status3.equals("Approved")) {
+			    		//System.out.println("inside if blah blah");
 		    			status = "Approved";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -786,8 +841,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 4) {
-		    		if(status1 == "Approved" && status2 == "Approved" && status3 == "Approved" && status4 == "Approved") {
+		    		if(status1.equals("Approved") && status2.equals("Approved") && status3.equals("Approved") && status4.equals("Approved")) {
 		    			status = "Approved";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -795,8 +851,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 5) {
-		    		if(status1 == "Approved" && status2 == "Approved" && status3 == "Approved" && status4 == "Approved" && status5 == "Approved") {
+		    		if(status1.equals("Approved") && status2.equals("Approved") && status3.equals("Approved") && status4.equals("Approved") && status5.equals("Approved")) {
 		    			status = "Approved";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -806,8 +863,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	
 		    	//for each number of approvals for rejected
 		    	if(noOfApprovals == 1) {
-		    		if(status1 == "Rejected") {
+		    		if(status1.equals("Rejected")) {
 		    			status = "Rejected";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -815,8 +873,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 2) {
-		    		if(status1 == "Rejected" && status2 == "Rejected") {
+		    		if(status1.equals("Rejected") && status2.equals("Rejected")) {
 		    			status = "Rejected";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -824,8 +883,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 3) {
-		    		if(status1 == "Rejected" && status2 == "Rejected" && status3 == "Rejected") {
+		    		if(status1.equals("Rejected") && status2.equals("Rejected") && status3.equals("Rejected")) {
 		    			status = "Rejected";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -833,8 +893,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 4) {
-		    		if(status1 == "Rejected" && status2 == "Rejected" && status3 == "Rejected" && status4 == "Rejected") {
+		    		if(status1.equals("Rejected") && status2.equals("Rejected") && status3.equals("Rejected") && status4.equals("Rejected")) {
 		    			status = "Rejected";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -842,8 +903,9 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		    	}
 		    	
 		    	if(noOfApprovals == 5) {
-		    		if(status1 == "Rejected" && status2 == "Rejected" && status3 == "Rejected" && status4 == "Rejected" && status5 == "Rejected") {
+		    		if(status1.equals("Rejected") && status2.equals("Rejected") && status3.equals("Rejected") && status4.equals("Rejected") && status5.equals("Rejected")) {
 		    			status = "Rejected";
+		    			updateOrNot = "true";
 		    		}
 		    	}
 		    	else {
@@ -858,20 +920,39 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		        
 		    }
 		    
-		    //now update the status in the main invoice queue
-			String updateStatusQuery = "Update invoice set invoiceStatus = '"+ status +"' where invoiceID = " + invoiceID;
+		    if(updateOrNot.equals("true")) {
+		    	//now update the status in the main invoice queue
+				String updateStatusQuery = "Update Invoice set invoiceStatus = '"+ status +"' where invoiceID = " + invoiceID;
+				
+				//EntityManager em;
+				
+				//Begin transaction
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				Transaction tx = session.beginTransaction();
+				
+				String hql = updateStatusQuery;
+				Query query1 = session.createQuery(hql);
+				query1.setCacheable(false);
+				int results = query1.executeUpdate();
+				tx.commit();
+				
+				
+				
+				
+				/*System.out.println("Query for approval update is- " + updateStatusQuery);
 			
-			System.out.println("Query is- " + updateStatusQuery);
-		
-			Connection conn2 = DriverManager.getConnection(myUrl, dbuser, password);
-			Statement st2 = conn2.createStatement();
-			
-			// execute the query, and get a java resultset
-		    Boolean rss = st2.execute(updateStatusQuery);
-		    
-		    if(rss) {
-		    	System.out.println("Query executed successfully");
+				Connection conn2 = DriverManager.getConnection(myUrl, dbuser, password);
+				Statement st2 = conn2.createStatement();
+				
+				// execute the query, and get a java resultset
+			    Boolean rss = st2.execute(updateStatusQuery); */
+			    
+			    if(results == 1) {
+			    	System.out.println("Query executed successfully");
+			    }
 		    }
+		    
+		    
 		    
 		    
 		}

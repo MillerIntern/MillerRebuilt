@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class GetInvAttStatus extends HttpServlet {
 			String status = parameters.get("invStatus");
 			String invId = parameters.get("invId");
 			String mcsPE = parameters.get("mcsPE");
+			String host = parameters.get("host");
 			
 			//String path = "D:\\uploads\\";
 			
@@ -205,19 +207,33 @@ public class GetInvAttStatus extends HttpServlet {
 		          if (buf != null)
 		          buf.close( );
 		     }*/
-			
+			String host = parameters.get("host");
 			final PrintWriter writer = response.getWriter();
+			System.out.println("Host address is" + host);
+			
+			//String temppath = getServletContext().getResource("").toString();
+			//String temppath = getServletContext().getRealPath("");
+			
+			//System.out.println("Upload base path is- " + temppath);
+			
+			
+			
 			
 			// constructs the directory path to store upload file
 			String uploadPath = getServletContext().getRealPath("")
 					+ File.separator + UPLOAD_DIRECTORY;
 			//String uploadPath = getServletContext().getRealPath("");
 					
-			System.out.println(uploadPath);
+			System.out.println("Upload path is " + uploadPath);
+			
+			String pathForServer = uploadPath.substring(10);
+			System.out.println("Path for server is -" + pathForServer);
 			
 			String fileName = (String) request.getParameter("mcsPE");
 			fileName = fileName + ".pdf";
-			String pdfDir = "D:\\uploads\\";
+			//String pdfDir = "D:\\uploads\\";
+			Configuration configuration= new Configuration().configure("hibernate.cfg.xml");
+			String pdfDir = configuration.getProperty("hibernate.invoice.location");
 			File pdf = new File(pdfDir + "/" + fileName);
 			
 			final String dir = System.getProperty("user.dir");
