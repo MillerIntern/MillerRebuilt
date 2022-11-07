@@ -10736,9 +10736,11 @@ function saveProject_CHANGE_ORDER()
 	
 	var cost = $('#changeOrder').find("#cost").val();
 	if(cost) {cost = cleanNumericValueForSaving($('#changeOrder').find("#cost")[0].value); cost = parseFloat(cost);}
+	if(cost < 0) {alert("Cost cannot be negative value");}
 	
 	var sell = $('#changeOrder').find("#sell").val();
 	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
+	if(sell < 0) {alert("Sell cannot be negative value");}
 	
 	var mcsInvoiceStatus = $('#changeOrder').find("#mcsInvoiceStatus").val();
 	var subInvoiceStatus = $('#changeOrder').find("#subInvoiceStatus").val();
@@ -14549,7 +14551,7 @@ function submitInv() {
 		
 		//checks if submit/reject date should be added
 		submitRejectDateCheck();	
-		alert("Are you sure you want to add the inovoice of amount- $"+invoiceAmount);
+		alert("Are you sure you want to add the inovoice of amount $"+invoiceAmount);
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14577,7 +14579,7 @@ function submitInv() {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
 				if (response === 'INVOICE_ADDED') {
-					alert('Invoice Added Successfully');
+					//alert('Invoice Added Successfully');
 					
 					//add the information in the approvals part too
 					$.ajax({
@@ -14591,7 +14593,7 @@ function submitInv() {
 						}, complete: function (serverResponse) {
 							console.log(serverResponse);
 							let response = $.trim(serverResponse.responseText);
-							if (response === 'INVOICE_ADDED') {
+							if (response === 'APPROVALS_ADDED') {
 								alert('Approvals Added Successfully');
 								
 								//Makes the user return to the invoice screen 

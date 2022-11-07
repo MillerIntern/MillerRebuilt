@@ -175,11 +175,14 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 				Statement st = conn.createStatement();
 				
 				// execute the query, and get a java resultset
-			    Boolean rs = st.execute(query);
-			    
-			    if (rs)
+			    int rs = st.executeUpdate(query);
+			    //System.out.println("Query result is- " + rs);
+			    if (rs > 0)
 			    {
 			    	System.out.println("Approvals created");
+			    	
+			    	out = response.getWriter();
+					out.println("APPROVALS_ADDED");
 			        
 			    }
 			}
