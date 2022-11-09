@@ -9111,8 +9111,16 @@ let ready = false;
 
 let projects;
 
+// Removed the "Type" option from the dropdown
+//let parameterFields = ["Warehouse", "Project", "Item",
+ //                     "Manager", "Supervisor", "Type", "Status"];
+ 
+ //For future "All Projects" option                    
+//let parameterFields = ["Warehouse", "Project", "Item",
+//                      "Manager", "Supervisor", "Status", "All Projects"];
+
 let parameterFields = ["Warehouse", "Project", "Item",
-                       "Manager", "Supervisor", "Type", "Status"];
+                       "Manager", "Supervisor", "Status"];
 
 let paramNum = 2;
 
@@ -9124,6 +9132,9 @@ let supervisorOptions;
 let typeOptions;
 let statusOptions;
 let stageOptions;
+
+//For future "All Projects" option
+//let allProjectsOptions;
 
 
 let taskFinder;
@@ -9168,10 +9179,34 @@ $(document).on('click', '.commonStage', function(){
 
 
 //RITVIK - Types of Interest Logic
+//Type selection - ALL
+
+$(document).on('click', '#AllTypes', function(){
+	if(document.getElementById("AllTypes").checked == true){
+		$('.commonType').each(function(i, obj) {
+			obj.checked = true;
+		});
+		document.getElementById("NoTypes").checked = false;
+	}
+	updateFrontEnd();
+});
+
+
+//Type selection - NONE
+
+$(document).on('click', '#NoTypes', function(){
+	if(document.getElementById("NoTypes").checked == true){
+		$('.commonType').each(function(i, obj) {
+			obj.checked = false;
+		});
+		document.getElementById("AllTypes").checked = false;
+	}
+	updateFrontEnd();
+});
 //Keeps track of type selections
 $(document).on('click', '.commonType', function(){
-	//if(this.checked == false) document.getElementById('AllStages').checked = false;
-    //document.getElementById('NoStages').checked = false;
+	if(this.checked == false) document.getElementById('AllTypes').checked = false;
+    document.getElementById('NoTypes').checked = false;
     updateFrontEnd();
 });
 
@@ -9468,8 +9503,8 @@ function updateDisplayableProjects(){
 		for(var q = 0; q < stagesOfInterest.length; q++)
 		{
 			if(stagesOfInterest[q].value == RETRIEVED_PROJECTS[i].stage.id)
-			{
-				if(typesOfInterest.length == 0 || typesOfInterestMatch(typesOfInterest, RETRIEVED_PROJECTS[i].projectType.id) == true){
+			{//typesOfInterest.length == 0 ||
+				if(typesOfInterestMatch(typesOfInterest, RETRIEVED_PROJECTS[i].projectType.id) == true){
 					DISPLAYABLE_PROJECTS.push(RETRIEVED_PROJECTS[i]);
 					break;	
 				}
@@ -9497,6 +9532,7 @@ function typesOfInterestMatch(typesOfInterest, projectTypeId){
  * INNER FUNCTION CALLS: clearAndAddSingleRow(), fillDropdowns_FIND_PROJECT(), checkInitFilter()
  */
 function getSearchCriteria(_stopServerCalls) {
+	
 	
 	clearAndAddSingleRow("Retrieving Search Criteria...");
 	
@@ -9721,6 +9757,16 @@ function fillDropdowns_FIND_PROJECT(data) {
 	supervisorOptions = generateDropdowns_FIND_PROJECTS(data['person'], parameterFields[4]);
 	typeOptions = generateDropdowns_FIND_PROJECTS(data['type'], parameterFields[5]);
 	statusOptions = generateDropdowns_FIND_PROJECTS(data['status'], parameterFields[6]);
+	
+	//For future "All Projects" option
+/*	let d1 = document.createDocumentFragment();
+	let option1 = document.createElement('option');
+	option1.innerHTML = "All";
+	option1.setAttribute('value', "all");
+	d1.appendChild(option1);
+	
+	allProjectsOptions = d1; */
+	
 	console.log(parameterFields[6]);
 }
 
@@ -9850,6 +9896,11 @@ function setVals (param) {
 		modParam.empty();
 		modParam.append(stageOptions.cloneNode(true));
 		break;
+//For future "All Projects" option
+/*	case 'All Projects':
+		modParam.empty();
+		modParam.append(allProjectsOptions.cloneNode(true));
+		break; */
 	}
 }
 
@@ -9960,13 +10011,12 @@ function filterProjects (filter) {
 	let outputs = new Array();	
 	let parameters = $('.paramHolder').children('select');
 	
-	
 	let remaining = json.length;
 
 	if(paramNum != 0){
 	for (var i = 0; i < (paramNum * 2); i+= 2) {
 		let id = $(parameters[i]).val();
-		let val = $(parameters[i + 1]).val();
+		let val = $(parameters[i + 1]).val();		
 		if((id == undefined || id == "default") || (val == undefined || val == "default"))
 		{
 			break;
@@ -10006,7 +10056,7 @@ function filterProjects (filter) {
 					json[j] = null;
 					remaining = remaining - 1;
 				}
-			} else if (id === 'Status') {
+			} else if (id === 'Status') {				
 				if(json[j] != null && json[j].status.id != val) {
 					json[j] = null;
 					remaining = remaining - 1;
@@ -10018,8 +10068,12 @@ function filterProjects (filter) {
 					remaining = remaining - 1;
 				}
 			}
+			else if(id === 'All Projects'){
+				
+			}
 		}	
 		
+		//alert(filter);
 		if(filter == "mcsNumber")
 		{
 			json.sort(function(a,b){
@@ -11627,7 +11681,7 @@ function toggleTaskAssignee() {
  * INNER FUNCTION CALLS: none
  * @returns
  */
-function goToFindProject() {
+function goToFindProject() {	
 	$('#editTask').prop('disabled', true);
 	$('#editEquipment').prop('disabled', true);
 	$('#editChangeOrder').prop('disabled', true);
@@ -13605,6 +13659,7 @@ function fillPeInvsTable(data) {
 		else if($('#peInvoiceSelector2').val() == "complete" && changeOrders[i].status != "5") continue;
 		else if($('#peInvoiceSelector2').val() == "review" && changeOrders[i].status != "6") continue;
 		
+	
 		var tableRow = document.createElement('tr');
 		tableRow.setAttribute("value", changeOrder.id);
 		
@@ -13721,8 +13776,9 @@ function fillPeInvsTable(data) {
 		
 		
 		//if the PE is not MCS (non-billable) or MCS(no-cost)
-		if(changeOrder.type != 8 && changeOrder.type != 7 && parseChangeOrderStatus(changeOrder.status) != "Rejected"){
-	
+		
+		//if(changeOrder.type != 8 && changeOrder.type != 7 && parseChangeOrderStatus(changeOrder.status) != "Rejected"){
+		if(changeOrder.type != 8 && (changeOrder.status == "5" || changeOrder.status == "3")){
 			tableRow.appendChild(amountInvoiced);
 			tableRow.appendChild(amountToInvoice);
 			tableRow.appendChild(invoicesPending);
@@ -14549,7 +14605,7 @@ function submitInv() {
 		
 		//checks if submit/reject date should be added
 		submitRejectDateCheck();	
-		alert("Are you sure you want to add the inovoice of amount- $"+invoiceAmount);
+		alert("Are you sure you want to add the inovoice of amount $"+invoiceAmount+ "?");
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 
@@ -14666,6 +14722,7 @@ function submitInv() {
 					$('#returnAccountsReceivable').show();
 					clearInvoiceTable();
 					getInvs(1);
+					
 				}
 			}
 		});
@@ -14785,7 +14842,7 @@ function submitInv1(){
 		
 		//checks if submit/reject date should be added
 		submitRejectDateCheck();
-		alert("Are you sure you want to add the inovoice of amount- $"+invoiceAmount);
+		alert("Are you sure you want to add the inovoice of amount $"+invoiceAmount+"?");
 		$.ajax({
 			type: 'POST',
 			url: 'Project', 

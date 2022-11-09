@@ -13,9 +13,9 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/miller_dev</property>
         <property name="hibernate.invoice.location">D:\\uploads\\</property> -->
         
-        <property name="hibernate.connection.password">constructionSQL3600</property>
-        <property name="hibernate.connection.username">millerAdmin</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/employee</property>
+        <property name="hibernate.connection.password">Miller8104</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/miller_dev</property>
         <property name="hibernate.invoice.location">\\\\192.168.0.252\\users2\\Saurabh\\Invoices\\</property>
         
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>

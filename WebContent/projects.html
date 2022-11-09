@@ -115,13 +115,15 @@
 				<br> 
 				<span id="type" class = "stageLabel"> Stage</span> &nbsp; : &nbsp;&nbsp;
 				
-				<input id="AllStages" class="pointer stage" type ="checkbox" value="all" ><span id="all" class = "stageLabel"> All</span>
-				<input id="NoStages" class="pointer stage" type = "checkbox" value="none"> <span id="none" class = "stageLabel">None</span> &nbsp;
+				<input id="AllStages" class="pointer stage" type ="checkbox" value="all" ><span id="all" class = "stageLabel">All</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;
+				<input id="NoStages" class="pointer stage" type = "checkbox" value="none"><span id="none" class = "stageLabel">None</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;
 				<input class = "pointer commonStage stage" type ="checkbox" value="8" checked = 'true'><span id="8" class = "stageLabel">Budgetary</span>&nbsp;
-				<input class = "pointer commonStage stage" type ="checkbox" value="1" checked = 'true'><span id="1" class = "stageLabel">Proposal</span>&nbsp;
-				<input class = "pointer commonStage stage" type ="checkbox" value="2" checked = 'true'><span id="2" class = "stageLabel">Active</span>&nbsp;
-				<input class ="pointer commonStage stage" type ="checkbox" value="4"><span id="4" class = "stageLabel">Closed</span> &nbsp;
-				<input class ="pointer commonStage stage" type ="checkbox" value="9"><span id="9" class = "stageLabel">On Hold</span> &nbsp;
+				<input class = "pointer commonStage stage" type ="checkbox" value="1" checked = 'true'><span id="1" class = "stageLabel">Proposal</span>&nbsp;&nbsp;
+				<input class = "pointer commonStage stage" type ="checkbox" value="2" checked = 'true'><span id="2" class = "stageLabel">Active</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class ="pointer commonStage stage" type ="checkbox" value="4"><span id="4" class = "stageLabel">Closed</span> &nbsp;&nbsp;&nbsp;&nbsp;
+				<input class ="pointer commonStage stage" type ="checkbox" value="9"><span id="9" class = "stageLabel">On Hold</span> &nbsp;&nbsp;&nbsp;&nbsp;
 				<input class ="pointer commonStage stage" type ="checkbox" value="15"><span id="15" class = "stageLabel">Canceled</span>
 				
 				
@@ -144,17 +146,29 @@
 				<!--  <button class = "btn-primary" onclick = "updateFrontEnd()">Reload Projects </button> -->
 				
 				<div id= "projectType">
-				<span id="type" class = "stageLabel"> Type</span> &nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;
+				<span id="type" class = "stageLabel">Type </span>&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;
 				
-				<input class = "pointer commonType projectType" type ="checkbox" value="4"><span id = "4" class = "stageLabel">Budgetary</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="1"><span id = "1" class = "stageLabel">Construction</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="3"><span id = "3" class = "stageLabel">Constr/Refrig</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="12"><span id = "12" class = "stageLabel">Facilities</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="8"><span id = "8" class = "stageLabel">HVAC</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="2"><span id = "2" class = "stageLabel">On Hold</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="6"><span id = "6" class = "stageLabel">Refrigeration</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="11"><span id = "11" class = "stageLabel">Refrigeration Repair</span>&nbsp;
-				<input class = "pointer commonType projectType" type ="checkbox" value="9"><span id = "9" class = "stageLabel">RX</span>
+				<input id="AllTypes" class="pointer projectType" type ="checkbox" value="all" checked = 'true'><span id="all" class = "stageLabel">All</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id="NoTypes" class="pointer projectType" type = "checkbox" value="none"><span id="none" class = "stageLabel">None</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<!-- <input class = "pointer commonType projectType" type ="checkbox" value="4" checked = 'true'><span id = "4" class = "stageLabel">BE</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+				<input class = "pointer commonType projectType" type ="checkbox" value="1" checked = 'true'><span id = "1" class = "stageLabel">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class = "pointer commonType projectType" type ="checkbox" value="3" checked = 'true'><span id = "3" class = "stageLabel">CR</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class = "pointer commonType projectType" type ="checkbox" value="12" checked = 'true'><span id = "12" class = "stageLabel">F</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class = "pointer commonType projectType" type ="checkbox" value="8" checked = 'true'><span id = "8" class = "stageLabel">HVAC</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;
+			<!--	<input class = "pointer commonType projectType" type ="checkbox" value="2" checked = 'true'><span id = "2" class = "stageLabel">OH</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+				<input class = "pointer commonType projectType" type ="checkbox" value="6" checked = 'true'><span id = "6" class = "stageLabel">R</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class = "pointer commonType projectType" type ="checkbox" value="11" checked = 'true'><span id = "11" class = "stageLabel">RR</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class = "pointer commonType projectType" type ="checkbox" value="9" checked = 'true'><span id = "9" class = "stageLabel">RX</span>
 				
 				</div>
 	   			
