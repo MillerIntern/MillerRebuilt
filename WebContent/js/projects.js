@@ -14633,8 +14633,9 @@ function submitInv() {
 				console.log(serverResponse);
 				let response = $.trim(serverResponse.responseText);
 				if (response === 'INVOICE_ADDED') {
-					alert('Invoice Added Successfully');
+					//alert('Invoice Added Successfully');
 					
+					//add the information in the approvals part too
 					//add the information in the approvals part too
 					$.ajax({
 						type: 'POST',
@@ -14647,8 +14648,8 @@ function submitInv() {
 						}, complete: function (serverResponse) {
 							console.log(serverResponse);
 							let response = $.trim(serverResponse.responseText);
-							if (response === 'INVOICE_ADDED') {
-								alert('Approvals Added Successfully');
+							if (response === 'APPROVALS_ADDED') {
+								alert('Invoice Added Successfully');
 								
 								//Makes the user return to the invoice screen 
 								document.getElementById('invoiceInformation').style.width = "100%";
@@ -14870,7 +14871,7 @@ function submitInv1(){
 				let response = $.trim(serverResponse.responseText);
 				//alert(response);
 				if (response === 'INVOICE_ADDED') {
-					alert('Invoice Added Successfully');
+					//alert('Invoice Added Successfully');
 					
 					$('#invoiceCreationZone1').hide();		
 					
@@ -14886,8 +14887,8 @@ function submitInv1(){
 						}, complete: function (serverResponse) {
 							console.log(serverResponse);
 							let response = $.trim(serverResponse.responseText);
-							if (response === 'INVOICE_ADDED') {
-								alert('Approvals Added Successfully');
+							if (response === 'APPROVALS_ADDED') {
+								alert('Invoice Added Successfully');
 								
 								//Makes the user return to the invoice screen 
 								document.getElementById('invoiceInformation').style.width = "100%";

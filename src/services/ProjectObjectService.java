@@ -1287,7 +1287,8 @@ public class ProjectObjectService
 	
 	public synchronized static String getProjectInvsAsJSON(long projectID) {
         Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
-		Session session = HibernateUtil.getSession();
+		//Session session = HibernateUtil.getSession();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();

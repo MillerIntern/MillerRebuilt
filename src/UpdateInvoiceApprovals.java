@@ -290,10 +290,11 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		        	
 		   			System.out.println("Query is- " + query);
 		   			
-		   			Boolean x = st.execute(query);
+		   			int x = st.executeUpdate(query);
 		   			
-		   			if(x) {
-		   				System.out.println("Approvals Updated successfully"); 
+		   			if(x>0) {
+		   				out = response.getWriter();
+		   				out.println("UPDATED_APPROVALS");
 		   			} 
 		   			
 		   			//now update the status of invoice based on the status of individual approvals
@@ -715,7 +716,7 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			JSONArray json = new JSONArray(users);
 			
 			System.out.println(json.length());
-			
+			Boolean result = false;
 			for(int i=0; i<json.length(); i++) {
 				JSONObject obj = json.getJSONObject(i);
 				
@@ -732,7 +733,10 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 				    Boolean rs = st.execute(query);		   
 				    
 				    if(!rs) {
-				    	
+				    	result = true;
+				    }
+				    else {
+				    	result = false;
 				    }
 				}
 				catch (Exception e) {
@@ -740,6 +744,10 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 				}
 				
 			}
+		
+			out = response.getWriter();
+			out.println(result.toString());
+			
 		}
 		
 	}
