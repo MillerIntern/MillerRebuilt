@@ -484,6 +484,10 @@ function fillInvsTable() {
 		
 		//alert(invListing.id);
 		
+		//createa dummy element for saving project id
+		let projectID = document.createElement("INPUT");
+		projectID.id = "projectID_" + invListing.value;
+		projectID.setAttribute("type", "hidden");
 		let projectDetails = document.createElement('td'); 
 		projectDetails.width = "10%";
 		
@@ -541,7 +545,7 @@ function fillInvsTable() {
 					projItem = projItem.substring(0,14);
 					projItem = projItem + "...";
 				} 
-				
+				projectID.value = RETRIEVED_PROJECTS[j].id;
 				projectDetails.id = "project_" + invListing.value;
 				
 				//truncate and show full item on hover part
@@ -579,6 +583,7 @@ function fillInvsTable() {
 				projectDetails.appendChild(projItemHover);
 				
 				//projectDetails.className = "tooltip";
+				projectLocation.id = "project_location_" + invListing.value;
 				projectLocation.innerHTML = RETRIEVED_PROJECTS[j].warehouse.city.name + " " + RETRIEVED_PROJECTS[j].warehouse.warehouseID ;
 				
 				//alert(RETRIEVED_PROJECTS[i].warehouse.city.name);
@@ -825,7 +830,7 @@ function fillInvsTable() {
 				//alert("inside");
 				selectStatus.value = invs[i].invoiceStatus;
 			}
-			//now in this case, when the top status is review, then show the individual users status based on checkbos
+			//now in this case, when the top status is review, then show the individual users status based on checkbox
 			else{
 				
 				if( invs[i].invoiceStatus == "Requested" || invs[i].invoiceStatus == "Completed" || invs[i].invoiceStatus == "Rejected" 
@@ -1066,7 +1071,7 @@ function fillInvsTable() {
 			id = id.split('_').pop();
 			editId = "edit_notes_" + id;
 			
-			// set the selected value of the notes modal box
+			//set the selected value of the notes modal box
 			//var selectedValue = document.getElementbyId = "edit_notes_" + id;
 					
 			document.getElementById(editId).style.display = "none";
@@ -1631,9 +1636,10 @@ function fillInvsTable() {
 		//invListing.appendChild(approvals);
 		invListing.appendChild(notes);
 		//invListing.appendChild(invoiceSubmitBtn);
+		invListing.appendChild(projectID);
 		
 		
-		if(invs[i].invoiceStatus == 'Approved'){
+		if(invs[i].invoiceStatus == 'Submitted'){
 			invListing.appendChild(emailSendBtn);	
 		}
 		else{
@@ -1670,7 +1676,13 @@ function sendEmail(id){
 	
 	var emailLink = "mailto:";
 	
+	let projectID = document.getElementById("projectID_" + id).value;
 	let mcsPE = document.getElementById("mcs_pe_" + id).innerHTML;
+	
+	mcsPE = mcsPE.split("-")[1];
+	
+	//alert(mcsPE);
+	
 	
 	for(var i = 0; i<customerEmails.length; i++){
 		//alert(i);
@@ -1697,16 +1709,59 @@ function sendEmail(id){
 			}	
 		}		
 	}
-	emailLink += "?subject=" + encodeURIComponent("This is my subject")
-     	+ "&body=" + "This is email";
-    emailLink += "&attachment=";
-    //alert(mcsPE);
-    let fileLoc = location.host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
-	emailLink += fileLoc;     	
-	console.log("Email link is- " + emailLink);
 	
-	//window.location.href = link;
-	window.location.href = emailLink;
+	//create the subject fot the email
+	let location = document.getElementById("project_location_" + id).innerHTML;
+	let project_name = document.getElementById("hover_project_" + id).innerHTML;
+	
+	let subject = location + " - " + project_name + " - Invoice"; 
+	
+	//create the email body
+	let PEtitle = document.getElementById("") 
+	
+	//fetching the changeorder title for PE title
+	
+    $.ajax({
+        type: "POST",
+        url: "Emails",
+        data: {
+			action : "getChangeOrderTitle",
+			projectID : projectID,
+			mcsPE : mcsPE,
+		},
+        timeout: 600000,
+        success: function (data) {
+			
+			console.log(data);
+			data = JSON.parse(data);
+			
+			let body = "Please find the attached invoice for " + data.title + ".%0D%0A%0D%0AThank you.";
+			
+			emailLink += "?subject=" + encodeURIComponent(subject)
+		     	+ "&body=" + body;
+		    emailLink += "&attachment=";
+		    //alert(mcsPE);
+		    let fileLoc = location.host + "/MillerRebuilt/upload/" + mcsPE + ".pdf";
+			//emailLink += fileLoc;     	
+			console.log("Email link is- " + emailLink);
+			
+			//window.location.href = link;
+			window.location.href = emailLink;
+            return true;
+
+        },
+        error: function (e) {
+
+            $("#result").text(e.responseText);
+            console.log("ERROR : ", e);
+            
+        }
+    });
+
+		
+	
+
+	
 }
 
 //function to display approvals on mouse over on invoice icon
