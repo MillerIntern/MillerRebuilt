@@ -10789,10 +10789,15 @@ function saveProject_CHANGE_ORDER()
 	var title = $('#changeOrder').find('#title').val();
 	
 	var cost = $('#changeOrder').find("#cost").val();
-	if(cost) {cost = cleanNumericValueForSaving($('#changeOrder').find("#cost")[0].value); cost = parseFloat(cost);}
+	if(cost) 
+	{
+		cost = cleanNumericValueForSaving($('#changeOrder').find("#cost")[0].value); cost = parseFloat(cost);
+	}
+	if(cost<1){ alert("Value of cost can't be less than 1. Please enter new value."); return; }
 	
 	var sell = $('#changeOrder').find("#sell").val();
 	if(sell) {sell = cleanNumericValueForSaving($('#changeOrder').find("#sell")[0].value); sell = parseFloat(sell);}
+	if(sell<1) { alert("Value of sell can't be less than 1. Please enter new value."); return;}
 	
 	var mcsInvoiceStatus = $('#changeOrder').find("#mcsInvoiceStatus").val();
 	var subInvoiceStatus = $('#changeOrder').find("#subInvoiceStatus").val();
@@ -14544,6 +14549,9 @@ function submitInv() {
 	//Removes a $ prior to saving to prevent a display error
 	invoiceAmount = invoiceAmount.replace('$', '');
 	invoiceAmount = invoiceAmount.replace('%', '');
+	invoiceAmount = invoiceAmount.replace(',', '');
+	
+	alert(invoiceAmount);
 	
 	//user picks to invoice %
 	
