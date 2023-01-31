@@ -1303,7 +1303,9 @@ public class ProjectObjectService
 			
 			Criteria criteria = session.createCriteria(c);
 			
-			criteria.addOrder(Order.desc("submittedDate"));
+			// changing the order from date to id
+			//criteria.addOrder(Order.desc("submittedDate"));
+			criteria.addOrder(Order.asc("id"));
 
 			if(projectID != -1) {
 				

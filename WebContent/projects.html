@@ -2419,12 +2419,12 @@
 		            
 		            <tr id = "invoicePercentHide1">
 		               <td><label for='invoicePercent1'>Invoice Percent:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoicePercent1' onkeyup='populateInvoiceAmt1(this.value)'/>
+		               <td><input type='text' id='invoicePercent1' onkeyup='populateInvoiceAmt1(this.value)' onkeypress="return /[0-9]/i.test(event.key)"/>
 		            </tr>
 		            
 		            <tr id = 'invoiceAmountHide1'>
 		               <td><label for='invoiceAmount1'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceAmount1'/>
+		               <td><input type='text' id='invoiceAmount1' onkeypress="return /[0-9, .]/i.test(event.key)"/>
 		            </tr>
 		            
 		            
@@ -2654,12 +2654,12 @@
             		
             		<tr id = "invoicePercentHide">
 		               <td><label for='invoicePercent'>Invoice Percent:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoicePercent' onkeyup='populateInvoiceAmt(this.value)'/>
+		               <td><input type='text' id='invoicePercent' onkeyup='populateInvoiceAmt(this.value)' onkeypress="return /[0-9]/i.test(event.key)"/>
 		            </tr>
 		            
 		            <tr id = "invoiceAmountHide">
 		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
-		               <td><input type='text' id='invoiceAmount'/>
+		               <td><input type='text' id='invoiceAmount' onkeypress="return /[0-9, .]/i.test(event.key)" />
 		            </tr>
 		            
 		            
@@ -2676,7 +2676,7 @@
 		                  </select>
 		               </td>
 		            </tr>
-		            
+		          
 		            
 		            <tr id = hide1>
 		            <td><label for='associatedPE'>Associated PE #<span style="color:#FF0000">*</span></label>

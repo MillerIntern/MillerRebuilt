@@ -237,10 +237,64 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			
 			
 			if(userpermission.equals("basic")) {
+				int approval_id = Integer.parseInt(parameters.get("id"));
+				int projID = Integer.parseInt(parameters.get("project"));
+				int invoiceID = Integer.parseInt(parameters.get("invoiceID"));
+				int invUploaded = Integer.parseInt(parameters.get("invAvailable"));		
+				System.out.println("Invoice pdf availability " + invUploaded);
 				
+				Date now = new Date();
+				
+				String pattern = "yyyy-MM-dd HH:mm:ss";
+				SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+				
+				String mysqlDateString = formatter.format(now);
+				System.out.println("Java's Default Date Format: " + now);
+		        System.out.println("Mysql's Default Date Format: " + mysqlDateString);
+		        
+		        try {
+		        	Class.forName(myDriver);
+		        	Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+		        	Statement st = conn.createStatement();
+		        	
+		        	
+		        	String username = (String)session.getAttribute("user");
+		   				 
+		        	//String query = "Select * from invoiceapproval where invoice_id = " +invoiceID;
+		   			
+		        	String query = "";
+		   			
+		        	// make the invoice available field to 1 if
+		        	if(invUploaded == 1) {
+		        		query = "Update invoiceapproval set invavailable = " + invUploaded + " "
+			        			+  " where approval_id = "+ approval_id;
+		        		
+		        	}
+		        	
+		        	else {
+		        		query = "Update invoiceapproval set invavailable = " + invUploaded + " "
+			        			+  " where approval_id = "+ approval_id;
+		        	}
+		        	
+		   			System.out.println("Query is- " + query);
+		   			
+		   			int x = st.executeUpdate(query);
+		   			
+		   			if(x>0) {
+		   				out = response.getWriter();
+		   				out.println("UPDATED_APPROVALS");
+		   			} 
+		   			
+		   			//now update the status of invoice based on the status of individual approvals
+		   			updateInvoiceStatus(fetcnNoOfApprovals(),invoiceID);
+		        }
+		        catch(Exception e) {
+		        	e.printStackTrace();
+		        }
 			}
 			
 			else {
+				int approval_id = Integer.parseInt(parameters.get("id"));
 				int projID = Integer.parseInt(parameters.get("project"));
 				int invoiceID = Integer.parseInt(parameters.get("invoiceID"));
 				
@@ -276,7 +330,7 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 		        	String query = "Update invoiceapproval set user_" + userApprovalIndex + " = '" + username
 		        			+ "', status_" + userApprovalIndex + " = '" + approvalStatus + "'"
 		        			+ ", date_" + userApprovalIndex + " = '" + mysqlDateString + "'" 
-		        			+  " where invoice_id = "+ invoiceID;
+		        			+  " where approval_id = "+ approval_id;
 		   			
 		        	// make the invoice available field to 1 if
 		        	if(invUploaded == 1) {
@@ -284,7 +338,7 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			        			+ "', status_" + userApprovalIndex + " = '" + approvalStatus + "'"
 			        			+ ", date_" + userApprovalIndex + " = '" + mysqlDateString + "'" 
 			        			+ ", invavailable = " + invUploaded + " "
-			        			+  " where invoice_id = "+ invoiceID;;
+			        			+  " where approval_id = "+ approval_id;
 		        		
 		        	}
 		        	

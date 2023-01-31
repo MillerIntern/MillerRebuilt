@@ -100,6 +100,7 @@ function getInvs(stopServerCalls) {
 		alert("user type is " + userType);
 		continue;
 	} */
+	//alert('get invoices called');
 	
 	$.ajax({
 		type: 'POST',
@@ -1899,7 +1900,7 @@ function uploadInvoice(id) {
             //$("#result").text(data);
             console.log("SUCCESS : ", data);
             //$("#btnSubmit").prop("disabled", false);
-            alert("Invoice uploaded successfully");
+            //alert("Invoice uploaded successfully");
             submitInvBtn(id, 1);
             return true;
 
@@ -2611,6 +2612,8 @@ function submitInvBtn(id, invAvailable) {
 	//alert("Invoice pdf uploaded or not? " +  invAvailable);
 	//alert("btnId");
 	
+	//alert(id);
+	
 	let invId = id.split('_').pop();
 	let Id = invId;
 	//alert(invId);
@@ -2716,7 +2719,7 @@ function submitInvBtn(id, invAvailable) {
 		invoiceStatusToSubmit = invoiceStatus.value;
 	}
 	
-	alert(invoiceStatusToSubmit);
+	//alert(invoiceStatusToSubmit);
 	
 	//now handling the variables for the approvals part
 	let approvalStatus = document.getElementById("invoiceStatus_Inv_" + id).value;
@@ -2765,6 +2768,7 @@ function submitInvBtn(id, invAvailable) {
 						data: {
 							
 							'action': 'updateInvoiceApprovals',
+							'id': id,
 							'project': projectID,
 							'currInvoice':INVOICES_STORED,
 							'invoiceID': invoiceID,
@@ -2784,7 +2788,8 @@ function submitInvBtn(id, invAvailable) {
 								$('#invoiceCreationZone').hide();
 								$('#invoiceDisplay').show();
 								clearInvoiceTable();
-								getInvs(1);
+								//getInvs(1);
+								fetchApprovalsAll();
 							}
 						}
 					});
@@ -2797,7 +2802,8 @@ function submitInvBtn(id, invAvailable) {
 						$('#invoiceCreationZone').hide();
 						$('#invoiceDisplay').show();
 						clearInvoiceTable();
-						getInvs(1);
+						//getInvs(1);
+						fetchApprovalsAll();
 					}
 					
 				
