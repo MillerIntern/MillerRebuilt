@@ -118,7 +118,7 @@
 					<option value='rejected'>Rejected</option>
 			 </select>
 			 
-			 <div style = "display:inline;">&nbsp&nbsp Invoice Reviewers</div>
+			<!--  <div style = "display:inline;">&nbsp&nbsp Invoice Reviewers</div> -->
 			 
 			 <div style = "display:inline;">&nbsp&nbsp</div>
 			 <div id = "usersSelection" style = "display:inline;">
@@ -371,6 +371,8 @@
 		</div>
 		
 	<!--  NOTES MODAL BOX -->
+	
+	
 	<DIV id='PopUp' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
 	<SPAN id='PopUpText'>TEXT</SPAN>
 	</DIV>
@@ -396,14 +398,83 @@
 		<SPAN id='editNotesText' >
 			TEXT</SPAN>
 	</DIV>
-
-
+	
 	<!-- model box for notes addition  -->
 	<!-- The Modal -->
-<div id="notesModal" class="modal-notes">
+	<div id="notesModal" class="modalAG">
+		<div class="Modal" id="modal-attachAG">
+			<a class=closeAGNotes>&times;</a>
+			<div class="Modal-heading">Notes</div>
+			<input type="checkbox" id="incorrectAmount" name="incorrectAmount">
+ 			<label style = "font-weight: 500" for="incorrectAmount"> Incorrect Amount</label><br>
+ 			<input type="checkbox" id="incorrectCustomer" name="incorrectCustomer">
+ 			<label style = "font-weight: 500" for="incorrectCustomer"> Incorrect Customer</label><br>
+ 			<input type="checkbox" id="customerRejected" name="customerRejected">
+ 			<label style = "font-weight: 500" for="customerRejected"> Customer Rejected</label><br>
+ 			<input type="checkbox" id="incompleteWork" name="incompleteWork">
+ 			<label style = "font-weight: 500" for="incompleteWork"> Incomplete Work</label><br>
+			<textarea rows="2" cols="40" id="invoiceNotes" maxlength="1000" placeholder="Please describe"></textarea>
+			<div class="u-margin-top--x-large">
+				<input type="checkbox" id="invoiceNoteId" style="display:none">
+				<button class="Button Button--outline u-float--right"
+					id="saveInvoiceNotes">Save Notes</button>
+				<button class="Button Button--outline u-float--right"
+					id="closeInvoiceModal">Cancel</button>
 
-</div>
-	
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+<div id="myModalAG" class="modalAG">
+
+<!--
+ https://codepen.io/paddyduke/pen/NRvVwR
+ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal 
+-->
+  <div class="Modal" id="modal-attach">
+    <a class="closeAG">&times;</a>
+    <div class="Modal-heading">
+      Attach File
+    </div>
+    <p>
+      Choose a file to attach.
+    </p>
+    <ul class="FileList">
+      <li>
+        <label for="file--01">          
+          <i class="Icon Icon--small Icon--file"></i>
+          <span id='invoiceFileName' class="File-name has-Icon">
+            invoice-file-name.pdf
+          </span>
+        </label>
+       <!--  <a id='previewInvoice' class="u-margin-left--small">Preview</a> -->
+      </li>
+    </ul>
+    <div class="u-margin-top--x-large">
+      
+      <button class="Button Button--outline u-float--right" id="uploadInvoiceFile">
+        Upload a new file
+      </button>
+        <button class="Button Button--outline u-float--right" id="previewInvoice">
+        Preview existing file
+      </button>
+      
+    </div>
+  </div>
+
+
+  <!-- Modal content
+  <div class="modal-content-ag">
+    <span class="closeAG">&times;</span>
+    <p>File Name Here</p>
+    <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+    <input type="file" name="filepdf" id = "filepdf" accept = ".pdf"/><br/><br/>
+    <input type="submit" value="Upload" id="btnSubmit"/>
+    <input type="button" value="Remove" id="btnSubmit"/>
+</form>
+    
+  </div> -->
+</div>	
 	
 <form method="post" action="fileuploadservlet" enctype="multipart/form-data" id = "fileForm" style= "display:none;">
     <input type="file" name="file" id = "file" accept = ".pdf"/>
@@ -418,6 +489,11 @@
 </form>
 
 <input id='username' type='hidden' value='${sessionScope.user}'/> 
+
+
+
+
+
 
 </body>
 </html>

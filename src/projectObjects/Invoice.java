@@ -6,6 +6,8 @@
 package projectObjects;
 
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -18,11 +20,16 @@ public class Invoice extends ProjectObject {
 	private String invoiceType;
 	private Date submittedDate;
 	private Date submitRejectDate;
+	private Date completedDate;
 	private double invoiceAmount;
 	private String invoiceCustomer;
 	private String invoiceStatus;
 	private String invoiceApproval;
 	private String notes;
+
+	
+	
+	
 	private String invoice_id;
 	
 	private String peInvNum;
@@ -30,8 +37,9 @@ public class Invoice extends ProjectObject {
 	private String approval1;
 	private String approval2;
 	private String approval3;
+	private String invoiceFileName;
 
-	
+
 	private double laborInvoiced;
 	private double laborToInvoice;
 	private double laborPercentInvoiced;
@@ -49,15 +57,24 @@ public class Invoice extends ProjectObject {
 	private double aiaPercentInvoiced;
 	
 	
-	public Invoice(String invoiceID, String associatedPE, String invoiceTitle, String invoiceNumber, String invoiceType, Date submittedDate, double invoiceAmount,
-			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, String invoice_id, Date submitRejectDate, String approval1, String approval2,
-			String approval3, String peInvNum,
+	
+	//Adding these as part of the notes feature
+	private boolean incorrectAmount;
+	private boolean incorrectCustomer;
+	private boolean customerRejected;
+	private boolean incompleteWork;
+	
+	public Invoice(String invoiceID, String associatedPE, String invoiceTitle, String invoiceNumber, String invoiceType, Date submittedDate, Date completedDate, double invoiceAmount,
+			String invoiceCustomer, String invoiceStatus, String invoiceApproval, String notes, boolean incorrectAmount, boolean incorrectCustomer, boolean customerRejected, boolean incompleteWork,String invoice_id, 
+			Date submitRejectDate, String approval1, String approval2,
+			String approval3, String peInvNum, String invoiceFileName,
 			double laborInvoiced, double laborToInvoice, double laborPercentInvoiced, 
 			double materialInvoiced, double materialToInvoice, double materialPercentInvoiced,
 			double projectInvoiced, double projectToInvoice, double projectPercentInvoiced,
 			double aiaInvoiced, double aiaToInvoice, double aiaPercentInvoiced) {
 		
 	
+
 		//super();
 		this.invoiceID = invoiceID;
 		this.associatedPE = associatedPE;
@@ -65,6 +82,7 @@ public class Invoice extends ProjectObject {
 		this.invoiceNumber = invoiceNumber;
 		this.invoiceType = invoiceType;
 		this.submittedDate = submittedDate;
+		this.completedDate = completedDate;
 		this.submitRejectDate = submitRejectDate;
 		this.invoiceAmount = invoiceAmount;
 		this.invoiceCustomer = invoiceCustomer;
@@ -74,6 +92,7 @@ public class Invoice extends ProjectObject {
 		this.invoice_id = invoice_id;
 		
 		this.peInvNum = peInvNum; 
+		this.invoiceFileName = invoiceFileName;
 		
 		this.approval1 = approval1;
 		this.approval2 = approval2;
@@ -95,6 +114,10 @@ public class Invoice extends ProjectObject {
 		this.aiaToInvoice = aiaToInvoice;
 		this.aiaPercentInvoiced = aiaPercentInvoiced;
 	
+		this.incorrectAmount = incorrectAmount;
+		this.incorrectCustomer = incorrectCustomer;
+		this.customerRejected = customerRejected;
+		this.incompleteWork = incompleteWork;
 		
 	}
 	
@@ -106,6 +129,7 @@ public class Invoice extends ProjectObject {
 		this.invoiceNumber = null;
 		this.invoiceType = null;
 		this.submittedDate = null;
+		this.completedDate = null;
 		this.submitRejectDate = null;
 		this.invoiceAmount = 0;
 		this.invoiceCustomer = null;
@@ -119,6 +143,7 @@ public class Invoice extends ProjectObject {
 		this.approval1 = null;
 		this.approval2 = null;
 		this.approval3 = null;
+		this.invoiceFileName = null;
 		
 		this.laborInvoiced = 0;
 		this.laborToInvoice = 0;
@@ -136,6 +161,19 @@ public class Invoice extends ProjectObject {
 		this.aiaToInvoice = 0;
 		this.aiaPercentInvoiced = 0;
 		
+		this.incorrectAmount = false;
+		this.incorrectCustomer = false;
+		this.customerRejected = false;
+		this.incompleteWork = false;
+		
+	}
+	
+	public String getInvoiceFileName() {
+		return invoiceFileName;
+	}
+
+	public void setInvoiceFileName(String invoiceFileName) {
+		this.invoiceFileName = invoiceFileName;
 	}
 	
 	public String getPeInvNum() {
@@ -209,6 +247,16 @@ public class Invoice extends ProjectObject {
 	public void setSubmittedDate(Date submittedDate) {
 		this.submittedDate = submittedDate;
 	}
+	
+	
+	public Date getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(Date completedDate) {
+		this.completedDate = completedDate;
+	}
+	
 
 	public double getInvoiceAmount() {
 		return invoiceAmount;
@@ -242,6 +290,7 @@ public class Invoice extends ProjectObject {
 		this.invoiceApproval = invoiceApproval;
 	}
 
+	@Column(length = 1000)
 	public String getNotes() {
 		return notes;
 	}
@@ -369,6 +418,39 @@ public class Invoice extends ProjectObject {
 
 	public void setApproval3(String approval3) {
 		this.approval3 = approval3;
+	}
+	
+	
+	public boolean getIncorrectAmount() {
+		return incorrectAmount;
+	}
+
+	public void setIncorrectAmount(boolean incorrectAmount) {
+		this.incorrectAmount = incorrectAmount;
+	}
+
+	public boolean getIncorrectCustomer() {
+		return incorrectCustomer;
+	}
+
+	public void setIncorrectCustomer(boolean incorrectCustomer) {
+		this.incorrectCustomer = incorrectCustomer;
+	}
+
+	public boolean getCustomerRejected() {
+		return customerRejected;
+	}
+
+	public void setCustomerRejected(boolean customerRejected) {
+		this.customerRejected = customerRejected;
+	}
+
+	public boolean getIncompleteWork() {
+		return incompleteWork;
+	}
+
+	public void setIncompleteWork(boolean incompleteWork) {
+		this.incompleteWork = incompleteWork;
 	}
 
 	

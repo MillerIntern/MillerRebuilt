@@ -1016,9 +1016,118 @@ public class Project extends HttpServlet
 			}
 			
 			//updates invoice
-		} else if (action.equals("updateInvoice")) {
+		} 
+		else if (action.equals("getSpecificInvoice")) {	
+											
+			try {
+					
+				Invoice currentInvoice = null;
+				long invoice_ID = Long.parseLong(parameters.get("invoiceID"));
+				System.out.println(invoice_ID);
+				currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
+				response = (String) ProjectObjectService.getAsJSON(invoice_ID, "Invoice");
+														
+				} 
+			catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+				}							
+		}
+		
+		else if(action.equals("updateInvoiceFileName")) {
+						
+					
+			try {
+				long invoice_ID = Long.parseLong(parameters.get("invoiceId"));
+				System.out.println("invoice_ID - ");
+				System.out.println(invoice_ID);
+				Invoice currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
+				System.out.println(currentInvoice.getInvoiceCustomer());
+				currentInvoice.setInvoiceFileName(parameters.get("fileName"));
+				Session session = HibernateUtil.getSession();
+				Transaction tx = session.beginTransaction();
+				session.clear();
+				session.update(currentInvoice);
+				tx.commit();
+				
+				response =  "UPDATED_INVOICE_FILE_NAME";
+			} 
+			catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+						
 			
-			Invoice currentInvoice = null;			
+					
+
+			 
+
+			System.out.println("AG Invoice File Name - "+parameters.get("fileName"));
+			
+			
+//			Task task = (Task)ProjectObjectService.get(Long.parseLong(parameters.get("taskID")), "Task");
+//			
+//			task.setCompleted(true);
+
+			
+		}
+		
+		
+		else if(action.equals("updateInvoiceNotes")) {
+			Invoice currentInvoice = null;		
+			try {
+				long invoice_ID = Long.parseLong(parameters.get("currInvoice"));
+				currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
+			} catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+			
+			try {				
+				InvoiceFiller.updateInvoiceNotes(currentInvoice, parameters, (String) req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
+			session.clear();
+			session.update(currentInvoice);
+			tx.commit();
+
+			response =  "UPDATED_INVOICE_NOTES";
+			
+		}
+		
+		else if(action.equals("updateFromInvoiceQueue")) {
+			Invoice currentInvoice = null;		
+			try {
+				long invoice_ID = Long.parseLong(parameters.get("currInvoice"));
+				currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
+			} catch (ClassNotFoundException | NumberFormatException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				InvoiceFiller.updatesFromInvoiceQueue(currentInvoice, parameters, (String) req.getSession().getAttribute("user"));
+			} catch (ClassNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			Session session = HibernateUtil.getSession();
+			Transaction tx = session.beginTransaction();
+			session.clear();
+			session.update(currentInvoice);
+			tx.commit();
+
+			response =  "UPDATED_INVOICE_FROM_QUEUE";
+			
+		}
+		
+		else if (action.equals("updateInvoice")) {
+			
+			Invoice currentInvoice = null;				
 			try {
 				long invoice_ID = Long.parseLong(parameters.get("currInvoice"));
 				currentInvoice = (Invoice)ProjectObjectService.get(invoice_ID,  "Invoice");
