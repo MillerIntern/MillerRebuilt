@@ -56,6 +56,7 @@ public class InvoiceFiller {
 		i.setAssociatedPE(params.get("associatedPE"));
 		
 		i.setInvoiceTitle(params.get("invoiceTitle"));
+		i.setInvoiceFileName(params.get("invoiceFileName"));
 		
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");		
 		Date submittedDate = null;

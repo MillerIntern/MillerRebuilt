@@ -20,6 +20,7 @@
 
 var noMove = 0;
 var DATA = null;
+var invoiceInformation;
 
 //can I create a function for all this - Akash
 $(document).on('click', '#equipmentFailedTable tbody tr', function (e) {
@@ -15013,6 +15014,42 @@ function displayInvWell1() {
 
 //creates an invoice
 function createInv() {
+	document.getElementById('invoiceFileInformation').style.display="none";
+	document.getElementById('invoiceFileName').innerHTML = '';
+	document.getElementById('previewInvoice').style.display="none";
+	
+	
+	var specificProjectInformation = getProjectInformation(projectID)[0]; 
+	
+	var uploadButton = document.getElementById('uploadInvoiceFile');
+	uploadButton.onclick = function(){
+	var pdf = document.getElementById("filepdf");
+	pdf.accept = ".pdf";
+	pdf.click();
+	pdf.onchange = function() {								
+		
+		var mcsNumber = specificProjectInformation.McsNumber.toString();
+		var peNumber = document.getElementById('peInvNum').value
+		
+		//Call a function to actually upload it to server
+		
+		var newFileName = 'mcs_'+mcsNumber+'_'+peNumber;			
+		uploadInvoice(newFileName);			
+		
+		
+//		Call a function to set the InvoiceFileName in the database
+//		setInvoiceFileName(invoiceInformation.id.toString(), newFileName);
+
+		var invoiceFileName = document.getElementById('invoiceFileName');
+		invoiceFileName.innerHTML = newFileName;
+		document.getElementById('invoiceFileInformation').style.display="";
+		
+	}
+	}
+	
+
+
+
   INV_ACTION = 'createInv';
   clearInvForm();
   displayInvWell();
@@ -15189,6 +15226,7 @@ function clearInvForm() {
 
 //prompts user when they want to back out of invoice
 function viewInv() {
+	invoiceInformation = '';
   $('#invoiceTable tr').css('background-color', '');
 
   let updateMessage =
@@ -15213,11 +15251,92 @@ function viewInv() {
 }
 
 function toggleInv(source) {
-  $(source).siblings().css('background-color', 'white');
-  $(source).css('background-color', '#dddddd');
-  $('#editInvoice').prop('disabled', false);
-  editSelectedInv(source);
+	
+	//invoiceFileName
+	//uploadInvoiceFile
+	//previewInvoice
+	//invoiceFileInformation
+	
+	document.getElementById('invoiceFileInformation').style.display="none";
+	document.getElementById('previewInvoice').style.display="none";
+	document.getElementById('uploadInvoiceFile').style.display="";
+	
+	var invId = source.id;
+	invId = invId.split('_').pop();
+
+	invoiceInformation = getInvoiceInformation(invId);
+	
+	
+	var invoiceFileName = document.getElementById('invoiceFileName');
+	
+	if(invoiceInformation.invoiceFileName){
+		
+		invoiceFileName.innerHTML = invoiceInformation.invoiceFileName;
+		document.getElementById('invoiceFileInformation').style.display="";
+		document.getElementById('previewInvoice').style.display="";
+	}
+	
+	
+	
+
+	
+	var specificProjectInformation = getProjectInformation(invoiceInformation.invoice_id)[0]; 
+	//alert(invoiceInformation.invoice_id);
+	//Need project number
+	//Need Invoice Information
+	
+	var uploadButton = document.getElementById('uploadInvoiceFile');
+	uploadButton.onclick = function(){
+	var pdf = document.getElementById("filepdf");
+	pdf.accept = ".pdf";
+	pdf.click();
+	
+	
+	pdf.onchange = function() {								
+		
+		var mcsNumber = specificProjectInformation.McsNumber.toString();
+		var peNumber = invoiceInformation.peInvNum.toString();
+		
+		//Call a function to actually upload it to server
+		
+		var newFileName = 'mcs_'+mcsNumber+'_'+peNumber;			
+		uploadInvoice(newFileName);			
+		//Call a function to set the InvoiceFileName in the database
+		setInvoiceFileName(invoiceInformation.id.toString(), newFileName);
+		invoiceInformation.invoiceFileName = newFileName;
+		invoiceFileName.innerHTML = invoiceInformation.invoiceFileName;
+	}
+	}
+
+
+	
+	
+	
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editInvoice').prop('disabled', false);
+	editSelectedInv(source);
 }
+
+function getInvoiceInformation(invoiceId){	
+	var invoiceName = '';
+	$.ajax({
+	type: 'POST',
+	url: 'Project', 
+	async: false,
+	data: {
+		'action': 'getSpecificInvoice',
+		'invoiceID' : invoiceId,
+		},
+		success: function(data)
+		{
+			invoiceName = data;
+		}
+	});
+	
+	return invoiceName;
+}
+
 
 //allows user to edit invoice
 function editSelectedInv(source) {
@@ -15362,8 +15481,8 @@ function fillInvsTable(data) {
 
   //these values with dollar amounts are put at bottom as not to intefere with invoice calculation
   $('#invoiceInformation')
-    .find('#invoiceBalance1')
-    .val(cleanNumericValueForDisplaying(balance));
+    .find('#invoiceBalance1').val(cleanNumericValueForDisplaying(balance.toFixed(2)));
+//    .val(cleanNumericValueForDisplaying(balance));
   $('#invoiceInformation')
     .find('#amountInvoiced1')
     .val(cleanNumericValueForDisplaying(invoiced));
@@ -15442,7 +15561,7 @@ function fillInvsTable(data) {
     //invoiceType.innerHTML = invs[i].invoiceType;
 
     if (invs[i].invoiceAmount)
-      invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
+      invoiceAmount.innerHTML = cleanNumericValueForDisplaying(invs[i].invoiceAmount);
     else invoiceAmount.innerHTML = '---';
 
     submittedDate.innerHTML = invs[i].submittedDate;
@@ -15515,6 +15634,18 @@ function clearAndAddSingleRowInvs(msg) {
 
 //submits invoice with user creating or editing an invoice in the invoice menu
 function submitInv() {
+	//alert(INV_ACTION);
+
+	var invoiceFileName = document.getElementById('invoiceFileName').innerHTML.toString();
+	console.log('invoiceFileName '+invoiceFileName);
+	
+	  if (INV_ACTION == 'createInv' && invoiceFileName == '') {
+		    alert('Please upload a file before submitting the invoice');
+		    return;
+		  }
+	
+	
+	invoiceInformation = '';
   let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
   let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
   let invoiceTitle = $('#invoiceCreationZone').find('#invoiceTitle').val();
@@ -15644,6 +15775,7 @@ function submitInv() {
         invoiceID: invoiceID,
         associatedPE: associatedPE,
         invoiceTitle: invoiceTitle,
+        invoiceFileName: invoiceFileName,
         invoiceNumber: invoiceNumber,
         invoiceType: invoiceType,
         submittedDate: submittedDate,
@@ -15715,6 +15847,7 @@ function submitInv() {
         invoiceID: invoiceID,
         associatedPE: associatedPE,
         invoiceTitle: invoiceTitle,
+        invoiceFileName: invoiceFileName,
         invoiceNumber: invoiceNumber,
         invoiceType: invoiceType,
         submittedDate: submittedDate,
@@ -15961,4 +16094,126 @@ function submitInv1() {
       },
     });
   }
+}
+
+function previewInvoice(){
+	var previewIcon = document.getElementById('previewInvoice');
+			
+		
+		
+		var invoiceFileName = invoiceInformation.invoiceFileName;	
+		console.log(invoiceInformation);
+		openInvoice(invoiceFileName.toString());
+	
+}
+
+function openInvoice(mcsPE, id){
+	
+	var host = location.host;
+	$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvoice",
+				mcsPE: mcsPE,
+				host : host,
+			},
+			complete: function (data) {
+								
+				var href = location.href;
+				var pathname = location.pathname;				
+				pathname = pathname.substring(0, pathname.lastIndexOf("/"));
+								
+				var loc = host + pathname + "/upload/" + mcsPE+".pdf";
+				
+				window.open("http://" + loc);
+				
+				 
+			}
+		});
+	
+}
+
+
+function getProjectInformation(projectID){
+	
+	var projectInfo = '';
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		async: false,
+		data: {
+			'action': 'getSpecProject',
+			'id' : projectID,
+			},
+			success: function(data)
+			{
+				projectInfo = data;
+			}
+		});
+	return projectInfo;
+}
+
+
+
+function setInvoiceFileName(invoiceId, fileName){
+//	alert(fileName);
+//	alert(invoiceId);
+	
+	$.ajax({
+	type: 'POST',
+	url: 'Project', 
+	async: false,
+	data: {
+		'action': 'updateInvoiceFileName',
+		'invoiceId' : invoiceId,
+		'fileName' : fileName
+		},
+		success: function(data)
+		{
+			invoiceName = data;
+		}
+	});
+}
+
+//function to upload the pdf file
+function uploadInvoice(fileName) {
+	
+    event.preventDefault();
+  
+    var form = $('#fileUploadForm')[0]; 
+    var data = new FormData(form);
+	data.append("fileName", fileName);
+		
+	alert("File is being uploaded, Please wait for some time for file to be copied properly");
+	
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "fileuploadservlet",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+			//alert(data);
+            //$("#result").text(data);
+            console.log("SUCCESS : ", data);
+            //$("#btnSubmit").prop("disabled", false);
+            //alert("Invoice uploaded successfully");            
+            return true;
+
+        },
+        error: function (e) {
+
+            $("#result").text(e.responseText);
+            console.log("ERROR : ", e);
+            $("#btnSubmit").prop("disabled", false);
+			alert("Unable to upload invoice due to system error");
+			return false;
+        }
+    });
+
+    //});
 }

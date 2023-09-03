@@ -2661,14 +2661,14 @@
 		               <td><label for='invoiceAmount'>Invoice Amount:  <span style="color:#FF0000">*</span></label>
 		               <td><input type='text' id='invoiceAmount' onkeypress="return /[0-9, .]/i.test(event.key)" />
 		            </tr>
-		            
+
 		            
 		            <tr id = "invoiceStatusSelectionRow" style = "display : none">
 		               <td><label>Status <span style="color:#FF0000">*</span></label></td>
 		               <td>
 		                  <select id = "invoiceStatus" onfocus="this.setAttribute('PrvSelectedValue',this.value);" onchange="submitRejectDateCheck()">
 		                     <option value="Requested"> Requested </option>
-		                     <option value="Processing"> Processing</option>
+		                     <!-- option value="Processing"> Processing</option> -->
 		                     <option id="Review"  value="Review"> Review</option>
 		                     <option id="Approved"  value="Approved"> Approved</option>
 		                     <option id="Submitted"  value="Submitted"> Submitted </option>
@@ -2676,8 +2676,23 @@
 		                  </select>
 		               </td>
 		            </tr>
-		          
-		            
+		        
+		        <tr id='invoiceFileInformation'>
+	          		<td><label>File Name</label></td>	
+		        	<td><span id='invoiceFileName' class="File-name has-Icon">invoice-file-name.pdf</span></td>		          	
+		        </tr>
+<!--        		       <tr>
+		            <td>
+		              <button class="Button Button--outline u-float--right" id="uploadInvoiceFile">
+				        Upload a new file
+				     </button>
+		            </td>
+		               <td>
+		              <button class="Button Button--outline u-float--right" id="previewInvoice" onclick= "previewInvoice()">
+				        Preview existing file
+				     </button>
+		            </td>
+		            </tr> -->
 		            <tr id = hide1>
 		            <td><label for='associatedPE'>Associated PE #<span style="color:#FF0000">*</span></label>
 		            <td><input type='text' id='associatedPE' readonly/>
@@ -2737,48 +2752,25 @@
 		               
 		            </tr>
 		            
-		<!--        <tr id = hide10>
-		            <td><b>Approval 1</b></td>
-		             <td >  
-                    <select class="closeout-input" id="approval1">
-                        <option value="default">--Status--</option>
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>
-                    </select>
-                </td>
-                </tr>
-                
-                
-                <tr id = hide11>
-                <td><b>Approval 2</b></td>
-		             <td >  
-                    <select class="closeout-input" id="approval2">
-                        <option value="default">--Status--</option>
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>
-                    </select>
-                </td>
-                </tr>
-                
-                
-                <tr id = hide12>
-                <td><b>Approval 3</b></td>
-		             <td >  
-                    <select class="closeout-input" id="approval3">
-                        <option value="default">--Status--</option>
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>
-                    </select>
-                </td>
-                </tr>  -->
+		
                 
 
 		                 		         
 		         </table>
 		      </div>
+		      
+		      
+		       <button class="Button Button--outline u-float--right" id="uploadInvoiceFile">Upload a new file</button>
+		      <button class="Button Button--outline u-float--right" id="previewInvoice" onclick= "previewInvoice()">Preview existing file</button>
+		      <br>
+		      <br>
 		      <button style = "float:center;" onclick='submitInv()' class='btn btn-success'>Save Invoice</button>
 		      <button style = "float:right; margin-right:5px;background-color: #4169E1;color: white;" onclick='viewInv()' class='btn'>Back to Invoice View</button>
-		      
+		      <form method="POST" enctype="multipart/form-data" id="fileUploadForm" style = "display:none;" >
+			    <input type="text" name="extraField"/><br/><br/>
+			    <input type="file" name="filepdf" id = "filepdf" accept = ".pdf"/><br/><br/>
+			    <input type="submit" value="Submit" id="btnSubmit"/>
+			</form>
 		      
 		   </div>
 		   </div>

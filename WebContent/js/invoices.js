@@ -394,8 +394,9 @@ function fillInvoiceListView(inv){
 	var invLocation = invWarehouse.city.name + ' ' +invWarehouse.warehouseID;
 	var invProjName = invProject.projectItem.name;
 	var invMCSPE  = invProject.McsNumber + ' ' +inv.peInvNum;
-	var invAmount = '$'+inv.invoiceAmount;
+	var invAmount = cleanNumericValueForDisplaying(inv.invoiceAmount);
 	var invStatus = inv.invoiceStatus;
+	var invoiceFileName = inv.invoiceFileName;
 	var invRequestedDate = inv.submittedDate;
 	var invCompletedDate = inv.completedDate;
 	
@@ -441,7 +442,7 @@ function fillInvoiceListView(inv){
 	let notesIcon = generateNotesIcon(inv, invListing);
 
 	
-	let invIcon = generateInvoiceIcon(invStatus, invListing);
+	let invIcon = generateInvoiceIcon(invStatus, invListing, invoiceFileName);
 	
 	//call function to display div on mouse hover
 	invIcon.onmouseover = function(){
@@ -668,10 +669,10 @@ function generateInvoiceStatusDropdown(invStatus,invListing){
 	opt.textContent = "Requested";
 	selectStatus.appendChild(opt);
 	//invoiceStatus.appendChild(opt);
-	var opt2 = document.createElement("Option");
-	opt2.value = "Processing";
-	opt2.textContent = "Processing";
-	selectStatus.appendChild(opt2)
+//	var opt2 = document.createElement("Option");
+//	opt2.value = "Processing";
+//	opt2.textContent = "Processing";
+//	selectStatus.appendChild(opt2)
 	var opt3 = document.createElement("Option");
 	opt3.value = "Review";
 	opt3.textContent = "Review";
@@ -795,34 +796,43 @@ function generateNotesIcon(invoiceInformation, invListing){
 //Generated the html content for an image
 //Contains the onclick functionality of the invoice icon as well
 //Returns the same
-function generateInvoiceIcon(invStatus, invListing){
+function generateInvoiceIcon(invStatus, invListing, invoiceFileName){
+	
+	
+	
 	let invIcon = document.createElement('img');
 	invIcon.id = "inv_att_" + invListing.value;
 	invIcon.src = "icons/invattachment.png";
 	invIcon.width = "22";
 	invIcon.height = "22";
 	
-	switch(invStatus){
-	case "Submitted":
-		invIcon.src = "icons/green_pdf.png";
-		break;
-	case "Approved":
-		invIcon.src = "icons/green_pdf.png";
-		break;
-	case "Rejected":
-		invIcon.src = "icons/red_pdf.png";
-		break;
-	case "Review":
-		invIcon.src = "icons/yellow_pdf.png";
-		break;
-	case "Processing":
-		invIcon.src = "icons/yellow_pdf.png";
-		break;
-	case "Requested":
-		invIcon.src = "icons/grey_pdf.png";
-		break;
-	default:
+	
+	if(invoiceFileName == '' || invoiceFileName == undefined || invoiceFileName == null){
+		invIcon.src =  "icons/grey_pdf.png";
 	}
+	
+	else{
+		switch(invStatus){
+		case "Submitted":
+			invIcon.src = "icons/green_pdf.png";
+			break;
+		case "Approved":
+			invIcon.src = "icons/green_pdf.png";
+			break;
+		case "Rejected":
+			invIcon.src = "icons/red_pdf.png";
+			break;
+		case "Review":
+			invIcon.src = "icons/yellow_pdf.png";
+			break;
+		case "Requested":
+			invIcon.src = "icons/yellow_pdf.png";
+			break;
+		default:
+		}
+	}
+	
+
 	
 	//Invoice Icon On click logic
 	invIcon.onclick = function(){
@@ -1302,10 +1312,10 @@ function fillInvsTable() {
 		opt.textContent = "Requested";
 		selectStatus.appendChild(opt);
 		//invoiceStatus.appendChild(opt);
-		var opt2 = document.createElement("Option");
-		opt2.value = "Processing";
-		opt2.textContent = "Processing";
-		selectStatus.appendChild(opt2)
+//		var opt2 = document.createElement("Option");
+//		opt2.value = "Processing";
+//		opt2.textContent = "Processing";
+//		selectStatus.appendChild(opt2)
 		var opt3 = document.createElement("Option");
 		opt3.value = "Review";
 		opt3.textContent = "Review";
@@ -4488,4 +4498,84 @@ function modifyApprovingMembers(){
 				
 			}
 	}); 
+}
+
+/**
+ * This function makes a number more human friendly by adding commas and by adding a 0 to the decimal
+ * Example : instead of 123456.7 being displayed, this method turns it into 123,456.70
+ * @param a number
+ * @returns human friendly number
+ */
+function cleanNumericValueForDisplaying(num) {
+  var neg;
+  if (num < 0) neg = true;
+  else neg = false;
+  num = Math.abs(num);
+  var str = num.toString();
+
+  var price, cleanPrice;
+  var dollars, cleanDollars;
+  var dollarArray = new Array();
+  var correctOrder = '';
+  var cents, cleanCents;
+
+  if (str.indexOf('.') != -1) {
+    price = str.split('.');
+    dollars = price[0];
+    cents = price[1];
+    if (cents.length == 1) cleanCents = cents + '0';
+    else cleanCents = cents;
+    var commaCount = 0;
+    for (var i = dollars.length - 1; i > -1; i--) {
+      commaCount++;
+      dollarArray.push(dollars[i]);
+      if (commaCount % 3 == 0 && i != 0) dollarArray.push('-');
+    }
+
+    cleanDollars = dollarArray.toString();
+    while (cleanDollars.indexOf(',') != -1) {
+      cleanDollars = cleanDollars.replace(',', '');
+    }
+
+    while (cleanDollars.indexOf('-') != -1) {
+      cleanDollars = cleanDollars.replace('-', ',');
+    }
+
+    for (var i = cleanDollars.length - 1; i > -1; i--) {
+      correctOrder += cleanDollars[i];
+    }
+
+    cleanPrice = '$' + correctOrder + '.' + cleanCents;
+    if (neg) {
+      cleanPrice = '(-' + cleanPrice + ')';
+    }
+    return cleanPrice;
+  } else {
+    var commaCount = 0;
+    for (var i = str.length - 1; i > -1; i--) {
+      commaCount++;
+      dollarArray.push(str[i]);
+      if (commaCount % 3 == 0 && i != 0) dollarArray.push('-');
+    }
+    cleanDollars = dollarArray.toString();
+
+    while (cleanDollars.indexOf(',') != -1) {
+      cleanDollars = cleanDollars.replace(',', '');
+    }
+
+    while (cleanDollars.indexOf('-') != -1) {
+      cleanDollars = cleanDollars.replace('-', ',');
+    }
+
+    for (var i = cleanDollars.length - 1; i > -1; i--) {
+      correctOrder += cleanDollars[i];
+    }
+
+    cleanPrice = '$' + correctOrder;
+
+    if (neg) {
+      cleanPrice = '(-' + cleanPrice + ')';
+    }
+    return cleanPrice;
+  }
 }
