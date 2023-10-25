@@ -1,5 +1,7 @@
 /**
  * author: Fardeen Yaqub
+ * A - Adding invoice notes status and completed update function
+ * 
  *
  */
 
@@ -21,6 +23,32 @@ public class InvoiceFiller {
 	 * @param parameters
 	 */
 	
+	public synchronized static void updateInvoiceNotes(Invoice i, Map<String, String> params, String sessionName) throws ParseException, ClassNotFoundException{
+		
+		i.setIncorrectAmount(Boolean.parseBoolean(params.get("incorrectAmount")));
+		i.setIncorrectCustomer(Boolean.parseBoolean(params.get("incorrectCustomer")));
+		i.setCustomerRejected(Boolean.parseBoolean(params.get("customerRejected")));
+		i.setIncompleteWork(Boolean.parseBoolean(params.get("incompleteWork")));
+		i.setNotes(params.get("invoiceNotes"));
+			
+	}
+	
+	public synchronized static void updatesFromInvoiceQueue(Invoice i, Map<String, String> params, String sessionName) throws ParseException, ClassNotFoundException{
+		//Set the status
+		i.setInvoiceStatus(params.get("invoiceStatus"));
+		
+		//Set the completed date
+		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");		
+		Date completedDate = null;
+		if(params.get("completedDate") != null && !params.get("completedDate").isEmpty())
+			completedDate = formatter.parse(params.get("completedDate"));
+		i.setCompletedDate(completedDate);
+		
+		//Set the Notes
+//		i.setNotes(params.get("notes"));
+		
+	}
+	
 	public synchronized static void fillInvoiceInformation(Invoice i, Map<String, String> params, String sessionName) throws ParseException, ClassNotFoundException {
 		
 		i.setInvoiceID(params.get("invoiceID"));
@@ -28,6 +56,7 @@ public class InvoiceFiller {
 		i.setAssociatedPE(params.get("associatedPE"));
 		
 		i.setInvoiceTitle(params.get("invoiceTitle"));
+		i.setInvoiceFileName(params.get("invoiceFileName"));
 		
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");		
 		Date submittedDate = null;

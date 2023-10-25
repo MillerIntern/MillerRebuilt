@@ -1,0 +1,11 @@
+<infinispan>
+    <cache-container default-cache="local">
+        <local-cache name="local">
+            <!-- Configure cache settings here -->
+            <eviction strategy="LRU" max-entries="1000" />
+            <expiration max-idle="60000" />
+            <indexing enabled="true" />
+            <locking isolation="READ_COMMITTED" />
+        </local-cache>
+    </cache-container>
+</infinispan>

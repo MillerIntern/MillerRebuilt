@@ -46,7 +46,7 @@ public class InvUpload extends HttpServlet {
 
 	    // Create path components to save the file
 	  	
-	  	System.out.println("Servletn: InvUpload.java");  	
+	  	System.out.println("Servlet: InvUpload.java");  	
 	  	Configuration configuration= new Configuration().configure("hibernate.cfg.xml");
 		String invoiceLocation = configuration.getProperty("hibernate.invoice.location");
 	  	

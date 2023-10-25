@@ -120,13 +120,24 @@ $(document).ready(function() {
 
 	 $('table').each(function () {
         var $table = $(this);
+        
+        $table.css({'max-height': '400px'})
 
         var $button = $("<button type='button'>");
         $button.text("Export to CSV");
         $button.insertAfter($table);
-        $button.css({position:'fixed'});
-        $button.css({'margin-top':'35px'});
+        $button.css({position:'relative'});
+        $button.css({'margin-top':'25px'});
+        $button.css({top: '20px'});
+                
+        var width = document.getElementById("DataTables_Table_0_info").offsetWidth
 
+        var margin = -(width - 10);
+        
+        $button.css({left: margin +'px'});
+        
+        
+      
         $button.click(
 		function download() {
 

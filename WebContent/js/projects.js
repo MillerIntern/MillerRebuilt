@@ -20,6 +20,7 @@
 
 var noMove = 0;
 var DATA = null;
+var invoiceInformation;
 
 //can I create a function for all this - Akash
 $(document).on('click', '#equipmentFailedTable tbody tr', function (e) {
@@ -151,6 +152,10 @@ var PROJECT_DATA_EQUIP;
 
 // This gets run upon loading and handles tabbing and the datepickers
 $(document).ready(function () {
+	
+	//hide the progress upload bar
+	$("#progress-wrp").hide();
+	
   generateViewTableHeaders();
   generateSortOptions('project');
   $('#closeoutData')
@@ -272,6 +277,7 @@ function generateSortOptions(viewName) {
     createSortProjectOption('Start Date', '5');
     createSortProjectOption('End Date', '6');
     createSortProjectOption('Status', '4');
+    createSortProjectOption('Key Status', '8');
   }
   if (viewName == 'proposal') {
     createSortProjectOption('Warehouse', '0');
@@ -281,6 +287,7 @@ function generateSortOptions(viewName) {
     createSortProjectOption('Scope Date', '4');
     createSortProjectOption('Schedule', '5');
     createSortProjectOption('Due Date', '6');
+    createSortProjectOption('Key Status', '8');
   }
 }
 
@@ -717,13 +724,26 @@ function fillTabs_CLOSEOUT(data) {
         .val(json.closeoutDetails.salvageValue.date);
       $('#otherItemsSalvageTable')
         .find('#salvageAmount')
-        .val(convertSalvage(json.closeoutDetails.salvageValue.value));
-    }
+        .val(
+			json.closeoutDetails.salvageValue.value >= 0 ? 
+		    cleanNumericValueForDisplaying(json.closeoutDetails.salvageValue.value) : 
+		    convertSalvage(json.closeoutDetails.salvageValue.value)
+		);
+    
 
     console.log(
       'SALVAGE AMOUNT FILL',
       $('#otherItemsSalvageTable').find('#salvageAmount').val()
     );
+    
+    var salvageAmount = document.getElementById('salvageAmount');
+	if (salvageAmount) {
+	    salvageAmount.addEventListener('focus', setOriginalValue, false);
+	    salvageAmount.addEventListener('focus', clearSalvageValue, false);
+	    salvageAmount.addEventListener('blur', restoreAndFormatValue, false);
+	    salvageAmount.addEventListener('keypress', isNumberKey, false);
+	}
+  }
   }
 }
 
@@ -9915,11 +9935,6 @@ $(document).on('click', '.stageLabel', function () {
   updateFrontEnd();
 });
 
-//$(document).ready(function()
-//{
-//	getMasterScopes();
-//});
-
 function getMasterScopes() {
   $.ajax({
     type: 'POST',
@@ -11414,20 +11429,20 @@ function saveProject_CHANGE_ORDER() {
     cost = cleanNumericValueForSaving($('#changeOrder').find('#cost')[0].value);
     cost = parseFloat(cost);
   }
-  if (cost < 1) {
+  /*if (cost < 1) {
     alert("Value of cost can't be less than 1. Please enter new value.");
     return;
-  }
+  }*/
 
   var sell = $('#changeOrder').find('#sell').val();
   if (sell) {
     sell = cleanNumericValueForSaving($('#changeOrder').find('#sell')[0].value);
     sell = parseFloat(sell);
   }
-  if (sell < 1) {
+  /*if (sell < 1) {
     alert("Value of sell can't be less than 1. Please enter new value.");
     return;
-  }
+  }*/
 
   var mcsInvoiceStatus = $('#changeOrder').find('#mcsInvoiceStatus').val();
   var subInvoiceStatus = $('#changeOrder').find('#subInvoiceStatus').val();
@@ -11643,7 +11658,7 @@ function saveProject_CHANGE_ORDER() {
       console.log(data);
     },
     error: function (data) {
-      alert('Saved Saved Pricing Element');
+      alert('Saved Pricing Element');
 
       //noMove makes it so the user doesn't get kicked out of General info when setting refrigeration or HVAC to "Yes"
       if (noMove == 0) {
@@ -11693,6 +11708,21 @@ function goToChangeOrder(edit) {
   $('#changeOrder').show();
   $('#changeOrderInfo').addClass('active');
   setCurrentDivLocation('changeOrder');
+  
+  //also add the amount check to the cost and sell fields
+  // Add the event listener to the cost and sell field element.
+	var costField = document.getElementById('cost');
+	if (costField) {
+	    costField.addEventListener('keypress', isNumberKey, false);
+	    costField.addEventListener('blur', formatCurrency, false);
+	}
+	
+	var sellField = document.getElementById('sell');
+	if (sellField) {
+	    sellField.addEventListener('keypress', isNumberKey, false);
+	    sellField.addEventListener('blur', formatCurrency, false);
+	}
+  
   console.log('EDIT = ', edit);
   if (edit == 0) {
     edit_CHANGE_ORDER = 'false';
@@ -12638,9 +12668,6 @@ function preparePage() {
   let from = getParameterByName('from');
   let type = getParameterByName('type');
 
-  //new lines added by me
-  //window.alert("Saurabh");
-
   $('#findProject').hide();
   $('.editProject').hide();
 
@@ -13509,10 +13536,10 @@ function submitTask() {
   if (typeof title === 'undefined' || title === '') return alert('Bad Title');
   if (typeof description === 'undefined' || description === '')
     return alert('Bad Description111');
-  if (typeof assignee === 'undefined' || assignee === '')
-    return alert('Bad Assignee');
-  if (typeof subassignee === 'undefined' || subassignee === '')
-    return alert('Bad Sub Assignee');
+  if (typeof assignee === 'undefined' || assignee === '' || assignee === null)
+    return alert('Please select MCS/Assignee responsibility');
+  if (typeof subassignee === 'undefined' || subassignee === '' || subassignee === null)
+    return alert('Please select Sub Assignee responsibility');
   if (typeof severity === 'undefined' || severity === '')
     return alert('Bad Severity');
   if (dueDate === 'undefined' || dueDate === '') return alert('Bad Due Date');
@@ -15013,6 +15040,43 @@ function displayInvWell1() {
 
 //creates an invoice
 function createInv() {
+	document.getElementById('invoiceFileInformation').style.display="none";
+	document.getElementById('invoiceFileName').innerHTML = '';
+	document.getElementById('previewInvoice').style.display="none";
+	
+	
+	var specificProjectInformation = getProjectInformation(projectID)[0]; 
+	
+	var uploadButton = document.getElementById('uploadInvoiceFile');
+	uploadButton.onclick = function(){
+	var pdf = document.getElementById("filepdf");
+	pdf.accept = ".pdf";
+	pdf.click();
+	pdf.onchange = function() {								
+		
+		var mcsNumber = specificProjectInformation.McsNumber.toString();
+		var peNumber = document.getElementById('peInvNum').value
+		
+		//Call a function to actually upload it to server
+		
+		var newFileName = 'mcs_'+mcsNumber+'_'+peNumber;			
+		//uploadInvoice(newFileName);			
+		uploadInvoiceSD(newFileName);			
+		
+		
+//		Call a function to set the InvoiceFileName in the database
+//		setInvoiceFileName(invoiceInformation.id.toString(), newFileName);
+
+		var invoiceFileName = document.getElementById('invoiceFileName');
+		invoiceFileName.innerHTML = newFileName;
+		document.getElementById('invoiceFileInformation').style.display="";
+		
+	}
+	}
+	
+
+
+
   INV_ACTION = 'createInv';
   clearInvForm();
   displayInvWell();
@@ -15189,6 +15253,7 @@ function clearInvForm() {
 
 //prompts user when they want to back out of invoice
 function viewInv() {
+	invoiceInformation = '';
   $('#invoiceTable tr').css('background-color', '');
 
   let updateMessage =
@@ -15213,11 +15278,92 @@ function viewInv() {
 }
 
 function toggleInv(source) {
-  $(source).siblings().css('background-color', 'white');
-  $(source).css('background-color', '#dddddd');
-  $('#editInvoice').prop('disabled', false);
-  editSelectedInv(source);
+	
+	//invoiceFileName
+	//uploadInvoiceFile
+	//previewInvoice
+	//invoiceFileInformation
+	
+	document.getElementById('invoiceFileInformation').style.display="none";
+	document.getElementById('previewInvoice').style.display="none";
+	document.getElementById('uploadInvoiceFile').style.display="";
+	
+	var invId = source.id;
+	invId = invId.split('_').pop();
+
+	invoiceInformation = getInvoiceInformation(invId);
+	
+	
+	var invoiceFileName = document.getElementById('invoiceFileName');
+	
+	if(invoiceInformation.invoiceFileName){
+		
+		invoiceFileName.innerHTML = invoiceInformation.invoiceFileName;
+		document.getElementById('invoiceFileInformation').style.display="";
+		document.getElementById('previewInvoice').style.display="";
+	}
+	
+	
+	
+
+	
+	var specificProjectInformation = getProjectInformation(invoiceInformation.invoice_id)[0]; 
+	//alert(invoiceInformation.invoice_id);
+	//Need project number
+	//Need Invoice Information
+	
+	var uploadButton = document.getElementById('uploadInvoiceFile');
+	uploadButton.onclick = function(){
+	var pdf = document.getElementById("filepdf");
+	pdf.accept = ".pdf";
+	pdf.click();
+	
+	
+	pdf.onchange = function() {								
+		
+		var mcsNumber = specificProjectInformation.McsNumber.toString();
+		var peNumber = invoiceInformation.peInvNum.toString();
+		
+		//Call a function to actually upload it to server
+		
+		var newFileName = 'mcs_'+mcsNumber+'_'+peNumber;			
+		uploadInvoiceSD(newFileName);			
+		//Call a function to set the InvoiceFileName in the database
+		setInvoiceFileName(invoiceInformation.id.toString(), newFileName);
+		invoiceInformation.invoiceFileName = newFileName;
+		invoiceFileName.innerHTML = invoiceInformation.invoiceFileName;
+	}
+	}
+
+
+	
+	
+	
+	$(source).siblings().css('background-color', 'white');
+	$(source).css('background-color', '#dddddd');
+	$('#editInvoice').prop('disabled', false);
+	editSelectedInv(source);
 }
+
+function getInvoiceInformation(invoiceId){	
+	var invoiceName = '';
+	$.ajax({
+	type: 'POST',
+	url: 'Project', 
+	async: false,
+	data: {
+		'action': 'getSpecificInvoice',
+		'invoiceID' : invoiceId,
+		},
+		success: function(data)
+		{
+			invoiceName = data;
+		}
+	});
+	
+	return invoiceName;
+}
+
 
 //allows user to edit invoice
 function editSelectedInv(source) {
@@ -15362,8 +15508,8 @@ function fillInvsTable(data) {
 
   //these values with dollar amounts are put at bottom as not to intefere with invoice calculation
   $('#invoiceInformation')
-    .find('#invoiceBalance1')
-    .val(cleanNumericValueForDisplaying(balance));
+    .find('#invoiceBalance1').val(cleanNumericValueForDisplaying(balance.toFixed(2)));
+//    .val(cleanNumericValueForDisplaying(balance));
   $('#invoiceInformation')
     .find('#amountInvoiced1')
     .val(cleanNumericValueForDisplaying(invoiced));
@@ -15442,7 +15588,7 @@ function fillInvsTable(data) {
     //invoiceType.innerHTML = invs[i].invoiceType;
 
     if (invs[i].invoiceAmount)
-      invoiceAmount.innerHTML = '$' + invs[i].invoiceAmount;
+      invoiceAmount.innerHTML = cleanNumericValueForDisplaying(invs[i].invoiceAmount);
     else invoiceAmount.innerHTML = '---';
 
     submittedDate.innerHTML = invs[i].submittedDate;
@@ -15515,6 +15661,18 @@ function clearAndAddSingleRowInvs(msg) {
 
 //submits invoice with user creating or editing an invoice in the invoice menu
 function submitInv() {
+	//alert(INV_ACTION);
+
+	var invoiceFileName = document.getElementById('invoiceFileName').innerHTML.toString();
+	console.log('invoiceFileName '+invoiceFileName);
+	
+	  if (INV_ACTION == 'createInv' && invoiceFileName == '') {
+		    alert('Please upload a file before submitting the invoice');
+		    return;
+		  }
+	
+	
+	invoiceInformation = '';
   let invoiceID = $('#invoiceCreationZone').find('#invoiceID').val();
   let associatedPE = $('#invoiceCreationZone').find('#associatedPE').val();
   let invoiceTitle = $('#invoiceCreationZone').find('#invoiceTitle').val();
@@ -15537,7 +15695,22 @@ function submitInv() {
   let invoiceApproval = $('#invoiceCreationZone')
     .find('#invoiceApproval')
     .val();
+    
+  // notes part
   let notes = $('#invoiceCreationZone').find('#notes').val();
+  var incorrectAmount = document.getElementById('incorrectAmount');
+	var incorrectCustomer = document.getElementById('incorrectCustomer');
+	var customerRejected = document.getElementById('customerRejected');
+	var incompleteWork = document.getElementById('incompleteWork');
+	var invoiceNotes = document.getElementById('invoiceNotes');
+	//var currInvoice = document.getElementById('invoiceNoteId').value;
+	
+	/*alert('incorrectAmount:', incorrectAmount);
+	alert('incorrectCustomer:', incorrectCustomer);
+	alert('customerRejected:', customerRejected);
+	alert('incompleteWork:', incompleteWork);
+	alert('invoiceNotes:', invoiceNotes);*/
+	
 
   let peInvNum = $('#invoiceInformation')
     .find('#invoiceCreationZone')
@@ -15561,7 +15734,6 @@ function submitInv() {
     alert('Please enter a valid Invoice Amount greater than 0');
     return;
   }
-  //alert(invoiceAmount);
 
   //user picks to invoice %
 
@@ -15644,6 +15816,7 @@ function submitInv() {
         invoiceID: invoiceID,
         associatedPE: associatedPE,
         invoiceTitle: invoiceTitle,
+        invoiceFileName: invoiceFileName,
         invoiceNumber: invoiceNumber,
         invoiceType: invoiceType,
         submittedDate: submittedDate,
@@ -15675,32 +15848,58 @@ function submitInv() {
               invoiceID: invoiceID,
             },
             complete: function (serverResponse) {
-              console.log(serverResponse);
+              //console.log(serverResponse);
               let response = $.trim(serverResponse.responseText);
-              if (response === 'APPROVALS_ADDED') {
-                alert('Invoice Added Successfully');
+              console.log(response);
+              
+              var parsedResponse = JSON.parse(response);
+			  var obj = parsedResponse[0];
+			  var resultValue = obj.result;
+			  var currInvoice = obj.approval_id;
+			  
+			  console.log(resultValue);
+			  console.log(currInvoice);
+              
+              if (resultValue === 'APPROVALS_ADDED') {
+	
+				$.ajax({
+				type: 'POST',
+				url: 'Project',
+				data: {
+	
+					'action': 'updateInvoiceNotes',
+					'currInvoice':currInvoice,
+					'incorrectAmount': incorrectAmount.checked,
+					'incorrectCustomer': incorrectCustomer.checked,
+					'customerRejected': customerRejected.checked,
+					'incompleteWork': incompleteWork.checked,
+					'invoiceNotes': invoiceNotes.value,					
+					
+				}, complete: function (serverResponse) {
+					console.log(serverResponse);
+					let response = $.trim(serverResponse.responseText);
+	
+					if (response === 'UPDATED_INVOICE_FROM_QUEUE') {}
+					//alert('Invoice Notes Updated Successfully');
+					
+					alert('Invoice Added Successfully');
 
-                //Makes the user return to the invoice screen
-                document.getElementById('invoiceInformation').style.width =
-                  '100%';
-                $('#invoiceCreationZone').hide();
-                $('#invoiceDisplay').show();
-                $('#returnAccountsReceivable').show();
-
-                clearPeInvoiceTable();
-                getInvs(1);
-                fillPeInvsTable(DATA);
-              }
-            },
-          });
-
-          //Makes the user return to the invoice screen
-          /*document.getElementById('invoiceInformation').style.width = "100%";
+	                //Makes the user return to the invoice screen
+          			document.getElementById('invoiceInformation').style.width = "100%";
 					$('#invoiceCreationZone').hide();
 					$('#invoiceDisplay').show();
 					$('#returnAccountsReceivable').show();
 					clearInvoiceTable();
-					getInvs(1); */
+					getInvs(1);
+				
+					
+				}
+				});
+				
+              }
+            },
+          });
+
         }
       },
     });
@@ -15715,6 +15914,7 @@ function submitInv() {
         invoiceID: invoiceID,
         associatedPE: associatedPE,
         invoiceTitle: invoiceTitle,
+        invoiceFileName: invoiceFileName,
         invoiceNumber: invoiceNumber,
         invoiceType: invoiceType,
         submittedDate: submittedDate,
@@ -15962,3 +16162,389 @@ function submitInv1() {
     });
   }
 }
+
+function previewInvoice(){
+	var previewIcon = document.getElementById('previewInvoice');
+			
+		
+		
+		var invoiceFileName = invoiceInformation.invoiceFileName;	
+		console.log(invoiceInformation);
+		openInvoice(invoiceFileName.toString());
+	
+}
+
+function openInvoice(mcsPE, id){
+	
+	var host = location.host;
+	$.ajax({
+			type: 'POST',
+			url: 'GetInvAttStatus', 
+			data: {
+				action: "GetInvoice",
+				mcsPE: mcsPE,
+				host : host,
+			},
+			complete: function (data) {
+								
+				var href = location.href;
+				var pathname = location.pathname;				
+				pathname = pathname.substring(0, pathname.lastIndexOf("/"));
+								
+				var loc = host + pathname + "/upload/" + mcsPE+".pdf";
+				
+				window.open("http://" + loc);
+				
+				 
+			}
+		});
+	
+}
+
+
+function getProjectInformation(projectID){
+	
+	var projectInfo = '';
+	$.ajax({
+		type: 'POST',
+		url: 'Project', 
+		async: false,
+		data: {
+			'action': 'getSpecProject',
+			'id' : projectID,
+			},
+			success: function(data)
+			{
+				projectInfo = data;
+			}
+		});
+	return projectInfo;
+}
+
+
+
+function setInvoiceFileName(invoiceId, fileName){
+//	alert(fileName);
+//	alert(invoiceId);
+	
+	$.ajax({
+	type: 'POST',
+	url: 'Project', 
+	async: false,
+	data: {
+		'action': 'updateInvoiceFileName',
+		'invoiceId' : invoiceId,
+		'fileName' : fileName
+		},
+		success: function(data)
+		{
+			invoiceName = data;
+		}
+	});
+}
+
+//function to upload the pdf file
+function uploadInvoice(fileName) {
+	
+    event.preventDefault();
+  
+    var form = $('#fileUploadForm')[0]; 
+    var data = new FormData(form);
+	data.append("fileName", fileName);
+		
+	alert("File is being uploaded, Please wait for some time for file to be copied properly");
+	
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "fileuploadservlet",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+			//alert(data);
+            //$("#result").text(data);
+            console.log("SUCCESS : ", data);
+            //$("#btnSubmit").prop("disabled", false);
+            //alert("Invoice uploaded successfully");            
+            return true;
+
+        },
+        error: function (e) {
+
+            $("#result").text(e.responseText);
+            console.log("ERROR : ", e);
+            $("#btnSubmit").prop("disabled", false);
+			alert("Unable to upload invoice due to system error");
+			return false;
+        }
+    });
+
+    //});
+}
+
+
+// New function with spinner
+function uploadInvoiceSD(fileName) {
+    event.preventDefault();
+
+    // Show the spinner and backdrop when upload starts
+    $("#spinner-wrp, #spinner-backdrop").css("display", "block");
+
+    var form = $('#fileUploadForm')[0];
+    var data = new FormData(form);
+    data.append("fileName", fileName);
+
+    // Define xhr outside the AJAX function so we can reference it
+    var xhr = new window.XMLHttpRequest();
+
+    // Handle cancel button click
+    $("#cancel-upload-btn").on("click", function() {
+        xhr.abort(); // abort the upload
+        // Navigate back or reload the page, based on your requirement
+        //window.location.reload(); // or use history.back();
+         $("#spinner-wrp, #spinner-backdrop").css("display", "none");
+    });
+
+    $.ajax({
+        xhr: function() {
+            return xhr;
+        },
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "fileuploadservlet",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function(data) {
+            console.log("SUCCESS : ", data);
+            alert("Invoice uploaded successfully");
+
+            // Hide the spinner and backdrop once upload is complete
+            $("#spinner-wrp, #spinner-backdrop").css("display", "none");
+        },
+        error: function(e) {
+            if(e.statusText == "abort") {
+                console.log("Upload was cancelled");
+            } else {
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                alert("Unable to upload invoice due to system error");
+            }
+
+            // Hide the spinner and backdrop once upload is complete or aborted
+            $("#spinner-wrp, #spinner-backdrop").css("display", "none");
+        }
+    });
+}
+
+
+
+
+
+
+
+var htmlBegin = "<!DOCTYPE html><html id='hmtl'><head>"
+			+ "<script type='text/javascript' src='DataTables-1.10.0/media/js/jquery.js' ></script>"
+			//+ "<script type='text/javascript' src='css/theme/currentTheme/global.css'></script>"
+			+ "<script type='text/javascript' src='DataTables-1.10.0/media/js/jquery.dataTables.js'></script>"
+			+ "<script type='text/javascript' src='DataTables-1.10.0/extensions/TableTools/js/dataTables.tableTools.js'></script>"
+			+ "<link rel='stylesheet' type='text/css' href='DataTables-1.10.0/media/css/jquery.dataTables.css'>"
+			+ "<link href='DataTables-1.10.0/extensions/TableTools/css/dataTables.tableTools.css' type='text/css' rel='stylesheet'>"
+			+ "<script type='text/javascript' src='js/global.js'></script>"
+			+ "<script type='text/javascript' src='js/report.js'></script>"
+			+ "<title>" + "Socrecard Report" + "</title>"
+			+ "<meta charset='UTF-8'>"
+			+ "</head>"
+
+			+ "<body id='body'>"
+			+ "<div id='content'>";
+
+var htmlClose = "</body></html>";
+
+
+function openScorecard() {
+        // Collect data from the table
+        var tableData = [];
+        var tableRows = document.querySelectorAll('.scoreCardTableHeaderClass tbody tr');
+        
+        tableRows.forEach(function (row) {
+            var rowData = {
+                category: row.cells[0].textContent,
+                severity: row.cells[1].textContent,
+                issues: row.cells[2].textContent
+            };
+            tableData.push(rowData);
+        });
+
+        // Open scorecard.html in a new window
+        var newWindow = window.open("scorecard.html", "_blank");
+
+        // Wait for the new window to load
+        newWindow.addEventListener('load', function () {
+            // Send table data to scorecard.html using postMessage
+            newWindow.postMessage(tableData, '*');
+        });
+    }
+
+
+// function to export csv of scorecard
+function exportToCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    const rows = document.querySelectorAll(".scoreCardTableHeaderClass tr");
+    
+    rows.forEach(row => {
+        const columns = row.querySelectorAll('th, td');
+        let rowString = '';
+        
+        columns.forEach(col => {
+            rowString += '"' + (col.innerText || col.textContent).trim() + '",';
+        });
+        
+        rowString = rowString.slice(0, -1);  // Remove trailing comma
+        csvContent += rowString + "\r\n";
+    });
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "scorecard.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    var inputField = evt.target;  // Get the input field that triggered the event
+    var inputValue = inputField.value;
+    var cursorPosition = inputField.selectionStart;
+
+    // Check if the pressed key is a number (0-9), a control key (backspace or delete),
+    // a single decimal point (.), a comma (,) or a dollar sign ($)
+    if ((charCode >= 48 && charCode <= 57) || charCode === 8 || charCode === 46 || charCode === 44 || charCode === 36) {
+        // Check if a decimal point has already been entered in the input value.
+        if (charCode === 46 && inputValue.indexOf('.') !== -1) {
+            evt.preventDefault();  // Prevent additional decimal points.
+        } 
+        // Allow $ sign only at the beginning and if it's not already present
+        else if (charCode === 36 && (cursorPosition !== 0 || inputValue.indexOf('$') !== -1)) {  
+            evt.preventDefault();
+        } 
+        // Prevent more than 2 digits after the decimal point.
+        else if (charCode !== 46 && inputValue.indexOf('.') !== -1 && inputValue.split('.')[1].length >= 2 && cursorPosition > inputValue.indexOf('.') + 2) {
+            evt.preventDefault();  
+        } 
+        // Prevent adding a comma immediately after a dot, at the beginning, after another comma, or after the decimal point
+        else if (charCode === 44 && (inputValue.length === 0 || inputValue.charAt(inputValue.length - 1) === '.' || inputValue.charAt(inputValue.length - 1) === ',' || (inputValue.indexOf('.') !== -1 && cursorPosition > inputValue.indexOf('.')))) {
+            evt.preventDefault();
+        } 
+        // Prevent two consecutive commas
+        else if (charCode === 44 && inputValue.charAt(cursorPosition - 1) === ',') {
+            evt.preventDefault();
+        }
+        else {
+            return true;
+        }
+    } else {
+        evt.preventDefault();  // Prevent the input if the key is not allowed.
+        return false;
+    }
+}
+
+
+
+// This function stores the current value as the input's data-original attribute
+function setOriginalValue(evt) {
+    if (!evt.target.dataset.original) {  // Only set it if it hasn't been set before
+        evt.target.dataset.original = evt.target.value;
+    }
+}
+
+// Clear the input if the current value is "n/a" or "tbd"
+function clearSalvageValue(evt) {
+    var currentValue = evt.target.value;
+    // Store the previous value
+    evt.target.dataset.previous = currentValue;
+    if (currentValue === "N/A" || currentValue === "TBD") {
+        evt.target.value = "";
+    }
+}
+
+// Restore previous or original value for Salvage Value and also Format if previous is changed
+function restoreAndFormatValue(evt) {
+    var inputField = evt.target;
+    var inputValue = inputField.value;
+    var originalValue = inputField.dataset.original || "0";
+
+    // Remove any existing commas and dollar signs for clean processing
+    inputValue = inputValue.replace(/,/g, '').replace('$', '');
+
+    // If the input ends with a '.', remove the '.'
+    if (inputValue.endsWith('.')) {
+        inputValue = inputValue.slice(0, -1);
+    }
+
+    // If the input is numeric, format it using Intl.NumberFormat
+    if (!isNaN(inputValue) && inputValue.trim() !== '') {
+        var numericValue = parseFloat(inputValue);
+        inputValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(numericValue);
+    }
+    // If it's an empty string but the original value was N/A or TBD, restore that
+    else if (inputValue === "" && (originalValue === "N/A" || originalValue === "TBD")) {
+        inputValue = originalValue;
+    }
+    
+    inputField.value = inputValue;
+}
+
+
+function formatCurrency(evt) {
+    var inputField = evt.target;
+    var inputValue = inputField.value;
+    var originalValue = inputField.dataset.original || "0";
+
+    // Remove any existing commas and dollar signs for clean processing
+    inputValue = inputValue.replace(/,/g, '').replace('$', '');
+
+    // If the input ends with a '.', remove the '.'
+    if (inputValue.endsWith('.')) {
+        inputValue = inputValue.slice(0, -1);
+    }
+
+    // If the input is numeric, format it using Intl.NumberFormat
+    if (!isNaN(inputValue) && inputValue.trim() !== '') {
+        var numericValue = parseFloat(inputValue);
+        inputValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(numericValue);
+    }
+
+    inputField.value = inputValue;
+}
+
+
+// Format the currency/amount to display properly once the control leaves the field
+function formatCurrencyOnBlur(evt) {
+    var inputField = evt.target;
+    var inputValue = inputField.value;
+
+    // Remove all commas and dollar sign
+    inputValue = inputValue.replace(/,/g, '').replace('$', '');
+
+    // If there's a dot but no number after it, remove the dot
+    if (inputValue.charAt(inputValue.length - 1) === '.') {
+        inputValue = inputValue.slice(0, -1);
+    }
+
+    // Convert the string value back to number and format using Intl.NumberFormat
+    if (!isNaN(inputValue) && inputValue.trim() !== '') {
+        var formattedValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(inputValue);
+        inputField.value = formattedValue;
+    }
+}
+
+

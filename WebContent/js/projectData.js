@@ -439,7 +439,7 @@ function saveProject() {
 			}, complete: function (data) {
 				console.log(data);
 				projectID = data.responseJSON;
-				addInvoiceApproval(projectID);
+				//addInvoiceApproval(projectID);
 				alert('Save Complete!');
 				document.getElementById("saveProjectLink").onclick = "";// Added it here by removing it at the top
 				$('#saveButton > button').prop('disabled', false);
@@ -457,7 +457,7 @@ function saveProject() {
 //function to add invoiceapprovals to the table
 function addInvoiceApproval(projID){
 	
-	alert("add invoice approvals called");
+	//alert("add invoice approvals called");
 	
 	//for invoice approval thing
 	var noOfApprovers = document.getElementById("autofill-approvers");
@@ -481,7 +481,7 @@ function addInvoiceApproval(projID){
 		url: 'Project',
 		data: {
 			'domain': 'project',
-			'action': addInvoiceApproval,
+			'action': 'addApprovals',
 			'projectID': projID,
 			'name1' : name1,
 			'name2' : name2,

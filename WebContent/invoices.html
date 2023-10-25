@@ -19,6 +19,7 @@
     <link href="css/theme/currentTheme/jquery-ui-1.10.4.custom.css" rel="stylesheet"/>
     <link href="css/invoices.css" rel="stylesheet">
     <link rel="stylesheet" href="css/jquery.hovertruncated.css" />
+    <link href="css/fileupload.css" rel="stylesheet">
 
 
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>  -->
@@ -108,17 +109,42 @@
 		
 		    <div style="width:100%" class = "changeOrderTableDiv" id = 'invoiceDisplay' >
 		    										
-		      <select id ='invoiceSelector2' class='form-control' style = "width:200px;display:inline;">
-					<option value='all' selected = "selected">All</option>
-					<option value='requested'>Requested</option>
-					<option value='processing'>Processing</option>
-					<option value='review'>Review</option>
-					<option value='approved'>Approved</option>
-					<option value='submitted'>Submitted</option>
-					<option value='rejected'>Rejected</option>
-			 </select>
+		      <select id="invoiceSelector2" class="form-control" style="width:200px;display:inline;margin-right:15px;">
+			    <option value="all" selected="selected">All</option>
+			    <option value="requested">Requested</option>
+			    <!-- <option value='processing'>Processing</option> -->
+			    <option value="review">Review</option>
+			    <option value="approved">Approved</option>
+			    <option value="submitted">Submitted</option>
+			    <option value="rejected">Rejected</option>
+			  </select>
+
+			<div id="invoiceFilter" style="display:inline;">
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="all" checked> All
+			    </label>
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="requested" checked> Requested
+			    </label>
+			    <!-- <label style="margin-right:10px;">
+			        <input type="checkbox" value="processing"> Processing
+			    </label> -->
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="review" checked> Review
+			    </label>
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="approved" checked> Approved
+			    </label>
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="submitted" checked> Submitted
+			    </label>
+			    <label style="margin-right:10px;">
+			        <input type="checkbox" value="rejected" checked> Rejected
+			    </label>
+			</div>
+
 			 
-			 <div style = "display:inline;">&nbsp&nbsp Invoice Reviewers</div>
+			<!--  <div style = "display:inline;">&nbsp&nbsp Invoice Reviewers</div> -->
 			 
 			 <div style = "display:inline;">&nbsp&nbsp</div>
 			 <div id = "usersSelection" style = "display:inline;">
@@ -371,6 +397,8 @@
 		</div>
 		
 	<!--  NOTES MODAL BOX -->
+	
+	
 	<DIV id='PopUp' style='display: none; position: absolute; left: 100px; top: 50px; border: solid black 1px; padding: 10px; background-color: rgb(200,100,100); text-align: justify; font-size: 12px; width: 135px;' onmouseover="document.getElementById('PopUp').style.display = 'none' ">
 	<SPAN id='PopUpText'>TEXT</SPAN>
 	</DIV>
@@ -396,14 +424,83 @@
 		<SPAN id='editNotesText' >
 			TEXT</SPAN>
 	</DIV>
-
-
+	
 	<!-- model box for notes addition  -->
 	<!-- The Modal -->
-<div id="notesModal" class="modal-notes">
+	<div id="notesModal" class="modalAG">
+		<div class="Modal" id="modal-attachAG">
+			<a class=closeAGNotes>&times;</a>
+			<div class="Modal-heading">Notes</div>
+			<input type="checkbox" id="incorrectAmount" name="incorrectAmount">
+ 			<label style = "font-weight: 500" for="incorrectAmount"> Incorrect Amount</label><br>
+ 			<input type="checkbox" id="incorrectCustomer" name="incorrectCustomer">
+ 			<label style = "font-weight: 500" for="incorrectCustomer"> Incorrect Customer</label><br>
+ 			<input type="checkbox" id="customerRejected" name="customerRejected">
+ 			<label style = "font-weight: 500" for="customerRejected"> Customer Rejected</label><br>
+ 			<input type="checkbox" id="incompleteWork" name="incompleteWork">
+ 			<label style = "font-weight: 500" for="incompleteWork"> Incomplete Work</label><br>
+			<textarea rows="2" cols="40" id="invoiceNotes" maxlength="1000" placeholder="Please describe"></textarea>
+			<div class="u-margin-top--x-large">
+				<input type="checkbox" id="invoiceNoteId" style="display:none">
+				<button class="Button Button--outline u-float--right"
+					id="saveInvoiceNotes">Save Notes</button>
+				<button class="Button Button--outline u-float--right"
+					id="closeInvoiceModal">Cancel</button>
 
-</div>
-	
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+<div id="myModalAG" class="modalAG">
+
+<!--
+ https://codepen.io/paddyduke/pen/NRvVwR
+ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal 
+-->
+  <div class="Modal" id="modal-attach">
+    <a class="closeAG">&times;</a>
+    <div class="Modal-heading">
+      Attach File
+    </div>
+    <p>
+      Choose a file to attach.
+    </p>
+    <ul class="FileList">
+      <li>
+        <label for="file--01">          
+          <i class="Icon Icon--small Icon--file"></i>
+          <span id='invoiceFileName' class="File-name has-Icon">
+            invoice-file-name.pdf
+          </span>
+        </label>
+       <!--  <a id='previewInvoice' class="u-margin-left--small">Preview</a> -->
+      </li>
+    </ul>
+    <div class="u-margin-top--x-large">
+      
+      <button class="Button Button--outline u-float--right" id="uploadInvoiceFile">
+        Upload a new file
+      </button>
+        <button class="Button Button--outline u-float--right" id="previewInvoice">
+        Preview existing file
+      </button>
+      
+    </div>
+  </div>
+
+
+  <!-- Modal content
+  <div class="modal-content-ag">
+    <span class="closeAG">&times;</span>
+    <p>File Name Here</p>
+    <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+    <input type="file" name="filepdf" id = "filepdf" accept = ".pdf"/><br/><br/>
+    <input type="submit" value="Upload" id="btnSubmit"/>
+    <input type="button" value="Remove" id="btnSubmit"/>
+</form>
+    
+  </div> -->
+</div>	
 	
 <form method="post" action="fileuploadservlet" enctype="multipart/form-data" id = "fileForm" style= "display:none;">
     <input type="file" name="file" id = "file" accept = ".pdf"/>
@@ -418,6 +515,74 @@
 </form>
 
 <input id='username' type='hidden' value='${sessionScope.user}'/> 
+
+
+
+<!-- Add a backdrop for the spinner to blur the background -->
+<div id="spinner-backdrop" style="display: none;"></div>
+
+<!-- Adjust spinner container -->
+<div id="spinner-wrp" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+    <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+    <!-- Cancel Button -->
+    <button id="cancel-upload-btn" style="margin-top: 15px;">Cancel Upload</button>
+</div>
+
+<style>
+    .spinner {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin: 100px auto;
+    }
+
+    .double-bounce1, .double-bounce2 {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #333;
+        opacity: 0.6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+        animation: sk-bounce 2.0s infinite ease-in-out;
+    }
+
+    .double-bounce2 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+
+    @-webkit-keyframes sk-bounce {
+        0%, 100% { -webkit-transform: scale(0.0) }
+        50% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bounce {
+        0%, 100% { 
+            transform: scale(0.0);
+            -webkit-transform: scale(0.0);
+        } 50% { 
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+        }
+    }
+    
+    #spinner-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+</style>
+
 
 </body>
 </html>

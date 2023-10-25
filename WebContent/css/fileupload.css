@@ -1,0 +1,43 @@
+#progress-wrp {
+    border: 1px solid #0099CC;
+    padding: 1px;
+    position: relative;
+    height: 30px;
+    border-radius: 3px;
+    margin: 10px;
+    text-align: left;
+    background: #fff;
+    box-shadow: inset 1px 3px 6px rgba(0, 0, 0, 0.12);
+    display: none;
+}
+
+#progress-wrp .progress-bar {
+    height: 100%;
+    border-radius: 3px;
+    background-color: #f39ac7;
+    width: 0;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.11);
+}
+
+#progress-wrp .status {
+    top: 3px;
+    left: 50%;
+    position: absolute;
+    display: inline-block;
+    color: #000000;
+}
+
+#cancel-upload-btn {
+    background-color: #f44336; /* Red */
+    color: white; /* White text */
+    padding: 10px 20px; /* Some padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Slightly rounded corners */
+    cursor: pointer; /* Hand cursor on hover */
+    font-weight: bold; /* Bold text */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+#cancel-upload-btn:hover {
+    background-color: #d32f2f; /* Darken red a bit when hovered */
+}

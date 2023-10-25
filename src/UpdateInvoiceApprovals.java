@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -172,19 +173,63 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			try {
 				Class.forName(myDriver);
 				Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
-				Statement st = conn.createStatement();
+				//Statement st = conn.createStatement();
+				
+				// Using prepared statement as to return the new generated approval_id
+				PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				
+				// Execute the INSERT query
+				int affectedRows = pstmt.executeUpdate();
+				
+				if (affectedRows == 0) {
+				    System.out.println("No rows were inserted.");
+				} else {
+				    // Retrieve the generated keys (i.e., the last inserted ID)
+				    ResultSet generatedKeys = pstmt.getGeneratedKeys();
+				    if (generatedKeys.next()) {
+				        int lastInsertedID = generatedKeys.getInt(1); // Assuming 'id' is an INT column
+				        System.out.println("Approvals created and last Inserted ID: " + lastInsertedID);
+				        
+				        out = response.getWriter();
+				        
+				        JSONArray jsonArray = new JSONArray();
+				        JSONObject jsonObject = new JSONObject();
+				        jsonObject.put("result", "APPROVALS_ADDED");
+				        jsonObject.put("approval_id", lastInsertedID);
+				        jsonArray.put(jsonObject);
+				        out.println(jsonArray.toString());
+				    } else {
+				        System.out.println("No generated keys were retrieved.");
+				        out.println("ERROR UPDATING APPROVALS");
+				    }
+				}
 				
 				// execute the query, and get a java resultset
-			    int rs = st.executeUpdate(query);
+			    //int rs = st.executeUpdate(query);
 			    //System.out.println("Query result is- " + rs);
-			    if (rs > 0)
+			    /*if (rs > 0)
 			    {
 			    	System.out.println("Approvals created");
 			    	
 			    	out = response.getWriter();
 					out.println("APPROVALS_ADDED");
+					
+					// Get the ID of the last inserted row immediately after the INSERT
+					//Statement last_id = conn.createStatement();
+					ResultSet new_approval_id_rs = st.executeQuery("select approval_id from invoiceapprovals SELECT LAST _INSERT_ID()");
+					System.out.println("Approvals result is- " + new_approval_id_rs);
+					int new_approval_id;
+					while(new_approval_id_rs.next()) {
+						new_approval_id = new_approval_id_rs.getInt(0);
+						System.out.println("New Inserted approval Id is- " + new_approval_id);
+					}
+					
+					
+					JSONArray resp = convertToJSONArray(new_approval_id_rs);
+					
+					out.println(resp.toString());
 			        
-			    }
+			    } */
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -224,6 +269,122 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			
+		}
+		
+
+		else if(action.equals("clearInvoiceApprovalsAG")){
+			//Need Status_1,2, 3 set to Review
+			//Need date_1,2,3 set to empty
+
+			
+			int userApprovalIndex = Integer.parseInt(parameters.get("userApprovalIndex")) + 1;
+			int approval_id = Integer.parseInt(parameters.get("id"));
+			Date now = new Date();
+			
+			
+			String pattern = "yyyy-MM-dd HH:mm:ss";
+			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+			
+			String mysqlDateString = formatter.format(now);
+			System.out.println("Java's Default Date Format: " + now);
+	        System.out.println("Mysql's Default Date Format: " + mysqlDateString);
+	        try {
+	        	Class.forName(myDriver);
+	        	Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+	        	Statement st = conn.createStatement();
+	        	
+	        	
+	        	String username = (String)session.getAttribute("user");
+	   				 	
+	        	String rejectionHistoryNote = "Rejected by "+username +" on "+mysqlDateString;
+	        	
+	        	String query = "Update invoiceapproval set status_1 = 'Review', status_2 = 'Review', status_3 = 'Review', date_1 = '"+mysqlDateString + "', date_2 = '"+mysqlDateString 
+	        			+ "', date_3 = '" +mysqlDateString + "', notes_"+ userApprovalIndex + "= '"+rejectionHistoryNote
+	        			+  "' where approval_id = "+ approval_id;
+	   			
+	        	
+	   			System.out.println("Query is- " + query);
+	   			
+	   			int x = st.executeUpdate(query);
+	   			
+	   			if(x>0) {
+	   				out = response.getWriter();
+	   				out.println("UPDATED_APPROVALS");
+	   			} 
+	   			
+	   			//now update the status of invoice based on the status of individual approvals
+//	   			updateInvoiceStatusAG(approval_id);
+	        }
+	        catch(Exception e) {
+	        	e.printStackTrace();
+	        }
+			
+			
+			
+			//Future - Update notes1,notes2, notes 3 to the previous approval information, make them save the history
+			
+			
+			
+		}
+		
+		else if(action.equals("updateInvoiceApprovalsAG")) {
+			Gson g = new Gson();
+			String userpermission = User.mapNameToUser((String) request.getSession().getAttribute("user")).getPermission().getName();
+			//Why even check the user permission - looks like it should be handled on the front end
+			
+			int approval_id = Integer.parseInt(parameters.get("id"));
+
+			
+			String approvalStatus = parameters.get("approvalStatus");
+			String statusDate = parameters.get("statusDate");
+			int userApprovalIndex = Integer.parseInt(parameters.get("userApprovalIndex")) + 1;
+			
+
+			
+			Date now = new Date();
+			
+			
+			String pattern = "yyyy-MM-dd HH:mm:ss";
+			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+			
+			String mysqlDateString = formatter.format(now);
+			System.out.println("Java's Default Date Format: " + now);
+	        System.out.println("Mysql's Default Date Format: " + mysqlDateString);
+	        
+	        try {
+	        	Class.forName(myDriver);
+	        	Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+	        	Statement st = conn.createStatement();
+	        	
+	        	
+	        	String username = (String)session.getAttribute("user");
+	   				 
+	        	//String query = "Select * from invoiceapproval where invoice_id = " +invoiceID;
+	   			
+	        	String query = "Update invoiceapproval set user_" + userApprovalIndex + " = '" + username
+	        			+ "', status_" + userApprovalIndex + " = '" + approvalStatus + "'"
+	        			+ ", date_" + userApprovalIndex + " = '" + mysqlDateString + "'" 
+	        			+  " where approval_id = "+ approval_id;
+	   			
+	        	
+	   			System.out.println("Query is- " + query);
+	   			
+	   			int x = st.executeUpdate(query);
+	   			
+	   			if(x>0) {
+	   				out = response.getWriter();
+	   				out.println("UPDATED_APPROVALS");
+	   			} 
+	   			
+	   			//now update the status of invoice based on the status of individual approvals
+	   			updateInvoiceStatusAG(approval_id);
+	        }
+	        catch(Exception e) {
+	        	e.printStackTrace();
+	        }
+			
 			
 			
 		}
@@ -821,6 +982,98 @@ public class UpdateInvoiceApprovals extends HttpServlet {
         }
         return jsonArray;
     }
+	
+	
+	public static void updateInvoiceStatusAG(int invoiceID) {
+		String status = "Review";
+		Configuration configuration= new Configuration().configure("hibernate.cfg.xml");
+		String myDriver = configuration.getProperty("hibernate.connection.driver_class");
+		String createApprovalsmyDriver = configuration.getProperty("hibernate.connection.driver_class");
+		String myUrl = configuration.getProperty("hibernate.connection.url");
+		String dbuser = configuration.getProperty("hibernate.connection.username");
+		String password = configuration.getProperty("hibernate.connection.password");
+		
+		try {
+			Class.forName(myDriver);
+			Connection conn = DriverManager.getConnection(myUrl, dbuser, password);
+			
+			//String
+			
+			String query = "Select * from invoiceapproval where approval_id = " + invoiceID;
+			
+			System.out.println("Query is- " + query);
+		
+			Statement st = conn.createStatement();
+			
+			// execute the query, and get a java resultset
+		    ResultSet rs = st.executeQuery(query);
+		    
+		    //whether to update the invoice status in the original invoice queue or not
+		    String updateOrNot = "false";
+		    
+		    while (rs.next())
+		    {
+		    	System.out.println("inside while");
+		    	
+		    	//first check that the status for the user1 already exists or not
+		    	String status1 = rs.getString("status_1");
+		    	String status2 = rs.getString("status_2");
+		    	String status3 = rs.getString("status_3");
+		    	String status4 = rs.getString("status_4");
+		    	String status5 = rs.getString("status_5");
+		    	
+		    	System.out.println("Approvals data- " + status1);
+		    	System.out.println("Approvals data- " + status2);
+		    	System.out.println("Approvals data- " + status3);
+		    	
+		    	
+		    	if(status1.equals("Approved") && status2.equals("Approved") && status3.equals("Approved")) {
+		    		status = "Approved";
+		    	}
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	
+		        //System.out.println("Status id is " + id);
+		        
+		        //response = Integer.toString(id);
+		        
+		    }
+		    
+	
+		    //now update the status in the main invoice queue
+		    String updateStatusQuery = "Update Invoice set invoiceStatus = '"+ status +"' where id = " + invoiceID;
+		    System.out.println("updateStatusQuery - " + updateStatusQuery);
+		    //EntityManager em;
+
+		    //Begin transaction
+		    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		    Transaction tx = session.beginTransaction();
+
+		    String hql = updateStatusQuery;
+		    Query query1 = session.createQuery(hql);
+		    query1.setCacheable(false);
+		    int results = query1.executeUpdate();
+		    tx.commit();
+
+
+
+		    if(results == 1) {
+		    	System.out.println("Query executed successfully");
+		    }
+		    
+		    
+		    
+		    
+		    
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 
 	//function to update invoice approval on invoice queue based on the approvals of the individual users
 	public static void updateInvoiceStatus(int noOfApprovals, int invoiceID) {
@@ -1025,6 +1278,8 @@ public class UpdateInvoiceApprovals extends HttpServlet {
 			e.printStackTrace();
 		} 
 	} 
+	
+	
 	
 	
 	

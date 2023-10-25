@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plain Scorecard</title>
+    
+    <script>
+    // Function to handle data received from the parent window
+    function receiveData(event) {
+        if (event.data) {
+            // Assuming event.data is an array of table data
+            var tableData = event.data;
+
+            // Process the table data as needed
+            tableData.forEach(function (rowData) {
+                // Create new table rows in scorecard.html based on the received data
+                var newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${rowData.category}</td>
+                    <td>${rowData.severity}</td>
+                    <td>${rowData.issues}</td>
+                `;
+
+                // Append the new row to the table in scorecard.html
+                var tableBody = document.querySelector('tbody');
+                tableBody.appendChild(newRow);
+            });
+        }
+    }
+
+    // Add an event listener to listen for messages from the parent window
+    window.addEventListener('message', receiveData, false);
+</script>
+    
+</head>
+<body>
+    <h1>Project Scorecard</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>CATEGORY</th>
+                <th>SEVERITY</th>
+                <th>ISSUES</th>
+            </tr>
+ 
+        </tbody>
+    </table>
+
+    <button id="exportCsvButton">Export to CSV</button>
+
+
+<script>
+
+//Function to export table data to CSV
+function exportToCsv() {
+    // Create a CSV content string
+    var csvContent = "data:text/csv;charset=utf-8,";
+
+    // Select all tables in the document
+    var tables = document.querySelectorAll("table");
+
+    tables.forEach(function (table) {
+        // Extract and add table header values to CSV
+        var headerValues = [];
+        var headerCols = table.querySelectorAll("table tbody tr th");
+        headerCols.forEach(function (col) {
+            headerValues.push(col.textContent);
+        });
+        csvContent += headerValues.join(",");
+
+        // Extract and add table row values to CSV
+        var rows = table.querySelectorAll("tbody tr");
+        rows.forEach(function (row) {
+            var rowData = [];
+            var cols = row.querySelectorAll("td");
+            cols.forEach(function (col) {
+                rowData.push(col.textContent);
+            });
+            csvContent += rowData.join(",") + "\n";
+        });
+    });
+
+    // Create a data URI for downloading
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "scorecard.csv");
+    document.body.appendChild(link);
+
+    // Trigger the link to start downloading
+    link.click();
+}
+
+// Add a click event listener to the export button
+document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
+
+
+    </script>
+
+
+</body>
+
+</html>
+
